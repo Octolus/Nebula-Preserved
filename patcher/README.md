@@ -2,6 +2,12 @@
 
 The Windows GUI and portable release build are documented in [LAUNCHER.md](../docs/LAUNCHER.md). Normal launching requires a frozen native-accepted remote bundle. Explicit `gui --allow-provisional` is available only for developer native acceptance and visibly marks its window as development. CLI patch/restore commands never launch the game.
 
+The GUI guides players through finding the game, saving their server connection
+and starting. Saved connections are checked automatically; certificate settings
+and technical details expand when needed. Missing requirements and failures
+explain the next action. It uses scalable, themed native Windows controls and
+background progress without capturing the pointer.
+
 Rust source for Steam app **919290**, build **11018722**. Windows x64 is the supported patching platform. Steam discovery uses registry and VDF library/app manifests; `--game` selects an explicit installation. Original executable, licensing and ownership initialization are preserved.
 
 ```powershell
@@ -39,4 +45,4 @@ Disposable acceptance scripts exercise pristine install, idempotence, restore, r
 
 **Status:** provisional. The file-transaction checks do not validate a release bundle or shared-host deployment. Final bundle acceptance and public remote/TLS activation remain incomplete. Source dependencies are pinned in Cargo.lock; bundle construction additionally uses Python, UnityPy1.25.4, pefile and capstone as described in `../client-patches/README.md`.
 
-Original public game service host/IP literals in `src/endpoint.rs` are exact-match reconstruction constants from the shipped client, not developer/user network addresses. No personal machine or account configuration is included. No project license is invented here; see `../client-patches/PROVENANCE.md`.
+Original public game service host/IP literals in `src/endpoint.rs` are exact-match reconstruction constants from the shipped client, not developer/user network addresses. No personal machine or account configuration is included. Original contributions use the root MIT license; upstream and game-derived materials retain their separate terms. See [licensing scope](../docs/LICENSING.md) and [provenance](../client-patches/PROVENANCE.md).

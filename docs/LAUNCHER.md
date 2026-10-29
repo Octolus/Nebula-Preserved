@@ -2,14 +2,26 @@
 
 Double-click the release executable, or run `nebula-preservation-patcher.exe gui`. The launcher leaves the mouse and the game's UI/input settings alone.
 
-1. Enter the server IPv4 address or complete HTTPS origin. A bare address uses HTTPS on port 8444. HTTP, credentials in URLs and ambiguous origins are refused.
-2. The launcher checks Steam registry paths, Steam's library list and bounded common Steam folders on drives C–Z. Broken libraries do not hide valid installations elsewhere. If several supported copies exist, select one using **Browse executable**. If none is found, select the installed **Nebula Realms.exe**. Other executables, incomplete installations and unsupported Steam builds are refused.
-3. On the first connection, select your own operator-issued account credential file, the operator's DER CA certificate, and its trusted SHA256 fingerprint. Check the fingerprint through a trusted channel. A prepared portable build can include the public CA and fingerprint. Click **Import connection**. Credentials are protected with Windows CurrentUser DPAPI and restricted file permissions; Steam ownership is still required. Each player needs their own credential. Never distribute an account credential inside the launcher.
-4. Click **Start the game**. Verification runs in the background. It checks the manifest, exact executable, Steam build (where its manifest exists), network-only profile, transaction history, pristine backups, installed helper outputs and regenerated metadata. It verifies the TLS profile and server certificate/hostname against the pinned CA, probes the existing HTTP protocol, applies the verified transaction and launches the exact executable from its game folder.
+1. **Find your game.** Steam libraries are searched automatically. Use **Find game** to search again or **Browse…** to choose the installed **Nebula Realms.exe**. If several supported copies exist, choose the one you want. Other executables, incomplete installations and unsupported builds are refused.
+2. **Connect to your server.** Enter the IPv4 address or complete HTTPS address supplied by the server owner. A bare IPv4 address uses HTTPS on port 8444. Choose your own account credential file. Open **Certificate settings** if the server certificate and fingerprint are not already supplied by the player release. Confirm the fingerprint with the server owner, then click **Save connection**. Each player needs their own account file; it is protected with Windows CurrentUser DPAPI and restricted permissions.
+3. **Start the game.** The next-step message explains any missing requirement. Start becomes available after the game and connection checks pass and the launcher has a reviewed bundle pin. It checks the exact executable, Steam build, patch profile, receipt history, backups, helper outputs and metadata again before patching and opening the game. Named progress stages show the work in the background.
+
+Returning players have their saved server restored and checked automatically.
+Use **Check server** to retry after an outage. The check uses the saved profile;
+it does not import a new account. The main screen keeps certificate settings and
+technical details expandable. A development build without a reviewed patch bundle
+explains why Start is unavailable.
+
+The launcher uses themed native Windows controls, Segoe UI typography, resizable
+sections and per-monitor display scaling. Smaller windows scroll; Tab follows the
+visual order and brings focused controls into view. Errors open the technical
+details and offer a recovery step. It does not capture the pointer or change the
+game's controls. The DPI handling follows Microsoft's
+[per-monitor guidance](https://learn.microsoft.com/en-us/windows/win32/hidpi/wm-dpichanged).
 
 The probe is read-only and deliberately does not send an account token. Success establishes certificate-verified backend reachability, not server-side account authentication, multiplayer or world loading. The game performs login. A successful process start is reported as a process start.
 
-Existing saved profiles must match the selected server. **Reset connection** asks before removing only this Windows user's saved connection files. It preserves the server account and patch backups. Import the new server's credential and CA afterward. If import is interrupted, reset and retry with the trusted files. Store the source credential securely outside the game/repository as a recovery secret; never send it to another player.
+Existing saved profiles must match the selected server. Editing the server address invalidates the previous connection check. Under **Certificate settings**, **Forget connection** asks before removing only this Windows user's saved connection files. It preserves the server account and patch backups. Import the new server's credential and CA afterward. Certificate preflight rejects a wrong fingerprint before account provisioning begins. If import is interrupted, forget the incomplete connection and retry with the trusted files. Store the source credential securely outside the game/repository as a recovery secret; never send it to another player.
 
 Close the game before patching, restoring, changing accounts or changing servers. The launcher refuses concurrent operations, unknown modifications, mixed optional UI/input patches, damaged backups and unfinished transactions. Use CLI `recover`/`restore` when instructed. It never silently repairs an unknown installation or discards backups.
 
@@ -37,3 +49,12 @@ Default server and CA material are public distribution configuration. Keep opera
 ## Validation status
 
 Windows unit tests cover parser limits, corrupt Steam libraries, address normalization, profile boundaries, output pins, rollback and backup/receipt tampering. They never run fake fixture executables. Compilation and protocol probes do not establish native multiplayer acceptance. Record original-client remote TLS/login/world/social/customization checks before freezing or distributing a launch-enabled bundle.
+
+The current patcher suite has 37 tests, including launch prerequisites, stale
+connection invalidation, layout overlap/bounds, 100–300% scaling geometry, scroll
+reachability, saved-origin parsing and read-only certificate preflight. Windows
+release inspection checks the embedded native-control/DPI manifest, normal-user
+execution and absence of input-capture imports. These headless checks do not
+replace a visual and keyboard/screen-reader pass on an unlocked Windows desktop.
+The [recorded checks](../patcher/launcher-ui-validation.json) pin the tested source
+and local preview binary; that preview contains no reviewed game bundle.

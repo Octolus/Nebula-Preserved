@@ -27,6 +27,35 @@ fn fields(bytes: &[u8]) -> Result<BTreeMap<&str, &str>> {
     }
     Ok(out)
 }
+/// Read only the saved public origin; full credential/trust checks follow.
+#[cfg(windows)]
+pub fn saved_server() -> Result<Option<String>> {
+    let root = folder()?;
+    crate::manifest::reject_link(&root)?;
+    let path = crate::manifest::safe(&root, "remote-game.conf")?;
+    if !path.exists() {
+        return Ok(None);
+    }
+    let bytes = crate::manifest::read_bounded(&path, 4096)?;
+    Ok(Some(profile_server(&bytes)?))
+}
+#[cfg(any(windows, test))]
+fn profile_server(bytes: &[u8]) -> Result<String> {
+    let data = fields(&bytes)?;
+    ensure!(
+        data.get("format") == Some(&"nebula-remote-transport-v1"),
+        "Unknown saved connection format"
+    );
+    let server = data
+        .get("server_url")
+        .context("Saved connection has no server address")?;
+    crate::endpoint::validate(server, "127.0.0.1")?;
+    ensure!(
+        server.starts_with("https://"),
+        "Saved connection requires HTTPS"
+    );
+    Ok((*server).to_owned())
+}
 fn der(bytes: &[u8]) -> Result<()> {
     ensure!(
         bytes.len() >= 4 && bytes[0] == 0x30,
@@ -97,14 +126,7 @@ pub fn ca_bytes(server: &str) -> Result<Vec<u8>> {
         1024 * 1024,
     )
 }
-pub fn configure(server: &str, ca_file: &Path, pin: &str) -> Result<()> {
-    crate::discovery::stopped()?;
-    crate::endpoint::validate(server, "127.0.0.1")?;
-    ensure!(
-        server.starts_with("https://"),
-        "Remote profile requires HTTPS"
-    );
-    crate::endpoint::check_public_config(server)?;
+pub fn validate_ca_file(ca_file: &Path, pin: &str) -> Result<Vec<u8>> {
     crate::manifest::sha(pin)?;
     crate::manifest::reject_link(ca_file)?;
     let bytes = crate::manifest::read_bounded(ca_file, 1024 * 1024)?;
@@ -113,6 +135,17 @@ pub fn configure(server: &str, ca_file: &Path, pin: &str) -> Result<()> {
         "CA fingerprint mismatch"
     );
     der(&bytes)?;
+    Ok(bytes)
+}
+pub fn configure(server: &str, ca_file: &Path, pin: &str) -> Result<()> {
+    crate::discovery::stopped()?;
+    crate::endpoint::validate(server, "127.0.0.1")?;
+    ensure!(
+        server.starts_with("https://"),
+        "Remote profile requires HTTPS"
+    );
+    crate::endpoint::check_public_config(server)?;
+    let bytes = validate_ca_file(ca_file, pin)?;
     let root = folder()?;
     crate::manifest::reject_link(&root)?;
     let config = crate::manifest::safe(&root, "remote-game.conf")?;
@@ -172,4 +205,50 @@ pub fn reset() -> Result<()> {
         "Removed only remote transport config and fixed public CA file; account token retained."
     );
     Ok(())
+}
+
+#[cfg(test)]
+mod setup_tests {
+    use super::*;
+    #[test]
+    fn saved_origin_refuses_duplicates_unknown_profiles_and_unsafe_addresses() {
+        assert_eq!(
+            profile_server(
+                b"format=nebula-remote-transport-v1\nserver_url=https://play.example.org:8444\n"
+            )
+            .unwrap(),
+            "https://play.example.org:8444"
+        );
+        for value in [
+            "format=unknown\nserver_url=https://play.example.org:8444\n",
+            "format=nebula-remote-transport-v1\nserver_url=http://play.example.org\n",
+            "format=nebula-remote-transport-v1\nserver_url=https://user@play.example.org\n",
+            "format=nebula-remote-transport-v1\nserver_url=https://play.example.org\nserver_url=https://other.example.org\n",
+        ] { assert!(profile_server(value.as_bytes()).is_err()); }
+    }
+    #[test]
+    fn certificate_preflight_is_read_only_and_rejects_wrong_pins_and_trailing_bytes() {
+        let root = std::env::temp_dir().join(format!(
+            "nebula-ca-preflight-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        std::fs::create_dir(&root).unwrap();
+        let path = root.join("test.der");
+        let cert = [0x30, 0x02, 0x05, 0x00];
+        std::fs::write(&path, cert).unwrap();
+        let pin = crate::manifest::hash(&cert);
+        assert_eq!(validate_ca_file(&path, &pin).unwrap(), cert);
+        assert!(validate_ca_file(&path, &"0".repeat(64)).is_err());
+        std::fs::write(&path, [0x30, 0x02, 0x05, 0x00, 0]).unwrap();
+        assert!(
+            validate_ca_file(&path, &crate::manifest::hash(&[0x30, 0x02, 0x05, 0x00, 0])).is_err()
+        );
+        assert_eq!(std::fs::read_dir(&root).unwrap().count(), 1);
+        std::fs::remove_file(path).unwrap();
+        std::fs::remove_dir(root).unwrap();
+    }
 }

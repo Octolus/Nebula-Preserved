@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "recorded_date": "2026-10-30",
+  "scope": "Headless launcher policy/layout/preflight and binary inspection only",
+  "rust": "1.90.0",
+  "windows_toolchain": "x86_64-pc-windows-gnu",
+  "windows_tests": 37,
+  "linux_tests": 36,
+  "failed": 0,
+  "skipped": 0,
+  "preview_sha256": "11da9f3c97ef2bc0fa80d635693077e62ceb246d55d85bbde61f47c878fb2420",
+  "preview_bytes": 4951040,
+  "preview_has_reviewed_game_bundle": false,
+  "windows_manifest": {
+    "themed_native_controls": true,
+    "per_monitor_v2": true,
+    "execution_level": "asInvoker"
+  },
+  "input_capture_imports": false,
+  "private_build_path_scan_passed": true,
+  "source_hashes": {
+    "patcher/Cargo.toml": "b769717ae83ae13cd38d3263f30ebdd090a97f41c15cd31ab5a60be70914711d",
+    "patcher/Cargo.lock": "0fbb57651920cd2e5e8908bd483b2eeef2087786b7abe556dbec1036e5441291",
+    "patcher/build.rs": "6e4a40ae59d46d5e8d73caf74c017b15bf1157f07af41b3fd1bac6540fcb1ac7",
+    "patcher/launcher.manifest": "2651221be54f676a3d85cfaee628c69876ff736554b8f1051ecbf97f0b71364b",
+    "patcher/src/gui.rs": "1d39042ce127ceff1c8323d3607a7929679885fd8a78a909b5b7bfc7e834833a",
+    "patcher/src/launcher_ui.rs": "acc718a6b401206812f317491992854b8a21ef32d5a4fd727c03f3756fb6c410",
+    "patcher/src/remote.rs": "89b034810515f5a25c2533438820cb0fc2b8797971eb1e4317a18e17cc4d67d4",
+    "patcher/src/main.rs": "b78691daf2d115075c1b06702f64d6a5d6ab1ada8e3087091948b0a2e778eade"
+  },
+  "native_visual_acceptance": "NOT_RUN_DESKTOP_LOCKED",
+  "native_game_acceptance": "NOT_PROVEN"
+}

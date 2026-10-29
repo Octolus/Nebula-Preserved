@@ -15,7 +15,7 @@ An operator-owned deployment passed actual reboot recovery, retained its account
 wallet and credential, and passed certificate-verified API/dashboard checks.
 Its private address, credentials and evidence are excluded from this repository.
 The Windows launcher now has server selection, Steam discovery, an executable
-picker and a verified Start action. Thirty Rust unit tests and 44 disposable CLI
+picker and a verified Start action. Thirty-seven Rust unit tests and 44 disposable CLI
 acceptance commands passed. The final original-client GUI test remains blocked
 by Windows desktop access; the release bundle remains provisional.
 
@@ -31,7 +31,7 @@ by Windows desktop access; the release bundle remains provisional.
 | Resources | Durable selections/current-session guards integrated; 13 authority tests passed; complete Linux/Weaver build from a fresh copy of the public server source passed | Native selection/rejection reconciliation, fresh-session restoration and peer proof |
 | Settings | Original friend-login notification toggle persisted; a second fresh process loaded the changed value and restored baseline; a third loaded baseline; unrelated durable state preserved | Other settings and final-distribution acceptance; original platform-only UI defect excluded |
 | Input | Default networking profile retains shipped input; optional keyboard/mouse research remains separate | Optional input experiments are outside the required networking completion scope |
-| Portable patcher | Steam discovery and exact version checks; 22 Rust tests, six builder tests and 44 CLI fixture commands verified receipt-backed endpoint/profile updates, idempotence, tamper refusal and restore; inherited recovery checks retained | Final runtime-accepted bundle and independent tester install |
+| Portable patcher | Guided game/connection/start flow, scalable native controls, saved connections and recovery guidance; 37 Windows Rust tests, six builder tests and 44 CLI fixture commands cover policy, layout, endpoint/profile updates, idempotence, tamper refusal and restore | Unlocked-desktop visual/keyboard checks, final runtime-accepted bundle and independent tester install |
 | Linux / remote | Linux Docker backend/panel and Unity demand-start passed; fresh Linux/Weaver build and isolated state restart passed; public TLS client source repairs passed independent review; native acceptance remains incomplete | Original Windows client/sidecar/DPAPI acceptance and independent remote peer connectivity |
 | Moderation | Account bans, current-session kicks, global chat restrictions, report review, staff labels, operator/player links, maintenance notices and login news implemented; disposable Linux protocol, restart and four dashboard browser cases pass | Original Windows-client moderation presentation remains unverified; no proven arbitrary live broadcast |
 | Minigames | Existing protocol, rules and asset research preserved | Deferred until the non-minigame networking and persistence requirements are verified |
@@ -57,7 +57,7 @@ and browser results, not shipped Windows-client presentation or full multiplayer
 acceptance.
 
 The offline unit runner now covers 423 Python tests, 33 dashboard tests and
-30 Rust patcher tests, including permission matrices, transaction rollback,
+37 Rust patcher tests, including permission matrices, transaction rollback,
 malformed wire inputs, resource-selection recovery and concurrent retries.
 See [testing](TESTING.md) for the single-command runner and measured timings.
 These checks do not replace the native acceptance gates above.

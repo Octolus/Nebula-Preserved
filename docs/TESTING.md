@@ -76,7 +76,7 @@ exports and check before sharing them.
 The current suite discovers 423 Python tests: 325 backend, 60 tooling, 23 Linux
 builder, six bundle and nine offline harness checks. Three backend tests require
 private evidence and are skipped explicitly. The panel adds 33 unit tests and
-the Rust patcher adds 30. A local Linux run of all five Python suites completed
+the Rust patcher adds 37 on Windows (36 on Linux). A local Linux run of all five Python suites completed
 in approximately 25 seconds using shared memory; timings depend on the machine
 and temporary storage. These counts describe unit coverage, not complete native
 multiplayer acceptance.

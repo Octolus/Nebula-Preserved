@@ -32,6 +32,42 @@ fn source(root: &Path, name: &str) -> PathBuf {
     path
 }
 fn main() {
+    if env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("windows") {
+        let manifest =
+            PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap()).join("launcher.manifest");
+        println!("cargo:rerun-if-changed={}", manifest.display());
+        if env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
+            println!("cargo:rustc-link-arg-bin=nebula-preservation-patcher=/MANIFEST:EMBED");
+            println!(
+                "cargo:rustc-link-arg-bin=nebula-preservation-patcher=/MANIFESTINPUT:{}",
+                manifest.display()
+            );
+        } else {
+            let out = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+            let rc = out.join("launcher.rc");
+            let object = out.join("launcher-resource.o");
+            fs::write(
+                &rc,
+                format!(
+                    "1 24 \"{}\"\n",
+                    manifest.to_str().unwrap().replace('\\', "/")
+                ),
+            )
+            .unwrap();
+            let result = std::process::Command::new("windres")
+                .arg("-i")
+                .arg(&rc)
+                .args(["-O", "coff", "-o"])
+                .arg(&object)
+                .status()
+                .expect("Windows GNU builds need windres for the launcher manifest");
+            assert!(result.success(), "Cannot build launcher manifest resource");
+            println!(
+                "cargo:rustc-link-arg-bin=nebula-preservation-patcher={}",
+                object.display()
+            );
+        }
+    }
     for name in [
         "NEBULA_DEFAULT_SERVER",
         "NEBULA_BUNDLE_SHA256",

@@ -1,7 +1,7 @@
 {
-  "bytes_excluding_inventory": 29160844,
+  "bytes_excluding_inventory": 29196582,
   "excluded": "Original game installation, compiled client/runtime outputs, Unity Linux build, databases, logs, credentials, keys, generated build products and private evidence are excluded. Four pre-existing vendored Cecil dependency DLLs remain at their reviewed original hashes.",
-  "file_count_excluding_inventory": 1644,
+  "file_count_excluding_inventory": 1647,
   "files": {
     ".editorconfig": {
       "sha256": "93287d2202fa7d6d6ce0d539f7189bbf775bd3df5de67be71830c2f55b7d7b82",
@@ -1384,8 +1384,8 @@
       "size": 1439
     },
     "docs/LAUNCHER.md": {
-      "sha256": "f1f2532d7b1799a2c460c7f842f4ea2b5a2e18ff657cd885c6ee9f0714715ab4",
-      "size": 5549
+      "sha256": "de602f5c4c31a02fd771d5504db51842bb10408d7575bf3bf067842cbb32d405",
+      "size": 6895
     },
     "docs/LICENSING.md": {
       "sha256": "06001ca90eb0ae4c1067e635e669dd5179b4a85a5160d0b4752d8a7f96ed8048",
@@ -1412,8 +1412,8 @@
       "size": 1946
     },
     "docs/PROGRESS.md": {
-      "sha256": "3ab6634a2d01e632eaf7878cad0bf32fb4076792501fb575885021cea04c5db5",
-      "size": 9046
+      "sha256": "28ffcb253c488cd378706f0d6cc75ddcf69d7bfc8d444c5184698fe344421af2",
+      "size": 9123
     },
     "docs/PUBLISHING.md": {
       "sha256": "439cdcbb5ad15eaad33e94ef664ad22ab305cf1c691d085ca4526f9de4bd9710",
@@ -1432,8 +1432,8 @@
       "size": 4218
     },
     "docs/TESTING.md": {
-      "sha256": "733859f311c993744443cb94320cee1155b52145c671f9548c0cb99e3eb5198f",
-      "size": 12263
+      "sha256": "d2f5ec89f4c51692d2ea2095a15074eb45df14f2bbe41197b911b62c824877e8",
+      "size": 12288
     },
     "docs/images/admin-panel.png": {
       "sha256": "bce9f0b96a157712952e47def10e38571623b8eb20d59339bbd29f314b818471",
@@ -5984,16 +5984,24 @@
       "size": 23356
     },
     "patcher/Cargo.toml": {
-      "sha256": "08c8e9cc43295d6711b9bdf7807270b5df9c1e7ff810afa977bf6bf96719f113",
-      "size": 933
+      "sha256": "b769717ae83ae13cd38d3263f30ebdd090a97f41c15cd31ab5a60be70914711d",
+      "size": 951
     },
     "patcher/README.md": {
-      "sha256": "7f2ec7f7dee4b662c8fa3905475d73b770db73d901af610ccc7c0490a39a9e17",
-      "size": 7364
+      "sha256": "7bac3674134fad5b4e24c005d7b4f1cda274d80ccb1a9add40fe15454c4610a6",
+      "size": 7869
     },
     "patcher/build.rs": {
-      "sha256": "89a511d5e6bb833cb3dd749e3679dbab5478a2b2db37c21e5b7c3d3385aa9b7b",
-      "size": 4910
+      "sha256": "6e4a40ae59d46d5e8d73caf74c017b15bf1157f07af41b3fd1bac6540fcb1ac7",
+      "size": 6457
+    },
+    "patcher/launcher-ui-validation.json": {
+      "sha256": "48c9f39b7abce8b9ce8f5b6003061b45554277f5894f67a48d31e4e604c473d2",
+      "size": 1575
+    },
+    "patcher/launcher.manifest": {
+      "sha256": "2651221be54f676a3d85cfaee628c69876ff736554b8f1051ecbf97f0b71364b",
+      "size": 1093
     },
     "patcher/manifest.schema.json": {
       "sha256": "3d72464fc92de86a13840f411289df506bfb0259c01ab68812122705f8a1faa5",
@@ -6028,24 +6036,28 @@
       "size": 10532
     },
     "patcher/src/gui.rs": {
-      "sha256": "1dc7038c606178cdb742c8b74a35a21c730db4a19cb42c1b27ceab9b3af7b1a9",
-      "size": 15837
+      "sha256": "1d39042ce127ceff1c8323d3607a7929679885fd8a78a909b5b7bfc7e834833a",
+      "size": 34106
     },
     "patcher/src/launcher.rs": {
       "sha256": "842bfcdcd630cbd09ff35a9412fcd45a30f49e0b8e657278704baf727ec849c9",
       "size": 6513
     },
+    "patcher/src/launcher_ui.rs": {
+      "sha256": "acc718a6b401206812f317491992854b8a21ef32d5a4fd727c03f3756fb6c410",
+      "size": 8171
+    },
     "patcher/src/main.rs": {
-      "sha256": "8ffb7a815c00f3fd6dfa5e318062dd8246c3eaf09362e5500c0c78ddcd5ce8c5",
-      "size": 5904
+      "sha256": "b78691daf2d115075c1b06702f64d6a5d6ab1ada8e3087091948b0a2e778eade",
+      "size": 5948
     },
     "patcher/src/manifest.rs": {
       "sha256": "98521e87266edcea7ba8fdd9fe97dee4a236880c37e3ab14dcc42ee5476950c9",
       "size": 14320
     },
     "patcher/src/remote.rs": {
-      "sha256": "ade248db21bc607095e12689bdb895e3d77ee1cbac19f60e40f03be110f9b90f",
-      "size": 6297
+      "sha256": "89b034810515f5a25c2533438820cb0fc2b8797971eb1e4317a18e17cc4d67d4",
+      "size": 9365
     },
     "patcher/src/transaction.rs": {
       "sha256": "8be5af4f33340f9462748d7afce47138193f6732ea15787b1d3fc667e7678957",

@@ -7,6 +7,8 @@ mod endpoint;
 #[cfg(windows)]
 mod gui;
 mod launcher;
+#[cfg(any(windows, test))]
+mod launcher_ui;
 mod manifest;
 mod remote;
 mod transaction;
