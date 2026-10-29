@@ -1,0 +1,2287 @@
+{
+  "scope": "Static player prefab and client deserializer constraints; no runtime validation",
+  "bundle_sha256": "68845c9c1f16c17a57fc5b122dd0a71f5881c54eb4d8dbb2534a292522802099",
+  "asset_guid": "86041873b099ede4687c67606e379683",
+  "scene_id": 0,
+  "root_components": [
+    {
+      "root_component_order": 0,
+      "path_id": 5434529600036162088,
+      "type": "Transform",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_LocalRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "m_LocalPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "m_Children": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -7001280778866747471
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1698635878033571701
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2452617257693947515
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1117667196765886822
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -9152595918660179229
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2680297407151131098
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3541894419069519306
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7626204318658437596
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 9061348581114357474
+          }
+        ],
+        "m_Father": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        }
+      }
+    },
+    {
+      "root_component_order": 1,
+      "path_id": -5053589730487251,
+      "type": "NebulaPlayer",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -7119947212044120438
+        },
+        "m_Name": "",
+        "playerAvatar": {
+          "m_FileID": 0,
+          "m_PathID": 961720196313085990
+        },
+        "bonesAtLateUpdate": {
+          "m_FileID": 0,
+          "m_PathID": -7014036415922518130
+        },
+        "playerControl": {
+          "m_FileID": 0,
+          "m_PathID": 6709836030519654978
+        },
+        "playerLabel": {
+          "m_FileID": 0,
+          "m_PathID": -7851261600442357131
+        },
+        "playerAnim": {
+          "m_FileID": 0,
+          "m_PathID": 5161856875911566476
+        },
+        "playerTransform": {
+          "m_FileID": 0,
+          "m_PathID": -8096412145350216435
+        },
+        "camManager": {
+          "m_FileID": 0,
+          "m_PathID": -1610967852279874664
+        },
+        "interactor": {
+          "m_FileID": 0,
+          "m_PathID": 5386342675610776777
+        },
+        "remotePlayerInteractable": {
+          "m_FileID": 0,
+          "m_PathID": 4991391313748209576
+        },
+        "input": {
+          "m_FileID": 0,
+          "m_PathID": 7378753790392901044
+        },
+        "blink": {
+          "m_FileID": 0,
+          "m_PathID": -4256780145438288027
+        },
+        "camCollisionDetector": {
+          "m_FileID": 0,
+          "m_PathID": -3436970431036386931
+        },
+        "nebulaSideMenu": {
+          "m_FileID": 0,
+          "m_PathID": -9092165535466675563
+        },
+        "nebulaPlayerSyncVars": {
+          "m_FileID": 0,
+          "m_PathID": 26538158297908956
+        },
+        "randomIdle": {
+          "m_FileID": 0,
+          "m_PathID": 4512353890520742313
+        },
+        "vehicle": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        }
+      }
+    },
+    {
+      "root_component_order": 2,
+      "path_id": -7014036415922518130,
+      "type": "BonesAtLateUpdateSpaces",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 8383662551749918260
+        },
+        "m_Name": "",
+        "l_eyemaster_t": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "r_eyemaster_t": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "l_eyemaster_s": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "r_eyemaster_s": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "t_l_eyemaster_t": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "t_r_eyemaster_t": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        }
+      }
+    },
+    {
+      "root_component_order": 3,
+      "path_id": 961720196313085990,
+      "type": "Assets.Scripts.NebulaPlayers.NebulaPlayerAvatar",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -1352318509284945003
+        },
+        "m_Name": "",
+        "attachedItems": {
+          "m_keys": [],
+          "m_values": []
+        },
+        "textureBundles": [],
+        "avatarBaseMale": {
+          "m_FileID": 0,
+          "m_PathID": 1325323989101315281
+        },
+        "avatarBaseFemale": {
+          "m_FileID": 0,
+          "m_PathID": -3348081350956184196
+        },
+        "animatorFemaleBase": {
+          "m_FileID": 0,
+          "m_PathID": 8668016461801492344
+        },
+        "animatorMaleBase": {
+          "m_FileID": 0,
+          "m_PathID": 572721659061428195
+        },
+        "animatorFemaleCunaBaja": {
+          "m_FileID": 0,
+          "m_PathID": -381490194154267960
+        },
+        "animatorMaleCunaBaja": {
+          "m_FileID": 0,
+          "m_PathID": 2346669214472797057
+        },
+        "animatorFemaleCunaAlta": {
+          "m_FileID": 0,
+          "m_PathID": 2824480111018302753
+        },
+        "animatorMaleCunaAlta": {
+          "m_FileID": 0,
+          "m_PathID": 8593159622999065487
+        },
+        "animatorFemaleTalon": {
+          "m_FileID": 0,
+          "m_PathID": -899047828861351429
+        },
+        "animatorMaleTacon": {
+          "m_FileID": 0,
+          "m_PathID": -8277648295708339263
+        },
+        "LTexturesCharacterGame": [
+          {
+            "m_FileID": 1,
+            "m_PathID": -8395426002725360894
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5156641035359736368
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -7472967925111009849
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5656098031362732581
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 9077574078918448565
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5310746580990807251
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4824512802724082064
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1356204508410972160
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -8078194579686544328
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -8669614953882882236
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -705352746703015146
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -8375899004524094687
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3221181077697151423
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6427819003633929263
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5567666636076594325
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 7971281745680428134
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3959239291605770365
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 7429641470514195417
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6122556136058613012
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8717366317896405189
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -7845863964213023776
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -7036715047828145126
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3339357371807900654
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -8624061337784983628
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 9022513872660947318
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6272287502579957598
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2807407130134350627
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3550992712645731667
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 9126493787629546746
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5840311323427623024
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5801648664702431225
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3172645897018866791
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5433759991959541813
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 847509233801085141
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1166541044485929799
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8948790293119681548
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2955543427913576767
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3715148476633574584
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8817748990249126396
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5467370735512496655
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 9004037664766850129
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5835277088181675972
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 7301321052682788552
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -8173861212512508560
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5346689048747795216
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -551533439665569941
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2325055279131259389
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6029857060061865139
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5184709697262680492
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -4236344602206462752
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5360831089501352020
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -834048005762326255
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8378875095387737157
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -97740488706034209
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1334440469973108195
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4886441762353781104
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6225593436453179523
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2274692979620229836
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4063891222477404285
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4650439844810167661
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 661569863246604956
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3601205008510137061
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4117715811258115183
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5486839269064196105
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -7506363161223257463
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 830162277433631968
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6341846810037265432
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5737751680684809446
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1297254624108465218
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3261782896966460829
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8475210592912972743
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5693714907874643644
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5046678235017565808
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5205769840491536059
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -369133184551596196
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -4431449441607221078
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1550325495894130172
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5014549048656484834
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8425480561814073923
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1910399319803637626
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 6482320043491944659
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -772119572883058025
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3785675278277551062
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1018966078597382894
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1124244845853699177
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 89304384330905282
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4771840218106568257
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1552284475387510771
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5363446316983748438
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3519787725859624069
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -8931863092882356890
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2557068504305127788
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 7196721629234166062
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1442468838133179294
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -459687379767101211
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2509938273228054401
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -99392660798402821
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4852926508932758041
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2924492012694268813
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2551801169221321377
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2043928975851172334
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8134691656515934915
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -4189802805255820355
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 6735418719306355595
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5825413207721727682
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5548666975098610486
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 6916483994321607315
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1029242247158295381
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 66518725564338765
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1801146671384020957
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2644825041149236795
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8579427811637732196
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8339533332316206973
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5969619612841305221
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1766909923565216953
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8001594841939840668
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2985406692209676654
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2287225251776777384
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 9147471565242589137
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5858767791932114205
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1539399116979008222
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1428376471593535113
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4562862995204739721
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 6248112403534282367
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4187150264405910435
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -8002788088395751643
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5801248444300271598
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 7662712047639590396
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4740199967072859653
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1855092513123703454
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -4897653488227793218
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6718661465029822410
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3652684947886016770
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 7723075302247150671
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8915820170581675492
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1720263505294061756
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1590529314147286184
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4147788598087587616
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3280823574393998175
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 6889072771155293116
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3625356615897427201
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3112209101420606181
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3219163845056470940
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 574042059262431148
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 6551476444002271917
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5975006451534549565
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -1042760155365092739
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -824167578478770154
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2846815719888037563
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3103455471414478242
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3691908849644056664
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -2715534210827643903
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2752701427259129311
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5053683873123316242
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 568372356195161656
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1744680346558349374
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 293229088481244216
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 481743853459490804
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 4361601669874078595
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1678873111282905100
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 578351661939447064
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -3702327886527608034
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 3997908777233879907
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -385380470918225583
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 1244384895372234244
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 5045656333682368655
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 2773250566262152032
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -6828722104349924171
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": -5923414116163886120
+          },
+          {
+            "m_FileID": 1,
+            "m_PathID": 8994392321143815130
+          }
+        ],
+        "animator": {
+          "m_FileID": 0,
+          "m_PathID": 1461033964066630523
+        },
+        "maleController": {
+          "m_FileID": 0,
+          "m_PathID": -2189850009687195113
+        },
+        "femaleController": {
+          "m_FileID": 0,
+          "m_PathID": 2952418877072241532
+        },
+        "assetsToLod0": [],
+        "assetsToLod1": [],
+        "assetsToLod2": []
+      }
+    },
+    {
+      "root_component_order": 4,
+      "path_id": 6709836030519654978,
+      "type": "Assets.Scripts.NebulaPlayers.NebulaPlayerControl",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 6617544463690323959
+        },
+        "m_Name": "",
+        "animator": {
+          "m_FileID": 0,
+          "m_PathID": 1461033964066630523
+        },
+        "controller": {
+          "m_FileID": 0,
+          "m_PathID": 3109859835562633671
+        },
+        "nebulaPlayer": {
+          "m_FileID": 0,
+          "m_PathID": -5053589730487251
+        }
+      }
+    },
+    {
+      "root_component_order": 5,
+      "path_id": 5161856875911566476,
+      "type": "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 916288079657589358
+        },
+        "m_Name": "",
+        "MaleController1": {
+          "m_FileID": 0,
+          "m_PathID": -6447176616310208588
+        },
+        "FemaleController1": {
+          "m_FileID": 0,
+          "m_PathID": -7302577749883579886
+        },
+        "AnimDanceMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -8872962919299875994
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2870034424605983522
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 5357550159564130614
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8965151339035805099
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8513145871668711102
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1355169568394704123
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2747610137521406821
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3083021960352849760
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6814950725892779486
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6459804898882762560
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -755708103496941598
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 219426309114049583
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8869002068107215765
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2196761368297283654
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -7272960581478456132
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4638707005599596902
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2687052604489402733
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8468150416922159036
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7476001136805977723
+          }
+        ],
+        "AnimDanceFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -7466694812961879903
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 907403048563871511
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8381237914912261460
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -267384908205010449
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5446409236567025364
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2742174316125424335
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6356614009290058354
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7693597611841715278
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3904006674923067269
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 47711186265894486
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1672811172332654600
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5308513706827795968
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 455891141055886898
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8711964652652535160
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8224617284933376069
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1761234682518292911
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8921789047545038571
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6079160639908178860
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7487141777925796105
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 581095757864924440
+          }
+        ],
+        "AnimGestureMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -1131355562706970180
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4496952228404100542
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2642717292909092710
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8643614016789420206
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1426071481864824700
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2836996968121854540
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 5329465646791153019
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5684431373242848351
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4669131188090856038
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6542371366890544172
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6655613416746743494
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2842104280778854148
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7888918284527217166
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -7056367281490934603
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4359426223135973714
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8493903833740228960
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2260587520474137403
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -884224245416563779
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1722264148899750274
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1244575049936605467
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1780144070546538818
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4642284352276692608
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2868944611851556611
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 9025472003758910793
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8739886731055541846
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7011687042703414227
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8422825654674092761
+          }
+        ],
+        "AnimGestureFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -2479607333771850727
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4405826304959677505
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3896227749955499947
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5423311090366828959
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4712612501176327594
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -7095828442194497144
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4297460105148847473
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8773079214129204604
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8917462242599531668
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1051579346940177845
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5621016015250879741
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1164967499654779771
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1838691868734797870
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -7396001011780199472
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5830599063200772699
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3994263495612673272
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8499998139224757207
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8369536703719535234
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 5458443688235365497
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 609160403623088023
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8080431149897534336
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4627222731981979272
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4310799867561772164
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1848106338285588031
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1038589336666207663
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3316218581013563496
+          }
+        ],
+        "AnimPoseMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -4096692922919753105
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5338038927465925782
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -7437815838822959733
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3460370999601344295
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3458456708781198161
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7869746061235041419
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 434640318205008846
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2470123459271226805
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1896620814335460292
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7671819044692733049
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3415246494778370337
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7934724002267864419
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 9157079461682077160
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2630116727157624366
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8862551003007997125
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1598969041954786940
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -564619080852657074
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7414939398332567574
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6609970982053865030
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4948181898693463971
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1639192418447313495
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6945012204892788206
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3502930028274057147
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3055174064679620851
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8361309338595772530
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7496493894365438602
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7766987313843905404
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7506999004002050513
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4143720048068354620
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8867229402753989843
+          }
+        ],
+        "AnimPoseFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -8814529755921591407
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6167205478476186638
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4751429224120880820
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1362256864785509699
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6685368092868721683
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2290578449901092475
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2748553231773079738
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1774327211940149077
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4195534730424042049
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4168730814266014657
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 5303822083088036242
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -494196155439916519
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -8303545257107254600
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -933036011993213879
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1659354114455901851
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -269617142974273491
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6758053059060755677
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8892550823468990025
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7756344499687680915
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6890811615810192714
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -9078927821270279639
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3628020361961453422
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4368047912248899818
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4932500346369269832
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8469414204968768670
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2923255012892473808
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1660701246992032817
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 337256264201416782
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 424591049683378836
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1889401114058599103
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 944193052942554836
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3422176558052128994
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6825757646988995286
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7552422748072147378
+          }
+        ],
+        "AnimSeatingMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -7419004156492429367
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7668751543320388001
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -346633533535175575
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5667468152806071773
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4125054528655719437
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -5346711248018375753
+          }
+        ],
+        "AnimSeatingFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 459298541647191451
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1349807346780034434
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3838855047677950649
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8813148572671473017
+          }
+        ],
+        "AnimSeatingTriggerMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 5286510897864833951
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4990368245220006560
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 164339476718842056
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 1054761463740688796
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6640159042637624621
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2705341937428415321
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3341543010260616626
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 5600153421488934251
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -918034655105119249
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3955317237624990934
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6231796244382254045
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8948159421516668111
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3140696014059032800
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6802345172033906287
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4942880198030191601
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2073366174658817562
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7254152226864716082
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 7188711297563782935
+          }
+        ],
+        "AnimSeatingTriggerFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -9006890051535966035
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6965180416220567579
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -7493345878667108114
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 9201632937948515592
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3023515559438065885
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3039605070149233801
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -4777177233792184176
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4911342181995671459
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 5825789566068480267
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6307234298669778770
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6231796244382254045
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8948159421516668111
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3976825209115174462
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2362893781856544311
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 5611776467006892653
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6236768604249357176
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3654509193526092727
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6273751368108873935
+          }
+        ],
+        "AnimSeatSelectionTriggerMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -4942880198030191601
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -3001146950867703068
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3140696014059032800
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -1131540063531325009
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6802345172033906287
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2571526927490094610
+          }
+        ],
+        "AnimSeatSelectionTriggerFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 5611776467006892653
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6392562452851284525
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 3976825209115174462
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 4934218372658111649
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 2362893781856544311
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 6535176632781486120
+          }
+        ],
+        "AnimBowlingMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 3292252691830922885
+          }
+        ],
+        "AnimBowlingFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 6325061864167048904
+          }
+        ],
+        "AnimSnowballMale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 376744916689995527
+          }
+        ],
+        "AnimSnowballFemale": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 6558287853033756258
+          }
+        ],
+        "nebulaPlayer": {
+          "m_FileID": 0,
+          "m_PathID": -5053589730487251
+        },
+        "animator": {
+          "m_FileID": 0,
+          "m_PathID": 1461033964066630523
+        }
+      }
+    },
+    {
+      "root_component_order": 6,
+      "path_id": -4256780145438288027,
+      "type": "Blink",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 8070484754682252519
+        },
+        "m_Name": "",
+        "speed": 12.0,
+        "maxAngleToBlink": 35.0
+      }
+    },
+    {
+      "root_component_order": 7,
+      "path_id": 1461033964066630523,
+      "type": "Animator",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Avatar": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Controller": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_CullingMode": 0,
+        "m_UpdateMode": 0,
+        "m_ApplyRootMotion": false,
+        "m_LinearVelocityBlending": false,
+        "m_StabilizeFeet": false,
+        "m_HasTransformHierarchy": true,
+        "m_AllowConstantClipSamplingOptimization": true,
+        "m_KeepAnimatorControllerStateOnDisable": false
+      }
+    },
+    {
+      "root_component_order": 8,
+      "path_id": -1610967852279874664,
+      "type": "Assets.Scripts.NebulaPlayers.NebulaCamManager",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 8213748821360785450
+        },
+        "m_Name": "",
+        "controller": {
+          "m_FileID": 0,
+          "m_PathID": 3109859835562633671
+        },
+        "nebulaPlayer": {
+          "m_FileID": 0,
+          "m_PathID": -5053589730487251
+        },
+        "cameraPivotY": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "cameraPivotX": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "cam": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "camTargetRayCast": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "camTargetPosition": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "_distanceMin": -1.5,
+        "_distanceMax": -4.75,
+        "zoom": 0.0,
+        "speedMultiplier": 4.5
+      }
+    },
+    {
+      "root_component_order": 9,
+      "path_id": 4345918548735076514,
+      "type": "Rigidbody",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Mass": 1.0,
+        "m_Drag": 0.0,
+        "m_AngularDrag": 0.05000000074505806,
+        "m_UseGravity": false,
+        "m_IsKinematic": true,
+        "m_Interpolate": 0,
+        "m_Constraints": 126,
+        "m_CollisionDetection": 0
+      }
+    },
+    {
+      "root_component_order": 10,
+      "path_id": 3109859835562633671,
+      "type": "CharacterController",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Material": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_IsTrigger": false,
+        "m_Enabled": true,
+        "m_Height": 1.7999999523162842,
+        "m_Radius": 0.30000001192092896,
+        "m_SlopeLimit": 45.0,
+        "m_StepOffset": 0.15000000596046448,
+        "m_SkinWidth": 0.029999999329447746,
+        "m_MinMoveDistance": 0.0010000000474974513,
+        "m_Center": {
+          "x": 0.0,
+          "y": 0.925000011920929,
+          "z": 0.0
+        }
+      }
+    },
+    {
+      "root_component_order": 11,
+      "path_id": -3436970431036386931,
+      "type": "CamCollisionDetector",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -557729354084712206
+        },
+        "m_Name": "",
+        "minDistance": 0.800000011920929
+      }
+    },
+    {
+      "root_component_order": 12,
+      "path_id": 4512353890520742313,
+      "type": "RandomIdle",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -5117568107592220465
+        },
+        "m_Name": "",
+        "minTime": 2.0,
+        "maxTime": 7.0,
+        "animator": {
+          "m_FileID": 0,
+          "m_PathID": 1461033964066630523
+        },
+        "nebulaPlayer": {
+          "m_FileID": 0,
+          "m_PathID": -5053589730487251
+        }
+      }
+    },
+    {
+      "root_component_order": 13,
+      "path_id": -8321236448418530348,
+      "type": "PlayerAnimationEvents",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 2368195583107134702
+        },
+        "m_Name": "",
+        "footStepAnimationEvent": {
+          "m_FileID": 0,
+          "m_PathID": -3409468193734040382
+        },
+        "skateAnimationEvent": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "inflatableCastleAnimationEvent": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "swimmingAnimationEvent": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "consumableAnimationEvent": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        }
+      }
+    },
+    {
+      "root_component_order": 14,
+      "path_id": -8616151989793038564,
+      "type": "Mirror.NetworkIdentity",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -7736423292204046394
+        },
+        "m_Name": "",
+        "sceneId": 0,
+        "serverOnly": 0,
+        "visible": 0,
+        "m_AssetId": "86041873b099ede4687c67606e379683",
+        "hasSpawned": 0
+      }
+    },
+    {
+      "root_component_order": 15,
+      "path_id": -8096412145350216435,
+      "type": "Mirror.NetworkTransform",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 0,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 7141973357344197859
+        },
+        "m_Name": "",
+        "syncMode": 0,
+        "syncInterval": 0.10000000149011612,
+        "clientAuthority": 1,
+        "sendInterval": 0.05000000074505806,
+        "syncPosition": 1,
+        "syncRotation": 1,
+        "syncScale": 0,
+        "interpolatePosition": 1,
+        "interpolateRotation": 1,
+        "interpolateScale": 0,
+        "bufferTimeMultiplier": 1,
+        "bufferSizeLimit": 64,
+        "catchupThreshold": 4,
+        "catchupMultiplier": 0.10000000149011612,
+        "onlySyncOnChange": 1,
+        "bufferResetMultiplier": 5.0,
+        "positionSensitivity": 0.009999999776482582,
+        "rotationSensitivity": 0.009999999776482582,
+        "scaleSensitivity": 0.009999999776482582,
+        "showGizmos": 0,
+        "showOverlay": 0,
+        "overlayColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.5
+        }
+      }
+    },
+    {
+      "root_component_order": 16,
+      "path_id": 26538158297908956,
+      "type": "Assets.Scripts.NebulaPlayers.NebulaPlayerSyncVars",
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 4817000971351979618
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -7962536554221453189
+        },
+        "m_Name": "",
+        "syncMode": 0,
+        "syncInterval": 0.10000000149011612,
+        "speed": 0.0
+      }
+    }
+  ],
+  "network_behaviour_order": [
+    {
+      "index": 0,
+      "type": "Mirror.NetworkTransform",
+      "enabled": 0,
+      "initial_state": "Vector3 localPosition (3 float32), Quaternion localRotation (4 float32)",
+      "bytes": 28
+    },
+    {
+      "index": 1,
+      "type": "Assets.Scripts.NebulaPlayers.NebulaPlayerSyncVars",
+      "initial_state": "float32 speed",
+      "bytes": 4,
+      "delta": "UInt64 dirty mask, bit0 gates float32 speed"
+    }
+  ],
+  "envelope": "Each component: uint8 index, int32 little-endian byte count, component bytes",
+  "baseline": {
+    "localPosition": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "localRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "speed": 0.0
+  },
+  "baseline_initial_payload_bytes": 42,
+  "baseline_initial_payload_hex": "001c0000000000000000000000000000000000000000000000000000000000803f010400000000000000",
+  "native_rvas": {
+    "component_discovery": "0x1291a50",
+    "component_envelopes": "0x1292700",
+    "component_length": "0x1292930",
+    "transform_initial_read": "0x126cb90",
+    "transform_initial_write": "0x126cf50",
+    "speed_read": "0x614040",
+    "speed_write": "0x614380"
+  },
+  "limitations": [
+    "NetworkIdentity.GetComponents<NetworkBehaviour>() uses root component order, not child traversal.",
+    "Spawn ordering, ownership and application handshake must be implemented separately.",
+    "The baseline root transform is asset state, not a verified world spawn point.",
+    "No runtime equivalence or original server spawn policy is claimed."
+  ]
+}

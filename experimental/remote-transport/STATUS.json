@@ -1,0 +1,25 @@
+{
+  "format_version": 1,
+  "component": "remote-v9-direct-tls",
+  "activation_ready": false,
+  "listener_started": false,
+  "target_executed_for_curated_copy": false,
+  "source_pins": {
+    "client/src/main.rs": "24cf0da500869896a386c096d0dbcca992176b8cc85190ebb3835da791af79bc",
+    "client/Cargo.toml": "f622d400a37260d959d82e64265f07af7bdf7e25f450cebaa55b6e4d9148abe7",
+    "client/Cargo.lock": "fd35df676549266ec5b87fee58046410cd191b32a32a6d938564670454d87bde",
+    "server/remote_gateway.py": "59f9e1a7a37024912be4950b936bc628fbc1642d6fa43cf8ab8f09c70e4c14f5"
+  },
+  "security": {
+    "original_steam_initialization_preserved": true,
+    "steam_ticket_validation_implemented": false,
+    "operator_ca_digest_required": true,
+    "account_credential_required": true
+  },
+  "remaining_acceptance": [
+    "remote sidecar and gateway runtime",
+    "account binding",
+    "multi-client reconnect",
+    "operator certificate and DNS configuration"
+  ]
+}

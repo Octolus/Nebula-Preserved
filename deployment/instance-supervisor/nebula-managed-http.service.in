@@ -1,0 +1,23 @@
+[Unit]
+Description=Nebula preservation managed account and allocation service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nebula
+Group=nebula
+WorkingDirectory=/opt/nebula-preservation
+EnvironmentFile=/etc/nebula-preservation/instance-supervisor.env
+ExecStart=/opt/nebula-preservation/.venv/bin/python /opt/nebula-preservation/backend/server.py --listen --bind ${NEBULA_BIND} --advertise-ip ${NEBULA_ADVERTISE_IP} --port ${NEBULA_HTTP_PORT} --state-dir ${NEBULA_STATE_DIR} --core-test-profile nonmini-semantic-v1 --managed-instances
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/nebula-preservation
+
+[Install]
+WantedBy=multi-user.target

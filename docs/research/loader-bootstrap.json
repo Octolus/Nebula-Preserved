@@ -1,0 +1,296 @@
+{
+  "format_version": 1,
+  "scope": "Static Unity serialized-file and recovered native pseudocode evidence only; the game was not executed.",
+  "question": "How does the first active ScreenLoader instance exist during startup?",
+  "answer": "The sole compiled startup scene (Booter.unity / level0) directly serializes one enabled ScreenLoader component on an active root GameObject. Unity loads that scene object graph before MonoBehaviour Start callbacks; ScreenLoader.get_Instance can therefore find the placed component. No runtime prefab instantiation is required to explain first existence.",
+  "answer_basis": "observed_static_plus_unity_lifecycle_inference",
+  "confidence": "high",
+  "placement_proven": true,
+  "installed_data_root": "[local-path] Realms\\Nebula Realms_Data",
+  "unity_build": {
+    "version": "2021.3.9f1",
+    "scenes": [
+      "Assets/Scenes/Boot/Booter.unity"
+    ],
+    "startup_scene_index": 0,
+    "startup_compiled_file": "level0"
+  },
+  "initial_scene_screen_loader_components": [
+    {
+      "mono_behaviour_path_id": 46,
+      "script_reference": {
+        "file_id": 1,
+        "path_id": 1805
+      },
+      "script": {
+        "class": "ScreenLoader",
+        "namespace": "",
+        "assembly": "Assembly-CSharp.dll"
+      },
+      "enabled": true,
+      "game_object_path_id": 14,
+      "game_object_name": "ScreenLoader",
+      "active_self": true,
+      "transform": {
+        "type": "RectTransform",
+        "path_id": 38,
+        "parent": {
+          "file_id": 0,
+          "path_id": 0
+        },
+        "parent_chain": [],
+        "is_scene_root": true
+      },
+      "components": [
+        {
+          "reference": {
+            "file_id": 0,
+            "path_id": 38
+          },
+          "type": "RectTransform"
+        },
+        {
+          "reference": {
+            "file_id": 0,
+            "path_id": 32
+          },
+          "type": "Canvas"
+        },
+        {
+          "reference": {
+            "file_id": 0,
+            "path_id": 54
+          },
+          "type": "MonoBehaviour"
+        },
+        {
+          "reference": {
+            "file_id": 0,
+            "path_id": 46
+          },
+          "type": "MonoBehaviour"
+        }
+      ]
+    }
+  ],
+  "preload_table": {
+    "source_object": {
+      "type": "PreloadData",
+      "path_id": 1
+    },
+    "asset_count": 16,
+    "assets": [
+      {
+        "file_id": 1,
+        "path_id": 11993
+      },
+      {
+        "file_id": 1,
+        "path_id": 11995
+      },
+      {
+        "file_id": 1,
+        "path_id": 11998
+      },
+      {
+        "file_id": 1,
+        "path_id": 12001
+      },
+      {
+        "file_id": 1,
+        "path_id": 13312
+      },
+      {
+        "file_id": 1,
+        "path_id": 13313
+      },
+      {
+        "file_id": 1,
+        "path_id": 19000
+      },
+      {
+        "file_id": 1,
+        "path_id": 19001
+      },
+      {
+        "file_id": 1,
+        "path_id": 19002
+      },
+      {
+        "file_id": 1,
+        "path_id": 19003
+      },
+      {
+        "file_id": 1,
+        "path_id": 19004
+      },
+      {
+        "file_id": 1,
+        "path_id": 19100
+      },
+      {
+        "file_id": 1,
+        "path_id": 19101
+      },
+      {
+        "file_id": 1,
+        "path_id": 19102
+      },
+      {
+        "file_id": 1,
+        "path_id": 19103
+      },
+      {
+        "file_id": 1,
+        "path_id": 19202
+      }
+    ],
+    "externals": [
+      {
+        "file_id": 1,
+        "name": "unity default resources",
+        "path": "Library/unity default resources"
+      },
+      {
+        "file_id": 2,
+        "name": "unity_builtin_extra",
+        "path": "Resources/unity_builtin_extra"
+      }
+    ],
+    "screen_loader_scene_component_is_in_table": false,
+    "interpretation": "The preload table is not the source of the scene component: its entries reference external file ID 1, while the ScreenLoader component is local to level0."
+  },
+  "resources_inventory": {
+    "resource_manager_container_count": 3043,
+    "container_entries_with_exact_screenloader_substring": [],
+    "serialized_screen_loader_components_in_resources_assets": [
+      {
+        "mono_behaviour_path_id": 19051,
+        "game_object_path_id": 7046,
+        "game_object_name": "ScreenLoader",
+        "active_self_in_serialized_asset": true,
+        "script_reference": {
+          "file_id": 1,
+          "path_id": 1805
+        }
+      }
+    ],
+    "interpretation": "resources.assets contains a separate serialized ScreenLoader asset, but no ResourceManager key contains the exact substring 'screenloader'. Asset presence does not establish startup placement."
+  },
+  "asset_bundle_inventory": {
+    "screenloader_bundle": {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\screenloader",
+      "size": 30304,
+      "sha256": "509acddeace91b8d277c694d6e919829791d72dfd8a8693907f6b0df9dc197c9"
+    },
+    "screenloader_manifest": {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\screenloader.manifest",
+      "size": 1244,
+      "sha256": "449b25e0a7dd9c4ad81fd8863faae57fee40a980e3bcbe7f71222c8089e93781"
+    },
+    "interpretation": "The separate bundle is packaged evidence only. The initial level0 placement already explains first existence. A separate compiled loader can load and instantiate this bundle, but the reviewed Booter.Start/Init startup path does not invoke that loader."
+  },
+  "native_checks": {
+    "getter_reads_static_cache": true,
+    "getter_calls_find_object_of_type": true,
+    "getter_contains_instantiate_call": false,
+    "booter_start_initializes_asset_bundle_manager": true,
+    "booter_start_initializes_scenes": true,
+    "booter_start_starts_init_state_machine": true,
+    "booter_init_loads_nav": true,
+    "booter_init_loads_nebula_player": true,
+    "booter_init_loads_preinitiload": true,
+    "booter_start_or_init_mentions_screen_loader": false,
+    "separate_loader_calls_scenes_load_screen_loader": true,
+    "separate_loader_instantiates_game_object": true,
+    "separate_loader_marks_instance_dont_destroy_on_load": true,
+    "scenes_loader_requests_screenloader_bundle": true
+  },
+  "native_binary_evidence": {
+    "path": "[local-path] Realms\\GameAssembly.dll",
+    "size": 42310144,
+    "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac"
+  },
+  "native_evidence": [
+    {
+      "symbol": "ScreenLoader.get_Instance",
+      "rva": "0x429fd0",
+      "path": "[local-path]",
+      "size": 1306,
+      "sha256": "cfebed2575816b2e44418dc0898b8ff97e005a49f3994e35c6d66f86b054b821"
+    },
+    {
+      "symbol": "Booter.Start",
+      "rva": "0x68b170",
+      "path": "[local-path]",
+      "size": 3415,
+      "sha256": "7085af18b639a00a9565be4fe371b553bb74ea26d1fe385625b443bbb3427301"
+    },
+    {
+      "symbol": "Booter.<Init>d__5.MoveNext",
+      "rva": "0x69f440",
+      "path": "[local-path]",
+      "size": 8772,
+      "sha256": "22e8677e6310a884e202aa5b455816149f2fa4858214d076850a00a3588e43e3"
+    },
+    {
+      "symbol": "Booter.<LoadScreenLoader>d__6.MoveNext",
+      "rva": "0x69fde0",
+      "path": "[local-path]",
+      "size": 4862,
+      "sha256": "7bcdfa8e2dd0d78c9f3634055f80cceb44a2a9b786225da7db982eecfc2f97ed"
+    },
+    {
+      "symbol": "Scenes.<LoadScreenLoader>d__16.MoveNext",
+      "rva": "0x5e9110",
+      "path": "[local-path]",
+      "size": 5945,
+      "sha256": "21262f4186298d2405c8cd9a021e88d840ed3b9c02b9db110eb9a8bff64f00da"
+    }
+  ],
+  "serialized_source_evidence": [
+    {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\globalgamemanagers",
+      "size": 1131320,
+      "sha256": "ecdebe7c899776956a4d5fb801f37f04128ec9bef72e744cd1e7fd5349ce8466"
+    },
+    {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\globalgamemanagers.assets",
+      "size": 344828,
+      "sha256": "4600d3bef0d3e503bbf028c6b203bb7ca80e5f48711bfef4c523ff905ab4e299"
+    },
+    {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\level0",
+      "size": 9824,
+      "sha256": "95e80ae6c2658c6da0c9269e9e6a54ecf8d6b43c4cd28e091957521235fe1e0c"
+    },
+    {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\resources.assets",
+      "size": 135412392,
+      "sha256": "adf9fcbca4f1b6910ab2a4d6260196cdb378f19c20dc616d1fd97c3b9b06eb1b"
+    }
+  ],
+  "observations": [
+    "BuildSettings contains exactly one scene: Assets/Scenes/Boot/Booter.unity.",
+    "level0 contains exactly one ScreenLoader MonoBehaviour candidate.",
+    "That component is enabled and attached to an active GameObject named ScreenLoader.",
+    "Its RectTransform has a null parent reference, making the GameObject a scene root.",
+    "The component's MonoScript resolves to ScreenLoader in Assembly-CSharp.dll.",
+    "ScreenLoader.get_Instance checks its static cache, then calls FindObjectOfType<ScreenLoader>; no Instantiate call appears.",
+    "Booter.Start initializes local managers and starts Init; Init loads nav, NebulaPlayer, then preinitiload. Neither reviewed function mentions ScreenLoader.",
+    "Separate compiled LoadScreenLoader state machines request the screenloader bundle, instantiate the returned GameObject, and mark it DontDestroyOnLoad.",
+    "The reviewed Booter.Start/Init path does not call or start that separate LoadScreenLoader state machine."
+  ],
+  "inferences": [
+    "Unity deserializes the initial scene object graph before invoking Start callbacks, so the placed active component exists when Booter.Start runs.",
+    "The resources.assets and bundle copies are not needed to explain the first instance and must not be treated as proof of dynamic instantiation.",
+    "The separate bundle loader may be a later, alternate, or obsolete path; its mere presence does not establish that it runs during initial startup."
+  ],
+  "remaining_unknowns": [
+    "No runtime observation confirms whether later scene transitions destroy, retain, or replace this initial ScreenLoader.",
+    "This audit does not establish when or whether the separate screenloader bundle loader is invoked outside the reviewed Booter.Start/Init path.",
+    "Static placement proves the intended initial host, not successful rendering or execution on this machine."
+  ],
+  "game_executed": false,
+  "network_activity": false
+}

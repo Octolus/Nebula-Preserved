@@ -1,0 +1,28 @@
+{
+  "base_hashes": {
+    "backend/housing.py": "88056d9a5d43170c02bdc65155cc52c4f7563d7d1b02a268c31e7488afcb1f2d",
+    "backend/server.py": "7f3ba745d4cc3ee8b622a9de3145095be32e98cb90815b0da3ef0af7607fa411",
+    "backend/service.py": "eed54bd758780f1ee91e2341a02b8d65bf7c75ba350e0ec366a11d0c83e5de10",
+    "backend/state.py": "041a262c6249e8ea7d8da5382254be0b3eb1a46b17f6399f7876272df6c8c8fd",
+    "tools/instance_supervisor.py": "d6357ced2733805582e26f3cb4db90e76d999b50c4c80a8f4b4945e27e4bef37"
+  },
+  "changed_hashes": {
+    "backend/economy_admin.py": "1c3a00b58310db4e5b512231483f5edc3441db814b3fe8db0be33467b958fb4e",
+    "backend/housing.py": "e15901fb248fd5bf8205dedd16cb6d33288c2de6ce1bcdce2ce2fa2c1af1dd03",
+    "backend/public_access.py": "325b9defd8e39e67c318cf7b6d71f4b8cdfc5919a298df8fba60b53f05ba3be7",
+    "backend/public_access_admin.py": "5cfbfd409eaf2c875ee2f1b1ec00a85b0da6764b8721c400678cb6055358b660",
+    "backend/server.py": "443de9dc358a4da9f3c987039b191aeb657c67411ade46894ea831e5adaeb48c",
+    "backend/service.py": "22f938f30b2ff42e3fca34bc66d679cf56407c19055e87d380630c18de913b09",
+    "backend/state.py": "b89f23d56d7bb9ce25362e71e360ee0a025f28474a3cd78b872e851ff128725b",
+    "tools/backup_state.py": "d0dc40f29996aaa38899dce4556ab45b9f6554a002ad97804b50dff18e49d7df",
+    "tools/migrate_public_access.py": "ae0a4c861448b376466a0a6f43e0c7e07e5521ece7c3f1a74cb538c67b8dbf93"
+  },
+  "client_auth_dll_sha256": "eea7e808af971c36ca0fa11147e399c1a5b07411a1f2bdf16af489315f4d75b1",
+  "remote_transport_exe_sha256": "160128d93690cfd992ddde03300aeb931df3d84dc781b97a401e9f97876b783f",
+  "remote_transport_profile": "remote-v9-direct-tls",
+  "client_auth_manifest_sha256": "545d680831fa5ca23986b571c1cfe2766738a98cdd8e43723d3a0908b6007696",
+  "economy_admin_stage_sha256": "a5f5933c88377429a18d99d61e2b557698268442a51cbfa31119df463a675eff",
+  "format_version": 1,
+  "requires_client_authorization_header_and_https": true,
+  "steam_ticket_validation": false
+}

@@ -1,0 +1,277 @@
+{
+  "format_version": 2,
+  "scope": "small_reachable_local_preservation_shop_seed",
+  "runtime_used": false,
+  "commercial_data_recovered": false,
+  "local_policy_fields": [
+    "shop_id",
+    "shop_name",
+    "offer_name",
+    "prices",
+    "bundle_composition",
+    "starter_balance"
+  ],
+  "gender_navigation": [
+    {
+      "id": 0,
+      "sprite_path_id": 4251,
+      "sprite_name": "Male_Icon",
+      "response": "TypeData"
+    },
+    {
+      "id": 1,
+      "sprite_path_id": 4012,
+      "sprite_name": "Female_Icon",
+      "response": "TypeData"
+    },
+    {
+      "id": 2,
+      "sprite_path_id": 3015,
+      "sprite_name": "Bundle",
+      "response": "ItemData"
+    },
+    {
+      "id": 3,
+      "sprite_path_id": 3054,
+      "sprite_name": "Companion",
+      "response": "ItemData"
+    },
+    {
+      "id": 4,
+      "sprite_path_id": 2879,
+      "sprite_name": "Spaces",
+      "response": "personal-space flow",
+      "seeded": false
+    },
+    {
+      "id": 5,
+      "sprite_path_id": 3301,
+      "sprite_name": "Furniture_Icon",
+      "response": "ItemData"
+    },
+    {
+      "id": 6,
+      "sprite_path_id": 3836,
+      "sprite_name": "Locomotion",
+      "response": "ItemData"
+    }
+  ],
+  "wardrobe_type_ids": [
+    "CLOTH_BODY_TORSO",
+    "CLOTH_BODY_LEGS",
+    "CLOTH_BODY_FEET",
+    "CLOTH_HEAD_HAIRSTYLE"
+  ],
+  "shop_image_contract": {
+    "native_expression": "url.Substring(57, url.Length - 61)",
+    "native_result_prefix": "Shops/",
+    "carrier_prefix_length": 57,
+    "suffix": ".png",
+    "carrier_network_requested": false,
+    "original_service_prefix_recovered": false,
+    "policy": "explicit local compatibility carrier plus shipped resource ID"
+  },
+  "shops": [
+    {
+      "shop_id": "local-preservation-clothing",
+      "type_shop": 0,
+      "image_resource_id": "00456nmbhjg345tglcdfbt650234rtgf",
+      "sprite_path_id": 4203
+    },
+    {
+      "shop_id": "local-preservation-companions",
+      "type_shop": 1,
+      "image_resource_id": "0056yhjnbmg456y3k3gbvnf96o7wdecf",
+      "sprite_path_id": 3546
+    },
+    {
+      "shop_id": "local-preservation-furniture",
+      "type_shop": 2,
+      "image_resource_id": "00653925e2aa48958861cad67fb8ce78",
+      "sprite_path_id": 4377
+    },
+    {
+      "shop_id": "local-preservation-locomotions",
+      "type_shop": 3,
+      "image_resource_id": "0095gbnhmgtr4556yuhjnmqwe345tbg9",
+      "sprite_path_id": 3877
+    }
+  ],
+  "selected_assets": [
+    {
+      "offer_id": "local-clothing-male-1",
+      "kind": "wardrobe",
+      "item_id": "A13tK6A245RQ02xMfiC5kD4502g84E17",
+      "gender_id": 0,
+      "type_id": "CLOTH_BODY_TORSO"
+    },
+    {
+      "offer_id": "local-clothing-male-2",
+      "kind": "wardrobe",
+      "item_id": "A6oD28LEKv4n3M8uhWbjD324L2O2rFMI",
+      "gender_id": 0,
+      "type_id": "CLOTH_BODY_LEGS"
+    },
+    {
+      "offer_id": "local-clothing-male-3",
+      "kind": "wardrobe",
+      "item_id": "ANp1bSQMXWE6ReDj2HXwGG1s7rU3OfJo",
+      "gender_id": 0,
+      "type_id": "CLOTH_BODY_FEET"
+    },
+    {
+      "offer_id": "local-clothing-male-4",
+      "kind": "wardrobe",
+      "item_id": "C28S1E20Ra3CKuMi63a0Q0UjJLHTL8th",
+      "gender_id": 0,
+      "type_id": "CLOTH_HEAD_HAIRSTYLE"
+    },
+    {
+      "offer_id": "local-clothing-female-5",
+      "kind": "wardrobe",
+      "item_id": "A1oWEkEcr2T38NeXd3Yc32b676jmy0Vo",
+      "gender_id": 1,
+      "type_id": "CLOTH_BODY_TORSO"
+    },
+    {
+      "offer_id": "local-clothing-female-6",
+      "kind": "wardrobe",
+      "item_id": "A8Sp01XssgYKavAIUEpVF37w5ya5447d",
+      "gender_id": 1,
+      "type_id": "CLOTH_BODY_LEGS"
+    },
+    {
+      "offer_id": "local-clothing-female-7",
+      "kind": "wardrobe",
+      "item_id": "A2s6EX6Fiiqy0qtyA156f8Sbxtu4e44d",
+      "gender_id": 1,
+      "type_id": "CLOTH_BODY_FEET"
+    },
+    {
+      "offer_id": "local-clothing-female-8",
+      "kind": "wardrobe",
+      "item_id": "DWky6XkhT88n41QpoBJgj2JMpEBPJCj4",
+      "gender_id": 1,
+      "type_id": "CLOTH_HEAD_HAIRSTYLE"
+    },
+    {
+      "offer_id": "local-companion-1",
+      "kind": "companions",
+      "item_id": "A0IQgRXmw2UMG8T5UGrVE022o7Id25GU",
+      "gender_id": 3,
+      "type_id": "items"
+    },
+    {
+      "offer_id": "local-companion-2",
+      "kind": "companions",
+      "item_id": "A12086m7MxCG7imcV81F7WHyf81U2080",
+      "gender_id": 3,
+      "type_id": "items"
+    },
+    {
+      "offer_id": "local-furniture-1",
+      "kind": "housing",
+      "item_id": "A044fFy8Xtm2U2J1DuRolDt63P431gI8",
+      "gender_id": 5,
+      "type_id": "items"
+    },
+    {
+      "offer_id": "local-furniture-2",
+      "kind": "housing",
+      "item_id": "A1X4V6Mtlh1f42k86ShKfuQDgAKIN0yH",
+      "gender_id": 5,
+      "type_id": "items"
+    },
+    {
+      "offer_id": "local-locomotion-1",
+      "kind": "locomotions",
+      "item_id": "AJ7C1vNaTXDE2G5xRD5Uq4Tqv22a775K",
+      "gender_id": 6,
+      "type_id": "items"
+    },
+    {
+      "offer_id": "local-locomotion-2",
+      "kind": "locomotions",
+      "item_id": "AQeKMFYM0XY032R12q6RECJddp0EUf5f",
+      "gender_id": 6,
+      "type_id": "items"
+    },
+    {
+      "offer_id": "local-starter-bundle",
+      "kind": "bundle",
+      "item_id": null,
+      "gender_id": 2,
+      "type_id": "bundles"
+    }
+  ],
+  "local_prices": {
+    "wardrobe": {
+      "crystals": 25,
+      "np": 10
+    },
+    "companions": {
+      "crystals": 40,
+      "np": 20
+    },
+    "housing": {
+      "crystals": 30,
+      "np": 15
+    },
+    "locomotions": {
+      "crystals": 35,
+      "np": 15
+    },
+    "bundle": {
+      "crystals": 60,
+      "np": 25
+    }
+  },
+  "evidence": {
+    "gender_window": {
+      "asset": "Nebula Realms_Data/resources.assets",
+      "component_path_id": 16536,
+      "raw_size": 196,
+      "image_count": 7
+    },
+    "item_type_window": {
+      "asset": "Nebula Realms_Data/resources.assets",
+      "component_path_id": 16353,
+      "raw_size": 460,
+      "image_count": 29
+    },
+    "native_rvas": [
+      "0x40cdf0",
+      "0x40d630",
+      "0x4a5950",
+      "0x4a7f90",
+      "0x4aa380",
+      "0x4ab1c0",
+      "0x4a8ae0",
+      "0x4a90e0",
+      "0x4acb30",
+      "0x4acce0",
+      "0x4ad0a0",
+      "0x4adc20",
+      "0x4ae290",
+      "0x4ae350"
+    ],
+    "shop_resource_table": "work/evidence/assets/resource-paths.json",
+    "reachability": "GetShops requests a class; OnShopSelected stores and forwards returned ShopData.id unchanged; OnTypeSelected forwards stored shop ID, gender ID, and returned type ID; EntryShop.Set slices ShopData.url to a shipped Shops resource ID"
+  },
+  "sha256": {
+    "tools/seed_local_shops.py": "aea055270cd0dbec2126187391d3aa759f709c61e194118b31358941020983bd",
+    "backend/tests/test_shop_seed.py": "4a824703e98740d41dfc39293d2f9d0300fdbb84b66d193eb9a87d2684253d54",
+    "protocol/avatar-asset-catalog.json": "20275e008ee31ff464741325fbba0766a3b6189191c2c7cf64e66636f016b06f",
+    "protocol/resource-entitlements.json": "13c2d86f64a2d5319b32b49ed9c7c228ef133b22654416f903e4a35ab51aae7f",
+    "protocol/http-nonminigame-gap-audit.json": "7bb4895473ae0e54e8f6091b7566548440ef859f3dd8dbb770da9deef17a50c2",
+    "work/evidence/assets/resource-behaviours.json": "4f82726208edaf73902dc638cbb784d9afa8802e9f59e5068c85e2433033ff2e",
+    "work/evidence/assets/resource-paths.json": "296f82bfff1cbb1e3e3536ebb3889ea58679754a04ef83aeef4a8c797fbc618a",
+    "work/evidence/ghidra/functions/4ab1c0.c": "3dd17e9502c76c1efab9282bfcfecb7daedcd1ffbdfae3bb73009791d10c110b",
+    "work/evidence/ghidra/functions/4a7f90.c": "e868dc8a0c69136cddb664495344c9a3d37dc0ca2c425ff993bff74f3576a5cf",
+    "work/evidence/ghidra/functions/4aa380.c": "dbb4494afe79e52b200f10cc8d32efef2ced0f3eeabd6dd2dcf8fdfcc51668b9",
+    "work/evidence/ghidra/functions/4acb30.c": "33c928fc267ce88449f5a7d0a7cdb9febb4caeaf847952f7e13311b168cde882",
+    "work/evidence/ghidra/functions/4acce0.c": "c16e18c4c61a27fcb456ddd35da1e45075dee8811093dbff0a373d07dae783d7",
+    "work/evidence/ghidra/functions/4ae290.c": "40e17a8f4b67b9ddada0498ad5c94849e60ef03185ce54d48770323f8e0eb71a",
+    "work/evidence/ghidra/functions/4ae350.c": "7625391463a3e3ecf2524bb78d7342b61463fab93e495f9fb991d78adbd4ddcc"
+  }
+}

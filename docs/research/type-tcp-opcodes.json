@@ -1,0 +1,390 @@
+[
+  {
+    "name": "OnConnected",
+    "value": 0
+  },
+  {
+    "name": "PlayerJoined",
+    "value": 1
+  },
+  {
+    "name": "Transform",
+    "value": 2
+  },
+  {
+    "name": "GetCurrentAnim",
+    "value": 3
+  },
+  {
+    "name": "SetCurrentAnim",
+    "value": 4
+  },
+  {
+    "name": "Anim",
+    "value": 5
+  },
+  {
+    "name": "GetCurrentCompanion",
+    "value": 6
+  },
+  {
+    "name": "Companion",
+    "value": 7
+  },
+  {
+    "name": "GetOccupable",
+    "value": 8
+  },
+  {
+    "name": "Occupable",
+    "value": 9
+  },
+  {
+    "name": "LeaveOccupable",
+    "value": 10
+  },
+  {
+    "name": "StartTyping",
+    "value": 11
+  },
+  {
+    "name": "StopTyping",
+    "value": 12
+  },
+  {
+    "name": "ChatMessage",
+    "value": 13
+  },
+  {
+    "name": "OnRemoteDisconnected",
+    "value": 14
+  },
+  {
+    "name": "UpdateLocomotion",
+    "value": 15
+  },
+  {
+    "name": "GetCurrentLocomotion",
+    "value": 16
+  },
+  {
+    "name": "UpdateCompanion",
+    "value": 17
+  },
+  {
+    "name": "PlayerPref",
+    "value": 18
+  },
+  {
+    "name": "Notification",
+    "value": 19
+  },
+  {
+    "name": "GetCurrentPosition",
+    "value": 20
+  },
+  {
+    "name": "RemoveFriend",
+    "value": 21
+  },
+  {
+    "name": "RemoveSilenced",
+    "value": 22
+  },
+  {
+    "name": "AddSilenced",
+    "value": 23
+  },
+  {
+    "name": "AddBlock",
+    "value": 24
+  },
+  {
+    "name": "RemoveBlock",
+    "value": 25
+  },
+  {
+    "name": "NotificationAccepted",
+    "value": 26
+  },
+  {
+    "name": "ToJoinNotification",
+    "value": 27
+  },
+  {
+    "name": "RelationshipUpdated",
+    "value": 28
+  },
+  {
+    "name": "SetIsInWardrobe",
+    "value": 29
+  },
+  {
+    "name": "DayNightCycle",
+    "value": 30
+  },
+  {
+    "name": "BoatTokenToInstantiate",
+    "value": 31
+  },
+  {
+    "name": "Board_msg_InitGame",
+    "value": 32
+  },
+  {
+    "name": "Board_msg_SelectGame",
+    "value": 33
+  },
+  {
+    "name": "Board_msg_StartGame",
+    "value": 34
+  },
+  {
+    "name": "Board_msg_MakeMove",
+    "value": 35
+  },
+  {
+    "name": "Board_msg_LeaveGame",
+    "value": 36
+  },
+  {
+    "name": "Board_msg_SyncGame",
+    "value": 37
+  },
+  {
+    "name": "Board_msg_SyncTable",
+    "value": 38
+  },
+  {
+    "name": "Board_msg_InitGameOneWay",
+    "value": 39
+  },
+  {
+    "name": "Board_msg_SelectGameOneWay",
+    "value": 40
+  },
+  {
+    "name": "Board_msg_StartGameOneWay",
+    "value": 41
+  },
+  {
+    "name": "Board_msg_LeaveGameOneWay",
+    "value": 42
+  },
+  {
+    "name": "Board_msg_MakeMoveOneWay",
+    "value": 43
+  },
+  {
+    "name": "FoodTruck_msg_GotConsumable",
+    "value": 44
+  },
+  {
+    "name": "FoodTruck_msg_GotConsumableOneWay",
+    "value": 45
+  },
+  {
+    "name": "OktoberFest_msg_GotConsumable",
+    "value": 46
+  },
+  {
+    "name": "OktoberFest_msg_GotConsumableOneWay",
+    "value": 47
+  },
+  {
+    "name": "Pinball_msg_addScore",
+    "value": 48
+  },
+  {
+    "name": "Pinball_msg_getBestScore",
+    "value": 49
+  },
+  {
+    "name": "Pinball_msg_getLeaderboard",
+    "value": 50
+  },
+  {
+    "name": "Pool_msg_InitGame",
+    "value": 51
+  },
+  {
+    "name": "Pool_msg_LeaveGame",
+    "value": 52
+  },
+  {
+    "name": "Pool_msg_SelectGame",
+    "value": 53
+  },
+  {
+    "name": "Pool_msg_StartGame",
+    "value": 54
+  },
+  {
+    "name": "Pool_msg_MakeMove",
+    "value": 55
+  },
+  {
+    "name": "Pool_msg_EndsMove",
+    "value": 56
+  },
+  {
+    "name": "Pool_msg_MoveFoul",
+    "value": 57
+  },
+  {
+    "name": "Pool_msg_SyncGame",
+    "value": 58
+  },
+  {
+    "name": "Pool_msg_LeaveGameOneWay",
+    "value": 59
+  },
+  {
+    "name": "Pool_msg_StartGameOneWay",
+    "value": 60
+  },
+  {
+    "name": "Pool_msg_MakeMoveOneWay",
+    "value": 61
+  },
+  {
+    "name": "Pool_msg_EndsMoveOneWay",
+    "value": 62
+  },
+  {
+    "name": "Pool_msg_MoveFoulOneWay",
+    "value": 63
+  },
+  {
+    "name": "Bowling_msg_InitGame",
+    "value": 64
+  },
+  {
+    "name": "Bowling_msg_LeaveGame",
+    "value": 65
+  },
+  {
+    "name": "Bowling_msg_ReadyGame",
+    "value": 66
+  },
+  {
+    "name": "Bowling_msg_StartGame",
+    "value": 67
+  },
+  {
+    "name": "Bowling_msg_ShotGame",
+    "value": 68
+  },
+  {
+    "name": "Bowling_msg_PinsGame",
+    "value": 69
+  },
+  {
+    "name": "Bowling_msg_TurnGame",
+    "value": 70
+  },
+  {
+    "name": "Bowling_msg_SyncGame",
+    "value": 71
+  },
+  {
+    "name": "Bowling_msg_InitGameOneWay",
+    "value": 72
+  },
+  {
+    "name": "Bowling_msg_LeaveGameOneWay",
+    "value": 73
+  },
+  {
+    "name": "Bowling_msg_ReadyGameOneWay",
+    "value": 74
+  },
+  {
+    "name": "Bowling_msg_StartGameOneWay",
+    "value": 75
+  },
+  {
+    "name": "Bowling_msg_ShotGameOneWay",
+    "value": 76
+  },
+  {
+    "name": "Bowling_msg_PinsGameOneWay",
+    "value": 77
+  },
+  {
+    "name": "Bowling_msg_TurnGameOneWay",
+    "value": 78
+  },
+  {
+    "name": "Bowling_msg_SyncPositionOneWay",
+    "value": 79
+  },
+  {
+    "name": "Darts_msg_InitGame",
+    "value": 80
+  },
+  {
+    "name": "Darts_msg_LeaveGame",
+    "value": 81
+  },
+  {
+    "name": "Darts_msg_SelectGame",
+    "value": 82
+  },
+  {
+    "name": "Darts_msg_SelectMode",
+    "value": 83
+  },
+  {
+    "name": "Darts_msg_StartGame",
+    "value": 84
+  },
+  {
+    "name": "Darts_msg_MakeMove",
+    "value": 85
+  },
+  {
+    "name": "Darts_msg_SyncGame",
+    "value": 86
+  },
+  {
+    "name": "Darts_msg_InitGameOneWay",
+    "value": 87
+  },
+  {
+    "name": "Darts_msg_LeaveGameOneWay",
+    "value": 88
+  },
+  {
+    "name": "Darts_msg_SelectGameOneWay",
+    "value": 89
+  },
+  {
+    "name": "Darts_msg_StartGameOneWay",
+    "value": 90
+  },
+  {
+    "name": "Darts_msg_MakeMoveOneWay",
+    "value": 91
+  },
+  {
+    "name": "AnimParameter",
+    "value": 92
+  },
+  {
+    "name": "UpdateAnimationLayer",
+    "value": 93
+  },
+  {
+    "name": "Genericinteractable",
+    "value": 94
+  },
+  {
+    "name": "NotificationGameDeclined",
+    "value": 95
+  },
+  {
+    "name": "GetInstanceClosing",
+    "value": 96
+  }
+]

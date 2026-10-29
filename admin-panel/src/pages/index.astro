@@ -1,0 +1,21 @@
+---
+import '../styles/global.css';
+import ControlPanel from '../components/control-panel';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Nebula · Preservation control</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="csrf-token" content={Astro.locals.csrf} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">
+      Skip to content
+    </a>
+    <ControlPanel actor={Astro.locals.actor} csrf={Astro.locals.csrf} client:load />
+  </body>
+</html>

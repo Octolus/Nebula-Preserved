@@ -1,0 +1,1213 @@
+{
+  "scope": "Read-only serialized asset inventory, not runtime observations. Modern active paths only, not s/pre variants. Every MonoBehaviour is classified using its native header/MonoScript first; managed typetrees are then parsed only for relevant minigame/table classes or Manager classes. Empty manager/count arrays mean no such class present among successfully classified components, not a guessed positive count. Check both error counters before making absence claims. No game, server, listener or connection was executed.",
+  "bundles": [
+    {
+      "bundle": "s/nexus",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\nexus",
+      "sha256": "95df4352e39d5a14e504911b36205aa58cb09ba20efa9883b431098d68eb6480",
+      "containers": [
+        "Assets/Scenes/Spaces/Nexus.unity"
+      ],
+      "mono_behaviours_classified": 9,
+      "class_counts": {
+        "SpacePREFAB": 1,
+        "tazo_UVScroller": 8
+      },
+      "class_resolution_errors": {},
+      "relevant_field_parse_errors": {},
+      "minigames": [],
+      "board_manager_configured_counts": [],
+      "darts_manager_configured_counts": []
+    },
+    {
+      "bundle": "s/nexuslogicprefab",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\nexuslogicprefab",
+      "sha256": "7a555fddd0bf0743444f60a3eacf0533cc6ce3a546995b6bd6ffc2ed10bd5f66",
+      "containers": [
+        "assets/prefabs/logicprefab/nexuslogicprefab.prefab"
+      ],
+      "mono_behaviours_classified": 1981,
+      "class_counts": {
+        "AirRacingTrigger": 1,
+        "AmbientOcclusion": 1,
+        "AnimMenuSelection": 1,
+        "Bloom": 2,
+        "BubbleArrow": 1,
+        "BubbleManager": 1,
+        "Button": 207,
+        "CFX_AutoDestructShuriken": 15,
+        "CameraShotView": 1,
+        "CanvasScaler": 16,
+        "Chat": 1,
+        "ChatBubble": 1,
+        "ChatEntry": 1,
+        "ChatTab": 2,
+        "ChatToolbar": 1,
+        "CinemaBuyPopCorn": 1,
+        "CinemaBuyTicket": 1,
+        "CinemaSpaceTrigger": 1,
+        "CinemaTicketOffice": 1,
+        "ColorsPalette": 1,
+        "ConsumablePopCorn": 1,
+        "ContentSizeFitter": 19,
+        "CustomSpaceTrigger": 10,
+        "DayNightCycle": 1,
+        "DepthOfField": 1,
+        "DomeLightsController": 3,
+        "DomeMusicController": 1,
+        "Dummies": 1,
+        "DummyWardrobe": 2,
+        "EventSystem": 29,
+        "EventTrigger": 389,
+        "ExitManager": 1,
+        "GenericOneAssetRewardTrigger": 2,
+        "GlobalFog": 1,
+        "GraphicRaycaster": 13,
+        "GridLayoutGroup": 1,
+        "HorizontalLayoutGroup": 11,
+        "Image": 535,
+        "ImageByPlatform": 14,
+        "InputField": 3,
+        "InteractableManager": 1,
+        "InteractionMenu": 1,
+        "Jukebox": 1,
+        "LayoutElement": 67,
+        "LensAberrations": 1,
+        "LoadingCircle": 9,
+        "LoadingCircleEditor": 1,
+        "LocomotionPrefab": 1,
+        "LoginOnlineFriends": 2,
+        "ManagerInstanceNexus": 1,
+        "Mask": 17,
+        "MenuWheel": 1,
+        "MenuWheelDances": 1,
+        "MenuWheelEntry": 7,
+        "MenuWheelGestures": 1,
+        "MenuWheelInflate": 7,
+        "MenuWheelLocomotions": 1,
+        "MenuWheelMoodStatus": 1,
+        "MenuWheelPets": 1,
+        "MenuWheelPoses": 1,
+        "MenuWheelSeating": 1,
+        "MusicSpace": 1,
+        "NavigationSpaceMenu": 2,
+        "NavigatorItem": 1,
+        "NavigatorSelector": 1,
+        "NebulaSeat": 21,
+        "NebulaUIButton": 77,
+        "NetworkChecker": 1,
+        "NotificationsManager": 1,
+        "OnlineOfflineFriend": 1,
+        "OpenShopTrigger": 1,
+        "OptionsMainWindow": 1,
+        "OptionsManager": 1,
+        "Outline": 5,
+        "PS4InputModule": 29,
+        "PanelGameUISide": 1,
+        "PanelMovGameUI": 7,
+        "ParticleSystemAutoDestroy": 1,
+        "PersonalSpaceTrigger": 1,
+        "PetPrefab": 1,
+        "PlayerPrefsSliderClient": 6,
+        "PlayerPrefsToggleClient": 11,
+        "PostProcessingBehaviour": 2,
+        "PostProcessingProfile": 3,
+        "RectMask2D": 7,
+        "RemotePlayerMenu": 1,
+        "ReportMenu": 1,
+        "SKLGoalGameManager": 1,
+        "SKLGoalGameTarget": 15,
+        "SKLTrigger": 1,
+        "SKLlBall": 1,
+        "ScrollRect": 15,
+        "Scrollbar": 16,
+        "SetShopBase": 1,
+        "SetShopRotateAvatar": 1,
+        "Slider": 6,
+        "SocialEntry": 1,
+        "SocialMainMenu": 1,
+        "SocialMainWindow": 1,
+        "SocialManager": 1,
+        "SocialOptionsMenu": 4,
+        "SocialOptionsMenuSimple": 1,
+        "SocialOptionsSpaceUsers": 1,
+        "SoundsHandler": 2,
+        "SpaceUnderConstructionTrigger": 5,
+        "SwimmingAnimationEvent": 1,
+        "Text": 210,
+        "Toggle": 11,
+        "TonemappingColorGrading": 1,
+        "TriggerSwiming": 2,
+        "TutorialSpace": 1,
+        "UIBaseMenu": 4,
+        "UIFocuser": 4,
+        "UIFullGameLeaderboardEntry": 3,
+        "UIFullGameLeaderboardSpaces": 1,
+        "UIInteractionMenu": 1,
+        "UISKLGameIcons": 1,
+        "UISKLGo": 1,
+        "UISKLIconBall": 2,
+        "UISKLMenu": 1,
+        "UISKLResult": 1,
+        "UISKLScore": 1,
+        "UISKLScoreGoal": 3,
+        "UIScrolledBaseMenu": 7,
+        "UISimpleScaleInOut": 3,
+        "VerticalLayoutGroup": 16,
+        "VisibilityZone": 1,
+        "VolumeController": 27
+      },
+      "class_resolution_errors": {},
+      "relevant_field_parse_errors": {},
+      "minigames": [],
+      "board_manager_configured_counts": [],
+      "darts_manager_configured_counts": []
+    },
+    {
+      "bundle": "s/bowling",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\bowling",
+      "sha256": "d6c45eba53bd2ad53702eb3ef62d44b3b797b9bb1618eff3899383292d213516",
+      "containers": [
+        "Assets/Scenes/Spaces/Bowling.unity"
+      ],
+      "mono_behaviours_classified": 56,
+      "class_counts": {
+        "CanvasScaler": 1,
+        "GraphicRaycaster": 1,
+        "Image": 1,
+        "NebulaSeat": 50,
+        "SpacePREFAB": 1,
+        "SpaceUnderConstructionTrigger": 1,
+        "Text": 1
+      },
+      "class_resolution_errors": {},
+      "relevant_field_parse_errors": {},
+      "minigames": [],
+      "board_manager_configured_counts": [],
+      "darts_manager_configured_counts": []
+    },
+    {
+      "bundle": "s/bowlinglogicprefab",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\bowlinglogicprefab",
+      "sha256": "dcc6039feba98722b0c609b48c0f65e532211d75cf18ab130d3f10c3fdf4b395",
+      "containers": [
+        "assets/prefabs/logicprefab/bowlinglogicprefab.prefab"
+      ],
+      "mono_behaviours_classified": 4489,
+      "class_counts": {
+        "AnimMenuSelection": 1,
+        "ArcheryUI": 3,
+        "Bloom": 25,
+        "BowlingBall": 12,
+        "BowlingConstraint": 12,
+        "BowlingFireEvent": 24,
+        "BowlingGameLane": 12,
+        "BowlingGameManager": 1,
+        "BowlingGameRespawner": 1,
+        "BowlingGameTrigger": 12,
+        "BowlingPin": 10,
+        "BowlingPinDeck": 1,
+        "BowlingPinSetter": 1,
+        "BowlingSelectorDirection": 12,
+        "BowlingSelectorPosition": 12,
+        "BowlingSelectorSpin": 12,
+        "BowlingSelectorStrength": 12,
+        "BubbleArrow": 1,
+        "BubbleManager": 1,
+        "Button": 242,
+        "CameraShotView": 1,
+        "CanvasScaler": 23,
+        "Chat": 1,
+        "ChatBubble": 1,
+        "ChatEntry": 1,
+        "ChatTab": 2,
+        "ChatToolbar": 1,
+        "ColorsPalette": 1,
+        "ContentSizeFitter": 22,
+        "CustomSpaceTrigger": 1,
+        "Dart": 18,
+        "DartFloatingScore": 3,
+        "DartPointer": 3,
+        "DartStrength": 3,
+        "DartboardField": 195,
+        "Dartboards": 3,
+        "DartsGameManager": 1,
+        "DartsGameTable": 3,
+        "DartsGameTrigger": 3,
+        "DartsRules301": 1,
+        "DartsRules501": 1,
+        "DartsRules701": 1,
+        "DartsRulesAround": 1,
+        "DartsRulesCricket": 1,
+        "DomeMusicController": 1,
+        "Dummies": 1,
+        "DummyWardrobe": 2,
+        "EventSystem": 62,
+        "EventTrigger": 434,
+        "ExitManager": 1,
+        "GatherChristmas": 2,
+        "GatherChristmasTrigger": 2,
+        "GatherEaster": 1,
+        "GatherEasterTrigger": 1,
+        "GatherItemChristmas": 2,
+        "GatherItemEaster": 1,
+        "GlobalFog": 10,
+        "GraphicRaycaster": 19,
+        "GridLayoutGroup": 5,
+        "HorizontalLayoutGroup": 37,
+        "Image": 1481,
+        "ImageByPlatform": 14,
+        "InputField": 3,
+        "InteractableManager": 1,
+        "InteractionMenu": 1,
+        "Jukebox": 1,
+        "LayoutElement": 87,
+        "LoadingCircle": 13,
+        "LoadingCircleEditor": 1,
+        "LocomotionPrefab": 1,
+        "LoginOnlineFriends": 2,
+        "ManagerInstanceBowling": 1,
+        "Mask": 19,
+        "MenuWheel": 1,
+        "MenuWheelDances": 1,
+        "MenuWheelEntry": 7,
+        "MenuWheelGestures": 1,
+        "MenuWheelInflate": 7,
+        "MenuWheelLocomotions": 1,
+        "MenuWheelMoodStatus": 1,
+        "MenuWheelPets": 1,
+        "MenuWheelPoses": 1,
+        "MenuWheelSeating": 1,
+        "NavigationSpaceMenu": 2,
+        "NavigatorItem": 1,
+        "NavigatorSelector": 1,
+        "NebulaUIButton": 77,
+        "NetworkChecker": 1,
+        "NotificationsManager": 1,
+        "OnlineOfflineFriend": 1,
+        "OptionsMainWindow": 1,
+        "OptionsManager": 1,
+        "Outline": 9,
+        "PS4InputModule": 62,
+        "PanelGameUISide": 1,
+        "PanelMovGameUI": 7,
+        "PetPrefab": 1,
+        "PinballGameManager": 1,
+        "PinballGameTrigger": 4,
+        "PinballInteractableTable": 4,
+        "PinballTableInstancializer": 1,
+        "PlayerPrefsSliderClient": 6,
+        "PlayerPrefsToggleClient": 11,
+        "PoolBall": 16,
+        "PoolBallDrag": 16,
+        "PoolBallRigid": 16,
+        "PoolCue": 1,
+        "PoolGameInteractable": 9,
+        "PoolGameManager": 1,
+        "PoolGameTable": 9,
+        "PoolGameTrigger": 9,
+        "PoolLineHole": 6,
+        "PoolLineSolid": 24,
+        "PoolMessage": 4,
+        "PoolPanel8Ball": 2,
+        "PoolPanel9Ball": 1,
+        "PoolPocketedBall": 1,
+        "PoolPointerLine": 9,
+        "PoolRelocatePointer": 1,
+        "PoolRules8Ball": 1,
+        "PoolRulesPractice": 1,
+        "PopUpGeneric": 2,
+        "PostProcessingBehaviour": 25,
+        "PostProcessingProfile": 4,
+        "RectMask2D": 7,
+        "RemotePlayerMenu": 1,
+        "ReportMenu": 1,
+        "SKLPromoTrigger": 1,
+        "SceneAreaContainer": 1,
+        "ScrollRect": 18,
+        "Scrollbar": 20,
+        "SetShopBase": 1,
+        "SetShopRotateAvatar": 1,
+        "Slider": 7,
+        "SocialEntry": 1,
+        "SocialMainMenu": 1,
+        "SocialMainWindow": 1,
+        "SocialManager": 1,
+        "SocialOptionsMenu": 4,
+        "SocialOptionsMenuSimple": 1,
+        "SocialOptionsSpaceUsers": 1,
+        "SoundsHandler": 2,
+        "SpaceEventManager": 1,
+        "SpaceGameCamera": 24,
+        "Sprite3D": 3,
+        "TableIntermediary": 2,
+        "Text": 831,
+        "Toggle": 11,
+        "Toy_Skull_Eye_LookAt_Ball": 2,
+        "TutorialSpace": 1,
+        "UIBaseMenu": 6,
+        "UIBowlingConfirmExit": 1,
+        "UIBowlingFullLane": 1,
+        "UIBowlingMain": 1,
+        "UIBowlingMainEntry": 4,
+        "UIBowlingMenu": 1,
+        "UIBowlingPlayerPanel": 1,
+        "UIBowlingPopUpPanel": 5,
+        "UIBowlingResultsPanel": 1,
+        "UIBowlingScoreHeader": 1,
+        "UIBowlingScorePanel": 1,
+        "UIDartsGlowEffect": 2,
+        "UIDartsMenu": 1,
+        "UIDartsMenuResultsMulti": 1,
+        "UIDartsMenuResultsSingle": 1,
+        "UIDartsPanelCricket": 1,
+        "UIDartsPanelInfo": 1,
+        "UIDartsPanelPlayer": 2,
+        "UIDartsPanelScores": 1,
+        "UIDartsPanelScoresInfo": 1,
+        "UIDartsPanelTurn": 1,
+        "UIDartsScore301": 2,
+        "UIDartsScoreAround": 2,
+        "UIDartsScoreCricket": 2,
+        "UIFocuser": 4,
+        "UIFullGameLeaderboardEntry": 2,
+        "UIFullGameLeaderboardSpaces": 1,
+        "UIGameHelp": 3,
+        "UIGameMenuInstructions": 4,
+        "UIGameMenuItem": 13,
+        "UIGameMenuJoin": 2,
+        "UIGamePanel": 3,
+        "UIInteractionMenu": 1,
+        "UIPoolMenu": 1,
+        "UIScrolledBaseMenu": 7,
+        "UiBowlingScoreFrame": 80,
+        "UiBowlingScorePlayer": 8,
+        "VerticalLayoutGroup": 28,
+        "VolumeController": 69
+      },
+      "class_resolution_errors": {
+        "ValueError": 449
+      },
+      "relevant_field_parse_errors": {},
+      "minigames": [
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -9111580590076131193,
+          "raw_sha256": "f092e58dfdab5ccccecc40ccba4bc2d7ebed3693ac1972c31dd62401936b4e8b",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 4327181507854252381
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_07",
+          "active_self": false
+        },
+        {
+          "class": "DartsGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -8993503128569358876,
+          "raw_sha256": "e6e9c9de396ed8b11ca7cbff11c4ff8cf69718cddb7dc5b7428a5ab96531204e",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -4628744890927442064
+          },
+          "m_Enabled": 1,
+          "cabinetDarts": [
+            {
+              "name": "red darts",
+              "darts": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -1063995002044001313
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -2743527728739287682
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 2750066309517743253
+                }
+              ]
+            },
+            {
+              "name": "blue darts",
+              "darts": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 6884785266015874873
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 3829340324453813318
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -8298357861919843611
+                }
+              ]
+            }
+          ],
+          "game_object_name": "TABLE_02",
+          "active_self": true
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -8855918518441434735,
+          "raw_sha256": "0793f21843c12a3637126942ce836037c658e7ad2dc97b7c62f1c9cc76e596ea",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -1276327311504792602
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_02",
+          "active_self": false
+        },
+        {
+          "class": "PinballGameManager",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -4333528158176357648,
+          "raw_sha256": "ac333dafb23bd6ecf56a172938895c481ea74b8d253ac0cc3896693ea5aa9c42",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 3268936947749355348
+          },
+          "m_Enabled": 1,
+          "gameTables": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 3916775387784488899
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -6177304976876787655
+            }
+          ],
+          "spaceTypeGame": 1,
+          "rulesPrefabs": [],
+          "game_object_name": "PINBALL",
+          "active_self": false,
+          "configured_table_count": 2
+        },
+        {
+          "class": "DartsGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -4314248659817008190,
+          "raw_sha256": "f458602639d062dbac48d4817e59acf660b14b31601dbaa44fe814775cab211c",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 7113859567135008298
+          },
+          "m_Enabled": 1,
+          "cabinetDarts": [
+            {
+              "name": "red darts",
+              "darts": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 7167416589634548570
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -489828212247874683
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 1129605685322917084
+                }
+              ]
+            },
+            {
+              "name": "blue darts",
+              "darts": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -8678659838183130099
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 5784593520825285739
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -4700415983056686386
+                }
+              ]
+            }
+          ],
+          "game_object_name": "TABLE_01",
+          "active_self": true
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -3809332725209440201,
+          "raw_sha256": "6d5631cfd5a02df078da6830fcc5e23bb4f46f413f580c0ed3b539dd3fdfc9e0",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 7089420457263036537
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_04",
+          "active_self": false
+        },
+        {
+          "class": "PoolGameManager",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -3707029641742055303,
+          "raw_sha256": "cdee0b842f694caa29cde53b02c19e5b96a7fb4ac0ad7bc9f5c43cdacb3d1713",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 6309957248655543973
+          },
+          "m_Enabled": 1,
+          "gameTables": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 5433941736416009266
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -2719238950406041806
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -8855918518441434735
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 184764826162661088
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -3809332725209440201
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 3341533990665495766
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 1172503399335532340
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -9111580590076131193
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -941256686147098275
+            }
+          ],
+          "spaceTypeGame": 2,
+          "rulesPrefabs": [
+            {
+              "m_FileID": 0,
+              "m_PathID": -2103306683401612216
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 3502755806153674379
+            }
+          ],
+          "game_object_name": "POOL",
+          "active_self": true,
+          "configured_table_count": 9
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -2719238950406041806,
+          "raw_sha256": "6ca833da15c41055549aaf8b465ed4e460fc03562a22d87a6e7612b235ef6349",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 6533397931570653074
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_01",
+          "active_self": false
+        },
+        {
+          "class": "DartsGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -1028336552687415320,
+          "raw_sha256": "d569816c214fc053e07613672987730a9019f612f73e7ed95a29f38b46d4ed09",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 8219797691499083224
+          },
+          "m_Enabled": 1,
+          "cabinetDarts": [
+            {
+              "name": "red darts",
+              "darts": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -4093327090292121289
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -1855248647025092463
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -9069921339790773384
+                }
+              ]
+            },
+            {
+              "name": "blue darts",
+              "darts": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 5802757621057509926
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": 1457833752627940929
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -4475456297223208940
+                }
+              ]
+            }
+          ],
+          "game_object_name": "TABLE_00",
+          "active_self": true
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": -941256686147098275,
+          "raw_sha256": "dbeed22dbcb927b0cb62ab848767fa76cd857e721de102c4039852f43f860168",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 2364314499825069024
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_08",
+          "active_self": false
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": 184764826162661088,
+          "raw_sha256": "afd89cd9f23ffdf16994a392c3ea9e401f0523908ba6c39f8c9eef1128b1a188",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 7886643477494152540
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_03",
+          "active_self": false
+        },
+        {
+          "class": "BowlingGameManager",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": 449013288830373459,
+          "raw_sha256": "33e5d17e4838ed0800d37b59de3c9e9ca052f2c5b7d0ec57e6e1c31983033f33",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -2220401379482389457
+          },
+          "m_Enabled": 1,
+          "gameTables": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 7433020129361571138
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -222767833026084036
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -6405831569257119399
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -6521834656970434816
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -3889113015350368210
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -3457712059990258864
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -8105140877350634424
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -467714600195578618
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 2633123350019621687
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -8171671900032770006
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 7526555210762264758
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -7774439452673249888
+            }
+          ],
+          "spaceTypeGame": 3,
+          "rulesPrefabs": [],
+          "game_object_name": "BOWLING",
+          "active_self": true,
+          "configured_table_count": 12
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": 1172503399335532340,
+          "raw_sha256": "92017d970cc95e6fa1d686b7f623f9a815925353104bdad3a5b6adadde72cbc0",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 4262157625618001205
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_06",
+          "active_self": false
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": 3341533990665495766,
+          "raw_sha256": "f641a57da85717d0cc233e811fe44b9e332044b9022fa60d65f6af0e4740c6b0",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 3882002045676009394
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_05",
+          "active_self": false
+        },
+        {
+          "class": "PoolGameTable",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": 5433941736416009266,
+          "raw_sha256": "9508f55c9c0c83a359a753ae491043272a6e33121b16d3d6b1474f7bcb844fd1",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -3320678768244463855
+          },
+          "m_Enabled": 1,
+          "game_object_name": "GAME_00",
+          "active_self": false
+        },
+        {
+          "class": "DartsGameManager",
+          "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+          "path_id": 8889941422846280897,
+          "raw_sha256": "750555d53bb175c68a82768bad3d9a6f631e63b061a408ba26306ed2819bae0e",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 3388090302905165460
+          },
+          "m_Enabled": 1,
+          "gameTables": [
+            {
+              "m_FileID": 0,
+              "m_PathID": -1028336552687415320
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -4314248659817008190
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -8993503128569358876
+            }
+          ],
+          "spaceTypeGame": 4,
+          "rulesPrefabs": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 7580530455394315255
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -1442145000364640077
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -437173891310133193
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 6299898228976792536
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -1246911446777717803
+            }
+          ],
+          "game_object_name": "DARTS",
+          "active_self": false,
+          "configured_table_count": 3
+        }
+      ],
+      "board_manager_configured_counts": [],
+      "darts_manager_configured_counts": [
+        3
+      ]
+    },
+    {
+      "bundle": "s/leafpark",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\leafpark",
+      "sha256": "a359a0864046f750430b6f98e6b540568923dbb177694ebf570df924da762ca8",
+      "containers": [
+        "Assets/Scenes/Spaces/LeafPark.unity"
+      ],
+      "mono_behaviours_classified": 42,
+      "class_counts": {
+        "AmbientOcclusion": 1,
+        "Bloom": 1,
+        "CanvasScaler": 1,
+        "DepthOfField": 1,
+        "GlobalFog": 1,
+        "GraphicRaycaster": 1,
+        "Image": 2,
+        "InflatableCastleAnimationEvents": 1,
+        "InflatableCastleArea": 1,
+        "LensAberrations": 1,
+        "NebulaSeat": 21,
+        "PostProcessingBehaviour": 1,
+        "PostProcessingProfile": 1,
+        "SpacePREFAB": 1,
+        "Text": 1,
+        "TonemappingColorGrading": 1,
+        "VolumeController": 2,
+        "tazo_UVScroller": 3
+      },
+      "class_resolution_errors": {
+        "ValueError": 9
+      },
+      "relevant_field_parse_errors": {},
+      "minigames": [],
+      "board_manager_configured_counts": [],
+      "darts_manager_configured_counts": []
+    },
+    {
+      "bundle": "s/leafparklogicprefab",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\leafparklogicprefab",
+      "sha256": "ff7c9b49bc085dfadbfbc61b7797300e20a5d4e6f4dc4bae5ac7f68c267391ed",
+      "containers": [
+        "assets/prefabs/logicprefab/leafparklogicprefab.prefab"
+      ],
+      "mono_behaviours_classified": 3091,
+      "class_counts": {
+        "AmbientOcclusion": 5,
+        "AnimMenuSelection": 1,
+        "ArcheryUI": 2,
+        "Bloom": 6,
+        "BoatRemover": 1,
+        "BoatSpawnArea": 1,
+        "BoatSpawnCollider": 1,
+        "BubbleArrow": 1,
+        "BubbleManager": 1,
+        "Button": 249,
+        "CameraShotView": 1,
+        "CanvasScaler": 31,
+        "Chat": 1,
+        "ChatBubble": 1,
+        "ChatEntry": 1,
+        "ChatTab": 2,
+        "ChatToolbar": 1,
+        "ColorsPalette": 1,
+        "ConsumableCoffee": 1,
+        "ConsumableOktoberFest": 1,
+        "ContentSizeFitter": 21,
+        "CustomSpaceTrigger": 1,
+        "DayNightCycle": 1,
+        "DepthOfField": 5,
+        "DomeMusicController": 1,
+        "Dummies": 1,
+        "DummyWardrobe": 2,
+        "EventSystem": 65,
+        "EventTrigger": 433,
+        "ExitManager": 1,
+        "FloatingObject": 5,
+        "FoodTruckManager": 1,
+        "FoodTruckTrigger": 1,
+        "FootRaceCheckpoint": 36,
+        "FootRaceManager": 1,
+        "FootRaceRoute": 3,
+        "FootRaceTrigger": 1,
+        "GatherChristmas": 2,
+        "GatherChristmas2018": 1,
+        "GatherChristmas2018Trigger": 2,
+        "GatherChristmasTrigger": 2,
+        "GatherItemChristmas": 2,
+        "GatherUIMemorionGame": 1,
+        "GatherUIMemorionMenu": 1,
+        "GatherUIMemorionScore": 1,
+        "GatherUIMemorionSequence": 1,
+        "GlobalFog": 5,
+        "GraphicRaycaster": 29,
+        "GridLayoutGroup": 1,
+        "HarbourEnter": 1,
+        "HarbourExit": 1,
+        "HarbourReset": 6,
+        "HarbourSelectBoat": 1,
+        "HarbourSelectTrigger": 1,
+        "HorizontalLayoutGroup": 18,
+        "Image": 993,
+        "ImageByPlatform": 14,
+        "InputField": 3,
+        "InteractableManager": 1,
+        "InteractionMenu": 1,
+        "Jukebox": 1,
+        "KartGameTrigger": 1,
+        "LayoutElement": 105,
+        "LensAberrations": 5,
+        "LoadingCircle": 19,
+        "LoadingCircleEditor": 1,
+        "LocomotionPrefab": 1,
+        "LoginOnlineFriends": 2,
+        "ManagerInstanceLeafPark": 1,
+        "Mask": 20,
+        "MemorionTrigger": 1,
+        "MenuWheel": 1,
+        "MenuWheelDances": 1,
+        "MenuWheelEntry": 7,
+        "MenuWheelGestures": 1,
+        "MenuWheelInflate": 7,
+        "MenuWheelLocomotions": 1,
+        "MenuWheelMoodStatus": 1,
+        "MenuWheelPets": 1,
+        "MenuWheelPoses": 1,
+        "MenuWheelSeating": 1,
+        "MusicSpace": 1,
+        "NavigationSpaceMenu": 2,
+        "NavigatorItem": 1,
+        "NavigatorSelector": 1,
+        "NebulaSeat": 21,
+        "NebulaUIButton": 77,
+        "NetworkChecker": 1,
+        "NotificationsManager": 1,
+        "OktoberFestManager": 3,
+        "OktoberFestTrigger": 3,
+        "OnlineOfflineFriend": 1,
+        "OptionsMainWindow": 1,
+        "OptionsManager": 1,
+        "Outline": 5,
+        "PS4InputModule": 65,
+        "PadelBoat": 5,
+        "PanelGameUISide": 1,
+        "PanelMovGameUI": 7,
+        "ParticleSystemAutoDestroy": 1,
+        "ParticleSystemSoundEffect": 1,
+        "PetPrefab": 1,
+        "PicnicManager": 1,
+        "PicnicSet": 4,
+        "PicnicTrigger": 4,
+        "PlayerPrefsSliderClient": 6,
+        "PlayerPrefsToggleClient": 11,
+        "PopUpGeneric": 6,
+        "PostProcessingBehaviour": 5,
+        "PostProcessingProfile": 2,
+        "RectMask2D": 7,
+        "RemotePlayerMenu": 1,
+        "ReportMenu": 1,
+        "ScrollRect": 16,
+        "Scrollbar": 16,
+        "SetShopBase": 1,
+        "SetShopRotateAvatar": 1,
+        "Slider": 6,
+        "SocialEntry": 2,
+        "SocialMainMenu": 1,
+        "SocialMainWindow": 2,
+        "SocialManager": 1,
+        "SocialOptionsMenu": 4,
+        "SocialOptionsMenuSimple": 1,
+        "SocialOptionsSpaceUsers": 1,
+        "SoundsHandler": 2,
+        "SpaceGameCamera": 4,
+        "SpaceUnderConstructionTrigger": 1,
+        "Text": 443,
+        "Toggle": 11,
+        "TonemappingColorGrading": 5,
+        "TutorialSpace": 1,
+        "UIBaseMenu": 13,
+        "UIFocuser": 8,
+        "UIFoodTruckMenu": 1,
+        "UIFootRacePanelGame": 1,
+        "UIFootRacePanelResults": 1,
+        "UIFullGameLeaderboardEntry": 4,
+        "UIFullGameLeaderboardSpaces": 2,
+        "UIGameHelp": 6,
+        "UIGameMenu": 1,
+        "UIGameMenuItem": 3,
+        "UIGamePanel": 2,
+        "UIInteractionMenu": 1,
+        "UIMemorionButton": 16,
+        "UIMemorionGame": 1,
+        "UIMemorionMenu": 1,
+        "UIMemorionScore": 1,
+        "UIMemorionSequence": 1,
+        "UIOktoberFestMenu": 3,
+        "UIScrolledBaseMenu": 7,
+        "UiFoodTruckMenuInit": 1,
+        "UiFoodTruckMenuOk": 1,
+        "UiOktoberFestMenuInit": 4,
+        "UiOktoberFestMenuOk": 3,
+        "UiPicnicMenu": 1,
+        "UiPicnicMenuInit": 1,
+        "UiPicnicMenuInvite": 1,
+        "UiPicnicMenuSelect": 1,
+        "UiPicnicPanelInvitedElement": 1,
+        "UiPicnicPanelInvitedList": 1,
+        "VerticalLayoutGroup": 29,
+        "VolumeController": 52
+      },
+      "class_resolution_errors": {
+        "ValueError": 4
+      },
+      "relevant_field_parse_errors": {},
+      "minigames": [
+        {
+          "class": "OktoberFestManager",
+          "asset_file": "CAB-cc562d0dfb507ca580a63fa2660900e8",
+          "path_id": -3700782353618409689,
+          "raw_sha256": "9489b289db372b847a6bc49123c89ce87796417f3f447a0a4345754e99733e00",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 8635528467653424679
+          },
+          "m_Enabled": 1,
+          "gameTables": [],
+          "spaceTypeGame": 0,
+          "rulesPrefabs": [],
+          "game_object_name": "OktoberFest1",
+          "active_self": false,
+          "configured_table_count": 0
+        },
+        {
+          "class": "FootRaceManager",
+          "asset_file": "CAB-cc562d0dfb507ca580a63fa2660900e8",
+          "path_id": -2715656921292088431,
+          "raw_sha256": "e603d3b6a6e5be305437c4d622d88af3a173ec93ef1867c75a57d9238bebface",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -2818703802739426301
+          },
+          "m_Enabled": 0,
+          "gameTables": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          ],
+          "spaceTypeGame": 7,
+          "rulesPrefabs": [],
+          "game_object_name": "FOOTRACE",
+          "active_self": true,
+          "configured_table_count": 1
+        },
+        {
+          "class": "FoodTruckManager",
+          "asset_file": "CAB-cc562d0dfb507ca580a63fa2660900e8",
+          "path_id": 1751928713110966603,
+          "raw_sha256": "a2b448c3e15606b981e7d61d13313437d7c02b7cf82ea37b3d9699c678323c4b",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -7507706577198733623
+          },
+          "m_Enabled": 1,
+          "gameTables": [],
+          "spaceTypeGame": 0,
+          "rulesPrefabs": [],
+          "game_object_name": "FOODTRUCK",
+          "active_self": true,
+          "configured_table_count": 0
+        },
+        {
+          "class": "PicnicManager",
+          "asset_file": "CAB-cc562d0dfb507ca580a63fa2660900e8",
+          "path_id": 2741639575186686702,
+          "raw_sha256": "3e3f81e238d442ead57956acfd2664545bbc065d06dd2deb02708cdfbbe5bd46",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -531142773596004170
+          },
+          "m_Enabled": 1,
+          "gameTables": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 2665252381555692293
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": 4763274895642331803
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -2505298553433368367
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": -780231989611782588
+            }
+          ],
+          "spaceTypeGame": 8,
+          "rulesPrefabs": [],
+          "game_object_name": "PICNIC",
+          "active_self": false,
+          "configured_table_count": 4
+        },
+        {
+          "class": "OktoberFestManager",
+          "asset_file": "CAB-cc562d0dfb507ca580a63fa2660900e8",
+          "path_id": 4871167485257551876,
+          "raw_sha256": "bc9d38aaf48c4ec87211fb424e71ba452f5d2d7d5ef83cdab185f4888ca4b68e",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -4350373020707553853
+          },
+          "m_Enabled": 1,
+          "gameTables": [],
+          "spaceTypeGame": 0,
+          "rulesPrefabs": [],
+          "game_object_name": "OktoberFest3",
+          "active_self": false,
+          "configured_table_count": 0
+        },
+        {
+          "class": "OktoberFestManager",
+          "asset_file": "CAB-cc562d0dfb507ca580a63fa2660900e8",
+          "path_id": 6887328704093517374,
+          "raw_sha256": "def3470f4d644ccfe524bafb831c149e018e20c4ba2ee1ccf8ae6412bd0f81f6",
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": -1611505873589595488
+          },
+          "m_Enabled": 1,
+          "gameTables": [],
+          "spaceTypeGame": 0,
+          "rulesPrefabs": [],
+          "game_object_name": "OktoberFest2",
+          "active_self": false,
+          "configured_table_count": 0
+        }
+      ],
+      "board_manager_configured_counts": [],
+      "darts_manager_configured_counts": []
+    }
+  ],
+  "source_binary_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac"
+}

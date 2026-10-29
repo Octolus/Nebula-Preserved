@@ -1,0 +1,6 @@
+{
+  "fixture_id": "synthetic-admin-parity-v1",
+  "file": "fixture.json",
+  "sha256": "f99d96042203ead6d8cebe8f9783a26df2456ab4c119646913fbedbe0a9bc7f3",
+  "provenance": "SYNTHETIC_PARITY_ONLY_PUBLIC_TEST_TOKEN_NOT_A_SECRET"
+}

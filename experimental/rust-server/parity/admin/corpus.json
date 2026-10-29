@@ -1,0 +1,1979 @@
+[
+  {
+    "id": "admin-state-initial",
+    "op": "snapshot"
+  },
+  {
+    "id": "admin-missing-auth",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {},
+    "query": {},
+    "expected_status": 401
+  },
+  {
+    "id": "admin-bad-auth",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer synthetic-wrong",
+      "X-Management-Actor": "owner"
+    },
+    "query": {},
+    "expected_status": 401
+  },
+  {
+    "id": "admin-missing-actor",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-unknown-actor",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "unknown",
+      "Idempotency-Key": "admin-unknown-actor"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-disabled-actor",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "disabled",
+      "Idempotency-Key": "admin-disabled-actor"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-origin-denied",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-parity-key-0001",
+      "Origin": "https://synthetic.invalid"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-method-denied",
+    "op": "admin",
+    "tail": "health",
+    "method": "DELETE",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-method-denied"
+    },
+    "query": {},
+    "expected_status": 405
+  },
+  {
+    "id": "admin-unknown-route",
+    "op": "admin",
+    "tail": "synthetic-missing-route",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-unknown-route"
+    },
+    "query": {},
+    "expected_status": 404
+  },
+  {
+    "id": "admin-headers-lowercase",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "x-management-actor": "owner"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-origin-lowercase-denied",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-parity-key-0001",
+      "origin": "https://synthetic.invalid"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-post-auth-before-body",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": true,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "query": {},
+    "expected_status": 401
+  },
+  {
+    "id": "admin-post-content-type",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {},
+    "headers": {
+      "Content-Type": "text/plain",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-parity-key-0001"
+    },
+    "query": {},
+    "expected_status": 415
+  },
+  {
+    "id": "admin-post-object-null",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": null,
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-post-object-null"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-post-object-array",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": [],
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-post-object-array"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-post-object-bool",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": true,
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-post-object-bool"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-post-object-string",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": "synthetic",
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-post-object-string"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-post-size-limit",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-post-size-limit"
+    },
+    "query": {},
+    "expected_status": 413
+  },
+  {
+    "id": "admin-forged-role-denied",
+    "op": "admin",
+    "tail": "operators",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-parity-key-0001",
+      "X-Management-Role": "owner"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-me-moderator",
+    "op": "admin",
+    "tail": "me",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-me-moderator"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-me-admin",
+    "op": "admin",
+    "tail": "me",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-me-admin"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-me-owner",
+    "op": "admin",
+    "tail": "me",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-me-owner"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-health",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-health"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-roles",
+    "op": "admin",
+    "tail": "roles",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-roles"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-capabilities",
+    "op": "admin",
+    "tail": "capabilities",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-capabilities"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-stats",
+    "op": "admin",
+    "tail": "stats",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-stats"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-moderation-status",
+    "op": "admin",
+    "tail": "moderation/status",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-moderation-status"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-moderation-reports",
+    "op": "admin",
+    "tail": "moderation/reports",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-moderation-reports"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-moderation-news",
+    "op": "admin",
+    "tail": "moderation/news",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-moderation-news"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-moderation-events",
+    "op": "admin",
+    "tail": "moderation/events",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-moderation-events"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-transactions",
+    "op": "admin",
+    "tail": "transactions",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-transactions"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-audit",
+    "op": "admin",
+    "tail": "audit",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-audit"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-read-operators",
+    "op": "admin",
+    "tail": "operators",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-read-operators"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-operators-admin-denied",
+    "op": "admin",
+    "tail": "operators",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-operators-admin-denied"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-users",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-users"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-users-search-literal",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-users-search-literal"
+    },
+    "query": {
+      "q": "%_' OR 1=1",
+      "limit": "1"
+    },
+    "expected_status": 200
+  },
+  {
+    "id": "admin-users-page",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-users-page"
+    },
+    "query": {
+      "limit": "1",
+      "cursor": "1"
+    },
+    "expected_status": 200
+  },
+  {
+    "id": "admin-users-limit-zero",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-users-limit-zero"
+    },
+    "query": {
+      "limit": "0"
+    },
+    "expected_status": 400
+  },
+  {
+    "id": "admin-users-cursor-invalid",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-users-cursor-invalid"
+    },
+    "query": {
+      "cursor": "-1"
+    },
+    "expected_status": 400
+  },
+  {
+    "id": "admin-user-missing",
+    "op": "admin",
+    "tail": "users/synthetic-missing",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-missing"
+    },
+    "query": {},
+    "expected_status": 404
+  },
+  {
+    "id": "admin-user-a",
+    "op": "admin",
+    "tail": "users/fixture-parity-a",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-a"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-user-a-wallet",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-a-wallet"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-user-a-moderation",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/moderation",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-a-moderation"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-user-a-owned",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/owned",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-a-owned"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-user-a-transactions",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/transactions",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-a-transactions"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-user-a-audit",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/audit",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-a-audit"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-user-a-purchases",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/purchases",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-user-a-purchases"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-catalog-companions",
+    "op": "admin",
+    "tail": "catalog",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-catalog-companions"
+    },
+    "query": {
+      "kind": "companions",
+      "limit": "3"
+    },
+    "expected_status": 200
+  },
+  {
+    "id": "admin-catalog-locomotions",
+    "op": "admin",
+    "tail": "catalog",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-catalog-locomotions"
+    },
+    "query": {
+      "kind": "locomotions",
+      "limit": "3"
+    },
+    "expected_status": 200
+  },
+  {
+    "id": "admin-catalog-housing",
+    "op": "admin",
+    "tail": "catalog",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-catalog-housing"
+    },
+    "query": {
+      "kind": "housing",
+      "limit": "3"
+    },
+    "expected_status": 200
+  },
+  {
+    "id": "admin-catalog-offer",
+    "op": "admin",
+    "tail": "catalog",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-catalog-offer"
+    },
+    "query": {
+      "kind": "offer",
+      "limit": "3"
+    },
+    "expected_status": 200
+  },
+  {
+    "id": "admin-catalog-kind-denied",
+    "op": "admin",
+    "tail": "catalog",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-catalog-kind-denied"
+    },
+    "query": {
+      "kind": "game-admin"
+    },
+    "expected_status": 400
+  },
+  {
+    "id": "admin-catalog-wardrobe",
+    "op": "admin",
+    "tail": "catalog",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-catalog-wardrobe"
+    },
+    "query": {
+      "kind": "wardrobe",
+      "limit": "3"
+    },
+    "expected_status": 200
+  },
+  {
+    "id": "admin-search-too-long",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-search-too-long"
+    },
+    "query": {
+      "q": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "expected_status": 400
+  },
+  {
+    "id": "admin-users-limit-overflow",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-users-limit-overflow"
+    },
+    "query": {
+      "limit": "101"
+    },
+    "expected_status": 400
+  },
+  {
+    "id": "admin-users-cursor-overflow",
+    "op": "admin",
+    "tail": "users",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-users-cursor-overflow"
+    },
+    "query": {
+      "cursor": "1000000000"
+    },
+    "expected_status": 400
+  },
+  {
+    "id": "admin-moderator-wallet-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 1
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-moderator-wallet-denied"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-admin-operator-denied",
+    "op": "admin",
+    "tail": "operators/new",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "role": "owner",
+      "enabled": true
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-admin-operator-denied"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-last-owner-denied",
+    "op": "admin",
+    "tail": "operators/owner",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "role": "admin",
+      "enabled": false
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-last-owner-denied"
+    },
+    "query": {},
+    "expected_status": 409
+  },
+  {
+    "id": "admin-wallet-no-key",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 1
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-wallet-bool-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": true
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-bool-denied"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-wallet-underflow-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": -151
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-underflow-denied"
+    },
+    "query": {},
+    "expected_status": 409
+  },
+  {
+    "id": "admin-wallet-extra-field-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 1,
+      "synthetic_extra": true
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-extra-field-denied"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-wallet-zero-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 0
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-zero-denied"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-wallet-level-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "level",
+      "delta": 1
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-level-denied"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-wallet-overflow-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 2147483647
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-overflow-denied"
+    },
+    "query": {},
+    "expected_status": 409
+  },
+  {
+    "id": "admin-wallet-short-key-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 1
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "short"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-wallet-control-reason-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "synthetic\u0001",
+      "currency": "crystals",
+      "delta": 1
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-control-reason-denied"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-grant-missing-housing",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/items",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "kind": "housing",
+      "item_id": "synthetic-missing"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-grant-missing-housing"
+    },
+    "query": {},
+    "expected_status": 404
+  },
+  {
+    "id": "admin-staff-unicode-format",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "\u200b"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-unicode-format"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-staff-unicode-private-use",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "\ue000"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-unicode-private-use"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-staff-unicode-unassigned",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "\u0378"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-unicode-unassigned"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-staff-unicode-delete",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "\u007f"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-unicode-delete"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-staff-unicode-delimiter",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "synthetic#label"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-unicode-delimiter"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-after-guards",
+    "op": "snapshot",
+    "same_as": "admin-state-initial"
+  },
+  {
+    "id": "admin-wallet-credit",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 7
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-credit-key"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-after-wallet",
+    "op": "snapshot"
+  },
+  {
+    "id": "admin-wallet-replay",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 7
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-credit-key"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-after-wallet-replay",
+    "op": "snapshot",
+    "same_as": "admin-after-wallet"
+  },
+  {
+    "id": "admin-wallet-conflict",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "crystals",
+      "delta": 8
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-credit-key"
+    },
+    "query": {},
+    "expected_status": 409
+  },
+  {
+    "id": "admin-after-wallet-conflict",
+    "op": "snapshot",
+    "same_as": "admin-after-wallet"
+  },
+  {
+    "id": "admin-wallet-current-a",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-current-a"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-wallet-isolated-b",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/wallet",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-isolated-b"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-wallet-ledger",
+    "op": "admin",
+    "tail": "transactions",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-ledger"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-wallet-audit",
+    "op": "admin",
+    "tail": "audit",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-audit"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-wallet-other-actor-same-key",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/wallet-adjustments",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "currency": "np",
+      "delta": 2
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-wallet-credit-key"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-wallet-other-actor-b",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/wallet",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-other-actor-b"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-grant-companion",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/items",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "kind": "companions",
+      "item_id": "A0IQgRXmw2UMG8T5UGrVE022o7Id25GU"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-grant-companion"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-grant-existing-companion",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/items",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "kind": "companions",
+      "item_id": "A0IQgRXmw2UMG8T5UGrVE022o7Id25GU"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-grant-existing-companion"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-grant-offer",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/items",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "kind": "offer",
+      "offer_id": "fixture-bundle-buy"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-grant-offer"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-granted-owned",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/owned",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-granted-owned"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-granted-purchases",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/purchases",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-granted-purchases"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-after-grants",
+    "op": "snapshot"
+  },
+  {
+    "id": "admin-staff-admin-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "Staff"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-staff-admin-denied"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-staff-richtext-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "<b>Staff</b>"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-richtext-denied"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-staff-label",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "Synthetic Staff"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-label"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-staff-status",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/moderation",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-staff-status"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-game-report-create",
+    "op": "http",
+    "route": "ReportServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#0#Fixture B#Synthetic report only#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200
+  },
+  {
+    "id": "admin-report-read",
+    "op": "admin",
+    "tail": "moderation/reports",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-report-read"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-report-review",
+    "op": "admin",
+    "tail": "moderation/reports/a784f58c646aa360fa67d507e4ef5b12e947f3297e3febbb05cebe52dfe22317",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "status": "resolved",
+      "note": "Synthetic reviewed"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-report-review"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-report-read-resolved",
+    "op": "admin",
+    "tail": "moderation/reports",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-report-read-resolved"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-report-status-denied",
+    "op": "admin",
+    "tail": "moderation/reports/a784f58c646aa360fa67d507e4ef5b12e947f3297e3febbb05cebe52dfe22317",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "status": "invalid",
+      "note": "Synthetic"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-report-status-denied"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-rename-b",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/rename",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "username": "Fixture Renamed B"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-rename-b"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-renamed-profile",
+    "op": "admin",
+    "tail": "users/fixture-parity-b",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-renamed-profile"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-mute",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/mute",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "expires_at": null
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-mute"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-muted-status",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/moderation",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-muted-status"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-unmute",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/unmute",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-unmute"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-maintenance",
+    "op": "admin",
+    "tail": "moderation/maintenance",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "minutes": 5
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-maintenance"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-maintenance-status",
+    "op": "admin",
+    "tail": "moderation/status",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-maintenance-status"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-news-publish",
+    "op": "admin",
+    "tail": "moderation/news",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "text": "Synthetic preservation news",
+      "expires_at": null
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-news-key-0001"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-after-news",
+    "op": "snapshot"
+  },
+  {
+    "id": "admin-news-replay",
+    "op": "admin",
+    "tail": "moderation/news",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "text": "Synthetic preservation news",
+      "expires_at": null
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "admin",
+      "Idempotency-Key": "admin-news-key-0001"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-after-news-replay",
+    "op": "snapshot",
+    "same_as": "admin-after-news"
+  },
+  {
+    "id": "admin-news-read",
+    "op": "admin",
+    "tail": "moderation/news",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-news-read"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-kick",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/kick",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-kick"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-kicked-session-denied",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 403
+  },
+  {
+    "id": "admin-ban",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/ban",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "expires_at": null
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-ban"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-banned-status",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/moderation",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-banned-status"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-unban",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/unban",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-unban"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-unbanned-status",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/moderation",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-unbanned-status"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-unban-does-not-resurrect-session",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 403
+  },
+  {
+    "id": "admin-owner-player-link",
+    "op": "admin",
+    "tail": "operators/owner/player-link",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "account_id": "fixture-parity-b"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-owner-player-link"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-equal-higher-sanction-denied",
+    "op": "admin",
+    "tail": "users/fixture-parity-b/ban",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "expires_at": null
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-equal-higher-sanction-denied"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-disable-moderator",
+    "op": "admin",
+    "tail": "operators/moderator",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "role": "moderator",
+      "enabled": false
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-disable-moderator"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-disabled-moderator-denied",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-disabled-moderator-denied"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-final-events",
+    "op": "admin",
+    "tail": "moderation/events",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-final-events"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-final-audit",
+    "op": "admin",
+    "tail": "audit",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-final-audit"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-final-stats",
+    "op": "admin",
+    "tail": "stats",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-final-stats"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-before-process-reopen",
+    "op": "snapshot"
+  },
+  {
+    "id": "admin-process-reopen",
+    "op": "process_restart"
+  },
+  {
+    "id": "admin-after-process-reopen",
+    "op": "snapshot",
+    "same_as": "admin-before-process-reopen"
+  },
+  {
+    "id": "admin-wallet-after-process-reopen",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/wallet",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-wallet-after-process-reopen"
+    },
+    "query": {},
+    "expected_status": 200
+  },
+  {
+    "id": "admin-disabled-role-survives-reopen",
+    "op": "admin",
+    "tail": "health",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "moderator",
+      "Idempotency-Key": "admin-disabled-role-survives-reopen"
+    },
+    "query": {},
+    "expected_status": 403
+  },
+  {
+    "id": "admin-news-after-process-reopen",
+    "op": "admin",
+    "tail": "moderation/news",
+    "method": "GET",
+    "body": null,
+    "headers": {
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-news-after-process-reopen"
+    },
+    "query": {},
+    "expected_status": 200
+  }
+]

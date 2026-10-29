@@ -1,0 +1,3 @@
+# Optional developer integration test dependencies; not runtime image dependencies.
+cryptography==44.0.0
+pycryptodome==3.23.0

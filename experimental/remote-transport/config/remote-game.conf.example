@@ -1,0 +1,8 @@
+format=nebula-remote-transport-v1
+server_url=https://nebula.example.org
+gateway_port=8443
+api_port=38080
+first_scene_port=28000
+last_scene_port=28031
+ca_file=REPLACE_WITH_ABSOLUTE_PATH_TO_OPERATOR_CA_DER
+ca_sha256=REPLACE_WITH_64_LOWERCASE_HEX_SHA256

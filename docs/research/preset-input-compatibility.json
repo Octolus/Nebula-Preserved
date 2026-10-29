@@ -1,0 +1,277 @@
+{
+  "format_version": 1,
+  "scope": "Authored private StandaloneWindows focus and end-edit compatibility for the shipped Save Preset name field. Native save, listing and named load request pass; exact visual morph reapplication remains unproven.",
+  "observed_state": {
+    "wardrobe_reached": true,
+    "avatar_height_changed_one_step": true,
+    "save_preset_opened": true,
+    "visible_state": "blank horizontal dark rectangle with no prompt, text, or visible caret",
+    "escape_once_changed_visible_state": false,
+    "focus_v1_runtime_retested": true,
+    "focus_v1_result": "Caret appeared and PreservationTest was entered successfully.",
+    "return_trace": {
+      "path": "work/integration-state/preset-input-trace-pid63352-active.jsonl",
+      "sha256": "d9724dfed74eb55abfaa2ea5d8d5ba5007218a177b2bdb958be0e84e9bf8f75c",
+      "input_field_key_pressed_finish": true,
+      "deactivate_input_field_entered": true,
+      "allow_input_changed_to_false": true,
+      "save_preset_name_on_save_preset_calls": 0,
+      "n2_save_preset_request_observed": false,
+      "text_length_after_deactivation": 16
+    },
+    "screenshot": {
+      "path": "outputs/nebula-preservation/runtime-screenshots/preset-save-blank.png",
+      "sha256": "d114cb10b5e6c2c213067ff8f0c2d5702e355dc711149e40b2f58065cf3f83d2"
+    }
+  },
+  "shipped_asset_contract": {
+    "bundle_path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\charactereditor",
+    "bundle_sha256": "5d1713e79b4e5bab090a3d57eb4d4c4139999629bb4a2038412a6cb92d1b02e0",
+    "serialized_file": "BuildPlayer-CharacterEditor",
+    "serialized_unity_version": "2018.4.36f1",
+    "save_button": {
+      "game_object_path_id": 1603,
+      "component_path_id": 22207,
+      "name": "BTNMENU_SavePreset",
+      "calls": [
+        {
+          "order": 1,
+          "target_path_id": 16799,
+          "method": "onClickBTNMENU_SavePreset",
+          "native_body": "empty"
+        },
+        {
+          "order": 2,
+          "target_path_id": 38388,
+          "method": "Show"
+        }
+      ]
+    },
+    "input_field": {
+      "game_object_path_id": 5152,
+      "component_path_id": 38565,
+      "save_component_path_id": 38388,
+      "name": "InputFieldSavePresetName",
+      "initially_active": false,
+      "initial_text": "",
+      "placeholder": null,
+      "text_color": "white",
+      "caret_color": [
+        0.1960784346,
+        0.1960784346,
+        0.1960784346,
+        1.0
+      ],
+      "background_color": [
+        0.1137254983,
+        0.1098039299,
+        0.3529411852,
+        1.0
+      ],
+      "line_type": "single_line",
+      "read_only": false,
+      "character_limit": 0,
+      "on_end_edit": {
+        "target_path_id": 38388,
+        "method": "OnSavePreset"
+      }
+    },
+    "event_systems": {
+      "main": {
+        "component_path_id": 14998,
+        "disabled_by_show": true
+      },
+      "pc_save": {
+        "component_path_id": 15015,
+        "game_object_path_id": 5150,
+        "name": "EventSystemPCSavePreset",
+        "initially_active": true,
+        "first_selected_path_id": 5152
+      }
+    }
+  },
+  "static_cause": {
+    "show_rva": "0x671220",
+    "behavior": "Disables the main EventSystem GameObject and activates the InputField GameObject.",
+    "missing_behavior": "Does not select the field or call InputField.ActivateInputField.",
+    "first_selected_timing": "The dedicated PC save EventSystem is already active while its first-selected InputField GameObject is inactive, so its initial first-selection attempt is not a reliable activation path and is not retried by Show.",
+    "blank_visual_explanation": "The field intentionally has empty text and no placeholder; without activation it has no caret. Escape has no SavePresetName cancel handler.",
+    "end_edit_compatibility_inference": "The 2021 runtime declares m_OnSubmit at offset 0x130 with FormerlySerializedAs aliases including m_OnEndEdit, and declares the callback invoked by DeactivateInputField separately as m_OnDidEndEdit at offset 0x138. The 2018 asset type tree names its listener m_OnEndEdit. The trace proves deactivation without OnSavePreset, supporting—but not independently proving until retest—that the legacy event did not populate the runtime m_OnDidEndEdit slot."
+  },
+  "authored_patch": {
+    "policy": "Append exactly one third persistent Button call after SavePresetName.Show and migrate the sole legacy InputField end-edit type-tree field to the 2021 runtime field name.",
+    "call": {
+      "target_path_id": 38565,
+      "method": "ActivateInputField",
+      "mode": 1,
+      "call_state": 2
+    },
+    "focus_proof": "Show synchronously activates the field and disables the main EventSystem. ActivateInputField sets the next-update activation flag. ActivateInputFieldInternal then uses the still-active EventSystemPCSavePreset, selects GameObject 5152, and enables in-place keyboard editing and caret state.",
+    "why_main_event_system_is_not_reactivated": "A dedicated active PC save EventSystem already exists. Reactivating the main one would create competing active EventSystems and is unnecessary.",
+    "end_edit_type_tree_migration": {
+      "serialized_type_id": 85,
+      "serialized_type_users": [
+        38565
+      ],
+      "before": "m_OnEndEdit",
+      "after": "m_OnDidEndEdit",
+      "listener_payload_bytes_changed": false,
+      "all_other_type_tree_nodes_preserved": true,
+      "status": "V2 native save, list and named load request pass. This supports the compatibility inference; exact visual morph reapplication remains unproven."
+    },
+    "normal_actions_after_patch": [
+      "Select Save Preset and press Return.",
+      "Type PreservationTest.",
+      "Press Return to end the single-line edit.",
+      "InputField onEndEdit invokes SavePresetName.OnSavePreset, which rejects only an empty name, hides the field, restores selection after one frame, and calls ManagerPreset.Save with the current gender."
+    ]
+  },
+  "controller_text_entry": {
+    "method": "DialogPS4.OpenIMESavePreset",
+    "rva": "0x6a3fc0",
+    "platform_guard": "Returns without opening Sony IME when DialogPS4.isPC is true.",
+    "title": "Save Preset",
+    "maximum_characters": 16,
+    "initial_text": "",
+    "note": "PreservationTest is 16 characters and fits the controller IME limit. The StandaloneWindows Button instead uses the local InputField persistent-call flow."
+  },
+  "prepared_copy": {
+    "path": "work/patched-preset-input-v2/charactereditor",
+    "manifest": "outputs/nebula-preservation/client-fixes/prepared-preset-input-v2-copy.json",
+    "sha256": "9a2cdcaa9ac356fe95df9b5a5ad5df6bba93330ad1591685553031729628d3c4",
+    "changed_object_path_id": 22207,
+    "original_button_calls_preserved": true,
+    "preserved_raw_entries": 41050,
+    "all_other_serialized_objects_and_streamed_resources_preserved": true,
+    "steam_original_changed": false
+  },
+  "historical_focus_only_copy": {
+    "path": "work/patched-preset-input/charactereditor",
+    "manifest": "outputs/nebula-preservation/client-fixes/prepared-preset-input-copy.json",
+    "sha256": "d5ed36e3cf7951f804f659c3395c7e747f8b07b0d341119dafed638cdf00dfc1",
+    "runtime_result": "Focus, caret, and text entry passed; end-edit callback did not invoke OnSavePreset."
+  },
+  "verification": {
+    "actual_bundle_roundtrip": true,
+    "tests_passed": 6,
+    "source_hash_rechecked": true,
+    "runtime_retested": true,
+    "target_executed_with_patch": true,
+    "focus_and_text_entry_passed": true,
+    "return_closed_name_panel": true,
+    "native_save_request_succeeded": true,
+    "saved_name_listed": true,
+    "named_load_request_succeeded": true,
+    "visual_morph_reload_proven": false
+  },
+  "v2_runtime_result": {
+    "process_id": 125164,
+    "client_mode": "unhooked private client copy",
+    "bundle_sha256": "9a2cdcaa9ac356fe95df9b5a5ad5df6bba93330ad1591685553031729628d3c4",
+    "actions": [
+      "Opened Save Preset.",
+      "Entered PreservationTest with visible focus.",
+      "Pressed Return; the name panel closed and the editor resumed.",
+      "Opened the preset list; Default and PreservationTest were visible.",
+      "Selected PreservationTest; the named native load request was served."
+    ],
+    "http_observations": [
+      {
+        "time": 1793221442.8305616,
+        "command": "N2SavePreset",
+        "status": 200,
+        "response_bytes": 9,
+        "request_sha256": "9a57d89a9f470b72d3fa2f3729e6190b396b98c99dca12020c09a1c13c1e7a52"
+      },
+      {
+        "time": 1793221457.9319463,
+        "command": "ShowPresetsServlet",
+        "status": 200,
+        "response_bytes": 62,
+        "request_sha256": "8aa198f9c63fb213cfa2ab7d65a686b1ab71f37b8b92902c934975564e240092"
+      },
+      {
+        "time": 1793221476.6852026,
+        "command": "GetLoadPresetByName",
+        "status": 200,
+        "response_bytes": 10183,
+        "request_sha256": "c29d464fea9e4b7b2b52dc102d3bba074654c6e2d0eb15bd298b5e3e8cf1cafa"
+      }
+    ],
+    "load_request_shape_verified_without_identifiers": "current session GUID, current platform account ID, preset GUID, numeric gender 0, PreservationTest, StandaloneWindows",
+    "persistence_checkpoint": {
+      "path": "work/integration-state/account-checkpoint-after-preset-save.json",
+      "sha256": "70b6fd35690a6736400d6bb2c31aa0394250433876f6af1e50239460f59160ce",
+      "observation": "A male PreservationTest preset exists and its stored b73 value is 100; the Default preset b73 value is 0."
+    },
+    "screenshots": [
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/preset-name-entered.png",
+        "sha256": "fbc8f1e1c86f274f32d945ec1d89d8de1bbb19c80be865f2ffee32121e4b1dc0",
+        "observation": "Focused field contains PreservationTest."
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/preset-load-list.png",
+        "sha256": "bb3c95f99ad003064df1a2aaabaa9ceeeb4cd312510c0677f6a3dd7690b52697",
+        "observation": "Preset list visibly contains Default and PreservationTest."
+      }
+    ],
+    "boundary": "The named save, durable listing, and named load request are proven. The tester perceived a possible height change after load but could not confirm it, so exact visual morph reapplication is not claimed."
+  },
+  "native_sources": [
+    {
+      "path": "work/evidence/ghidra/functions/671220.c",
+      "rva": "0x671220",
+      "name": "SavePresetName.Show",
+      "sha256": "a2a40b2902a2265f4c81e066eba7fe87e10cd02370acacbbae047fa138ae2b95"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/671050.c",
+      "rva": "0x671050",
+      "name": "SavePresetName.OnSavePreset",
+      "sha256": "83b1872a0ff81dffe6e51b867db145376c7961ef9b8dbef9ddd07a0f89038a24"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/673420.c",
+      "rva": "0x673420",
+      "name": "SavePresetName.SetInputFieldDelay.MoveNext",
+      "sha256": "45993ffe0c4aeadf905cb9d4535e95670558d53997fd77b1c437953d8a63c411"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/1c3a7f0.c",
+      "rva": "0x1c3a7f0",
+      "name": "InputField.ActivateInputField",
+      "sha256": "e5f52a1771da35c0a913087dd05e872020691403aba98cd0d8d355910fcaa842"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/1c3a380.c",
+      "rva": "0x1c3a380",
+      "name": "InputField.ActivateInputFieldInternal",
+      "sha256": "0453b9fd0f95e6ef932dd1f8e58991df2c2c774c362f009e59a91f3260e0f7e6"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/1c410d0.c",
+      "rva": "0x1c410d0",
+      "name": "InputField.OnSubmit",
+      "sha256": "ae64a50817af46c74f9d6846c81085e317c61273c1d75471c1da3f66e7342cb5"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/1c3b8b0.c",
+      "rva": "0x1c3b8b0",
+      "name": "InputField.DeactivateInputField",
+      "sha256": "df0225bb9354ff73f70fd2be2e3cb9cd0781058e5e28ff874c8944d312d1d05b"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/6a3fc0.c",
+      "rva": "0x6a3fc0",
+      "name": "DialogPS4.OpenIMESavePreset",
+      "sha256": "c5247b2a8a1aba771ad3668631a299e56a0f2aacb97f9b630e4e8aa10338c604"
+    }
+  ],
+  "limitations": [
+    "The V2 end-edit migration is runtime validated for focus, text entry, Return close, native save, durable listing, and named load request.",
+    "Exact visual morph reapplication after the load remains unproven.",
+    "Reconnect persistence was not separately retested in a fresh process during this bounded run.",
+    "The bundle rewrite preserves every other raw object/resource payload but not the original compressed byte layout."
+  ]
+}

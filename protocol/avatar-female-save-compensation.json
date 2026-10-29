@@ -1,0 +1,175 @@
+{
+  "format_version": 1,
+  "target_execution": false,
+  "build_id": "11018722",
+  "policy": "original-build11018722-female-save-six-field-permutation-v1",
+  "sources": [
+    {
+      "path": "work/evidence/GameAssembly.dll",
+      "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac"
+    },
+    {
+      "path": "work/decompiled/dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/582470.c",
+      "sha256": "3c456a363546a832168d7c9a49dc41c80b44e0bd0c25e4ea0356eb4ab97a6bb6"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/3c6680.c",
+      "sha256": "8d070dcb459d699c16e4d7ec0d120144de384d685cc402d21da6c4510284fd94"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/58f910.c",
+      "sha256": "f1a5fbe86e7fb6689d09c368e1ef2e13d23c6ff1acf1d44c9272b76efb6b36a4"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/600200.c",
+      "sha256": "04eb9130b846c09cdef1d53af6ddbecd72a17cde6e8826cd0f50522c884156ef"
+    }
+  ],
+  "reader_rva": "0x582470",
+  "writer_rva": "0x3c6680",
+  "editor_consumer_rva": "0x58f910",
+  "world_consumer_rva": "0x600200",
+  "raw_reader_to_saved_json": [
+    {
+      "raw_float_index": 36,
+      "reader_array_object_offset": "0xb0",
+      "reader_semantic_field": "f_ch_l_pectoral_jnt_t_x",
+      "native_saved_field": "f_ch_l_pectoral_jnt_t_x",
+      "saved_json_object_offset": "0x350"
+    },
+    {
+      "raw_float_index": 37,
+      "reader_array_object_offset": "0xb4",
+      "reader_semantic_field": "f_ch_l_pectoral_jnt_t_y",
+      "native_saved_field": "f_ch_l_pectoral_jnt_t_y",
+      "saved_json_object_offset": "0x354"
+    },
+    {
+      "raw_float_index": 38,
+      "reader_array_object_offset": "0xb8",
+      "reader_semantic_field": "f_ch_l_pectoral_jnt_t_z",
+      "native_saved_field": "f_ch_l_pectoral_jnt_t_z",
+      "saved_json_object_offset": "0x358"
+    },
+    {
+      "raw_float_index": 39,
+      "reader_array_object_offset": "0xbc",
+      "reader_semantic_field": "f_ch_l_pectoral_jnt_s_x",
+      "native_saved_field": "f_ch_r_pectoral_jnt_t_x",
+      "saved_json_object_offset": "0x35c"
+    },
+    {
+      "raw_float_index": 40,
+      "reader_array_object_offset": "0xc0",
+      "reader_semantic_field": "f_ch_l_pectoral_jnt_s_y",
+      "native_saved_field": "f_ch_r_pectoral_jnt_t_y",
+      "saved_json_object_offset": "0x360"
+    },
+    {
+      "raw_float_index": 41,
+      "reader_array_object_offset": "0xc4",
+      "reader_semantic_field": "f_ch_l_pectoral_jnt_s_z",
+      "native_saved_field": "f_ch_r_pectoral_jnt_t_z",
+      "saved_json_object_offset": "0x364"
+    },
+    {
+      "raw_float_index": 42,
+      "reader_array_object_offset": "0xc8",
+      "reader_semantic_field": "f_ch_r_pectoral_jnt_t_x",
+      "native_saved_field": "f_ch_l_pectoral_jnt_s_x",
+      "saved_json_object_offset": "0x368"
+    },
+    {
+      "raw_float_index": 43,
+      "reader_array_object_offset": "0xcc",
+      "reader_semantic_field": "f_ch_r_pectoral_jnt_t_y",
+      "native_saved_field": "f_ch_l_pectoral_jnt_s_y",
+      "saved_json_object_offset": "0x36c"
+    },
+    {
+      "raw_float_index": 44,
+      "reader_array_object_offset": "0xd0",
+      "reader_semantic_field": "f_ch_r_pectoral_jnt_t_z",
+      "native_saved_field": "f_ch_l_pectoral_jnt_s_z",
+      "saved_json_object_offset": "0x370"
+    },
+    {
+      "raw_float_index": 45,
+      "reader_array_object_offset": "0xd4",
+      "reader_semantic_field": "f_ch_r_pectoral_jnt_s_x",
+      "native_saved_field": "f_ch_r_pectoral_jnt_s_x",
+      "saved_json_object_offset": "0x374"
+    },
+    {
+      "raw_float_index": 46,
+      "reader_array_object_offset": "0xd8",
+      "reader_semantic_field": "f_ch_r_pectoral_jnt_s_y",
+      "native_saved_field": "f_ch_r_pectoral_jnt_s_y",
+      "saved_json_object_offset": "0x378"
+    },
+    {
+      "raw_float_index": 47,
+      "reader_array_object_offset": "0xdc",
+      "reader_semantic_field": "f_ch_r_pectoral_jnt_s_z",
+      "native_saved_field": "f_ch_r_pectoral_jnt_s_z",
+      "saved_json_object_offset": "0x37c"
+    }
+  ],
+  "canonical_consumers": [
+    {
+      "bone": "F_ch_l_pectoral_jnt",
+      "translation_vector_index": 12,
+      "scale_vector_index": 14,
+      "translation_array_offset": "0xb0",
+      "scale_array_offset": "0xc8"
+    },
+    {
+      "bone": "F_ch_r_pectoral_jnt",
+      "translation_vector_index": 13,
+      "scale_vector_index": 15,
+      "translation_array_offset": "0xbc",
+      "scale_array_offset": "0xd4"
+    }
+  ],
+  "synthetic_fixture": {
+    "canonical": {
+      "f_ch_l_pectoral_jnt_t_x": 0.125,
+      "f_ch_l_pectoral_jnt_t_y": 0.25,
+      "f_ch_l_pectoral_jnt_t_z": 0.375,
+      "f_ch_r_pectoral_jnt_t_x": -0.125,
+      "f_ch_r_pectoral_jnt_t_y": -0.25,
+      "f_ch_r_pectoral_jnt_t_z": 0.5,
+      "f_ch_l_pectoral_jnt_s_x": 1.125,
+      "f_ch_l_pectoral_jnt_s_y": 1.25,
+      "f_ch_l_pectoral_jnt_s_z": 1.375,
+      "f_ch_r_pectoral_jnt_s_x": 0.875,
+      "f_ch_r_pectoral_jnt_s_y": 0.75,
+      "f_ch_r_pectoral_jnt_s_z": 0.625
+    },
+    "native_saved_named_fields": {
+      "f_ch_l_pectoral_jnt_t_x": 0.125,
+      "f_ch_l_pectoral_jnt_t_y": 0.25,
+      "f_ch_l_pectoral_jnt_t_z": 0.375,
+      "f_ch_r_pectoral_jnt_t_x": 1.125,
+      "f_ch_r_pectoral_jnt_t_y": 1.25,
+      "f_ch_r_pectoral_jnt_t_z": 1.375,
+      "f_ch_l_pectoral_jnt_s_x": -0.125,
+      "f_ch_l_pectoral_jnt_s_y": -0.25,
+      "f_ch_l_pectoral_jnt_s_z": 0.5,
+      "f_ch_r_pectoral_jnt_s_x": 0.875,
+      "f_ch_r_pectoral_jnt_s_y": 0.75,
+      "f_ch_r_pectoral_jnt_s_z": 0.625
+    }
+  },
+  "scope": "Only original native N2SavePreset ingress. Canonical admin, neutral, stored and response JSON remain named order.",
+  "unknowns": [
+    "Whether the original retired service compensated this mismatch is unknown.",
+    "Runtime visual confirmation after the local correction is still required.",
+    "A future corrected client writer must use separately versioned ingress to avoid double compensation."
+  ]
+}
+

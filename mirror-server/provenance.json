@@ -1,0 +1,1261 @@
+{
+  "upstream_repository": "https://github.com/MirrorNetworking/Mirror",
+  "tag": "v66.0.9",
+  "commit": "4d0cd1054a9011ee4492f91ed4bd16c671fea470",
+  "unity_editor": "6000.6.3f1",
+  "source_date": "2022-04-16",
+  "modifications": [
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Server.cs",
+      "upstream_sha256": "ec513d43b1a2274464e17eb282fc8b6983339d5d4465026903ec90f48061dcf7",
+      "project_sha256": "b8d9c4f95695c8c9905399749e8726a8a342ee7be7aa9d78d9f4c0053ab43695",
+      "change": "Configurable explicit IPv4 bind with loopback default and IPv4/port validation; Start captures address; Listen uses TcpListener(bindAddress,port). Added volatile read-only Listening telemetry, set only after listener.Start and cleared on stop/finally. Existing framing, queues, send/receive loops, and Active semantics retained."
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/TelepathyTransport.cs",
+      "upstream_sha256": "d358b21c173162bbacbd9c3ef69185968f3072209de414e81101e03c148492a0",
+      "project_sha256": "5bb320e981e472f95d8bfed00ebf7d7102b9c31d1399db7aacf0ac1c42308baa",
+      "change": "Added read-only ServerListening accessor for Telepathy actual-bound telemetry. Existing ServerActive semantics and all wire behavior retained."
+    }
+  ],
+  "verified_source_files": [
+    {
+      "path": "CompilerSymbols/Mirror.CompilerSymbols.asmdef",
+      "upstream_sha256": "b60f7bb5fed1640ef5e5263c6746fad4820d51f022b00dddb96bc9255d677b7a",
+      "project_sha256": "b60f7bb5fed1640ef5e5263c6746fad4820d51f022b00dddb96bc9255d677b7a"
+    },
+    {
+      "path": "CompilerSymbols/PreprocessorDefine.cs",
+      "upstream_sha256": "6b914a3cc4e1dc63295087f3560eb2f0662ba4a81b4850d5b545606d7fd1530c",
+      "project_sha256": "6b914a3cc4e1dc63295087f3560eb2f0662ba4a81b4850d5b545606d7fd1530c"
+    },
+    {
+      "path": "Editor/AndroidManifestHelper.cs",
+      "upstream_sha256": "ad692e74b25bb4b3a27da25cfc07ffa4282c9d40092ab14c2a6450ac89decbb1",
+      "project_sha256": "ad692e74b25bb4b3a27da25cfc07ffa4282c9d40092ab14c2a6450ac89decbb1"
+    },
+    {
+      "path": "Editor/EditorHelper.cs",
+      "upstream_sha256": "5caa1baed890f70667a520f35101163db7644f13876e1a09b7469d604c6a30d4",
+      "project_sha256": "5caa1baed890f70667a520f35101163db7644f13876e1a09b7469d604c6a30d4"
+    },
+    {
+      "path": "Editor/Empty/EnterPlayModeSettingsCheck.cs",
+      "upstream_sha256": "a4fc13a56eb0c6ba23c668ef64c38aca18ec53b72a9b08dd4aacc90842cb937c",
+      "project_sha256": "a4fc13a56eb0c6ba23c668ef64c38aca18ec53b72a9b08dd4aacc90842cb937c"
+    },
+    {
+      "path": "Editor/Empty/Logging/LogLevelsGUI.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Editor/Empty/Logging/LogLevelWindow.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Editor/Empty/Logging/LogSettingsEditor.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Editor/Empty/Logging/NetworkLogSettingsEditor.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Editor/Empty/LogLevelWindow.cs",
+      "upstream_sha256": "fd85dd97af55d26f868d0ead7f4c5674873668c525f3650e3d0dbcad7a90614f",
+      "project_sha256": "fd85dd97af55d26f868d0ead7f4c5674873668c525f3650e3d0dbcad7a90614f"
+    },
+    {
+      "path": "Editor/Empty/ScriptableObjectUtility.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Editor/Icon/MirrorIcon.png",
+      "upstream_sha256": "5f1ee2247319c7a4e5d1ab13ad4981c21c5a408299ae4158050a63ac7f1eba47",
+      "project_sha256": "5f1ee2247319c7a4e5d1ab13ad4981c21c5a408299ae4158050a63ac7f1eba47"
+    },
+    {
+      "path": "Editor/InspectorHelper.cs",
+      "upstream_sha256": "f5dfe08094e51320cd661992dc0dc63d024b73ca48f124c2bec48286db3e3e02",
+      "project_sha256": "f5dfe08094e51320cd661992dc0dc63d024b73ca48f124c2bec48286db3e3e02"
+    },
+    {
+      "path": "Editor/Mirror.Editor.asmdef",
+      "upstream_sha256": "36f47c2f59ff57f4532e97e6709aee4a7365018cb7688a498b38d9a9c8dd8991",
+      "project_sha256": "36f47c2f59ff57f4532e97e6709aee4a7365018cb7688a498b38d9a9c8dd8991"
+    },
+    {
+      "path": "Editor/NetworkBehaviourInspector.cs",
+      "upstream_sha256": "4e0131948cd46a51b3a0d252a3ebad8903b65a1ce2512d4e8bbd54c5345c81b3",
+      "project_sha256": "4e0131948cd46a51b3a0d252a3ebad8903b65a1ce2512d4e8bbd54c5345c81b3"
+    },
+    {
+      "path": "Editor/NetworkInformationPreview.cs",
+      "upstream_sha256": "5494bfd9bd40c8e078dd7e4def5e1e2d35b22ed5929419877e1ad9c83e0f3515",
+      "project_sha256": "5494bfd9bd40c8e078dd7e4def5e1e2d35b22ed5929419877e1ad9c83e0f3515"
+    },
+    {
+      "path": "Editor/NetworkManagerEditor.cs",
+      "upstream_sha256": "14b4930eef462327790bad656733be48789e815b8d39c2af8619942bf1d17db2",
+      "project_sha256": "14b4930eef462327790bad656733be48789e815b8d39c2af8619942bf1d17db2"
+    },
+    {
+      "path": "Editor/NetworkScenePostProcess.cs",
+      "upstream_sha256": "2ab5402f68f11a6e17a887c3696a1a2b189a365a11a7e52f8159e3ef41f26805",
+      "project_sha256": "2ab5402f68f11a6e17a887c3696a1a2b189a365a11a7e52f8159e3ef41f26805"
+    },
+    {
+      "path": "Editor/SceneDrawer.cs",
+      "upstream_sha256": "f8955fbd3dbac1c88b7e2a7cef3d764f08541d0c65f363ccab0edfa7c5b9f944",
+      "project_sha256": "f8955fbd3dbac1c88b7e2a7cef3d764f08541d0c65f363ccab0edfa7c5b9f944"
+    },
+    {
+      "path": "Editor/SyncObjectCollectionsDrawer.cs",
+      "upstream_sha256": "b4fb6cf508d01eb821664a2ffca986bbe98b925a6e22ec9c38e0cf597c77306a",
+      "project_sha256": "b4fb6cf508d01eb821664a2ffca986bbe98b925a6e22ec9c38e0cf597c77306a"
+    },
+    {
+      "path": "Editor/SyncVarAttributeDrawer.cs",
+      "upstream_sha256": "86fc43300551f6edba68cf36a6c0f596220ae6921865debce7dfd6aaddafe45d",
+      "project_sha256": "86fc43300551f6edba68cf36a6c0f596220ae6921865debce7dfd6aaddafe45d"
+    },
+    {
+      "path": "Editor/SyncVarDrawer.cs",
+      "upstream_sha256": "faa507495279b5bf49bbcf97e48a1acae4c8d5003ae7f6bd0c5c7106ca164c31",
+      "project_sha256": "faa507495279b5bf49bbcf97e48a1acae4c8d5003ae7f6bd0c5c7106ca164c31"
+    },
+    {
+      "path": "Editor/Weaver/AssemblyInfo.cs",
+      "upstream_sha256": "29eda74a5a2a9cbce6c519fcc7410e3cb900ad31d67db5fe8baa1e774a5f9fcb",
+      "project_sha256": "29eda74a5a2a9cbce6c519fcc7410e3cb900ad31d67db5fe8baa1e774a5f9fcb"
+    },
+    {
+      "path": "Editor/Weaver/Empty/GenericArgumentResolver.cs",
+      "upstream_sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15",
+      "project_sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15"
+    },
+    {
+      "path": "Editor/Weaver/Empty/MessageClassProcessor.cs",
+      "upstream_sha256": "34536595e2147d5d9739523bd99d8af1264c944aa99cec2c4861fae539bc2aab",
+      "project_sha256": "34536595e2147d5d9739523bd99d8af1264c944aa99cec2c4861fae539bc2aab"
+    },
+    {
+      "path": "Editor/Weaver/Empty/Program.cs",
+      "upstream_sha256": "7fa0673a2797260e39bc312e5dff31d410d9d6f138c9ddaf7e6e26b7516bf518",
+      "project_sha256": "7fa0673a2797260e39bc312e5dff31d410d9d6f138c9ddaf7e6e26b7516bf518"
+    },
+    {
+      "path": "Editor/Weaver/Empty/SyncDictionaryProcessor.cs",
+      "upstream_sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15",
+      "project_sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15"
+    },
+    {
+      "path": "Editor/Weaver/Empty/SyncEventProcessor.cs",
+      "upstream_sha256": "2ef90e3cb73b182eb7eb6001dfaa3d6784d2874402737ced7675cb8afe490024",
+      "project_sha256": "2ef90e3cb73b182eb7eb6001dfaa3d6784d2874402737ced7675cb8afe490024"
+    },
+    {
+      "path": "Editor/Weaver/Empty/SyncListProcessor.cs",
+      "upstream_sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15",
+      "project_sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15"
+    },
+    {
+      "path": "Editor/Weaver/EntryPoint/CompilationFinishedHook.cs",
+      "upstream_sha256": "696a82d857da48145c7106b398014b03436c2cdd514cb8116c6339724372ed5f",
+      "project_sha256": "696a82d857da48145c7106b398014b03436c2cdd514cb8116c6339724372ed5f"
+    },
+    {
+      "path": "Editor/Weaver/EntryPoint/CompilationFinishedLogger.cs",
+      "upstream_sha256": "f1ad27229d599137411ca410d668d55920eebd0a35aff9c8d747a5a05367a2e0",
+      "project_sha256": "f1ad27229d599137411ca410d668d55920eebd0a35aff9c8d747a5a05367a2e0"
+    },
+    {
+      "path": "Editor/Weaver/EntryPoint/EnterPlayModeHook.cs",
+      "upstream_sha256": "9a6f51227a31423587f047d584faf105e45c113daa6e985ee91ac7abc9c88a51",
+      "project_sha256": "9a6f51227a31423587f047d584faf105e45c113daa6e985ee91ac7abc9c88a51"
+    },
+    {
+      "path": "Editor/Weaver/EntryPointILPostProcessor/CompiledAssemblyFromFile.cs",
+      "upstream_sha256": "7b98dc1f84e137250056495cfb795b0423ebccc15e924b6ef78aeb52738c9b0c",
+      "project_sha256": "7b98dc1f84e137250056495cfb795b0423ebccc15e924b6ef78aeb52738c9b0c"
+    },
+    {
+      "path": "Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorAssemblyResolver.cs",
+      "upstream_sha256": "f4c5da4c5cb666d1c87e89374856fcdfead2daec831eb4d7d9574a329460be82",
+      "project_sha256": "f4c5da4c5cb666d1c87e89374856fcdfead2daec831eb4d7d9574a329460be82"
+    },
+    {
+      "path": "Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorFromFile.cs",
+      "upstream_sha256": "e32e7447336e414448d6f8853b413a5f8537b80e620eb935624b22f2396e3be4",
+      "project_sha256": "e32e7447336e414448d6f8853b413a5f8537b80e620eb935624b22f2396e3be4"
+    },
+    {
+      "path": "Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorHook.cs",
+      "upstream_sha256": "04f6810de154d1af231be68976e73d7d8cb47163e65107c8652a4f371a3e6979",
+      "project_sha256": "04f6810de154d1af231be68976e73d7d8cb47163e65107c8652a4f371a3e6979"
+    },
+    {
+      "path": "Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorLogger.cs",
+      "upstream_sha256": "632feb7aedaa6df2ab6d05141ca9d9f2bae17ccae6f5a0ce9e38384adac606fd",
+      "project_sha256": "632feb7aedaa6df2ab6d05141ca9d9f2bae17ccae6f5a0ce9e38384adac606fd"
+    },
+    {
+      "path": "Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorReflectionImporter.cs",
+      "upstream_sha256": "c269047f31b2cabed31a1460bea874286797299446aab8a47c4c653d52ea2472",
+      "project_sha256": "c269047f31b2cabed31a1460bea874286797299446aab8a47c4c653d52ea2472"
+    },
+    {
+      "path": "Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorReflectionImporterProvider.cs",
+      "upstream_sha256": "f9525a2daacebdbd438180ecf30bc80b2d51ef9d01a9a56514dd965474a5c9cc",
+      "project_sha256": "f9525a2daacebdbd438180ecf30bc80b2d51ef9d01a9a56514dd965474a5c9cc"
+    },
+    {
+      "path": "Editor/Weaver/Extensions.cs",
+      "upstream_sha256": "566c979120628d9399bc40c35db48af43975d851a8b30153d6cd68cf87c9d29c",
+      "project_sha256": "566c979120628d9399bc40c35db48af43975d851a8b30153d6cd68cf87c9d29c"
+    },
+    {
+      "path": "Editor/Weaver/Helpers.cs",
+      "upstream_sha256": "e87db8a89283dfcd050a4dea30dcbe714267a2b74bbae6a525834d7f9f3d6277",
+      "project_sha256": "e87db8a89283dfcd050a4dea30dcbe714267a2b74bbae6a525834d7f9f3d6277"
+    },
+    {
+      "path": "Editor/Weaver/Logger.cs",
+      "upstream_sha256": "3d3c31d4ca2cdfb143e773ae3d66785560a21ac2c1d1761fe82d37fabfbf514c",
+      "project_sha256": "3d3c31d4ca2cdfb143e773ae3d66785560a21ac2c1d1761fe82d37fabfbf514c"
+    },
+    {
+      "path": "Editor/Weaver/Processors/CommandProcessor.cs",
+      "upstream_sha256": "dc4961fd508152ae1f12ee990b69cdc96ca6bf83838a251417494ef0baa84768",
+      "project_sha256": "dc4961fd508152ae1f12ee990b69cdc96ca6bf83838a251417494ef0baa84768"
+    },
+    {
+      "path": "Editor/Weaver/Processors/MethodProcessor.cs",
+      "upstream_sha256": "2ebcd7d0d351cb066b0b9ea35624bf2beaa44c3dda8fbde51c7f4a20771ed04d",
+      "project_sha256": "2ebcd7d0d351cb066b0b9ea35624bf2beaa44c3dda8fbde51c7f4a20771ed04d"
+    },
+    {
+      "path": "Editor/Weaver/Processors/MonoBehaviourProcessor.cs",
+      "upstream_sha256": "fc9343c96e2d92076d725023f85a7fdb85e112f63169d2634166e64077200131",
+      "project_sha256": "fc9343c96e2d92076d725023f85a7fdb85e112f63169d2634166e64077200131"
+    },
+    {
+      "path": "Editor/Weaver/Processors/NetworkBehaviourProcessor.cs",
+      "upstream_sha256": "80a714cb8921784a2207e10350408f8607d26d73f444b4491d05c8f7554fd11e",
+      "project_sha256": "80a714cb8921784a2207e10350408f8607d26d73f444b4491d05c8f7554fd11e"
+    },
+    {
+      "path": "Editor/Weaver/Processors/ReaderWriterProcessor.cs",
+      "upstream_sha256": "ef83e599180cf5fef46d1edba2e1d25d53324f7c5459993c089d6d70af72d8bf",
+      "project_sha256": "ef83e599180cf5fef46d1edba2e1d25d53324f7c5459993c089d6d70af72d8bf"
+    },
+    {
+      "path": "Editor/Weaver/Processors/RpcProcessor.cs",
+      "upstream_sha256": "08988fb2c016300c5dfb0b259c3f8d11eb605f5c4d7970392d45cf4e1c97f904",
+      "project_sha256": "08988fb2c016300c5dfb0b259c3f8d11eb605f5c4d7970392d45cf4e1c97f904"
+    },
+    {
+      "path": "Editor/Weaver/Processors/ServerClientAttributeProcessor.cs",
+      "upstream_sha256": "d8d02259a45d45935fe2673c63c55c986c8712e54fb0dcbe63ebb890fe8e6015",
+      "project_sha256": "d8d02259a45d45935fe2673c63c55c986c8712e54fb0dcbe63ebb890fe8e6015"
+    },
+    {
+      "path": "Editor/Weaver/Processors/SyncObjectInitializer.cs",
+      "upstream_sha256": "31ae4c14079dc0db178f8ed4c662d7cff70c15193ee0ec9ddf78d02398a62aee",
+      "project_sha256": "31ae4c14079dc0db178f8ed4c662d7cff70c15193ee0ec9ddf78d02398a62aee"
+    },
+    {
+      "path": "Editor/Weaver/Processors/SyncObjectProcessor.cs",
+      "upstream_sha256": "f52789241b6419d5370a5f2a78c71e5b6f38e1e5b7bbe6dbf18e38415cd1846a",
+      "project_sha256": "f52789241b6419d5370a5f2a78c71e5b6f38e1e5b7bbe6dbf18e38415cd1846a"
+    },
+    {
+      "path": "Editor/Weaver/Processors/SyncVarAttributeAccessReplacer.cs",
+      "upstream_sha256": "99449f032f1599ad2f264c392f59f3b8ee367dbb54460947abea20e6c034c963",
+      "project_sha256": "99449f032f1599ad2f264c392f59f3b8ee367dbb54460947abea20e6c034c963"
+    },
+    {
+      "path": "Editor/Weaver/Processors/SyncVarAttributeProcessor.cs",
+      "upstream_sha256": "1994f5e751372b7292d8f8f7a62af31d631b4420d19ea9c302de88c1501dd201",
+      "project_sha256": "1994f5e751372b7292d8f8f7a62af31d631b4420d19ea9c302de88c1501dd201"
+    },
+    {
+      "path": "Editor/Weaver/Processors/TargetRpcProcessor.cs",
+      "upstream_sha256": "1cdb332a41cbce98eed123cb8a43faffb4447146f7c8f1616a8f2698e0dbcfd9",
+      "project_sha256": "1cdb332a41cbce98eed123cb8a43faffb4447146f7c8f1616a8f2698e0dbcfd9"
+    },
+    {
+      "path": "Editor/Weaver/Readers.cs",
+      "upstream_sha256": "8a37f084c73a336ae233bbe7f1c759ca4c29a6685e1f7203b30c129f27edd4d8",
+      "project_sha256": "8a37f084c73a336ae233bbe7f1c759ca4c29a6685e1f7203b30c129f27edd4d8"
+    },
+    {
+      "path": "Editor/Weaver/Resolvers.cs",
+      "upstream_sha256": "1a3855d11e8b6ff078bf24522b4cdf742c7ba5ad64a60650b6762c43078d2090",
+      "project_sha256": "1a3855d11e8b6ff078bf24522b4cdf742c7ba5ad64a60650b6762c43078d2090"
+    },
+    {
+      "path": "Editor/Weaver/SyncVarAccessLists.cs",
+      "upstream_sha256": "c3c8862e91dc5a29d7fce833c6ee75e218bc43edf2fc9cc78dfc3b359e31a3dc",
+      "project_sha256": "c3c8862e91dc5a29d7fce833c6ee75e218bc43edf2fc9cc78dfc3b359e31a3dc"
+    },
+    {
+      "path": "Editor/Weaver/TypeReferenceComparer.cs",
+      "upstream_sha256": "db420ce1bcb07594ad00e261476d6c7fc0ccb6b231b96d51a555d4f66c49a2f0",
+      "project_sha256": "db420ce1bcb07594ad00e261476d6c7fc0ccb6b231b96d51a555d4f66c49a2f0"
+    },
+    {
+      "path": "Editor/Weaver/Unity.Mirror.CodeGen.asmdef",
+      "upstream_sha256": "2d3e1d4b2d55c3ccce0cde03d7621a96aec677233eac4affd3d4e448cef90629",
+      "project_sha256": "2d3e1d4b2d55c3ccce0cde03d7621a96aec677233eac4affd3d4e448cef90629"
+    },
+    {
+      "path": "Editor/Weaver/Weaver.cs",
+      "upstream_sha256": "a6931391b4b09708a4566969c9ea4cf1bd0e91396c1595211893cbf8bb4e2e8f",
+      "project_sha256": "a6931391b4b09708a4566969c9ea4cf1bd0e91396c1595211893cbf8bb4e2e8f"
+    },
+    {
+      "path": "Editor/Weaver/WeaverExceptions.cs",
+      "upstream_sha256": "2a94235761bd47e6ceef8c7cd43b692ebce2c6dc7452c3c01264e0e046689658",
+      "project_sha256": "2a94235761bd47e6ceef8c7cd43b692ebce2c6dc7452c3c01264e0e046689658"
+    },
+    {
+      "path": "Editor/Weaver/WeaverTypes.cs",
+      "upstream_sha256": "5785e6bf4d3c56da9d52c7b6b0e38052d34e6f68e7b98d5845452e4609a22d1f",
+      "project_sha256": "5785e6bf4d3c56da9d52c7b6b0e38052d34e6f68e7b98d5845452e4609a22d1f"
+    },
+    {
+      "path": "Editor/Weaver/Writers.cs",
+      "upstream_sha256": "5158ad23eba3f188c95b1a73c8ba716fa7f0e9668a510740ecbc5d3e5d221f97",
+      "project_sha256": "5158ad23eba3f188c95b1a73c8ba716fa7f0e9668a510740ecbc5d3e5d221f97"
+    },
+    {
+      "path": "Plugins/Mono.Cecil/License.txt",
+      "upstream_sha256": "521b1b698f6ba3870a3af24e443af1f927a83b3db1f83eee94fb40c175241859",
+      "project_sha256": "521b1b698f6ba3870a3af24e443af1f927a83b3db1f83eee94fb40c175241859"
+    },
+    {
+      "path": "Plugins/Mono.Cecil/Mono.CecilX.dll",
+      "upstream_sha256": "95e4c2a039bd231183625b608e50b8c7edf85536d6a74faeac8e19db2779497b",
+      "project_sha256": "95e4c2a039bd231183625b608e50b8c7edf85536d6a74faeac8e19db2779497b"
+    },
+    {
+      "path": "Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll",
+      "upstream_sha256": "2634466c09fd41920a98e773c050ce3c9438900a70f93859fc3055fd8e95ee05",
+      "project_sha256": "2634466c09fd41920a98e773c050ce3c9438900a70f93859fc3055fd8e95ee05"
+    },
+    {
+      "path": "Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll",
+      "upstream_sha256": "524e1c46f47cedf1e10255551d6020609baee7c7fd54741b882cf6465b10e4c9",
+      "project_sha256": "524e1c46f47cedf1e10255551d6020609baee7c7fd54741b882cf6465b10e4c9"
+    },
+    {
+      "path": "Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll",
+      "upstream_sha256": "3894a25bcc175dc107ed5ab78c807791ddd218af43fc92876567552d28faf3ff",
+      "project_sha256": "3894a25bcc175dc107ed5ab78c807791ddd218af43fc92876567552d28faf3ff"
+    },
+    {
+      "path": "Runtime/AssemblyInfo.cs",
+      "upstream_sha256": "f6d40c01b5847aac32f20d1d7c03f445829d4422547e8fd9b4ff7b78c48330ba",
+      "project_sha256": "f6d40c01b5847aac32f20d1d7c03f445829d4422547e8fd9b4ff7b78c48330ba"
+    },
+    {
+      "path": "Runtime/Attributes.cs",
+      "upstream_sha256": "85c5477860306919c81874b86c2e3e13d55d32ccdf09e7efc979f31030f20b50",
+      "project_sha256": "85c5477860306919c81874b86c2e3e13d55d32ccdf09e7efc979f31030f20b50"
+    },
+    {
+      "path": "Runtime/Batching/Batcher.cs",
+      "upstream_sha256": "9b36403083abd6f3de749dad2b86e9281d8308dd9523a5debf1115a3ef081594",
+      "project_sha256": "9b36403083abd6f3de749dad2b86e9281d8308dd9523a5debf1115a3ef081594"
+    },
+    {
+      "path": "Runtime/Batching/Unbatcher.cs",
+      "upstream_sha256": "2f3ba58b17cecccf5a81567b80e467c6b4dbeec9f2a497eb54f1e7d2c49ea238",
+      "project_sha256": "2f3ba58b17cecccf5a81567b80e467c6b4dbeec9f2a497eb54f1e7d2c49ea238"
+    },
+    {
+      "path": "Runtime/Compression.cs",
+      "upstream_sha256": "c2ac77a114fdf5acb62bdbffdabd7e705c2c1d8bbe89f528404d96f7ceb47ca2",
+      "project_sha256": "c2ac77a114fdf5acb62bdbffdabd7e705c2c1d8bbe89f528404d96f7ceb47ca2"
+    },
+    {
+      "path": "Runtime/Empty/ClientScene.cs",
+      "upstream_sha256": "2672ae8de167a35cf6a6cb3b0c12e4cd14c52ee22f083ee1137c7229255e7ef3",
+      "project_sha256": "2672ae8de167a35cf6a6cb3b0c12e4cd14c52ee22f083ee1137c7229255e7ef3"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ApiConnector.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ApiUpdater.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/Ball.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/BallManager.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/BaseApi.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/Events.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/Extensions.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ICoroutineRunner.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/InstantiateNetworkManager.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/IRequestCreator.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/IUnityEqualCheck.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/JsonStructs.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ListServer.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ListServerBaseApi.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ListServerClientApi.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ListServerJson.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ListServerServerApi.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/Logger.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/NetworkManagerListServer.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/NetworkManagerListServerPong.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/Player.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/QuickListServerDebug.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/QuitButtonHUD.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/RequestCreator.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ServerListManager.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ServerListUI.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/Cloud/ServerListUIItem.cs",
+      "upstream_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "project_sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c"
+    },
+    {
+      "path": "Runtime/Empty/DotNetCompatibility.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/Empty/FallbackTransport.cs",
+      "upstream_sha256": "66f1ba6c5699160ae008a7a952365d54fca844020716d9bdb4856717c3ab0981",
+      "project_sha256": "66f1ba6c5699160ae008a7a952365d54fca844020716d9bdb4856717c3ab0981"
+    },
+    {
+      "path": "Runtime/Empty/LogFactory.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/Empty/LogFilter.cs",
+      "upstream_sha256": "bd3fa9e22b716f9359a4585cae86554c29e218d1a4be7566f363b0d1b011ab46",
+      "project_sha256": "bd3fa9e22b716f9359a4585cae86554c29e218d1a4be7566f363b0d1b011ab46"
+    },
+    {
+      "path": "Runtime/Empty/Logging/ConsoleColorLogHandler.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/Empty/Logging/EditorLogSettingsLoader.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/Empty/Logging/LogFactory.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/Empty/Logging/LogSettings.cs",
+      "upstream_sha256": "9076ef684744dccaeea52f5ebd38cd469813d6c7f778b4748933668f896e244d",
+      "project_sha256": "9076ef684744dccaeea52f5ebd38cd469813d6c7f778b4748933668f896e244d"
+    },
+    {
+      "path": "Runtime/Empty/Logging/NetworkHeadlessLogger.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/Empty/Logging/NetworkLogSettings.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/Empty/NetworkMatchChecker.cs",
+      "upstream_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "project_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd"
+    },
+    {
+      "path": "Runtime/Empty/NetworkOwnerChecker.cs",
+      "upstream_sha256": "5e203323ae272288c2a54b7ccf94d8ce29cbbad417d5d70100a6a32032b2c713",
+      "project_sha256": "5e203323ae272288c2a54b7ccf94d8ce29cbbad417d5d70100a6a32032b2c713"
+    },
+    {
+      "path": "Runtime/Empty/NetworkProximityChecker.cs",
+      "upstream_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "project_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd"
+    },
+    {
+      "path": "Runtime/Empty/NetworkSceneChecker.cs",
+      "upstream_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "project_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd"
+    },
+    {
+      "path": "Runtime/Empty/NetworkVisibility.cs",
+      "upstream_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "project_sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd"
+    },
+    {
+      "path": "Runtime/Empty/StringHash.cs",
+      "upstream_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "project_sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94"
+    },
+    {
+      "path": "Runtime/ExponentialMovingAverage.cs",
+      "upstream_sha256": "1bef5d0028923a94116026e97b9ee6407316ec5c235a8fb5213c266d9ac57ba4",
+      "project_sha256": "1bef5d0028923a94116026e97b9ee6407316ec5c235a8fb5213c266d9ac57ba4"
+    },
+    {
+      "path": "Runtime/Extensions.cs",
+      "upstream_sha256": "cc103bb011b0282f96dc8f7727d0d97e7ecd3adbac7d231c475ca18f6112ef7b",
+      "project_sha256": "cc103bb011b0282f96dc8f7727d0d97e7ecd3adbac7d231c475ca18f6112ef7b"
+    },
+    {
+      "path": "Runtime/InterestManagement.cs",
+      "upstream_sha256": "2c852846065c5611b5a98320052a103cdb6a961a449e13c7fb67e8f80e026dd7",
+      "project_sha256": "2c852846065c5611b5a98320052a103cdb6a961a449e13c7fb67e8f80e026dd7"
+    },
+    {
+      "path": "Runtime/LocalConnectionToClient.cs",
+      "upstream_sha256": "9e9e526d1072bb3df091872ecc19adba99a6b7d7c3a4fda68c57fe795c962b68",
+      "project_sha256": "9e9e526d1072bb3df091872ecc19adba99a6b7d7c3a4fda68c57fe795c962b68"
+    },
+    {
+      "path": "Runtime/LocalConnectionToServer.cs",
+      "upstream_sha256": "dacdf3dda2b8804971b3b569bdb380113c71a02286f231a4af8fe85cb8adf69c",
+      "project_sha256": "dacdf3dda2b8804971b3b569bdb380113c71a02286f231a4af8fe85cb8adf69c"
+    },
+    {
+      "path": "Runtime/Mathd.cs",
+      "upstream_sha256": "c3293d0e07ebb49ff5ac13084189a6a137772c80f8e0d9144fcf7268fdbc15d4",
+      "project_sha256": "c3293d0e07ebb49ff5ac13084189a6a137772c80f8e0d9144fcf7268fdbc15d4"
+    },
+    {
+      "path": "Runtime/MessagePacking.cs",
+      "upstream_sha256": "fbfa8278e1453e976f397f36b060d71e820ea6badecb624c64d7f9064a429bd1",
+      "project_sha256": "fbfa8278e1453e976f397f36b060d71e820ea6badecb624c64d7f9064a429bd1"
+    },
+    {
+      "path": "Runtime/Messages.cs",
+      "upstream_sha256": "45467e31f4d001552deddbc21c793eb48196e5dd6766db1982f081cec1c81852",
+      "project_sha256": "45467e31f4d001552deddbc21c793eb48196e5dd6766db1982f081cec1c81852"
+    },
+    {
+      "path": "Runtime/Mirror.asmdef",
+      "upstream_sha256": "aa688faf6fad64228764dc93e5218f11a5ab4167f51b970946f0d98937452141",
+      "project_sha256": "aa688faf6fad64228764dc93e5218f11a5ab4167f51b970946f0d98937452141"
+    },
+    {
+      "path": "Runtime/NetworkAuthenticator.cs",
+      "upstream_sha256": "3e6d7e33b193876c8fb2cc9e229f712f561d8d19e1d5ace35813beb6de29d981",
+      "project_sha256": "3e6d7e33b193876c8fb2cc9e229f712f561d8d19e1d5ace35813beb6de29d981"
+    },
+    {
+      "path": "Runtime/NetworkBehaviour.cs",
+      "upstream_sha256": "ec5d7ff6c429f6897fa40ef4b8627fe958d3cbde54a61dda3bdf16f499ef7a7e",
+      "project_sha256": "ec5d7ff6c429f6897fa40ef4b8627fe958d3cbde54a61dda3bdf16f499ef7a7e"
+    },
+    {
+      "path": "Runtime/NetworkClient.cs",
+      "upstream_sha256": "7d9a38eb0216f8e09d60be8ef51cd9034587b43bedfa0cb9d24870d9cad9f111",
+      "project_sha256": "7d9a38eb0216f8e09d60be8ef51cd9034587b43bedfa0cb9d24870d9cad9f111"
+    },
+    {
+      "path": "Runtime/NetworkConnection.cs",
+      "upstream_sha256": "99d64d81318ab53aea171419a6798b0e54e3b0a81efb6835bda426929f31c3de",
+      "project_sha256": "99d64d81318ab53aea171419a6798b0e54e3b0a81efb6835bda426929f31c3de"
+    },
+    {
+      "path": "Runtime/NetworkConnectionToClient.cs",
+      "upstream_sha256": "c8079ffb73e5379d24f1ae3519ccf6e944e10eeae1a5c8676cdb2d355ad4a6f0",
+      "project_sha256": "c8079ffb73e5379d24f1ae3519ccf6e944e10eeae1a5c8676cdb2d355ad4a6f0"
+    },
+    {
+      "path": "Runtime/NetworkConnectionToServer.cs",
+      "upstream_sha256": "d1bfaa30485fe8ad16fd1b3ce6e5f8bfb1860cf8eba0bd4bc7d3b3e949e29c82",
+      "project_sha256": "d1bfaa30485fe8ad16fd1b3ce6e5f8bfb1860cf8eba0bd4bc7d3b3e949e29c82"
+    },
+    {
+      "path": "Runtime/NetworkDiagnostics.cs",
+      "upstream_sha256": "9bacb7561c65178810ddf7efa9ef2e548f55fe85f062e2c3ebaebdbd22a6fb38",
+      "project_sha256": "9bacb7561c65178810ddf7efa9ef2e548f55fe85f062e2c3ebaebdbd22a6fb38"
+    },
+    {
+      "path": "Runtime/NetworkIdentity.cs",
+      "upstream_sha256": "6a5abf9267b122ebf74506b25658bbe1463e6c783bddd2307a429c882baaac08",
+      "project_sha256": "6a5abf9267b122ebf74506b25658bbe1463e6c783bddd2307a429c882baaac08"
+    },
+    {
+      "path": "Runtime/NetworkLoop.cs",
+      "upstream_sha256": "e107cbe669bc181818a6fe65ed9be7e177b0f5479c2500417d19af5a100e0328",
+      "project_sha256": "e107cbe669bc181818a6fe65ed9be7e177b0f5479c2500417d19af5a100e0328"
+    },
+    {
+      "path": "Runtime/NetworkManager.cs",
+      "upstream_sha256": "b4fa8c2259d0e58caf38a49fe1973815d91920f8b7c4fc4150361dd81627facc",
+      "project_sha256": "b4fa8c2259d0e58caf38a49fe1973815d91920f8b7c4fc4150361dd81627facc"
+    },
+    {
+      "path": "Runtime/NetworkManagerHUD.cs",
+      "upstream_sha256": "ee059b8b41cd25aeddc1f826f186f03a5c2b2cafc301818529305be2554cac83",
+      "project_sha256": "ee059b8b41cd25aeddc1f826f186f03a5c2b2cafc301818529305be2554cac83"
+    },
+    {
+      "path": "Runtime/NetworkMessage.cs",
+      "upstream_sha256": "188c4d6656563ac7b42ce887fa98df46fb1349f85f7ed13af74aecd9c93f7dd5",
+      "project_sha256": "188c4d6656563ac7b42ce887fa98df46fb1349f85f7ed13af74aecd9c93f7dd5"
+    },
+    {
+      "path": "Runtime/NetworkReader.cs",
+      "upstream_sha256": "2e07c61f89fe7a7e3e7868e46171a3f20348edcd09cf121b92c8f5a8fde90405",
+      "project_sha256": "2e07c61f89fe7a7e3e7868e46171a3f20348edcd09cf121b92c8f5a8fde90405"
+    },
+    {
+      "path": "Runtime/NetworkReaderExtensions.cs",
+      "upstream_sha256": "e9671bf7daa66ead9077b4b38ba83d21377de48ff581065b01f1c9a4eb72dfc1",
+      "project_sha256": "e9671bf7daa66ead9077b4b38ba83d21377de48ff581065b01f1c9a4eb72dfc1"
+    },
+    {
+      "path": "Runtime/NetworkReaderPool.cs",
+      "upstream_sha256": "54a489536b3b6a8022e38726d354fa107aec25bf414efccdeddfd076c4edbb19",
+      "project_sha256": "54a489536b3b6a8022e38726d354fa107aec25bf414efccdeddfd076c4edbb19"
+    },
+    {
+      "path": "Runtime/NetworkReaderPooled.cs",
+      "upstream_sha256": "67199b1579d95f4cf6b1bfe04809cffd00bb7fc936a56ade0ef80381801bbf64",
+      "project_sha256": "67199b1579d95f4cf6b1bfe04809cffd00bb7fc936a56ade0ef80381801bbf64"
+    },
+    {
+      "path": "Runtime/NetworkServer.cs",
+      "upstream_sha256": "3e263f3ce31f0fd58274519fafc7febd26677e96b5ef2c8ee6252fb0143a19cb",
+      "project_sha256": "3e263f3ce31f0fd58274519fafc7febd26677e96b5ef2c8ee6252fb0143a19cb"
+    },
+    {
+      "path": "Runtime/NetworkStartPosition.cs",
+      "upstream_sha256": "2f8cc9ea82b836f9608763a8d9a9db16db305c03bd0e41f1bd4886dc9301e72f",
+      "project_sha256": "2f8cc9ea82b836f9608763a8d9a9db16db305c03bd0e41f1bd4886dc9301e72f"
+    },
+    {
+      "path": "Runtime/NetworkTime.cs",
+      "upstream_sha256": "69c8350c20e9ee10c9b78540282f1694c77d3c79f2c9987bbd990ab2d44c398c",
+      "project_sha256": "69c8350c20e9ee10c9b78540282f1694c77d3c79f2c9987bbd990ab2d44c398c"
+    },
+    {
+      "path": "Runtime/NetworkWriter.cs",
+      "upstream_sha256": "7e76dc137d40cf7d04dc2e89c4096e8286d4fb2ef9f848b0d82e3b1a2e8e001d",
+      "project_sha256": "7e76dc137d40cf7d04dc2e89c4096e8286d4fb2ef9f848b0d82e3b1a2e8e001d"
+    },
+    {
+      "path": "Runtime/NetworkWriterExtensions.cs",
+      "upstream_sha256": "4dbf55c98e613afe50814bc2e15aa902959e75d37c51ed2550c55d22b28c4293",
+      "project_sha256": "4dbf55c98e613afe50814bc2e15aa902959e75d37c51ed2550c55d22b28c4293"
+    },
+    {
+      "path": "Runtime/NetworkWriterPool.cs",
+      "upstream_sha256": "2580f2efe6834bb8631c3307427264645eab6589c7272fef06fcaf65b66517ea",
+      "project_sha256": "2580f2efe6834bb8631c3307427264645eab6589c7272fef06fcaf65b66517ea"
+    },
+    {
+      "path": "Runtime/NetworkWriterPooled.cs",
+      "upstream_sha256": "5756314b3493f0a97fbbb45b618c1a37f5e0351e2f7b9ab5ae4321bc04bee0c8",
+      "project_sha256": "5756314b3493f0a97fbbb45b618c1a37f5e0351e2f7b9ab5ae4321bc04bee0c8"
+    },
+    {
+      "path": "Runtime/Pool.cs",
+      "upstream_sha256": "c57e872ed84afd863bb289549b98331ec74a3cc391154afa1c7433489cfab135",
+      "project_sha256": "c57e872ed84afd863bb289549b98331ec74a3cc391154afa1c7433489cfab135"
+    },
+    {
+      "path": "Runtime/RemoteCalls.cs",
+      "upstream_sha256": "328455e823e66ae8e126d3d86048ac0b662d485862d1715903c66d2e611e3f4c",
+      "project_sha256": "328455e823e66ae8e126d3d86048ac0b662d485862d1715903c66d2e611e3f4c"
+    },
+    {
+      "path": "Runtime/SnapshotInterpolation/Snapshot.cs",
+      "upstream_sha256": "61a002675a3b154be0f5b88ad8d57a681b0db010363fd3424ddfb1f57dba754c",
+      "project_sha256": "61a002675a3b154be0f5b88ad8d57a681b0db010363fd3424ddfb1f57dba754c"
+    },
+    {
+      "path": "Runtime/SnapshotInterpolation/SnapshotInterpolation.cs",
+      "upstream_sha256": "ba4cf77d5ea35ea4ebaae71f6e6e540f9cd566f0ef01c3f78ca7b55b54b11d37",
+      "project_sha256": "ba4cf77d5ea35ea4ebaae71f6e6e540f9cd566f0ef01c3f78ca7b55b54b11d37"
+    },
+    {
+      "path": "Runtime/SyncDictionary.cs",
+      "upstream_sha256": "cd99577dddf672cb44ed7d424fb453fb7de810f71d0b8fdf47e827f3a44cd55c",
+      "project_sha256": "cd99577dddf672cb44ed7d424fb453fb7de810f71d0b8fdf47e827f3a44cd55c"
+    },
+    {
+      "path": "Runtime/SyncList.cs",
+      "upstream_sha256": "67e3e63b1bf2c8d9ef5bc1620f9558c70e2a2032c436aea5dbc4c7dbfec9113f",
+      "project_sha256": "67e3e63b1bf2c8d9ef5bc1620f9558c70e2a2032c436aea5dbc4c7dbfec9113f"
+    },
+    {
+      "path": "Runtime/SyncObject.cs",
+      "upstream_sha256": "6a711822f0964c41c06edd87fc9c709776621379d7d7b97a3d0d091f5fda4d79",
+      "project_sha256": "6a711822f0964c41c06edd87fc9c709776621379d7d7b97a3d0d091f5fda4d79"
+    },
+    {
+      "path": "Runtime/SyncSet.cs",
+      "upstream_sha256": "3a1439003a1c1acc6b12acd709fd45f27d9dc9e785381f1440da3f53b10f27a5",
+      "project_sha256": "3a1439003a1c1acc6b12acd709fd45f27d9dc9e785381f1440da3f53b10f27a5"
+    },
+    {
+      "path": "Runtime/SyncVar.cs",
+      "upstream_sha256": "b8c8ddbb5313be5dbe4b37fc143ebf3db27ea97489b776eb0e12d5cafccc8912",
+      "project_sha256": "b8c8ddbb5313be5dbe4b37fc143ebf3db27ea97489b776eb0e12d5cafccc8912"
+    },
+    {
+      "path": "Runtime/SyncVarGameObject.cs",
+      "upstream_sha256": "5ced918c8e8bcc40450059663be5f79d14e6979cdc4d2679f0ff84d0b2f38411",
+      "project_sha256": "5ced918c8e8bcc40450059663be5f79d14e6979cdc4d2679f0ff84d0b2f38411"
+    },
+    {
+      "path": "Runtime/SyncVarNetworkBehaviour.cs",
+      "upstream_sha256": "98a89d5cab01bfade8a0e3a7104b19e5e72717ca53313ff4f4761040c5c7901f",
+      "project_sha256": "98a89d5cab01bfade8a0e3a7104b19e5e72717ca53313ff4f4761040c5c7901f"
+    },
+    {
+      "path": "Runtime/SyncVarNetworkIdentity.cs",
+      "upstream_sha256": "a949ae943e931a3b3419298419be94da655672fbf490f288480c9bbe1d8f3da7",
+      "project_sha256": "a949ae943e931a3b3419298419be94da655672fbf490f288480c9bbe1d8f3da7"
+    },
+    {
+      "path": "Runtime/Transport.cs",
+      "upstream_sha256": "7503e6ad884cc9125b50990544866fa53a8f0b7fc2eb2fc56bd7c73301253d63",
+      "project_sha256": "7503e6ad884cc9125b50990544866fa53a8f0b7fc2eb2fc56bd7c73301253d63"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/Extensions.cs",
+      "upstream_sha256": "84731a3ed02f0cd40af35876ad33e9cd48ffbd6e29003b2ee6bec315dde2814f",
+      "project_sha256": "84731a3ed02f0cd40af35876ad33e9cd48ffbd6e29003b2ee6bec315dde2814f"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/KcpChannel.cs",
+      "upstream_sha256": "57c2ac515b9e7062a9b8adbc3013cffca0ea251e8e3780dc8e73c835dc4e4097",
+      "project_sha256": "57c2ac515b9e7062a9b8adbc3013cffca0ea251e8e3780dc8e73c835dc4e4097"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/KcpClient.cs",
+      "upstream_sha256": "780e362437e11712a470b38c969fe52b6fe184018ef2354393a731efde82e2d3",
+      "project_sha256": "780e362437e11712a470b38c969fe52b6fe184018ef2354393a731efde82e2d3"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/KcpClientConnection.cs",
+      "upstream_sha256": "23f55906b38f93587867ad521ea3211ea6352c0e97c38f094af0e941a2a77335",
+      "project_sha256": "23f55906b38f93587867ad521ea3211ea6352c0e97c38f094af0e941a2a77335"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/KcpConnection.cs",
+      "upstream_sha256": "74e534cc5c78341ecbb85a00a3a8b1892a6a2b31e1994d45daf8a7cecdb074a7",
+      "project_sha256": "74e534cc5c78341ecbb85a00a3a8b1892a6a2b31e1994d45daf8a7cecdb074a7"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/KcpHeader.cs",
+      "upstream_sha256": "5acc6d1d04f842730344a590339841271a39bedbb1247a86ef3e7724625268af",
+      "project_sha256": "5acc6d1d04f842730344a590339841271a39bedbb1247a86ef3e7724625268af"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/KcpServer.cs",
+      "upstream_sha256": "f0ba7a1830ce1304a15221a38c1fd124c4ce33c8532cb394eb1a781eebf11476",
+      "project_sha256": "f0ba7a1830ce1304a15221a38c1fd124c4ce33c8532cb394eb1a781eebf11476"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/KcpServerConnection.cs",
+      "upstream_sha256": "f0aa6e84a78d8fe9b27fb86f874ae16f8e493dd6cef9630d6d49adc3ac046a5c",
+      "project_sha256": "f0aa6e84a78d8fe9b27fb86f874ae16f8e493dd6cef9630d6d49adc3ac046a5c"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/Log.cs",
+      "upstream_sha256": "1625af908ba3f78da59f131595b867cfdbe4b0881e03c9755f3c87b2196c7d64",
+      "project_sha256": "1625af908ba3f78da59f131595b867cfdbe4b0881e03c9755f3c87b2196c7d64"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpClientConnectionNonAlloc.cs",
+      "upstream_sha256": "e32a336cd4f0a43e5fc5ab23a2a6251d987a1d0cba2daeba9a00159874534b4c",
+      "project_sha256": "e32a336cd4f0a43e5fc5ab23a2a6251d987a1d0cba2daeba9a00159874534b4c"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpClientNonAlloc.cs",
+      "upstream_sha256": "a8b8e7db646fce99c8e84b71023b3fb147b5da4d81a13a01277340264d91a117",
+      "project_sha256": "a8b8e7db646fce99c8e84b71023b3fb147b5da4d81a13a01277340264d91a117"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpServerConnectionNonAlloc.cs",
+      "upstream_sha256": "399676b640f4789592088d143d5dcd631b4cb7888fb0c67cfc67202b0e983275",
+      "project_sha256": "399676b640f4789592088d143d5dcd631b4cb7888fb0c67cfc67202b0e983275"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpServerNonAlloc.cs",
+      "upstream_sha256": "02f4c4c304fbe40f98a5e4ad22a41a3883b25c988537531dec3c64261676067f",
+      "project_sha256": "02f4c4c304fbe40f98a5e4ad22a41a3883b25c988537531dec3c64261676067f"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/kcp/AssemblyInfo.cs",
+      "upstream_sha256": "a93d95d9ffea5028abe9660c20d3bf4467a18168a0baa8772776174b38546cdc",
+      "project_sha256": "a93d95d9ffea5028abe9660c20d3bf4467a18168a0baa8772776174b38546cdc"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/kcp/Kcp.cs",
+      "upstream_sha256": "3092ce6095b8360efc0d4c75e99ca9855f62e2f5df9187a11f1504695164b57f",
+      "project_sha256": "3092ce6095b8360efc0d4c75e99ca9855f62e2f5df9187a11f1504695164b57f"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/kcp/Pool.cs",
+      "upstream_sha256": "1c9aab54294d692ae3c3b7c0af958ebf0296ac7741ed4aef699bf6f4c6d20d66",
+      "project_sha256": "1c9aab54294d692ae3c3b7c0af958ebf0296ac7741ed4aef699bf6f4c6d20d66"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/kcp/Segment.cs",
+      "upstream_sha256": "343cb7908e9bb9748fad66a309948c3718f668f056a825a036d2df24342e69f3",
+      "project_sha256": "343cb7908e9bb9748fad66a309948c3718f668f056a825a036d2df24342e69f3"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/kcp/Utils.cs",
+      "upstream_sha256": "c461d0ceeec163ab93925c4058c690032d468ed9bc3c80c08d5754383fc25f70",
+      "project_sha256": "c461d0ceeec163ab93925c4058c690032d468ed9bc3c80c08d5754383fc25f70"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/kcp2k.asmdef",
+      "upstream_sha256": "9a0e9169283a57bcf0510d785293b239b8e9500d5ee0605503fc67baa9728ec2",
+      "project_sha256": "9a0e9169283a57bcf0510d785293b239b8e9500d5ee0605503fc67baa9728ec2"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/LICENSE",
+      "upstream_sha256": "cb8d1ca3226e9bc0f71d02d60a32eb3b504dbc47e1a88c73baf275f06c60566b",
+      "project_sha256": "cb8d1ca3226e9bc0f71d02d60a32eb3b504dbc47e1a88c73baf275f06c60566b"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/VERSION",
+      "upstream_sha256": "860be159e793910a1bc2dac8dffd98dbd3bf1170ddcfdf28fe1c45754dddb747",
+      "project_sha256": "860be159e793910a1bc2dac8dffd98dbd3bf1170ddcfdf28fe1c45754dddb747"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/where-allocation/LICENSE",
+      "upstream_sha256": "af7966e0cc35d29827a54305c52e5f7291b17367c1b1a7c63ef1925ec70806db",
+      "project_sha256": "af7966e0cc35d29827a54305c52e5f7291b17367c1b1a7c63ef1925ec70806db"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/AssemblyInfo.cs",
+      "upstream_sha256": "9544c656701ca2b0dc500effd7dc444fedfa982a51ec1f30026a02bb55a65764",
+      "project_sha256": "9544c656701ca2b0dc500effd7dc444fedfa982a51ec1f30026a02bb55a65764"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/Extensions.cs",
+      "upstream_sha256": "109750aeeeeeff31ad3aee7a02a650fb4f51d217931874225399a8d6166c13bd",
+      "project_sha256": "109750aeeeeeff31ad3aee7a02a650fb4f51d217931874225399a8d6166c13bd"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/IPEndPointNonAlloc.cs",
+      "upstream_sha256": "942eac5eef45d5dceff2af8590a74bd98edd522d953ad477cff5d20cd3dfa877",
+      "project_sha256": "942eac5eef45d5dceff2af8590a74bd98edd522d953ad477cff5d20cd3dfa877"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/where-allocations.asmdef",
+      "upstream_sha256": "d5b7cc6507424f0cafea3a69bf1cd558471f5484ffdec9c1c44872572504a074",
+      "project_sha256": "d5b7cc6507424f0cafea3a69bf1cd558471f5484ffdec9c1c44872572504a074"
+    },
+    {
+      "path": "Runtime/Transports/KCP/kcp2k/where-allocation/VERSION",
+      "upstream_sha256": "8fb21ad90a7efe2ef531f251ba991b580f63908e9cfcb4e7a9db893b5570556a",
+      "project_sha256": "8fb21ad90a7efe2ef531f251ba991b580f63908e9cfcb4e7a9db893b5570556a"
+    },
+    {
+      "path": "Runtime/Transports/KCP/MirrorTransport/KcpTransport.cs",
+      "upstream_sha256": "bfb5dc3d84ba2890cd34543f91eb0c74e1f619ee595ffcf5dcbfa354a44dbf65",
+      "project_sha256": "bfb5dc3d84ba2890cd34543f91eb0c74e1f619ee595ffcf5dcbfa354a44dbf65"
+    },
+    {
+      "path": "Runtime/Transports/LatencySimulation.cs",
+      "upstream_sha256": "4ad62fd7611332ed88360d59c9f54b0d51401b7cf2e1699597afe76b9a939d83",
+      "project_sha256": "4ad62fd7611332ed88360d59c9f54b0d51401b7cf2e1699597afe76b9a939d83"
+    },
+    {
+      "path": "Runtime/Transports/MiddlewareTransport.cs",
+      "upstream_sha256": "6e1c04885deef5692be7484d3aff63c6cb010feec6135bda1655ff82bfe149d9",
+      "project_sha256": "6e1c04885deef5692be7484d3aff63c6cb010feec6135bda1655ff82bfe149d9"
+    },
+    {
+      "path": "Runtime/Transports/MultiplexTransport.cs",
+      "upstream_sha256": "2fb60dea4c48119c1ab39a5c13ff2bd8c95a236749c82414a8e167b7ab1f655a",
+      "project_sha256": "2fb60dea4c48119c1ab39a5c13ff2bd8c95a236749c82414a8e167b7ab1f655a"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/.cert.example.Json",
+      "upstream_sha256": "5e3d3e4209a7d2a44a2bc266595b72dbae54dc9935f2cf458ecc7c4bc667d73e",
+      "project_sha256": "5e3d3e4209a7d2a44a2bc266595b72dbae54dc9935f2cf458ecc7c4bc667d73e"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/AssemblyInfo.cs",
+      "upstream_sha256": "c680c3617eda8622b4e844d95a45a1fda5f7270fb6798f30e13f94e853fa7bf5",
+      "project_sha256": "c680c3617eda8622b4e844d95a45a1fda5f7270fb6798f30e13f94e853fa7bf5"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/CHANGELOG.md",
+      "upstream_sha256": "ca795b6deef0b5c6743ae631090b3f6949e9a579d96541ddf2833084ec1fe2b8",
+      "project_sha256": "ca795b6deef0b5c6743ae631090b3f6949e9a579d96541ddf2833084ec1fe2b8"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Client/SimpleWebClient.cs",
+      "upstream_sha256": "c6624797e2aa52bfcb40b560227251b190bf0f4b46faa4d5d3906b5cbd55426e",
+      "project_sha256": "c6624797e2aa52bfcb40b560227251b190bf0f4b46faa4d5d3906b5cbd55426e"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Client/StandAlone/ClientHandshake.cs",
+      "upstream_sha256": "727d99b025c133e94e26990c54e23ef5219e7d86a22697bcb0aa987474deb2c0",
+      "project_sha256": "727d99b025c133e94e26990c54e23ef5219e7d86a22697bcb0aa987474deb2c0"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Client/StandAlone/ClientSslHelper.cs",
+      "upstream_sha256": "331fc22375d125c8c5fa934637f589cea6cb3042d60e35e389cef55f6562b74d",
+      "project_sha256": "331fc22375d125c8c5fa934637f589cea6cb3042d60e35e389cef55f6562b74d"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Client/StandAlone/WebSocketClientStandAlone.cs",
+      "upstream_sha256": "419cc2f82feec28f999987ef80dae6442651ea7acbbd980d038fc9a18a6da471",
+      "project_sha256": "419cc2f82feec28f999987ef80dae6442651ea7acbbd980d038fc9a18a6da471"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Client/Webgl/plugin/SimpleWeb.jslib",
+      "upstream_sha256": "2fefe9a8cc3f3d7ae261f345b3f4d315fa9a5015e77a1e202a2e6a12ed0beb42",
+      "project_sha256": "2fefe9a8cc3f3d7ae261f345b3f4d315fa9a5015e77a1e202a2e6a12ed0beb42"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Client/Webgl/SimpleWebJSLib.cs",
+      "upstream_sha256": "0ab5ae2aeac4dbeedf9ef3ea86616af601a55532998e02d623ff900906e705c6",
+      "project_sha256": "0ab5ae2aeac4dbeedf9ef3ea86616af601a55532998e02d623ff900906e705c6"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Client/Webgl/WebSocketClientWebGl.cs",
+      "upstream_sha256": "10d87632a28ef979ebb8f9b7f1bd577efb05e402e700046c1f91f134b305a5eb",
+      "project_sha256": "10d87632a28ef979ebb8f9b7f1bd577efb05e402e700046c1f91f134b305a5eb"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/BufferPool.cs",
+      "upstream_sha256": "86d994f663072b84b1aa5e1a10a6c58788664caa0dabebad2965bdbf1decd84f",
+      "project_sha256": "86d994f663072b84b1aa5e1a10a6c58788664caa0dabebad2965bdbf1decd84f"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/Connection.cs",
+      "upstream_sha256": "8a8a2978653e9cc607ccf255e46793ad0d47e8463a4dd8bc17c41dfbf7ec2526",
+      "project_sha256": "8a8a2978653e9cc607ccf255e46793ad0d47e8463a4dd8bc17c41dfbf7ec2526"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/Constants.cs",
+      "upstream_sha256": "3b16f8ea2d19ed7b2064d17131a28e92f3665aa896db4ede0809178f6def5606",
+      "project_sha256": "3b16f8ea2d19ed7b2064d17131a28e92f3665aa896db4ede0809178f6def5606"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/EventType.cs",
+      "upstream_sha256": "ca9775158a7d675690e549720c6e13227b390f2a63dc13b5dc085c41b072cd40",
+      "project_sha256": "ca9775158a7d675690e549720c6e13227b390f2a63dc13b5dc085c41b072cd40"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/Log.cs",
+      "upstream_sha256": "c735922387a28b1ab780935c9eb9e0f0af0930c13078acff7ddb29d819480d19",
+      "project_sha256": "c735922387a28b1ab780935c9eb9e0f0af0930c13078acff7ddb29d819480d19"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/Message.cs",
+      "upstream_sha256": "4b94b495f4b7c7b5467534cb577d7ae05d1a995587468a7eccec97d3c7c6611a",
+      "project_sha256": "4b94b495f4b7c7b5467534cb577d7ae05d1a995587468a7eccec97d3c7c6611a"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/MessageProcessor.cs",
+      "upstream_sha256": "56b320be231e35797187369923e3e97f21712d59f760cc71409fb4368ceec8c8",
+      "project_sha256": "56b320be231e35797187369923e3e97f21712d59f760cc71409fb4368ceec8c8"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/ReadHelper.cs",
+      "upstream_sha256": "ebb782663ba3f412adab38cb42770a7f1fb89718d1d0cecfbf402671f722dd08",
+      "project_sha256": "ebb782663ba3f412adab38cb42770a7f1fb89718d1d0cecfbf402671f722dd08"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/ReceiveLoop.cs",
+      "upstream_sha256": "45344d4e42d66ba5c47d36b49f24d91d2807e83c18372204da0cb5f3ffcc456f",
+      "project_sha256": "45344d4e42d66ba5c47d36b49f24d91d2807e83c18372204da0cb5f3ffcc456f"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/SendLoop.cs",
+      "upstream_sha256": "76dcf866c9d08e147bb27f8cfc98e03ae07241eec0bb966279c20b93d1d0dd06",
+      "project_sha256": "76dcf866c9d08e147bb27f8cfc98e03ae07241eec0bb966279c20b93d1d0dd06"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/TcpConfig.cs",
+      "upstream_sha256": "8c6f1bff62699f846294c9743987320b03645887f52865f57257ee0109948e32",
+      "project_sha256": "8c6f1bff62699f846294c9743987320b03645887f52865f57257ee0109948e32"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Common/Utils.cs",
+      "upstream_sha256": "03f1b1cd1d47fa891b5b34aca446233c462b8e9d407684af2cdd2ff4c086638a",
+      "project_sha256": "03f1b1cd1d47fa891b5b34aca446233c462b8e9d407684af2cdd2ff4c086638a"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/LICENSE",
+      "upstream_sha256": "9afe516cc2fbb9ecc7453f63e201d2f4b7c907061b6f1cfd0b5e072f50f8778a",
+      "project_sha256": "9afe516cc2fbb9ecc7453f63e201d2f4b7c907061b6f1cfd0b5e072f50f8778a"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/README.txt",
+      "upstream_sha256": "d7dd7abe2b81c0e98e5640244af3742900fbd9632ea16dc89cc5ea607e86c015",
+      "project_sha256": "d7dd7abe2b81c0e98e5640244af3742900fbd9632ea16dc89cc5ea607e86c015"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Server/ServerHandshake.cs",
+      "upstream_sha256": "e6095653476558fcec22e5a099541df49be96ca80fce92344a8a44159dac2daf",
+      "project_sha256": "e6095653476558fcec22e5a099541df49be96ca80fce92344a8a44159dac2daf"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Server/ServerSslHelper.cs",
+      "upstream_sha256": "ded1ff248c9533b2fbe1c0bf4a878f05d36b4275b534d21d05ae42eccf37fdaf",
+      "project_sha256": "ded1ff248c9533b2fbe1c0bf4a878f05d36b4275b534d21d05ae42eccf37fdaf"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Server/SimpleWebServer.cs",
+      "upstream_sha256": "61cc524073ed52e4c13af8046f2acd9e77adc556cd336829c8bab452dc1de684",
+      "project_sha256": "61cc524073ed52e4c13af8046f2acd9e77adc556cd336829c8bab452dc1de684"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/Server/WebSocketServer.cs",
+      "upstream_sha256": "6909a70e1f0acab86d2bcfbe2951db642540a220e4c6b50340540844a8a72ada",
+      "project_sha256": "6909a70e1f0acab86d2bcfbe2951db642540a220e4c6b50340540844a8a72ada"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/SimpleWebTransport.asmdef",
+      "upstream_sha256": "f14e1e57de24758d3f21ea9e9a3eb12619f571398d08a3f2f862bacbd4a83b22",
+      "project_sha256": "f14e1e57de24758d3f21ea9e9a3eb12619f571398d08a3f2f862bacbd4a83b22"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/SimpleWebTransport.cs",
+      "upstream_sha256": "e3a38f639650c110209dcbfc906fb821ef37ad0e64d626690eff3a5eda0ff396",
+      "project_sha256": "e3a38f639650c110209dcbfc906fb821ef37ad0e64d626690eff3a5eda0ff396"
+    },
+    {
+      "path": "Runtime/Transports/SimpleWebTransport/SslConfigLoader.cs",
+      "upstream_sha256": "fca428e9057b0dba6b345963da2152b6d65114b8adc748ef999af8e3f28b8a4d",
+      "project_sha256": "fca428e9057b0dba6b345963da2152b6d65114b8adc748ef999af8e3f28b8a4d"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Client.cs",
+      "upstream_sha256": "28d2d99f3f8f950452a149d7feb90a00c469b3e4da25f4e0ab2b950357e02706",
+      "project_sha256": "28d2d99f3f8f950452a149d7feb90a00c469b3e4da25f4e0ab2b950357e02706"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Common.cs",
+      "upstream_sha256": "1ed5408798477a66094eabe6acfc8107afd2fac592badbb2ee80e1790ac148aa",
+      "project_sha256": "1ed5408798477a66094eabe6acfc8107afd2fac592badbb2ee80e1790ac148aa"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/ConnectionState.cs",
+      "upstream_sha256": "fb236627a02b4e2a7ca96a24bc64b9c9b8c4fef2262a6ad87e8df8554977a21a",
+      "project_sha256": "fb236627a02b4e2a7ca96a24bc64b9c9b8c4fef2262a6ad87e8df8554977a21a"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Empty/Logger.cs",
+      "upstream_sha256": "d352baa5050d2a9f4396618550e90a53e9f7af0388bda12e3eea8b85fe8167b4",
+      "project_sha256": "d352baa5050d2a9f4396618550e90a53e9f7af0388bda12e3eea8b85fe8167b4"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Empty/Message.cs",
+      "upstream_sha256": "d352baa5050d2a9f4396618550e90a53e9f7af0388bda12e3eea8b85fe8167b4",
+      "project_sha256": "d352baa5050d2a9f4396618550e90a53e9f7af0388bda12e3eea8b85fe8167b4"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Empty/SafeQueue.cs",
+      "upstream_sha256": "12395d555a0d7dda0389c8dc452f7504f5cc477b67b3efad86f09abe05abcaaa",
+      "project_sha256": "12395d555a0d7dda0389c8dc452f7504f5cc477b67b3efad86f09abe05abcaaa"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Empty/ThreadExtensions.cs",
+      "upstream_sha256": "73e16836028bfc5a6ae471bfeb49c2c94b91a43937e029a6984bfb064bf02c66",
+      "project_sha256": "73e16836028bfc5a6ae471bfeb49c2c94b91a43937e029a6984bfb064bf02c66"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/EventType.cs",
+      "upstream_sha256": "f2708cfa10704314dc331096c981e11373d085ae1fb2d4453e8730ab62fd4147",
+      "project_sha256": "f2708cfa10704314dc331096c981e11373d085ae1fb2d4453e8730ab62fd4147"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/LICENSE",
+      "upstream_sha256": "3e27a14c7f1b1cc5cd614682e3096a1c5419c06f2bd56bdd60f56fb9c64b4188",
+      "project_sha256": "3e27a14c7f1b1cc5cd614682e3096a1c5419c06f2bd56bdd60f56fb9c64b4188"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Log.cs",
+      "upstream_sha256": "34d218b4e94a6c90f7aa9bece55b114187f55f8547c5bf6c83b87396bf6ec272",
+      "project_sha256": "34d218b4e94a6c90f7aa9bece55b114187f55f8547c5bf6c83b87396bf6ec272"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/MagnificentReceivePipe.cs",
+      "upstream_sha256": "d05e8fb29f1236bb6df4b1dadda94444176719b0b0f55282ae4924585ac42885",
+      "project_sha256": "d05e8fb29f1236bb6df4b1dadda94444176719b0b0f55282ae4924585ac42885"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/MagnificentSendPipe.cs",
+      "upstream_sha256": "df5a8ffbb8fab46f9ad9f82b359a7c828c75359fd65927ebbf2c27c44c58ec67",
+      "project_sha256": "df5a8ffbb8fab46f9ad9f82b359a7c828c75359fd65927ebbf2c27c44c58ec67"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/NetworkStreamExtensions.cs",
+      "upstream_sha256": "815696b96f00ef9248d100373facdc255abad3b0bcab469551c1ce809e74c281",
+      "project_sha256": "815696b96f00ef9248d100373facdc255abad3b0bcab469551c1ce809e74c281"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Pool.cs",
+      "upstream_sha256": "f565372afdd3834eaa1cd4b0c80fb1564a4f446a3ecb2fecfafca4524549e78c",
+      "project_sha256": "f565372afdd3834eaa1cd4b0c80fb1564a4f446a3ecb2fecfafca4524549e78c"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Server.cs",
+      "upstream_sha256": "ec513d43b1a2274464e17eb282fc8b6983339d5d4465026903ec90f48061dcf7",
+      "project_sha256": "b8d9c4f95695c8c9905399749e8726a8a342ee7be7aa9d78d9f4c0053ab43695"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Telepathy.asmdef",
+      "upstream_sha256": "37b5f9c10356ee2630dfb5566c61a7436fa3b2b3c7e2b87705133f4e6875cf9c",
+      "project_sha256": "37b5f9c10356ee2630dfb5566c61a7436fa3b2b3c7e2b87705133f4e6875cf9c"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/ThreadFunctions.cs",
+      "upstream_sha256": "4a53fb10d4860a4a1e7b44ae0e03eca5e0e9cfae7a1b9d1b7e5c4e3f86406525",
+      "project_sha256": "4a53fb10d4860a4a1e7b44ae0e03eca5e0e9cfae7a1b9d1b7e5c4e3f86406525"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/Utils.cs",
+      "upstream_sha256": "0518d70079d1afe216cf378dbc12c6411d8ff7b1441575e8c8101ae425317dbd",
+      "project_sha256": "0518d70079d1afe216cf378dbc12c6411d8ff7b1441575e8c8101ae425317dbd"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/Telepathy/VERSION",
+      "upstream_sha256": "1eedf8df8039a817a7f2c4496eee2579f861a22cc43a91e09ca26cc0698b2e51",
+      "project_sha256": "1eedf8df8039a817a7f2c4496eee2579f861a22cc43a91e09ca26cc0698b2e51"
+    },
+    {
+      "path": "Runtime/Transports/Telepathy/TelepathyTransport.cs",
+      "upstream_sha256": "d358b21c173162bbacbd9c3ef69185968f3072209de414e81101e03c148492a0",
+      "project_sha256": "5bb320e981e472f95d8bfed00ebf7d7102b9c31d1399db7aacf0ac1c42308baa"
+    },
+    {
+      "path": "Runtime/Utils.cs",
+      "upstream_sha256": "0abd5c728e8d4395d92520105641220a798417a092504008766a70a7af0f73f6",
+      "project_sha256": "0abd5c728e8d4395d92520105641220a798417a092504008766a70a7af0f73f6"
+    }
+  ],
+  "executable_sha256": "96b492cb271111251fe42b8646e65370a1b7b566773a1e35b34c3f2d1ae70873",
+  "verification": {
+    "unity_build": "Success: scoped validation profile source revision; canonical build-validation.json",
+    "listener_run": false,
+    "client_compatibility": "Structural candidate; unverified until runtime capture",
+    "canonical_build_report": "build-validation.json",
+    "verified_source_file_count": 245,
+    "compile_utc": "2026-10-28T19:48:17.0979519Z",
+    "canonical_source_hashes_match": true,
+    "canonical_source_count": 14
+  },
+  "executable_sha256_scope": "Unity Windows player host executable from the canonical build; authored server behavior is bound by the managed assembly hash and source hashes in build-validation.json.",
+  "managed_assembly_sha256": "37cc28cc8d56dd48ddfba1e778d5f908df97201329fbee30f1ff28366616c4ec"
+}

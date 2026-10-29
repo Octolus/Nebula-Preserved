@@ -1,0 +1,258 @@
+{
+  "format_version": 1,
+  "scope": "Recovered client wire contracts plus explicit local preservation policy; no runtime, listener or connection test",
+  "routes": [
+    {
+      "route": "CheckOwnGenericReward",
+      "request": [
+        "guid",
+        "ps4_id",
+        "asset_id"
+      ],
+      "response": [
+        "unused",
+        "unused",
+        "unused",
+        "already_owned_bool"
+      ],
+      "policy": "checks the durable claim for the configured GenericReward definition; an unknown/disabled definition fails closed"
+    },
+    {
+      "route": "GenericReward",
+      "request": [
+        "guid",
+        "ps4_id",
+        "asset_id"
+      ],
+      "response": [
+        "unused",
+        "unused",
+        "unused",
+        "newly_granted_bool"
+      ],
+      "policy": "atomically grants one configured validated entitlement once per account and key"
+    },
+    {
+      "route": "RewardClothServlet",
+      "request": [
+        "guid",
+        "ps4_id",
+        "reward_int"
+      ],
+      "response": [
+        "unused",
+        "unused",
+        "newly_granted_bool"
+      ],
+      "policy": "only the native sender's canonical trigger0 is accepted and it must map to a validated wardrobe entitlement"
+    },
+    {
+      "route": "RewardConsumeServlet",
+      "request": [
+        "guid",
+        "ps4_id",
+        "asset_id"
+      ],
+      "response": [
+        "true",
+        "guid",
+        "ps4_id"
+      ],
+      "policy": "idempotently claims the configured entitlement; repeat calls acknowledge the already durable result"
+    },
+    {
+      "route": "SKLPromoTriggerServlet",
+      "request": [
+        "guid",
+        "ps4_id",
+        "promo_id_int"
+      ],
+      "response": [
+        "true",
+        "guid",
+        "ps4_id",
+        "already_consumed_bool"
+      ],
+      "policy": "checks the claim paired with the configured SKLPromoServlet definition"
+    },
+    {
+      "route": "SKLPromoServlet",
+      "request": [
+        "guid",
+        "ps4_id",
+        "promo_id_int"
+      ],
+      "response": [
+        "true",
+        "guid",
+        "ps4_id",
+        "configured_sprite_id_int"
+      ],
+      "policy": "promo ID and sprite-pair index must exist in the extracted shipped SKL trigger catalog before an idempotent claim can succeed"
+    },
+    {
+      "route": "checkRewardAvailableServlet",
+      "request": [
+        "guid",
+        "ps4_id",
+        "reward_type_enum_name"
+      ],
+      "response": [
+        "true",
+        "guid",
+        "available_bool"
+      ],
+      "policy": "availability is an explicit enabled local definition restricted to the compiled 12-name Utils.RewardType enum; this check never grants"
+    },
+    {
+      "route": "CinemaInteractionNPServlet",
+      "request": [
+        "guid",
+        "ps4_id",
+        "interaction_type_int_0_or_1"
+      ],
+      "response": [
+        "true",
+        "guid",
+        "ps4_id",
+        "success_bool"
+      ],
+      "policy": "an enabled local definition durably grants ticket0 or popcorn1 capability without currency or a real purchase"
+    },
+    {
+      "route": "CheckIfSpaceStillExistServlet",
+      "request": [
+        "guid",
+        "ps4_id",
+        "instance_id"
+      ],
+      "response": [
+        "true",
+        "exists_bool"
+      ],
+      "policy": "true only for the same session/platform allocation and a fresh, unique, loopback, protocol-complete descriptor matching both instance_id and psidglobal"
+    }
+  ],
+  "grant_kinds": {
+    "wardrobe": "Catalog.resolve plus Store.grant",
+    "companions_or_locomotions": "ResourceCatalog.resolve plus ResourceEntitlements.grant",
+    "housing": "HousingStore canonical catalog plus grant_item",
+    "coffee_or_oktoberfest": "explicit positive units/uses through Consumables.grant",
+    "cinema": "durable local capability only; interaction types0/1"
+  },
+  "durability": {
+    "definitions_table": "local_reward_definitions primary key(route,trigger_key)",
+    "claims_table": "local_reward_claims primary key(ps4_id,route,trigger_key)",
+    "cinema_table": "cinema_capabilities primary key(ps4_id,interaction_type)",
+    "unknown_definition": "HTTP404 ProtocolError; never a fabricated success",
+    "repeat_claim": "no duplicate entitlement mutation",
+    "atomicity": "BEGIN IMMEDIATE groups entitlement mutation and claim marker; injected post-grant failure rolls both back"
+  },
+  "closed_domains": {
+    "canonical_numeric_text": "value must equal Int32.ToString(parsed value); aliases such as 00 and -0 are rejected",
+    "RewardClothServlet": {
+      "trigger_keys": [
+        "0"
+      ],
+      "grant_kinds": [
+        "wardrobe"
+      ]
+    },
+    "Utils.RewardType": [
+      "Halloween",
+      "ArcheryBow",
+      "ArcheryCarcaj",
+      "Chess",
+      "CastleSword",
+      "PatricksDay2018",
+      "Cube",
+      "CampSilverLake0",
+      "CampSilverLake1",
+      "CampSilverLake2",
+      "CampSilverLake3",
+      "GhostWolf"
+    ],
+    "SKLPromoServlet": {
+      "promo_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sprite_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "basis": "six shipped SKLPromoTrigger components; each aSprites length12; native reads 2*i and 2*i+1"
+    },
+    "CinemaInteractionNPServlet": {
+      "0": "Ticket",
+      "1": "PopCorn"
+    }
+  },
+  "observed_vs_policy": {
+    "observed": "field order, Boolean/Int32 consumers, numeric/enumerated request strings, MITM space fallback branch",
+    "new_local_policy": "which rewards exist, which shipped entitlement each grants, enabled state, sprite ID, consumable uses and cinema availability",
+    "unknown_original_state": [
+      "prices",
+      "currency balances",
+      "eligibility",
+      "schedules",
+      "cooldowns",
+      "reward mapping",
+      "idempotency keys",
+      "historical claims"
+    ]
+  },
+  "sources": [
+    {
+      "path": "outputs/nebula-preservation/protocol/http-legacy-contracts.json",
+      "sha256": "a20f48f68f41887a022b114e0770d5e66deab72e057f55735f52f017b41d937f"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/46e360.c",
+      "sha256": "91a0bfa302c2260b9a1c8772ffb609443652d473c8f176e76dea5c09449f1d4b"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/3ea1a0.c",
+      "sha256": "f8626a9dbe7035c0832faf99ac585dbaba508b762fa5531ed9ce11a2aa316143"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5bee40.c",
+      "sha256": "b46e14863d87d0db2651d00f40c0b992165c41703635c3a463a45d562f2a64d6"
+    },
+    {
+      "path": "work/evidence/mitm-space-callcontext-native.json",
+      "sha256": "1ed4e48182837f74326cb2cbba333ba00c46cfb05ea163841d28c18731f0394c"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/skl-promo-catalog.json",
+      "sha256": "bca3fc08dfdb4e6f5072d3b8ac13e4d0b84580917c115b2fc139e77f43522bc5"
+    },
+    {
+      "path": "outputs/nebula-preservation/tools/extract_skl_promo_assets.py",
+      "sha256": "124fad3bac6aac053c66ef01799db356822ecfcb460315e953ee2593dd8d563f"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/rewards.py",
+      "sha256": "0d7c2710205456c0b405117bb2811eb2596a1b10effa61bf0ecd3e5a5c45700d"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/rewards_admin.py",
+      "sha256": "2fed537260a56f7e06571694d7c2786e1c22cceec456c881fb51c0854f88bf23"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/tests/test_rewards.py",
+      "sha256": "3b9bb75a8bd7dacdae00b7bfc98a6fff66250f2e288bd62969962eff20b719a2"
+    }
+  ],
+  "offline_tests": 9,
+  "runtime_or_connection_tests_performed": false,
+  "original_server_policy_recovered": false
+}

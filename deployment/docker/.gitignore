@@ -1,0 +1,5 @@
+.env
+private-linux/
+secrets/
+state/
+backups/

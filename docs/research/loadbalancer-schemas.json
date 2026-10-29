@@ -1,0 +1,51 @@
+[
+  {
+    "name": "<Module>",
+    "namespace": "",
+    "full_name": "<Module>",
+    "kind": "class",
+    "type_def_index": 10707,
+    "base_types": null,
+    "source_line": 520121,
+    "fields": [],
+    "methods": [],
+    "assembly": "loadbalancerConn.dll"
+  },
+  {
+    "name": "loadbalancerConn",
+    "namespace": "",
+    "full_name": "loadbalancerConn",
+    "kind": "class",
+    "type_def_index": 10708,
+    "base_types": null,
+    "source_line": 520125,
+    "fields": [],
+    "methods": [
+      {
+        "rva": "0x12499A0",
+        "offset": "0x12489A0",
+        "va": "0x1812499A0",
+        "decl": "public static string get_DevIp() { }"
+      },
+      {
+        "rva": "0x12499D0",
+        "offset": "0x12489D0",
+        "va": "0x1812499D0",
+        "decl": "public static string get_Ip() { }"
+      },
+      {
+        "rva": "0x1249A00",
+        "offset": "0x1248A00",
+        "va": "0x181249A00",
+        "decl": "public static int get_port() { }"
+      },
+      {
+        "rva": "0x35DFF0",
+        "offset": "0x35CFF0",
+        "va": "0x18035DFF0",
+        "decl": "public void .ctor() { }"
+      }
+    ],
+    "assembly": "loadbalancerConn.dll"
+  }
+]

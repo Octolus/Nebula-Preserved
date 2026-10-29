@@ -1,0 +1,11 @@
+{
+  "fixture_id": "synthetic-admin-parity-v1",
+  "provenance": "SYNTHETIC_PARITY_ONLY_PUBLIC_TEST_TOKEN_NOT_A_SECRET",
+  "token": "0123456789abcdef0123456789abcdef",
+  "operators": [
+    {"id": "owner", "role": "owner", "enabled": true},
+    {"id": "admin", "role": "admin", "enabled": true},
+    {"id": "moderator", "role": "moderator", "enabled": true},
+    {"id": "disabled", "role": "admin", "enabled": false}
+  ]
+}

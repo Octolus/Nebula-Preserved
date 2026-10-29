@@ -1,0 +1,57 @@
+{
+  "format": "nebula-client-source-curation-validation-v2",
+  "status": "offline-source-reconstruction-passed-release-provisional",
+  "source_selection_files": 102,
+  "foundation_files": 96,
+  "python_syntax_files": 18,
+  "source_lock_sha256": "4399d7a031de47a1870feddd7c6299c6a56a4e7a73d047ec1a2867a794b9bf62",
+  "source_foundation_delta_files": 6,
+  "source_foundation_unchanged_files": 90,
+  "historical_ga_stages_reproduced": 11,
+  "profiles": {
+    "default": {
+      "ga_sha256": "d59155564b142aa24dcfab03a47290d43261dccbfd55ea3a06543fffe65fda04",
+      "helper_sha256": "c880fb8df3265da1432ff3e6683156e2941abf972ad23df8e15699f38fea6e19",
+      "original_cursor_preserved": true,
+      "settings_cursor_safe_profile": false
+    },
+    "free-mouse": {
+      "ga_sha256": "39ad8c096357f4a1e56b90524175f67b8e6cc88dcedf2c3bc0fbf87178271e3b",
+      "helper_sha256": "68415abf23ee90cbc3e9c6294097c0387eea8b29ddae42eb1fbc290739573083",
+      "original_cursor_preserved": false,
+      "settings_cursor_safe_profile": true
+    }
+  },
+  "portable_target_checks": [
+    "default exact GA/helper tuple and full helper source closure",
+    "free-mouse exact GA/helper tuple and full helper source closure",
+    "actual settings cursor safe-list predicate default",
+    "actual settings cursor safe-list predicate free-mouse",
+    "actual settings cursor safe-list predicate cohort",
+    "actual settings cursor safe-list predicate unknown",
+    "default exact pristine cursor body 0x6a93e0",
+    "default exact pristine cursor body 0x1b6b7d0",
+    "default exact pristine cursor body 0x1b6b810",
+    "default exact eight-artifact provisional bundle input",
+    "free-mouse exact eight-artifact provisional bundle input"
+  ],
+  "standalone_helper_builds": {
+    "default": "c880fb8df3265da1432ff3e6683156e2941abf972ad23df8e15699f38fea6e19",
+    "free_mouse": "68415abf23ee90cbc3e9c6294097c0387eea8b29ddae42eb1fbc290739573083",
+    "registry": "e493d6fa9af94df6626e950ee8e4483ede10d94fc81405b394090dd0e047ef10"
+  },
+  "registry_build": "Fresh strict C++17 build reproduced the reviewed reference; preferred image base and ABI preserved",
+  "public_access_build": "Source and CMake unchanged; reviewed separate authored binary supplied to reconstruction",
+  "rust_patcher": "Production Rust bytes unchanged by this client-source promotion; existing ten locked/offline checks remain separate evidence",
+  "complete_game_files_copied": false,
+  "private_runtime_evidence_copied": false,
+  "game_or_server_launched": false,
+  "steam_or_private_client_changed": false,
+  "production_ready": false,
+  "remaining_gates": [
+    "Independent final source review and promotion",
+    "Complete native networking and persistence acceptance",
+    "Reviewed provisional delta bundle assembly and independent install",
+    "Separate TLS sidecar/deployment security profile when remote transport is selected"
+  ]
+}

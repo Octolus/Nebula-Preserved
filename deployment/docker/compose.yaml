@@ -1,0 +1,155 @@
+name: nebula-preserved
+services:
+  server:
+    image: nebula-preserved-server:local
+    platform: linux/amd64
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile
+    init: true
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: ${NEBULA_PIDS_LIMIT:-4096}
+    stop_grace_period: 45s
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=256m,mode=1777
+    environment:
+      NEBULA_MODE: ${NEBULA_MODE:-private}
+      COMPOSE_PROFILES: ${COMPOSE_PROFILES:-private}
+      NEBULA_ADVERTISE_IP: ${NEBULA_ADVERTISE_IP:-127.0.0.1}
+      NEBULA_BUILD_REPORT_SHA256: ${NEBULA_BUILD_REPORT_SHA256:?Set the reviewed build report hash}
+      NEBULA_SERVER_SHA256: ${NEBULA_SERVER_SHA256:?Set the reviewed ELF hash}
+      NEBULA_MANAGED_SHA256: ${NEBULA_MANAGED_SHA256:?Set the reviewed Assembly-CSharp hash}
+      NEBULA_MAX_PROCESSES: ${NEBULA_MAX_PROCESSES:-16}
+      NEBULA_IDLE_TTL: ${NEBULA_IDLE_TTL:-60}
+      NEBULA_ADMIN_BIND: 0.0.0.0
+      NEBULA_ADMIN_PORT: "8090"
+      NEBULA_ADMIN_TOKEN_FILE: /run/secrets/admin_token
+      NEBULA_ADMIN_OPERATORS_FILE: /run/secrets/admin_operators.json
+    secrets:
+      - admin_token
+      - source: admin_operators
+        target: admin_operators.json
+    volumes:
+      - state:/var/lib/nebula
+    # Only enabled sidecars listen on the mapped proxy/gateway ports.
+    # 8090 is deliberately absent: SSR reaches it on the internal bridge.
+    ports:
+      - "${NEBULA_HOST_BIND:-127.0.0.1}:8080:8081/tcp"
+      - "${NEBULA_HOST_BIND:-127.0.0.1}:28000-28031:28000-28031/tcp"
+    healthcheck:
+      test: [CMD, python, /opt/nebula-container/healthcheck.py]
+      interval: 10s
+      timeout: 4s
+      start_period: 45s
+      retries: 3
+  private-http:
+    image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+    profiles: [private]
+    network_mode: service:server
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=16m,mode=1777"]
+    volumes:
+      - ./nginx-private.conf:/etc/nginx/nginx.conf:ro
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - |
+        health="$$(wget -q -T 3 -O - http://127.0.0.1:8080/preservation/health)"
+        printf '%s' "$$health" | grep -Eq '"public_access"[[:space:]]*:[[:space:]]*false'
+        exec nginx -g 'daemon off;'
+    restart: unless-stopped
+    depends_on:
+      server: {condition: service_healthy}
+  panel:
+    image: nebula-preserved-panel:local
+    platform: linux/amd64
+    build:
+      context: ../../admin-panel
+      dockerfile: Dockerfile
+    init: true
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=64m,mode=1777"]
+    restart: unless-stopped
+    stop_grace_period: 15s
+    ports:
+      - "${NEBULA_PANEL_HOST_BIND:-127.0.0.1}:4321:4321/tcp"
+    environment:
+      PORT: "4321"
+      HOST: 0.0.0.0
+      NODE_ENV: production
+      NEBULA_MANAGEMENT_URL: http://server:8090
+      NEBULA_ADMIN_TOKEN_FILE: /run/secrets/admin_token
+      NEBULA_ADMIN_OPERATORS_FILE: /run/secrets/admin_operators.json
+      NEBULA_PANEL_SESSION_KEY_FILE: /run/secrets/panel_session_key
+      NEBULA_PANEL_ORIGIN: ${NEBULA_PANEL_ORIGIN:-http://localhost:4321}
+    secrets:
+      - admin_token
+      - source: admin_operators
+        target: admin_operators.json
+      - panel_session_key
+    depends_on:
+      server: {condition: service_healthy}
+  public-https:
+    image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+    profiles: [public]
+    network_mode: service:server
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=16m,mode=1777"]
+    volumes:
+      - ./nginx-public.conf:/etc/nginx/nginx.conf:ro
+    secrets: [tls_certificate, tls_private_key]
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - |
+        health="$$(wget -q -T 3 -O - http://127.0.0.1:8080/preservation/health)"
+        printf '%s' "$$health" | grep -Eq '"public_access"[[:space:]]*:[[:space:]]*true'
+        exec nginx -g 'daemon off;'
+    restart: unless-stopped
+    depends_on:
+      server: {condition: service_healthy}
+  public-game:
+    image: nebula-preserved-server:local
+    platform: linux/amd64
+    profiles: [public]
+    network_mode: service:server
+    user: "1000:1000"
+    init: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=16m,mode=1777"]
+    volumes:
+      - state:/var/lib/nebula:ro
+    secrets: [tls_certificate, tls_private_key]
+    entrypoint: [python, /opt/nebula/backend/remote_gateway.py]
+    command: [--listen, --bind, 0.0.0.0, --port, "8443", --first-scene-port, "28000", --last-scene-port, "28031", --state-dir, /var/lib/nebula, --certificate, /run/secrets/tls_certificate, --private-key, /run/secrets/tls_private_key]
+    restart: unless-stopped
+    stop_grace_period: 10s
+    depends_on:
+      server: {condition: service_healthy}
+volumes:
+  state:
+secrets:
+  admin_token:
+    file: ${NEBULA_ADMIN_TOKEN_SOURCE:-./secrets/admin-token.txt}
+  admin_operators:
+    file: ${NEBULA_ADMIN_OPERATORS_SOURCE:-./secrets/admin-operators.json}
+  panel_session_key:
+    file: ${NEBULA_PANEL_SESSION_KEY_SOURCE:-./secrets/panel-session-key.txt}
+  tls_certificate:
+    file: ${NEBULA_TLS_CERTIFICATE_SOURCE:-./secrets/fullchain.pem}
+  tls_private_key:
+    file: ${NEBULA_TLS_PRIVATE_KEY_SOURCE:-./secrets/server-key.pem}

@@ -1,0 +1,842 @@
+{
+  "scope": "Raw E8 direct-call candidates in executable sections, assigned nearest preceding IL2CPP metadata method; inspect bounded instruction stream to confirm code and calling semantics.",
+  "callers": [
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x419408",
+      "containing_method_rva": "0x4190b0",
+      "method_candidates": [
+        "UiFoodTruckMenuInit$$GetConsumable"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x419ef8",
+      "containing_method_rva": "0x419ba0",
+      "method_candidates": [
+        "UiOktoberFestMenuInit$$GetConsumable"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x41f2c9",
+      "containing_method_rva": "0x41f200",
+      "method_candidates": [
+        "JetpackFlying$$AttachJetPack"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x41fc07",
+      "containing_method_rva": "0x41fa00",
+      "method_candidates": [
+        "JetpackFlying$$LocomotionAndCompanionBack"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x41fe03",
+      "containing_method_rva": "0x41fa00",
+      "method_candidates": [
+        "JetpackFlying$$LocomotionAndCompanionBack"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x42017c",
+      "containing_method_rva": "0x420090",
+      "method_candidates": [
+        "JetpackFlying$$StartFreeFlying"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x43947f",
+      "containing_method_rva": "0x4393e0",
+      "method_candidates": [
+        "ManagerInstance$$OnSetIsWardrobe"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x44b64e",
+      "containing_method_rva": "0x44b2f0",
+      "method_candidates": [
+        "AnimMenuSelection$$OnClick"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x44d180",
+      "containing_method_rva": "0x44ce10",
+      "method_candidates": [
+        "Boat$$FixedUpdate"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x44f60b",
+      "containing_method_rva": "0x44f580",
+      "method_candidates": [
+        "DayNightTrigger$$Interact"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x45141e",
+      "containing_method_rva": "0x451100",
+      "method_candidates": [
+        "GenericInteractable$$SendData"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x451979",
+      "containing_method_rva": "0x451640",
+      "method_candidates": [
+        "HarbourEnter$$Callback"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4522dc",
+      "containing_method_rva": "0x451e00",
+      "method_candidates": [
+        "HarbourEnter$$Interact"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x462692",
+      "containing_method_rva": "0x4625b0",
+      "method_candidates": [
+        "Chat$$OnChatDialogResult"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4633d9",
+      "containing_method_rva": "0x463310",
+      "method_candidates": [
+        "Chat$$OnMessageWritten"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x464629",
+      "containing_method_rva": "0x4640c0",
+      "method_candidates": [
+        "Chat$$SendMessage"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x47e547",
+      "containing_method_rva": "0x47e050",
+      "method_candidates": [
+        "NotificationsManager$$AcceptNotification"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x47e7e5",
+      "containing_method_rva": "0x47e050",
+      "method_candidates": [
+        "NotificationsManager$$AcceptNotification"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x47f901",
+      "containing_method_rva": "0x47f160",
+      "method_candidates": [
+        "NotificationsManager$$DeclineAll"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x47fe91",
+      "containing_method_rva": "0x47fa70",
+      "method_candidates": [
+        "NotificationsManager$$DismissNotification"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x483dbf",
+      "containing_method_rva": "0x483650",
+      "method_candidates": [
+        "RemotePlayerMenu$$OnOptionSelected"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4b94f7",
+      "containing_method_rva": "0x4b9240",
+      "method_candidates": [
+        "ChatFlooder$$SendMessage"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4b98ad",
+      "containing_method_rva": "0x4b95a0",
+      "method_candidates": [
+        "ChatTest$$OnEnable"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4b9e0c",
+      "containing_method_rva": "0x4b9be0",
+      "method_candidates": [
+        "LocomotionPrefab$$OnClick"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c0d2c",
+      "containing_method_rva": "0x4c0b00",
+      "method_candidates": [
+        "PetPrefab$$OnClick"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c60a2",
+      "containing_method_rva": "0x4c5db0",
+      "method_candidates": [
+        "SocialOptionsMenuSimple$$<OnRemove>b__4_0"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c6432",
+      "containing_method_rva": "0x4c6140",
+      "method_candidates": [
+        "SocialOptionsMenuSimple$$<OnRemove>b__4_1"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c67c2",
+      "containing_method_rva": "0x4c64d0",
+      "method_candidates": [
+        "SocialOptionsMenuSimple$$<OnRemove>b__4_2"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c6eb0",
+      "containing_method_rva": "0x4c6a60",
+      "method_candidates": [
+        "SocialOptionsMenu$$OnInvite"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c80ed",
+      "containing_method_rva": "0x4c7700",
+      "method_candidates": [
+        "SocialOptionsMenu$$OnTalk"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c8be2",
+      "containing_method_rva": "0x4c88f0",
+      "method_candidates": [
+        "SocialOptionsMenu$$<OnRemove>b__19_0"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c8f72",
+      "containing_method_rva": "0x4c8c80",
+      "method_candidates": [
+        "SocialOptionsMenu$$<OnRemove>b__19_1"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c9302",
+      "containing_method_rva": "0x4c9010",
+      "method_candidates": [
+        "SocialOptionsMenu$$<OnRemove>b__19_2"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4c9c2b",
+      "containing_method_rva": "0x4c9530",
+      "method_candidates": [
+        "SocialOptionsSpaceUsers$$OnAddFriend"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x4cc247",
+      "containing_method_rva": "0x4cbf60",
+      "method_candidates": [
+        "SocialOptionsSpaceUsers.<>c$$<OnBlock>b__7_0"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x53f695",
+      "containing_method_rva": "0x53f370",
+      "method_candidates": [
+        "BoardGamesManager$$Send_InitializeGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x53f961",
+      "containing_method_rva": "0x53f730",
+      "method_candidates": [
+        "BoardGamesManager$$Send_LeaveGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x53fc8d",
+      "containing_method_rva": "0x53f9e0",
+      "method_candidates": [
+        "BoardGamesManager$$Send_MakeMove"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x54000f",
+      "containing_method_rva": "0x53fd20",
+      "method_candidates": [
+        "BoardGamesManager$$Send_SelectGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5402f5",
+      "containing_method_rva": "0x5400c0",
+      "method_candidates": [
+        "BoardGamesManager$$Send_StartGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x54041d",
+      "containing_method_rva": "0x540370",
+      "method_candidates": [
+        "BoardGamesManager$$Send_SynchronizeGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x544dcb",
+      "containing_method_rva": "0x544b40",
+      "method_candidates": [
+        "BoatMiniGame$$RemoveCompanion"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x546264",
+      "containing_method_rva": "0x545c50",
+      "method_candidates": [
+        "BoatTripManager$$InstantiateBoatAndSeatPlayer"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5465fb",
+      "containing_method_rva": "0x546370",
+      "method_candidates": [
+        "BoatTripManager$$RemoveCompanion"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x54befe",
+      "containing_method_rva": "0x54b8b0",
+      "method_candidates": [
+        "BowlingGameLane$$Send_BallShot"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x54c336",
+      "containing_method_rva": "0x54bff0",
+      "method_candidates": [
+        "BowlingGameLane$$Send_ChangeTurn"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x54c6b2",
+      "containing_method_rva": "0x54c3d0",
+      "method_candidates": [
+        "BowlingGameLane$$Send_LeaveGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x54d43e",
+      "containing_method_rva": "0x54c750",
+      "method_candidates": [
+        "BowlingGameLane$$Send_StrikePins"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x553176",
+      "containing_method_rva": "0x552ea0",
+      "method_candidates": [
+        "BowlingGameManager$$Send_InitializeGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x557254",
+      "containing_method_rva": "0x556f20",
+      "method_candidates": [
+        "Cupid2018WalkingInLove$$StartInLove"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5575b6",
+      "containing_method_rva": "0x5572d0",
+      "method_candidates": [
+        "Cupid2018WalkingInLove$$StopInlove"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x55cb1c",
+      "containing_method_rva": "0x55c5e0",
+      "method_candidates": [
+        "DartsGameManager$$Send_InitializeGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x55cdc1",
+      "containing_method_rva": "0x55cb90",
+      "method_candidates": [
+        "DartsGameManager$$Send_LeaveGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x55d1a2",
+      "containing_method_rva": "0x55ce40",
+      "method_candidates": [
+        "DartsGameManager$$Send_MakeMove"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x55d59b",
+      "containing_method_rva": "0x55d240",
+      "method_candidates": [
+        "DartsGameManager$$Send_SelectGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x55d97c",
+      "containing_method_rva": "0x55d730",
+      "method_candidates": [
+        "DartsGameManager$$Send_StartGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x55da9d",
+      "containing_method_rva": "0x55d9f0",
+      "method_candidates": [
+        "DartsGameManager$$Send_SynchronizeGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x561d78",
+      "containing_method_rva": "0x5618c0",
+      "method_candidates": [
+        "BowlingGameLane.<SyncrhonizeMessageCoroutine>d__101$$MoveNext"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x563703",
+      "containing_method_rva": "0x5634e0",
+      "method_candidates": [
+        "UIBowlingMain$$OnSelect"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5955d4",
+      "containing_method_rva": "0x5952a0",
+      "method_candidates": [
+        "Halloween2018ZombiesTrigger$$StartZombie"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x595936",
+      "containing_method_rva": "0x595650",
+      "method_candidates": [
+        "Halloween2018ZombiesTrigger$$StopZombie"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x59e862",
+      "containing_method_rva": "0x59ddc0",
+      "method_candidates": [
+        "PoolGameTable$$Send_MoveBalls"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x59ecd4",
+      "containing_method_rva": "0x59e9c0",
+      "method_candidates": [
+        "PoolGameTable$$Send_MoveCue"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x59f0ce",
+      "containing_method_rva": "0x59ed60",
+      "method_candidates": [
+        "PoolGameTable$$Send_MoveFoul"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x59f434",
+      "containing_method_rva": "0x59f180",
+      "method_candidates": [
+        "PoolGameTable$$Send_StartGame"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5a9a72",
+      "containing_method_rva": "0x5a98c0",
+      "method_candidates": [
+        "PoolGameManager.<Send_InitializeGameDelay>d__28$$MoveNext"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5a9d9f",
+      "containing_method_rva": "0x5a9af0",
+      "method_candidates": [
+        "PoolGameManager.<Send_LeaveGameDelay>d__31$$MoveNext"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5aa2a8",
+      "containing_method_rva": "0x5a9e70",
+      "method_candidates": [
+        "PoolGameManager.<Send_SelectGameDelay>d__35$$MoveNext"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5d9bbc",
+      "containing_method_rva": "0x5d98b0",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingBallShotOneWayProcessor$$Process"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5da1c0",
+      "containing_method_rva": "0x5d9de0",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingLeaveGameOneWayProcessor$$Process"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5da6ed",
+      "containing_method_rva": "0x5da2e0",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStartGameOneWayProcessor$$Process"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5dab6d",
+      "containing_method_rva": "0x5da760",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStartGameProcessor$$Process"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5daeec",
+      "containing_method_rva": "0x5dabe0",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStrikePinsOneWayProcessor$$Process"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5db76c",
+      "containing_method_rva": "0x5db460",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingTurnBowlingGameOneWayProcessor$$Process"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5e024f",
+      "containing_method_rva": "0x5dfdc0",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.OnConnectedProcessor$$OnAvatarLoaded"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5e3d0b",
+      "containing_method_rva": "0x5e3b10",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.PlayerJoinedProcessor$$GetCurrentCompanion"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5e3f7b",
+      "containing_method_rva": "0x5e3d80",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.PlayerJoinedProcessor$$GetCurrentLocomotion"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5e41eb",
+      "containing_method_rva": "0x5e3ff0",
+      "method_candidates": [
+        "Assets.Scripts.TCPs.Processors.PlayerJoinedProcessor$$GetCurrentPosition"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5f079b",
+      "containing_method_rva": "0x5f0320",
+      "method_candidates": [
+        "Assets.Scripts.NebulaPlayers.NebulaInputChat$$ProcessStartTyping"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5f226b",
+      "containing_method_rva": "0x5f2070",
+      "method_candidates": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$GetCurrentAnim"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5f3d6a",
+      "containing_method_rva": "0x5f3c60",
+      "method_candidates": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$RemoveLocomotion"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5f41f4",
+      "containing_method_rva": "0x5f3ee0",
+      "method_candidates": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$SendParameter"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x5f4ad2",
+      "containing_method_rva": "0x5f4500",
+      "method_candidates": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$SetCurrentAnim"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x6125f7",
+      "containing_method_rva": "0x612380",
+      "method_candidates": [
+        "Assets.Scripts.NebulaInteractors.Interactables.NebulaOccupable$$Initialize"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x612a03",
+      "containing_method_rva": "0x612700",
+      "method_candidates": [
+        "Assets.Scripts.NebulaInteractors.Interactables.NebulaOccupable$$LeaveInteract"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x615387",
+      "containing_method_rva": "0x615000",
+      "method_candidates": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerTransform$$SendData"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x615d53",
+      "containing_method_rva": "0x6159f0",
+      "method_candidates": [
+        "Assets.Scripts.NebulaInteractors.Interactables.NebulaSeat$$Interact"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x639d1f",
+      "containing_method_rva": "0x6399f0",
+      "method_candidates": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPSavePlayerPref$$OnResponse"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x6e99a0",
+      "containing_method_rva": "0x6e8f80",
+      "method_candidates": [
+        "NebulaRemotePlayerInteractable$$SendRequest"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x6ed508",
+      "containing_method_rva": "0x6ed260",
+      "method_candidates": [
+        "NebulaRemotePlayerInteractable.<>c__DisplayClass7_0$$<SendRequest>b__0"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x6ed848",
+      "containing_method_rva": "0x6ed5a0",
+      "method_candidates": [
+        "NebulaRemotePlayerInteractable.<>c__DisplayClass7_0$$<SendRequest>b__1"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x6edb88",
+      "containing_method_rva": "0x6ed8e0",
+      "method_candidates": [
+        "NebulaRemotePlayerInteractable.<>c__DisplayClass7_0$$<SendRequest>b__2"
+      ]
+    },
+    {
+      "target": "TCPs.TCPClient.Send",
+      "target_rva": "0x5e7820",
+      "call_rva": "0x6edec8",
+      "containing_method_rva": "0x6edc20",
+      "method_candidates": [
+        "NebulaRemotePlayerInteractable.<>c__DisplayClass7_0$$<SendRequest>b__3"
+      ]
+    }
+  ]
+}

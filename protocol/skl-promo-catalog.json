@@ -1,0 +1,432 @@
+{
+  "format_version": 1,
+  "scope": "Static UnityPy type-tree extraction; no Unity/game/server/listener/connection runtime",
+  "native_consumer_rule": "SetSprites(i) reads aSprites[2*i] and aSprites[2*i+1]",
+  "source_inventory": {
+    "path": "work/evidence/world-interaction-assets.json",
+    "sha256": "004c9f4fa343fc697f98169b6cacfe8223ffd9fa7daafb10b8d79fe764d07b57"
+  },
+  "extractor": {
+    "path": "tools/extract_skl_promo_assets.py",
+    "sha256": "124fad3bac6aac053c66ef01799db356822ecfcb460315e953ee2593dd8d563f"
+  },
+  "promo_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "records": [
+    {
+      "promo_id": 0,
+      "bundle": "s/beachlogicprefab",
+      "bundle_sha256": "6e8e14eeba8213e6ce5ae88f29ad1ec6cd7468b60ca7e0a5d10f3d8b321fb46e",
+      "asset_file": "CAB-93426583d3e03a4d334201f3e0272f33",
+      "component_path_id": -5549885354771354820,
+      "component_raw_sha256": "71e3a3bb1fef556be9f87ecc7c5d9e90b4764449dfcd4dcae032210ce64bfc15",
+      "game_object_name": "SKLPromoTrigger",
+      "sprite_count": 12,
+      "valid_sprite_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sprite_references": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1453891122704234173
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 2583387494070283386
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 467021623169476746
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1987882251448518814
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 5838626471969177384
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 9185705074100412487
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -1883419359738674710
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -4128332870306790520
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 8390578191265777256
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -3872629078822410978
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1905524923315669358
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -8835842516995527382
+        }
+      ]
+    },
+    {
+      "promo_id": 1,
+      "bundle": "s/skllogicprefab",
+      "bundle_sha256": "3b6c0ff0f716e7612525e227f8a602396adbf97e307a407a9956f25e15338bf2",
+      "asset_file": "CAB-1115bb394957ea6a14fc9c30fa3403a6",
+      "component_path_id": -7662971182731204646,
+      "component_raw_sha256": "b54c54f5ac23fce7b62476e28bd14634c3c45696a450a1bcb9dd7ee0866c7aaa",
+      "game_object_name": "SKLPromoTrigger",
+      "sprite_count": 12,
+      "valid_sprite_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sprite_references": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1453891122704234173
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 2583387494070283386
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 467021623169476746
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1987882251448518814
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 5838626471969177384
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 9185705074100412487
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -1883419359738674710
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -4128332870306790520
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 8390578191265777256
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -3872629078822410978
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1905524923315669358
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -8835842516995527382
+        }
+      ]
+    },
+    {
+      "promo_id": 2,
+      "bundle": "s/beachlogicprefab",
+      "bundle_sha256": "6e8e14eeba8213e6ce5ae88f29ad1ec6cd7468b60ca7e0a5d10f3d8b321fb46e",
+      "asset_file": "CAB-93426583d3e03a4d334201f3e0272f33",
+      "component_path_id": 5907096419830153525,
+      "component_raw_sha256": "7b634bbd6380413b507a305eb7fffe47a39a19f4e6e0da07ba8829c1cf863d00",
+      "game_object_name": "SKLPromoTrigger",
+      "sprite_count": 12,
+      "valid_sprite_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sprite_references": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1453891122704234173
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 2583387494070283386
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 467021623169476746
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1987882251448518814
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 5838626471969177384
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 9185705074100412487
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -1883419359738674710
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -4128332870306790520
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 8390578191265777256
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -3872629078822410978
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1905524923315669358
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -8835842516995527382
+        }
+      ]
+    },
+    {
+      "promo_id": 3,
+      "bundle": "s/cubelogicprefab",
+      "bundle_sha256": "0e9865ec8bc9bdd4c94e13cbec35b8a17f6e445bbad1bb920086a61339a2f552",
+      "asset_file": "CAB-4efd7be244d26831b707290b34ab7201",
+      "component_path_id": 7366387691986642245,
+      "component_raw_sha256": "027fac154c9fbe290a79f30f21379ea6753366ea8b83a66830ea87f47eb75bfd",
+      "game_object_name": "SKLPromoTrigger",
+      "sprite_count": 12,
+      "valid_sprite_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sprite_references": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1453891122704234173
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 2583387494070283386
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 467021623169476746
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1987882251448518814
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 5838626471969177384
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 9185705074100412487
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -1883419359738674710
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -4128332870306790520
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 8390578191265777256
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -3872629078822410978
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1905524923315669358
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -8835842516995527382
+        }
+      ]
+    },
+    {
+      "promo_id": 4,
+      "bundle": "s/domelogicprefab",
+      "bundle_sha256": "ad226cb3f87733ecfce4a7f1a03470e2839bfad8f49ebf641443a18bfe2c42a9",
+      "asset_file": "CAB-6986ed3df72b456d2ecaf1d149bb32f0",
+      "component_path_id": -3022791373242754547,
+      "component_raw_sha256": "9733260501deec8ff54ff0a8f26d94160f3594de919748964beddc463d4c4df6",
+      "game_object_name": "SKLPromoTrigger",
+      "sprite_count": 12,
+      "valid_sprite_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sprite_references": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1453891122704234173
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 2583387494070283386
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 467021623169476746
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1987882251448518814
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 5838626471969177384
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 9185705074100412487
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -1883419359738674710
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -4128332870306790520
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 8390578191265777256
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -3872629078822410978
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1905524923315669358
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -8835842516995527382
+        }
+      ]
+    },
+    {
+      "promo_id": 5,
+      "bundle": "s/bowlinglogicprefab",
+      "bundle_sha256": "dcc6039feba98722b0c609b48c0f65e532211d75cf18ab130d3f10c3fdf4b395",
+      "asset_file": "CAB-5ebf39cbaeb97559d0e17d7f8e77a180",
+      "component_path_id": -6799787056928148942,
+      "component_raw_sha256": "3535fba880026511ed2c551e6eed98a4b74e667e41e36b47c8cc9113852e9b1a",
+      "game_object_name": "SKLPromoTrigger",
+      "sprite_count": 12,
+      "valid_sprite_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sprite_references": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 1453891122704234173
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 2583387494070283386
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 467021623169476746
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1987882251448518814
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 5838626471969177384
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 9185705074100412487
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -1883419359738674710
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -4128332870306790520
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 8390578191265777256
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -3872629078822410978
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 1905524923315669358
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -8835842516995527382
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,135 @@
+name: Experimental Rust server
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - experimental/rust-server/**
+      - experimental/remote-transport/server/**
+      - backend/**
+      - protocol/**
+      - .github/workflows/rust-server.yml
+  pull_request:
+    paths:
+      - experimental/rust-server/**
+      - experimental/remote-transport/server/**
+      - backend/**
+      - protocol/**
+      - .github/workflows/rust-server.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rust-server-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  RUST_TOOLCHAIN: '1.90.0'
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Locked Rust contracts (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+            executable: nebula-preserved-server
+          - os: windows-2025
+            target: x86_64-pc-windows-msvc
+            executable: nebula-preserved-server.exe
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Configure isolated build paths
+        run: |
+          set -euo pipefail
+          printf 'CARGO_HOME=%s/rust-server-cargo\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'CARGO_TARGET_DIR=%s/rust-server-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'RUSTUP_HOME=%s/rust-server-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'TMPDIR=%s\nTMP=%s\nTEMP=%s\n' "$RUNNER_TEMP" "$RUNNER_TEMP" "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - name: Check out source without persisted credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          set -euo pipefail
+          rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal --target "${{ matrix.target }}"
+          rustup run "$RUST_TOOLCHAIN" rustc --version
+      - name: Fetch the exact locked dependencies
+        run: |
+          set -euo pipefail
+          cargo "+$RUST_TOOLCHAIN" fetch --locked --manifest-path experimental/rust-server/Cargo.toml --target "${{ matrix.target }}"
+      - name: Test the isolated Rust candidate
+        run: |
+          set -euo pipefail
+          cargo "+$RUST_TOOLCHAIN" test --locked --offline --all-targets --manifest-path experimental/rust-server/Cargo.toml --target "${{ matrix.target }}"
+      - name: Build the executable used by the headless probes
+        run: cargo "+$RUST_TOOLCHAIN" build --locked --offline --manifest-path experimental/rust-server/Cargo.toml --target "${{ matrix.target }}"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Install headless reference-test dependencies
+        run: python -m pip install -r backend/requirements.txt -r experimental/rust-server/interop/requirements-interop.txt
+      - name: Compare the authored reference and candidate
+        working-directory: experimental/rust-server/parity
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          candidate="$CARGO_TARGET_DIR/${{ matrix.target }}/debug/${{ matrix.executable }}"
+          python -B -m unittest test_harness -v
+          python -B admin/test_controls.py
+          python -B run_parity.py --reference ../../.. --candidate "$candidate" --candidate-arg probe --name ci-baseline
+          python -B run_parity.py --reference ../../.. --fixture configured-mutations-v1 --candidate "$candidate" --candidate-arg probe --name ci-configured
+          python -B admin/run_admin.py --reference ../../.. --candidate "$candidate" --name ci-admin
+          python -B admin/run_admin.py --reference ../../.. --candidate "$candidate" --name ci-unicode --unicode-version-edge
+      - name: Verify certificate-checked gateway interoperability
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          python -B experimental/rust-server/interop/run_interop.py \
+            --reference . \
+            --candidate "$CARGO_TARGET_DIR/${{ matrix.target }}/debug/${{ matrix.executable }}" \
+            --work-dir "$RUNNER_TEMP/rust-server-interop"
+
+  container:
+    name: Build and verify the private container profile
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build the source-only candidate image
+        run: docker build -f experimental/rust-server/Dockerfile -t nebula-rust-ci .
+      - name: Verify nonroot, read-only startup and graceful stop
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'docker rm -f nebula-rust-ci-test >/dev/null 2>&1 || true' EXIT
+          test "$(docker inspect --format '{{.Config.User}}' nebula-rust-ci)" = '10001:10001'
+          docker run -d --rm --name nebula-rust-ci-test --network none --read-only \
+            --cap-drop ALL --security-opt no-new-privileges \
+            --tmpfs /var/lib/nebula-rust:rw,uid=10001,gid=10001,mode=0700,size=64m \
+            --tmpfs /tmp:rw,nosuid,nodev,size=16m nebula-rust-ci
+          healthy=0
+          for attempt in $(seq 1 15); do
+            if docker exec nebula-rust-ci-test nebula-preserved-server health; then
+              healthy=1
+              break
+            fi
+            sleep 1
+          done
+          test "$healthy" = 1
+          docker stop --time 15 nebula-rust-ci-test

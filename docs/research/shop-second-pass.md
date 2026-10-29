@@ -1,0 +1,107 @@
+> Historical research: this file records an earlier investigation, not current feature acceptance. The root [PROGRESS report](../PROGRESS.md) is authoritative. Local evidence and extracted game code are intentionally omitted. See [research index](README.md).
+
+# Shop second-pass audit
+
+Static comparison only: no game, UI, listener, connection, or process attachment.
+
+## SHOP-SP-001 — GetGenderData nonempty response layout
+
+- Severity/state: `critical` / `fixed`
+- Native fact: field 3 is the number of following scalar tokens; client divides it by 2 and consumes genderID,Boolean pairs
+- Current implementation: _genders emits the exact flat scalar pair layout
+- Action: emit true#guid#ps4_id#(2*N)#genderID#True...; keep empty form count 0
+- Evidence: 0x40bc30
+
+## SHOP-SP-002 — ShopInfo display field order
+
+- Severity/state: `critical` / `fixed`
+- Native fact: fields 3,4,5 populate ShopManager.name,np,crystals at offsets 0x38,0x40,0x48
+- Current implementation: returns authenticated profile username, NP, crystals
+- Action: return profile username, local NP, local crystals; remove level from the wire reply
+- Evidence: 0x410d10, dump.cs ShopManager
+
+## SHOP-SP-003 — SyncCrystals display field order
+
+- Severity/state: `critical` / `fixed`
+- Native fact: the same three offsets populate name,np,crystals
+- Current implementation: returns authenticated profile username, NP, crystals and accepts native Int64 consumedCount
+- Action: return profile username, local NP, local crystals; client receipt fields remain non-authoritative
+- Evidence: 0x410a50, dump.cs ShopManager
+
+## SHOP-SP-004 — ItemData.imagePath
+
+- Severity/state: `high` / `fixed`
+- Native fact: EntryItem passes imagePath to a loader that classifies known path segments, removes a four-character extension, and may take the final 41 characters
+- Current implementation: non-bundle thumbnails derive from validated shipped manifests; bundles require a compatible explicit path
+- Action: derive and validate a compatible shipped thumbnail path; never invent or accept an unverified arbitrary path
+- Evidence: 0x4aa380, 0x4a7f90, 0x413f20
+
+## SHOP-SP-005 — TypeShop enum
+
+- Severity/state: `info` / `match`
+- Native fact: CLOTHING=0, COMPANIONS=1, HOUSING=2, LOCOMOTIONS=3
+- Current implementation: shop type is restricted to 0 through 3
+- Action: No change required.
+- Evidence: dump.cs ShopNETGcloud.TypeShop
+
+## SHOP-SP-006 — Bundle list framing
+
+- Severity/state: `info` / `match`
+- Native fact: field 3 is ItemData entry count and each entry occupies one serialized EntryData token
+- Current implementation: _bundle uses _list with ItemData and configured child order
+- Action: No change required.
+- Evidence: 0x40e900
+
+## SHOP-SP-007 — purchase statuses
+
+- Severity/state: `medium` / `compatibility_note`
+- Native fact: buy explicitly handles enum values 0/1/2 (OK/NOCRYSTALS/NOXP); gift handles 0/1/3 and requires six fields; buy does not present a dedicated ISPURCHASED branch
+- Current implementation: uses exact enum strings; idempotent buy returns ISPURCHASED and gift includes target plus a sixth compatibility field
+- Action: retain exact strings; test the ignored buy ISPURCHASED path separately from success UI
+- Evidence: 0x40f230, 0x40fbb0
+
+## SHOP-SP-008 — gift target identifier
+
+- Severity/state: `high` / `fixed`
+- Native fact: FriendEntry.OnClick copies displayed friend name into giftNameFriendTarget; OnClickGift sends only that string
+- Current implementation: resolves an exact displayed username across local platforms and requires one unambiguous friend relation
+- Action: retain ambiguity rejection because the wire carries no platform discriminator
+- Evidence: 0x4ab9c0, 0x4b7700
+
+## SHOP-SP-009 — gender IDs and symbolic fields
+
+- Severity/state: `critical` / `fixed`
+- Native fact: EntryItem compares ItemData.gender with TypeGender.ToString; selected IDs 0/1 parse TypeData while 2/3/5/6 parse ItemData directly
+- Current implementation: wardrobe items emit MALE/FEMALE and GetShopTypeData selects the native DTO by selected ID
+- Action: keep ID 4 empty because its native callback branch does not deserialize rows
+- Evidence: 0x40d630, 0x4a9790, 0x4ad0a0
+
+## Evidence hashes
+
+- `outputs/nebula-preservation/backend/shop.py`: `2b59fbf8fa3c12d71008d590ed6f8c18adb0bbe71cc190595bcd7ad37e572924`
+- `work/decompiled/dump.cs`: `5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850`
+- `work/evidence/ghidra/functions/40bc30.c`: `5469b045e4ed7c32df994b438bf7fb123a139169012e5a87d121b384b691a1d0`
+- `work/evidence/ghidra/functions/40d630.c`: `06e4f5bb6a295aaa3ad7a42240ee0a39f639f1a5232982889e0fab10e474b2cb`
+- `work/evidence/ghidra/functions/40e900.c`: `bd4c4ef829e074fb0834f08398f816128273a0303e95b6a63afba1e34f22fe0f`
+- `work/evidence/ghidra/functions/40f230.c`: `a97cccb298887d9fde26b3e62eea2d763d03fc1381ea8cf3e05654dce646664d`
+- `work/evidence/ghidra/functions/40fbb0.c`: `9542d8cb1141250458e182685944718b7fd79252af77230697f415a201b1d3fa`
+- `work/evidence/ghidra/functions/410a50.c`: `b4a7674325f7d3e587178e3caa8e104cb7d7dccccd921f8178e1c14dafab3792`
+- `work/evidence/ghidra/functions/410d10.c`: `862680e04edbdbf6d7b49a9031a7029db24fd0dab0289fe9173578857364d036`
+- `work/evidence/ghidra/functions/413f20.c`: `be5bdbbdc30f85267e907c6d2d645d36d30828ff64b5bd9967f86ddc0906e88c`
+- `work/evidence/ghidra/functions/440cb0.c`: `7294fd37136075a5ce98ea035fabea4b104b3c2acc1ce4177bec8be59e6eeb53`
+- `work/evidence/ghidra/functions/448fc0.c`: `26444d1801f234514b70fae5133e5d4cce4c6b5cc5e3d6ff3e74f5c111c1379a`
+- `work/evidence/ghidra/functions/4a7f90.c`: `e868dc8a0c69136cddb664495344c9a3d37dc0ca2c425ff993bff74f3576a5cf`
+- `work/evidence/ghidra/functions/4a8ae0.c`: `4fa1a77606b9d61e3bc400b11be85a45817ed7414a1410f416db9638efd35b55`
+- `work/evidence/ghidra/functions/4a90e0.c`: `393aa0d415fd632c1a6fa908737a8f06618080a4874d8db4351f943fce25fe60`
+- `work/evidence/ghidra/functions/4a9790.c`: `ef506bdf41ae85cf530a1fb1a758fc7c85e07d18bd13092b1061562312a78a02`
+- `work/evidence/ghidra/functions/4aa380.c`: `dbb4494afe79e52b200f10cc8d32efef2ced0f3eeabd6dd2dcf8fdfcc51668b9`
+- `work/evidence/ghidra/functions/4ab9c0.c`: `0625651e361f3f5b449b931987790e1408dd16fcf9a0ae7493620733329a761d`
+- `work/evidence/ghidra/functions/4acda0.c`: `77e4b2aa1e680dab025578a7cb4197d917672880bcc43e7e96b877d79a7a6ef6`
+- `work/evidence/ghidra/functions/4acf20.c`: `dceb2e80fdb346c56c8e5b69f732dce5b7fde71f010a27a0c14129ecb940a33d`
+- `work/evidence/ghidra/functions/4acfe0.c`: `3e190e15899efd996969aae62466e6372db50509b5770d03fe2eb4ff98777b32`
+- `work/evidence/ghidra/functions/4ad0a0.c`: `666583000d96b1c355e355b276f37d69a3f413cdccbdb7a278e8ecb00aa73003`
+- `work/evidence/ghidra/functions/4adc20.c`: `cc9b16b52f1ed2615e58a8027baabdc51e131ef008b5752c1da4ccbb07bbbbf8`
+- `work/evidence/ghidra/functions/4b75e0.c`: `33252885777f1e78457f697e73c0ce102b8795965c3b7ed5c55a20d5e09b8bd3`
+- `work/evidence/ghidra/functions/4b7670.c`: `0c1ac6bf0443a9abd20bd322b0960cbe3a11b781acb86e90e378cfb41157d99a`
+- `work/evidence/ghidra/functions/4b7700.c`: `8ef86acf4dfcc6a89807a96f6ed9b689cd9ada7a0870001000da514562f0c2b5`
+- `work/evidence/ghidra/functions/4b8500.c`: `e662cccd2157c7f5b99e13680ca81363336c6da1bad4979ed78d6d81323b98d7`

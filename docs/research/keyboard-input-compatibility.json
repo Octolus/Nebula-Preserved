@@ -1,0 +1,278 @@
+{
+  "format_version": 1,
+  "scope": "Private keyboard compatibility copy for Nebula Realms build 11018722; offline preparation is separated from later unhooked, networked Return/arrow/W runtime evidence without claiming controller emulation or complete input parity.",
+  "observed_input_state": {
+    "event_system_present": true,
+    "current_input_module": "PS4InputModule",
+    "module_count": 1,
+    "has_focus": true,
+    "send_navigation_events": true,
+    "selected_object_present": true,
+    "standalone_input_module_process_calls": 0,
+    "mouse_click_handler_observed": false,
+    "submit_handler_observed": false
+  },
+  "static_contract": {
+    "submit": "PS4InputModule.SendSubmit calls Input.GetButtonDown with its serialized Submit name.",
+    "movement": "PS4InputModule.GetRawMoveVector reads both serialized axis names with Input.GetAxisRaw and returns horizontal/vertical without vertical inversion.",
+    "mouse": "The reviewed PS4InputModule Process/ProcessMouseEvent bodies obtain MouseState/button state but do not recover a complete StandaloneInputModule-style pointer dispatch path.",
+    "conclusion": "Adding keyboard rows under the already serialized logical names is a bounded initial compatibility path."
+  },
+  "input_manager_source": {
+    "path": "[local-path] Realms\\Nebula Realms_Data\\globalgamemanagers",
+    "sha256": "ecdebe7c899776956a4d5fb801f37f04128ec9bef72e744cd1e7fd5349ce8466",
+    "size": 1131320,
+    "unity_version": "2021.3.9f1",
+    "input_manager_path_id": 2,
+    "axis_count": 42
+  },
+  "authored_patch_policy": {
+    "submit_change": {
+      "name": "Submit",
+      "positiveButton": "return",
+      "preserved_altPositiveButton": "joystick 1 button 0"
+    },
+    "appended_axes": [
+      {
+        "name": "dpad1_horizontal",
+        "negativeButton": "left",
+        "positiveButton": "right",
+        "type": 0,
+        "gravity": 1000.0,
+        "sensitivity": 1000.0,
+        "dead": 0.0010000000474974513
+      },
+      {
+        "name": "dpad1_vertical",
+        "negativeButton": "down",
+        "positiveButton": "up",
+        "type": 0,
+        "gravity": 1000.0,
+        "sensitivity": 1000.0,
+        "dead": 0.0010000000474974513
+      }
+    ],
+    "preserves_existing_joystick_axis_rows": true,
+    "axis_count_after": 44
+  },
+  "prepared_copy": {
+    "path": "work/patched-input/globalgamemanagers",
+    "manifest": "outputs/nebula-preservation/client-fixes/prepared-keyboard-input-copy.json",
+    "sha256": "54c632afc0db42a5b39af4084428efbb28de6241c0aea7401a74eaac1dc822c6",
+    "all_non_input_manager_object_raw_hashes_preserved": true,
+    "non_input_manager_object_count": 17,
+    "original_steam_file_changed": false
+  },
+  "optional_world_controls_copy": {
+    "path": "work/patched-input-world/globalgamemanagers",
+    "manifest": "outputs/nebula-preservation/client-fixes/prepared-keyboard-world-input-copy.json",
+    "sha256": "70a141380052f0c2eb0d64c8bad71961648fe9791d79a6b2da37924b9bff4775",
+    "axis_count_after": 48,
+    "bindings": [
+      {
+        "name": "leftstick1horizontal",
+        "negative": "a",
+        "positive": "d"
+      },
+      {
+        "name": "leftstick1vertical",
+        "negative": "w",
+        "positive": "s",
+        "sign_note": "physical-stick up is negative"
+      },
+      {
+        "name": "rightstick1horizontal",
+        "negative": "j",
+        "positive": "l"
+      },
+      {
+        "name": "rightstick1vertical",
+        "negative": "i",
+        "positive": "k",
+        "sign_note": "physical-stick up is negative"
+      }
+    ],
+    "all_original_controller_rows_preserved": true,
+    "all_non_input_manager_object_raw_hashes_preserved": true,
+    "installed_in_current_private_client": true,
+    "runtime_retested": true,
+    "runtime_test_boundary": "Return and arrow UI navigation were exercised. Twenty discrete W presses later translated the avatar 5.131479731560391 world units; held-key behavior and camera control were not established."
+  },
+  "runtime_followup": {
+    "unhooked": true,
+    "networked_reconstructed_services_used": true,
+    "tested_gameassembly_sha256": "3ddc1eb903eda90be06cc7079e2afa584d250b4430455b86564150fa05949703",
+    "tested_windows_endpoint_metadata_sha256": "76e10da141d2daacd99c0976f362ddbf9463321aeef69ea464230565202885fd",
+    "tested_globalgamemanagers_sha256": "70a141380052f0c2eb0d64c8bad71961648fe9791d79a6b2da37924b9bff4775",
+    "tested_preset_v2_charactereditor_sha256": "9a2cdcaa9ac356fe95df9b5a5ad5df6bba93330ad1591685553031729628d3c4",
+    "menu_copy_runtime_retested": true,
+    "return_submit_login_passed": true,
+    "nexus_rendered": true,
+    "native_public_chat_to_peer_to_native_visible": true,
+    "menu_arrow_navigation_tested": true,
+    "arrow_keys_changed_focused_icons": true,
+    "return_activated_focused_selections": true,
+    "character_editor_opened": true,
+    "hanger_clothing_view_opened": true,
+    "owned_blue_torso_selected": true,
+    "height_right_increment_visibly_changed_slider_and_avatar_height": true,
+    "dated_intermediate_stage": {
+      "save_preset_blank_rectangle_observed": true,
+      "one_short_w_visible_orientation_or_response": true,
+      "superseded_as_current_blocker": true
+    },
+    "preset_v2_named_save_list_and_load_passed": true,
+    "world_controls_runtime_retested": true,
+    "w_discrete_press_count": 20,
+    "w_horizontal_translation_world_units": 5.131479731560391,
+    "held_key_api_used": false,
+    "repeated_w_translation_proven": true,
+    "held_walking_proven": false,
+    "camera_control_proven": false,
+    "chat_input_path": {
+      "c_r3_showed_chat": true,
+      "left_shift_l3_focused_chat": false,
+      "left_shift_focus_success_inference_retracted": true,
+      "computer_access_shift_l_observed_chat_is_focused": 0,
+      "computer_access_shift_l_observed_chat_is_typing": 0,
+      "computer_access_shift_l_probe": {
+        "path": "work/integration-state/chat-focus-explicit-shift-l-recheck.json",
+        "sha256": "816365f550a9cb2a3f9187e653de2bf7aff7735b835d0bd8cee31cc09dcbbaaa",
+        "all_observed_manager_and_pad_gates_clear": true,
+        "physical_keyboard_left_shift_never_works_claimed": false
+      },
+      "return_input_manager_submit_started_input": true,
+      "linux_public_chat_roundtrip_visible": true,
+      "pad_wrapper_evidence_is_separate": true,
+      "f8_l3_followup": {
+        "protocol": "outputs/nebula-preservation/protocol/keyboard-focus-compatibility.json",
+        "candidate_sha256": "ec6f909d3af35c89cd287a2803b86839cd5d1b168bc1f76517eed2494c85e01b",
+        "native_focus_probe": "work/integration-state/chat-focus-f8-first-native-press.json",
+        "native_focus_probe_sha256": "65dc9cae764ab84e329dbe12a866cb2bb24c68b61df194e8a4118865993e345d",
+        "chat_is_focused_after_f8": 1
+      }
+    },
+    "broader_persistence_followup": {
+      "red_jacket_purchase_cost_crystals": 25,
+      "red_jacket_equipped_and_saved": true,
+      "fresh_linux_login_restored_jacket": true,
+      "fresh_linux_login_crystals": 475,
+      "fresh_linux_login_np": 200,
+      "fresh_linux_login_music": 0.9,
+      "fresh_linux_login_restored_owned_offer": true,
+      "linux_service_revision_separate_from_windows_endpoint_metadata": true,
+      "input_alias_coverage_inferred_from_these_results": false
+    },
+    "evidence": [
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/nexus-world.png",
+        "sha256": "be6d73f71000ef05cdc2ded05e09e7cb81bc320fda870c37f12dfebc00fc4ac1"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/public-chat-reply.png",
+        "sha256": "bafb1dd6c36229bfb8de70dd3e8d7d94a67f40bd700674a4ae9747d36ae2118d"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/options-settled.png",
+        "sha256": "9e2cb9e8ba694119048bcffb03c116ed54227e63c77fe2407afe042e7cfd6059"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/character-preset.png",
+        "sha256": "8c77d30d5f48caa7d97c55bcf0121fcedd63b093d8be9d6213ff0888e824a841"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/preset-save-blank.png",
+        "sha256": "d114cb10b5e6c2c213067ff8f0c2d5702e355dc711149e40b2f58065cf3f83d2"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/preset-load-list.png",
+        "sha256": "bb3c95f99ad003064df1a2aaabaa9ceeeb4cd312510c0677f6a3dd7690b52697"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/native-walking.png",
+        "sha256": "f9169df94c07f0dc488f5d3750a514fade4bfcc67c7d9ea2c674c193d352f798"
+      },
+      {
+        "path": "outputs/nebula-preservation/protocol/windows-native-core-flows.json",
+        "sha256": "2d1b43296505f0c4d622957463760f0de734c1549c3a66f5b19cf598879f84dd"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/red-jacket-equipped.png",
+        "sha256": "8a304e57ac183841ceb7a1f2346a4b4668f84c235fee8f6d403ae1070d353f47"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/linux-settings-wallet.png",
+        "sha256": "808282d93e2682f83c9333aff53b24b1fce2c70a35327da5b849f8b1adb6dcb0"
+      },
+      {
+        "path": "outputs/nebula-preservation/runtime-screenshots/linux-public-chat.png",
+        "sha256": "db9b7c1cdbe7abafbb3862ebe9c13b3543448ca8cfb715800fb5247bb440f5bb"
+      },
+      {
+        "path": "work/integration-state/peer-20261028-2020.jsonl",
+        "sha256": "94b72d96c0ee195367d799ea92ce1cc0dc0cdcbacb49d98473680ab8d8012443"
+      }
+    ],
+    "boundary": "Return, arrows and repeated discrete W presses directly cover InputManager behavior. M and C successfully cover separate PadPS4 wrappers. An explicit Computer Access Shift_L attempt did not toggle focus; the later F8 L3 mapping did. The broader chat, preset, purchase and fresh-login persistence results do not prove untested keyboard aliases, held-W behavior, camera controls, two native clients, or full parity."
+  },
+  "verification": {
+    "unitypy_roundtrip_passed": true,
+    "same_unity_version": true,
+    "original_axes_preserved_except_submit_positive_button": true,
+    "new_axes_exactly_two": true,
+    "all_non_input_manager_object_raw_hashes_preserved": true,
+    "automated_tests_passed": 5,
+    "offline_preparation_target_executed": false,
+    "offline_preparation_network_used": false,
+    "subsequent_runtime_network_used": true,
+    "menu_copy_runtime_retested": true,
+    "world_controls_copy_runtime_retested": true,
+    "world_controls_runtime_coverage": "20 discrete W presses translated the avatar 5.131479731560391 world units; no held-key API was used"
+  },
+  "native_sources": [
+    {
+      "path": "work/evidence/ghidra/functions/4236e0.c",
+      "rva": "0x4236e0",
+      "name": "PS4InputModule.GetRawMoveVector",
+      "sha256": "0c408c0caed00d140f1ebb6d16e725e1a31853c7bbc4bb9de2328eaafde6f300"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4244c0.c",
+      "rva": "0x4244c0",
+      "name": "PS4InputModule.SendSubmit",
+      "sha256": "15afccc4ca4c64698595d1ff8af0cd7eee091dd156093f8655cf4eae5e938c8d"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/423f60.c",
+      "rva": "0x423f60",
+      "name": "PS4InputModule.Process",
+      "sha256": "16648c0f7b55c2053955b47dddf0be9ed4d0bea6bd2923f870c5e88d52406133"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/423820.c",
+      "rva": "0x423820",
+      "name": "PS4InputModule.ProcessMouseEvent",
+      "sha256": "6cb93005819e81e4c7aec51f6db2c16eb7adb87fc968f9f41bb9ec731d73509f"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4237e0.c",
+      "rva": "0x4237e0",
+      "name": "PS4InputModule.ProcessMouseEvent(int)",
+      "sha256": "ed56ba449b14dc3fff8e7a3e888613ce94deb2c9069c3247adb5fcbb05fbd58a"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/6a9640.c",
+      "rva": "0x6a9640",
+      "name": "PadPS4.LStick_Vertical",
+      "sha256": "2457b45c6244098db6926132faf418509efba13053e742c9907004aa1d696f3b"
+    }
+  ],
+  "limitations": [
+    "Keyboard aliases do not emulate a PS4 controller and do not add pointer dispatch.",
+    "The current copy addresses Submit, the two serialized dpad1 axis names, and opt-in world-stick aliases; direct runtime evidence covers Return, arrow navigation, and repeated discrete W movement.",
+    "A/S/D and I/J/K/L, held-W behavior, and camera control were not established.",
+    "The earlier blank Save Preset rectangle and short-W response are retained as dated intermediate observations; later V2 preset and measured-W tests superseded them as blockers.",
+    "M and C are successful evidence for separate PadPS4 wrappers, not additional InputManager aliases; the tested Computer Access Shift_L did not toggle focus, and no claim is made that a physical keyboard Left Shift can never work.",
+    "The runtime follow-up is bounded UI/input and preservation evidence, not full input or networking parity."
+  ]
+}

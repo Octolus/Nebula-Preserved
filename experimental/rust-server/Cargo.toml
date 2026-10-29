@@ -1,0 +1,38 @@
+[package]
+name = "nebula-preserved-server"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "MIT"
+
+[dependencies]
+anyhow = "1"
+thiserror = "2"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "io-util", "sync", "time", "signal", "macros"] }
+axum = { version = "0.8", features = ["form", "json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order", "float_roundtrip"] }
+serde_urlencoded = "0.7"
+rusqlite = { version = "0.37", features = ["bundled"] }
+aes = "0.8"
+base64 = "0.22"
+sha1 = "0.10"
+sha2 = "0.10"
+hex = "0.4"
+uuid = { version = "1", features = ["v4", "serde"] }
+clap = { version = "4", features = ["derive"] }
+scrypt = { version = "0.11", default-features = false, features = ["std"] }
+subtle = "2"
+fs2 = "0.4"
+# Match the reference Python 3.12 Unicode 15.0 character-policy database.
+unicode-general-category = "=0.6.0"
+percent-encoding = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "debuginfo"
+

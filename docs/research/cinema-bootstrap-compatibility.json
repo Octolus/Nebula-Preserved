@@ -1,0 +1,152 @@
+{
+  "format_version": 1,
+  "scope": "Authored local no-films bootstrap compatibility for Steam build 11018722; original cinema service parity is not claimed.",
+  "route": "GetCinemaFilmsServlet",
+  "runtime_observation": {
+    "source": "Bounded native trace reported by the integration task; trace artifact is not embedded in this report.",
+    "http_status": "All listed bootstrap requests returned HTTP 200.",
+    "client_state": "LoadingNews; process reported not responding.",
+    "events": [
+      "Preceding bootstrap callbacks returned.",
+      "HTTPGetCinemaFilms.OnResponse RVA 0x6085d0 entered.",
+      "CinemaFilms.Set RVA 0x5568b0 entered and did not leave during the observation window.",
+      "GetNews OnResponse RVA 0x6217e0 did not enter during the observation window."
+    ],
+    "interpretation": "CinemaFilms.Set monopolized the Unity callback thread before the queued News response callback could run."
+  },
+  "parser_contract": {
+    "syntactic_minimum_fields": 5,
+    "syntactic_shape": "SessionGUID#hour#minute#second#maxMinutes",
+    "syntactic_minimum_termination_safe": false,
+    "pair_start_index": 5,
+    "pair_stride": 2,
+    "pair_shape": "filmName:string#seconds:int32"
+  },
+  "static_cause": {
+    "on_response": "Creates non-null film-name and duration lists, consumes every remaining complete pair, then calls CinemaFilms.Set.",
+    "set_loop_condition": "film-name list object is non-null, not Count > 0",
+    "empty_list_behavior": "Index resets to zero; accumulated time remains zero; the greater-than-86399 exit condition is never satisfied.",
+    "result": "A five-field empty schedule hangs indefinitely in CinemaFilms.Set."
+  },
+  "authored_local_policy": {
+    "response": "{SessionGUID}#{hour}#{minute}#{second}#0#LOCAL_NO_FILMS#84600",
+    "termination_safe_minimum_fields": 7,
+    "sentinel_film_name": "LOCAL_NO_FILMS",
+    "sentinel_duration_seconds": 84600,
+    "arithmetic": {
+      "inter_film_seconds": 1800,
+      "day_seconds": 86400,
+      "first_iteration_advance": 86400,
+      "schedule_add_test": "0 + 1800 + 84600 < 86400 is false",
+      "loop_exit_test": "86400 > 86399 is true"
+    },
+    "generated_schedule_count": 0,
+    "sentinel_semantics": "Explicit local compatibility token; not an original film identifier and never reaches a ScheduleFilm or media path.",
+    "unsafe_adjacent_duration": "84599 creates a ScheduleFilm and is not an empty-schedule sentinel."
+  },
+  "consumer_observations": [
+    {
+      "consumer": "CinemaTicketOffice.<SetCartelera>d__7.MoveNext",
+      "rva": "0x5608a0",
+      "count_zero_behavior": "Checks Count before item access, writes empty strings to four text controls, yields, and repeats safely."
+    },
+    {
+      "consumer": "StreamingVideo.Initialize",
+      "rva": "0x55f920",
+      "count_zero_behavior": "Copies the schedule reference and calls SetScreen."
+    },
+    {
+      "consumer": "StreamingVideo.SetScreen",
+      "rva": "0x5605d0",
+      "count_zero_behavior": "Returns when Count <= index before item access or LaunchFilm."
+    },
+    {
+      "consumer": "StreamingVideo.LaunchFilm",
+      "rva": "0x55fa80",
+      "observation": "A real schedule token becomes StreamingAssets/<Platform>/f/<filmName>.mp4; unreachable for the zero-entry sentinel schedule."
+    },
+    {
+      "consumer": "ScheduleFilm..ctor",
+      "rva": "0x55f200",
+      "observation": "Only stores name, start second and duration; constructor is skipped for the sentinel."
+    }
+  ],
+  "verification": {
+    "failing_runtime_trace_observed": true,
+    "static_set_nontermination_proven": true,
+    "sentinel_termination_arithmetic_proven": true,
+    "empty_generated_schedule_consumers_reviewed": true,
+    "fix_runtime_retested": true
+  },
+  "limitations": [
+    "The bounded retest clears this bootstrap hang; native world loading and UI flows are tracked separately.",
+    "Retired cinema catalogue, schedules and media are unavailable; the authored sentinel exposes no screenings.",
+    "Recovered Count guards are static evidence; visiting the cinema has not been tested."
+  ],
+  "native_sources": [
+    {
+      "path": "work/evidence/ghidra/functions/6085d0.c",
+      "rva": "0x6085d0",
+      "name": "HTTPGetCinemaFilms.OnResponse",
+      "sha256": "2d494a2f53c11c1499489edced093f58ebf88ecb6702818b6bbf44582f0d2800"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5568b0.c",
+      "rva": "0x5568b0",
+      "name": "CinemaFilms.Set",
+      "sha256": "e77cd5dd32dc9c4c46716794f36c3a6f08b5d721ba47a45986b61073cf08ac35"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/556700.c",
+      "rva": "0x556700",
+      "name": "CinemaFilms.SetSchedule",
+      "sha256": "be2e73366145f884e0b6bcf15472b95b8bcd08f6da1c83dd0564ca6ca616f85a"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5608a0.c",
+      "rva": "0x5608a0",
+      "name": "CinemaTicketOffice.<SetCartelera>d__7.MoveNext",
+      "sha256": "6b41e111b61c0549eb15b7c3da9de3d2b731e68b3b4d5380854a1a6e54810f83"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/55f920.c",
+      "rva": "0x55f920",
+      "name": "StreamingVideo.Initialize",
+      "sha256": "c4b471e2fa3504eb179c6e03dec7c1a0eb535eb194aec218842446b22bee2cf8"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5605d0.c",
+      "rva": "0x5605d0",
+      "name": "StreamingVideo.SetScreen",
+      "sha256": "100ee932bc9912979c8db9b50a24d5b8b322cb92481230bcc8a9dcf45a821c1e"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/55fa80.c",
+      "rva": "0x55fa80",
+      "name": "StreamingVideo.LaunchFilm",
+      "sha256": "dec4d81ac96841e2690842e58c5b8fafee7c0f606c0cbf0d76bfdfdbef468393"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/55f200.c",
+      "rva": "0x55f200",
+      "name": "ScheduleFilm..ctor",
+      "sha256": "dbf2dd2ad0ecd814d96a7ec54d807a12f2829d62b16370a8386cde8e12a34dad"
+    }
+  ],
+  "fix_runtime_retested": true,
+  "runtime_retest": {
+    "scope": "Bounded private native client with observational entry/return hooks; no argument or return writes.",
+    "handler_enter_and_return": {
+      "cinema_response": true,
+      "cinema_set": true,
+      "news_response": true,
+      "pref_check_response": true,
+      "login_show": true
+    },
+    "trace": "work/integration-state/bootstrap-callback-trace3.jsonl",
+    "trace_sha256": "e5f4270325c51fce66491d4e97e7ff912ea2c913989321b89f8051b4ecdd56b0",
+    "game_ready": false,
+    "world_loading_tested": false,
+    "limit": "This retest proves the bootstrap hang is cleared. Native world/UI integration is tracked separately in runtime-validation.json."
+  }
+}

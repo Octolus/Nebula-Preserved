@@ -1,0 +1,198 @@
+{
+  "format_version": 1,
+  "scope": "Read-only native/asset review plus an offline Python compatibility prototype. No game, UI, live service, listener, connection, database, or Unity/C# source was changed.",
+  "conclusion": {
+    "server_only_numeric_registry_safe": false,
+    "smallest_safe_bridge": "A compatible client announces a complete semantic-key to local-ID registry for each authenticated scene/layout epoch. The server stores state by semantic key and rewrites IDs separately for every recipient.",
+    "why": "Initial IDs follow runtime InstanceID order. Housing saves register active ground descendants again and overwrite their IDs without resetting counters. Those orders and histories are not recoverable from a legacy packet carrying only an integer.",
+    "profile_effect": "The three mixed personal scenes can be admitted for ordinary interactions after this client registry-ready bridge exists. Deferred minigame members remain in the complete registry because they consume IDs, but their semantic keys remain denied."
+  },
+  "static_registry": {
+    "key": [
+      "exact binary and bundle profile",
+      "authored root-relative Transform sibling-index chain",
+      "concrete component class",
+      "component slot on its GameObject"
+    ],
+    "not_keys": [
+      "numeric wire ID",
+      "runtime InstanceID",
+      "serialized component pathId",
+      "name-only hierarchy path"
+    ],
+    "reason": "Serialized pathId is not available from a normal runtime Component. Names are insufficient: Cutteridge has two active NebulaSeat objects both named Trigger (1), distinguished by root child indices 2 and 3.",
+    "profiles": [
+      {
+        "scene": "CampSilverLake",
+        "bundle_sha256": "c0b01fca923fbf51c46f0bebed71a7e78df60c819c5dfc4aaf9329cc81c373e2",
+        "generic_active": 9,
+        "generic_ordinary": 8,
+        "generic_deferred": 1,
+        "occupable_active": 0,
+        "ordinary_keys": [
+          "4/0/0|JG_ChaletFireplaceInteractable|slot1",
+          "4/0/1|JG_CampSilverLake_WeatherInteractable|slot1",
+          "4/0/5/0|JG_CampSilverLake_Door|slot1",
+          "4/0/5/1|JG_CampSilverLake_Door|slot1",
+          "4/0/5/2|JG_CampSilverLake_Door|slot1",
+          "4/0/5/3|JG_CampSilverLake_Door|slot1",
+          "4/0/5/4|JG_CampSilverLake_Door|slot1",
+          "4/0/4|JG_CampSilverLake_TimeInteractable|slot1"
+        ],
+        "deferred": "4/0/6|JG_CampSilverLake_Killer_Launcher|slot1"
+      },
+      {
+        "scene": "CutteridgeEstate",
+        "bundle_sha256": "70e6fed70bb06219c6d961faf2306ce16b4396a50b74e31b7d9579feb729a4f2",
+        "generic_active": 3,
+        "generic_ordinary": 2,
+        "generic_deferred": 1,
+        "occupable_active": 2,
+        "ordinary_generic_keys": [
+          "12|JG_WeatherInteractable|slot1",
+          "11|JG_DoorInteractable|slot1"
+        ],
+        "ordinary_occupable_keys": [
+          "2|NebulaSeat|slot2",
+          "3|NebulaSeat|slot2"
+        ],
+        "deferred": "15|JG_Ghost_Minigame|slot1",
+        "excluded": "Seven inactive JG_Ghost_Candle children are excluded by FindObjectsOfType(false)."
+      },
+      {
+        "scene": "SorcerersEyrie1",
+        "source_inventory_scene": "SorcerersEyrie",
+        "bundle_sha256": "2449b9fe4a4684c352523d6d58e32c8424dbac05681ce9b8528c014b08bd5311",
+        "generic_active": 12,
+        "generic_ordinary": 1,
+        "generic_deferred": 11,
+        "occupable_active": 0,
+        "ordinary_key": "6/1|JG_SorcerersEyrie_TimeInteractable|slot1",
+        "deferred_keys": [
+          "6/0|JG_SorcerersEyrie_PotionControl|slot1",
+          "6/0/3|JG_SorcerersEyrie_RecipeControl|slot1",
+          "6/0/4|JG_SorcerersEyrie_RecipeControl|slot1",
+          "6/0/6/0|JG_SorcerersEyrie_Ingredient|slot1",
+          "6/0/6/1|JG_SorcerersEyrie_Ingredient|slot1",
+          "6/0/6/2|JG_SorcerersEyrie_Ingredient|slot1",
+          "6/0/6/3|JG_SorcerersEyrie_Ingredient|slot1",
+          "6/0/6/4|JG_SorcerersEyrie_Ingredient|slot1",
+          "6/0/6/5|JG_SorcerersEyrie_Ingredient|slot1",
+          "6/0/6/6|JG_SorcerersEyrie_Ingredient|slot1",
+          "6/0/6/7|JG_SorcerersEyrie_Ingredient|slot1"
+        ]
+      }
+    ]
+  },
+  "furniture_registry": {
+    "key": [
+      "canonical durable layout digest/revision",
+      "persisted HousingAssetGround array index",
+      "catalog item/prefab ID",
+      "prefab-relative sibling-index chain",
+      "component slot",
+      "generic or occupable kind"
+    ],
+    "duplicate_policy": "Persisted array index distinguishes two copies of the same item/prefab.",
+    "activation_policy": "Only active HousingAssetGround descendants registered by SaveAtServer are admitted. Floor scan, wall and ceiling assets are not invented as dynamic generic registries.",
+    "epoch_policy": "A placement change or save creates a new layout epoch. Freeze interaction traffic, clear retained generic/occupancy state, require a full reload/rebind, then admit traffic after registry-ready acknowledgement. Unsaved objects are never relayed.",
+    "reason_for_reload": "SaveAtServer registers descendants repeatedly, counters do not reset, assigned IDs are overwritten, and RemoveOccupable can change the dense list without renumbering. No safe native state migration is proven."
+  },
+  "wire_contract": {
+    "registry_ready": "A new authenticated compatibility control message is required. Legacy opcode 1 is not proof: native 8 and 94 can precede it. Queue automatic opcode 8 until both registries are acknowledged.",
+    "8_query": "C2S 8#requesterGuid#senderLocalId resolves to a semantic occupable key. Free response is S2C 10##recipientLocalId. Held response to the requester is S2C 9#requesterGuid#recipientLocalId#occupantGuid.",
+    "9_claim": "Resolve sender ID to a semantic key and broadcast S2C9 with each recipient's local ID, including sender. Sender inclusion sets TargetGUID, which native leave later requires.",
+    "10_leave": "Verify current occupant, resolve key, and broadcast S2C10 with each recipient's local ID, including sender.",
+    "94_generic": "Validate allowed key and exact extension arity, store latest state by semantic key, and relay to same-epoch ready peers using recipient IDs, including sender because Interact does not apply locally.",
+    "snapshot": "After registry-ready, answer queued occupancy queries and then translate retained generic state. Never snapshot by raw ID on opcode 1.",
+    "claim_conflict": "The native seat animates before authoritative acceptance. A denial envelope is not proven to roll it back safely; a compatibility implementation must serialize claims or force reload on a race rather than claim a native rollback."
+  },
+  "validation": [
+    "Authenticate instance, account, exact scene, binary/bundle profile and current saved layout digest.",
+    "Require an all-or-nothing exact semantic key set for each namespace.",
+    "Reject duplicate semantic keys, duplicate local IDs within each native registry kind, wrong kind, negative ID, wrong extension arity, stale sequence or epoch.",
+    "Deferred members must be announced but cannot produce relayed state.",
+    "Deliver only to peers that acknowledged the same current epoch and contain the semantic key."
+  ],
+  "prototype": {
+    "path": "tools/interaction_mapping_bridge.py",
+    "sha256": "fa37775aa132b301f0dfcf7217c5a14d625e634b5c165f9a3def3250696ad1c6",
+    "test_path": "tools/tests/test_interaction_mapping_bridge.py",
+    "test_sha256": "34f3e1fef1edd3d09e85e0e9fca1d34878e10eb00a537093002dc0d3f4c7e9e9",
+    "result": "7 passed",
+    "coverage": [
+      "different numeric IDs translate by key and echo to sender",
+      "deferred and unknown IDs fail closed",
+      "announcements are complete, current and collision-free",
+      "occupancy free/query/claim/leave envelopes translate IDs",
+      "missing/stale layout bindings do not relay",
+      "extension arity and sender echo are enforced",
+      "duplicate furniture prefabs differ by persisted array index"
+    ]
+  },
+  "remaining_before_production": [
+    "Generate the trusted interactable-child manifest for every placeable ground prefab.",
+    "Implement the patched-client descriptor/registry-ready control channel and queue native automatic opcode 8 until acknowledgement.",
+    "Implement server semantic-key storage and per-recipient translation; do not reuse the prototype as a network listener.",
+    "Add a controlled two-client runtime observation after source review and rebuild."
+  ],
+  "sources": [
+    {
+      "path": "protocol/mixed-world-registries.json",
+      "sha256": "ce44c6fe5f3dc0e3c8932de2d84961431f0883b77da6d0800758b277535cff23"
+    },
+    {
+      "path": "protocol/world-registry-next-pass.json",
+      "sha256": "cb6918e6171cd72d67cf38f5919445927539bc1a02d5816b396eceb43f7a32ac"
+    },
+    {
+      "path": "protocol/tcp-contracts.json",
+      "sha256": "36bcf6d0caf8407e4cf69ea9e5634de29f48aae7a5fb6e675597be56e38a7136"
+    },
+    {
+      "path": "protocol/tcp-world-interactions.json",
+      "sha256": "ed280f4f7e0c215d71bfd66f50defcbc98a9fb29d1041c050e03d6c3872a03b2"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/612380.c",
+      "rva": "0x612380",
+      "sha256": "d3160cadd72704bf6d265fea10695cf29ffc69fd96ec54bd30968a6cb662fe89"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/6159f0.c",
+      "rva": "0x6159f0",
+      "sha256": "df043c989d92dd042f1ba775b0200791add8d20eb6ca6a813c3acea9db5f86cd"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/612700.c",
+      "rva": "0x612700",
+      "sha256": "28ccfe2b5a94509c651b317d4c1047b38f6fb516d43cc45acc6d8b7798d25f49"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5dfa40.c",
+      "rva": "0x5dfa40",
+      "sha256": "861b8ff3e9f71c07c1f1e9801dff8ed52a2c65865a0b700c38814e7b15848b03"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5dc440.c",
+      "rva": "0x5dc440",
+      "sha256": "24f65c48c7bfb814ae91f02071665a8fd16e2d68c92b2f44543d9ba284b92ba8"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5deae0.c",
+      "rva": "0x5deae0",
+      "sha256": "571678be463a5fa2c04674275ce5d0ea6a4d425d7e670f649fb5791e533f6a69"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/451100.c",
+      "rva": "0x451100",
+      "sha256": "dba4dac1937ed2057e36b1c8050715a36353e226d6295c7b7ac2427fd7055cdb"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5d91b0.c",
+      "rva": "0x5d91b0",
+      "sha256": "6a9192923f2ad0786510e5cc0fcf3bd956266c48bd4cc858dc234706071730fc"
+    }
+  ]
+}
+

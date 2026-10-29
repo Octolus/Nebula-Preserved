@@ -1,0 +1,206 @@
+---
+- name: Deploy the reviewed Nebula preservation stack
+  hosts: nebula
+  become: true
+  vars:
+    nebula_root: /opt/nebula-preserved
+  tasks:
+    - name: Validate platform and reviewed pins
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.distribution == 'Ubuntu'
+          - ansible_facts.distribution_version is version('26.04', '>=')
+          - ansible_facts.architecture == 'x86_64'
+          - nebula_public_ip is match('^[0-9.]+$')
+          - nebula_image_archive_sha256 is match('^[0-9a-f]{64}$')
+          - nebula_build_report_sha256 is match('^[0-9a-f]{64}$')
+          - nebula_server_sha256 is match('^[0-9a-f]{64}$')
+          - nebula_managed_sha256 is match('^[0-9a-f]{64}$')
+          - (nebula_max_processes | default(2) | int) in range(1, 33)
+          - nebula_server_image is match('^[a-zA-Z0-9./:_@-]+$')
+          - nebula_panel_image is match('^[a-zA-Z0-9./:_@-]+$')
+    - name: Install repository prerequisites
+      ansible.builtin.apt:
+        name: [ca-certificates, curl, openssl, python3]
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+    - name: Create Docker keyring directory
+      ansible.builtin.file: {path: /etc/apt/keyrings, state: directory, mode: '0755'}
+    - name: Install official Docker signing key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+    - name: Configure official Docker repository
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/nebula-docker.sources
+        mode: '0644'
+        content: |
+          Types: deb
+          URIs: https://download.docker.com/linux/ubuntu
+          Suites: {{ ansible_facts.distribution_release }}
+          Components: stable
+          Architectures: amd64
+          Signed-By: /etc/apt/keyrings/docker.asc
+    - name: Install Docker Engine and Compose
+      ansible.builtin.apt:
+        name: [docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin]
+        state: present
+        update_cache: true
+    - name: Enable Docker at boot
+      ansible.builtin.systemd_service: {name: docker, state: started, enabled: true}
+    - name: Inspect Docker data root for the backup unit
+      ansible.builtin.command:
+        argv: [docker, info, --format, '{{ "{{.DockerRootDir}}" }}']
+      register: docker_root
+      changed_when: false
+    - name: Require the supported volume location
+      ansible.builtin.assert:
+        that: docker_root.stdout == '/var/lib/docker'
+        fail_msg: Custom Docker data roots need an explicitly adapted backup unit.
+    - name: Create deployment directories
+      ansible.builtin.file:
+        path: '{{ item }}'
+        state: directory
+        mode: '0700'
+      loop: ['{{ nebula_root }}', /var/backups/nebula-preserved]
+    - name: Check local image archive hash
+      ansible.builtin.stat:
+        path: '{{ nebula_image_archive }}'
+        checksum_algorithm: sha256
+      delegate_to: localhost
+      become: false
+      register: archive
+    - name: Admit exact reviewed archive
+      ansible.builtin.assert:
+        that: archive.stat.checksum == nebula_image_archive_sha256
+    - name: Upload reviewed images
+      ansible.builtin.copy:
+        src: '{{ nebula_image_archive }}'
+        dest: '{{ nebula_root }}/images.tar'
+        mode: '0600'
+      register: image_upload
+    - name: Load reviewed images
+      ansible.builtin.command: docker load --input {{ nebula_root }}/images.tar
+      when: image_upload.changed
+      async: 600
+      poll: 5
+    - name: Install base compose and public-only exposure
+      ansible.builtin.copy:
+        src: '../docker/{{ item }}'
+        dest: '{{ nebula_root }}/{{ item }}'
+        mode: "{{ '0644' if item == 'nginx-public.conf' else '0600' }}"
+      loop: [compose.yaml, compose.public.yaml, nginx-public.conf]
+      register: base_files
+    - name: Install panel proxy
+      ansible.builtin.copy:
+        src: files/nginx-panel.conf
+        dest: '{{ nebula_root }}/nginx-panel.conf'
+        mode: '0644'
+      register: panel_proxy
+    - name: Render private runtime settings
+      ansible.builtin.template:
+        src: templates/{{ item }}.j2
+        dest: '{{ nebula_root }}/{{ item }}'
+        mode: '0600'
+      loop: [runtime.env, compose.host.yaml]
+      register: settings
+    - name: Install secret bootstrap
+      ansible.builtin.copy:
+        src: files/bootstrap-secrets.py
+        dest: '{{ nebula_root }}/bootstrap-secrets.py'
+        mode: '0700'
+    - name: Create stable TLS identity and random owner credentials if absent
+      ansible.builtin.command:
+        argv: [python3, '{{ nebula_root }}/bootstrap-secrets.py', '{{ nebula_public_ip }}']
+      changed_when: false
+      no_log: true
+    - name: Validate compose before touching service
+      ansible.builtin.command:
+        argv: [docker, compose, --env-file, runtime.env, -f, compose.yaml, -f, compose.public.yaml, -f, compose.host.yaml, config, --quiet]
+        chdir: '{{ nebula_root }}'
+      changed_when: false
+    - name: Inspect existing stack state
+      ansible.builtin.command: systemctl is-active nebula-preserved
+      register: existing_stack
+      failed_when: false
+      changed_when: false
+    - name: Install offline first-start state verifier
+      ansible.builtin.copy:
+        src: files/initialize-state.py
+        dest: '{{ nebula_root }}/initialize-state.py'
+        mode: '0644'
+    - name: Initialize and verify public authority before the first listener
+      ansible.builtin.command:
+        argv:
+          - docker
+          - run
+          - --rm
+          - --network
+          - none
+          - --user
+          - '1000:1000'
+          - --cap-drop
+          - ALL
+          - --security-opt
+          - no-new-privileges:true
+          - --mount
+          - type=volume,src=nebula-preserved_state,dst=/var/lib/nebula
+          - --mount
+          - type=bind,src={{ nebula_root }}/operator/account-operator.key,dst=/operator/account-operator.key,readonly
+          - --mount
+          - type=bind,src={{ nebula_root }}/initialize-state.py,dst=/initialize-state.py,readonly
+          - --entrypoint
+          - python
+          - '{{ nebula_server_image }}'
+          - /initialize-state.py
+      when: existing_stack.stdout != 'active'
+      changed_when: false
+    - name: Install consistent SQLite backup utility
+      ansible.builtin.copy:
+        src: ../../tools/backup_state.py
+        dest: '{{ nebula_root }}/backup_state.py'
+        mode: '0644'
+    - name: Install boot service and backup timer
+      ansible.builtin.copy:
+        src: files/{{ item }}
+        dest: /etc/systemd/system/{{ item }}
+        mode: '0644'
+      loop: [nebula-preserved.service, nebula-preserved-backup.service, nebula-preserved-backup.timer]
+      register: units
+    - name: Start or refresh complete stack
+      ansible.builtin.systemd_service:
+        name: nebula-preserved
+        daemon_reload: true
+        enabled: true
+        state: "{{ 'restarted' if image_upload.changed or base_files.changed or panel_proxy.changed or settings.changed or units.changed else 'started' }}"
+    - name: Enable daily backups
+      ansible.builtin.systemd_service: {name: nebula-preserved-backup.timer, enabled: true, state: started}
+    - name: Verify first consistent backup
+      ansible.builtin.systemd_service: {name: nebula-preserved-backup.service, state: started}
+    - name: Optionally verify actual reboot recovery
+      ansible.builtin.reboot: {reboot_timeout: 300}
+      when: nebula_verify_reboot | default(false) | bool
+    - name: Wait for boot service recovery
+      ansible.builtin.command: systemctl is-active nebula-preserved
+      register: boot_health
+      changed_when: false
+      until: boot_health.rc == 0
+      retries: 30
+      delay: 5
+    - name: Verify trusted API rejects anonymous access
+      ansible.builtin.command:
+        argv: [curl, --silent, --show-error, --cacert, '{{ nebula_root }}/operator/ca.pem', --output, /dev/null, --write-out, '%{http_code}', 'https://{{ nebula_public_ip }}:8444/']
+      register: api_health
+      changed_when: false
+      until: api_health.stdout == '401'
+      retries: 20
+      delay: 3
+      failed_when: api_health.stdout != '401'
+    - name: Verify trusted dashboard HTTPS
+      ansible.builtin.command:
+        argv: [curl, --silent, --show-error, --cacert, '{{ nebula_root }}/operator/ca.pem', --output, /dev/null, --write-out, '%{http_code}', 'https://{{ nebula_public_ip }}/login']
+      register: panel_health
+      changed_when: false
+      failed_when: panel_health.stdout != '200'

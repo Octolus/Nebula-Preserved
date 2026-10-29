@@ -1,0 +1,21 @@
+{
+  "format_version": 1,
+  "component": "public-access-v9-overlay",
+  "activation_ready": false,
+  "merge_ready_against_current_primary": false,
+  "listener_started": false,
+  "service_started": false,
+  "contains_credentials_or_account_state": false,
+  "evidence": {
+    "merge_receipt_sha256": "1e39921b0021663093142303d1d69b8478dfddab99ad7875d5e228ca130e96a9",
+    "historical_archive_sha256": "5b802e94443ca54983d2c66a35f9e97bf674690481017932c980f24b2565e64d",
+    "client_auth_dll_sha256_not_included": "eea7e808af971c36ca0fa11147e399c1a5b07411a1f2bdf16af489315f4d75b1",
+    "remote_transport_exe_sha256_not_included": "160128d93690cfd992ddde03300aeb931df3d84dc781b97a401e9f97876b783f"
+  },
+  "security": {
+    "authorization_header_and_https_required": true,
+    "steam_ticket_validation_implemented": false,
+    "game_transport_public_exposure_supported": false
+  },
+  "compatibility": "Apply only to the exact historical base hashes recorded by the merge receipt, or perform a new reviewed three-way integration."
+}

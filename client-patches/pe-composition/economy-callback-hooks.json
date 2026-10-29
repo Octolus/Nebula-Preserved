@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "purpose": "validated post-buy callback generation authority",
+  "gameassembly_base_sha256": "8460554e5287fe8e3c5fe475f65379da971bcccf2f21f716f2ca82d6e029b9fd",
+  "hooks": [
+    {
+      "name": "ShopNETGcloud.Get_ShopInfoPlayer",
+      "rva": "0x410d10",
+      "signature": "void(this,string[],MethodInfo*)",
+      "ghidra_sha256": "862680e04edbdbf6d7b49a9031a7029db24fd0dab0289fe9173578857364d036",
+      "after_original_export": "NebulaAutomation_EconomyShopInfoCompleted",
+      "export_signature": "void(string[] response)",
+      "success_contract": "exact six System.String elements: true,current guid,nonempty account id,nonempty name,canonical uint32 NP,canonical uint32 crystals; current ShopManager and all three destination Text objects remain present"
+    },
+    {
+      "name": "Assets.Scripts.HTTPs.Tasks.HTTPGetPurchases.OnResponse",
+      "rva": "0x634fb0",
+      "signature": "void(this,string[],MethodInfo*)",
+      "ghidra_sha256": "ea262c8cf8b40279a47932083c55a838a94666277762b84dac6e9a88a7fd6af0",
+      "after_original_export": "NebulaAutomation_EconomyPurchasesCompleted",
+      "export_signature": "void(string[] response)",
+      "success_contract": "exact three System.String elements: true,current guid,nonempty JSON object; current Persistency remains present"
+    }
+  ],
+  "wrapper_rules": [
+    "Call the complete original function first with RCX/RDX/R8 and Win64 nonvolatiles preserved.",
+    "Retain original RDX string[] only in an unwind-described wrapper stack/nonvolatile slot for the duration of the original call.",
+    "After normal return pass the retained string[] in RCX to the named helper export.",
+    "The helper requires its initialized main thread, validates the complete response synchronously against the current PS4Info singleton and advances only on the exact success shape.",
+    "The helper retains no response, element, account, session, UI or Persistency pointer.",
+    "Use strict original-byte guards against the exact fully composed GameAssembly base; resolve the already pinned sibling helper without per-callback LoadLibrary.",
+    "Both validated counters must advance after arm before purchase state may be classified. Normal early returns for false token or wrong GUID are not generations."
+  ],
+  "patcher_status": "contract-ready; final atomic PE wrapper composition owned by release composer",
+  "tests_executed": false,
+  "target_executed": false
+}

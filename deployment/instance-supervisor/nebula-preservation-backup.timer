@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Nebula preservation state backup
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=15m
+Unit=nebula-preservation-backup.service
+
+[Install]
+WantedBy=timers.target

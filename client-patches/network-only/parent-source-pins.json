@@ -1,0 +1,17 @@
+{
+  "format": "network-only-parent-source-pins-v1",
+  "files": {
+    "recipes/make_client_copy.py": "979570d9e150457dfd916d1321412047bf372914e153907d994fa53a8838710d",
+    "recipes/rapid_boat_patch.py": "3f30588cbcc1ac5753091fb1333b1bc64a57a6e96c6a3f37e82aac484e7c4d04",
+    "recipes/interaction_registry_patch.py": "6a65a9eab4340d759a5fc7509622b2fd741bae473fc8a954cadd7d7cb24ffdee",
+    "recipes/settings_preservation_patch.py": "a633ceb73192ee5ee920543b96ad4ea431a334006f6c32ae0682a103de6f65a3",
+    "shims/rapid_boat_exit.s": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66",
+    "shims/interaction_registry_bridge.s": "efd230c15283b07927d83f927c8f5419a9c35ffa776e8e1affb04152ce360870",
+    "native-registry/interaction_registry_bridge.cpp": "ebfea7fb5fec6d448fffd3c8d26d20b1701595e94f8e5060bb00b7f7ba468746",
+    "native-registry/interaction_registry_bridge_abi.h": "7d1ca53eb1c9f2df22b3e7595a5b1bfb72e52403e630b0fceaf106526b06b426",
+    "native-automation/join_queue_gate.cpp": "21c0bb8054b70e640ce149ed882f84f74744068fe42324b819e7e17f2e54f003",
+    "native-automation/join_queue_gate.h": "957b3cd423964d5ede86771a92ed6174d88c8febfbf6056e71271719456cb7e2",
+    "native-automation/movement_profile.h": "9b3c726bf841fb50b4915e47d4cb0de28a14115485879b3166b4c4c9a1f4296d"
+  },
+  "changed_inventory_parent_sha256": "3701dd476b1f8085807a4cef4f49e604455c1324641a843862731e7f60ffae94"
+}

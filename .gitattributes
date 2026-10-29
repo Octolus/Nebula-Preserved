@@ -1,0 +1,4 @@
+# Keep exact bytes: source overlays, dependency and curation manifests use SHA256.
+# Disabling conversion preserves all pins across Windows/Linux checkouts.
+# Treat retained CRLF as a line ending when reviewing whitespace.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

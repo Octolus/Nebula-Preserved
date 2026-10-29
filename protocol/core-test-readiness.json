@@ -1,0 +1,610 @@
+{
+  "format_version": 1,
+  "kind": "nexus_core_integration_validation_readiness_audit",
+  "generated_at": "2026-10-28T19:51:04.331152+00:00",
+  "scope": {
+    "scene": "Nexus",
+    "minigames": "Deferred by user; zero Board/Darts tables required",
+    "goal": [
+      "Login/load avatar",
+      "Walk",
+      "Two-client public/private chat",
+      "Customize wear/remove and persist",
+      "Native DTO settings persistence",
+      "Admin credits and server-priced local shop purchase"
+    ]
+  },
+  "assessment": {
+    "contract_supported_candidate": true,
+    "additional_mandatory_static_contract_blockers_found": [],
+    "eligible_to_stage_controlled_validation_after_prerequisites": true,
+    "native_runtime_validated": false,
+    "linux_runtime_validated": false,
+    "full_original_parity_proven": false,
+    "game_ready": false,
+    "protocol_complete": false,
+    "meaning": "Finite reviewed contract candidate with substantial bounded runtime progress; the complete listed native milestone is not validated.",
+    "scope": "Original static/offline core-contract assessment; native_runtime_validated means the complete listed native flow milestone, which remains false.",
+    "linux_wsl_protocol_fixture_validated": true,
+    "native_world_and_remote_fixture_avatar_observed": true,
+    "linux_native_bounded_flow_validated": true,
+    "complete_native_flow_milestone_still_pending": true
+  },
+  "profile": {
+    "name": "nexus-core-v1",
+    "http_flag": "--core-test-profile",
+    "instance_flag": "--nebula-core-test-profile",
+    "both_required": true,
+    "default": "Closed",
+    "exact_descriptor_fields": {
+      "readiness_scope": "nexus-core-v1",
+      "core_test_eligible": true,
+      "listener_bound": true,
+      "listening": true,
+      "psidglobal": "Nexus",
+      "board_tables": 0,
+      "darts_tables": 0,
+      "game_ready": false,
+      "protocol_complete": false,
+      "networking_parity": "unproven"
+    },
+    "base_gates_preserved": [
+      "Heartbeat age0..15seconds",
+      "Exact configured concrete advertised IPv4",
+      "Canonical IPv4 and integer port",
+      "Valid scene/instance identifiers",
+      "Maxusers32/player counts",
+      "Duplicate IDs/endpoints excluded",
+      "Real HTTP allocation before peerGUIDbinding",
+      "Current-session/name/platform/netId ownership"
+    ],
+    "actual_bind_signal": "Volatile Telepathy.Listening set after listener.Start, cleared onStop/finally, read through ServerListening; no network probe",
+    "arbitrary_skip_checks_flag": false,
+    "synthetic_allocation_or_session_added": false
+  },
+  "fixed_definite_bug": {
+    "request_key": "NotificationLoginFriend",
+    "canonical_storage_and_response_key": "notificationLoginFriend",
+    "native_enum_value": 19,
+    "regression": "backend/tests/test_settings_native.py",
+    "result": "pass"
+  },
+  "flows": [
+    {
+      "flow": "login_allocation",
+      "implementation": "Recovered bootstrap envelopes, local current-session hash binding, neutral starter avatars and Login-to-Nexus policy. Scoped admission exercises actual N2LoadSpace/N2SpaceLoading plus instance export.",
+      "offline": "Native-shaped HTTP handlers and socket-forbidden profile allocation test pass.",
+      "native_evidence": [
+        "bootstrap-response-contracts.json",
+        "world-loading-pipeline.json"
+      ],
+      "runtime_unknowns": [
+        "Steam-ticket identity assurance remains replacement policy",
+        "Native-client connection to the Linux backend"
+      ],
+      "preconditions": [
+        "Matching HTTP origin and advertised IPv4",
+        "Both named profile opt-ins",
+        "Fresh actual-bound instance descriptor"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "Owned Steam client startup",
+        "Actual HTTP task completion/loading"
+      ],
+      "runtime_observed": [
+        "Native bootstrap, Login input, allocation and loading complete into Nexus on the private client copy.",
+        "Protocol-fixture login/allocation remains separately observed."
+      ]
+    },
+    {
+      "flow": "scene_bootstrap",
+      "implementation": "Enabled active-root ScreenLoader serialized in Booter level0; local selected bundle closure exists; modern ManagerInstance connects directly.",
+      "offline": "Serialized placement, bundle closure and native path audit.",
+      "native_evidence": [
+        "loader-bootstrap.json",
+        "world-loading-assets.json",
+        "world-loading-pipeline.json"
+      ],
+      "runtime_unknowns": [
+        "Sustained traversal and broader scene coverage",
+        "Native-client Linux-backend loading"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "Unity asset resolution",
+        "Scene rendering and loader completion"
+      ],
+      "runtime_observed": [
+        "Native Nexus world loads and renders on the private client copy."
+      ]
+    },
+    {
+      "flow": "spawn_avatar_join",
+      "implementation": "Ready/AddPlayer/raw Spawn precedes application0;42byte initial state; prefab GUID; C2S1 follows local avatar setup; Spawn before Joined; owned netId/name/platform/current session validation.",
+      "offline": "Pure component framing/GUID checks and compiled server source.",
+      "native_rvas": [
+        "5ea6e0",
+        "5dfdc0"
+      ],
+      "runtime_unknowns": [
+        "Two-native-client simultaneous joins",
+        "Exact full local/remote appearance parity"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "Native Mirror deserialization",
+        "Local avatar assembly",
+        "Remote player queues and simultaneous joins"
+      ],
+      "runtime_observed": [
+        "The native client renders the protocol fixture as a remote avatar.",
+        "One native client plus one protocol fixture is observed; two native clients are not."
+      ]
+    },
+    {
+      "flow": "arrival_movement",
+      "implementation": "Native client selects one of6 Nexus spawns afterC2S1. Custom2/20 pose plus root command/RPC validators, full32bit hashes, nullable transform flags and speed dirtybit0 implemented.",
+      "offline": "Codec roundtrips and rejected malformed/extra/nonfinite payloads; serialized spawn audit.",
+      "native_rvas": [
+        "5ea260"
+      ],
+      "runtime_unknowns": [
+        "CharacterController behavior",
+        "Remote visual interpolation",
+        "Actual disabled NetworkTransform command activity"
+      ],
+      "local_policy": [
+        "Speed assignment despite shipped empty UserCode stub",
+        "Cached authoritative pose"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "CharacterController behavior",
+        "Remote visual interpolation",
+        "Actual disabled NetworkTransform command activity"
+      ],
+      "runtime_observed": [
+        "Nexus arrival/world state is reached; sustained native walking is not yet proven."
+      ]
+    },
+    {
+      "flow": "public_private_chat",
+      "implementation": "Public same-instance Space0 chat with sender echo; authorized SocialInternal1 private partner tabs; typing and relation/block/silence checks.",
+      "offline": "Native wire contracts and compiled dispatcher/social implementation.",
+      "runtime_unknowns": [
+        "Two-native-client public delivery",
+        "Private tab UI and typing"
+      ],
+      "unsupported_or_unproven": [
+        "No recovered separate cross-instance global channel"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "Two-client public delivery",
+        "Private tab UI and typing"
+      ],
+      "runtime_observed": [
+        "One native account and one protocol-fixture account complete a public-chat round trip.",
+        "This proves two-account public chat, not two-native-client chat or private-tab behavior."
+      ]
+    },
+    {
+      "flow": "customization_persistence",
+      "implementation": "Manifest-backed starter assets, explicit entitlement lists, native EntryData save schemas, nullable item slots, per-gender preset save/load/rename/remove/selection.",
+      "offline": "Durable save/ownership tests and12 canonical avatar parser/fixture checks.",
+      "runtime_unknowns": [
+        "Exact visual morph reapplication after named load",
+        "Confirmed saved-and-reloaded appearance",
+        "Wear/remove item rendering and reconnect persistence"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "Wear/remove UI actions",
+        "Asset/morph/material rendering",
+        "Saved appearance after reconnect"
+      ],
+      "runtime_observed": [
+        "Clothing editor opens and the body slider responds.",
+        "PreservationTest is saved, listed and requested for named load; exact visual morph reapplication and a confirmed saved/reloaded result remain unproven."
+      ]
+    },
+    {
+      "flow": "wardrobe_return",
+      "implementation": "Current-session HTTP lease, pose cache, pre-query raw Spawn+Joined, post-avatar ghost29, retirement/visibility suppression and delayed remote reseed.",
+      "offline": "Native lifecycle audit and compiled implementation.",
+      "runtime_unknowns": [
+        "End-of-frame destruction across clients",
+        "Unacknowledged two-server-frame retirement timing"
+      ],
+      "local_policy": [
+        "Two-server-frame reseed barrier, not recovered original acknowledgement"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "End-of-frame destruction across clients",
+        "Unacknowledged two-server-frame retirement timing"
+      ]
+    },
+    {
+      "flow": "settings",
+      "implementation": "Native PlayerPrefsJson fields persist and hydrate. Exact NotificationLoginFriend enum request name maps to lowercase notificationLoginFriend DTO/storage.",
+      "offline": "Native save/response/reopen/legacy-wrapper regression plus existing preferences tests.",
+      "native_rvas": [
+        "4286c0",
+        "639db0"
+      ],
+      "runtime_unknowns": [
+        "Options effects, save and relogin persistence"
+      ],
+      "unsupported_or_unproven": [
+        "ShowPets and PlatformOnly absent from native JSON DTO/hydration; across-login restoration not established"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "Options UI effects/save/relogin"
+      ],
+      "runtime_observed": [
+        "Options menu opens and arrow-focus navigation works."
+      ]
+    },
+    {
+      "flow": "credits_shops",
+      "implementation": "Explicit offline admin balance/grants;4 validated reachable local shops; native DTO navigation; guarded server-price transactional debit/grant; idempotence/rollback.",
+      "offline": "Actual native-shaped browsing/purchase/seed tests plus transactional failures.",
+      "runtime_unknowns": [
+        "Exact native shop response acceptance",
+        "Purchase UI refresh and native inventory availability"
+      ],
+      "preconditions": [
+        "Apply shop seed to same state directory",
+        "Set explicit wallet balance for intended account"
+      ],
+      "local_policy": [
+        "Catalog labels/prices and credits are authored preservation data",
+        "No real Steam commerce"
+      ],
+      "runtime_unknowns_at_static_assessment": [
+        "Native shop UI thumbnails/navigation",
+        "Purchase UI refresh and native inventory availability"
+      ],
+      "runtime_observed": [
+        "Wallet displays the seeded 500 crystals and 200 NP.",
+        "The native shop reports a connection problem after HTTP 200 responses; no purchase, debit, grant or inventory refresh is claimed."
+      ]
+    }
+  ],
+  "remaining_prerequisites": [
+    "Confirm exact visual morph reapplication after a named preset load; save/list/request and saved-outfit restoration are separate proven observations.",
+    "Test a second real native client; current two-account chat uses one native client and one protocol fixture.",
+    "Validate held-key/camera controls and remote interpolation; the measured walking test uses20 separate W presses.",
+    "Validate remaining wardrobe categories/removal, social/housing UI, other spaces and runtime mixed-scene/housing IDs.",
+    "Deploy to a supplied shared Linux host and validate remote reachability/firewall/NAT separately from local WSL."
+  ],
+  "material_runtime_risks": [
+    "Native shop callback rejects an HTTP 200 response for an unresolved reason; purchases remain blocked.",
+    "Exact saved morph reapplication is visually uncertain despite preset save/list/load request.",
+    "Sustained walking and remote interpolation remain unobserved.",
+    "Wardrobe two-server-frame retirement barrier is authored timing without client acknowledgement.",
+    "Heartbeats can remain apparently fresh15seconds after a crash.",
+    "Local preservation account binding has no Steam ticket verification."
+  ],
+  "verification": {
+    "windows_compile": {
+      "kind": "compile_only_unity_build",
+      "utc": "2026-10-28T19:48:17.0979519Z",
+      "unity_editor": "6000.6.3f1",
+      "exit_code": 0,
+      "success_marker": "NEBULA_PROBE_BUILD_SUCCESS",
+      "game_launched": false,
+      "reconstructed_listener_started": false,
+      "sources_unchanged_during_build": true,
+      "executable_sha256": "96b492cb271111251fe42b8646e65370a1b7b566773a1e35b34c3f2d1ae70873",
+      "managed_assembly_sha256": "37cc28cc8d56dd48ddfba1e778d5f908df97201329fbee30f1ff28366616c4ec",
+      "networking_parity_proven": false
+    },
+    "canonical_compile_report": "mirror-server/build-validation.json",
+    "canonical_compile_report_sha256": "1dd99c486c3e7203fbd3b14820d8cc6904f477747f0c7b4502a2c51b64cc0232",
+    "compiled_source_count": 14,
+    "cinema_regression": "backend/tests/test_contracts.py::test_cinema_no_films_terminates_native_schedule_without_media",
+    "prior_scope": {
+      "recorded_at": "2026-10-28T20:07:54.941454+00:00",
+      "backend_tests": 120,
+      "result": "pass",
+      "command": "python -m unittest discover -s backend/tests -q",
+      "socket_forbidden_profile_tests": 6,
+      "pure_csharp_checks": 133,
+      "avatar_fixture_checks": 12,
+      "scope": "Historical parent-owned offline run; not a claim about the current working tree."
+    },
+    "compiled_source_hashes_matched_at_compile": true,
+    "latest_offline_validation_pointer": "offline-validation.json",
+    "latest_offline_validation_hash_omitted_to_avoid_cycle": true,
+    "latest_offline_validation_scope": "Parent-owned current aggregate; pointer only."
+  },
+  "execution_boundary": {
+    "game_started": false,
+    "listener_started": false,
+    "native_code_executed": false,
+    "ui_automation": false,
+    "network_connections_made": false,
+    "scope": "Static audit activity only, assessed at 2026-10-28T19:51:04.331152+00:00; later overall execution is in runtime_followup."
+  },
+  "implementation_sources": [
+    {
+      "path": "backend/allocation.py",
+      "sha256": "8742004d6d56b7ecf341483649fedf2207acdbb1444601463d3c1c750255e72d"
+    },
+    {
+      "path": "backend/server.py",
+      "sha256": "174482cdd6c339798c2464abd8c50ea02caa6ca39dea729c45b1028ba30c932f"
+    },
+    {
+      "path": "backend/service.py",
+      "sha256": "2a282906497f7c5b0916767500b0f47a348c18f3a75367395add25a7c884a96c"
+    },
+    {
+      "path": "backend/state.py",
+      "sha256": "4182dd824e1ea1be182d87acf1ce1ec632c4ee49adba8106e9038f61e856df52"
+    },
+    {
+      "path": "backend/avatar.py",
+      "sha256": "be380c107b6e9307bd58b348814a9f955f21b02b9e23c920562e3f413887beea"
+    },
+    {
+      "path": "backend/admin.py",
+      "sha256": "d16e58bf3de42baf4b6df1f162e094f6f7eb286c4400d7c6c3bce1638c81f855"
+    },
+    {
+      "path": "backend/shop.py",
+      "sha256": "2b59fbf8fa3c12d71008d590ed6f8c18adb0bbe71cc190595bcd7ad37e572924"
+    },
+    {
+      "path": "backend/shop_admin.py",
+      "sha256": "685230586330a4df02b1d05eb6ddd97fd8966e9be040f8eb38d4f3530d005bb7"
+    },
+    {
+      "path": "backend/tests/test_core_readiness.py",
+      "sha256": "6f063396e6cddd5085c310a60c88cba605ab4978daee3de6e836acf03792122d"
+    },
+    {
+      "path": "backend/tests/test_settings_native.py",
+      "sha256": "8d880123d05d47cececd0f070dbb9185aa13dbfc2b319df0e419f9042ff042fd"
+    },
+    {
+      "path": "backend/tests/test_network_config.py",
+      "sha256": "352acfac3fef0744ba09c843abe882288e08ff9df75511034c87b76152f82146"
+    },
+    {
+      "path": "backend/tests/test_allocation.py",
+      "sha256": "d6c328b6e92bbc72dccbe44c29fea91bfde1c26dff6cd234a55f8aeb7968fb2f"
+    },
+    {
+      "path": "tools/seed_local_shops.py",
+      "sha256": "aea055270cd0dbec2126187391d3aa759f709c61e194118b31358941020983bd"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+      "sha256": "8c70ed0b9fe8844258256115c867993ce7dd2fffba3cf246d57cd0daf53f14fe"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceAccounts.cs",
+      "sha256": "944f79403ae690fe621579a5400ff226af04cb0b7f3923393bbea01ca5b7ccc9"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSpawnState.cs",
+      "sha256": "3b70f692f6afe1363b9cde7a615b25c5003fa3920d509ea03081ffb2f983a4f8"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaMirrorCommands.cs",
+      "sha256": "552cff5dd5da57e723f980209828bffa54a3f3407f16e060e60e0d563a369e3f"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSocialState.cs",
+      "sha256": "d71403fe82a4e6652125caaa07b83f9c723d702a944fc3c0ce1e3bb330f08580"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Server.cs",
+      "sha256": "b8d9c4f95695c8c9905399749e8726a8a342ee7be7aa9d78d9f4c0053ab43695"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/TelepathyTransport.cs",
+      "sha256": "5bb320e981e472f95d8bfed00ebf7d7102b9c31d1399db7aacf0ac1c42308baa"
+    },
+    {
+      "path": "tools/offline-mirror-tests/Program.cs",
+      "sha256": "0d1cd55d7e0f8c3b1016fc855a2fa6d8f2830dec46aa8b178e9d741e79fc794f"
+    },
+    {
+      "path": "backend/tests/test_contracts.py",
+      "sha256": "86695c158590edba6eb6f45f5f3c87fb3ea2d475e51b3bb9483234fdae7afb61"
+    }
+  ],
+  "native_sources": [
+    {
+      "path": "work/evidence/ghidra/functions/5ea6e0.c",
+      "sha256": "af04f45ab084b633c12e8d08f4d024433e5a883a23d32c5a31c102dd89c39f8d"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5dfdc0.c",
+      "sha256": "14f31fa8fb7cfc6293f3626afd1175427a17fe3c93b01ec84d793b8979960fd8"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5ea260.c",
+      "sha256": "a70dd10e6da7f67e275a40882ee36a04dcfbbadb245c59eca198ec858f289512"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4286c0.c",
+      "sha256": "48362829ad5b9bd5fe86e484b91238bf01297f49d47c37618cd70b234758b877"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/639db0.c",
+      "sha256": "9bc69807643a92375f857e6ae6ffc42ba636cd606d1f0e5a0372e824505b1c7f"
+    }
+  ],
+  "evidence_documents": [
+    "protocol/shared-server-networking.json",
+    "protocol/bootstrap-response-contracts.json",
+    "protocol/loader-bootstrap.json",
+    "protocol/world-loading-pipeline.json",
+    "protocol/world-loading-assets.json",
+    "protocol/tcp-world-spawn.json",
+    "protocol/tcp-reconstruction.md",
+    "protocol/mirror-command-contracts.json",
+    "protocol/mirror-player-state.json",
+    "protocol/avatar-static-validation.json",
+    "protocol/avatar-default-catalog.json",
+    "protocol/http-shop.json",
+    "protocol/local-shop-seeding.json"
+  ],
+  "evidence_hash_boundary": "Current code and native body hashes are bound here; the original static timestamp is preserved. runtime_followup hashes its one-way runtime source. Downstream aggregate/pipeline reports are pointers only, avoiding mutual report-hash cycles.",
+  "updated_at": "2026-10-28T22:05:28.512977+00:00",
+  "static_assessment_scope": {
+    "assessed_at": "2026-10-28T19:51:04.331152+00:00",
+    "meaning": "The original assessment and compile/offline execution-boundary flags describe the static audit at this timestamp. Later native execution is recorded separately below.",
+    "full_core_native_flows_validated": false
+  },
+  "runtime_followup": {
+    "report": "runtime-validation.json",
+    "report_sha256": "2616f7f0b09cf12d6b3d64959121a2c7fb3f9bd71318257c01e7ef316adaf5f5",
+    "report_utc": "2026-10-28T22:05:28.367063+00:00",
+    "recorded_at": "2026-10-28T22:05:28.512977+00:00",
+    "scope": "Current controlled private-client-copy checkpoint. Windows core tests, Linux compilation, an isolated WSL fixture and the separately recorded native Linux-backed flow are distinguished by their milestone flags. Remote/public reachability remains unproven. runtime-validation.json is authoritative for later progress.",
+    "game_executed": true,
+    "reconstructed_listeners_started": true,
+    "live_connections_performed": true,
+    "game_ready": false,
+    "networking_parity_proven": false,
+    "linux_compilation_passed": true,
+    "linux_wsl_protocol_fixture_passed": true,
+    "native_client_connected_to_linux_backend": true,
+    "evidence_file_count": 56,
+    "milestones": {
+      "http_bootstrap_requests_received": true,
+      "mirror_listener_bound": true,
+      "protocol_peer_login_allocation_spawn_announce": true,
+      "protocol_peer_public_chat_self_echo": true,
+      "protocol_peer_ping_pong": true,
+      "native_bootstrap_hang_fixed": true,
+      "native_login_menu_reached": true,
+      "native_world_loaded": true,
+      "native_to_protocol_peer_chat_round_trip": true,
+      "two_account_chat_proven": true,
+      "two_native_clients_chat_proven": false,
+      "native_movement_proven": true,
+      "native_held_key_walk_tested": false,
+      "native_remote_avatar_rendered": true,
+      "native_options_menu_opened": true,
+      "native_arrow_focus_navigation_proven": true,
+      "native_clothing_editor_opened": true,
+      "native_body_slider_responds": true,
+      "native_preset_saved_and_listed": true,
+      "native_named_preset_load_requested": true,
+      "native_preset_saved_and_reloaded": false,
+      "native_settings_saved_and_reopened": true,
+      "native_settings_persistence_proven": true,
+      "native_wardrobe_proven": true,
+      "native_purchase_proven": true,
+      "native_linux_world_loaded": true,
+      "native_linux_saved_jacket_restored": true,
+      "native_linux_wallet_and_owned_offer_restored": true,
+      "native_linux_public_chat_round_trip": true,
+      "reward_absence_encrypted_http_checks_passed": true,
+      "current_linux_backend_offline_checks_passed": true
+    },
+    "current_blocker": {
+      "state": "core_flows_passed_remaining_nonmini_and_shared_host_validation",
+      "symptom": "The bounded Nexus core flows pass. Remote shared-host deployment, a second real native client and remaining non-mini features are still pending.",
+      "cause": "A target Linux host/SSH alias has not been supplied. Other spaces, all social/housing UI branches, mixed-scene runtime IDs and exact visual morph reapplication require further validation; full allocation remains closed outside the explicit Nexus test profile.",
+      "observation": "Named preset save/list/load request, walking, local purchase and equip/save passed. Fresh Linux login restored the red jacket, Music0.9,475 crystals/200NP and owned-offer status; public chat passed both directions with a distinct protocol account. The private Windows client is left open in Nexus."
+    },
+    "history": [
+      {
+        "stage": "local_protocol_fixture",
+        "state": "passed_bounded_checks",
+        "observed": "HTTP/Mirror bound; fixture login/allocation/spawn/announce, public self-echo and ping/pong passed. These checks do not render a native avatar or establish two-account chat."
+      },
+      {
+        "stage": "native_bootstrap",
+        "state": "hang_fixed_and_retested",
+        "observed": "Empty non-null cinema schedule caused a main-thread loop. The authored no-films response clears it; observational trace3 records cinema/news/prefs/login-show entry and return.",
+        "evidence": "protocol/cinema-bootstrap-compatibility.json"
+      },
+      {
+        "stage": "native_login_menu",
+        "state": "visually_reached",
+        "observed": "Terra observed the unhooked private client login menu. Native world, wardrobe and stores remain unreached.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_menu_input",
+        "state": "diagnosed_fix_in_progress",
+        "observed": "Native login menu is visible, but mouse clicks and Return do not invoke its Login handler.",
+        "cause": "The shipped PS4InputModule never dispatches mouse press events; InputManager Submit is bound only to joystick1 button0. No virtual controller driver is installed."
+      },
+      {
+        "stage": "native_world",
+        "state": "loaded",
+        "observed": "The private native client loads Nexus and renders the protocol fixture as a remote avatar.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_fixture_chat",
+        "state": "two_account_round_trip_passed",
+        "observed": "One native account and one protocol-fixture account exchange public chat; two native clients remain untested.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_customization_preset",
+        "state": "save_list_load_requested",
+        "observed": "Body slider responds; PreservationTest is saved, listed and requested for load. Exact visual morph reapplication and confirmed reload remain unproven.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_shop",
+        "state": "response_rejection_under_investigation",
+        "observed": "Wallet values render, but the shop reports a connection problem after HTTP 200; no purchase is claimed.",
+        "evidence": "runtime-validation.json"
+      }
+    ],
+    "offline_flags_scope": "No-game/no-listener flags in compile and historical offline test records apply only to those runs. They do not negate later controlled runtime observations.",
+    "evidence_hash_boundary": "Only runtime-validation.json is hashed here. The downstream offline aggregate is a pointer without a reciprocal hash, avoiding report-hash cycles."
+  },
+  "prerequisites_at_static_assessment": [
+    "Select separate complete exact-build client copy and matching compatibility/endpoint metadata",
+    "Use matching client API origin and backend/instance advertised IPv4",
+    "Explicit intended ports/common state and both profile opt-ins",
+    "Apply validated local shop seed and explicit intended-account wallet balance before paid purchase",
+    "Observe first controlled Windows flow sequence; Linux module/build/deploy is separate",
+    "Observe second-client visibility/chat before claiming multiplayer or shared-host reachability"
+  ],
+  "material_runtime_risks_at_static_assessment": [
+    "Native task/scene/avatar ordering unobserved",
+    "Remote movement/rendering unobserved",
+    "Wardrobe two-server-frame retirement barrier is authored timing without client acknowledgement",
+    "Heartbeats can remain apparently fresh15seconds after a crash",
+    "Local preservation account binding has no Steam ticket verification"
+  ],
+  "source_updates_since_static_assessment": [
+    {
+      "path": "backend/service.py",
+      "static_sha256": "e03d2afdc939c0056986f1fae0a3b579700735b1518c85ba7d08ed00e65b2179",
+      "current_sha256": "2a282906497f7c5b0916767500b0f47a348c18f3a75367395add25a7c884a96c",
+      "reason": "Cinema bootstrap response compatibility update; network/profile compiled C# sources unchanged."
+    },
+    {
+      "path": "backend/state.py",
+      "static_sha256": "7d8b3c9d569706768e52729737561049da19990baede6a23215a4ba38ddbee55",
+      "current_sha256": "4182dd824e1ea1be182d87acf1ce1ec632c4ee49adba8106e9038f61e856df52",
+      "reason": "Dated state/snapshot implementation update after the original static report; the current hash is bound in implementation_sources."
+    },
+    {
+      "path": "tools/seed_local_shops.py",
+      "previous_report_sha256": "be25f7b210bf2f6b9cd784993387714d65fcb598f7cff7e2abfded89e6cf1474",
+      "current_sha256": "aea055270cd0dbec2126187391d3aa759f709c61e194118b31358941020983bd",
+      "recorded_at": "2026-10-28T21:56:00.213143+00:00",
+      "reason": "Current source/artifact hash refresh. Start-CoreTest now waits for HTTP initial state before Unity; historical runtime observations remain scoped to their tested revisions."
+    }
+  ],
+  "source_hash_history": [
+    {
+      "path": "backend/state.py",
+      "sha256": "7d8b3c9d569706768e52729737561049da19990baede6a23215a4ba38ddbee55",
+      "recorded_at": "2026-10-28T20:17:55.076721+00:00",
+      "scope": "Dated prior report update; superseded by the current implementation_sources hash."
+    }
+  ]
+}
+

@@ -1,0 +1,1780 @@
+{
+  "format_version": 1,
+  "scope": "Static client contracts and integrated authored preservation modules; no game, listener, connection, attach or native execution",
+  "binary": "<private-research-path>",
+  "binary_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+  "metadata_sha256": "7c2d1d0fbe78783799fb78499b9150ec516d30f626f6cf4949cb0d552a17de4a",
+  "declarations_sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850",
+  "reused_evidence": [
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-contracts.json",
+      "sha256": "36bcf6d0caf8407e4cf69ea9e5634de29f48aae7a5fb6e675597be56e38a7136"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-callers.json",
+      "sha256": "4b119e915c8708296e1b11c43855669eb20d81caed73eb8349633d600f7db53b"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-notification-consumable-native.json",
+      "sha256": "4b9bbe3da6b1169f098ad22b1537e4ea28fde1b2e4416e76d697aed09783332a"
+    }
+  ],
+  "generator": "outputs\\nebula-preservation\\tools\\notification_contracts.py",
+  "generator_sha256": "97b53b83901c087f3595e6c8454d02c87fe7cc9c76446c883964fd0ab7c27ce6",
+  "notification_packet": {
+    "c2s_opcode": 19,
+    "c2s_fields": [
+      "senderUsername",
+      "targetUsername",
+      "notificationType:Int32",
+      "targetPlatform:Int32"
+    ],
+    "c2s_reviewed_types": [
+      0,
+      1,
+      6
+    ],
+    "s2c_opcode": 19,
+    "s2c_fields": [
+      "playerName",
+      "platform:Int32",
+      "type:Int32",
+      "arguments",
+      "ticks:Int64"
+    ],
+    "ticks": "System.DateTime ticks, valid range0..3155378975999999999; UI new DateTime(ticks).ToString(hh:mm)",
+    "prerequisites": [
+      "ManagerInstance.chat.notificationsManager initialized",
+      "PS4Info and player preferences available",
+      "Chat0 suppressed when isChatRestricted"
+    ],
+    "dedupe": {
+      "types": [
+        0,
+        1,
+        5
+      ],
+      "key": [
+        "type",
+        "playerName",
+        "platform"
+      ],
+      "ignored_in_key": [
+        "ticks",
+        "arguments"
+      ]
+    },
+    "in_memory_only": true,
+    "all_entries_bind_confirm_and_dismiss": true,
+    "formatting_prerequisite": "Gift/Reward text requires source username/platform resolved through Memory.remotes only; local recipient identity does NOT resolve through this lookup; missing source shows timestamp+name without Gift/Reward body",
+    "earliest_inbox_delivery": "C2S1 is sent by OnAvatarLoaded5dfdc0 after animator/control/companion/locomotion/randomidle setup; constructing its payload earlier5ea6e0 is not send"
+  },
+  "notification_types": [
+    {
+      "type": 0,
+      "enum_name": "Chat",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "private-chat request",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": true,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 1,
+      "enum_name": "Friend",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "friend request",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": true,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 2,
+      "enum_name": "FullGame",
+      "deferred_game_type": true,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "FullGame arguments suffix after first !",
+      "confirm_behavior": "Send_AcceptFullGameNotification; deferred full game",
+      "dismiss_behavior": "C2S95 guid#sourceName#sourcePlatform#declineType",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 3,
+      "enum_name": "Gift",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "gift prefix + arguments + gift suffix",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": true
+    },
+    {
+      "type": 4,
+      "enum_name": "Reward",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "System Reward",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": true
+    },
+    {
+      "type": 5,
+      "enum_name": "Friend_Accepted",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "friend-accepted text",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 6,
+      "enum_name": "InviteToJoin",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "invite-to-space text",
+      "confirm_behavior": "HTTP resolve -> LoadSpace; no TCP26",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": true,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 7,
+      "enum_name": "AskToJoin",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "ask-to-join text",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 8,
+      "enum_name": "AceptedToJoin",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 9,
+      "enum_name": "NewInstanceIsCreated",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 10,
+      "enum_name": "FullGame_Declined",
+      "deferred_game_type": true,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 11,
+      "enum_name": "SpaceGame",
+      "deferred_game_type": true,
+      "body_when_source_resolves": "SpaceGame Invitation EntryData -> game enum name",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#11 (platform omitted)",
+      "dismiss_behavior": "C2S95 guid#sourceName#sourcePlatform#declineType",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 12,
+      "enum_name": "SpaceGame_Declined",
+      "deferred_game_type": true,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    },
+    {
+      "type": 13,
+      "enum_name": "SocialToJoin",
+      "deferred_game_type": false,
+      "body_when_source_resolves": "empty body",
+      "body_when_source_does_not_resolve": "empty body",
+      "confirm_behavior": "C2S26 guid#sourceName#type#sourcePlatform",
+      "dismiss_behavior": "local remove only",
+      "recovered_c2s19_producer": false,
+      "native_direct_local_push_producer_recovered": false,
+      "local_outbox_support": false
+    }
+  ],
+  "gift": {
+    "http_route": "NPShopGiftItem",
+    "request": "GUID#PS4ID#offerID#targetUsername#displayedCrystals",
+    "response": "true#GUID#PS4ID#ErrorBUY_enum_name#targetUsername#offerID",
+    "response_consumption": "Callback requires6 fields; checks own GUID, status field3, target field4; field5 required by length but unread",
+    "callback_effect": "sender Item gifted popup or error, shop-info refresh; no local Push or C2S19",
+    "grant_authority": "Existing backend Shop._gift durable entitlement/debit transaction; notification is separate bookkeeping",
+    "original_notification_arguments": "UI consumes arguments as gift display text; original source mapping unknown"
+  },
+  "join": {
+    "invite6": "HTTPGetPsidglobalAndGuidByUsernamePlatform(sourceName,sourcePlatform) -> callback488fe0 -> LoadSpace(psidglobal,empty,true,guid,null); empty psidglobal rejects",
+    "ask7": "unknown-source text exists; Confirm falls through ordinary26. No recovered direct C2S19 producer, owner approval policy or allocation continuation",
+    "types8_9_13": "enum-only meanings; no dedicated formatting or acceptance continuation in reviewed modern UI; Confirm falls through ordinary26",
+    "opcode27": {
+      "fields_consumed": "count only",
+      "less_than3": "CannotConnectIsFull; unlock pad",
+      "at_least3": "HTTPSpaceLoading IsFromNotification=true; request actual local GUID#PS4ID",
+      "does_not_consume_values": true,
+      "original_server_producer": "unknown",
+      "modern_invite6_does_not_need_27": true
+    }
+  },
+  "animation_layer93": {
+    "direction": "clientbound-only in recovered send inventory",
+    "fields": [
+      "guid",
+      "layerName",
+      "weight:Int32"
+    ],
+    "prerequisites": [
+      "Memory.GetNebulaPlayer(guid) resolves Unity object",
+      "NebulaPlayer.avatar non-null",
+      "PlayerAnimationEvents child and footStepAnimationEvent non-null",
+      "avatar.Animator non-null"
+    ],
+    "effects_in_order": [
+      "footStepAnimationEvent.activated=false",
+      "GetLayerIndex(layerName)",
+      "SetLayerWeight(index,float(Int32.Parse(weight)))"
+    ],
+    "native_conversion_rvas": [
+      "0x5ec49b",
+      "0x5ec4a2"
+    ],
+    "missing_avatar": "returns without queueing",
+    "invalid_layer_guard": "none recovered",
+    "weight_clamp": "none recovered",
+    "recovered_c2s_producer": false,
+    "original_server_rule": "unknown",
+    "safe_integration": "no client-origin93 echo or blanket replay; use only source-bound authored effects after actual avatar build if justified",
+    "local_set_layer_weight_calls_do_not_prove_tcp93": true
+  },
+  "authored_outbox": {
+    "types": [
+      3,
+      4
+    ],
+    "ownership_is_separate": true,
+    "enqueue": "must run inside existing grant Store.atomic; schema initialization must run before it",
+    "reward_source": "actual recipient username/platform; truthful authored identity policy; native remotes-only lookup still degrades text until reviewed fallback-formatting patch",
+    "gift_source": "actual donor username/platform; full text degrades when donor not in Memory; no fabricated presence",
+    "delivery": "at-least-once across process/session restart; one inflight event per recipient/sourceName/platform/type; no packet acknowledgement evidence",
+    "ack": "C2S26 only maps in-flight sender/type tuple; no event ID exists on wire; write durable receipt then MarkAccepted; never regrant or send S2C26",
+    "dismissal": "gift/reward dismissal emits no wire event; unacknowledged notices may replay on reconnect",
+    "retention": "no original expiry recovered; pending notices retained; accepted DB rows and immutable ack files retained",
+    "export": {
+      "filename": "instance-notifications.json",
+      "root": "shared state root",
+      "format_version": 1,
+      "fields": [
+        "generation:UnixSeconds",
+        "entries:[event_id,target_ps4_id,source_username,source_platform:Int32,notification_type:3|4,arguments,ticks:Int64]"
+      ],
+      "freshness_seconds": 15,
+      "future_tolerance_seconds": 5,
+      "max_entries": 10000
+    },
+    "ack_directory": "notification-acks",
+    "ack_filename": "event_id(lowercase UUID-N)+'-'+guid(lowercase UUID-N)+.json; legacy event_id.json also accepted",
+    "ack_fields": [
+      "format_version",
+      "event_id",
+      "target_ps4_id",
+      "guid",
+      "source_username",
+      "source_platform",
+      "notification_type",
+      "accepted_at"
+    ],
+    "unsupported_types": [
+      7,
+      8,
+      9,
+      13
+    ],
+    "integration_state": "Integrated into Service/Shop/Rewards and the compile-only Mirror instance; offline account/receipt checks only, live delivery untested",
+    "offline_backend_tests_passed": 9
+  },
+  "authored_informational_type5": {
+    "type": 5,
+    "behavior": "acknowledge only an actually sent notice for exact recipient session/sourceName/platform; retire bookkeeping without friendship mutation",
+    "record": "after successful transport Send of type5",
+    "accept": "ordinary26 must carry type5 and match pending key; do not require a live source peer",
+    "ttl_seconds_default": 300,
+    "capacity_default": 256,
+    "duplicate_send": "refreshes one pending key, matching client unread deduplication",
+    "disconnect": "removes recipient session pending entries",
+    "durability": "in-process only; no event files or original retention claim",
+    "other_types": "all rejected by dedicated helper",
+    "pure_check_assertions": 30,
+    "validation": "parent owns final pure C# harness execution/compile"
+  },
+  "direct_call_candidates": [
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x377114",
+      "nearest_metadata_method_rva": "0x376eb0",
+      "method_names": [
+        "CancelSwimming$$OnTriggerEnter"
+      ],
+      "pe_runtime_function": [
+        "0x376eb0",
+        "0x377140"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x381f16",
+      "nearest_metadata_method_rva": "0x381d30",
+      "method_names": [
+        "SkatesRemover$$OnTriggerEnter"
+      ],
+      "pe_runtime_function": [
+        "0x381dd2",
+        "0x381f2e"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x382af1",
+      "nearest_metadata_method_rva": "0x3829c0",
+      "method_names": [
+        "SkatingArea$$OnTriggerEnter"
+      ],
+      "pe_runtime_function": [
+        "0x3829c0",
+        "0x382b07"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x382c3f",
+      "nearest_metadata_method_rva": "0x382b10",
+      "method_names": [
+        "SkatingArea$$OnTriggerStay"
+      ],
+      "pe_runtime_function": [
+        "0x382b10",
+        "0x382c55"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x3847b4",
+      "nearest_metadata_method_rva": "0x384550",
+      "method_names": [
+        "TriggerSwiming.<delayedTransition>d__7$$MoveNext"
+      ],
+      "pe_runtime_function": [
+        "0x384550",
+        "0x384871"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x38482f",
+      "nearest_metadata_method_rva": "0x384550",
+      "method_names": [
+        "TriggerSwiming.<delayedTransition>d__7$$MoveNext"
+      ],
+      "pe_runtime_function": [
+        "0x384550",
+        "0x384871"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x4030f1",
+      "nearest_metadata_method_rva": "0x403050",
+      "method_names": [
+        "ConsumableCoffee$$DeletePlayerCoffee"
+      ],
+      "pe_runtime_function": [
+        "0x403050",
+        "0x403271"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x4034eb",
+      "nearest_metadata_method_rva": "0x403280",
+      "method_names": [
+        "ConsumableCoffee$$InitPlayerCoffee"
+      ],
+      "pe_runtime_function": [
+        "0x403280",
+        "0x403655"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x4037a5",
+      "nearest_metadata_method_rva": "0x4036e0",
+      "method_names": [
+        "ConsumableCoffee$$Update"
+      ],
+      "pe_runtime_function": [
+        "0x403766",
+        "0x403ac1"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x403cd1",
+      "nearest_metadata_method_rva": "0x403c30",
+      "method_names": [
+        "ConsumableOktoberFest$$DeletePlayerOktoberFest"
+      ],
+      "pe_runtime_function": [
+        "0x403c30",
+        "0x403e31"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x4040ab",
+      "nearest_metadata_method_rva": "0x403e40",
+      "method_names": [
+        "ConsumableOktoberFest$$InitPlayerOktoberFest"
+      ],
+      "pe_runtime_function": [
+        "0x403e40",
+        "0x40421a"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x404359",
+      "nearest_metadata_method_rva": "0x4042a0",
+      "method_names": [
+        "ConsumableOktoberFest$$Update"
+      ],
+      "pe_runtime_function": [
+        "0x40431a",
+        "0x404678"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x4071d1",
+      "nearest_metadata_method_rva": "0x406f20",
+      "method_names": [
+        "InflatableCastleArea$$OnTriggerEnter"
+      ],
+      "pe_runtime_function": [
+        "0x4070f8",
+        "0x407353"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x40756a",
+      "nearest_metadata_method_rva": "0x407370",
+      "method_names": [
+        "InflatableCastleArea$$OnTriggerExit"
+      ],
+      "pe_runtime_function": [
+        "0x4074fd",
+        "0x407579"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x407693",
+      "nearest_metadata_method_rva": "0x407590",
+      "method_names": [
+        "InflatableCastleArea$$OnTriggerStay"
+      ],
+      "pe_runtime_function": [
+        "0x407590",
+        "0x4076a9"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x41b9e5",
+      "nearest_metadata_method_rva": "0x41b950",
+      "method_names": [
+        "ConsumablePopCorn$$DeletePlayerpopCorn"
+      ],
+      "pe_runtime_function": [
+        "0x41b950",
+        "0x41bb15"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x41bcf0",
+      "nearest_metadata_method_rva": "0x41bb20",
+      "method_names": [
+        "ConsumablePopCorn$$InitPlayerpopCorn"
+      ],
+      "pe_runtime_function": [
+        "0x41bb20",
+        "0x41bf62"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x41c129",
+      "nearest_metadata_method_rva": "0x41c070",
+      "method_names": [
+        "ConsumablePopCorn$$Update"
+      ],
+      "pe_runtime_function": [
+        "0x41c0ea",
+        "0x41c4aa"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x4553d6",
+      "nearest_metadata_method_rva": "0x455200",
+      "method_names": [
+        "Locomotion$$StopLocomotion"
+      ],
+      "pe_runtime_function": [
+        "0x455200",
+        "0x455414"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x45da93",
+      "nearest_metadata_method_rva": "0x45d960",
+      "method_names": [
+        "Locomotion.<>c__DisplayClass18_0$$<StartLocomotion>b__0"
+      ],
+      "pe_runtime_function": [
+        "0x45d960",
+        "0x45db59"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a2a3",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a2c5",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a30a",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a34c",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a36e",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a390",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a402",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a424",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a446",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a478",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a4ba",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a4dc",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49a4fe",
+      "nearest_metadata_method_rva": "0x499d50",
+      "method_names": [
+        "CW_Wardrobe$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x499e4a",
+        "0x49a537"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49b608",
+      "nearest_metadata_method_rva": "0x49a8f0",
+      "method_names": [
+        "CW_Wardrobe$$ImgOnclickPS4"
+      ],
+      "pe_runtime_function": [
+        "0x49a8f0",
+        "0x49d0fb"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49b635",
+      "nearest_metadata_method_rva": "0x49a8f0",
+      "method_names": [
+        "CW_Wardrobe$$ImgOnclickPS4"
+      ],
+      "pe_runtime_function": [
+        "0x49a8f0",
+        "0x49d0fb"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x49b662",
+      "nearest_metadata_method_rva": "0x49a8f0",
+      "method_names": [
+        "CW_Wardrobe$$ImgOnclickPS4"
+      ],
+      "pe_runtime_function": [
+        "0x49a8f0",
+        "0x49d0fb"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "NotificationsManager.Push",
+      "target_rva": "0x480710",
+      "call_rva": "0x5dfa0d",
+      "nearest_metadata_method_rva": "0x5df8a0",
+      "method_names": [
+        "Assets.Scripts.TCPs.Processors.NotificationProcessor$$Process"
+      ],
+      "pe_runtime_function": [
+        "0x5df966",
+        "0x5dfa37"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5ec4aa",
+      "nearest_metadata_method_rva": "0x5ec380",
+      "method_names": [
+        "Assets.Scripts.TCPs.Processors.UpdateAnimationLayerProcessor$$Process"
+      ],
+      "pe_runtime_function": [
+        "0x5ec380",
+        "0x5ec4d0"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5f364f",
+      "nearest_metadata_method_rva": "0x5f3580",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$PopMaskLayerWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5f3580",
+        "0x5f3821"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5f36a4",
+      "nearest_metadata_method_rva": "0x5f3580",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$PopMaskLayerWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5f3580",
+        "0x5f3821"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5f36f9",
+      "nearest_metadata_method_rva": "0x5f3580",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$PopMaskLayerWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5f3580",
+        "0x5f3821"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5f374e",
+      "nearest_metadata_method_rva": "0x5f3580",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$PopMaskLayerWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5f3580",
+        "0x5f3821"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5f37a3",
+      "nearest_metadata_method_rva": "0x5f3580",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$PopMaskLayerWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5f3580",
+        "0x5f3821"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5f37f0",
+      "nearest_metadata_method_rva": "0x5f3580",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAnim$$PopMaskLayerWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5f3580",
+        "0x5f3821"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5fe251",
+      "nearest_metadata_method_rva": "0x5fe150",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAvatar$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5fe150",
+        "0x5fe437"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5fe2ac",
+      "nearest_metadata_method_rva": "0x5fe150",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAvatar$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5fe150",
+        "0x5fe437"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5fe307",
+      "nearest_metadata_method_rva": "0x5fe150",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAvatar$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5fe150",
+        "0x5fe437"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5fe363",
+      "nearest_metadata_method_rva": "0x5fe150",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAvatar$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5fe150",
+        "0x5fe437"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x5fe3bf",
+      "nearest_metadata_method_rva": "0x5fe150",
+      "method_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerAvatar$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x5fe150",
+        "0x5fe437"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x66777a",
+      "nearest_metadata_method_rva": "0x667530",
+      "method_names": [
+        "AEManagerItems$$RemoveItem"
+      ],
+      "pe_runtime_function": [
+        "0x667530",
+        "0x66795a"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x66779c",
+      "nearest_metadata_method_rva": "0x667530",
+      "method_names": [
+        "AEManagerItems$$RemoveItem"
+      ],
+      "pe_runtime_function": [
+        "0x667530",
+        "0x66795a"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x6677be",
+      "nearest_metadata_method_rva": "0x667530",
+      "method_names": [
+        "AEManagerItems$$RemoveItem"
+      ],
+      "pe_runtime_function": [
+        "0x667530",
+        "0x66795a"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x6678db",
+      "nearest_metadata_method_rva": "0x667530",
+      "method_names": [
+        "AEManagerItems$$RemoveItem"
+      ],
+      "pe_runtime_function": [
+        "0x667530",
+        "0x66795a"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x6678fd",
+      "nearest_metadata_method_rva": "0x667530",
+      "method_names": [
+        "AEManagerItems$$RemoveItem"
+      ],
+      "pe_runtime_function": [
+        "0x667530",
+        "0x66795a"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x66791f",
+      "nearest_metadata_method_rva": "0x667530",
+      "method_names": [
+        "AEManagerItems$$RemoveItem"
+      ],
+      "pe_runtime_function": [
+        "0x667530",
+        "0x66795a"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677bef",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677c11",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677c5e",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677cb6",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677cd8",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677d6c",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677dc7",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677de9",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677e15",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677e37",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x677e59",
+      "nearest_metadata_method_rva": "0x677870",
+      "method_names": [
+        "AEManagerPreset$$CheckHandType"
+      ],
+      "pe_runtime_function": [
+        "0x677976",
+        "0x677e8d"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x6991b1",
+      "nearest_metadata_method_rva": "0x6990b0",
+      "method_names": [
+        "IndividualAssembler$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x6990b0",
+        "0x699397"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x69920c",
+      "nearest_metadata_method_rva": "0x6990b0",
+      "method_names": [
+        "IndividualAssembler$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x6990b0",
+        "0x699397"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x699267",
+      "nearest_metadata_method_rva": "0x6990b0",
+      "method_names": [
+        "IndividualAssembler$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x6990b0",
+        "0x699397"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x6992c3",
+      "nearest_metadata_method_rva": "0x6990b0",
+      "method_names": [
+        "IndividualAssembler$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x6990b0",
+        "0x699397"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x69931f",
+      "nearest_metadata_method_rva": "0x6990b0",
+      "method_names": [
+        "IndividualAssembler$$ReasignHandTypeWeights"
+      ],
+      "pe_runtime_function": [
+        "0x6990b0",
+        "0x699397"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x1255c8b",
+      "nearest_metadata_method_rva": "0x1255c10",
+      "method_names": [
+        "Mirror.NetworkAnimator$$HandleAnimMsg"
+      ],
+      "pe_runtime_function": [
+        "0x1255c10",
+        "0x1255cbb"
+      ],
+      "instruction_boundary_confirmed": true
+    },
+    {
+      "target": "Animator.SetLayerWeight",
+      "target_rva": "0x1b62950",
+      "call_rva": "0x1257057",
+      "nearest_metadata_method_rva": "0x1256de0",
+      "method_names": [
+        "Mirror.NetworkAnimator$$OnDeserialize"
+      ],
+      "pe_runtime_function": [
+        "0x1256e2c",
+        "0x12570b1"
+      ],
+      "instruction_boundary_confirmed": true
+    }
+  ],
+  "evidence": [
+    {
+      "rva": "0x5df8a0",
+      "names": [
+        "Assets.Scripts.TCPs.Processors.NotificationProcessor$$Process"
+      ],
+      "native_byte_range": [
+        "0x5df8a0",
+        "0x5dfa40"
+      ],
+      "native_bytes_sha256": "267cbc25a2470eb936fd975505bae0532056caf3055e21f913f44317265059ee",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\5df8a0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "9d2ea523a63c0d3e472c652ac2473450872d63dcf76ae00574b94d15d0e4c6a2"
+    },
+    {
+      "rva": "0x480710",
+      "names": [
+        "NotificationsManager$$Push"
+      ],
+      "native_byte_range": [
+        "0x480710",
+        "0x480ab0"
+      ],
+      "native_bytes_sha256": "757cf98f9eebea91dbcc46c8caf6da5818ff4d37b87c3ca27765a4c586b1b204",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\480710.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "4b7b3466d80482a838496d0684e28646b275533d0ae5f32e371c58f5354660bf"
+    },
+    {
+      "rva": "0x489160",
+      "names": [
+        "NotificationsManager.<>c__DisplayClass13_0$$<Push>b__0"
+      ],
+      "native_byte_range": [
+        "0x489160",
+        "0x4891c0"
+      ],
+      "native_bytes_sha256": "5c39bf86e09de21f85bd41d22f339b07dae0669eb2f726871266f9c12eb5c7ea",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\489160.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "4d747a7776796dd9bd17cf97a2c8c787d38f31414d6c4f4e7cda53363321c517"
+    },
+    {
+      "rva": "0x47ee90",
+      "names": [
+        "NotificationsManager$$CreateNotification"
+      ],
+      "native_byte_range": [
+        "0x47ee90",
+        "0x47f160"
+      ],
+      "native_bytes_sha256": "97696c8d813166d3ee2da282ca031da2736b338f2cc097197236f03371b399b7",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\47ee90.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "f313b603c150ed659e50553afc97d5c5f08b082480758c26aa37f0f91713c335"
+    },
+    {
+      "rva": "0x476950",
+      "names": [
+        "ChatEntry$$SetAsNotification"
+      ],
+      "native_byte_range": [
+        "0x476950",
+        "0x476ba0"
+      ],
+      "native_bytes_sha256": "74edfdc42e5b59ca171c951835a0e7ca89a5df6aa9c084bed039e41d91ed321a",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\476950.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "a8c14980490ce892473fade265b51d117fe3d8b411640a48586190d132ac37c1"
+    },
+    {
+      "rva": "0x477470",
+      "names": [
+        "ChatEntry$$set_notification"
+      ],
+      "native_byte_range": [
+        "0x477470",
+        "0x477b90"
+      ],
+      "native_bytes_sha256": "a9b5e2583f6e4b5ea6e642c59bc8386dabbd69428826e31df65e916c31c73faa",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\477470.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "7559d564ab08df77e0edb5101c218763d65d4fc44897caf96d26a6e9644f94c7"
+    },
+    {
+      "rva": "0x480d80",
+      "names": [
+        "NotificationsManager$$Select"
+      ],
+      "native_byte_range": [
+        "0x480d80",
+        "0x481090"
+      ],
+      "native_bytes_sha256": "a57bcb7865ddbf6f2132785ed48fd10c9d66be75f97af607cb4b19018e0c92c2",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\480d80.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "09275adafc959245ef9093133e71adb51b0af7567adaf15f69a7818f62ae8a51"
+    },
+    {
+      "rva": "0x4812d0",
+      "names": [
+        "NotificationsManager$$Update"
+      ],
+      "native_byte_range": [
+        "0x4812d0",
+        "0x481410"
+      ],
+      "native_bytes_sha256": "a33dd7934172a3630406f5f73739c6b647b40ae901efb165a49dd6caa8c82858",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\4812d0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "1292a6ad2827d26d65cda67a26e58206e4d93474f25978a29f7587da72aa17c2"
+    },
+    {
+      "rva": "0x488bc0",
+      "names": [
+        "NotificationsManager.<ShowNotification>d__19$$MoveNext"
+      ],
+      "native_byte_range": [
+        "0x488bc0",
+        "0x488f90"
+      ],
+      "native_bytes_sha256": "08f8ae744e4b763d0f282d1638b25e60d16f1617a33601cd60f341aef6b7fb92",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\488bc0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "8c6e43ca64763d78c6e840e915f73d4e04f3dced7683704857d27bb3321a1a90"
+    },
+    {
+      "rva": "0x47e050",
+      "names": [
+        "NotificationsManager$$AcceptNotification"
+      ],
+      "native_byte_range": [
+        "0x47e050",
+        "0x47eb50"
+      ],
+      "native_bytes_sha256": "706859befa8f3a6b17df2b6911bd06fede1048eefd43da3ad91801cecb000b06",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\47e050.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "aaf1a77ab47711cb0794a97261cf8a89fdde984629958341f098a1708b454bc3"
+    },
+    {
+      "rva": "0x47fa70",
+      "names": [
+        "NotificationsManager$$DismissNotification"
+      ],
+      "native_byte_range": [
+        "0x47fa70",
+        "0x480300"
+      ],
+      "native_bytes_sha256": "8a87273e9614307172a7b6f11a6166222675822bfcb452273501a733b7580229",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\47fa70.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "c6734af64f497e4c8b6a39690b53ffc7f085c47e106edf0a470529546d99385f"
+    },
+    {
+      "rva": "0x47f160",
+      "names": [
+        "NotificationsManager$$DeclineAll"
+      ],
+      "native_byte_range": [
+        "0x47f160",
+        "0x47fa70"
+      ],
+      "native_bytes_sha256": "5113069a2c8e7314bbdde830b2a9a38909366e443079f8301179880253d405ee",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\47f160.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "f73e8dda352f8f25087fa010839ca50c6da225068abe362c0e354d19b3b5b514"
+    },
+    {
+      "rva": "0x488fe0",
+      "names": [
+        "NotificationsManager.<>c$$<AcceptNotification>b__17_0"
+      ],
+      "native_byte_range": [
+        "0x488fe0",
+        "0x489160"
+      ],
+      "native_bytes_sha256": "a745f238ef51ab03429c8f5c897dececf70d25a45c3a3563f58650088763b4c5",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\488fe0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "70a44ab46dc36e4f19fdca7a836d470fabb41a401dcff3526c45bb89f479be55"
+    },
+    {
+      "rva": "0x5e7db0",
+      "names": [
+        "Assets.Scripts.TCPs.Processors.ToJoinNotificationProcessor$$Process"
+      ],
+      "native_byte_range": [
+        "0x5e7db0",
+        "0x5e7ed0"
+      ],
+      "native_bytes_sha256": "53a592a36c067855f681b6eb3b364101355cbd4d22ee09f0323235811b81272b",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\5e7db0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "85184a8e82a7efc72b50475a29b289036e6e239165009705555a8e6ef2b00a22"
+    },
+    {
+      "rva": "0x412fe0",
+      "names": [
+        "ShopNETGcloud$$Send_NPShopGiftItem"
+      ],
+      "native_byte_range": [
+        "0x412fe0",
+        "0x4134a0"
+      ],
+      "native_bytes_sha256": "1b76000b4679e43f1cf3ca68cf4c247f8ee0882ec8eb8e38ff726dffe5c4c8fc",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\412fe0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "31268ddefc1cd3931f6156c506305a4c4b3d042b020970e5cbf59125cf0f8e65"
+    },
+    {
+      "rva": "0x40fbb0",
+      "names": [
+        "ShopNETGcloud$$Get_NPShopGiftItem"
+      ],
+      "native_byte_range": [
+        "0x40fbb0",
+        "0x410020"
+      ],
+      "native_bytes_sha256": "b8aa7821446051891848d50e0f6e80b27e0e28cb231256e9a22977e9aa6e27a7",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\40fbb0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "9542d8cb1141250458e182685944718b7fd79252af77230697f415a201b1d3fa"
+    },
+    {
+      "rva": "0x5ec380",
+      "names": [
+        "Assets.Scripts.TCPs.Processors.UpdateAnimationLayerProcessor$$Process"
+      ],
+      "native_byte_range": [
+        "0x5ec380",
+        "0x5ec4d0"
+      ],
+      "native_bytes_sha256": "301cbf20d4437fe2f2a7edf0dd270f57d5e65c3984560c0a650dfff2c9e9e5db",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\5ec380.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "3686518d8c4bed4cda4ef0e7e2cc252e94f6ae71c455dc8a22065f6d3ba680ab"
+    },
+    {
+      "rva": "0x610d40",
+      "names": [
+        "Assets.Scripts.Memories.Memory$$GetguidByUsername"
+      ],
+      "native_byte_range": [
+        "0x610d40",
+        "0x610f00"
+      ],
+      "native_bytes_sha256": "eeb58f362b0bb6999befa9aebd21b80910eecc9def5d6f422f7ff185d341efb9",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\610d40.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "dfa0dd627343c65096982c1037e9d6104f418be52f2d57dff7d6e13df5ae7c73"
+    },
+    {
+      "rva": "0x4764f0",
+      "names": [
+        "ChatEntry$$OnPointerClick",
+        "ChatEntry$$OnSubmit"
+      ],
+      "native_byte_range": [
+        "0x4764f0",
+        "0x476510"
+      ],
+      "native_bytes_sha256": "9f558a956b34bcbbb002709822c20b18aee5c10ce39630f83cbd57003fd7361f",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\4764f0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "29e8250b52caaa4a7050a4b6495aed882cac1da50235d996fe20cf282accfe88"
+    },
+    {
+      "rva": "0x5ea6e0",
+      "names": [
+        "Assets.Scripts.TCPs.Processors.OnConnectedProcessor.<Process>d__1$$MoveNext"
+      ],
+      "native_byte_range": [
+        "0x5ea6e0",
+        "0x5eb190"
+      ],
+      "native_bytes_sha256": "dad3eca495407f0fbbee003bb5a4f0ce706612f0e9ddc343792d6e80cfc87fe7",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\5ea6e0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "af04f45ab084b633c12e8d08f4d024433e5a883a23d32c5a31c102dd89c39f8d"
+    },
+    {
+      "rva": "0x5dfdc0",
+      "names": [
+        "Assets.Scripts.TCPs.Processors.OnConnectedProcessor$$OnAvatarLoaded"
+      ],
+      "native_byte_range": [
+        "0x5dfdc0",
+        "0x5e02f0"
+      ],
+      "native_bytes_sha256": "7f36d0d210e7a08ab4a53563e0f807ef9b01046f07845f70a247db363c3ee679",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\5dfdc0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "14f31fa8fb7cfc6293f3626afd1175427a17fe3c93b01ec84d793b8979960fd8"
+    },
+    {
+      "rva": "0x6e82a0",
+      "names": [
+        "NebulaPlayer$$SetPlayer"
+      ],
+      "native_byte_range": [
+        "0x6e82a0",
+        "0x6e8640"
+      ],
+      "native_bytes_sha256": "c1dd78b6111ea82107044320caa2c8eaa350eef39935afe7ce8ca8465d9f6744",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\6e82a0.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "2dbf44cb51c6f0702ca274c446031a61883d0b1ec714318eb6cb46c22f9d6d05"
+    },
+    {
+      "rva": "0x6e8f80",
+      "names": [
+        "NebulaRemotePlayerInteractable$$SendRequest"
+      ],
+      "native_byte_range": [
+        "0x6e8f80",
+        "0x6e9ae0"
+      ],
+      "native_bytes_sha256": "9e2413785118d15cd703f38b6952a4aaea0985c3e70b72863f4326cc3c82badb",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\6e8f80.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "258cb52ca66a475cd65054c21290b5780bbe5582230f2327c8c02858c6b9f283"
+    },
+    {
+      "rva": "0x4c6a60",
+      "names": [
+        "SocialOptionsMenu$$OnInvite"
+      ],
+      "native_byte_range": [
+        "0x4c6a60",
+        "0x4c6f70"
+      ],
+      "native_bytes_sha256": "2a33a3cc8a007223843a18f93a8201b50ca2f28c3eba35da8844abba4fb1e6be",
+      "pseudocode": "work\\evidence\\ghidra\\functions\\4c6a60.c",
+      "pseudocode_available": true,
+      "pseudocode_sha256": "48b572a229fd286e21a1a00c5822779b6047129ae814a1fa30d2c20bdd39b83b"
+    }
+  ],
+  "limitations": [
+    "No original server source or runtime parity evidence",
+    "Indirect calls are not excluded by direct E8 scan",
+    "Gift full text when donor absent needs a narrowly reviewed client formatting change",
+    "26 cannot distinguish multiple arbitrary simultaneously displayed notices from one sender/type",
+    "Join7/8/9/13 policy and server producer remain unrecovered",
+    "Animation93 has no recovered native C2S producer or original server effect policy"
+  ],
+  "authored_sources": [
+    {
+      "path": "backend/notifications.py",
+      "sha256": "ad964e8e2b32e9941b6a609c69883292e5de2036cce75b4fc926795f157c5836"
+    },
+    {
+      "path": "backend/tests/test_notifications.py",
+      "sha256": "6bbcba577c8e0cfe46962b58a28ee69ce333cb14e863e73f0a011a3270cea638"
+    },
+    {
+      "path": "backend/service.py",
+      "sha256": "e03d2afdc939c0056986f1fae0a3b579700735b1518c85ba7d08ed00e65b2179"
+    },
+    {
+      "path": "backend/server.py",
+      "sha256": "174482cdd6c339798c2464abd8c50ea02caa6ca39dea729c45b1028ba30c932f"
+    },
+    {
+      "path": "backend/shop.py",
+      "sha256": "2b59fbf8fa3c12d71008d590ed6f8c18adb0bbe71cc190595bcd7ad37e572924"
+    },
+    {
+      "path": "backend/rewards.py",
+      "sha256": "0d7c2710205456c0b405117bb2811eb2596a1b10effa61bf0ecd3e5a5c45700d"
+    },
+    {
+      "path": "backend/tests/test_notification_integration.py",
+      "sha256": "365857dcd346c7a430dbe51769565cd0019217b178fc9db022116980e1151e69"
+    },
+    {
+      "path": "backend/tests/test_state_refresh.py",
+      "sha256": "9efda1027bf7801db8b2218132518142795cd2ada1c355f7ced2552c8e8fd2b0"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+      "sha256": "8c70ed0b9fe8844258256115c867993ce7dd2fffba3cf246d57cd0daf53f14fe"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaNotificationInbox.cs",
+      "sha256": "194814843cd47e11096b42b44564e1589d13173fe9ac38c2b360963799af4612"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInformationalNotifications.cs",
+      "sha256": "aacbcb38aec91fb75ea899209aa432fe37bf148793e4f478957222c675e62eb2"
+    },
+    {
+      "path": "tools/offline-mirror-tests/InformationalChecks.cs",
+      "sha256": "b163718fa4a93652ef92ed29f2e16b889f8d5ec4cdc1076e4d993a4034afa72b"
+    },
+    {
+      "path": "tools/offline-mirror-tests/NotificationChecks.cs",
+      "sha256": "8b9ca5565998b9926057025610c7063f06a77e028f32a41d3fa731fcec22e497"
+    }
+  ]
+}
+

@@ -1,0 +1,76 @@
+{
+  "format_version": 1,
+  "candidate_binary": {
+    "name": "nebula-preserved-server.exe",
+    "sha256": "8df20c772bdb8a99afdf261ccf2669f4c1221f18bef09107dcaa871c2e827578"
+  },
+  "reference_source_digest": "ee84a152511488426825d36492ab27128c4cdf78cee0f6da88fc3521560e10b3",
+  "result": {
+    "PASS": 137
+  },
+  "ordinary_result": {
+    "PASS": 134
+  },
+  "unicode_edge_result": {
+    "PASS": 3
+  },
+  "case_counts": {
+    "snapshot": 12,
+    "admin": 121,
+    "http": 3,
+    "process_restart": 1
+  },
+  "raw_no_change_assertions": 6,
+  "route_patterns_exercised": 35,
+  "route_patterns_total": 36,
+  "typed_table_count": 47,
+  "python_unicode_data_version": "15.0.0",
+  "rust_unicode_data_version": "15.0.0",
+  "fixture_sha256": "f99d96042203ead6d8cebe8f9783a26df2456ab4c119646913fbedbe0a9bc7f3",
+  "game_fixture_sha256": "2e5750a99f4f3b9148c77cf50db897937a512a407662e60763ce5885f4d0e1e8",
+  "ordinary_summary_sha256": "c74a519900f4eef599b2cc5ce59004cb45a3a61ec0802522cb8021ca7748453c",
+  "unicode_edge_summary_sha256": "5a1d7b9c4650c7284db2e578f8e003d0167e264368696fed7b65db5f379df640",
+  "admin_manifest_sha256": "0af7fb5b95429eb3615a0b8c17119f6e196e0f6add28c07c93a1744b1c5acec7",
+  "negative_controls": 11,
+  "harness_sources": [
+    {
+      "source": "reference_probe.py",
+      "sha256": "a3efbded2ec205eb56f14c9d69d9885d2ca22d4bc9d775c0be3a5478a92a679d"
+    },
+    {
+      "source": "run_parity.py",
+      "sha256": "538b36d9047cebff6d91d581358ea7aaec6e3be208cefd1a490802d7013d9d6f"
+    },
+    {
+      "source": "common.py",
+      "sha256": "8e74026f4cf9c3ebcd93c990e17231bd474b2b675bf7f642b46ab8b33f8f856d"
+    },
+    {
+      "source": "fixture_support.py",
+      "sha256": "c0d4ca6c12a9c6de27e7ef0f43b07d079ce08538e544de21cdaa62f12f79823a"
+    },
+    {
+      "source": "admin/cases.py",
+      "sha256": "ddfe2f5a115305955686905eb807ddab9f8c6516eb5410ce2cdaaedd60e3f13e"
+    },
+    {
+      "source": "admin/normalize.py",
+      "sha256": "7422bd7905a060053a090b09a131269c69952ab9861921e8544794b1e07c4884"
+    },
+    {
+      "source": "admin/run_admin.py",
+      "sha256": "a5e8d1d938a8aa1ae761286113a58ceddc925eafcb8afe732c64c04d2ab3ab67"
+    },
+    {
+      "source": "admin/test_controls.py",
+      "sha256": "772c1043aa54b5612989516b71c17733d65a58b7690a9e105a4fe0f45d1426fa"
+    },
+    {
+      "source": "admin/write_report.py",
+      "sha256": "9d57e3acd294d561782d9a6390fc3a052777329592bbae44df740afea18d952d"
+    }
+  ],
+  "harness_matches_current_sources": true,
+  "one_to_one_parity": "NOT_PROVEN",
+  "original_server_parity": "NOT_PROVEN"
+}

@@ -1,0 +1,45 @@
+{
+  "format_version": 2,
+  "profile": "remote-v9-direct-tls",
+  "target_executed": false,
+  "listener_started": false,
+  "build_only": true,
+  "game_executable_sha256": "77bdecc37804194305c2402be5ac0851570f395bf9af3fb4ee03030c6d779d0d",
+  "remote_transport": {
+    "installed_name": "NebulaRemoteTransport.exe",
+    "sha256": "160128d93690cfd992ddde03300aeb931df3d84dc781b97a401e9f97876b783f",
+    "size": 2928128,
+    "source_sha256": "24cf0da500869896a386c096d0dbcca992176b8cc85190ebb3835da791af79bc",
+    "cargo_toml_sha256": "f622d400a37260d959d82e64265f07af7bdf7e25f450cebaa55b6e4d9148abe7",
+    "cargo_lock_sha256": "fd35df676549266ec5b87fee58046410cd191b32a32a6d938564670454d87bde"
+  },
+  "public_access": {
+    "sha256": "eea7e808af971c36ca0fa11147e399c1a5b07411a1f2bdf16af489315f4d75b1",
+    "size": 640882,
+    "source_sha256": "4661a9a86c38dc8f9a8a3883a7acd5fbab59b44bffaced4b048d9b3e3e97c3f4",
+    "bootstrap_source_sha256": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae",
+    "bootstrap_header_sha256": "9560fce1b72cf3692bb2e0a6e4ce03a20acf8bb0c358a7f96978ad315748f123",
+    "cmake_sha256": "b8376d789d12347409ede360ad0180676ae60d5a76034208dfd5e371ec4abb22",
+    "generated_pin_header_sha256": "a40c60dc04e1f3ea482245dfdae7c1181951c579d933834a6cf11c5bed2c3c46",
+    "exports": ["NebulaPublicAccess_AbiVersion", "NebulaPublicAccess_Get"],
+    "imports": [
+      "bcrypt.dll", "CRYPT32.dll", "KERNEL32.dll",
+      "api-ms-win-crt-convert-l1-1-0.dll",
+      "api-ms-win-crt-environment-l1-1-0.dll",
+      "api-ms-win-crt-heap-l1-1-0.dll",
+      "api-ms-win-crt-private-l1-1-0.dll",
+      "api-ms-win-crt-runtime-l1-1-0.dll",
+      "api-ms-win-crt-stdio-l1-1-0.dll",
+      "api-ms-win-crt-string-l1-1-0.dll",
+      "api-ms-win-crt-utility-l1-1-0.dll"
+    ]
+  },
+  "startup": {
+    "trigger": "first exact loopback backend request after original game startup",
+    "dllmain_process_start": false,
+    "arguments": [],
+    "ready_timeout_ms": 5000,
+    "job_kill_on_close": true,
+    "secrets_in_arguments_or_logs": false
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "format_version": 1,
+  "http": [],
+  "durable_state": [
+    {
+      "table": "profiles",
+      "column": "created_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "sessions",
+      "column": "created_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "entitlements",
+      "column": "granted_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "presets",
+      "column": "updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "profile_state",
+      "column": "wardrobe_updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/service.py",
+        "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+      }
+    },
+    {
+      "table": "positions",
+      "column": "updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/service.py",
+        "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+      }
+    },
+    {
+      "table": "allocations",
+      "column": "allocated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/service.py",
+        "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+      }
+    },
+    {
+      "table": "resource_entitlements",
+      "column": "granted_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Exact reference field is assigned wall-clock time during configured mutation",
+      "source": {
+        "source": "backend/resources.py",
+        "sha256": "a22fcdf348c8fe03f6ca9a05312212a10c5420df90410f676d2ba56eb7d7e80c"
+      }
+    },
+    {
+      "table": "shop_owned",
+      "column": "created_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Exact reference field is assigned wall-clock time during configured mutation",
+      "source": {
+        "source": "backend/shop.py",
+        "sha256": "f5fbcdb6532c8b07f0c7896e2df39735aa6e7ef5728f605f997055cce0c9ac76"
+      }
+    },
+    {
+      "table": "local_reward_claims",
+      "column": "claimed_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Exact reference field is assigned wall-clock time during configured mutation",
+      "source": {
+        "source": "backend/rewards.py",
+        "sha256": "bb9621699304c9a4b9954d2a64c16622f30d231d6b4d54a8da551221432765a2"
+      }
+    },
+    {
+      "table": "consumable_balances",
+      "column": "updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Exact reference field is assigned wall-clock time during configured mutation",
+      "source": {
+        "source": "backend/consumables.py",
+        "sha256": "9669ce3733cc00af4718d3c4fe0c6a368ee8358dd8b1ce5180a4b9a9daf8ed2f"
+      }
+    },
+    {
+      "table": "cinema_capabilities",
+      "column": "granted_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Exact reference field is assigned wall-clock time during configured mutation",
+      "source": {
+        "source": "backend/rewards.py",
+        "sha256": "bb9621699304c9a4b9954d2a64c16622f30d231d6b4d54a8da551221432765a2"
+      }
+    },
+    {
+      "table": "housing_layouts",
+      "column": "updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Exact reference field is assigned wall-clock time during configured mutation",
+      "source": {
+        "source": "backend/housing_atomic.py",
+        "sha256": "39ccea368edcfbde5906aa5adf86ae6c2696c6cbb1cb25a88884c762baba1fd0"
+      }
+    },
+    {
+      "table": "housing_save_receipts",
+      "column": "committed_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Exact reference field is assigned wall-clock time during configured mutation",
+      "source": {
+        "source": "backend/housing_atomic.py",
+        "sha256": "39ccea368edcfbde5906aa5adf86ae6c2696c6cbb1cb25a88884c762baba1fd0"
+      }
+    }
+  ]
+}

@@ -1,0 +1,314 @@
+{
+  "status": "static audit and pure offline lifecycle tests; exact native visual reapplication remains pending",
+  "created_at_utc": "2026-10-28T22:46:49.951526+00:00",
+  "target_execution": false,
+  "socket_creation_blocked_in_tests": true,
+  "production_backend_changes": false,
+  "installed_asset_changes": false,
+  "original_server_defaults_recovered": false,
+  "game": {
+    "appid": 919290,
+    "build_id": 11018722,
+    "binary": {
+      "path": "work\\evidence\\GameAssembly.dll",
+      "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+      "bytes": 42310144
+    }
+  },
+  "sources": [
+    {
+      "path": "outputs\\nebula-preservation\\backend\\avatar.py",
+      "sha256": "be380c107b6e9307bd58b348814a9f955f21b02b9e23c920562e3f413887beea",
+      "bytes": 3164
+    },
+    {
+      "path": "outputs\\nebula-preservation\\backend\\service.py",
+      "sha256": "39c91aef0b155f6efd8d1484d4f46c0e9b8f8b1c715ef59b3778203167aff8e4",
+      "bytes": 44073
+    },
+    {
+      "path": "outputs\\nebula-preservation\\backend\\state.py",
+      "sha256": "ec86aa7e948d9af1db7860f46a7d3fdaf0ad5c391655828c803ca66e995c9a4a",
+      "bytes": 34234
+    },
+    {
+      "path": "outputs\\nebula-preservation\\tools\\avatar_entry_codec.py",
+      "sha256": "1e26bf2d8b8d835008ceb1c0be82e91ace753390244395a31e417c347f5b11a5",
+      "bytes": 9938
+    },
+    {
+      "path": "outputs\\nebula-preservation\\backend\\tests\\test_avatar_persistence.py",
+      "sha256": "5657bf1294154042d60f2a5cbb803ca7211f1ef257dbc1ea05d1bd4ea6be6da3",
+      "bytes": 11734
+    },
+    {
+      "path": "outputs\\nebula-preservation\\tools\\inspect_avatar_morphs.py",
+      "sha256": "d6ed5ff9335176b34d1b4e06fe262a358afa56e3946abeef9eebaa01e4260a05",
+      "bytes": 5187
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\avatar-morph-channels.json",
+      "sha256": "f34d04a378707850109ba76355c24e90263ea7e447b5a9fe1233434df346b171",
+      "bytes": 124339
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\avatar-persistence-audit.md",
+      "sha256": "a9eaeaa2bc1ae932a9353dbdfb17ca814f2e8cb2910cc42281441536b2d344a5",
+      "bytes": 8737
+    }
+  ],
+  "native_sources": [
+    {
+      "method": "NETGcloudEditor.OnGetLoadPresetByName",
+      "rva": "0x3c4490",
+      "path": "work\\evidence\\ghidra\\functions\\3c4490.c",
+      "sha256": "7b0019e3454cbd73cd4bd1d9a9e1e0a689b0823731ac520a24cfd15ae9322e35",
+      "bytes": 2970
+    },
+    {
+      "method": "NETGcloudEditor.CreatePlayer",
+      "rva": "0x3c3c10",
+      "path": "work\\evidence\\ghidra\\functions\\3c3c10.c",
+      "sha256": "995ead5ed35cebfdd301e5c1ca15e8e6688b8991ec29bceaeda6d073c156b88d",
+      "bytes": 31428
+    },
+    {
+      "method": "ManagerPreset.LoadPreset",
+      "rva": "0x57d040",
+      "path": "work\\evidence\\ghidra\\functions\\57d040.c",
+      "sha256": "fdfe631cc2cf7d94c06155b9efba4396def721418b2d89483c44665f39b032bc",
+      "bytes": 27379
+    },
+    {
+      "method": "CW_Wardrobe.ImgOnclickPS4",
+      "rva": "0x49a8f0",
+      "path": "work\\evidence\\ghidra\\functions\\49a8f0.c",
+      "sha256": "2b3ec7baafa783f8956b20ba3cb3b47cf74b1bccebf1086dd249e7dad9f546cf",
+      "bytes": 124303
+    },
+    {
+      "method": "AssetBundleManager.LoadAssetBundlePS4Editor",
+      "rva": "0x36ea50",
+      "path": "work\\evidence\\ghidra\\functions\\36ea50.c",
+      "sha256": "3d96d1b313381333804542c33905641e70c5e69447228b9cf8d3b5aa6cee35dc",
+      "bytes": 103324
+    },
+    {
+      "method": "ResourcesLoader.Load<T>",
+      "rva": "0x8a6c80",
+      "path": "work\\evidence\\ghidra\\functions\\8a6c80.c",
+      "sha256": "94055f610d94e565174b36e1c3630a59368d26cf52963c8ec94395f5ce338f2a",
+      "bytes": 13006
+    },
+    {
+      "method": "CHARACTEREDITOR_SLIDERS.Height",
+      "rva": "0x3943e0",
+      "path": "work\\evidence\\ghidra\\functions\\3943e0.c",
+      "sha256": "723eb45cd3dc07cef6fcde97ded58a5dc3ba19453d943c4ff9f37928ee898a3e",
+      "bytes": 12644
+    },
+    {
+      "method": "ManagerPreset.ReadMaleBlendsNETGCloud",
+      "rva": "0x586e30",
+      "path": "work\\evidence\\ghidra\\functions\\586e30.c",
+      "sha256": "0fbfe65a7e7cb9f84d31dc60aa21d2d498cfd55008af8600ab6892d8bd67b6e9",
+      "bytes": 9436
+    },
+    {
+      "method": "ManagerPreset.ReadFemaleBlendsNETGCloud",
+      "rva": "0x5820f0",
+      "path": "work\\evidence\\ghidra\\functions\\5820f0.c",
+      "sha256": "296635d0a859c35de5cd31c7f20a583d39e2e5b8056ff88f2981908868d78b5a",
+      "bytes": 9716
+    },
+    {
+      "method": "ManagerPreset.WriteMaleBlends",
+      "rva": "0x591e30",
+      "path": "work\\evidence\\ghidra\\functions\\591e30.c",
+      "sha256": "e20b9d25026a536b1e427e5d309f837561a95a8f1c89260ab667446b21c00772",
+      "bytes": 8446
+    },
+    {
+      "method": "ManagerPreset.WriteFemaleBlends",
+      "rva": "0x58f530",
+      "path": "work\\evidence\\ghidra\\functions\\58f530.c",
+      "sha256": "9364251a3ded37402e1bf52f51309d192190796b960053a1ad245f175ed6554b",
+      "bytes": 8450
+    },
+    {
+      "method": "ManagerPreset.ReadMaleBonesNETGCloud",
+      "rva": "0x5871a0",
+      "path": "work\\evidence\\ghidra\\functions\\5871a0.c",
+      "sha256": "e5b5f38c34bda280da5b01e20fd3e0b64a1f27aa5076707d9b0088b9e93f5e33",
+      "bytes": 51903
+    },
+    {
+      "method": "ManagerPreset.ReadFemaleBonesNETGCloud",
+      "rva": "0x582470",
+      "path": "work\\evidence\\ghidra\\functions\\582470.c",
+      "sha256": "3c456a363546a832168d7c9a49dc41c80b44e0bd0c25e4ea0356eb4ab97a6bb6",
+      "bytes": 49393
+    },
+    {
+      "method": "ManagerPreset.WriteMaleBones",
+      "rva": "0x592210",
+      "path": "work\\evidence\\ghidra\\functions\\592210.c",
+      "sha256": "5933894e464fa9ff985c157d49000ef5520a7fbee07d6ba29330c7c43a216e85",
+      "bytes": 68252
+    },
+    {
+      "method": "ManagerPreset.WriteFemaleBones",
+      "rva": "0x58f910",
+      "path": "work\\evidence\\ghidra\\functions\\58f910.c",
+      "sha256": "f1a5fbe86e7fb6689d09c368e1ef2e13d23c6ff1acf1d44c9272b76efb6b36a4",
+      "bytes": 71045
+    },
+    {
+      "method": "ManagerPreset.WriteMaleSkin",
+      "rva": "0x594430",
+      "path": "work\\evidence\\ghidra\\functions\\594430.c",
+      "sha256": "4e2c13e5a3458068cc5a87f3fe51c47ca4607cad29dcfd7a06c6691ac0b431c1",
+      "bytes": 6601
+    },
+    {
+      "method": "ManagerPreset.WriteFemaleSkin",
+      "rva": "0x591bf0",
+      "path": "work\\evidence\\ghidra\\functions\\591bf0.c",
+      "sha256": "6605fb6316af7728b40a582afd7d03add291f6df55e11b9e5f57bba24e75635f",
+      "bytes": 4510
+    },
+    {
+      "method": "ManagerPreset.WriteClothColor",
+      "rva": "0x58eee0",
+      "path": "work\\evidence\\ghidra\\functions\\58eee0.c",
+      "sha256": "3eb63413714c999b59662d949abb215734abd7c7db314f6da138a89997dfb2dc",
+      "bytes": 11077
+    },
+    {
+      "method": "ManagerPreset.WriteAttachedItem",
+      "rva": "0x58ea90",
+      "path": "work\\evidence\\ghidra\\functions\\58ea90.c",
+      "sha256": "dcdb7ab3460eb4b46dbbe06da3ac2040d5e3915f69edef7e183dc13a1d20b5b5",
+      "bytes": 6735
+    },
+    {
+      "method": "ManagerPreset.SetSlidersBlends",
+      "rva": "0x58b5c0",
+      "path": "work\\evidence\\ghidra\\functions\\58b5c0.c",
+      "sha256": "254e978b547757f30607490c535d3bffbe7bbe93c04526c791bcbf60a86362b7",
+      "bytes": 72486
+    },
+    {
+      "method": "NETGcloudEditor.getPresetDataToSave",
+      "rva": "0x3c6680",
+      "path": "work\\evidence\\ghidra\\functions\\3c6680.c",
+      "sha256": "8d070dcb459d699c16e4d7ec0d120144de384d685cc402d21da6c4510284fd94",
+      "bytes": 344119
+    },
+    {
+      "method": "NebulaPlayerAvatar.PostInstantiateAssets",
+      "rva": "0x5fc840",
+      "path": "work\\evidence\\ghidra\\functions\\5fc840.c",
+      "sha256": "2dd7640ced0addddeaf44328afc5700610dacda7d2165433e244124d477e2dbd",
+      "bytes": 37008
+    },
+    {
+      "method": "NebulaPlayerAvatar.WriteMaleBonesGame",
+      "rva": "0x601920",
+      "path": "work\\evidence\\ghidra\\functions\\601920.c",
+      "sha256": "83f565cd0d5efaef6fd3aa4313a8113fd13b6c2d5bc4c1699f3af7fa9959f3e0",
+      "bytes": 38698
+    },
+    {
+      "method": "NebulaPlayerAvatar.WriteFemaleBonesGame",
+      "rva": "0x600200",
+      "path": "work\\evidence\\ghidra\\functions\\600200.c",
+      "sha256": "04eb9130b846c09cdef1d53af6ddbecd72a17cde6e8826cd0f50522c884156ef",
+      "bytes": 36996
+    },
+    {
+      "method": "NebulaPlayerAvatar.UpdateBlends",
+      "rva": "0x5ff480",
+      "path": "work\\evidence\\ghidra\\functions\\5ff480.c",
+      "sha256": "876a9e95342f753697a0e709b504034f020dcc2ae6a9aee303d5988915a3562d",
+      "bytes": 15173
+    },
+    {
+      "method": "NebulaPlayerAvatar.ModifySkin",
+      "rva": "0x5f8960",
+      "path": "work\\evidence\\ghidra\\functions\\5f8960.c",
+      "sha256": "56d0800692da724565776efc27524928c12c0549a513c68b4feb3956a9d353b7",
+      "bytes": 92692
+    }
+  ],
+  "tests": {
+    "command": "python -m unittest discover -s outputs/nebula-preservation/backend/tests -p test_avatar_persistence.py -v",
+    "passed": 7,
+    "failed": 0,
+    "scope": "temporary SQLite, direct Service.dispatch calls, fresh Store/Service and session GUID; socket.socket raises AssertionError",
+    "not_proven": [
+      "native UI controls",
+      "native mesh/body visible state",
+      "fresh native client appearance",
+      "runtime bundle load success"
+    ]
+  },
+  "findings": [
+    {
+      "id": "backend-retention",
+      "result": "No confirmed data-loss defect",
+      "details": "450/462 field round-trip, float32 equality, per-gender selection, modern response identity, wardrobe ID/category and ownership checks pass offline."
+    },
+    {
+      "id": "height",
+      "rva": "0x3943e0",
+      "result": "Uniform root scale equals height slider plus1",
+      "fields": {
+        "MALE": [
+          "MaleRoot_x",
+          "MaleRoot_y",
+          "MaleRoot_z"
+        ],
+        "FEMALE": [
+          "FemaleRoot_x",
+          "FemaleRoot_y",
+          "FemaleRoot_z"
+        ]
+      },
+      "constant": {
+        "rva": "0x1dd2c74",
+        "little_endian_hex": "0000803f",
+        "float32": 1.0
+      },
+      "load": "WriteBones restores height slider from root_x-1 and applies full saved root triplet."
+    },
+    {
+      "id": "b73",
+      "result": "Neck blend, not height",
+      "MALE": "Head_0_BS.Neck_Thin",
+      "FEMALE": "CopyBlendshapes.Neck_Fat"
+    },
+    {
+      "id": "maps-path",
+      "result": "No path patch needed for inspected editor route",
+      "details": "Load57d040 supplies FBX string;36ea50 selects Texture for texture categories;8a6c80 ignores optional path arguments and loads by original item ID."
+    },
+    {
+      "id": "hand-offset",
+      "result": "Narrow native load omission on inspected editor paths",
+      "details": "Save3c6680 reads both hand arrays;Load57d040/3c3c10 call WriteAttachedItem58ea90 only with hat array+0x30 and type0. No compatibility patch prepared."
+    },
+    {
+      "id": "female-last-blend",
+      "result": "Shipped reader captures87 then appendszero b88",
+      "mesh_index_87": "CopyBlendshapes.Cupid_Bow",
+      "details": "Backend does not drop supplied b88; original native read/save flow pads it."
+    }
+  ],
+  "limitations": [
+    "Original service appearance defaults unknown; neutral fixtures remain authored reconstruction.",
+    "Arbitrary replacement heads do not receive proven full default-head face mapping.",
+    "Original commercial itemTypes unknown globally; default Normal1 and explicit local overrides remain policy.",
+    "No missing default head asset or missing body/face HTTP field identified; exact female/face/body/colors/heel/removal visuals require native test."
+  ]
+}

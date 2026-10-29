@@ -1,0 +1,258 @@
+{
+  "scope": "Static ground-furniture input contracts and separately prepared additive InputManager copy. No target/UI/runtime calls.",
+  "native_binary_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+  "metadata_dump_sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850",
+  "pad": {
+    "L2": {
+      "rva": "0x6a94b0",
+      "returns": "float Input.GetAxis(PS4Gamepad.AXIS_L2_TRIGGER)",
+      "name": "joystick1_left_trigger",
+      "static_field_offset": "0x60",
+      "zero_when": "isBlockedControls+0x10 !=0"
+    },
+    "R2": {
+      "rva": "0x6a9810",
+      "returns": "float abs(Input.GetAxis(PS4Gamepad.AXIS_R2_TRIGGER))",
+      "name": "joystick1_right_trigger",
+      "static_field_offset": "0x68",
+      "zero_when": "isBlockedControls+0x10 !=0",
+      "abs_instruction_rva": "0x6a98a5",
+      "abs_mask_low32": "0x7fffffff"
+    }
+  },
+  "cctor": {
+    "rva": "0x35dcb0",
+    "left_name_load": "0x35df83",
+    "left_store": "0x35df8a -> static+0x60",
+    "right_name_load": "0x35dfba",
+    "right_store": "0x35dfc1 -> static+0x68",
+    "limitation": "Ghidra incorrectly truncates this initializer at shared write-barrier-looking calls; bounded native assembly preserves all later axis stores."
+  },
+  "dispatch": {
+    "caller": "HousingInputMapperPlacingGround.Update 0x6c2040; UpdateButtons 0x6c1c20",
+    "chain": "mapper.manager+0x20 -> HousingManager.housingCamera+0x28 -> HousingCamera.currentController+0x60",
+    "slots": [
+      {
+        "input": "L1",
+        "key": "q",
+        "vtable_offset": "0x1e8",
+        "slot": 11,
+        "method": "RotatePlacedObjectLeft",
+        "implementation": "0x6ba2c0"
+      },
+      {
+        "input": "R1",
+        "key": "r",
+        "vtable_offset": "0x1f8",
+        "slot": 12,
+        "method": "RotatePlacedObjectRight",
+        "implementation": "0x6ba410"
+      },
+      {
+        "input": "L2",
+        "key": "1 (candidate)",
+        "vtable_offset": "0x208",
+        "slot": 13,
+        "method": "LowerPlacedObject(float)",
+        "implementation": "0x6b96d0"
+      },
+      {
+        "input": "R2",
+        "key": "2 (candidate)",
+        "vtable_offset": "0x218",
+        "slot": 14,
+        "method": "RaisePlacedObject(float)",
+        "implementation": "0x6b9eb0"
+      }
+    ],
+    "trigger_gate": "Exactly nonzero float, reread and passed unchanged; not a bool/GetButtonDown trigger",
+    "rotation_effect": "Focused asset euler Y minus/plus 50*Time.deltaTime",
+    "height_effect": "CharacterController.Move along camera transform.up times -7.5/+7.5*Time.deltaTime*trigger speed",
+    "rotation_patch_needed_by_static_contract": false
+  },
+  "constants": [
+    {
+      "rva": "0x1dd3e84",
+      "label": "lower speed",
+      "raw_hex": "0000f0c0",
+      "float32": -7.5
+    },
+    {
+      "rva": "0x1dd3e80",
+      "label": "raise speed",
+      "raw_hex": "0000f040",
+      "float32": 7.5
+    },
+    {
+      "rva": "0x1dd2f18",
+      "label": "rotation degrees per second",
+      "raw_hex": "00004842",
+      "float32": 50.0
+    }
+  ],
+  "candidate": {
+    "format_version": 1,
+    "kind": "prepared_keyboard_housing_trigger_copy",
+    "source_sha256": "70a141380052f0c2eb0d64c8bad71961648fe9791d79a6b2da37924b9bff4775",
+    "copy_sha256": "94316afc2c49cda26f6cee95411cbba024f7848f490f2813a342da708063b100",
+    "source_size": 1128904,
+    "copy_size": 1129072,
+    "unity_version": "2021.3.9f1",
+    "input_manager_path_id": 2,
+    "axes_before": 48,
+    "axes_after": 50,
+    "added_rows": [
+      {
+        "axis_index": 48,
+        "action": "LowerPlacedObject",
+        "m_Name": "joystick1_left_trigger",
+        "descriptiveName": "",
+        "descriptiveNegativeName": "",
+        "negativeButton": "",
+        "positiveButton": "1",
+        "altNegativeButton": "",
+        "altPositiveButton": "",
+        "gravity": 1000.0,
+        "dead": 0.0010000000474974513,
+        "sensitivity": 1000.0,
+        "snap": false,
+        "invert": false,
+        "type": 0,
+        "axis": 0,
+        "joyNum": 0
+      },
+      {
+        "axis_index": 49,
+        "action": "RaisePlacedObject",
+        "m_Name": "joystick1_right_trigger",
+        "descriptiveName": "",
+        "descriptiveNegativeName": "",
+        "negativeButton": "",
+        "positiveButton": "2",
+        "altNegativeButton": "",
+        "altPositiveButton": "",
+        "gravity": 1000.0,
+        "dead": 0.0010000000474974513,
+        "sensitivity": 1000.0,
+        "snap": false,
+        "invert": false,
+        "type": 0,
+        "axis": 0,
+        "joyNum": 0
+      }
+    ],
+    "all_original_48_axis_rows_preserved": true,
+    "all_other_input_manager_fields_preserved": true,
+    "non_input_manager_object_count": 17,
+    "all_non_input_manager_object_raw_hashes_preserved": true,
+    "non_input_manager_raw_hashes": {
+      "1:PlayerSettings": "668e23781e4b7cb7f8a7abd56e81d0b54b75cc58dd092e64e6bc5b8a6739567f",
+      "3:TagManager": "6e687b77bce79047a53a137dee44cc5862dfabcc361a19bd4bb11fcb7ee20525",
+      "4:AudioManager": "c73933a74ec935d31249ae79d92baaed258791f9c8ae6ad94e17193c1b042814",
+      "5:ScriptMapper": "49ff51fd4e41aa2f7b4288aee62cd13dac2e2086731b5c42185610d5e5059644",
+      "6:MonoManager": "7d6f5f1510cc43538fb050509a086b86d528d0b1c5f424b6d7c44f958f3b6b86",
+      "7:GraphicsSettings": "f975aaac9aa95f10ed8e6757d961c889551e32cb7d1d3d213be82b22f7ac8ee3",
+      "8:TimeManager": "a8d974df26d17852d4ab7775f4c6487eb855195154ba29a663fa117a75b27ba0",
+      "9:DelayedCallManager": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "10:PhysicsManager": "78e90433bacf48498cb1da0edbe69b9b24d1ab56c15084576ee44af1a0c3d552",
+      "11:BuildSettings": "82c6db9a7276750f5ea0ac3ba30732b965636b4ffe59b86747976cea2fa1aa38",
+      "12:QualitySettings": "9ab32a00f333c02b4d2c7a3a0e8863c389d8d16c66318f18fb679a5381d4beb0",
+      "13:ResourceManager": "677e3980bcbb9fe2464dc711b049dba9c6f420c646a087f3ae7f831f74ba873e",
+      "14:NavMeshProjectSettings": "591c4f26ce501cc8f5434b77b021aa0e335d927723cdbcf1e07d40b7d9acf648",
+      "15:Physics2DSettings": "f6eb9452376143e07ad30babae60d578b4cf9cafd13c7df16ad22868801dbdf3",
+      "17:RuntimeInitializeOnLoadManager": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "19:StreamingManager": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "20:VFXManager": "567b240838211e2f46f9da78cc0eac968e92994a7ebc956a55b71c843131d412"
+    },
+    "source_changed": false,
+    "target_executed": false,
+    "listeners_started": false,
+    "runtime_proof": false,
+    "rotation": "Existing Q/L1 and R/R1 callbacks rotate. Added 1/L2 and 2/R2 supply lower/raise analog input.",
+    "key_policy": "Authored keyboard compatibility policy; plain 1/2 do not conflict with any existing InputManager key binding or reviewed PadPS4 button aliases. Global context exclusivity is not claimed.",
+    "limits": [
+      "Static serialization preservation only; no engine input/rotation/height runtime test.",
+      "Duplicate named axes use Unity maximum-absolute-value selection; controller rows are preserved, and simultaneous equal-magnitude inputs may tie.",
+      "PadPS4 blocked state and active housing mode still gate native behavior."
+    ],
+    "source_path": "[local-path]",
+    "copy_path": "[local-path]",
+    "patch_tool_sha256": "0a1b4fd06fcbb57c62b02859a0c89d4ebb49688f55b07cd4ab4ff48a8bae6324"
+  },
+  "engine_semantics_source": {
+    "url": "http[local-path]",
+    "claim": "Duplicate named axes return the input with greatest absolute magnitude; positive keyboard buttons increase the virtual axis."
+  },
+  "evidence": [
+    {
+      "path": "protocol/keyboard-housing-native.json",
+      "sha256": "5a9ecb66d9a23b7c05ebb26d04d5be8f25cd4f9052bdd48468fe8c881ae34841"
+    },
+    {
+      "path": "protocol/keyboard-housing-controller-native.json",
+      "sha256": "aa296fb505c18dcf53a96d1370f1f93c26ffe23fe3c3cf7154ff1a1eab142ad4"
+    },
+    {
+      "path": "protocol/keyboard-housing-offline-validation.json",
+      "sha256": "55e9e2cb647b6bfe308ae893e957376c384018008f0d642062cfa515c2e42a8c"
+    },
+    {
+      "path": "client-fixes/prepared-keyboard-housing-input-copy.json",
+      "sha256": "406661384ddae59af5b2554454d623a87e788cd5c1814a4b8a08865f71bbe6c8"
+    },
+    {
+      "path": "tools/keyboard_housing_input_patch.py",
+      "sha256": "0a1b4fd06fcbb57c62b02859a0c89d4ebb49688f55b07cd4ab4ff48a8bae6324"
+    },
+    {
+      "path": "tools/tests/test_keyboard_housing_input_patch.py",
+      "sha256": "d8a53f42dadd3df01554f2f2008ab3e38735792ca009b8ff3345f150ee6406d4"
+    },
+    {
+      "path": "tools/keyboard_buttons_patch.py",
+      "sha256": "f5946777e614f627fb991feed1bca2b0e4a6cc7630e85e6b948216ad72770bab"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\6a94b0.c",
+      "rva": "0x6a94b0",
+      "sha256": "3b2d86647ee057dfc8bfd7f22a71618f13f128dce24ed41e4d63b56f008472ed"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\6a9810.c",
+      "rva": "0x6a9810",
+      "sha256": "1207fe836065e28adc5ab145e982990085aeea03b102f1c6c51f6b9654d0a38a"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\35dcb0.c",
+      "rva": "0x35dcb0",
+      "sha256": "5ffd33ac8931a249d9b56898cee9b4bca3ec8281c177ad4979486fe785823c55"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\6c1b20.c",
+      "rva": "0x6c1b20",
+      "sha256": "4ca9bc800e0105ffc00b7e78355d1f9e3a766ac0b3f0a44d3136fe15ee5e7d87"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\6c1ba0.c",
+      "rva": "0x6c1ba0",
+      "sha256": "d605fc1679b37dfbeeef0417488042455eb304854648e8d44d39f3586ae7cf1b"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\6c1c20.c",
+      "rva": "0x6c1c20",
+      "sha256": "61004b657d87610d0acc52719d8175dc1590e2461276ff1667b460007ff2dc3b"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\6c2040.c",
+      "rva": "0x6c2040",
+      "sha256": "2cf76c5e39ffde250ca549f3ca00bb9f67a7ce6b56966b2e5499cc7fd8dcfd94"
+    }
+  ],
+  "limits": [
+    "No rotation, height, engine input or housing persistence runtime test was performed by this audit.",
+    "Native behavior is recovered from the reviewed shipped binary; current private binary deployment/probes are separate parent evidence.",
+    "The 1/2 binding is authored compatibility policy, not recovered original keyboard behavior.",
+    "Duplicate axes preserve controller row bytes, but equal-magnitude simultaneous keyboard/controller input may tie.",
+    "Existing Q/R keyboard wrappers already cover the recovered rotation callbacks; no new DLL rotation patch is justified by this static contract."
+  ]
+}

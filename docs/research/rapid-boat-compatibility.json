@@ -1,0 +1,250 @@
+{
+  "format_version": 1,
+  "scope": "Authored same-build rapid-boat compatibility candidate. Static PE checks and synthetic instruction-model tests only.",
+  "observed_static": [
+    "Rapid FixedUpdate calls native Exit at RVA0x44c1ce. Native Exit0x545920 does not emit opcode31 False.",
+    "The ordinary non-rapid exit path can emit31 False. The S2C31 False consumer ignores release.",
+    "The replacement instance therefore needs a remote retire/reseed when a guarded rapid release arrives."
+  ],
+  "authored_compatibility": [
+    "Redirect only that call to a new RX section. Preserve all existing unwind entries and add the wrapper entry.",
+    "Capture local actor/vehicle, call original Exit exactly once, recheck local identity and cleared vehicle, and require TCP connectivity.",
+    "For the shipped rapid index0, allocate a managed UTF16 string through IL2CPP and send31#GUID#False#0 through the original TCP sender.",
+    "The instance retires only other viewers, delays reseeding by at least two Unity frames, and filters transform delivery while reseeding."
+  ],
+  "manifest": {
+    "format_version": 1,
+    "scope": "Same-build compatibility candidate, static/offline validation only; original server parity not proven.",
+    "source_sha256": "29abe9dbf4f310ba72b4de19273da85c797e529fac6511ba40bb9f88314dc420",
+    "source_variant": "same build with reviewed wardrobe loop fix only",
+    "copy_sha256": "ce1a74588e74499e282699e160b966439ffb4c278e8bcef791951e28a57b0dd0",
+    "assembly_source_sha256": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66",
+    "coff_sha256": "24fc28d939cb1dda6c74662ecd53a22d2d3923d6573a6adddf194fbe19a83608",
+    "original_changed_byte_count": 34,
+    "target_executed": false,
+    "installation_changed": false,
+    "redirect": {
+      "call_rva": "0x44c1ce",
+      "file_offset": "0x44b1ce",
+      "original_hex": "e84d970f00",
+      "replacement_hex": "e82d6e6c02",
+      "old_target_rva": "0x545920",
+      "new_target_rva": "0x2b13000"
+    },
+    "new_section": {
+      "name": ".nbp",
+      "rva": "0x2b13000",
+      "raw_offset": "0x2859a00",
+      "virtual_size": 1656876,
+      "raw_size": 1657344,
+      "characteristics": "read+execute; not writable",
+      "code_bytes": 486
+    },
+    "unwind": {
+      "version": 1,
+      "flags": 0,
+      "prologue_bytes": 14,
+      "total_stack_bytes_including_saved_registers": 808,
+      "entries": [
+        {
+          "offset": 14,
+          "op": "allocate",
+          "bytes": 768
+        },
+        {
+          "offset": 7,
+          "op": "push_nonvolatile",
+          "register": 13
+        },
+        {
+          "offset": 5,
+          "op": "push_nonvolatile",
+          "register": 12
+        },
+        {
+          "offset": 3,
+          "op": "push_nonvolatile",
+          "register": 7
+        },
+        {
+          "offset": 2,
+          "op": "push_nonvolatile",
+          "register": 6
+        },
+        {
+          "offset": 1,
+          "op": "push_nonvolatile",
+          "register": 3
+        }
+      ],
+      "rva": "0x2b131f0",
+      "hex": "010e07000e01600007d005c00370026001300000",
+      "runtime_function": [
+        "0x2b13000",
+        "0x2b131e6",
+        "0x2b131f0"
+      ],
+      "original_entries_preserved": 138029,
+      "new_table_rva": "0x2b13204"
+    },
+    "native_calls": [
+      {
+        "call_rva": "0x2b13023",
+        "symbol": "ManagerSingleton",
+        "target_rva": "0x43cdf0"
+      },
+      {
+        "call_rva": "0x2b13069",
+        "symbol": "OriginalExit",
+        "target_rva": "0x545920"
+      },
+      {
+        "call_rva": "0x2b13079",
+        "symbol": "ManagerSingleton",
+        "target_rva": "0x43cdf0"
+      },
+      {
+        "call_rva": "0x2b130ea",
+        "symbol": "TcpIsConnected",
+        "target_rva": "0x5e79f0"
+      },
+      {
+        "call_rva": "0x2b130f9",
+        "symbol": "InfoSingleton",
+        "target_rva": "0x423490"
+      },
+      {
+        "call_rva": "0x2b131bf",
+        "symbol": "StringNewUtf16",
+        "target_rva": "0x2b11a0"
+      },
+      {
+        "call_rva": "0x2b131d2",
+        "symbol": "TcpSend",
+        "target_rva": "0x5e7820"
+      }
+    ],
+    "offline_checks": {
+      "strict_input_hash": true,
+      "allocator_export_matches": true,
+      "all_code_disassembled": true,
+      "all_branches_on_instruction_boundaries_inside_wrapper": true,
+      "only_expected_rel32_calls": true,
+      "unwind_matches_stack_and_nonvolatile_registers": true,
+      "existing_runtime_functions_preserved": true,
+      "new_pe_reparsed": true,
+      "only_permitted_original_bytes_changed": true
+    },
+    "limitations": [
+      "Candidate wrapper has not run in Unity/IL2CPP. Static checks do not prove runtime delivery or timing.",
+      "Shipped rapid index0 only; nonzero manager index fails closed after native exit.",
+      "Extra singleton getter before native exit is an authored compatibility step; current local actor identity is checked again after exit.",
+      "The managed string is allocated by exported IL2CPP API on the original managed game thread and passed immediately as TcpSend's managed argument; no raw allocation or manual GC field write.",
+      "Native exceptions propagate through generated unwind metadata; no new exception handler swallows original failures.",
+      "Sending False requires the separately implemented server remote refresh, since original S2C31 False is ignored."
+    ],
+    "native_sources": [
+      {
+        "path": "work\\evidence\\ghidra\\functions\\44bab0.c",
+        "sha256": "75f7e030782f76383a2d732d57298d81f62d86c9866bd7701e37883daec210b3"
+      },
+      {
+        "path": "work\\evidence\\ghidra\\functions\\545920.c",
+        "sha256": "f1399c4820b0f8541c98a47071e1e8a427f1453ffaa14a2adecc775b50f326a1"
+      },
+      {
+        "path": "work\\evidence\\ghidra\\functions\\545c50.c",
+        "sha256": "3961fce323717dc28f38fda1effc921f20d69e17fd615f8722ded5372730ce54"
+      },
+      {
+        "path": "work\\evidence\\ghidra\\functions\\44ce10.c",
+        "sha256": "797bba21997a9aab9bc487d51918fb9c7ce1f1605e229c773827335b8b74a832"
+      },
+      {
+        "path": "work\\evidence\\ghidra\\functions\\5e79f0.c",
+        "sha256": "2aecec214f8b4a9cbe3e843d4695d163c88189f3a1ea9fc592df23da21d1d6d4"
+      },
+      {
+        "path": "work\\evidence\\ghidra\\functions\\43cdf0.c",
+        "sha256": "f7a60a80cab8ea146bc1e4a37c8ee3a545a2998e9a22f059c8dc5936168fd9f6"
+      },
+      {
+        "path": "work\\evidence\\ghidra\\functions\\423490.c",
+        "sha256": "99b7f76d5d536940b1cfe9ffcf5590da2652b821671a5027d17a0f4e227efe75"
+      },
+      {
+        "path": "work\\evidence\\ghidra\\functions\\2b11a0.c",
+        "sha256": "4999790a37e119cb587ba8e519d086d168df463c78f80818e5fef4d7e111db5d"
+      }
+    ],
+    "copy_written": true,
+    "copy_path": "[local-path]"
+  },
+  "synthetic_checks": {
+    "passed": 30,
+    "scope": "Pure Python integer-instruction semantic model of only new wrapper code with synthetic data/native stubs; no original game code executed.",
+    "checks": [
+      "OriginalExit called exactly once",
+      "send occurs only after successful guarded exit",
+      "exact UTF16 payload",
+      "all native calls stack-aligned with shadow space",
+      "volatile registers poisoned between helper calls",
+      "all Win64 nonvolatile registers preserved",
+      "stack balanced",
+      "relative calls work at two synthetic image bases"
+    ]
+  },
+  "independent_review": {
+    "kind": "static source/PE/native-evidence review by a separate worker",
+    "findings": "No high-confidence ABI, relocation, field-write or unwind defect found in the reviewed candidate. An output-path overwrite issue in --spec was found and fixed.",
+    "coverage": [
+      "Both accepted input variants reproduced in memory",
+      "All seven native call targets checked",
+      "Original138029 runtime-function entries preserved plus one",
+      "Eight native evidence hashes checked"
+    ],
+    "limitation": "A review result is not proof of native execution, GC safety or server/client timing."
+  },
+  "path_guards": "All three copy tools reject existing/installed/source output paths; manifests require a new JSON destination. Five CLI tests exercise rejection with synthetic inputs.",
+  "candidate_hash_matches": true,
+  "installation_changed": false,
+  "game_executed": false,
+  "listener_started": false,
+  "game_ready": false,
+  "remaining_unknowns": [
+    "Windows loader/unwinder and live IL2CPP garbage collector have not exercised the wrapper.",
+    "Additional helper calls can throw before the original caller continuation; native unwind metadata propagates rather than swallows exceptions.",
+    "Two-frame remote teardown/reseed sequencing, animation state and transform races require future runtime validation.",
+    "This is a new preservation compatibility policy, not a recovered original server operation."
+  ],
+  "sources": [
+    {
+      "path": "client-fixes/prepared-rapid-copy.json",
+      "sha256": "13d0dd1a201f488845a60c203b1d9053609cdd058b9a8230cf1b194616003b70"
+    },
+    {
+      "path": "client-fixes/rapid-boat-offline-tests.json",
+      "sha256": "565adeee54d7fdb7c13dcdab3f791bdb578f098af0fb14bb4b4da3294742d078"
+    },
+    {
+      "path": "client-fixes/rapid_boat_exit.s",
+      "sha256": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66"
+    },
+    {
+      "path": "tools/rapid_boat_patch.py",
+      "sha256": "cb04d671750a305e250e306860b49bf8c7a2eaa302fa84c8ece61a98ee795dd2"
+    },
+    {
+      "path": "tools/rapid_boat_offline_tests.py",
+      "sha256": "2ddc83622c0975e54de8e781a6986c7b87f94d0640e3c02c234614e760014eb0"
+    },
+    {
+      "path": "tools/tests/test_patch_safety.py",
+      "sha256": "d50e0356d2cbfff721217728b4ffa68bbf847013b8f3e5914dc0370691afa426"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+      "sha256": "8c70ed0b9fe8844258256115c867993ce7dd2fffba3cf246d57cd0daf53f14fe"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "format_version": 1,
+  "profile": "remote-v9-direct-tls",
+  "integrated_tree": "work/remaining-implementation/deployment/integrated-review-v9",
+  "archive": {
+    "path": "work/remaining-implementation/deployment/nebula-public-staged-v9.tar.gz",
+    "sha256": "5b802e94443ca54983d2c66a35f9e97bf674690481017932c980f24b2565e64d",
+    "bytes": 37355327,
+    "manifested_files": 554
+  },
+  "client": {
+    "public_access_sha256": "eea7e808af971c36ca0fa11147e399c1a5b07411a1f2bdf16af489315f4d75b1",
+    "public_access_bytes": 640882,
+    "remote_transport_sha256": "160128d93690cfd992ddde03300aeb931df3d84dc781b97a401e9f97876b783f",
+    "remote_transport_bytes": 2928128,
+    "public_access_receipt_sha256": "c591080bc16c5e8cbeba190954d9c105721aa7d5dd7298818189ee4d589457eb",
+    "merge_receipt_sha256": "1e39921b0021663093142303d1d69b8478dfddab99ad7875d5e228ca130e96a9"
+  },
+  "gateway": {
+    "source_sha256": "59f9e1a7a37024912be4950b936bc628fbc1642d6fa43cf8ab8f09c70e4c14f5",
+    "service_sha256": "d0e4e85ffdb85ed1d14c1fc3785b22fcbad6e712e4a3de8cba55b3030ce40c59",
+    "environment_example_sha256": "840cf9081d6f4800550478daa99fd59e0f7f3bc38ed67d99adb85cea97939cec",
+    "client_profile_example_sha256": "0714da31738ba07f3fceedbe8ecdac03bf116476a8b0761bfb5a2e92471aee0e"
+  },
+  "security": {
+    "certificate_accept_any": false,
+    "ca_sha256_pin_required": true,
+    "authorization_in_process_arguments": false,
+    "sidecar_started_from_dllmain": false,
+    "original_steam_initialization_preserved": true,
+    "steam_ticket_validation_implemented": false
+  },
+  "verification": {
+    "public_access_compiled": true,
+    "public_access_imports_and_exports_statically_inspected": true,
+    "remote_transport_compiled_by_owning_stage": true,
+    "target_executed": false,
+    "listener_started": false,
+    "runtime_acceptance_complete": false
+  },
+  "activation_ready": false,
+  "activation_blockers": [
+    "Final patcher manifest and composed client release receipt must pin the remote-v9 siblings.",
+    "Remote client, gateway, account binding and multi-client reconnect require deferred runtime acceptance.",
+    "Operator certificate, DNS and persistent server paths are deployment inputs and are not embedded in this archive."
+  ]
+}

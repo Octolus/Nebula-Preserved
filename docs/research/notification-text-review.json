@@ -1,0 +1,560 @@
+{
+  "format_version": 1,
+  "review_type": "independent static review and in-memory PE rebuild",
+  "target_executed": false,
+  "instruction_model_executed_by_reviewer": false,
+  "native_helpers_executed": false,
+  "game_or_ui_started": false,
+  "listeners_or_connections": false,
+  "installation_changed": false,
+  "new_candidate_written_by_reviewer": false,
+  "verdict": "no concrete native ABI, field-layout, relocation or PE preservation defect found in reviewed bytes; runtime validation remains unavailable",
+  "source_sha256": "ce1a74588e74499e282699e160b966439ffb4c278e8bcef791951e28a57b0dd0",
+  "candidate_sha256": "13158d2f08c9511c9cc283a6dda680081c5e1f6142bb86ddde1bfbd039de7fcb",
+  "candidate_matches_prepared_copy": true,
+  "original_binary_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+  "rdi_proof": {
+    "assignment": {
+      "rva": "0x47748a",
+      "bytes": "488bf9",
+      "mnemonic": "mov",
+      "operands": "rdi, rcx"
+    },
+    "other_rdi_writes_before_redirect": 0,
+    "preserved_across_original_calls": "Win64 nonvolatile ABI"
+  },
+  "original_argument_setup": [
+    {
+      "rva": "0x4779e9",
+      "bytes": "488b0db86e0602",
+      "mnemonic": "mov",
+      "operands": "rcx, qword ptr [rip + 0x2066eb8]"
+    },
+    {
+      "rva": "0x4779f0",
+      "bytes": "4c8bce",
+      "mnemonic": "mov",
+      "operands": "r9, rsi"
+    },
+    {
+      "rva": "0x4779f3",
+      "bytes": "4c8bc0",
+      "mnemonic": "mov",
+      "operands": "r8, rax"
+    },
+    {
+      "rva": "0x4779f6",
+      "bytes": "48c744242000000000",
+      "mnemonic": "mov",
+      "operands": "qword ptr [rsp + 0x20], 0"
+    },
+    {
+      "rva": "0x4779ff",
+      "bytes": "498bd7",
+      "mnemonic": "mov",
+      "operands": "rdx, r15"
+    },
+    {
+      "rva": "0x477a02",
+      "bytes": "e8990bef00",
+      "mnemonic": "call",
+      "operands": "0x13685a0"
+    }
+  ],
+  "wrapper_disassembly": [
+    {
+      "rva": "0x2ca8000",
+      "bytes": "53",
+      "mnemonic": "push",
+      "operands": "rbx"
+    },
+    {
+      "rva": "0x2ca8001",
+      "bytes": "56",
+      "mnemonic": "push",
+      "operands": "rsi"
+    },
+    {
+      "rva": "0x2ca8002",
+      "bytes": "57",
+      "mnemonic": "push",
+      "operands": "rdi"
+    },
+    {
+      "rva": "0x2ca8003",
+      "bytes": "4154",
+      "mnemonic": "push",
+      "operands": "r12"
+    },
+    {
+      "rva": "0x2ca8005",
+      "bytes": "4155",
+      "mnemonic": "push",
+      "operands": "r13"
+    },
+    {
+      "rva": "0x2ca8007",
+      "bytes": "4883ec30",
+      "mnemonic": "sub",
+      "operands": "rsp, 0x30"
+    },
+    {
+      "rva": "0x2ca800b",
+      "bytes": "4889cb",
+      "mnemonic": "mov",
+      "operands": "rbx, rcx"
+    },
+    {
+      "rva": "0x2ca800e",
+      "bytes": "4889d6",
+      "mnemonic": "mov",
+      "operands": "rsi, rdx"
+    },
+    {
+      "rva": "0x2ca8011",
+      "bytes": "4d89c4",
+      "mnemonic": "mov",
+      "operands": "r12, r8"
+    },
+    {
+      "rva": "0x2ca8014",
+      "bytes": "4d89cd",
+      "mnemonic": "mov",
+      "operands": "r13, r9"
+    },
+    {
+      "rva": "0x2ca8017",
+      "bytes": "4d85ed",
+      "mnemonic": "test",
+      "operands": "r13, r13"
+    },
+    {
+      "rva": "0x2ca801a",
+      "bytes": "744e",
+      "mnemonic": "je",
+      "operands": "0x2ca806a"
+    },
+    {
+      "rva": "0x2ca801c",
+      "bytes": "41837d1000",
+      "mnemonic": "cmp",
+      "operands": "dword ptr [r13 + 0x10], 0"
+    },
+    {
+      "rva": "0x2ca8021",
+      "bytes": "7547",
+      "mnemonic": "jne",
+      "operands": "0x2ca806a"
+    },
+    {
+      "rva": "0x2ca8023",
+      "bytes": "4885ff",
+      "mnemonic": "test",
+      "operands": "rdi, rdi"
+    },
+    {
+      "rva": "0x2ca8026",
+      "bytes": "7442",
+      "mnemonic": "je",
+      "operands": "0x2ca806a"
+    },
+    {
+      "rva": "0x2ca8028",
+      "bytes": "80bf0801000000",
+      "mnemonic": "cmp",
+      "operands": "byte ptr [rdi + 0x108], 0"
+    },
+    {
+      "rva": "0x2ca802f",
+      "bytes": "7439",
+      "mnemonic": "je",
+      "operands": "0x2ca806a"
+    },
+    {
+      "rva": "0x2ca8031",
+      "bytes": "8b8710010000",
+      "mnemonic": "mov",
+      "operands": "eax, dword ptr [rdi + 0x110]"
+    },
+    {
+      "rva": "0x2ca8037",
+      "bytes": "83f803",
+      "mnemonic": "cmp",
+      "operands": "eax, 3"
+    },
+    {
+      "rva": "0x2ca803a",
+      "bytes": "740e",
+      "mnemonic": "je",
+      "operands": "0x2ca804a"
+    },
+    {
+      "rva": "0x2ca803c",
+      "bytes": "83f804",
+      "mnemonic": "cmp",
+      "operands": "eax, 4"
+    },
+    {
+      "rva": "0x2ca803f",
+      "bytes": "7529",
+      "mnemonic": "jne",
+      "operands": "0x2ca806a"
+    },
+    {
+      "rva": "0x2ca8041",
+      "bytes": "4c8b2dc0fc84ff",
+      "mnemonic": "mov",
+      "operands": "r13, qword ptr [rip - 0x7b0340]"
+    },
+    {
+      "rva": "0x2ca8048",
+      "bytes": "eb20",
+      "mnemonic": "jmp",
+      "operands": "0x2ca806a"
+    },
+    {
+      "rva": "0x2ca804a",
+      "bytes": "488b0de7d786ff",
+      "mnemonic": "mov",
+      "operands": "rcx, qword ptr [rip - 0x792819]"
+    },
+    {
+      "rva": "0x2ca8051",
+      "bytes": "488b9730010000",
+      "mnemonic": "mov",
+      "operands": "rdx, qword ptr [rdi + 0x130]"
+    },
+    {
+      "rva": "0x2ca8058",
+      "bytes": "4c8b05098b88ff",
+      "mnemonic": "mov",
+      "operands": "r8, qword ptr [rip - 0x7774f7]"
+    },
+    {
+      "rva": "0x2ca805f",
+      "bytes": "4531c9",
+      "mnemonic": "xor",
+      "operands": "r9d, r9d"
+    },
+    {
+      "rva": "0x2ca8062",
+      "bytes": "e8f9d06bfe",
+      "mnemonic": "call",
+      "operands": "0x1365160"
+    },
+    {
+      "rva": "0x2ca8067",
+      "bytes": "4989c5",
+      "mnemonic": "mov",
+      "operands": "r13, rax"
+    },
+    {
+      "rva": "0x2ca806a",
+      "bytes": "4889d9",
+      "mnemonic": "mov",
+      "operands": "rcx, rbx"
+    },
+    {
+      "rva": "0x2ca806d",
+      "bytes": "4889f2",
+      "mnemonic": "mov",
+      "operands": "rdx, rsi"
+    },
+    {
+      "rva": "0x2ca8070",
+      "bytes": "4d89e0",
+      "mnemonic": "mov",
+      "operands": "r8, r12"
+    },
+    {
+      "rva": "0x2ca8073",
+      "bytes": "4d89e9",
+      "mnemonic": "mov",
+      "operands": "r9, r13"
+    },
+    {
+      "rva": "0x2ca8076",
+      "bytes": "48c744242000000000",
+      "mnemonic": "mov",
+      "operands": "qword ptr [rsp + 0x20], 0"
+    },
+    {
+      "rva": "0x2ca807f",
+      "bytes": "e81c056cfe",
+      "mnemonic": "call",
+      "operands": "0x13685a0"
+    },
+    {
+      "rva": "0x2ca8084",
+      "bytes": "4883c430",
+      "mnemonic": "add",
+      "operands": "rsp, 0x30"
+    },
+    {
+      "rva": "0x2ca8088",
+      "bytes": "415d",
+      "mnemonic": "pop",
+      "operands": "r13"
+    },
+    {
+      "rva": "0x2ca808a",
+      "bytes": "415c",
+      "mnemonic": "pop",
+      "operands": "r12"
+    },
+    {
+      "rva": "0x2ca808c",
+      "bytes": "5f",
+      "mnemonic": "pop",
+      "operands": "rdi"
+    },
+    {
+      "rva": "0x2ca808d",
+      "bytes": "5e",
+      "mnemonic": "pop",
+      "operands": "rsi"
+    },
+    {
+      "rva": "0x2ca808e",
+      "bytes": "5b",
+      "mnemonic": "pop",
+      "operands": "rbx"
+    },
+    {
+      "rva": "0x2ca808f",
+      "bytes": "c3",
+      "mnemonic": "ret",
+      "operands": ""
+    }
+  ],
+  "field_layout": {
+    "ChatEntry_nullable": "0x108",
+    "nullable_hasValue": "0x108",
+    "type": "0x110",
+    "arguments": "0x130",
+    "Il2CppString_length": "0x10"
+  },
+  "abi": {
+    "entry_rsp_mod16": 8,
+    "five_pushes_bytes": 40,
+    "allocation_bytes": 48,
+    "frame_bytes": 88,
+    "precall_rsp_mod16": 0,
+    "callee_entry_rsp_mod16": 8,
+    "shadow_bytes": 32,
+    "format_fifth_parameter": "zero at caller RSP+0x20 -> callee RSP+0x28",
+    "concat_MethodInfo": "zero R9",
+    "nonvolatile_preserved": [
+      "RBX",
+      "RSI",
+      "RDI",
+      "R12",
+      "R13"
+    ],
+    "other_nonvolatile": "RBP/R14/R15 and XMM6..15 are not modified"
+  },
+  "literal_slots": {
+    "0x24f7d08": "System Reward",
+    "0x2515838": "has sent you '",
+    "0x2530b68": "' as a gift"
+  },
+  "calls": [
+    {
+      "rva": "0x2ca8062",
+      "bytes": "e8f9d06bfe",
+      "mnemonic": "call",
+      "operands": "0x1365160"
+    },
+    {
+      "rva": "0x2ca807f",
+      "bytes": "e81c056cfe",
+      "mnemonic": "call",
+      "operands": "0x13685a0"
+    }
+  ],
+  "unwind": {
+    "raw_hex": "010b06000b5207d005c0037002600130",
+    "prologue_bytes": 11,
+    "codes": "allocate48 at11;pushR13at7;pushR12at5;pushRDIat3;pushRSIat2;pushRBXat1",
+    "function": [
+      46825472,
+      46825616,
+      46825616
+    ]
+  },
+  "pe": {
+    "old_runtime_functions": 138030,
+    "new_runtime_functions": 138031,
+    "all_old_rows_identical": true,
+    "rapid_wrapper_row_preserved": [
+      45166592,
+      45167078,
+      45167088
+    ],
+    "old_sections": [
+      {
+        "name": ".text",
+        "header_identical": true,
+        "original_data_identical": true,
+        "changed_offsets": []
+      },
+      {
+        "name": "il2cpp",
+        "header_identical": true,
+        "original_data_identical": false,
+        "changed_offsets": [
+          1202691,
+          1202692,
+          1202693,
+          1202694
+        ]
+      },
+      {
+        "name": ".rdata",
+        "header_identical": true,
+        "original_data_identical": true,
+        "changed_offsets": []
+      },
+      {
+        "name": ".data",
+        "header_identical": true,
+        "original_data_identical": true,
+        "changed_offsets": []
+      },
+      {
+        "name": ".pdata",
+        "header_identical": true,
+        "original_data_identical": true,
+        "changed_offsets": []
+      },
+      {
+        "name": "_RDATA",
+        "header_identical": true,
+        "original_data_identical": true,
+        "changed_offsets": []
+      },
+      {
+        "name": ".reloc",
+        "header_identical": true,
+        "original_data_identical": true,
+        "changed_offsets": []
+      },
+      {
+        "name": ".nbp",
+        "header_identical": true,
+        "original_data_identical": true,
+        "changed_offsets": []
+      }
+    ],
+    "loader_directories_except_exception_unchanged": true,
+    "new_section_RX": true,
+    "absolute_pointer_relocations_added": false,
+    "signed_rel32_targets_in_range": true
+  },
+  "path_guards": [
+    {
+      "case": "existing source",
+      "rejected": true
+    },
+    {
+      "case": "existing object",
+      "rejected": true
+    },
+    {
+      "case": "assembly source",
+      "rejected": true
+    },
+    {
+      "case": "existing prepared JSON",
+      "rejected": true
+    },
+    {
+      "case": "existing patcher",
+      "rejected": true
+    },
+    {
+      "case": "Steam path",
+      "rejected": true
+    },
+    {
+      "case": "invalid JSON suffix",
+      "rejected": true
+    },
+    {
+      "case": "same destination/report",
+      "rejected": true
+    }
+  ],
+  "gc_assessment": {
+    "heap_reference_field_writes_added": false,
+    "new_managed_roots": "original references retained in nonvolatile registers; Concat RAX immediately retained in R13 before Format",
+    "basis": "matches native nonvolatile-register managed-reference lifetime pattern; no unmanaged buffer or unrooted allocation interval added",
+    "proven_runtime_collector_behavior": false
+  },
+  "findings": [],
+  "resolved_observations": [
+    {
+      "category": "documentation",
+      "file": "protocol/notification-text-compatibility.json",
+      "correction": "Parent narrowed exclusion wording to unrelated gameplay/UI behavior and explicitly states intended notification text changes before final source hashing"
+    }
+  ],
+  "remaining_risks": [
+    "Unity/IL2CPP GC collection and managed helper exceptions are not tested",
+    "Windows loader and exception unwinding are not executed",
+    "Visual presentation is not observed",
+    "Native field/register offsets are valid only for this exact build",
+    "Synthetic tests model helper return values and ABI poisoning; they do not establish real String/GC/rendering behavior",
+    "Path guards prevent normal aliases, existing files and steamapps outputs; concurrent malicious parent-directory replacement is not a promised threat model"
+  ],
+  "sources": [
+    {
+      "path": "outputs\\nebula-preservation\\tools\\notification_text_review.py",
+      "sha256": "6a59584c4ee9765bf37ab881e17e703bd79547b188bffaf42610608acd5d552e"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\tools\\notification_text_patch.py",
+      "sha256": "373609c4c25fa15383bc46c3e56220c4a65170dc7ef63f81428be25fa788876b"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\tools\\notification_text_offline_tests.py",
+      "sha256": "97b7168b80461e7bb8aaae83f5beffca599f54883317dbe7acf4dcc8e96a4bde"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\client-fixes\\notification_text.s",
+      "sha256": "3c2ffe73d58a207bed0d829cada33eb468f6f34e7ba4f05efff36a6bbceb646d"
+    },
+    {
+      "path": "work\\evidence\\notification_text.o",
+      "sha256": "9e65a06832343882297fee3763159d502e3eea330f7ea5252cfd8051479eacb7"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\client-fixes\\prepared-notification-copy.json",
+      "sha256": "0ebfef4a9e7550edf4e5beb3d70a50dce61c961d9ec1382af9970f8d8ad70e01"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\notification-text-compatibility.json",
+      "sha256": "b515d82b2b91381d232d6cf5560d058fd65c036eaf283cd52c49fbb7b276164c"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\477470.c",
+      "sha256": "7559d564ab08df77e0edb5101c218763d65d4fc44897caf96d26a6e9644f94c7"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\610d40.c",
+      "sha256": "dfa0dd627343c65096982c1037e9d6104f418be52f2d57dff7d6e13df5ae7c73"
+    },
+    {
+      "path": "work\\decompiled\\dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    },
+    {
+      "path": "work\\evidence\\notification-text-offline-tests.json",
+      "sha256": "6d3c2a26092ff3a1359d1dcf5ebb1781c4aa5a8a1c1a7061d7ef81cf71697aac"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\client-fixes\\notification-text-offline-tests.json",
+      "sha256": "6d3c2a26092ff3a1359d1dcf5ebb1781c4aa5a8a1c1a7061d7ef81cf71697aac"
+    }
+  ]
+}

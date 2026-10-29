@@ -1,0 +1,11 @@
+/target/
+/build-temp/
+/cargo-home/
+/test-state/
+/tmp/
+/state/
+/parity/runs/
+/parity/temp/
+/parity/**/__pycache__/
+/interop/work/
+# Cargo.lock and authored test fixtures belong in source control.

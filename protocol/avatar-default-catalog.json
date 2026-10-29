@@ -1,0 +1,381 @@
+{
+  "evidence_type": "native default-editor literals joined to shipped asset manifests",
+  "game_build": "Steam 919290 build11018722",
+  "defaults": {
+    "MALE": {
+      "default_editor_method_va": "0x18057c4d0",
+      "items": [
+        {
+          "gender": "MALE",
+          "category": "CLOTH_BODY_TORSO",
+          "item_id": "Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y",
+          "kind": "FBX",
+          "filename": "Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y.prefab",
+          "asset_path": "Assets/ART/ResourcesART/Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y/FBX/Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y.prefab",
+          "manifest_asset_text": "Assets/ART/ResourcesART/Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y/FBX/Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y.prefab",
+          "requested_resource_path": "Wardrobe_EAB/MALE/CLOTH_BODY_TORSO/Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y/FBX/Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y",
+          "category_evidence": [
+            [
+              "MALE",
+              "CLOTH_BODY_TORSO",
+              "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO/Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y/Gnvdg5DgdJYY5a56UBx1874HE25Xns2YThumbnail.png"
+            ],
+            [
+              "MALE",
+              "CLOTH_BODY_TORSO",
+              "native ManagerPreset.LoadDefaultMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/gnvdg5dgdjyy5a56ubx1874he25xns2y",
+          "bundle_size": 976320,
+          "manifest_sha256": "15c88e314b587e32f6f2365275d4afd14bbbc06b2e7f841af4ae21f094246ecd",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "MALE",
+          "category": "CLOTH_BODY_LEGS",
+          "item_id": "DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0",
+          "kind": "FBX",
+          "filename": "DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0.prefab",
+          "asset_path": "Assets/ART/ResourcesART/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0/FBX/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0.prefab",
+          "manifest_asset_text": "Assets/ART/ResourcesART/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0/FBX/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0.prefab",
+          "requested_resource_path": "Wardrobe_EAB/MALE/CLOTH_BODY_LEGS/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0/FBX/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0",
+          "category_evidence": [
+            [
+              "MALE",
+              "CLOTH_BODY_LEGS",
+              "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_LEGS/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0/DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0Thumbnail.png"
+            ],
+            [
+              "MALE",
+              "CLOTH_BODY_LEGS",
+              "native ManagerPreset.LoadDefaultMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/dc45lq5kind7sr6ui7vn4vsydrju0nh0",
+          "bundle_size": 468722,
+          "manifest_sha256": "0db4a178f9c8b69e4f29a79585ab16551efb308620e549ea415644cdcfe8dfab",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "MALE",
+          "category": "CLOTH_BODY_FEET",
+          "item_id": "d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv",
+          "kind": "FBX",
+          "filename": "d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv.prefab",
+          "asset_path": "Assets/ART/ResourcesART/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv/FBX/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv.prefab",
+          "manifest_asset_text": "Assets/ART/ResourcesART/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv/FBX/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv.prefab",
+          "requested_resource_path": "Wardrobe_EAB/MALE/CLOTH_BODY_FEET/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv/FBX/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv",
+          "category_evidence": [
+            [
+              "MALE",
+              "CLOTH_BODY_FEET",
+              "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_FEET/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv/d6X4a5fHWtFaAuP1kWkGDi6KE550fWjvThumbnail.png"
+            ],
+            [
+              "MALE",
+              "CLOTH_BODY_FEET",
+              "native ManagerPreset.LoadDefaultMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/d6x4a5fhwtfaaup1kwkgdi6ke550fwjv",
+          "bundle_size": 216389,
+          "manifest_sha256": "cdf6ff0bbbeff12b4be5caffc24ca66e0e066be1f4bfb077888b629fef3d203d",
+          "dependencies": []
+        },
+        {
+          "gender": "MALE",
+          "category": "CLOTH_BODY_HANDS",
+          "item_id": "O01QY505KRu3QWRH3QAH5f30p45Uv38B",
+          "kind": "FBX",
+          "filename": "O01QY505KRu3QWRH3QAH5f30p45Uv38B.prefab",
+          "asset_path": "Assets/ART/ResourcesART/O01QY505KRu3QWRH3QAH5f30p45Uv38B/FBX/O01QY505KRu3QWRH3QAH5f30p45Uv38B.prefab",
+          "manifest_asset_text": "Assets/ART/ResourcesART/O01QY505KRu3QWRH3QAH5f30p45Uv38B/FBX/O01QY505KRu3QWRH3QAH5f30p45Uv38B.prefab",
+          "requested_resource_path": "Wardrobe_EAB/MALE/CLOTH_BODY_HANDS/O01QY505KRu3QWRH3QAH5f30p45Uv38B/FBX/O01QY505KRu3QWRH3QAH5f30p45Uv38B",
+          "category_evidence": [
+            [
+              "MALE",
+              "CLOTH_BODY_HANDS",
+              "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_HANDS/O01QY505KRu3QWRH3QAH5f30p45Uv38B/O01QY505KRu3QWRH3QAH5f30p45Uv38BThumbnail.png"
+            ],
+            [
+              "MALE",
+              "CLOTH_BODY_HANDS",
+              "native ManagerPreset.LoadDefaultMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/o01qy505kru3qwrh3qah5f30p45uv38b",
+          "bundle_size": 167230,
+          "manifest_sha256": "bc162ccc5492b4cac92af1191ff35c270b6e915a1372b5ebcf1703e30ba00ac0",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "MALE",
+          "category": "CLOTH_HEAD_FULL_HEAD_DRESS",
+          "item_id": "sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf",
+          "kind": "FBX",
+          "filename": "sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf.prefab",
+          "asset_path": "Assets/ART/ResourcesART/sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf/FBX/sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf.prefab",
+          "manifest_asset_text": "Assets/ART/ResourcesART/sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf/FBX/sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf.prefab",
+          "requested_resource_path": "Wardrobe_EAB/MALE/CLOTH_HEAD_FULL_HEAD_DRESS/sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf/FBX/sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf",
+          "category_evidence": [
+            [
+              "MALE",
+              "CLOTH_HEAD_FULL_HEAD_DRESS",
+              "native ManagerPreset.LoadDefaultMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/sl0d2k3asbb756yb2qj0lchsilskw5cf",
+          "bundle_size": 565425,
+          "manifest_sha256": "6d8e9335413ada2863a92d248b20fbd4be30e011ae7b2ca00a593476b8cbb9bb",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        }
+      ],
+      "id_assets_tablenames_json": {
+        "data": "Gnvdg5DgdJYY5a56UBx1874HE25Xns2Y!DC45Lq5kINd7sR6Ui7vn4vsyDrjU0nh0!d6X4a5fHWtFaAuP1kWkGDi6KE550fWjv!O01QY505KRu3QWRH3QAH5f30p45Uv38B!sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf!CLOTH_BODY_TORSO!CLOTH_BODY_LEGS!CLOTH_BODY_FEET!CLOTH_BODY_HANDS!CLOTH_HEAD_FULL_HEAD_DRESS"
+      },
+      "order_note": "Native default-editor load call order (torso, legs, feet, hands, head, optional female hair); both halves use this same order. Original server preset slot order has not been recovered.",
+      "complete_preset": false,
+      "neutral_preset_fixture": "avatar-neutral-male.json",
+      "neutral_preset_provenance": "avatar-neutral-seed-evidence.json",
+      "remaining_unknowns": [
+        "Original server numerical morph/bone/skin defaults and preset slot order.",
+        "Authored-neutral full JSON fixtures are separately reconstructed; no runtime avatar load has been attempted."
+      ]
+    },
+    "FEMALE": {
+      "default_editor_method_va": "0x18057b9a0",
+      "items": [
+        {
+          "gender": "FEMALE",
+          "category": "CLOTH_BODY_TORSO",
+          "item_id": "qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd",
+          "kind": "FBX",
+          "filename": "qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd.prefab",
+          "asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd/FBX/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd.prefab",
+          "manifest_asset_text": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd/FBX/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd.prefab",
+          "requested_resource_path": "Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd/FBX/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd",
+          "category_evidence": [
+            [
+              "FEMALE",
+              "CLOTH_BODY_TORSO",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd/FBX/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd.prefab"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_TORSO",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd/qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqdThumbnail.png"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_TORSO",
+              "native ManagerPreset.LoadDefaultFEMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/qc16ldgpi66lgk2oqd1j3vj5tbuujwqd",
+          "bundle_size": 531166,
+          "manifest_sha256": "0a5d6e256dbcd8b282afc8170b37cce99944668ec86309cfa2072c03d6c44b8c",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "FEMALE",
+          "category": "CLOTH_BODY_LEGS",
+          "item_id": "nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17",
+          "kind": "FBX",
+          "filename": "nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17.prefab",
+          "asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_LEGS/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17/FBX/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17.prefab",
+          "manifest_asset_text": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_LEGS/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17/FBX/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17.prefab",
+          "requested_resource_path": "Wardrobe_EAB/FEMALE/CLOTH_BODY_LEGS/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17/FBX/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17",
+          "category_evidence": [
+            [
+              "FEMALE",
+              "CLOTH_BODY_LEGS",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_LEGS/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17/FBX/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17.prefab"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_LEGS",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_LEGS/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17/nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17Thumbnail.png"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_LEGS",
+              "native ManagerPreset.LoadDefaultFEMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/nl7dd7wr1awu7lxdfu4u07bv4fhkrg17",
+          "bundle_size": 933482,
+          "manifest_sha256": "0381a6f2f9af8c23ac2b9177aece5a8003ffe4caf47cbc551b14391b2004d425",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "FEMALE",
+          "category": "CLOTH_BODY_FEET",
+          "item_id": "M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4",
+          "kind": "FBX",
+          "filename": "M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4.prefab",
+          "asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_FEET/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4/FBX/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4.prefab",
+          "manifest_asset_text": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_FEET/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4/FBX/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4.prefab",
+          "requested_resource_path": "Wardrobe_EAB/FEMALE/CLOTH_BODY_FEET/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4/FBX/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4",
+          "category_evidence": [
+            [
+              "FEMALE",
+              "CLOTH_BODY_FEET",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_FEET/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4/FBX/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4.prefab"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_FEET",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_FEET/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4/M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4Thumbnail.png"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_FEET",
+              "native ManagerPreset.LoadDefaultFEMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/m2r5i8vmkjga3rh5fpma5b3vxc5le4j4",
+          "bundle_size": 312037,
+          "manifest_sha256": "3d2ef4f4851e2814744c8f3eba2a9e1b131eb27df492e846cf7468b52b905cdb",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "FEMALE",
+          "category": "CLOTH_BODY_HANDS",
+          "item_id": "kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1",
+          "kind": "FBX",
+          "filename": "kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1.prefab",
+          "asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_HANDS/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1/FBX/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1.prefab",
+          "manifest_asset_text": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_HANDS/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1/FBX/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1.prefab",
+          "requested_resource_path": "Wardrobe_EAB/FEMALE/CLOTH_BODY_HANDS/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1/FBX/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1",
+          "category_evidence": [
+            [
+              "FEMALE",
+              "CLOTH_BODY_HANDS",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_HANDS/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1/FBX/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1.prefab"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_HANDS",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_HANDS/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1/kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1Thumbnail.png"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_BODY_HANDS",
+              "native ManagerPreset.LoadDefaultFEMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/kuvsmc0n42ay68uyli7n5jt6bwk2ogj1",
+          "bundle_size": 191989,
+          "manifest_sha256": "9eac57521ade88ed776bba46d307d75eda1430dbf42b2a2952ee0bef78c87e91",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "FEMALE",
+          "category": "CLOTH_HEAD_FULL_HEAD_DRESS",
+          "item_id": "fVyLwiL15UE3U70354TJWIXiN8Y8K5C4",
+          "kind": "FBX",
+          "filename": "fVyLwiL15UE3U70354TJWIXiN8Y8K5C4.prefab",
+          "asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FULL_HEAD_DRESS/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4/FBX/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4.prefab",
+          "manifest_asset_text": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FULL_HEAD_DRESS/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4/FBX/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4.prefab",
+          "requested_resource_path": "Wardrobe_EAB/FEMALE/CLOTH_HEAD_FULL_HEAD_DRESS/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4/FBX/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4",
+          "category_evidence": [
+            [
+              "FEMALE",
+              "CLOTH_HEAD_FULL_HEAD_DRESS",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FULL_HEAD_DRESS/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4/FBX/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4.prefab"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_HEAD_FULL_HEAD_DRESS",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FULL_HEAD_DRESS/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4/fVyLwiL15UE3U70354TJWIXiN8Y8K5C4Thumbnail.png"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_HEAD_FULL_HEAD_DRESS",
+              "native ManagerPreset.LoadDefaultFEMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/fvylwil15ue3u70354tjwixin8y8k5c4",
+          "bundle_size": 567647,
+          "manifest_sha256": "316438a90ebfe289d36423858574dfabde4eb8f47ca7d27f877a2bcb5b601643",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        },
+        {
+          "gender": "FEMALE",
+          "category": "CLOTH_HEAD_HAIRSTYLE",
+          "item_id": "Mmu8uwI34MmXbL0dsJmK72DehIrER4QH",
+          "kind": "FBX",
+          "filename": "Mmu8uwI34MmXbL0dsJmK72DehIrER4QH.prefab",
+          "asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_HAIRSTYLE/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH/FBX/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH.prefab",
+          "manifest_asset_text": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_HAIRSTYLE/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH/FBX/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH.prefab",
+          "requested_resource_path": "Wardrobe_EAB/FEMALE/CLOTH_HEAD_HAIRSTYLE/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH/FBX/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH",
+          "category_evidence": [
+            [
+              "FEMALE",
+              "CLOTH_HEAD_HAIRSTYLE",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_HAIRSTYLE/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH/FBX/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH.prefab"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_HEAD_HAIRSTYLE",
+              "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_HAIRSTYLE/Mmu8uwI34MmXbL0dsJmK72DehIrER4QH/Mmu8uwI34MmXbL0dsJmK72DehIrER4QHThumbnail.png"
+            ],
+            [
+              "FEMALE",
+              "CLOTH_HEAD_HAIRSTYLE",
+              "native ManagerPreset.LoadDefaultFEMALEEditor literal"
+            ]
+          ],
+          "category_conflict": false,
+          "bundle": "04/mmu8uwi34mmxbl0dsjmk72dehirer4qh",
+          "bundle_size": 1284599,
+          "manifest_sha256": "be9872aabb4124da8af714fda156a2dc35c76b5f8bee69c0fea23c8d055c8038",
+          "dependencies": [
+            "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
+          ]
+        }
+      ],
+      "id_assets_tablenames_json": {
+        "data": "qC16ldGPI66LGk2oqD1j3Vj5TBuuJwqd!nl7dD7Wr1aWU7LXDfU4u07BV4FHKRg17!M2R5I8VmkJGA3Rh5fpma5B3vxC5Le4J4!kuVsMc0n42ay68uYlI7n5jT6bWK2OGJ1!fVyLwiL15UE3U70354TJWIXiN8Y8K5C4!Mmu8uwI34MmXbL0dsJmK72DehIrER4QH!CLOTH_BODY_TORSO!CLOTH_BODY_LEGS!CLOTH_BODY_FEET!CLOTH_BODY_HANDS!CLOTH_HEAD_FULL_HEAD_DRESS!CLOTH_HEAD_HAIRSTYLE"
+      },
+      "order_note": "Native default-editor load call order (torso, legs, feet, hands, head, optional female hair); both halves use this same order. Original server preset slot order has not been recovered.",
+      "complete_preset": false,
+      "neutral_preset_fixture": "avatar-neutral-female.json",
+      "neutral_preset_provenance": "avatar-neutral-seed-evidence.json",
+      "remaining_unknowns": [
+        "Original server numerical morph/bone/skin defaults and preset slot order.",
+        "Authored-neutral full JSON fixtures are separately reconstructed; no runtime avatar load has been attempted."
+      ]
+    }
+  }
+}
+

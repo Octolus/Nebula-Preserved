@@ -1,0 +1,1311 @@
+[
+  {
+    "container": "MANAGER_MSGS.LOADBALANCER",
+    "source_line": 27621,
+    "name": "msg_ipspace",
+    "literal": "100",
+    "value": 100
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelGUID",
+    "literal": "100",
+    "value": 100
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelLogin",
+    "literal": "101",
+    "value": 101
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelRegisterNewUser",
+    "literal": "102",
+    "value": 102
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelisExistPS4ID",
+    "literal": "103",
+    "value": 103
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelisExistUser",
+    "literal": "104",
+    "value": 104
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelNews",
+    "literal": "106",
+    "value": 106
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelGetIpsEditor",
+    "literal": "107",
+    "value": 107
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "ChannelNetInfo",
+    "literal": "140",
+    "value": 140
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "CheckPlayerPrefsExist",
+    "literal": "141",
+    "value": 141
+  },
+  {
+    "container": "MANAGER_MSGS.LOGIN_MSGS",
+    "source_line": 27724,
+    "name": "getselectedPlayerPrefs",
+    "literal": "136",
+    "value": 136
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.LoadingScreenSpaces",
+    "source_line": 27771,
+    "name": "msgs_JoinSpace",
+    "literal": "105",
+    "value": 105
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.LoadingScreenSpaces",
+    "source_line": 27771,
+    "name": "msgs_AddPoolJoinToSpace",
+    "literal": "114",
+    "value": 114
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_Insertnetid",
+    "literal": "100",
+    "value": 100
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msg_GetguidBynetid",
+    "literal": "101",
+    "value": 101
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_QuitPlayer",
+    "literal": "110",
+    "value": 110
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_LastPos",
+    "literal": "111",
+    "value": 111
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_update_last_psidglobal",
+    "literal": "115",
+    "value": 115
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_getRelationship",
+    "literal": "116",
+    "value": 116
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_addsilencePlayer",
+    "literal": "117",
+    "value": 117
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_addblockPlayer",
+    "literal": "118",
+    "value": 118
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_removesilencePlayer",
+    "literal": "119",
+    "value": 119
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_removeblockPlayer",
+    "literal": "120",
+    "value": 120
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_removefriendPlayer",
+    "literal": "121",
+    "value": 121
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_OnTriggerEnterPlayer",
+    "literal": "122",
+    "value": 122
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_OnTriggerExitPlayer",
+    "literal": "123",
+    "value": 123
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_getRelationshipReliable",
+    "literal": "124",
+    "value": 124
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_getCompanionsIDAssets",
+    "literal": "130",
+    "value": 130
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_updateCompanion",
+    "literal": "131",
+    "value": 131
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_RemoveCompanion",
+    "literal": "132",
+    "value": 132
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_updateCompanionReliable",
+    "literal": "133",
+    "value": 133
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_RemoveCompanionReliable",
+    "literal": "134",
+    "value": 134
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_ReadTargetCompanion",
+    "literal": "135",
+    "value": 135
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_getselectedPlayerPrefs",
+    "literal": "136",
+    "value": 136
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_sendSelectedPlayerPrefs",
+    "literal": "137",
+    "value": 137
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_createNewInstance",
+    "literal": "1000",
+    "value": 1000
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_instanceClosing",
+    "literal": "999",
+    "value": 999
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_dayNightCycle",
+    "literal": "139",
+    "value": 139
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_boatTokenToInstantiate",
+    "literal": "140",
+    "value": 140
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_sendToSupportScreen",
+    "literal": "141",
+    "value": 141
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_RemoveLocomotion",
+    "literal": "142",
+    "value": 142
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_updateLocomotion",
+    "literal": "143",
+    "value": 143
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_updateLocomotionReliable",
+    "literal": "144",
+    "value": 144
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_RemoveLocomotionReliable",
+    "literal": "145",
+    "value": 145
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_ReadTargetLocomotion",
+    "literal": "146",
+    "value": 146
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_updateAnimationLayer",
+    "literal": "147",
+    "value": 147
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_RemoveAnimationLayer",
+    "literal": "148",
+    "value": 148
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_updateAnimationLayerReliable",
+    "literal": "149",
+    "value": 149
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerInfo",
+    "source_line": 27847,
+    "name": "msgs_RemoveAnimationLayerReliable",
+    "literal": "150",
+    "value": 150
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Chat",
+    "source_line": 27907,
+    "name": "msgs_Chat",
+    "literal": "200",
+    "value": 200
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Chat",
+    "source_line": 27907,
+    "name": "msgs_StartTyping",
+    "literal": "201",
+    "value": 201
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Chat",
+    "source_line": 27907,
+    "name": "msgs_StopTyping",
+    "literal": "202",
+    "value": 202
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Notifications",
+    "source_line": 27934,
+    "name": "msgs_Notification",
+    "literal": "300",
+    "value": 300
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Notifications",
+    "source_line": 27934,
+    "name": "msgs_AcceptNotification",
+    "literal": "301",
+    "value": 301
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Notifications",
+    "source_line": 27934,
+    "name": "msgs_ToJoinNotification",
+    "literal": "302",
+    "value": 302
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.SocialFriends",
+    "source_line": 27974,
+    "name": "msgs_SocialFriends",
+    "literal": "400",
+    "value": 400
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.SocialFriends",
+    "source_line": 27974,
+    "name": "msgs_chatSocialFriends",
+    "literal": "401",
+    "value": 401
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.SocialFriends",
+    "source_line": 27974,
+    "name": "msgs_toggleFavourite",
+    "literal": "402",
+    "value": 402
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.SocialFriends",
+    "source_line": 27974,
+    "name": "msgs_socialList",
+    "literal": "403",
+    "value": 403
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.GSPACE",
+    "source_line": 28015,
+    "name": "msgs_InstanceIsRunning",
+    "literal": "99",
+    "value": 99
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.GSPACE",
+    "source_line": 28015,
+    "name": "msgs_InfoInstance",
+    "literal": "100",
+    "value": 100
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Interactables",
+    "source_line": 28080,
+    "name": "msgs_interactablesLength",
+    "literal": "106",
+    "value": 106
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Interactables",
+    "source_line": 28080,
+    "name": "msgs_interactablesUsage",
+    "literal": "107",
+    "value": 107
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Interactables",
+    "source_line": 28080,
+    "name": "msgs_interactablesUpdate",
+    "literal": "108",
+    "value": 108
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Interactables",
+    "source_line": 28080,
+    "name": "msgs_askinteractables",
+    "literal": "109",
+    "value": 109
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.Interactables",
+    "source_line": 28080,
+    "name": "msgs_genericinteractable",
+    "literal": "112",
+    "value": 112
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.SPACES",
+    "source_line": 28109,
+    "name": "msgs_OnInitClient",
+    "literal": "100",
+    "value": 100
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.XPGames",
+    "source_line": 28134,
+    "name": "msgs_addxp",
+    "literal": "1004",
+    "value": 1004
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_DeclineInvitation",
+    "literal": "1002",
+    "value": 1002
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_CreateNewInstance",
+    "literal": "1001",
+    "value": 1001
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_OpenGame",
+    "literal": "1000",
+    "value": 1000
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EnterGame",
+    "literal": "1003",
+    "value": 1003
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_SetIsReady",
+    "literal": "1004",
+    "value": 1004
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_LeaveGame",
+    "literal": "1005",
+    "value": 1005
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_StartGame",
+    "literal": "1006",
+    "value": 1006
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_LoadedGame",
+    "literal": "1007",
+    "value": 1007
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_InitMove",
+    "literal": "1008",
+    "value": 1008
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EndMove",
+    "literal": "1009",
+    "value": 1009
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EndStage",
+    "literal": "1010",
+    "value": 1010
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_NextStage",
+    "literal": "1011",
+    "value": 1011
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EndGame",
+    "literal": "1012",
+    "value": 1012
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_DeclineInvitationOneWay",
+    "literal": "1015",
+    "value": 1015
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EnterGameOneWay",
+    "literal": "1016",
+    "value": 1016
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_SetIsReadyOneWay",
+    "literal": "1017",
+    "value": 1017
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_LeaveGameOneWay",
+    "literal": "1018",
+    "value": 1018
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_StartGameOneWay",
+    "literal": "1019",
+    "value": 1019
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_LoadedGameOneWay",
+    "literal": "1020",
+    "value": 1020
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_InitMoveOneWay",
+    "literal": "1021",
+    "value": 1021
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EndMoveOneWay",
+    "literal": "1022",
+    "value": 1022
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EndStageOneWay",
+    "literal": "1023",
+    "value": 1023
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_NextStageOneWay",
+    "literal": "1024",
+    "value": 1024
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.FullGame",
+    "source_line": 28187,
+    "name": "msgs_EndGameOneWay",
+    "literal": "1025",
+    "value": 1025
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerLabelInfo",
+    "source_line": 28235,
+    "name": "msgs_askPlayerLabelInfo",
+    "literal": "700",
+    "value": 700
+  },
+  {
+    "container": "MANAGER_MSGS.Spaces_msgs.PlayerLabelInfo",
+    "source_line": 28235,
+    "name": "msgs_sendPlayerLabelInfo",
+    "literal": "701",
+    "value": 701
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pinball",
+    "source_line": 28284,
+    "name": "msg_addScore",
+    "literal": "3000",
+    "value": 3000
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pinball",
+    "source_line": 28284,
+    "name": "msg_getBestScore",
+    "literal": "3001",
+    "value": 3001
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pinball",
+    "source_line": 28284,
+    "name": "msg_getLeaderboard",
+    "literal": "3002",
+    "value": 3002
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_InitGame",
+    "literal": "3100",
+    "value": 3100
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_LeaveGame",
+    "literal": "3101",
+    "value": 3101
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_SelectGame",
+    "literal": "3102",
+    "value": 3102
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_StartGame",
+    "literal": "3103",
+    "value": 3103
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_MakeMove",
+    "literal": "3104",
+    "value": 3104
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_EndsMove",
+    "literal": "3105",
+    "value": 3105
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_MoveFoul",
+    "literal": "3106",
+    "value": 3106
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_SyncGame",
+    "literal": "3107",
+    "value": 3107
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_LeaveGameOneWay",
+    "literal": "3107",
+    "value": 3107
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_StartGameOneWay",
+    "literal": "3108",
+    "value": 3108
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_MakeMoveOneWay",
+    "literal": "3109",
+    "value": 3109
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_EndsMoveOneWay",
+    "literal": "3110",
+    "value": 3110
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Pool",
+    "source_line": 28298,
+    "name": "msg_MoveFoulOneWay",
+    "literal": "3111",
+    "value": 3111
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_InitGame",
+    "literal": "3200",
+    "value": 3200
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_LeaveGame",
+    "literal": "3201",
+    "value": 3201
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_ReadyGame",
+    "literal": "3202",
+    "value": 3202
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_StartGame",
+    "literal": "3203",
+    "value": 3203
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_ShotGame",
+    "literal": "3203",
+    "value": 3203
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_PinsGame",
+    "literal": "3204",
+    "value": 3204
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_TurnGame",
+    "literal": "3205",
+    "value": 3205
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_SyncGame",
+    "literal": "3206",
+    "value": 3206
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_InitGameOneWay",
+    "literal": "3210",
+    "value": 3210
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_LeaveGameOneWay",
+    "literal": "3211",
+    "value": 3211
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_ReadyGameOneWay",
+    "literal": "3212",
+    "value": 3212
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_StartGameOneWay",
+    "literal": "3213",
+    "value": 3213
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_ShotGameOneWay",
+    "literal": "3214",
+    "value": 3214
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_PinsGameOneWay",
+    "literal": "3215",
+    "value": 3215
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_TurnGameOneWay",
+    "literal": "3216",
+    "value": 3216
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Bowling",
+    "source_line": 28322,
+    "name": "msg_SyncPositionOneWay",
+    "literal": "3220",
+    "value": 3220
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_InitGame",
+    "literal": "3300",
+    "value": 3300
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_LeaveGame",
+    "literal": "3301",
+    "value": 3301
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_SelectGame",
+    "literal": "3302",
+    "value": 3302
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_SelectMode",
+    "literal": "3303",
+    "value": 3303
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_StartGame",
+    "literal": "3304",
+    "value": 3304
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_MakeMove",
+    "literal": "3305",
+    "value": 3305
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_SyncGame",
+    "literal": "3309",
+    "value": 3309
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_InitGameOneWay",
+    "literal": "3310",
+    "value": 3310
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_LeaveGameOneWay",
+    "literal": "3311",
+    "value": 3311
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_SelectGameOneWay",
+    "literal": "3312",
+    "value": 3312
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_StartGameOneWay",
+    "literal": "3313",
+    "value": 3313
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Darts",
+    "source_line": 28349,
+    "name": "msg_MakeMoveOneWay",
+    "literal": "3314",
+    "value": 3314
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_InitGame",
+    "literal": "1500",
+    "value": 1500
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_SelectGame",
+    "literal": "1501",
+    "value": 1501
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_StartGame",
+    "literal": "1502",
+    "value": 1502
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_MakeMove",
+    "literal": "1503",
+    "value": 1503
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_LeaveGame",
+    "literal": "1504",
+    "value": 1504
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_SyncGame",
+    "literal": "1505",
+    "value": 1505
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_SyncTable",
+    "literal": "1506",
+    "value": 1506
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_InitGameOneWay",
+    "literal": "1520",
+    "value": 1520
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_SelectGameOneWay",
+    "literal": "1521",
+    "value": 1521
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_StartGameOneWay",
+    "literal": "1522",
+    "value": 1522
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_MakeMoveOneWay",
+    "literal": "1523",
+    "value": 1523
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.BoardGames",
+    "source_line": 28372,
+    "name": "msg_LeaveGameOneWay",
+    "literal": "1524",
+    "value": 1524
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_InitGame",
+    "literal": "1600",
+    "value": 1600
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_SelectGame",
+    "literal": "1601",
+    "value": 1601
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_JoinGame",
+    "literal": "1602",
+    "value": 1602
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_InviteGame",
+    "literal": "1603",
+    "value": 1603
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_LeaveGame",
+    "literal": "1604",
+    "value": 1604
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_SyncGame",
+    "literal": "1605",
+    "value": 1605
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_InitGameOneWay",
+    "literal": "1610",
+    "value": 1610
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_SelectGameOneWay",
+    "literal": "1611",
+    "value": 1611
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_JoinGameOneWay",
+    "literal": "1612",
+    "value": 1612
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_InviteGameOneWay",
+    "literal": "1613",
+    "value": 1613
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.Picnic",
+    "source_line": 28395,
+    "name": "msg_LeaveGameOneWay",
+    "literal": "1614",
+    "value": 1614
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.FoodTruck",
+    "source_line": 28417,
+    "name": "msg_GotConsumable",
+    "literal": "1620",
+    "value": 1620
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.FoodTruck",
+    "source_line": 28417,
+    "name": "msg_GotConsumableOneWay",
+    "literal": "1621",
+    "value": 1621
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.OktoberFest",
+    "source_line": 28430,
+    "name": "msg_GotConsumable",
+    "literal": "1622",
+    "value": 1622
+  },
+  {
+    "container": "MANAGER_MSGS.SpaceGames.OktoberFest",
+    "source_line": 28430,
+    "name": "msg_GotConsumableOneWay",
+    "literal": "1623",
+    "value": 1623
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelGetIDAssets",
+    "literal": "108",
+    "value": 108
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelGetCurrentPreset",
+    "literal": "109",
+    "value": 109
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelSendLoadPreset",
+    "literal": "110",
+    "value": 110
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelPresetExist",
+    "literal": "111",
+    "value": 111
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelCheckGetPresetsNames",
+    "literal": "112",
+    "value": 112
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelSavePreset",
+    "literal": "113",
+    "value": 113
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelRemovePreset",
+    "literal": "115",
+    "value": 115
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelRenamePreset",
+    "literal": "116",
+    "value": 116
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelSavePresetDone",
+    "literal": "117",
+    "value": 117
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelAsssetFavourite",
+    "literal": "118",
+    "value": 118
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChanneladdItemStorage",
+    "literal": "119",
+    "value": 119
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChanneladdItemDelete",
+    "literal": "120",
+    "value": 120
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelResetDefaultPreset",
+    "literal": "122",
+    "value": 122
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelSetIsInWardrobe",
+    "literal": "125",
+    "value": 125
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "msgs_BackJoinSpace",
+    "literal": "126",
+    "value": 126
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelCheckIsInWardrobe",
+    "literal": "127",
+    "value": 127
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "ChannelAllInInWardrobe",
+    "literal": "128",
+    "value": 128
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "msgs_IsSetLastPos",
+    "literal": "129",
+    "value": 129
+  },
+  {
+    "container": "MANAGER_MSGS.Editor_msgs",
+    "source_line": 28491,
+    "name": "msgs_sendSelectedPlayerPrefs",
+    "literal": "138",
+    "value": 138
+  },
+  {
+    "container": "MANAGER_MSGS.NP_msgs",
+    "source_line": 28625,
+    "name": "msgs_NPShowAdded",
+    "literal": "600",
+    "value": 600
+  },
+  {
+    "container": "MANAGER_MSGS.NP_msgs",
+    "source_line": 28625,
+    "name": "msgs_NPAddByHour",
+    "literal": "601",
+    "value": 601
+  },
+  {
+    "container": "MANAGER_MSGS.NP_msgs",
+    "source_line": 28625,
+    "name": "msgs_NPAddEveryTwelveHours",
+    "literal": "602",
+    "value": 602
+  }
+]

@@ -1,0 +1,182 @@
+{
+  "schema": "nebula-preservation.gathering-branches.v1",
+  "source_artifact": {
+    "name": "GameAssembly.dll",
+    "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac"
+  },
+  "route_inventory": {
+    "implemented": 10,
+    "deferred": [
+      "Get_GatherChristmasGetSpacesCompleted"
+    ]
+  },
+  "sources": {
+    "init_callback": {
+      "rva": "0x3f3cb0",
+      "path": "work/evidence/ghidra/functions/3f3cb0.c",
+      "sha256": "afc4d0e817f76cc76dbf8f8edfa781a8c506520cc0167ba87dc62b54ae626b98"
+    },
+    "phase_callback": {
+      "rva": "0x3efa10",
+      "path": "work/evidence/ghidra/functions/3efa10.c",
+      "sha256": "48f4fee840175bbd6ea7fa6c3ec8164330ae75c41c9227bd6be297150ac7b9d6"
+    },
+    "consume_sender": {
+      "rva": "0x3f2e90",
+      "path": "work/evidence/ghidra/functions/3f2e90.c",
+      "sha256": "ece084e1c167e526c59c994220d03b81a5055e9007f31df1d8712133e1b713c3"
+    },
+    "consume_callback": {
+      "rva": "0x3ef680",
+      "path": "work/evidence/ghidra/functions/3ef680.c",
+      "sha256": "eec9ae851533d7644b9d706422d9d3dda5c9062c32c6b70f1da8c0f6c0e75494"
+    },
+    "reward_callback": {
+      "rva": "0x3ef240",
+      "path": "work/evidence/ghidra/functions/3ef240.c",
+      "sha256": "0e766c092dcbefa9bdea56a6da20a5573c84e298efca862d9097f79f08b8bd8c"
+    },
+    "memorion_result_callback": {
+      "rva": "0x3ef0c0",
+      "path": "work/evidence/ghidra/functions/3ef0c0.c",
+      "sha256": "a0e9e3110ee9790ae10b8b4f28952490c4841d8e06efa70a44d502f43e50c886"
+    },
+    "christmas_item_trigger": {
+      "rva": "0x68f920",
+      "path": "work/evidence/ghidra/functions/68f920.c",
+      "sha256": "fb4807e19f95a2a14137b6e87fbf3950410360ff81e6bfec3c452a036e29d87c"
+    },
+    "easter_item_trigger": {
+      "rva": "0x68fbd0",
+      "path": "work/evidence/ghidra/functions/68fbd0.c",
+      "sha256": "d38fbb11644df06a348bbd72813fe043838fcf718f707c892ede411c57204693"
+    },
+    "halloween2018_item_trigger": {
+      "rva": "0x68fe80",
+      "path": "work/evidence/ghidra/functions/68fe80.c",
+      "sha256": "d009a9b99751ca7b0568d9e248dc86f3a019facc4e6c2f9a9490df10795b7dee"
+    },
+    "halloween2018_process_item": {
+      "rva": "0x6901b0",
+      "path": "work/evidence/ghidra/functions/6901b0.c",
+      "sha256": "13e4c6b69533390be6f27d296175e0746820a2f5d85fc041f9669dd3b0de9459"
+    },
+    "managed_metadata": {
+      "path": "work/decompiled/dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    }
+  },
+  "observations": [
+    {
+      "branch": "Send_GatherInitInSpace callback",
+      "wire_after_identity": [
+        "type",
+        "current_gather",
+        "rewards_earned",
+        "cooldown_seconds"
+      ],
+      "detail": "Indices 4, 5 and 6 are parsed as Int32; index 4 drives count/reward thresholds, index 5 drives completion and SetThumbnails, and index 6 is passed to ShowCoolDown.",
+      "evidence": [
+        "init_callback",
+        "managed_metadata"
+      ]
+    },
+    {
+      "branch": "Get_GatherPhaseGame callback",
+      "wire_after_identity": [
+        "type",
+        "cooldown_seconds",
+        "current_gather",
+        "rewards_earned"
+      ],
+      "detail": "The same values use a different order: index 4 is passed to ShowCoolDown, index 5 is rendered/threshold-tested as the gather count, and index 6 selects the reward stage.",
+      "evidence": [
+        "phase_callback",
+        "managed_metadata"
+      ]
+    },
+    {
+      "branch": "Christmas2018 extended response",
+      "wire_indices_7_to_11": [
+        "isNexus",
+        "isLeafPark",
+        "isDome",
+        "isCube",
+        "isBeach"
+      ],
+      "psid_enum_values": {
+        "Nexus": 0,
+        "LeafPark": 1,
+        "Dome": 19,
+        "Cube": 7,
+        "Beach": 5
+      },
+      "detail": "Each value is parsed as Int32 and stored as a bool. PhaseGame compares the corresponding flag with ManagerInstance.typePsidglobal before showing SpaceCompleted.",
+      "evidence": [
+        "init_callback",
+        "phase_callback",
+        "managed_metadata"
+      ]
+    },
+    {
+      "branch": "Christmas2018 consume request",
+      "wire_after_identity": [
+        "type",
+        "psidglobal"
+      ],
+      "detail": "The sender loads ManagerInstance+0x250; managed metadata names that field psidglobal. It is not an unknown counter.",
+      "evidence": [
+        "consume_sender",
+        "managed_metadata"
+      ]
+    },
+    {
+      "branch": "Gather consume operation",
+      "detail": "Christmas and Easter item-trigger collisions call Send_GatherConsume after an item is collected. Halloween2018 increments its local round counter and calls the same route when the round completes. The consume callback displays returned index 4 and opens reward collection at observed thresholds. Therefore this route advances collection progress; it does not decrement inventory.",
+      "classification": "strong inference from independent sender and consumer paths",
+      "evidence": [
+        "christmas_item_trigger",
+        "easter_item_trigger",
+        "halloween2018_item_trigger",
+        "halloween2018_process_item",
+        "consume_callback"
+      ]
+    },
+    {
+      "branch": "ConsumeReward response",
+      "wire_after_identity": [
+        "type",
+        "current_gather",
+        "rewards_earned"
+      ],
+      "detail": "Index 4 updates the displayed gather count and index 5 is passed to ShowRewardGathered or used to select the reward sprite.",
+      "evidence": [
+        "reward_callback"
+      ]
+    },
+    {
+      "branch": "Get_GatherChristmasGetSpacesCompleted",
+      "wire_after_identity": [
+        "memorion_score",
+        "level_index"
+      ],
+      "detail": "The callback compares score against a level threshold array and continues into the Memorion challenge. This is mini-game score validation, not an ordinary spaces-completed counter.",
+      "evidence": [
+        "memorion_result_callback",
+        "managed_metadata"
+      ]
+    }
+  ],
+  "preservation_decisions": [
+    "Init and phase replies preserve their distinct observed field order.",
+    "Current gather and rewards earned are separate durable per-account values.",
+    "The five Christmas2018 PSIDs use unique durable rows; repeated scenes are idempotent and any other PSID fails closed.",
+    "Gather consume increments progress, bounded by the explicitly configured local threshold.",
+    "Reward grant, progress reset/increment and claim marker remain in Store.atomic().",
+    "The Memorion score endpoint returns an explicit deferred-gameplay error instead of fabricating a score oracle."
+  ],
+  "unknowns": [
+    "The retired service's schedules, reward item definitions and Memorion score-validation policy were not recovered.",
+    "Static client evidence establishes how fields are consumed, not historical production account values."
+  ]
+}

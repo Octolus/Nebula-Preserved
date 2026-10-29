@@ -1,0 +1,2 @@
+# Release workflow regression parser; production containers do not need it.
+PyYAML==6.0.3

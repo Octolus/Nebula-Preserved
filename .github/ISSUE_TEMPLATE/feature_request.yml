@@ -1,0 +1,25 @@
+name: Preservation improvement
+description: Propose a networking, compatibility or operator tooling improvement.
+body:
+  - type: markdown
+    attributes:
+      value: Keep examples synthetic. Do not attach original game binaries/assets, credentials or private captures.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or missing flow
+      description: Describe the user action and the behavior that needs restoring or improving.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include alternatives or relevant protocol/source references if known.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: How to verify it
+      description: Describe a reproducible test, including fresh sessions or a second client when relevant. Distinguish original evidence from a proposed preservation policy.

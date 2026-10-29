@@ -1,0 +1,691 @@
+{
+  "format": "nebula-authored-source-stage-closure-v2",
+  "files": {
+    "native-automation/appearance_core.inc": "7f1e275978a6e1a21f63366a6742bcae43f297cec7c1bfc25404d83335a1639c",
+    "native-automation/automation.cpp": "b65879629df0f709614dcdaee63fea427925d1628637cf48dfd11db89ffe1b80",
+    "native-automation/automation.s": "8f64ec52d25e5dfc2299dc1423c70249827e48f1e79bedcbb3cb74b44f74bc34",
+    "native-automation/automation_capture.h": "e446da9691b7a7dcce0f56713a57c3627318f63da5777a3a4ede285a295cb27a",
+    "native-automation/automation_desktop.h": "3e66245bc4b1f8325d7da2e0decff5c73b5def4c04e2ce9549e787d790bdbc2c",
+    "native-automation/automation_editor_mutation.h": "fc16ceeca1a437cd1489dd0b5e58bf53b344841006012d76e46f811b9cad34df",
+    "native-automation/automation_files.h": "849bd35f7c4a9b086e00af12be54eecdce4677e0c86ea4842ef8840e036764d7",
+    "native-automation/automation_login.h": "950d57d478690f768e05499459312e25795dd766c78b4c11066c64026f31aaaf",
+    "native-automation/automation_preset.h": "bcaa9b021e1308e6400df9e767384cffa0e68a1b8d7b6928bf47585d22163c43",
+    "native-automation/automation_protocol.h": "8e1e41208a72112415e973fd4c16738092442946c0835ca6be900ec14dfdd1c8",
+    "native-automation/automation_session_path.h": "a3d37e9489b6bc3582039095ebbca1b08b066c0dd22bc4106b5f0eb3b177adbc",
+    "native-automation/automation_store.cpp": "94bb6d967a4f693d3de5ad3c6a0f1ea985e53af7c912d4fdc30a2ab071f3bc32",
+    "native-automation/automation_store.h": "8c4fbfd1d9651673aded21f6319a80de4b3f38e39f205c74bb4e887ca82b5f36",
+    "native-automation/automation_store_binding.h": "5f9e6575c90f8912511484cc5d48f789db0a7515c38f9f3e5008f7e519e38d9b",
+    "native-automation/automation_types.h": "6a249b4ed6e9091ade49869102d74550d287a50186a41df474f8d0cb1945945e",
+    "native-automation/automation_wardrobe.h": "b5c028da235b80c62f5f373c1ea2830f51284121b7c7b8ea740396e99e3f483d",
+    "native-automation/character_exit_core.inc": "acf7c4e7f3774c9c4f75469195549b528a62fba57c9743bf449fa9d301cc06bf",
+    "native-automation/economy_actions.h": "9d9656a23b9aa8bc9f278c6b893a2025b1da0a9c1eec53c04e74c3079cc20a95",
+    "native-automation/economy_callback_generations.cpp": "a7341643ee75a4ac53c89e15b419a561e66ad5e61ccade91e81a8233d6107c8e",
+    "native-automation/economy_callback_generations.h": "58f57239557e3cc16b86be696f0d2ddb8c29591773599f7ed18b6c40e6ac7f5a",
+    "native-automation/economy_store_module.cpp": "804d8d3fd12aba6e32bb1243e5ad1b175eaf6d55c7a534e9facdfeae7a4ca116",
+    "native-automation/economy_store_module.h": "c48e62ed71a8b60ddea2018155617bdf8e30975c2ca4ddd987e3faf66a614c48",
+    "native-automation/economy_store_policy.h": "bb90e88893e26fdc9515c13fc6997bcad5e72c562275852942b6aed2ac46957a",
+    "native-automation/economy_v16_adapter.cpp": "5759b7d90fa9513ad168ff8a802e1bf2e0a6c68618099f8383407b938e69ecb8",
+    "native-automation/economy_v16_adapter.h": "94785d2b7f304c42e2b5513a5333e4ba02c72103698b7b565cb7ac4e5ad31d1c",
+    "native-automation/extension_hooks.inc": "223a8e39c6dcb68d104487c9eea414709f821e3aedfe8c9e6fa872e532816854",
+    "native-automation/frame_capture_module.cpp": "f478181a9f7d47edddd146790cd9614733c5e4967a3e3bb0d29d0a4559f876f1",
+    "native-automation/frame_capture_module.h": "8b5883833e2b2221bc3130c6e77149fe0fb6b5354d2c8458fdc2c361a1e1f610",
+    "native-automation/frame_capture_policy.h": "3d54be357ad32fb1acfd211dc9040f1b2c53f94de4093481d96a82729b9a3d75",
+    "native-automation/friend_request_probe.inc": "098cfa97b9755a080dc36ef2f7cc4b820e992376add66126686ef754e5fecb27",
+    "native-automation/friend_request_probe_policy.h": "47c053cd6e5dba91a1d59168490fa5938f6b92a6e253216386cf5a11fe507073",
+    "native-automation/housing_native.inc": "5a4a971b356f10da5a2a300f921ebcbfc3c855e2bcdc9b8248f036c876459649",
+    "native-automation/housing_wiring.inc": "bcb920ddf49d6f2f05f22bc3e20262679fe3dadb5f8be32ce491ad5db4a210c3",
+    "native-automation/join_queue_gate.cpp": "21c0bb8054b70e640ce149ed882f84f74744068fe42324b819e7e17f2e54f003",
+    "native-automation/join_queue_gate.h": "957b3cd423964d5ede86771a92ed6174d88c8febfbf6056e71271719456cb7e2",
+    "native-automation/movement_native_core.h": "9975e925c45bd67c5b6045250fb3f06d1192c62e9f3620f0edae557a92789885",
+    "native-automation/movement_policy.h": "3eb2c383bbf5b244fb650ee06fefdc028638ea5adca59adfbc6d73ebe838a044",
+    "native-automation/movement_profile.h": "9b3c726bf841fb50b4915e47d4cb0de28a14115485879b3166b4c4c9a1f4296d",
+    "native-automation/peer_pose_core.inc": "bf6093a391887a711cefb5e9d85f8e35db7ca5b0fbd00a1a03079f3ae3cb3a8d",
+    "native-automation/public_chat_core.inc": "bda043d4d8a4683bf08c09f7708248f0d9ea87a1aee2bd8003f9e9b4bbb74a5a",
+    "native-automation/resource_navigation_core.inc": "5924df271f7c6fb88b764131041da6302be75fa7cc085741b9bb81ed71a28869",
+    "native-automation/resource_navigation_module.cpp": "6ad210d90734bf114f18e49ee15be715385d50ffc328a2fc65abf2a1781d3a0a",
+    "native-automation/resource_navigation_module.h": "7b1303f3bbae2dd455f51b86f1605f9d5c7e372a5e9985fd140cc854ffc4110a",
+    "native-automation/resource_player_info_netid.inc": "726694d38b2002005afecea1048518d878cc4e61468a71a94fc25621277610af",
+    "native-automation/resource_selection.h": "c56e63fe7d181261c04a85dcc885a8acbf5eeb3a0eba9a0929f6191b309fa091",
+    "native-automation/resource_ui_core.inc": "6c57fd97dd3025a41b10a85670d4461218a47b33457de94ca0062c941be1b66a",
+    "native-automation/resource_ui_module.cpp": "7f18cac351a8cbb8b0ff973e24c7efef5007464611e7f9dfa0c95efec7e0f7a6",
+    "native-automation/resource_ui_module.h": "7b23c37d763d5d0fd5751feee5aebc9331e30ef7d457d06bb7acbfde19be40e7",
+    "native-automation/row_matcher_diagnostic.inc": "6d4f36ca8327ffd6a31db2e2eea9b785ade7fc7067d14d5a5d97c9524b629679",
+    "native-automation/settings_native_core.inc": "7005e673fbab6ae1d0f8a8e160e9cb3a7193161448d726cc9cb7fe91805631a1",
+    "native-automation/settings_open_core.inc": "c319d4dfee0c07c6a145666851da1380ebca42ac6163d6a7f95681dc67e07801",
+    "native-automation/settings_open_diagnostic.inc": "f3ecd589fc3cb49887ea8e37bd042499726605ee767f9ae6fadcdc1823bc5a87",
+    "native-automation/settings_sidebar_core.inc": "f3794b1d6bbc9d42dd6f8da46ff002a5b6f6a3fd67b5d017c8ae24bccf4658b6",
+    "native-automation/settings_sidebar_policy.h": "f8b7a5875274c8c5c49603a50fbe2a0616d64e30fba7aab992e90745c7331a3d",
+    "native-automation/social_module.cpp": "0e0e5667594c99d756191c77940cd871b571ee2ac22bf13d7508aa0321d3a32d",
+    "native-automation/social_module.h": "e23b7a599773a0ee7cf8c479f008f2404c35bde51099991039fde985a4b0c4eb",
+    "native-automation/social_owned_identity_diagnostic.inc": "ff3d69628eaa04cafcd540944ee4fc522eb98ee989f992b2db8d436e5066e2ac",
+    "native-automation/social_player_info_netid.inc": "d35b21b8b2506e6c61c61b788fd60b90278938f967bcbd65a1fb37d8fa052779",
+    "native-automation/store_policy.h": "374ca09d4ed038dbed7dee7df875151aeb89498e2702969a1d4e02e4864e8bec",
+    "native-automation/test_store_module.cpp": "e50763f8f5a6adc9c93c10aa839893013f35f4be294dc818c2a55319a7b9f432",
+    "native-automation/v16_shared_core.inc": "91f9fd65bcfba60eca17d428ce2ec33121eccf0a00c08dcc84bffda47ef4bcf5",
+    "native-automation/v16_snapshot.inc": "6f7818b6ec9b17e9a553858cd0befc2c0dccf31d5079d4da62f43fe17099d40c",
+    "native-automation/v16_social_core.inc": "bf2fed924e55b9d2969750f550b45790f177d41159ca5a6c1ac7f05e8aa8a5ab",
+    "native-registry/interaction_registry_bridge.cpp": "ebfea7fb5fec6d448fffd3c8d26d20b1701595e94f8e5060bb00b7f7ba468746",
+    "native-registry/interaction_registry_bridge_abi.h": "7d1ca53eb1c9f2df22b3e7595a5b1bfb72e52403e630b0fceaf106526b06b426",
+    "pe-composition/compose_iat_corrected.py": "7e9106c91f32ca2932916a8a92cd817a8aa10b7ea467d4b91e881aa1159b2cdf",
+    "pe-composition/economy-callback-hooks.json": "ede3f026cab87cd905ae2368efd302082bde4562961ab9efc658cdf4932640e0",
+    "pe-composition/join_queue_patch.py": "49c2827347c988795de82db11783abba5f08f350ddbe5fa0bb58073104c28618",
+    "pe-composition/join_queue_shim.s": "50dbd68cae3f0cee12f3dc6cec65a308a88a4eefdf68e3c8ba0ae7d08178c172",
+    "pe-composition/movement_shims.s": "be9e47a9a26e8b2caa441f1ac5afb37437fa7c095a8ede87265b97adec6262f7",
+    "pe-composition/unitywebrequest-get-calls.json": "3701dd476b1f8085807a4cef4f49e604455c1324641a843862731e7f60ffae94",
+    "public-access/CMakeLists.txt": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6",
+    "public-access/NebulaPublicAccess.cpp": "4d6023c1d55ed94530969c0af947ac22313f3a77870a89c66873cf34e800fe83",
+    "public-access/NebulaPublicAccess.h": "000d5c5437bc93f754ca26dba04113754c1a30634620120cef6d2151f663a9f5",
+    "public-access/NebulaRemoteBootstrap.cpp": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae",
+    "public-access/NebulaRemoteBootstrap.h": "9560fce1b72cf3692bb2e0a6e4ce03a20acf8bb0c358a7f96978ad315748f123",
+    "public-access/RemoteTransportPin.h.in": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4",
+    "recipes/eyes_lifetime_patch.py": "c380b597de877e49fe1f70c0a4dc15a43d0bd60c877dfc54bcf551dfe886f7d0",
+    "recipes/interaction_registry_patch.py": "6a65a9eab4340d759a5fc7509622b2fd741bae473fc8a954cadd7d7cb24ffdee",
+    "recipes/keyboard_buttons_patch.py": "d40a1814197e37168bdccf47314123abd400a384b163443adfff219444f1a244",
+    "recipes/keyboard_focus_patch.py": "cb8156a3cc4ab0f0114ae5736ad18a10086e220abf8b00e89767a0d46eb0a955",
+    "recipes/keyboard_housing_input_patch.py": "0a1b4fd06fcbb57c62b02859a0c89d4ebb49688f55b07cd4ab4ff48a8bae6324",
+    "recipes/keyboard_input_patch.py": "5f75c258008fcb8c1e1ea7b0cffc62391420ecf6315f970f635d105a9b212c72",
+    "recipes/make_client_copy.py": "979570d9e150457dfd916d1321412047bf372914e153907d994fa53a8838710d",
+    "recipes/neck_thin_load_patch.py": "653c38a4b200b7d01adae91a5e6659ce547c6996bec057921a387884a87de6ff",
+    "recipes/notification_text_patch.py": "621e0a570a20404d7dc3c94bdb871966e3c6fd7f7668025b05752979f0acdae7",
+    "recipes/preset_input_patch.py": "be1d00a3c764ae884fd7e8a19bd53899c24c054e3da77fd1dcb2439e756a79ab",
+    "recipes/rapid_boat_patch.py": "3f30588cbcc1ac5753091fb1333b1bc64a57a6e96c6a3f37e82aac484e7c4d04",
+    "recipes/settings_preservation_patch.py": "a633ceb73192ee5ee920543b96ad4ea431a334006f6c32ae0682a103de6f65a3",
+    "recipes/steam_update_pump_patch.py": "ff038f301edfc8673bb9a87cbbb22c94a6a76a2ec03f74f6afa577212a642e86",
+    "requirements-dev.txt": "569a5975409c2817c328ef70819260e256bf128a3093d75775544a96d1da14e2",
+    "shims/automation.s": "8f64ec52d25e5dfc2299dc1423c70249827e48f1e79bedcbb3cb74b44f74bc34",
+    "shims/interaction_registry_bridge.s": "efd230c15283b07927d83f927c8f5419a9c35ffa776e8e1affb04152ce360870",
+    "shims/keyboard_buttons.s": "009c99a34f9114bc95db0eccafa0e4f8e4034368d986589e202f59afb3be0f48",
+    "shims/notification_text.s": "3c2ffe73d58a207bed0d829cada33eb468f6f34e7ba4f05efff36a6bbceb646d",
+    "shims/rapid_boat_exit.s": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66"
+  },
+  "origins": {
+    "recipes/interaction_registry_patch.py": {
+      "source": "client-patches/recipes/interaction_registry_patch.py",
+      "original_sha256": "6a65a9eab4340d759a5fc7509622b2fd741bae473fc8a954cadd7d7cb24ffdee",
+      "relocated": false
+    },
+    "recipes/keyboard_buttons_patch.py": {
+      "source": "client-patches/recipes/keyboard_buttons_patch.py",
+      "original_sha256": "d40a1814197e37168bdccf47314123abd400a384b163443adfff219444f1a244",
+      "relocated": false
+    },
+    "recipes/keyboard_focus_patch.py": {
+      "source": "client-patches/recipes/keyboard_focus_patch.py",
+      "original_sha256": "cb8156a3cc4ab0f0114ae5736ad18a10086e220abf8b00e89767a0d46eb0a955",
+      "relocated": false
+    },
+    "recipes/keyboard_housing_input_patch.py": {
+      "source": "client-patches/recipes/keyboard_housing_input_patch.py",
+      "original_sha256": "0a1b4fd06fcbb57c62b02859a0c89d4ebb49688f55b07cd4ab4ff48a8bae6324",
+      "relocated": false
+    },
+    "recipes/keyboard_input_patch.py": {
+      "source": "client-patches/recipes/keyboard_input_patch.py",
+      "original_sha256": "5f75c258008fcb8c1e1ea7b0cffc62391420ecf6315f970f635d105a9b212c72",
+      "relocated": false
+    },
+    "recipes/neck_thin_load_patch.py": {
+      "source": "client-patches/recipes/neck_thin_load_patch.py",
+      "original_sha256": "653c38a4b200b7d01adae91a5e6659ce547c6996bec057921a387884a87de6ff",
+      "relocated": false
+    },
+    "recipes/notification_text_patch.py": {
+      "source": "client-patches/recipes/notification_text_patch.py",
+      "original_sha256": "621e0a570a20404d7dc3c94bdb871966e3c6fd7f7668025b05752979f0acdae7",
+      "relocated": false
+    },
+    "recipes/preset_input_patch.py": {
+      "source": "client-patches/recipes/preset_input_patch.py",
+      "original_sha256": "be1d00a3c764ae884fd7e8a19bd53899c24c054e3da77fd1dcb2439e756a79ab",
+      "relocated": false
+    },
+    "recipes/rapid_boat_patch.py": {
+      "source": "client-patches/recipes/rapid_boat_patch.py",
+      "original_sha256": "3f30588cbcc1ac5753091fb1333b1bc64a57a6e96c6a3f37e82aac484e7c4d04",
+      "relocated": false
+    },
+    "recipes/settings_preservation_patch.py": {
+      "source": "client-patches/recipes/settings_preservation_patch.py",
+      "original_sha256": "a633ceb73192ee5ee920543b96ad4ea431a334006f6c32ae0682a103de6f65a3",
+      "relocated": false
+    },
+    "shims/interaction_registry_bridge.s": {
+      "source": "client-patches/shims/interaction_registry_bridge.s",
+      "original_sha256": "efd230c15283b07927d83f927c8f5419a9c35ffa776e8e1affb04152ce360870",
+      "relocated": false
+    },
+    "shims/keyboard_buttons.s": {
+      "source": "client-patches/shims/keyboard_buttons.s",
+      "original_sha256": "009c99a34f9114bc95db0eccafa0e4f8e4034368d986589e202f59afb3be0f48",
+      "relocated": false
+    },
+    "shims/notification_text.s": {
+      "source": "client-patches/shims/notification_text.s",
+      "original_sha256": "3c2ffe73d58a207bed0d829cada33eb468f6f34e7ba4f05efff36a6bbceb646d",
+      "relocated": false
+    },
+    "shims/rapid_boat_exit.s": {
+      "source": "client-patches/shims/rapid_boat_exit.s",
+      "original_sha256": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66",
+      "relocated": false
+    },
+    "native-registry/interaction_registry_bridge.cpp": {
+      "source": "client-patches/native-registry/interaction_registry_bridge.cpp",
+      "original_sha256": "ebfea7fb5fec6d448fffd3c8d26d20b1701595e94f8e5060bb00b7f7ba468746",
+      "relocated": false
+    },
+    "native-registry/interaction_registry_bridge_abi.h": {
+      "source": "client-patches/native-registry/interaction_registry_bridge_abi.h",
+      "original_sha256": "7d1ca53eb1c9f2df22b3e7595a5b1bfb72e52403e630b0fceaf106526b06b426",
+      "relocated": false
+    },
+    "pe-composition/compose_iat_corrected.py": {
+      "source": "client-patches/pe-composition/compose_iat_corrected.py",
+      "original_sha256": "c736cfb829d93c1ef29272e16241fec11e6205985be69d4aa55a21be7924aac6",
+      "relocated": true
+    },
+    "pe-composition/economy-callback-hooks.json": {
+      "source": "client-patches/pe-composition/economy-callback-hooks.json",
+      "original_sha256": "ede3f026cab87cd905ae2368efd302082bde4562961ab9efc658cdf4932640e0",
+      "relocated": false
+    },
+    "pe-composition/movement_shims.s": {
+      "source": "client-patches/pe-composition/movement_shims.s",
+      "original_sha256": "be9e47a9a26e8b2caa441f1ac5afb37437fa7c095a8ede87265b97adec6262f7",
+      "relocated": false
+    },
+    "pe-composition/unitywebrequest-get-calls.json": {
+      "source": "client-patches/pe-composition/unitywebrequest-get-calls.json",
+      "original_sha256": "3701dd476b1f8085807a4cef4f49e604455c1324641a843862731e7f60ffae94",
+      "relocated": false
+    },
+    "public-access/CMakeLists.txt": {
+      "source": "client-patches/public-access/CMakeLists.txt",
+      "original_sha256": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6",
+      "relocated": false
+    },
+    "public-access/NebulaPublicAccess.cpp": {
+      "source": "client-patches/public-access/NebulaPublicAccess.cpp",
+      "original_sha256": "4d6023c1d55ed94530969c0af947ac22313f3a77870a89c66873cf34e800fe83",
+      "relocated": false
+    },
+    "public-access/NebulaPublicAccess.h": {
+      "source": "client-patches/public-access/NebulaPublicAccess.h",
+      "original_sha256": "000d5c5437bc93f754ca26dba04113754c1a30634620120cef6d2151f663a9f5",
+      "relocated": false
+    },
+    "public-access/NebulaRemoteBootstrap.cpp": {
+      "source": "client-patches/public-access/NebulaRemoteBootstrap.cpp",
+      "original_sha256": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae",
+      "relocated": false
+    },
+    "public-access/NebulaRemoteBootstrap.h": {
+      "source": "client-patches/public-access/NebulaRemoteBootstrap.h",
+      "original_sha256": "9560fce1b72cf3692bb2e0a6e4ce03a20acf8bb0c358a7f96978ad315748f123",
+      "relocated": false
+    },
+    "public-access/RemoteTransportPin.h.in": {
+      "source": "client-patches/public-access/RemoteTransportPin.h.in",
+      "original_sha256": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4",
+      "relocated": false
+    },
+    "requirements-dev.txt": {
+      "source": "client-patches/requirements-dev.txt",
+      "original_sha256": "569a5975409c2817c328ef70819260e256bf128a3093d75775544a96d1da14e2",
+      "relocated": false
+    },
+    "recipes/make_client_copy.py": {
+      "source": "outputs/nebula-preservation/tools/make_client_copy.py",
+      "original_sha256": "979570d9e150457dfd916d1321412047bf372914e153907d994fa53a8838710d",
+      "relocated": false
+    },
+    "recipes/eyes_lifetime_patch.py": {
+      "source": "work/client-fix-candidates/eyes-lifetime-v1/eyes_lifetime_patch.py",
+      "original_sha256": "0249bbd881a395c59c6300e6a27c34ed1a6d9786eb9fc768e6d71ecb0cda208a",
+      "relocated": true
+    },
+    "shims/automation.s": {
+      "source": "work/client-fix-candidates/background-automation-v1/automation.s",
+      "original_sha256": "8f64ec52d25e5dfc2299dc1423c70249827e48f1e79bedcbb3cb74b44f74bc34",
+      "relocated": false
+    },
+    "recipes/steam_update_pump_patch.py": {
+      "source": "work/client-fix-candidates/background-automation-v1/automation_patch.py",
+      "original_sha256": "0926a00b53d811beaf64edaf90bb902db85c3a94ce8d41674f5fc0c0f2545bd0",
+      "relocated": true,
+      "change": "Remove historical helper preflight/CLI; preserve exact source/object pins, emitter and output-byte checks"
+    },
+    "pe-composition/join_queue_patch.py": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v7/compose_ga.py",
+      "original_sha256": "c625a6a9e6a3fe97abceb605b4a86554fc2166f4f9e415f9fded15419c450877",
+      "relocated": true,
+      "change": "Relative COFF reader, exact default/optional source profiles, no historical CLI; unchanged compose body except error text"
+    },
+    "pe-composition/join_queue_shim.s": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v7/join_queue_shim.s",
+      "original_sha256": "50dbd68cae3f0cee12f3dc6cec65a308a88a4eefdf68e3c8ba0ae7d08178c172",
+      "relocated": false
+    },
+    "native-automation/appearance_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/appearance_core.inc",
+      "original_sha256": "7f1e275978a6e1a21f63366a6742bcae43f297cec7c1bfc25404d83335a1639c",
+      "relocated": false
+    },
+    "native-automation/automation.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation.cpp",
+      "original_sha256": "b65879629df0f709614dcdaee63fea427925d1628637cf48dfd11db89ffe1b80",
+      "relocated": false
+    },
+    "native-automation/automation.s": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation.s",
+      "original_sha256": "8f64ec52d25e5dfc2299dc1423c70249827e48f1e79bedcbb3cb74b44f74bc34",
+      "relocated": false
+    },
+    "native-automation/automation_capture.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_capture.h",
+      "original_sha256": "e446da9691b7a7dcce0f56713a57c3627318f63da5777a3a4ede285a295cb27a",
+      "relocated": false
+    },
+    "native-automation/automation_desktop.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_desktop.h",
+      "original_sha256": "3e66245bc4b1f8325d7da2e0decff5c73b5def4c04e2ce9549e787d790bdbc2c",
+      "relocated": false
+    },
+    "native-automation/automation_editor_mutation.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_editor_mutation.h",
+      "original_sha256": "fc16ceeca1a437cd1489dd0b5e58bf53b344841006012d76e46f811b9cad34df",
+      "relocated": false
+    },
+    "native-automation/automation_files.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_files.h",
+      "original_sha256": "849bd35f7c4a9b086e00af12be54eecdce4677e0c86ea4842ef8840e036764d7",
+      "relocated": false
+    },
+    "native-automation/automation_login.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_login.h",
+      "original_sha256": "950d57d478690f768e05499459312e25795dd766c78b4c11066c64026f31aaaf",
+      "relocated": false
+    },
+    "native-automation/automation_preset.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_preset.h",
+      "original_sha256": "bcaa9b021e1308e6400df9e767384cffa0e68a1b8d7b6928bf47585d22163c43",
+      "relocated": false
+    },
+    "native-automation/automation_protocol.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_protocol.h",
+      "original_sha256": "8e1e41208a72112415e973fd4c16738092442946c0835ca6be900ec14dfdd1c8",
+      "relocated": false
+    },
+    "native-automation/automation_session_path.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_session_path.h",
+      "original_sha256": "a3d37e9489b6bc3582039095ebbca1b08b066c0dd22bc4106b5f0eb3b177adbc",
+      "relocated": false
+    },
+    "native-automation/automation_store.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_store.cpp",
+      "original_sha256": "94bb6d967a4f693d3de5ad3c6a0f1ea985e53af7c912d4fdc30a2ab071f3bc32",
+      "relocated": false
+    },
+    "native-automation/automation_store.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_store.h",
+      "original_sha256": "8c4fbfd1d9651673aded21f6319a80de4b3f38e39f205c74bb4e887ca82b5f36",
+      "relocated": false
+    },
+    "native-automation/automation_store_binding.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_store_binding.h",
+      "original_sha256": "5f9e6575c90f8912511484cc5d48f789db0a7515c38f9f3e5008f7e519e38d9b",
+      "relocated": false
+    },
+    "native-automation/automation_types.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_types.h",
+      "original_sha256": "6a249b4ed6e9091ade49869102d74550d287a50186a41df474f8d0cb1945945e",
+      "relocated": false
+    },
+    "native-automation/automation_wardrobe.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/automation_wardrobe.h",
+      "original_sha256": "b5c028da235b80c62f5f373c1ea2830f51284121b7c7b8ea740396e99e3f483d",
+      "relocated": false
+    },
+    "native-automation/character_exit_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/character_exit_core.inc",
+      "original_sha256": "acf7c4e7f3774c9c4f75469195549b528a62fba57c9743bf449fa9d301cc06bf",
+      "relocated": false
+    },
+    "native-automation/economy_actions.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/economy_actions.h",
+      "original_sha256": "9d9656a23b9aa8bc9f278c6b893a2025b1da0a9c1eec53c04e74c3079cc20a95",
+      "relocated": false
+    },
+    "native-automation/economy_callback_generations.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/economy_callback_generations.cpp",
+      "original_sha256": "a7341643ee75a4ac53c89e15b419a561e66ad5e61ccade91e81a8233d6107c8e",
+      "relocated": false
+    },
+    "native-automation/economy_callback_generations.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/economy_callback_generations.h",
+      "original_sha256": "58f57239557e3cc16b86be696f0d2ddb8c29591773599f7ed18b6c40e6ac7f5a",
+      "relocated": false
+    },
+    "native-automation/economy_store_module.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v9/prepared-normal/economy_store_module.cpp",
+      "original_sha256": "804d8d3fd12aba6e32bb1243e5ad1b175eaf6d55c7a534e9facdfeae7a4ca116",
+      "relocated": false
+    },
+    "native-automation/economy_store_module.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/economy_store_module.h",
+      "original_sha256": "c48e62ed71a8b60ddea2018155617bdf8e30975c2ca4ddd987e3faf66a614c48",
+      "relocated": false
+    },
+    "native-automation/economy_store_policy.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v9/prepared-normal/economy_store_policy.h",
+      "original_sha256": "bb90e88893e26fdc9515c13fc6997bcad5e72c562275852942b6aed2ac46957a",
+      "relocated": false
+    },
+    "native-automation/economy_v16_adapter.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v9/prepared-normal/economy_v16_adapter.cpp",
+      "original_sha256": "5759b7d90fa9513ad168ff8a802e1bf2e0a6c68618099f8383407b938e69ecb8",
+      "relocated": false
+    },
+    "native-automation/economy_v16_adapter.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v9/prepared-normal/economy_v16_adapter.h",
+      "original_sha256": "94785d2b7f304c42e2b5513a5333e4ba02c72103698b7b565cb7ac4e5ad31d1c",
+      "relocated": false
+    },
+    "native-automation/extension_hooks.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/extension_hooks.inc",
+      "original_sha256": "223a8e39c6dcb68d104487c9eea414709f821e3aedfe8c9e6fa872e532816854",
+      "relocated": false
+    },
+    "native-automation/frame_capture_module.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/frame_capture_module.cpp",
+      "original_sha256": "f478181a9f7d47edddd146790cd9614733c5e4967a3e3bb0d29d0a4559f876f1",
+      "relocated": false
+    },
+    "native-automation/frame_capture_module.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/frame_capture_module.h",
+      "original_sha256": "8b5883833e2b2221bc3130c6e77149fe0fb6b5354d2c8458fdc2c361a1e1f610",
+      "relocated": false
+    },
+    "native-automation/frame_capture_policy.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/frame_capture_policy.h",
+      "original_sha256": "3d54be357ad32fb1acfd211dc9040f1b2c53f94de4093481d96a82729b9a3d75",
+      "relocated": false
+    },
+    "native-automation/friend_request_probe.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/friend_request_probe.inc",
+      "original_sha256": "098cfa97b9755a080dc36ef2f7cc4b820e992376add66126686ef754e5fecb27",
+      "relocated": false
+    },
+    "native-automation/friend_request_probe_policy.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/friend_request_probe_policy.h",
+      "original_sha256": "47c053cd6e5dba91a1d59168490fa5938f6b92a6e253216386cf5a11fe507073",
+      "relocated": false
+    },
+    "native-automation/housing_native.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/housing_native.inc",
+      "original_sha256": "5a4a971b356f10da5a2a300f921ebcbfc3c855e2bcdc9b8248f036c876459649",
+      "relocated": false
+    },
+    "native-automation/housing_wiring.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/housing_wiring.inc",
+      "original_sha256": "bcb920ddf49d6f2f05f22bc3e20262679fe3dadb5f8be32ce491ad5db4a210c3",
+      "relocated": false
+    },
+    "native-automation/join_queue_gate.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/join_queue_gate.cpp",
+      "original_sha256": "21c0bb8054b70e640ce149ed882f84f74744068fe42324b819e7e17f2e54f003",
+      "relocated": false
+    },
+    "native-automation/join_queue_gate.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/join_queue_gate.h",
+      "original_sha256": "957b3cd423964d5ede86771a92ed6174d88c8febfbf6056e71271719456cb7e2",
+      "relocated": false
+    },
+    "native-automation/movement_native_core.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/movement_native_core.h",
+      "original_sha256": "9975e925c45bd67c5b6045250fb3f06d1192c62e9f3620f0edae557a92789885",
+      "relocated": false
+    },
+    "native-automation/movement_policy.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/movement_policy.h",
+      "original_sha256": "3eb2c383bbf5b244fb650ee06fefdc028638ea5adca59adfbc6d73ebe838a044",
+      "relocated": false
+    },
+    "native-automation/movement_profile.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/movement_profile.h",
+      "original_sha256": "9b3c726bf841fb50b4915e47d4cb0de28a14115485879b3166b4c4c9a1f4296d",
+      "relocated": false
+    },
+    "native-automation/peer_pose_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/peer_pose_core.inc",
+      "original_sha256": "bf6093a391887a711cefb5e9d85f8e35db7ca5b0fbd00a1a03079f3ae3cb3a8d",
+      "relocated": false
+    },
+    "native-automation/public_chat_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/public_chat_core.inc",
+      "original_sha256": "bda043d4d8a4683bf08c09f7708248f0d9ea87a1aee2bd8003f9e9b4bbb74a5a",
+      "relocated": false
+    },
+    "native-automation/resource_navigation_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_navigation_core.inc",
+      "original_sha256": "5924df271f7c6fb88b764131041da6302be75fa7cc085741b9bb81ed71a28869",
+      "relocated": false
+    },
+    "native-automation/resource_navigation_module.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_navigation_module.cpp",
+      "original_sha256": "6ad210d90734bf114f18e49ee15be715385d50ffc328a2fc65abf2a1781d3a0a",
+      "relocated": false
+    },
+    "native-automation/resource_navigation_module.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_navigation_module.h",
+      "original_sha256": "7b1303f3bbae2dd455f51b86f1605f9d5c7e372a5e9985fd140cc854ffc4110a",
+      "relocated": false
+    },
+    "native-automation/resource_player_info_netid.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_player_info_netid.inc",
+      "original_sha256": "726694d38b2002005afecea1048518d878cc4e61468a71a94fc25621277610af",
+      "relocated": false
+    },
+    "native-automation/resource_selection.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_selection.h",
+      "original_sha256": "c56e63fe7d181261c04a85dcc885a8acbf5eeb3a0eba9a0929f6191b309fa091",
+      "relocated": false
+    },
+    "native-automation/resource_ui_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_ui_core.inc",
+      "original_sha256": "6c57fd97dd3025a41b10a85670d4461218a47b33457de94ca0062c941be1b66a",
+      "relocated": false
+    },
+    "native-automation/resource_ui_module.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_ui_module.cpp",
+      "original_sha256": "7f18cac351a8cbb8b0ff973e24c7efef5007464611e7f9dfa0c95efec7e0f7a6",
+      "relocated": false
+    },
+    "native-automation/resource_ui_module.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/resource_ui_module.h",
+      "original_sha256": "7b23c37d763d5d0fd5751feee5aebc9331e30ef7d457d06bb7acbfde19be40e7",
+      "relocated": false
+    },
+    "native-automation/row_matcher_diagnostic.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/row_matcher_diagnostic.inc",
+      "original_sha256": "6d4f36ca8327ffd6a31db2e2eea9b785ade7fc7067d14d5a5d97c9524b629679",
+      "relocated": false
+    },
+    "native-automation/settings_native_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/settings_native_core.inc",
+      "original_sha256": "7005e673fbab6ae1d0f8a8e160e9cb3a7193161448d726cc9cb7fe91805631a1",
+      "relocated": false
+    },
+    "native-automation/settings_open_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/settings_open_core.inc",
+      "original_sha256": "c319d4dfee0c07c6a145666851da1380ebca42ac6163d6a7f95681dc67e07801",
+      "relocated": false
+    },
+    "native-automation/settings_open_diagnostic.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/settings_open_diagnostic.inc",
+      "original_sha256": "f3ecd589fc3cb49887ea8e37bd042499726605ee767f9ae6fadcdc1823bc5a87",
+      "relocated": false
+    },
+    "native-automation/settings_sidebar_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/settings_sidebar_core.inc",
+      "original_sha256": "f3794b1d6bbc9d42dd6f8da46ff002a5b6f6a3fd67b5d017c8ae24bccf4658b6",
+      "relocated": false
+    },
+    "native-automation/settings_sidebar_policy.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/settings_sidebar_policy.h",
+      "original_sha256": "f8b7a5875274c8c5c49603a50fbe2a0616d64e30fba7aab992e90745c7331a3d",
+      "relocated": false
+    },
+    "native-automation/social_module.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/social_module.cpp",
+      "original_sha256": "0e0e5667594c99d756191c77940cd871b571ee2ac22bf13d7508aa0321d3a32d",
+      "relocated": false
+    },
+    "native-automation/social_module.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/social_module.h",
+      "original_sha256": "e23b7a599773a0ee7cf8c479f008f2404c35bde51099991039fde985a4b0c4eb",
+      "relocated": false
+    },
+    "native-automation/social_owned_identity_diagnostic.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/social_owned_identity_diagnostic.inc",
+      "original_sha256": "ff3d69628eaa04cafcd540944ee4fc522eb98ee989f992b2db8d436e5066e2ac",
+      "relocated": false
+    },
+    "native-automation/social_player_info_netid.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/social_player_info_netid.inc",
+      "original_sha256": "d35b21b8b2506e6c61c61b788fd60b90278938f967bcbd65a1fb37d8fa052779",
+      "relocated": false
+    },
+    "native-automation/store_policy.h": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/store_policy.h",
+      "original_sha256": "374ca09d4ed038dbed7dee7df875151aeb89498e2702969a1d4e02e4864e8bec",
+      "relocated": false
+    },
+    "native-automation/test_store_module.cpp": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/test_store_module.cpp",
+      "original_sha256": "e50763f8f5a6adc9c93c10aa839893013f35f4be294dc818c2a55319a7b9f432",
+      "relocated": false
+    },
+    "native-automation/v16_shared_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v9/prepared-normal/v16_shared_core.inc",
+      "original_sha256": "91f9fd65bcfba60eca17d428ce2ec33121eccf0a00c08dcc84bffda47ef4bcf5",
+      "relocated": false
+    },
+    "native-automation/v16_snapshot.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v8/prepared-final-v2-normal/v16_snapshot.inc",
+      "original_sha256": "6f7818b6ec9b17e9a553858cd0befc2c0dccf31d5079d4da62f43fe17099d40c",
+      "relocated": false
+    },
+    "native-automation/v16_social_core.inc": {
+      "source": "work/remaining-implementation/acceptance/normal-next-v9/prepared-normal/v16_social_core.inc",
+      "original_sha256": "bf2fed924e55b9d2969750f550b45790f177d41159ca5a6c1ac7f05e8aa8a5ab",
+      "relocated": false
+    }
+  },
+  "helper_baseline_receipt_sha256": "f8f38f5880e711b5664663f81ecf582d4cbaab76470327bb5f791a241b3981ea",
+  "helper_baseline": {
+    "bytes": 409600,
+    "exports": [
+      "NebulaAutomation_EconomyPurchasesCompleted",
+      "NebulaAutomation_EconomyShopInfoCompleted",
+      "NebulaAutomation_JoinQueueReady",
+      "NebulaAutomation_MovementAxis",
+      "NebulaAutomation_Pump"
+    ],
+    "ga_profile_sha256": "39ad8c096357f4a1e56b90524175f67b8e6cc88dcedf2c3bc0fbf87178271e3b",
+    "imports": [
+      "KERNEL32.dll",
+      "api-ms-win-crt-convert-l1-1-0.dll",
+      "api-ms-win-crt-heap-l1-1-0.dll",
+      "api-ms-win-crt-locale-l1-1-0.dll",
+      "api-ms-win-crt-private-l1-1-0.dll",
+      "api-ms-win-crt-runtime-l1-1-0.dll",
+      "api-ms-win-crt-stdio-l1-1-0.dll",
+      "api-ms-win-crt-string-l1-1-0.dll",
+      "bcrypt.dll"
+    ],
+    "sha256": "68415abf23ee90cbc3e9c6294097c0387eea8b29ddae42eb1fbc290739573083",
+    "source": {
+      "appearance_core.inc": "7f1e275978a6e1a21f63366a6742bcae43f297cec7c1bfc25404d83335a1639c",
+      "automation.cpp": "b65879629df0f709614dcdaee63fea427925d1628637cf48dfd11db89ffe1b80",
+      "automation.s": "8f64ec52d25e5dfc2299dc1423c70249827e48f1e79bedcbb3cb74b44f74bc34",
+      "automation_capture.h": "e446da9691b7a7dcce0f56713a57c3627318f63da5777a3a4ede285a295cb27a",
+      "automation_desktop.h": "3e66245bc4b1f8325d7da2e0decff5c73b5def4c04e2ce9549e787d790bdbc2c",
+      "automation_editor_mutation.h": "fc16ceeca1a437cd1489dd0b5e58bf53b344841006012d76e46f811b9cad34df",
+      "automation_files.h": "849bd35f7c4a9b086e00af12be54eecdce4677e0c86ea4842ef8840e036764d7",
+      "automation_login.h": "950d57d478690f768e05499459312e25795dd766c78b4c11066c64026f31aaaf",
+      "automation_preset.h": "bcaa9b021e1308e6400df9e767384cffa0e68a1b8d7b6928bf47585d22163c43",
+      "automation_protocol.h": "8e1e41208a72112415e973fd4c16738092442946c0835ca6be900ec14dfdd1c8",
+      "automation_session_path.h": "a3d37e9489b6bc3582039095ebbca1b08b066c0dd22bc4106b5f0eb3b177adbc",
+      "automation_store.cpp": "94bb6d967a4f693d3de5ad3c6a0f1ea985e53af7c912d4fdc30a2ab071f3bc32",
+      "automation_store.h": "8c4fbfd1d9651673aded21f6319a80de4b3f38e39f205c74bb4e887ca82b5f36",
+      "automation_store_binding.h": "5f9e6575c90f8912511484cc5d48f789db0a7515c38f9f3e5008f7e519e38d9b",
+      "automation_types.h": "6a249b4ed6e9091ade49869102d74550d287a50186a41df474f8d0cb1945945e",
+      "automation_wardrobe.h": "b5c028da235b80c62f5f373c1ea2830f51284121b7c7b8ea740396e99e3f483d",
+      "character_exit_core.inc": "acf7c4e7f3774c9c4f75469195549b528a62fba57c9743bf449fa9d301cc06bf",
+      "economy_actions.h": "9d9656a23b9aa8bc9f278c6b893a2025b1da0a9c1eec53c04e74c3079cc20a95",
+      "economy_callback_generations.cpp": "a7341643ee75a4ac53c89e15b419a561e66ad5e61ccade91e81a8233d6107c8e",
+      "economy_callback_generations.h": "58f57239557e3cc16b86be696f0d2ddb8c29591773599f7ed18b6c40e6ac7f5a",
+      "economy_store_module.cpp": "804d8d3fd12aba6e32bb1243e5ad1b175eaf6d55c7a534e9facdfeae7a4ca116",
+      "economy_store_module.h": "c48e62ed71a8b60ddea2018155617bdf8e30975c2ca4ddd987e3faf66a614c48",
+      "economy_store_policy.h": "bb90e88893e26fdc9515c13fc6997bcad5e72c562275852942b6aed2ac46957a",
+      "economy_v16_adapter.cpp": "5759b7d90fa9513ad168ff8a802e1bf2e0a6c68618099f8383407b938e69ecb8",
+      "economy_v16_adapter.h": "94785d2b7f304c42e2b5513a5333e4ba02c72103698b7b565cb7ac4e5ad31d1c",
+      "extension_hooks.inc": "223a8e39c6dcb68d104487c9eea414709f821e3aedfe8c9e6fa872e532816854",
+      "frame_capture_module.cpp": "f478181a9f7d47edddd146790cd9614733c5e4967a3e3bb0d29d0a4559f876f1",
+      "frame_capture_module.h": "8b5883833e2b2221bc3130c6e77149fe0fb6b5354d2c8458fdc2c361a1e1f610",
+      "frame_capture_policy.h": "3d54be357ad32fb1acfd211dc9040f1b2c53f94de4093481d96a82729b9a3d75",
+      "friend_request_probe.inc": "098cfa97b9755a080dc36ef2f7cc4b820e992376add66126686ef754e5fecb27",
+      "friend_request_probe_policy.h": "47c053cd6e5dba91a1d59168490fa5938f6b92a6e253216386cf5a11fe507073",
+      "housing_native.inc": "5a4a971b356f10da5a2a300f921ebcbfc3c855e2bcdc9b8248f036c876459649",
+      "housing_wiring.inc": "bcb920ddf49d6f2f05f22bc3e20262679fe3dadb5f8be32ce491ad5db4a210c3",
+      "join_queue_gate.cpp": "21c0bb8054b70e640ce149ed882f84f74744068fe42324b819e7e17f2e54f003",
+      "join_queue_gate.h": "957b3cd423964d5ede86771a92ed6174d88c8febfbf6056e71271719456cb7e2",
+      "movement_native_core.h": "9975e925c45bd67c5b6045250fb3f06d1192c62e9f3620f0edae557a92789885",
+      "movement_policy.h": "3eb2c383bbf5b244fb650ee06fefdc028638ea5adca59adfbc6d73ebe838a044",
+      "movement_profile.h": "9b3c726bf841fb50b4915e47d4cb0de28a14115485879b3166b4c4c9a1f4296d",
+      "peer_pose_core.inc": "bf6093a391887a711cefb5e9d85f8e35db7ca5b0fbd00a1a03079f3ae3cb3a8d",
+      "public_chat_core.inc": "bda043d4d8a4683bf08c09f7708248f0d9ea87a1aee2bd8003f9e9b4bbb74a5a",
+      "resource_navigation_core.inc": "5924df271f7c6fb88b764131041da6302be75fa7cc085741b9bb81ed71a28869",
+      "resource_navigation_module.cpp": "6ad210d90734bf114f18e49ee15be715385d50ffc328a2fc65abf2a1781d3a0a",
+      "resource_navigation_module.h": "7b1303f3bbae2dd455f51b86f1605f9d5c7e372a5e9985fd140cc854ffc4110a",
+      "resource_player_info_netid.inc": "726694d38b2002005afecea1048518d878cc4e61468a71a94fc25621277610af",
+      "resource_selection.h": "c56e63fe7d181261c04a85dcc885a8acbf5eeb3a0eba9a0929f6191b309fa091",
+      "resource_ui_core.inc": "6c57fd97dd3025a41b10a85670d4461218a47b33457de94ca0062c941be1b66a",
+      "resource_ui_module.cpp": "7f18cac351a8cbb8b0ff973e24c7efef5007464611e7f9dfa0c95efec7e0f7a6",
+      "resource_ui_module.h": "7b23c37d763d5d0fd5751feee5aebc9331e30ef7d457d06bb7acbfde19be40e7",
+      "row_matcher_diagnostic.inc": "6d4f36ca8327ffd6a31db2e2eea9b785ade7fc7067d14d5a5d97c9524b629679",
+      "settings_native_core.inc": "7005e673fbab6ae1d0f8a8e160e9cb3a7193161448d726cc9cb7fe91805631a1",
+      "settings_open_core.inc": "c319d4dfee0c07c6a145666851da1380ebca42ac6163d6a7f95681dc67e07801",
+      "settings_open_diagnostic.inc": "f3ecd589fc3cb49887ea8e37bd042499726605ee767f9ae6fadcdc1823bc5a87",
+      "settings_sidebar_core.inc": "f3794b1d6bbc9d42dd6f8da46ff002a5b6f6a3fd67b5d017c8ae24bccf4658b6",
+      "settings_sidebar_policy.h": "f8b7a5875274c8c5c49603a50fbe2a0616d64e30fba7aab992e90745c7331a3d",
+      "social_module.cpp": "0e0e5667594c99d756191c77940cd871b571ee2ac22bf13d7508aa0321d3a32d",
+      "social_module.h": "e23b7a599773a0ee7cf8c479f008f2404c35bde51099991039fde985a4b0c4eb",
+      "social_owned_identity_diagnostic.inc": "ff3d69628eaa04cafcd540944ee4fc522eb98ee989f992b2db8d436e5066e2ac",
+      "social_player_info_netid.inc": "d35b21b8b2506e6c61c61b788fd60b90278938f967bcbd65a1fb37d8fa052779",
+      "store_policy.h": "374ca09d4ed038dbed7dee7df875151aeb89498e2702969a1d4e02e4864e8bec",
+      "test_store_module.cpp": "e50763f8f5a6adc9c93c10aa839893013f35f4be294dc818c2a55319a7b9f432",
+      "v16_shared_core.inc": "91f9fd65bcfba60eca17d428ce2ec33121eccf0a00c08dcc84bffda47ef4bcf5",
+      "v16_snapshot.inc": "6f7818b6ec9b17e9a553858cd0befc2c0dccf31d5079d4da62f43fe17099d40c",
+      "v16_social_core.inc": "bf2fed924e55b9d2969750f550b45790f177d41159ca5a6c1ac7f05e8aa8a5ab"
+    }
+  },
+  "original_game_files_included": false,
+  "decompiler_listings_included": false,
+  "private_credentials_included": false,
+  "stage_replay_required": false,
+  "independently_reviewed": false,
+  "foundation_source_lock_sha256": "74f6b0cd19605ba5d67046bff8907c24cc2dfc62eef69b2f277c44ce150312ad",
+  "foundation_independent_review_sha256": "92f4e9e1efb86579b6b0b8382d30612065cc3dba6088926caf333d664d327e5d",
+  "helper_baseline_version": "V9",
+  "changed_native_files": [
+    "economy_store_module.cpp",
+    "economy_store_policy.h",
+    "economy_v16_adapter.cpp",
+    "economy_v16_adapter.h",
+    "v16_shared_core.inc",
+    "v16_social_core.inc"
+  ],
+  "root_review_sha256": "abbde3851b7a835f1e3831e566368b6f1f9ba0ce16e45b8e38b9f37e5f9af93f"
+}

@@ -1,0 +1,47 @@
+{
+  "format": "nebula-release-input-v1",
+  "app_id": "919290",
+  "build_id": "11018722",
+  "profile": "network-only",
+  "transport": "direct",
+  "status": "provisional",
+  "review": "PENDING exact networking-only source/native acceptance; template is not a release",
+  "originals": "REPLACE_WITH_LOCAL_PRISTINE_STEAM_FOLDER",
+  "artifacts": [
+    {
+      "path": "GameAssembly.dll",
+      "accepted_existing": [],
+      "target": "REPLACE_WITH_REVIEWED_LOCAL_TARGET",
+      "target_sha256": "REPLACE_WITH_REVIEWED_SHA256"
+    },
+    {
+      "path": "Nebula Realms_Data/il2cpp_data/Metadata/global-metadata.dat",
+      "accepted_existing": []
+    },
+    {
+      "path": "NebulaNetworkBridge.dll",
+      "accepted_existing": [],
+      "target": "REPLACE_WITH_REVIEWED_LOCAL_TARGET",
+      "target_sha256": "REPLACE_WITH_REVIEWED_SHA256"
+    },
+    {
+      "path": "NebulaRegistryBridge.dll",
+      "accepted_existing": [],
+      "target": "REPLACE_WITH_REVIEWED_LOCAL_TARGET",
+      "target_sha256": "REPLACE_WITH_REVIEWED_SHA256"
+    },
+    {
+      "path": "NebulaPublicAccess.dll",
+      "accepted_existing": [],
+      "target": "REPLACE_WITH_REVIEWED_LOCAL_TARGET",
+      "target_sha256": "REPLACE_WITH_REVIEWED_SHA256"
+    },
+    {
+      "path": "steam_appid.txt",
+      "accepted_existing": [],
+      "target": "REPLACE_WITH_REVIEWED_LOCAL_TARGET",
+      "target_sha256": "REPLACE_WITH_REVIEWED_SHA256"
+    }
+  ],
+  "review_evidence": []
+}

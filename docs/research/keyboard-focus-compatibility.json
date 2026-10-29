@@ -1,0 +1,120 @@
+{
+  "format_version": 1,
+  "title": "Keyboard focus compatibility: F8 as the L3 fallback",
+  "prepared_utc_date": "2026-10-28",
+  "status": "prepared_offline_validated_narrow_runtime_passed",
+  "classification": "deliberate_keyboard_compatibility_mapping_not_original_bugfix",
+  "motivation": {
+    "surface_limit": "The UI automation surface supports a discrete press_key operation but not a held modifier.",
+    "shift_recheck_path": "work/integration-state/chat-focus-explicit-shift-l-recheck.json",
+    "shift_recheck_sha256": "816365f550a9cb2a3f9187e653de2bf7aff7735b835d0bd8cee31cc09dcbbaaa",
+    "observed_after_shift": {
+      "chat_is_focused": 0,
+      "chat_is_typing": 0,
+      "pad_blocked": 0,
+      "pad_movement_blocked": 0,
+      "manager_show_wheel": 0,
+      "manager_camera_mode": 0,
+      "manager_space_game": 0,
+      "manager_chat_locked": 0
+    }
+  },
+  "candidate": {
+    "baseline_path": "work/patched-client-keyboard-buttons/GameAssembly.dll",
+    "baseline_sha256": "3ddc1eb903eda90be06cc7079e2afa584d250b4430455b86564150fa05949703",
+    "copy_path": "work/patched-client-keyboard-focus/GameAssembly.dll",
+    "copy_sha256": "ec6f909d3af35c89cd287a2803b86839cd5d1b168bc1f76517eed2494c85e01b",
+    "manifest_path": "work/evidence/keyboard-focus-prepared-copy.json",
+    "manifest_sha256": "ddf57425aae16cfe6a9c49d80e11be3e87ee25394d3b01b09537a1d23b3e64ec",
+    "target_executed": false,
+    "installation_changed": false,
+    "network_used": false
+  },
+  "edit": {
+    "l3_stub_rva": "0x2e3d05d",
+    "file_offset": "0x2b82c5d",
+    "instruction_before_hex": "41ba30010000",
+    "instruction_after_hex": "41ba21010000",
+    "semantic_changed_file_offset": "0x2b82c5f",
+    "keyboard_before": {
+      "key": "LeftShift",
+      "unity_keycode": 304
+    },
+    "keyboard_after": {
+      "key": "F8",
+      "unity_keycode": 289
+    },
+    "left_shift_retained": false,
+    "pe_checksum_recomputed": true
+  },
+  "preserved_policy": {
+    "original_padps4_l3_called_first": true,
+    "original_true_short_circuits_keyboard": true,
+    "physical_ps4_l3_changed": false,
+    "is_blocked_controls_guard": true,
+    "reset_true_helper": "UnityEngine.Input.GetKeyDownInt",
+    "reset_false_helper": "UnityEngine.Input.GetKeyInt"
+  },
+  "bounded_f8_reservation_evidence": {
+    "dump_cs_sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850",
+    "enum_neighbors": {
+      "F7": 288,
+      "F8": 289,
+      "F9": 290
+    },
+    "original_native_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+    "direct_integer_key_helper_call_count": 2,
+    "recovered_immediate_arguments": [
+      273,
+      274
+    ],
+    "f8_immediate_found": false,
+    "input_manager_sha256": "70a141380052f0c2eb0d64c8bad71961648fe9791d79a6b2da37924b9bff4775",
+    "input_manager_axis_count": 48,
+    "serialized_f8_binding_count": 0,
+    "limit": "Does not exclude indirect or reflection-based consumers without recovered immediates or serialized bindings."
+  },
+  "offline_tests": {
+    "path": "outputs/nebula-preservation/tools/keyboard_focus_offline_tests.py",
+    "sha256": "87813a249b9d1eade38866200e4eec652767adb28a755d6e342890fbcca050d7",
+    "tests_run": 8,
+    "failures": 0,
+    "errors": 0,
+    "passed": true,
+    "preserved_entry_redirects": 10,
+    "preserved_other_keycodes": 9,
+    "preserved_runtime_function_records": 138032,
+    "section_headers_unchanged": true,
+    "exception_directory_bytes_unchanged": true,
+    "only_l3_immediate_and_checksum_changed": true
+  },
+  "runtime_validation": {
+    "scope": "One native F8 press exercised the exact candidate's L3 keyboard fallback and focused chat.",
+    "pid": 25748,
+    "candidate_loaded_sha256": "ec6f909d3af35c89cd287a2803b86839cd5d1b168bc1f76517eed2494c85e01b",
+    "native_start_path": "work/integration-state/native-nonmini-f8-start.json",
+    "native_start_sha256": "dca23fe14a5b1ce4a842474b457efbd1568b5705cb1cb3fcb1a786be6b612868",
+    "closed_read_only_probe_path": "work/integration-state/chat-focus-f8-first-native-press.json",
+    "closed_read_only_probe_sha256": "65dc9cae764ab84e329dbe12a866cb2bb24c68b61df194e8a4118865993e345d",
+    "observed_after_f8": {
+      "chat_is_focused": 1,
+      "chat_is_typing": 0,
+      "event_system_selected_null": false,
+      "event_system_selected_class": "GameObject",
+      "event_system_input_module": "PS4InputModule",
+      "pad_blocked": 0,
+      "pad_movement_blocked": 0,
+      "manager_show_wheel": 0,
+      "manager_camera_mode": 0,
+      "manager_space_game": 0,
+      "manager_chat_locked": 0
+    },
+    "narrow_result": "passed",
+    "creation_manifest_rewritten": false
+  },
+  "limitations": [
+    "LeftShift is replaced, not retained as an additional L3 keyboard fallback.",
+    "F8-to-chat-focus passed, but downstream tab, notification, and submit paths are not established by that single observation.",
+    "Physical-controller coexistence and Windows exception dispatch through the pre-existing wrapper/unwind range were not stress-tested by this edit."
+  ]
+}

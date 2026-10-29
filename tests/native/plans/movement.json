@@ -1,0 +1,37 @@
+{
+  "format_version": 1,
+  "name": "movement-original-input-lease",
+  "mutating": true,
+  "fixture_notes": [
+    "Run in an empty, collision-safe space with an independently captured before position.",
+    "A second client must independently observe the peer movement before acceptance."
+  ],
+  "steps": [
+    {
+      "action": "query",
+      "expect_status": ["ok"],
+      "require": {
+        "snapshot.network.ready": true,
+        "movement.profile_ok": true,
+        "movement.opt_in": true
+      }
+    },
+    {
+      "action": "movement.forward",
+      "timeout_ms": 2500,
+      "expect_status": ["started"]
+    },
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 10,
+        "interval_ms": 100,
+        "until": {
+          "movement.phase": 4,
+          "movement.code": "movement_completed_idle",
+          "movement.ordinary_idle_observed": true
+        }
+      }
+    }
+  ]
+}

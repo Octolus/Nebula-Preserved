@@ -1,0 +1,28 @@
+{
+  "format_version": 1,
+  "name": "social-original-navigation-callbacks",
+  "mutating": false,
+  "fixture_notes": [
+    "Requires at least one independently authenticated peer in the same instance.",
+    "This plan does not send a message, relation change, invite, or talk request."
+  ],
+  "steps": [
+    {"action": "social.open", "expect_status": ["started"]},
+    {"action": "social.show_space_users", "expect_status": ["started"]},
+    {"action": "social.select_peer", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 10,
+        "interval_ms": 100,
+        "until": {
+          "social.probe_ok": true,
+          "social.binding_valid": true,
+          "social.present": true,
+          "social.pending": false
+        }
+      }
+    },
+    {"action": "chat.show_public", "expect_status": ["started"]}
+  ]
+}

@@ -1,0 +1,687 @@
+{
+  "format_version": 1,
+  "scope": "Static shipped-client moderation contracts, distinct from preservation-server policy and dashboard authorization.",
+  "authority": "shipped-artifact",
+  "runtime_tested": false,
+  "artifacts": {
+    "GameAssembly.dll": {
+      "bytes": 42310144,
+      "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac"
+    },
+    "global-metadata.dat": {
+      "bytes": 8467936,
+      "sha256": "c59807c2950c1051202ae7d96744d126be4c489c7719f7e2d8d207f8f75681c1"
+    }
+  },
+  "framing": {
+    "separator": "#",
+    "indices": "Zero-based response tokens after the existing HTTP response wrapper; TCP payload indices exclude its opcode token.",
+    "escaping": "These senders concatenate delimiter-separated fields without per-field escaping. The existing outer transport encrypts the complete payload.",
+    "safety": "Do not accept delimiter or line-break injection in authored reasons, badges, reports, or wire text. Encryption and client-supplied identifiers are not moderator authorization."
+  },
+  "http": [
+    {
+      "route": "CheckerServlet",
+      "send_rva": "0x607720",
+      "receive_rva": "0x6074a0",
+      "request": [
+        "PS4Info.userName",
+        "netInfo.ethernetAddress",
+        "netInfo.BSSID",
+        "Time.time.ToString() nonce"
+      ],
+      "response": [
+        "unused",
+        "nonce echo",
+        "isBanned: Boolean.Parse",
+        "banDate: string",
+        "banDescription: string"
+      ],
+      "gates": [
+        "Response nonce must equal the stored request nonce."
+      ],
+      "effects": "Banned=true creates or updates BannedUntil and loads UserBanned; false invokes the continuation.",
+      "authority_limit": "Persona name and hardware/network fields are client claims. Bind account policy to authenticated ingress authority, not these fields."
+    },
+    {
+      "route": "N2UserExist",
+      "send_rva": "0x636fb0",
+      "receive_rva": "0x636a10",
+      "request": [
+        "PS4Info.userName",
+        "versionGame",
+        "isDev Boolean.ToString()",
+        "sAccountId",
+        "Time.time.ToString() nonce"
+      ],
+      "response": [
+        "PS4ID echo",
+        "unused",
+        "remembered login value",
+        "isTesting: Boolean.Parse",
+        "isBanned: Boolean.Parse",
+        "banDate: string",
+        "banDescription: string"
+      ],
+      "effects": "Creates or updates BannedUntil from fields 5/6. Banned=true loads UserBanned. If not banned, an incorrect PS4ID echo causes Application.Quit; the existing-login branch continues through ChannelGUID.",
+      "identity_note": "On the shipped Steam bootstrap, sAccountId is the Steam account identifier and PS4ID. Echo request field 3, not the persona-name field 0.",
+      "testing_note": "isTesting is parsed only while its existing client value is false. isDev is a client-supplied boolean, not a permission grant."
+    },
+    {
+      "route": "UserExistsServlet",
+      "send_rva": "0x63d3d0",
+      "receive_rva": "0x63ce30",
+      "request": [
+        "PS4Info.userName",
+        "versionGame",
+        "isDev Boolean.ToString()",
+        "sAccountId",
+        "Time.time.ToString() nonce"
+      ],
+      "response": [
+        "PS4ID echo",
+        "unused",
+        "remembered login value",
+        "isTesting: Boolean.Parse",
+        "isBanned: Boolean.Parse",
+        "banDate: string",
+        "banDescription: string"
+      ],
+      "effects": "Banned=true loads UserBanned. Existing login and matching PS4ID continue through ChannelGUID; other branches select sign-in/terms. Unlike N2UserExist, identity mismatch does not directly call Quit."
+    },
+    {
+      "route": "N2AddUserOnline",
+      "send_rva": "0x6347e0",
+      "receive_rva": "0x634750",
+      "continuation_rva": "0x6ec320",
+      "request": [
+        "SessionGUID",
+        "PS4ID",
+        "netInfo.mappedIpAddress"
+      ],
+      "response": [
+        "unused",
+        "result: Boolean.Parse"
+      ],
+      "effects": "The login continuation calls Application.Quit(0) when false. True starts online-time updates and the existing space-load path.",
+      "limit": "This reply has no ban date/description or separate ban flag; false is admission failure, not proof of a particular sanction."
+    },
+    {
+      "route": "N2LoadSpace",
+      "send_rva": "0x635bf0",
+      "receive_rva": "0x635990",
+      "request": [
+        "SessionGUID",
+        "PS4ID",
+        "psidglobal argument",
+        "isTesting Boolean.ToString()",
+        "noIdSpace argument",
+        "desiredGuid argument"
+      ],
+      "response": [
+        "current SessionGUID echo",
+        "isBanned: Boolean.Parse",
+        "noFreeSlot: Boolean.Parse"
+      ],
+      "effects": "Requires current GUID. Banned=true loads UserBanned. Not banned and noFreeSlot=true invokes the no-slot callback; otherwise begins HTTPSpaceLoading.",
+      "limit": "No expiry or reason is parsed here; this path does not populate those display fields."
+    },
+    {
+      "route": "PlayerLabelInfoServlet",
+      "send_rva": "0x621fe0",
+      "receive_rva": "0x621c10",
+      "command_rva": "0x622320",
+      "display_rva": "0x613c00",
+      "request": [
+        "SessionGUID",
+        "PS4ID",
+        "target player GUID"
+      ],
+      "response": [
+        "literal lowercase true",
+        "current SessionGUID echo",
+        "PS4ID echo",
+        "target player GUID",
+        "PlayerLabelJson JSON",
+        "optional staff display string"
+      ],
+      "effects": "After literal/GUID/account checks, target must resolve to a current Memory player. JSON hydrates name/status/mood/color. When present, response field 5 is copied verbatim to NebulaPlayer.staff at offset 0xD0; SetValues assigns lblStaff.text and the nickname color.",
+      "role_limit": "No native role enum, accepted staff-value list, or moderation permission check was recovered in this path. A badge is display data, not authority; a preservation server must authorize actions independently."
+    },
+    {
+      "route": "ReportServlet",
+      "send_rva": "0x3ed4c0",
+      "receive_rva": "0x3e93a0",
+      "request": [
+        "SessionGUID",
+        "PS4ID",
+        "report category integer",
+        "target username",
+        "report text; empty string becomes literal 0"
+      ],
+      "response": [
+        "unused",
+        "current SessionGUID echo",
+        "unused",
+        "accepted: Boolean.Parse"
+      ],
+      "effects": "Requires current GUID echo. True shows the sent-report flow; false shows UserPreviouslyReported.",
+      "categories": {
+        "0": "ThreatHarassment",
+        "1": "HateSpeech",
+        "2": "Other"
+      },
+      "limits": [
+        "The native request has a target username but no target platform/account field.",
+        "Receipt presentation does not prove historical storage, review, deduplication scope, or moderator workflow."
+      ]
+    },
+    {
+      "route": "checkerToServerDownMaintenanceServlet",
+      "send_rva": "0x422650",
+      "receive_rva": "0x4233b0",
+      "poll_rva": "0x42a840",
+      "show_rva": "0x4ddac0",
+      "popup_rva": "0x4e2280",
+      "request": [
+        "SessionGUID",
+        "PS4ID"
+      ],
+      "response": [
+        "unused",
+        "current SessionGUID echo",
+        "unused",
+        "remainingTime: Int32.Parse"
+      ],
+      "effects": "Poll coroutine waits 10 seconds between sends. With matching GUID and a space/editor context, a nonzero value not previously displayed is shown in txtMinutes for 5 seconds, then hidden. Zero and repeated values are ignored until resetRemainingTimes.",
+      "limit": "The value is displayed as an integer in a field named txtMinutes. It is not arbitrary announcement text or client-side shutdown enforcement."
+    },
+    {
+      "route": "CheckServerStatusServlet",
+      "send_rva": "0x63ad00",
+      "receive_rva": "0x63abc0",
+      "continuation_rva": "0x6ecc00",
+      "request": [
+        "PS4Info.userName",
+        "Time.time.ToString() nonce"
+      ],
+      "response": [
+        "literal lowercase true",
+        "username echo",
+        "nonce echo",
+        "status: Int32.Parse"
+      ],
+      "states": {
+        "0": "Load ServerUnderMaintenance",
+        "1": "Continue login",
+        "2": "Load UpdatingPatch"
+      },
+      "limit": "This is a startup status gate, not a general message channel."
+    }
+  ],
+  "ban_screen": {
+    "reader_rva": "0x6cc270",
+    "display_rva": "0x6cc410",
+    "permanent_value": "null",
+    "permanent_effect": "The literal string null selects the built-in permanent-suspension text.",
+    "timed_effect": "Other date strings replace the literal (x) in the existing date label. No DateTime/integer parse or expiry enforcement occurs here.",
+    "description_effect": "Description is assigned directly to its Text component.",
+    "policy_limit": "The backend must enforce expiry. A readable UTC expiry string is an authored formatting choice, not a recovered original server date convention."
+  },
+  "personal_silence": {
+    "add_route": "N2AddSilenced",
+    "remove_route": "N2RemoveSilenced",
+    "request": [
+      "SessionGUID",
+      "target username",
+      "platform integer"
+    ],
+    "response": [
+      "unused",
+      "result: Boolean.Parse"
+    ],
+    "send_rvas": [
+      "0x606360",
+      "0x638060"
+    ],
+    "receive_rva": "0x6062d0",
+    "refresh_opcodes": {
+      "22": "RemoveSilenced",
+      "23": "AddSilenced"
+    },
+    "refresh_payload": [
+      "username",
+      "platform integer"
+    ],
+    "refresh_rva": "0x5d6db0",
+    "relation_consumer_rva": "0x6ec430",
+    "relation_values": {
+      "3": "Ignored: sets remote isSilenced at 0xB4",
+      "4": "SilentBy: sets remote isSilencer at 0xB5"
+    },
+    "effects": "Refresh resolves username/platform to a current GUID and refetches relationship state. Space-chat receive drops a silenced remote. This is viewer-to-target relationship behavior, not source proof of an account-wide moderator mute."
+  },
+  "current_scene_transport": {
+    "receive_rva": "0x5e7690",
+    "drain_rva": "0x5e5010",
+    "behavior": "Active Mirror client decrypts NebulaMessage and splits on #. Queue parses the first token as TypeTCP and calls only a registered processor, passing the remaining tokens as its payload.",
+    "chat_opcode": 13,
+    "chat_payload": [
+      "source player GUID",
+      "group/tab name",
+      "platform integer",
+      "text",
+      "Chat.ChatType integer"
+    ],
+    "chat_processor_rva": "0x5d7790",
+    "player_lookup_rva": "0x6109e0",
+    "chat_types": {
+      "0": "Space",
+      "1": "SocialInternal"
+    },
+    "chat_constraints": [
+      "Space type 0 requires a non-null current Memory player even for Public. Unknown GUID lookup returns null; there is no SYSTEM exception in Memory.GetNebulaPlayer.",
+      "Nonzero chat types bypass some ordinary Space relationship filters; that does not define a new System/moderator enum or confer permission.",
+      "A SYSTEM formatting literal exists elsewhere, but does not bypass the Space processor's missing-player rejection."
+    ],
+    "notification_opcode": 19,
+    "notification_type_values": {
+      "0": "Chat",
+      "1": "Friend",
+      "2": "FullGame",
+      "3": "Gift",
+      "4": "Reward",
+      "5": "Friend_Accepted",
+      "6": "InviteToJoin",
+      "7": "AskToJoin",
+      "8": "AceptedToJoin",
+      "9": "NewInstanceIsCreated",
+      "10": "FullGame_Declined",
+      "11": "SpaceGame",
+      "12": "SpaceGame_Declined",
+      "13": "SocialToJoin"
+    },
+    "notification_limit": "No global-warning/moderator-announcement type is declared in this enum.",
+    "closing_opcode": 96,
+    "closing_rva": "0x5dbd80",
+    "closing_effect": "Reads payload index 1 as instance identifier, compares current instance, then performs existing redirect-to-Nexus behavior. This is an instance-close path, not proof of a targeted moderation-kick reason channel."
+  },
+  "legacy_support_screen": {
+    "legacy_constant": "MANAGER_MSGS.Spaces_msgs.PlayerInfo.msgs_sendToSupportScreen = 141",
+    "display_rva": "0x6ea170",
+    "display_effect": "SupportScreen.Start assigns PS4Info.supportScreenMessage at offset 0x228 to its Text component.",
+    "current_route_limit": "No admitted network producer for that field was recovered on the current Mirror/ProcessorQueue path. TypeTCP 32 is Board_msg_InitGame; legacy 141 and 999 must not be treated as current support-screen/close commands without a separately reviewed receiver."
+  },
+  "limitations": [
+    "Static shipped-artifact evidence only; no game or server was launched for this analysis.",
+    "Original server persistence, expiry policy, staff-role semantics, moderation permissions and operational workflows are not established by client code.",
+    "The scene TypeTCP enum contains no separately named moderator ban, mute, kick or global-announcement command. This bounded finding does not prove that no historical out-of-band tooling existed.",
+    "Legacy transport constants, personal relationship controls, platform chat restrictions and developer flags must not be conflated with authenticated server moderation authority.",
+    "Some earlier decompiler exports lost branches after GC write barriers. Critical missing-player, permanent-ban and popup timing findings were checked against bounded raw instructions and metadata literals.",
+    "The backend/dashboard implementation and its capabilities must be documented and tested separately before claiming working operator moderation or native delivery."
+  ],
+  "native_evidence": [
+    {
+      "rva": "0x607720",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPChecker$$Process"
+      ],
+      "span_end_exclusive_rva": "0x607b50",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "c1f3b97d986981565a934421dfdc211622ceac40e0b5aa7fc04e078210f25d63"
+    },
+    {
+      "rva": "0x6074a0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPChecker$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x607720",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "8fa5f3d48b4ff6fbba865338d57598c3928fdbe5f8a2fe7532e78c4d25629377"
+    },
+    {
+      "rva": "0x636fb0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPN2UserExist$$Process"
+      ],
+      "span_end_exclusive_rva": "0x637490",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "b29af36e489f7d77fcd63d8e86b35126f29a20f4eb2c21328a37a5961d0c4a61"
+    },
+    {
+      "rva": "0x636a10",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPN2UserExist$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x636fb0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "b7e139d23632cc93c3e0d267f79b1d42b6db3eb3249a2baa22e9e229f31f03e0"
+    },
+    {
+      "rva": "0x63d3d0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPUserExist$$Process"
+      ],
+      "span_end_exclusive_rva": "0x63d8b0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "9e9ba51852cb94438003c5e6621daa345d7b22e4609155bc9a47555ef6593855"
+    },
+    {
+      "rva": "0x63ce30",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPUserExist$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x63d3d0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "6c6d716b63c8ceb40955c8b863364d3fdc34040eeccb0d05f41db00b53398aec"
+    },
+    {
+      "rva": "0x6347e0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPAddUserOnline$$Process"
+      ],
+      "span_end_exclusive_rva": "0x634b40",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "88c0cd60ba978c89ac97de9948321c4003d66e62dcba1b3cdcc8fe367d92b61b"
+    },
+    {
+      "rva": "0x634750",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPAddUserOnline$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x6347e0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "e71560c1a00fc59b66bc7eedcb8def37899240d69947ee6d14b9457abe18b2c1"
+    },
+    {
+      "rva": "0x6ec1e0",
+      "methods": [
+        "MANAGERLogin.<>c$$<LoginProcess>b__46_0"
+      ],
+      "span_end_exclusive_rva": "0x6ec320",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "e3242b57d5f632280ba0392eb64abd080f35bf47d64ff600ac3d5d448e83c45b"
+    },
+    {
+      "rva": "0x6ec320",
+      "methods": [
+        "MANAGERLogin.<>c$$<LoginProcess>b__46_1"
+      ],
+      "span_end_exclusive_rva": "0x6ec3f0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "9762eb48351919a621d51755200fb6a80893c5a50747dd00c843e7af1ae06afa"
+    },
+    {
+      "rva": "0x635bf0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPLoadSpace$$Process"
+      ],
+      "span_end_exclusive_rva": "0x636130",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "f5e05ccad0b225e27e36fd82cb3de3d1e3a3f461bb26e6fe1ce554796ef48220"
+    },
+    {
+      "rva": "0x635990",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPLoadSpace$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x635bf0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "2b6f9c4d933bffb6d2594c3e5fa915b49d12a673402400da1347e1ce81f072d5"
+    },
+    {
+      "rva": "0x6cc270",
+      "methods": [
+        "BannedReader$$Start"
+      ],
+      "span_end_exclusive_rva": "0x6cc410",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "263fb70711075bc6b393aaac82bdc50bbc6fcb33691412f75575407e995e5b82"
+    },
+    {
+      "rva": "0x6cc410",
+      "methods": [
+        "BannedUntil$$ReadData"
+      ],
+      "span_end_exclusive_rva": "0x6cc510",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "272466dff6fda2c30811d473df91ff54c94d237c343ab4c6cd038f96eab41005"
+    },
+    {
+      "rva": "0x63ad00",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPServerStatus$$Process"
+      ],
+      "span_end_exclusive_rva": "0x63aec0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "90b581e22d32524db4f99deecfba365965b689c13be5c5439a2458e84051c301"
+    },
+    {
+      "rva": "0x63abc0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPServerStatus$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x63ad00",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "72b644c11c1af17378c6d4603f7898181619e8e4e6a2e4199dd23f3db8a66b4c"
+    },
+    {
+      "rva": "0x6ecc00",
+      "methods": [
+        "MANAGERLogin.<>c__DisplayClass36_0$$<NebulaInitialize>b__1"
+      ],
+      "span_end_exclusive_rva": "0x6ece50",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "6eb2f5a493494e1d5c26f01b0dc75979cfcd7ed52d9e8cecd021944a5839055e"
+    },
+    {
+      "rva": "0x621fe0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPGetPlayerLabelInfo$$Process"
+      ],
+      "span_end_exclusive_rva": "0x622320",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "505a94825d600cea5341b0816cc5c31cfb6c2ff81a1279fe7a46bfbd58e94ec6"
+    },
+    {
+      "rva": "0x621c10",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPGetPlayerLabelInfo$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x621fe0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "8e84cb6b318ade5ebd6ef8b9e2b08b76a8707bf6de3f3292bbf33cc9cd3b9dd9"
+    },
+    {
+      "rva": "0x622320",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPGetPlayerLabelInfo$$.cctor"
+      ],
+      "span_end_exclusive_rva": "0x622390",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "6f2397b24db5a4cfe22751d221fccf7a1c370294760659445916f91b160eab7c"
+    },
+    {
+      "rva": "0x613c00",
+      "methods": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerLabel$$SetValues"
+      ],
+      "span_end_exclusive_rva": "0x613e90",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "047dc3ed6cac44c88ff97f2f0bf6a0c3e3784a0496348f321d01e54ead7b79a7"
+    },
+    {
+      "rva": "0x3ed4c0",
+      "methods": [
+        "NETGCloudSpace$$Send_ReportUser"
+      ],
+      "span_end_exclusive_rva": "0x3ed990",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "5d2403dc736c0e8734e1b08522d9268840c545349de5e72ef0bf2ea15d071167"
+    },
+    {
+      "rva": "0x3e93a0",
+      "methods": [
+        "NETGCloudSpace$$Get_ReportUser"
+      ],
+      "span_end_exclusive_rva": "0x3e94d0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "4d687edd9a96885de8c8f91aff00f676bd14faebfc0e8b83bf7ca83d7e6be6dc"
+    },
+    {
+      "rva": "0x422650",
+      "methods": [
+        "PS4Info$$SendCheckerToServerDownMaintenance"
+      ],
+      "span_end_exclusive_rva": "0x4227a0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "c5b4298c2a40a098831c79adfdd7a9ebad7c917b3b59bc0362f9958f5089026c"
+    },
+    {
+      "rva": "0x4233b0",
+      "methods": [
+        "PS4Info$$get_sendCheckerToServerDownMaintenance"
+      ],
+      "span_end_exclusive_rva": "0x423490",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "898831d03681a54781598ec634c3fd3096a5f6636ed66c80a69a27622e83a88a"
+    },
+    {
+      "rva": "0x42a840",
+      "methods": [
+        "PS4Info.<CheckerToServerDownMaintanance>d__86$$MoveNext"
+      ],
+      "span_end_exclusive_rva": "0x42aa40",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "8378252e4aab26afa63ee920917ecb98718565b8e93055cc4a32d50d205a5f45"
+    },
+    {
+      "rva": "0x4ddac0",
+      "methods": [
+        "ServerDownMaintenance$$Show"
+      ],
+      "span_end_exclusive_rva": "0x4ddc80",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "8fcb995f3fe394b598b070adeac8d0e4a09f63ef11947f6109c097ff72d5e778"
+    },
+    {
+      "rva": "0x4e2280",
+      "methods": [
+        "ServerDownMaintenance.<ShowCanvas>d__6$$MoveNext"
+      ],
+      "span_end_exclusive_rva": "0x4e2390",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "d8523fbc397ec5fb6ab13e830482a5df3b5cd4b0129bd7287372247fd91a6bfc"
+    },
+    {
+      "rva": "0x606360",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPAddSilenced$$Process"
+      ],
+      "span_end_exclusive_rva": "0x6066b0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "0d3a415e2ad0cc5a0fc98c7a86956c71f26130ed173dbc12ce6ab465d2a99e5e"
+    },
+    {
+      "rva": "0x6062d0",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPAddSilenced$$OnResponse"
+      ],
+      "span_end_exclusive_rva": "0x606360",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "ecb8d20211d6f616e271aeb95bcc981f4b56dcb1d72fadcd2e20a9a8e2dec185"
+    },
+    {
+      "rva": "0x638060",
+      "methods": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPRemoveSilenced$$Process"
+      ],
+      "span_end_exclusive_rva": "0x6383b0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "91a9cedaebac625e40fc7c78ec85b3f29d035034b008644440a985be33e8ece8"
+    },
+    {
+      "rva": "0x5d6db0",
+      "methods": [
+        "Assets.Scripts.TCPs.Processors.AddSilencedProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.RemoveFriendProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.RemoveSilencedProcessor$$Process"
+      ],
+      "span_end_exclusive_rva": "0x5d6e90",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "2775332dd0545b837bf46aa25f619a6e5bef256b1f5b29a75cae1beae239a608"
+    },
+    {
+      "rva": "0x6ec430",
+      "methods": [
+        "NebulaPlayer.<>c__DisplayClass118_0$$<SetRemoteRelation>b__0"
+      ],
+      "span_end_exclusive_rva": "0x6ec5e0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "47dd31901b43d215574791282371e976b2d73a7df7fffd7a78bb672be4a43c59"
+    },
+    {
+      "rva": "0x5d7790",
+      "methods": [
+        "Assets.Scripts.TCPs.Processors.ChatMessageProcessor$$Process"
+      ],
+      "span_end_exclusive_rva": "0x5d7a70",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "6fde1fb43dfa92af01d7cef302f5d9012377a8b940a1ececd56473a7053fb817"
+    },
+    {
+      "rva": "0x6109e0",
+      "methods": [
+        "Assets.Scripts.Memories.Memory$$GetNebulaPlayer"
+      ],
+      "span_end_exclusive_rva": "0x610ad0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "4fede15e2e24f67a56d0489b54eddaff31394f3da693cfc1812a123250212165"
+    },
+    {
+      "rva": "0x5e7690",
+      "methods": [
+        "TCPs.TCPClient$$OnNebulaMessage"
+      ],
+      "span_end_exclusive_rva": "0x5e77b0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "83584a1b1f9dff1d08af168a14416d6454b1fd893fb39a5980a2b5a114592215"
+    },
+    {
+      "rva": "0x5e5010",
+      "methods": [
+        "Assets.Scripts.TCPs.ProcessorQueue$$ProcessTasks"
+      ],
+      "span_end_exclusive_rva": "0x5e5240",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "46a655c0082a722b07346be96561ff084c3623c645d040df8b721bf60cd76964"
+    },
+    {
+      "rva": "0x5dbd80",
+      "methods": [
+        "Assets.Scripts.TCPs.Processors.GetInstanceClosingProcessor$$Process"
+      ],
+      "span_end_exclusive_rva": "0x5dbef0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "bc1febc357a02253d6f3c9d6ebe0d0ee9bc363fee5a5c13e186b62beb54c3eab"
+    },
+    {
+      "rva": "0x6ea170",
+      "methods": [
+        "SupportScreen$$Start"
+      ],
+      "span_end_exclusive_rva": "0x6ea1f0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "43ce293862807bbffdba7fbad713e3eb58b5d3cc7550fa9b66f100f578d67210"
+    },
+    {
+      "rva": "0x4673c0",
+      "methods": [
+        "Chat.ProcessedChatMessage$$.ctor"
+      ],
+      "span_end_exclusive_rva": "0x4676e0",
+      "span_rule": "Entry to next distinct IL2CPP metadata method address; may include alignment padding, not a complete function-body assertion.",
+      "native_span_sha256": "ad5f4150fcf66147236f8092aff7b10308e52d1115116de5676ab2047a45469e"
+    }
+  ]
+}

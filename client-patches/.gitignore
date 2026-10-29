@@ -1,0 +1,8 @@
+**/build*/
+**/__pycache__/
+*.dll
+*.exe
+*.o
+*.obj
+*.pyc
+local-analysis-not-in-repository/

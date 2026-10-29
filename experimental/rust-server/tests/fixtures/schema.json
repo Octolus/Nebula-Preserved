@@ -1,0 +1,118 @@
+{
+  "format_version": 1,
+  "fixture_ids": [
+    "configured-mutations-v1"
+  ],
+  "table_columns": {
+    "shop_wallets": [
+      "ps4_id",
+      "crystals",
+      "np",
+      "level"
+    ],
+    "shop_catalogs": [
+      "shop_id",
+      "type_shop",
+      "name",
+      "description",
+      "url",
+      "active"
+    ],
+    "shop_offers": [
+      "offer_id",
+      "kind",
+      "item_id",
+      "gender",
+      "category",
+      "shop_id",
+      "type_id",
+      "gender_id",
+      "name",
+      "image_path",
+      "crystals",
+      "np",
+      "featured",
+      "active",
+      "created_at"
+    ],
+    "shop_bundle_items": [
+      "bundle_offer_id",
+      "child_offer_id",
+      "ordinal"
+    ],
+    "relations": [
+      "ps4_id",
+      "target",
+      "target_platform",
+      "kind"
+    ],
+    "local_reward_definitions": [
+      "route",
+      "trigger_key",
+      "enabled",
+      "grant_kind",
+      "item_id",
+      "gender",
+      "category",
+      "display_name",
+      "sprite_id",
+      "units",
+      "uses",
+      "configured_at"
+    ],
+    "housing_spaces": [
+      "instance_id",
+      "logical_space_key",
+      "psidglobal",
+      "owner_ps4_id",
+      "created_at"
+    ],
+    "housing_entitlements": [
+      "ps4_id",
+      "item_id",
+      "display_name",
+      "granted_at"
+    ],
+    "allocations": [
+      "guid",
+      "instance_id",
+      "psidglobal",
+      "ip",
+      "port",
+      "allocated_at"
+    ],
+    "housing_save_stages": [
+      "instance_id",
+      "guid",
+      "owner_ps4_id",
+      "batch_id",
+      "shared_json",
+      "part0_json",
+      "part1_json",
+      "state",
+      "started_at",
+      "deadline"
+    ],
+    "notification_outbox": [
+      "event_id",
+      "target_ps4_id",
+      "source_username",
+      "source_platform",
+      "notification_type",
+      "arguments",
+      "ticks",
+      "dedupe_key",
+      "created_at",
+      "accepted_at"
+    ]
+  },
+  "rules": [
+    "Synthetic two-account state only",
+    "Fresh disposable D-drive database only",
+    "Parameterized INSERT with exact audited columns only",
+    "No SQL, code, files, listeners, credentials or secret tables",
+    "Deliberately invalid rollback child is fault data, not a supported grant",
+    "Notice dedupe rows are preseeded; notification creation is not proven",
+    "Housing part0 is preseeded; subsequent HTTP duplicate part0 and part1 commit are tested"
+  ]
+}

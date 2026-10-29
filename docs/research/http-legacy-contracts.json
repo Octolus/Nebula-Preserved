@@ -1,0 +1,4278 @@
+{
+  "format_version": 1,
+  "evidence_scope": "Targeted static direct HTTP inventory for NETGcloudLogin, NETGcloudEditor, NETGCloudSpace only. Occurrence does not prove reachable at runtime. No game/client/server launches or connections.",
+  "steam_appid": 919290,
+  "steam_buildid": 11018722,
+  "gameassembly_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+  "coverage": {
+    "unique_route_literals": 45,
+    "native_occurrences": 50,
+    "new_relative_to_40_task_routes": [
+      "CheckOwnGenericReward",
+      "CinemaInteractionNPServlet",
+      "GenericReward",
+      "GetCompanionsServlet",
+      "GetConsumablePriceServlet",
+      "GetConsumableServlet",
+      "GetInfoServlet",
+      "GetLeaderboardServlet",
+      "GetLocomotionsServlet",
+      "GetPersonalSpacesServlet",
+      "GetSpaceEventServlet",
+      "GetrefusernameServlet",
+      "InWardrobeCheckerServlet",
+      "N2AddUser",
+      "N2GetSocialList",
+      "N2GetUserTypeSpace",
+      "N2SavePreset",
+      "RemoveInWardrobeServlet",
+      "RemovePresetServlet",
+      "RenamePresetServlet",
+      "ReportServlet",
+      "RewardClothServlet",
+      "RewardConsumeServlet",
+      "SKLPromoServlet",
+      "SKLPromoTriggerServlet",
+      "SetLeaderboardServlet",
+      "SetPlayerPrefsServlet",
+      "ShowPresetsServlet",
+      "WardrobeOptionItemServlet",
+      "XSpacesGamesType0Servlet",
+      "checkRewardAvailableServlet",
+      "checkRewardGameServlet",
+      "checkStateNPFriendsServlet"
+    ],
+    "all_networking_parity_proven": false,
+    "fully_recovered_routes": 33,
+    "request_and_generic_response_only": 0,
+    "non_task_routes_with_full_contract": 33,
+    "non_task_routes_with_request_and_generic_only": 0
+  },
+  "preference_contracts": {
+    "NameColorSelectedIndex": {
+      "key_numeric": 15,
+      "wire_key": "NameColorSelectedIndex",
+      "value_encoding": "UnityEngine.JsonUtility.ToJson(PlayerPrefsManager.ColorData)",
+      "value_example": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "fields": [
+        {
+          "name": "x",
+          "type": "float",
+          "managed_offset": "0x10"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "managed_offset": "0x14"
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "managed_offset": "0x18"
+        }
+      ],
+      "native_va": "0x180429950",
+      "native_call_json_va": "0x180429a2b",
+      "native_call_save_va": "0x180429a47",
+      "observations": [
+        "Setter copies supplied Vector3 components into ColorData, updates local NebulaPlayerLabel.SetColor, then sends key15 with JSON value.",
+        "Wire key uses enum name, not numeric15. RGB values are floats, not palette index or hex text."
+      ],
+      "unknowns": [
+        "Original backend acceptance range/clamping and persistence behavior unknown."
+      ]
+    }
+  },
+  "social_codes": {
+    "ListType": {
+      "Friends": 0,
+      "Silenced": 1,
+      "Blocked": 2,
+      "SpaceUsers": 3,
+      "PSN": 4
+    },
+    "RelationType": {
+      "None": 0,
+      "Friend": 1,
+      "Favorite": 2,
+      "Ignored": 3,
+      "SilentBy": 4,
+      "BlockedUsers": 5,
+      "UserBlockedBy": 6
+    },
+    "Status": {
+      "Online": 0,
+      "Away": 1,
+      "Offline": 2,
+      "Wardrobe": 3
+    },
+    "evidence_kind": "IL2CPP enum declarations; menu callsites corroborate Friends0/Silenced1/Blocked2. Not every wire use mapped yet.",
+    "N2GetSocialList": {
+      "native_va": "0x1803ecda0",
+      "request_fields": [
+        "PS4Info.SessionGUID",
+        "PS4Info.PS4ID",
+        "type.ToString()",
+        "typeFriendlist.ToString()"
+      ],
+      "response_contract_status": "native_recovered",
+      "menu_callsite_va": "0x1804c3950",
+      "menu_request_pairs": {
+        "Friends": [
+          0,
+          1
+        ],
+        "Silenced": [
+          1,
+          1
+        ],
+        "Blocked": [
+          2,
+          1
+        ]
+      },
+      "unknowns": [
+        "Full flat EntryData per-field primitive grammar tracked by avatar serializer work; these entries are not JSON.",
+        "Modern task GetSocialList type mapping not proven by direct caller."
+      ],
+      "response_typeFriendlist_index": 2,
+      "response_entry_count_index": 3,
+      "entry_fields": [
+        {
+          "name": "isFavourite",
+          "type": "bool",
+          "managed_offset": "0x18"
+        },
+        {
+          "name": "status",
+          "type": "SocialManager.Status",
+          "managed_offset": "0x1c"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "managed_offset": "0x20"
+        },
+        {
+          "name": "platform",
+          "type": "int",
+          "managed_offset": "0x28"
+        },
+        {
+          "name": "listType",
+          "type": "SocialManager.ListType",
+          "managed_offset": "0x2c"
+        }
+      ]
+    }
+  },
+  "routes": [
+    {
+      "route": "ChannelGUIDServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_ChannelGUIDCoroutine>d__11$$MoveNext",
+          "va": "0x1803f6fd0",
+          "rva": "0x3f6fd0",
+          "literal": "/ChannelGUIDServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_ChannelGUIDCoroutine_d__11__MoveNext (NETGcloudLogin__Send_ChannelGUIDCoroutine_d__11_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1056,
+          "bounded_native_sha256": "d8c1c42008f46466e40129e0ccf4d27b1551ca037d8422388df92f04db9f02a7",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "NETGcloudLogin$$Send_GenerateGUID"
+          ],
+          "literal_reference_vas": [
+            "0x1803f701d",
+            "0x1803f7101"
+          ],
+          "ghidra_source_sha256": "9383df3c067c0f48b7a38ef6ebad24e818aedb5187d8f651feaa94d7bfbde178"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "CheckOwnGenericReward",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_CheckOwnGenericRewardCoroutine>d__16$$MoveNext",
+          "va": "0x1803f7540",
+          "rva": "0x3f7540",
+          "literal": "/CheckOwnGenericReward?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_CheckOwnGenericRewardCoroutine_d__16__MoveNext (NETGCloudSpace__Send_CheckOwnGenericRewardCoroutine_d__16_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1408,
+          "bounded_native_sha256": "6852a034f7fd406c5ff8cfd2b6994fd999c6cd53f357973f480b5777c9d5431b",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.Boolean$$Parse",
+            "GenericOneAssetRewardTrigger$$Show"
+          ],
+          "literal_reference_vas": [
+            "0x1803f75a5",
+            "0x1803f7795"
+          ],
+          "ghidra_source_sha256": "6ed4729a172af87256819c2438a83325c7de7caa64f7456759c63cbaa4d52ec3"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "idasset"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 3,
+          "name": "already_owned",
+          "type": "bool",
+          "rule": "false shows GenericOneAssetRewardTrigger.Show; true does nothing"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original server reward eligibility, asset grant/mutation, idempotency, cooldown and account entitlement rules remain unproven."
+      ],
+      "minimum_success_fields": 4,
+      "response_delimiter": "#",
+      "native_observations": [
+        "Native0x1803F7540 only reads response3 bool; response0/1/2 are unused and no true or session guard exists."
+      ]
+    },
+    {
+      "route": "CheckServerStatusServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<CheckServerStatusCoroutine>d__30$$MoveNext",
+          "va": "0x1803f57e0",
+          "rva": "0x3f57e0",
+          "literal": "/CheckServerStatusServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__CheckServerStatusCoroutine_d__30__MoveNext (NETGcloudLogin__CheckServerStatusCoroutine_d__30_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1648,
+          "bounded_native_sha256": "6e6a707e360eb47bf3437bf7eba225ece09ec79b7221cd71b7f0e5fa5a944144",
+          "observed_calls": [
+            "JG_CampSilverLake_AmbientSpook.<DelayReset>d__6$$System.IDisposable.Dispose",
+            "UnityEngine.Time$$get_time",
+            "System.Single$$ToString",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$.ctor",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Int32$$Parse",
+            "System.Action<int>$$.ctor",
+            "NETGcloudLogin$$CheckServerStatus",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803f5855",
+            "0x1803f59e4"
+          ],
+          "ghidra_source_sha256": "061684f776b332d6aceab384416d22acbdcd959eba2d95e5a2d0ce91049218f6"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "CheckerServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_CheckerServletCoroutine>d__7$$MoveNext",
+          "va": "0x1803f8a90",
+          "rva": "0x3f8a90",
+          "literal": "/CheckerServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_CheckerServletCoroutine_d__7__MoveNext (NETGcloudLogin__Send_CheckerServletCoroutine_d__7_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2384,
+          "bounded_native_sha256": "385aab893755b46dfd4951966bdbaaba83506928924be3954e9745ceaeafc583",
+          "observed_calls": [
+            "AES$$.ctor",
+            "UnityEngine.Time$$get_time",
+            "System.Single$$ToString",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.Boolean$$Parse",
+            "System.String$$Equals",
+            "UnityEngine.Object$$FindObjectOfType<object>",
+            "UnityEngine.Object$$op_Inequality",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.Object$$Destroy",
+            "UnityEngine.GameObject$$.ctor",
+            "UnityEngine.GameObject$$AddComponent<object>",
+            "UnityEngine.GameObject$$GetComponent<object>",
+            "UnityEngine.Object$$DontDestroyOnLoad",
+            "Assets.Scripts.Scene.Scenes$$get_Instance",
+            "Assets.Scripts.Scene.Scenes$$Load",
+            "NETGcloudLogin$$Send_CheckerServlet"
+          ],
+          "literal_reference_vas": [
+            "0x1803f8b43",
+            "0x1803f8e6b"
+          ],
+          "ghidra_source_sha256": "d8dade53f5e201b2581731c7880e83db05b1f42f4b81e1d0b7f8687f7a3879f5"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "CinemaInteractionNPServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_CinemaInteractionNP",
+          "va": "0x1803ea1a0",
+          "rva": "0x3ea1a0",
+          "literal": "CinemaInteractionNPServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_CinemaInteractionNP (NETGCloudSpace_o* __this, int32_t typeCinemaInteraction, System_Action_string____o* callback, System_Action_string__string__o* errorCallback, const MethodInfo* method);",
+          "bounded_native_length": 704,
+          "bounded_native_sha256": "0bc4d4560e72ce5a206d0920ba0c638f65a6cd1790822a37895431a4f7f55b32",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803ea1e7",
+            "0x1803ea3ac"
+          ],
+          "ghidra_source_sha256": "f8626a9dbe7035c0832faf99ac585dbaba508b762fa5531ed9ce11a2aa316143"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "typeCinemaInteraction numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "success",
+          "type": "Boolean.Parse"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original ticket/popcorn prices, charging, eligibility, consumption duration and film admission policy remain unproven."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 4,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send_CinemaInteractionNP0x1803EA1A0 appends decimal interaction type to identity fields.",
+        "CinemaBoxOfficeTrigger.Interact0x18044E370 passes serialized field typeBoxOffice(+0x30) into Send_CinemaInteractionNP and binds callback GetCinemaInteractionNP0x18044E200.",
+        "GetCinemaInteractionNP rechecks response[1] SessionGUID and parses response[3] bool, minimum4fields. False returns without mutation.",
+        "True for Ticket0 sets PS4Info.cinemaFilms(+0x118)._isTicket(+0x41)=true; true for PopCorn1 sets _isPalomitas(+0x40)=true. Both then call virtual slot11 OnGetCinemaInteractionNP (vtable+0x1E8). Other interaction values make no mutation or virtual call."
+      ],
+      "interaction_enum": {
+        "metadata_type": "CinemaBoxOfficeTrigger.TypeCinemaBoxOffice",
+        "encoding": "numeric Int32 decimal",
+        "values": {
+          "0": "Ticket",
+          "1": "PopCorn"
+        }
+      },
+      "consumer_evidence": [
+        {
+          "rva": "0x44e200",
+          "va": "0x18044e200",
+          "method": [
+            "CinemaBoxOfficeTrigger$$GetCinemaInteractionNP"
+          ],
+          "claim": "success bool, Ticket/PopCorn flag assignment and OnGetCinemaInteractionNP virtual callback",
+          "bounded_native_length": 368,
+          "bounded_native_sha256": "63a9609370ef47bf1efbda65abd4b65a310fcc1df3905404d777da7ef6a30e09",
+          "ghidra_source_sha256": "bdd2815262cdd446d45a956d700a611800fb8bf6294f2e33719603a779f538a0"
+        },
+        {
+          "rva": "0x44e370",
+          "va": "0x18044e370",
+          "method": [
+            "CinemaBoxOfficeTrigger$$Interact"
+          ],
+          "claim": "request interaction code comes from typeBoxOffice and response callback binding",
+          "bounded_native_length": 512,
+          "bounded_native_sha256": "2da99a190607efaf9202afae2ea72f48068c442b8da8bb28342ccceb6fbf7395"
+        }
+      ]
+    },
+    {
+      "route": "GenericReward",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_GenericRewardCoroutine>d__18$$MoveNext",
+          "va": "0x1803f9530",
+          "rva": "0x3f9530",
+          "literal": "/GenericReward?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_GenericRewardCoroutine_d__18__MoveNext (NETGCloudSpace__Send_GenericRewardCoroutine_d__18_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1408,
+          "bounded_native_sha256": "a81da521f26e899fc5ee982ba70a8f3a94d544d7a998c86dff9b3b9b9fa97f71",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.Boolean$$Parse",
+            "GenericOneAssetRewardTrigger$$ShowReward"
+          ],
+          "literal_reference_vas": [
+            "0x1803f9595",
+            "0x1803f9785"
+          ],
+          "ghidra_source_sha256": "2a3717e91bad38158d83306e687369c9243ecb5561788833bb9d2fea8d504b82"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "idasset"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 3,
+          "name": "reward_granted",
+          "type": "bool",
+          "rule": "true calls GenericOneAssetRewardTrigger.ShowReward; false does nothing"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original server reward eligibility, asset grant/mutation, idempotency, cooldown and account entitlement rules remain unproven."
+      ],
+      "minimum_success_fields": 4,
+      "response_delimiter": "#",
+      "native_observations": [
+        "Native0x1803F9530 only reads response3 bool; response0/1/2 unused, no true or session guard exists."
+      ]
+    },
+    {
+      "route": "GetCinemaFilmsServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_GetCinemaFilmsCoroutine>d__20$$MoveNext",
+          "va": "0x1803f9c00",
+          "rva": "0x3f9c00",
+          "literal": "/GetCinemaFilmsServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_GetCinemaFilmsCoroutine_d__20__MoveNext (NETGcloudLogin__Send_GetCinemaFilmsCoroutine_d__20_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1712,
+          "bounded_native_sha256": "f8ee683796439e3159bb9303f78ef4c2b0ff6191ca1ff11855ca7b92d3ae44fb",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$.ctor",
+            "System.Int32$$Parse",
+            "System.Collections.Generic.List<object>$$Add",
+            "CinemaFilms$$Set",
+            "NETGcloudLogin$$GetCinemaFilms"
+          ],
+          "literal_reference_vas": [
+            "0x1803f9c9e",
+            "0x1803f9d98"
+          ],
+          "ghidra_source_sha256": "70b11f086a3c55a757ee9a640047657e3cbfebb0ec71d22c3f90bed39906809a"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "GetCompanionsServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_GetCompanionsIDAssetsCoroutine>d__26$$MoveNext",
+          "va": "0x1803fa400",
+          "rva": "0x3fa400",
+          "literal": "/GetCompanionsServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_GetCompanionsIDAssetsCoroutine_d__26__MoveNext (NETGCloudSpace__Send_GetCompanionsIDAssetsCoroutine_d__26_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1696,
+          "bounded_native_sha256": "256b994cb78aaf0916aa16b0f7337f50edca750b34ae02ba4968c1dee70aab13",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "ManagerInstance$$get_singleton",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.GameObject$$SetActive",
+            "UnityEngine.GameObject$$get_activeSelf",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$.ctor",
+            "System.String$$op_Inequality",
+            "System.Collections.Generic.List<object>$$Add",
+            "MenuWheelPets$$AddPetAssets"
+          ],
+          "literal_reference_vas": [
+            "0x1803fa487",
+            "0x1803fa534"
+          ],
+          "ghidra_source_sha256": "99b4791a4f923f70b32ff49f9880a9a9bc6f7536e57cbdd5cd66be6d58f0f4bd"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": "2..end",
+          "name": "asset_IDs",
+          "type": "string list",
+          "rule": "empty fields skipped; all remaining nonempty fields are IDs"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "0x1803FA400 sends SessionGUID#PS4ID, decrypts response, and splits # with StringSplitOptions.None.",
+        "After true/local SessionGUID validation, hides loading indicator and only populates UI if its menu is active.",
+        "Builds List<string> from every nonempty field beginning index2. No count or nonempty trailer exists.",
+        "Empty list invokes the menu empty-state virtual callback; otherwise MenuWheelPets.AddPetAssets receives list."
+      ],
+      "minimum_success_fields": 2,
+      "empty_response": "true#<GUID>"
+    },
+    {
+      "route": "GetConsumablePriceServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_GetConsumablePrice",
+          "va": "0x1803ea820",
+          "rva": "0x3ea820",
+          "literal": "GetConsumablePriceServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_GetConsumablePrice (NETGCloudSpace_o* __this, System_String_o* consumableID, int32_t tableID, System_Action_string____o* callback, System_Action_string__string__o* errorCallback, const MethodInfo* method);",
+          "bounded_native_length": 864,
+          "bounded_native_sha256": "026edd846001ab75fa694ff6e0bb42978dbdafefec4d73b0678f715762466555",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803ea868",
+            "0x1803eaaaf"
+          ],
+          "ghidra_source_sha256": "5236d6f03a177f387e84caa2d77bb4194a007e1b8483c60b8cf2bf58ae84b067"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "consumableID",
+        "tableID numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "consumableID",
+          "type": "string",
+          "rule": "exact lowercase coffee, oktoberfest or picnic selects observed callback"
+        },
+        {
+          "index": 4,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 5,
+          "name": "price_display",
+          "type": "string",
+          "rule": "Used as display string without numeric parsing"
+        },
+        {
+          "index": 6,
+          "name": "price_type_display",
+          "type": "string",
+          "rule": "Required for coffee/oktoberfest; unused for picnic"
+        },
+        {
+          "index": 7,
+          "name": "user_amounts_display",
+          "type": "string",
+          "rule": "Required for coffee/oktoberfest; unused for picnic"
+        },
+        {
+          "index": 8,
+          "name": "rewarded",
+          "type": "Boolean.Parse",
+          "rule": "Required for coffee/oktoberfest; unused for picnic"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original prices, currency display literal, wallet balances, free/reward eligibility, table entitlement and server economy policy remain unproven.",
+        "Other caller-supplied callback implementations or consumable IDs outside the three recovered branches have not been exhaustively excluded."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 6,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send_GetConsumablePrice0x1803EA820 appends consumableID and decimal Int32 tableID after identity fields.",
+        "FoodTruckTrigger.GetConsumablePrice0x180405790 and OktoberFestTrigger.GetConsumablePrice0x1804090C0 recheck response[1] SessionGUID and exact response[3] coffee/oktoberfest, then pass strings response[5]/[6]/[7] and Boolean.Parse(response[8]) to InitMainPanel.",
+        "InitMainPanel0x180419470/0x180419F60 substitutes price into (x), priceType into (y), and userAmounts into balance (x). These three response fields are display strings, not parsed numeric or enum values. rewarded=true truncates the resulting price explanation at the first period inclusive.",
+        "PicnicTrigger.GetConsumablePrice0x180426ED0 rechecks session and exact picnic tag, replaces (x) in the picnic explanation with response[5], then obtains PicnicManager from game-manager dictionary key8. It does not parse fields6..8.",
+        "Price callbacks open the appropriate main menu. No count or arbitrary trailer is consumed by these bounded native callbacks."
+      ],
+      "response_variants": [
+        {
+          "consumableID": "coffee",
+          "minimum_success_fields": 9,
+          "shape": "true#<GUID>#<PS4ID>#coffee#<unused>#<price>#<priceType>#<userAmounts>#<rewardedBool>",
+          "callback_rva": "0x405790"
+        },
+        {
+          "consumableID": "oktoberfest",
+          "minimum_success_fields": 9,
+          "shape": "true#<GUID>#<PS4ID>#oktoberfest#<unused>#<price>#<priceType>#<userAmounts>#<rewardedBool>",
+          "callback_rva": "0x4090c0"
+        },
+        {
+          "consumableID": "picnic",
+          "minimum_success_fields": 6,
+          "shape": "true#<GUID>#<PS4ID>#picnic#<unused>#<price>",
+          "callback_rva": "0x426ed0"
+        }
+      ],
+      "request_caller_values": {
+        "coffee": {
+          "tableID": 0,
+          "rva": "0x4059e0"
+        },
+        "oktoberfest": {
+          "tableID": 0,
+          "rva": "0x409340"
+        },
+        "picnic": {
+          "tableID": "PicnicTrigger inherited SpaceGameTrigger.tableID (+0x30), also copied to PicnicManager.myTableID (+0x44)",
+          "rva": "0x427120"
+        }
+      },
+      "consumer_evidence": [
+        {
+          "rva": "0x405790",
+          "va": "0x180405790",
+          "method": [
+            "FoodTruckTrigger$$GetConsumablePrice"
+          ],
+          "claim": "coffee response fields and minimum length9",
+          "bounded_native_length": 592,
+          "bounded_native_sha256": "8216d659bf9b474b4960032b2c53911dd1ee779d476f8bf05a8d60ce9246a69f",
+          "ghidra_source_sha256": "94faad4443aa7728a35d34ac14fcdcbf0658d444b75bfefa6cc63e95e2b11457"
+        },
+        {
+          "rva": "0x4090c0",
+          "va": "0x1804090c0",
+          "method": [
+            "OktoberFestTrigger$$GetConsumablePrice"
+          ],
+          "claim": "oktoberfest response fields and minimum length9",
+          "bounded_native_length": 640,
+          "bounded_native_sha256": "f13b1cef2c53dbf6d3bb16baad06c38fa71e2b328401b825555a15606c540d7a",
+          "ghidra_source_sha256": "a06efd87a19b1b800ee86de3cdc352dba8e01404515c2cf7f1cabeddb466d2b4"
+        },
+        {
+          "rva": "0x426ed0",
+          "va": "0x180426ed0",
+          "method": [
+            "PicnicTrigger$$GetConsumablePrice"
+          ],
+          "claim": "picnic response field5 only; minimum length6",
+          "bounded_native_length": 592,
+          "bounded_native_sha256": "8dfa498acba0b1dac3f7b8ded297958cf0cdf180fa90da7ceead2b12f78fed89",
+          "ghidra_source_sha256": "61902fc68bfb002a3839eeb710d8cbc27904de04598150f478f5a8d0efd6995f"
+        },
+        {
+          "rva": "0x419470",
+          "va": "0x180419470",
+          "method": [
+            "UiFoodTruckMenuInit$$InitMainPanel"
+          ],
+          "claim": "coffee display-string substitutions and rewarded bool effect",
+          "bounded_native_length": 784,
+          "bounded_native_sha256": "8c09485226934557cf398dac871be46d633130a6cc86914c884f36ae5578eea9"
+        },
+        {
+          "rva": "0x419f60",
+          "va": "0x180419f60",
+          "method": [
+            "UiOktoberFestMenuInit$$InitMainPanel"
+          ],
+          "claim": "oktoberfest display-string substitutions and rewarded bool effect",
+          "bounded_native_length": 784,
+          "bounded_native_sha256": "cba9569082dd980cea79bdda0893fa539b11a7ef138572f895047da1a7f9312a"
+        },
+        {
+          "rva": "0x4059e0",
+          "va": "0x1804059e0",
+          "method": [
+            "FoodTruckTrigger$$Interact"
+          ],
+          "claim": "coffee request tableID literal0",
+          "bounded_native_length": 656,
+          "bounded_native_sha256": "4cf006062558a624a65188f26fa2ccc670b0ecc350a9e667d2c9fea057c5cfa7"
+        },
+        {
+          "rva": "0x409340",
+          "va": "0x180409340",
+          "method": [
+            "OktoberFestTrigger$$Interact"
+          ],
+          "claim": "oktoberfest request tableID literal0",
+          "bounded_native_length": 656,
+          "bounded_native_sha256": "748cee0f4922b57c030e61627468807544f5608dc5d0f10b78de29bc40f4da51"
+        },
+        {
+          "rva": "0x427120",
+          "va": "0x180427120",
+          "method": [
+            "PicnicTrigger$$Interact"
+          ],
+          "claim": "picnic request tableID inherited trigger field copied to manager myTableID",
+          "bounded_native_length": 832,
+          "bounded_native_sha256": "c83222f4c4166d8cdc4b4a8f56de52dd15333bd492b097b9a71eee6ae1ad7ce2"
+        }
+      ]
+    },
+    {
+      "route": "GetConsumableServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_GetConsumable",
+          "va": "0x1803eab80",
+          "rva": "0x3eab80",
+          "literal": "GetConsumableServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_GetConsumable (NETGCloudSpace_o* __this, System_String_o* consumableID, int32_t tableID, System_Action_string____o* callback, System_Action_string__string__o* errorCallback, const MethodInfo* method);",
+          "bounded_native_length": 864,
+          "bounded_native_sha256": "5ba5dc65d42c13b8357fda0da7825788a36bbf9afba9419d7756f64b5515add7",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803eabc8",
+            "0x1803eae0f"
+          ],
+          "ghidra_source_sha256": "d9fb2bc171177394cf2c852acec95aeabaed282ffda3337b40f058be94f897e6"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "consumableID",
+        "tableID numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "consumableID",
+          "type": "string",
+          "rule": "exact lowercase coffee, oktoberfest or picnic"
+        },
+        {
+          "index": 4,
+          "name": "picnic_parsed_integer_or_unused",
+          "type": "Int32.Parse for picnic; unused for coffee/oktoberfest",
+          "rule": "Picnic parse result is discarded in this callback"
+        },
+        {
+          "index": 5,
+          "name": "success",
+          "type": "Boolean.Parse"
+        },
+        {
+          "index": 6,
+          "name": "TCP_payload_value",
+          "type": "string",
+          "rule": "Required for coffee/oktoberfest; unused for picnic"
+        },
+        {
+          "index": 7,
+          "name": "giveRewardIndex",
+          "type": "Int32.Parse",
+          "rule": "Required for coffee/oktoberfest; copied to UiFoodTruckMenuInit/UiOktoberFestMenuInit.giveRewardIndex +0xA0"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original transaction atomicity, balance deduction, award selection/index catalog, response[6] content grammar and server consumable inventory policy remain unproven.",
+        "Picnic response[4] business meaning is unknown: it must parse as Int32 but the parsed result is discarded here.",
+        "The bounded Picnic success callback itself contains no state change beyond dictionary lookup; related TCP game state is outside this HTTP contract."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 6,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send_GetConsumable0x1803EAB80 appends consumableID and decimal Int32 tableID after identity fields.",
+        "UiFoodTruckMenuInit.GetConsumable0x1804190B0 and UiOktoberFestMenuInit.GetConsumable0x180419BA0 recheck response[1] SessionGUID and exact response[3] tag. They parse response[5] bool and response[7] Int32 and retain response[6] string; minimum array length8.",
+        "response[7] is copied to the metadata field giveRewardIndex at +0xA0. Response[4] is not read in these two consumers.",
+        "When success=false both menus select type99 and show the error menu. When true, coffee concatenates TCP44#SessionGUID#coffee#response[6], and oktoberfest concatenates TCP46#SessionGUID#oktoberfest#response[6]. Both call ManagerInstance.tcpClient.Send0x1805E7820.",
+        "UiPicnicMenuInit.GetConsumable0x18042CC80 checks session and picnic tag, Int32.Parse(response[4]) with discarded result, and Boolean.Parse(response[5]). False selects/shows error menu99. True obtains PicnicManager via game-manager dictionary key8; the bounded body returns that lookup result and contains no further mutation or TCP send.",
+        "Coffee and Oktoberfest send tableID literal0. Picnic sends manager.myTableID, previously copied from the chosen trigger.tableID."
+      ],
+      "response_variants": [
+        {
+          "consumableID": "coffee",
+          "minimum_success_fields": 8,
+          "shape": "true#<GUID>#<PS4ID>#coffee#<unused>#<successBool>#<TCPvalue>#<giveRewardIndexInt>",
+          "callback_rva": "0x4190b0",
+          "on_success_TCP": "44#<GUID>#coffee#<response[6]>"
+        },
+        {
+          "consumableID": "oktoberfest",
+          "minimum_success_fields": 8,
+          "shape": "true#<GUID>#<PS4ID>#oktoberfest#<unused>#<successBool>#<TCPvalue>#<giveRewardIndexInt>",
+          "callback_rva": "0x419ba0",
+          "on_success_TCP": "46#<GUID>#oktoberfest#<response[6]>"
+        },
+        {
+          "consumableID": "picnic",
+          "minimum_success_fields": 6,
+          "shape": "true#<GUID>#<PS4ID>#picnic#<parsedInt>#<successBool>",
+          "callback_rva": "0x42cc80"
+        }
+      ],
+      "request_caller_values": {
+        "coffee": {
+          "tableID": 0,
+          "rva": "0x419780"
+        },
+        "oktoberfest": {
+          "tableID": 0,
+          "rva": "0x41a270"
+        },
+        "picnic": {
+          "tableID": "PicnicManager.myTableID (+0x44)",
+          "rva": "0x42ce30"
+        }
+      },
+      "consumer_evidence": [
+        {
+          "rva": "0x4190b0",
+          "va": "0x1804190b0",
+          "method": [
+            "UiFoodTruckMenuInit$$GetConsumable"
+          ],
+          "claim": "coffee response bool, payload, giveRewardIndex and TCP44 send",
+          "bounded_native_length": 960,
+          "bounded_native_sha256": "5700f255f47ed70afdd287110f796302716103ef202140449391877a1f26e80a",
+          "ghidra_source_sha256": "7cadf67a3efc544c714836908f8a35028243290397fd5ca173141b71cadb19d8"
+        },
+        {
+          "rva": "0x419ba0",
+          "va": "0x180419ba0",
+          "method": [
+            "UiOktoberFestMenuInit$$GetConsumable"
+          ],
+          "claim": "oktoberfest response bool, payload, giveRewardIndex and TCP46 send",
+          "bounded_native_length": 960,
+          "bounded_native_sha256": "ccbde689fb4e083abe3e40107f8af97475c4601f24e0355764ee032f1b422b07",
+          "ghidra_source_sha256": "a37893c7c200667158cad742d867663578f5b262ee17db103138e0deff90457c"
+        },
+        {
+          "rva": "0x42cc80",
+          "va": "0x18042cc80",
+          "method": [
+            "UiPicnicMenuInit$$GetConsumable"
+          ],
+          "claim": "picnic response integer and bool; bounded success branch dictionary lookup only",
+          "bounded_native_length": 432,
+          "bounded_native_sha256": "c40086389f88f29113b37159bca70615d4da98aa7869fa3d42759cefbf91c425",
+          "ghidra_source_sha256": "291b398b3ee1393ac4965d6123afe2f252817f5c91160f996d31d392ea7d5314"
+        },
+        {
+          "rva": "0x419780",
+          "va": "0x180419780",
+          "method": [
+            "UiFoodTruckMenuInit$$OnClickBuy"
+          ],
+          "claim": "coffee purchase tableID0",
+          "bounded_native_length": 384,
+          "bounded_native_sha256": "f7a63dc00404022cd7efe6c502624c7943322bc562feda77cd1517ee2af9ff4f"
+        },
+        {
+          "rva": "0x41a270",
+          "va": "0x18041a270",
+          "method": [
+            "UiOktoberFestMenuInit$$OnClickBuy"
+          ],
+          "claim": "oktoberfest purchase tableID0",
+          "bounded_native_length": 704,
+          "bounded_native_sha256": "9a3c79674ada7782d2ac28e1ef619bb2e5481f56d03597d263c898d8299f9fa7"
+        },
+        {
+          "rva": "0x42ce30",
+          "va": "0x18042ce30",
+          "method": [
+            "UiPicnicMenuInit$$OnClickBuy"
+          ],
+          "claim": "picnic purchase tableID is manager.myTableID",
+          "bounded_native_length": 576,
+          "bounded_native_sha256": "bcd3ccfa4b97ce5c103d5cb436914d03e0c171d46af639690814779c950a7d67"
+        }
+      ]
+    },
+    {
+      "route": "GetIinitInfosNeededServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_GetIinitInfosNeededCoroutine>d__18$$MoveNext",
+          "va": "0x1803fb570",
+          "rva": "0x3fb570",
+          "literal": "/GetIinitInfosNeededServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_GetIinitInfosNeededCoroutine_d__18__MoveNext (NETGcloudLogin__Send_GetIinitInfosNeededCoroutine_d__18_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1376,
+          "bounded_native_sha256": "fa4b934dfeca088abbb0ce0253fb6753e832e6cad6caba06a27257710bb0a1ce",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Boolean$$Parse",
+            "NETGcloudLogin$$GetIinitInfosNeeded"
+          ],
+          "literal_reference_vas": [
+            "0x1803fb5c1",
+            "0x1803fb6b2"
+          ],
+          "ghidra_source_sha256": "5397a6075ce5347b82788f249ff199aa5eed09a862bbadee235e02c49e5fac5e"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "GetInfoServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<OnSend_GetCurrentPresetCoroutine>d__28$$MoveNext",
+          "va": "0x1803dece0",
+          "rva": "0x3dece0",
+          "literal": "/GetInfoServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_GetCurrentPresetCoroutine_d__28__MoveNext (NETGcloudEditor__OnSend_GetCurrentPresetCoroutine_d__28_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2848,
+          "bounded_native_sha256": "fe643d5f59418aa3da8f9e74c31402fa101724737d336e59c7e28317fc0c91a5",
+          "observed_calls": [
+            "AES$$.ctor",
+            "System.Int32$$ToString",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "JG_CampSilverLake_AmbientSpook.<DelayReset>d__6$$System.IDisposable.Dispose",
+            "CE_Menu$$get_singleton",
+            "System.Enum$$ToString",
+            "UnityEngine.GameObject$$SetActive",
+            "UnityEngine.EventSystems.EventSystem$$SetSelectedGameObject",
+            "UnityEngine.GameObject$$GetComponent<object>",
+            "AnimateTiledTextureOnTrail.VoidEvent$$.ctor",
+            "ManagerPreset$$LoadFemale",
+            "ManagerPreset$$LoadMale",
+            "NETGcloudEditor$$Send_GetCurrentPreset",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803ded8a",
+            "0x1803deffe"
+          ],
+          "ghidra_source_sha256": "d1ba482fb552f06a44ce78936e538da57f2f07f67d797e434f0ab770d8d137bd"
+        },
+        {
+          "method": "NETGcloudEditor.<OnSend_GetLastUsedPresetCoroutine>d__31$$MoveNext",
+          "va": "0x1803e0900",
+          "rva": "0x3e0900",
+          "literal": "/GetInfoServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_GetLastUsedPresetCoroutine_d__31__MoveNext (NETGcloudEditor__OnSend_GetLastUsedPresetCoroutine_d__31_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2688,
+          "bounded_native_sha256": "0daebb0c57b4c519d135aa08ff7464a62ad5f3bbe8593c14003a026cec86d789",
+          "observed_calls": [
+            "AES$$.ctor",
+            "System.Int32$$ToString",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "JG_CampSilverLake_AmbientSpook.<DelayReset>d__6$$System.IDisposable.Dispose",
+            "System.Int32$$Parse",
+            "CE_Menu$$get_singleton",
+            "UnityEngine.GameObject$$SetActive",
+            "UnityEngine.GameObject$$GetComponent<object>",
+            "AnimateTiledTextureOnTrail.VoidEvent$$.ctor",
+            "ManagerPreset$$LoadFemale",
+            "ManagerPreset$$LoadMale",
+            "NETGcloudEditor$$Send_GetLastUsedPreset",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e0997",
+            "0x1803e0c9f"
+          ],
+          "ghidra_source_sha256": "29513aa42e6a8b08144fd8e7fa80fe38252babfc9f0beaeaa9448499ae9e73f0"
+        },
+        {
+          "method": "NETGcloudEditor.<OnSend_GetIDAssetsCoroutine>d__33$$MoveNext",
+          "va": "0x1803df950",
+          "rva": "0x3df950",
+          "literal": "/GetInfoServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_GetIDAssetsCoroutine_d__33__MoveNext (NETGcloudEditor__OnSend_GetIDAssetsCoroutine_d__33_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 3680,
+          "bounded_native_sha256": "2084f81f465edb6179906ea1f3d994a245304f97c7c1ab3c0b0372c7a386e064",
+          "observed_calls": [
+            "AES$$.ctor",
+            "System.Int32$$ToString",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$.ctor",
+            "System.Collections.Generic.List<KeyValuePair<int, int>>$$get_Item",
+            "System.Collections.Generic.List<KeyValuePair<int, int>>$$Remove",
+            "System.Int32$$Parse",
+            "System.String$$get_Chars",
+            "System.Char$$Equals",
+            "System.String$$Remove",
+            "NDKManagerChecker$$.ctor",
+            "CW_Wardrobe$$addAssets",
+            "MANAGEREditor$$get_singleton",
+            "CE_Menu$$get_singleton",
+            "UnityEngine.GameObject$$get_activeSelf",
+            "UnityEngine.GameObject$$SetActive",
+            "NETGcloudEditor$$Send_GetIDAssets",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803dfa28",
+            "0x1803dfe39"
+          ],
+          "ghidra_source_sha256": "a1987243b7d6eeaed17a9932f2cd15deea0d11b7dfc4ce81c564b8397deb0c44"
+        },
+        {
+          "method": "NETGcloudEditor.<OnSend_RefreshIDAssetsCoroutine>d__35$$MoveNext",
+          "va": "0x1803e14d0",
+          "rva": "0x3e14d0",
+          "literal": "/GetInfoServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_RefreshIDAssetsCoroutine_d__35__MoveNext (NETGcloudEditor__OnSend_RefreshIDAssetsCoroutine_d__35_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 3840,
+          "bounded_native_sha256": "27840279ce714010722d81d94b31e79ddea9eb43b1500937d749a98ab3c136c8",
+          "observed_calls": [
+            "AES$$.ctor",
+            "System.Int32$$ToString",
+            "PS4Info$$get_singleton",
+            "CE_Menu$$get_singleton",
+            "MANAGEREditor$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$.ctor",
+            "System.Collections.Generic.List<KeyValuePair<int, int>>$$get_Item",
+            "System.Collections.Generic.List<KeyValuePair<int, int>>$$Remove",
+            "System.Int32$$Parse",
+            "System.String$$get_Chars",
+            "System.Char$$Equals",
+            "System.String$$Remove",
+            "UnityEngine.Component$$GetComponentsInChildren<object>",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.Object$$Destroy",
+            "NDKManagerChecker$$.ctor",
+            "CW_Wardrobe$$addAssets",
+            "UnityEngine.GameObject$$get_activeSelf",
+            "UnityEngine.GameObject$$SetActive",
+            "NETGcloudEditor$$Send_RefreshIDAssets",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e15c0",
+            "0x1803e19fb"
+          ],
+          "ghidra_source_sha256": "ec84203cc9c267a09fd3e175913181b34fe07b8e889b8dfa149886dd6f1aa9a5"
+        },
+        {
+          "method": "NETGcloudEditor.<OnGet_LoadPresetCoroutine>d__38$$MoveNext",
+          "va": "0x1803d6f30",
+          "rva": "0x3d6f30",
+          "literal": "/GetInfoServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnGet_LoadPresetCoroutine_d__38__MoveNext (NETGcloudEditor__OnGet_LoadPresetCoroutine_d__38_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 31840,
+          "bounded_native_sha256": "69addb7dad7feee2a4f713ec0bc34fbfc30a947f362aa18adb1bd4ce81125c84",
+          "observed_calls": [
+            "AES$$.ctor",
+            "System.Int32$$ToString",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Enum$$ToString",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$.ctor",
+            "UnityEngine.JsonUtility$$FromJson<object>",
+            "System.String$$op_Inequality",
+            "System.Collections.Generic.List<object>$$Add",
+            "System.Single$$ToString",
+            "NDKManagerChecker$$.ctor",
+            "UnityEngine.GameObject$$Find",
+            "CW_Wardrobe$$ImgOnclickPS4",
+            "CE_Menu$$get_singleton",
+            "CHARACTEREDITOR_SLIDERS$$PreStart",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$ToArray",
+            "ManagerPreset$$WriteFemaleBlends",
+            "ManagerPreset$$WriteFemaleBones",
+            "ManagerPreset$$WriteFemaleSkin",
+            "ManagerPreset$$WriteClothColor",
+            "ManagerPreset$$WriteMaleBlends",
+            "ManagerPreset$$WriteMaleBones",
+            "ManagerPreset$$WriteMaleSkin",
+            "ManagerPreset$$WriteAttachedItem",
+            "UnityEngine.GameObject$$GetComponent<object>",
+            "CE_Cam$$initCam",
+            "CE_Menu$$getAvatarByHighHeel",
+            "UnityEngine.Component$$GetComponentsInChildren<object>",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$AddRange",
+            "UnityEngine.Component$$GetComponent<object>",
+            "UnityEngine.Object$$op_Inequality",
+            "System.Collections.Generic.List<object>$$RemoveAt",
+            "UnityEngine.Animator$$set_avatar",
+            "UnityEngine.Object$$op_Equality",
+            "UnityEngine.Object$$get_name",
+            "AssetsLoaded$$CheckFullHead",
+            "ManagerPreset$$SetSlidersBlends",
+            "CW_Wardrobe$$CheckHandType",
+            "UnityEngine.GameObject$$SetActive",
+            "ScreenLoader$$get_Instance",
+            "ScreenLoader$$Hide",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log",
+            "NETGcloudEditor.<OnGet_LoadPresetCoroutine>d__38$$<>m__Finally1"
+          ],
+          "literal_reference_vas": [
+            "0x1803d7134",
+            "0x1803d7523"
+          ],
+          "ghidra_source_sha256": "4da1557c85913a988737f949ac221a0ea2dbeccea08a1e2dadc27119cad20843"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "native_multiplexed_variants_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original account ownership and entitlement policy, full catalog, sorting and server semantic parity remain unproven.",
+        "Public wrapper redirection does not rule out other references to old coroutine factories."
+      ],
+      "native_observations": [
+        "Route is multiplexed by first request field mode integer, before SessionGUID/PS4ID. Response delimiter and shape depend on mode; there is no universal GetInfo response.",
+        "Current public wrappers Send_GetCurrentPreset, Send_GetLastUsedPreset and Get_LoadPreset use modern task classes, leaving older mode1/2/3 coroutine bodies in the binary. Full reachability is not established."
+      ],
+      "variants": [
+        {
+          "name": "asset_catalog",
+          "mode": 0,
+          "native_va": "0x1803df950",
+          "request_fields": [
+            "0",
+            "SessionGUID",
+            "PS4ID",
+            "typeGender numeric",
+            "tablename",
+            "statusAsset"
+          ],
+          "response_delimiter": "!",
+          "response_fields": [
+            {
+              "index": 0,
+              "name": "success_literal",
+              "type": "string",
+              "rule": "exact lowercase true"
+            },
+            {
+              "index": 1,
+              "name": "SessionGUID",
+              "type": "string",
+              "rule": "local match"
+            },
+            {
+              "index": 2,
+              "name": "item_IDs",
+              "type": "#-separated string list",
+              "rule": "first empty item removed"
+            },
+            {
+              "index": 3,
+              "name": "status_values",
+              "type": "#-separated int list",
+              "rule": "empty entries skipped"
+            },
+            {
+              "index": 4,
+              "name": "names",
+              "type": "#-separated string list"
+            },
+            {
+              "index": 5,
+              "name": "id_types",
+              "type": "#-separated int list",
+              "rule": "empty entries skipped"
+            },
+            {
+              "index": 6,
+              "name": "gender",
+              "type": "nonempty string"
+            }
+          ],
+          "minimum_success_fields": 7,
+          "native_effect": "CW_Wardrobe.addAssets(items,statuses,gender,tablename,names,idtypes)",
+          "unknowns": [
+            "Complete category catalog, original ownership/entitlement policy, original sort order and exact original server selection predicate remain unproven.",
+            "Values outside recovered enums have no established semantics."
+          ],
+          "request_view_filter": {
+            "encoding": "numeric integer as decimal string",
+            "enum": "TypeWardrobe",
+            "values": {
+              "0": "WARDROBE",
+              "1": "STORAGE",
+              "2": "DELETED"
+            },
+            "evidence_kind": "native UI flow plus metadata",
+            "observations": [
+              "MANAGEREditor.RepaintWardrobe stores argument 0/1/2 as TypeWardrobe at +0x140 and passes the same number to CE_SubBtns.onClick(category,statusAsset).",
+              "CE_SubBtns.onClick(category) overload passes statusAsset=0. The main overload stores category/status in MANAGEREditor +0x168/+0x170 and sends statusAsset.ToString to Send_GetIDAssets.",
+              "WardrobeOptionItem success refreshes view 0 after moving an item into Storage, view 1 after moving it out of Storage, and view 2 after restoring a Deleted item."
+            ],
+            "inferred_server_selection": {
+              "0": [
+                0,
+                1
+              ],
+              "1": [
+                2
+              ],
+              "2": [
+                3
+              ]
+            },
+            "inference_limit": "The original server predicate, account entitlement rules, sorting and category SQL are not present in the client."
+          },
+          "returned_status_enum": {
+            "type": "CW_Wardrobe.typeassetStatus",
+            "values": {
+              "0": "Favourite",
+              "1": "Normal",
+              "2": "Storage",
+              "3": "Deleted"
+            },
+            "native_destination": "CW_Item.assetStatus at +0x58",
+            "favorite_badge_when": 0
+          },
+          "returned_item_type_enum": {
+            "type": "CW_Wardrobe.itemType",
+            "values": {
+              "0": "Accessory",
+              "1": "Normal",
+              "2": "NormalEditable",
+              "3": "BigItem",
+              "4": "BigEditable",
+              "5": "Locomotion",
+              "6": "Animation",
+              "7": "FullBody",
+              "8": "PersonalSpace"
+            },
+            "native_destination": "CW_Item.itemType at +0x5C",
+            "ownership_flag": false
+          },
+          "parallel_array_constraints": [
+            "Item IDs determine iteration count. Every item directly reads status[i], name[i], idType[i]. All four arrays must match in length.",
+            "No client-side entitlement or ownership filtering occurs in CW_Wardrobe.addAssets; server chooses returned entries.",
+            "CW_Wardrobe.paintAssets creates object name Img+itemID, sets display name, and registers a click handler carrying item ID, category and gender.",
+            "Thumbnail path is gender/category/itemID/itemID.png. Native resource path normally Wardrobe_EAB/gender/category/itemID/FBX/; TATTOO, HEAD_PAINT and LEG_TIGHTS use Maps/."
+          ],
+          "shop_separation": {
+            "observed": [
+              "addAssets always creates a separate tile using paintShopAsset before iterating returned item IDs.",
+              "paintShopAsset names its object ImgShop.",
+              "CW_Item.ImgShopOnClick checks object name ImgShop then invokes PS4Info.ShopManager.OpenShop."
+            ],
+            "inference": "GetInfo mode 0 is the wardrobe inventory listing, while shop access is a separate UI entry.",
+            "unknown": "Client evidence does not prove original entitlement grant policy or that every shipped catalog item was owned."
+          },
+          "empty_inventory_response": "true!<GUID>!!!!!MALE (or FEMALE)",
+          "empty_inventory_native_path": "Empty item segment Split(#) creates one empty entry, then the explicit List.Remove(first empty) makes ID count 0. Empty status and idType entries are skipped. Names is a one-empty-entry list but never indexed because item loop count is zero. addAssets still creates the separate shop tile. Gender must be nonempty."
+        },
+        {
+          "name": "refresh_asset_catalog",
+          "mode": 0,
+          "native_va": "0x1803e14d0",
+          "request_fields": [
+            "0",
+            "SessionGUID",
+            "PS4ID",
+            "CE_Menu.typeGender numeric",
+            "MANAGEREditor field+0x168 category",
+            "MANAGEREditor field+0x170 status numeric"
+          ],
+          "response_delimiter": "!",
+          "response_contract": "Same seven-segment split and CW_Wardrobe catalog population as asset_catalog."
+        },
+        {
+          "name": "current_preset_legacy",
+          "mode": 1,
+          "native_va": "0x1803dece0",
+          "request_fields": [
+            "1",
+            "SessionGUID",
+            "PS4ID"
+          ],
+          "response_delimiter": "#",
+          "response_fields": [
+            {
+              "index": 0,
+              "name": "success_literal",
+              "type": "string",
+              "rule": "exact true"
+            },
+            {
+              "index": 1,
+              "name": "SessionGUID",
+              "type": "string",
+              "rule": "local match"
+            },
+            {
+              "index": 2,
+              "name": "unused",
+              "type": "string"
+            },
+            {
+              "index": 3,
+              "name": "preset",
+              "type": "EntryData serialized preset string"
+            },
+            {
+              "index": 4,
+              "name": "gender",
+              "type": "TypeGender enum name",
+              "rule": "MALE selects male; other selects female"
+            }
+          ],
+          "minimum_success_fields": 5,
+          "public_wrapper_now_uses": "HTTPGetPresetGame.Process",
+          "reachability_status": "legacy coroutine not called by current public wrapper"
+        },
+        {
+          "name": "last_used_preset_legacy",
+          "mode": 2,
+          "native_va": "0x1803e0900",
+          "request_fields": [
+            "2",
+            "SessionGUID",
+            "PS4ID",
+            "typeGender numeric"
+          ],
+          "response_delimiter": "#",
+          "response_fields": [
+            {
+              "index": 0,
+              "name": "success_literal",
+              "type": "string",
+              "rule": "exact true"
+            },
+            {
+              "index": 1,
+              "name": "SessionGUID",
+              "type": "string",
+              "rule": "local match"
+            },
+            {
+              "index": 2,
+              "name": "preset",
+              "type": "EntryData serialized preset string"
+            },
+            {
+              "index": 3,
+              "name": "gender",
+              "type": "int",
+              "rule": "0 male; other female"
+            }
+          ],
+          "minimum_success_fields": 4,
+          "public_wrapper_now_uses": "HTTPGetLastUsedPreset.Process",
+          "reachability_status": "legacy coroutine not called by current public wrapper"
+        },
+        {
+          "name": "named_preset_legacy",
+          "mode": 3,
+          "native_va": "0x1803d6f30",
+          "request_fields": [
+            "3",
+            "SessionGUID",
+            "PS4ID",
+            "typeGender numeric",
+            "presetname"
+          ],
+          "response_delimiter": "#",
+          "response_fields": [
+            {
+              "index": 0,
+              "name": "success_literal",
+              "type": "string",
+              "rule": "exact true"
+            },
+            {
+              "index": 1,
+              "name": "SessionGUID",
+              "type": "string",
+              "rule": "local match"
+            },
+            {
+              "index": 2,
+              "name": "preset",
+              "type": "PresetMaleJson/PresetFemaleJson",
+              "rule": "request typeGender determines JSON type"
+            },
+            {
+              "index": 3,
+              "name": "idAssetsTablenames",
+              "type": "IdAssetsTablenamesJson"
+            }
+          ],
+          "minimum_success_fields": 4,
+          "public_wrapper_now_uses": "HTTPGetLoadPresetByName.Process",
+          "reachability_status": "legacy coroutine not called by current public wrapper"
+        }
+      ],
+      "consumer_evidence": [
+        {
+          "rva": "0x6e4800",
+          "va": "0x1806e4800",
+          "method": [
+            "MANAGEREditor$$RepaintWardrobe"
+          ],
+          "claim": "Request filter uses TypeWardrobe view 0/1/2.",
+          "bounded_native_length": 288,
+          "bounded_native_sha256": "066287c57f27f8a1d470ff12441982526bcc2f506909ad64035c26752cc0e928",
+          "ghidra_source_sha256": "36b213fd40064fb8ac12ff8330df5dd3eb3dd823ae5d4ac4a6e2f9390cad4752"
+        },
+        {
+          "rva": "0x491c80",
+          "va": "0x180491c80",
+          "method": [
+            "CE_SubBtns$$onClick"
+          ],
+          "claim": "Current category and filter stored and sent to GetIDAssets.",
+          "bounded_native_length": 7728,
+          "bounded_native_sha256": "2269e29eb0108b22ceb25e3724b3406d77ac31be6c57c17dcc160f6066a9ba01",
+          "ghidra_source_sha256": "5a33732240b95bf95a6554d2dd78737a0766b7a69b22186a6753602507594180"
+        },
+        {
+          "rva": "0x491c70",
+          "va": "0x180491c70",
+          "method": [
+            "CE_SubBtns$$onClick"
+          ],
+          "claim": "Single-argument category selection defaults filter to zero.",
+          "bounded_native_length": 16,
+          "bounded_native_sha256": "32ddecd2645fb7a535b830d63be91955da060889b276bd7e8074a93602a13cf2",
+          "ghidra_source_sha256": "42fcf73ee9d891411b63be30eccef7b25126a9d6fcddb4167d02d5aa12f5955f"
+        },
+        {
+          "rva": "0x49e160",
+          "va": "0x18049e160",
+          "method": [
+            "CW_Wardrobe$$addAssets"
+          ],
+          "claim": "Parallel arrays consumed without filtering and separate shop tile added.",
+          "bounded_native_length": 1328,
+          "bounded_native_sha256": "b0b399afaa4d146f92f7c7c4afa6f40ae9d507203259808a8cb2be9b50cb77cb",
+          "ghidra_source_sha256": "5864b38330d918087162bb1e96682c47f398e8fc5e0fdc30a47521d4b8b32ff7"
+        },
+        {
+          "rva": "0x49eb70",
+          "va": "0x18049eb70",
+          "method": [
+            "CW_Wardrobe$$paintAssets"
+          ],
+          "claim": "Returned asset status and item type copied into CW_Item and object named Img+itemID.",
+          "bounded_native_length": 4048,
+          "bounded_native_sha256": "ae3179369244be767b01a4a31f972f7442b015fdf4aaf4f8ce40e521eeacf7be",
+          "ghidra_source_sha256": "604262ba09e88f0c7181e8fc765935d7eb87e8d627fb4b3ddcd170dd561db0da"
+        },
+        {
+          "rva": "0x49fb40",
+          "va": "0x18049fb40",
+          "method": [
+            "CW_Wardrobe$$paintShopAsset"
+          ],
+          "claim": "Independent shop tile named ImgShop.",
+          "bounded_native_length": 832,
+          "bounded_native_sha256": "96313aa0c53047a6804821054d8d6380ec362ac0445ec945ddc1dfbac075db35",
+          "ghidra_source_sha256": "56c8fc678d2322d7bbd829e8f7c0176e4647529a8a3fedef08303a5fa4fd4d26"
+        },
+        {
+          "rva": "0x496670",
+          "va": "0x180496670",
+          "method": [
+            "CW_Item$$ImgShopOnClick"
+          ],
+          "claim": "Shop tile invokes ShopManager.OpenShop.",
+          "bounded_native_length": 176,
+          "bounded_native_sha256": "749b12201adebbf5921efaf55956e1f12a800556d4ecb9b4f2462eb16191a62f"
+        }
+      ]
+    },
+    {
+      "route": "GetLeaderboardServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<send_getLeaderboardCoroutine>d__30$$MoveNext",
+          "va": "0x180401860",
+          "rva": "0x401860",
+          "literal": "/GetLeaderboardServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__send_getLeaderboardCoroutine_d__30__MoveNext (NETGCloudSpace__send_getLeaderboardCoroutine_d__30_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2800,
+          "bounded_native_sha256": "e148e683910418ae9be68f8d29f61811432cea7b9e117887bda47df243e8ba3a",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Enum$$ToString",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "ManagerInstanceLeafPark$$get_singletonLeafPark",
+            "ManagerInstance$$get_singleton",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "NETGCloudSpace$$Send_GetLeaderboardProcess",
+            "NETGCloudSpace$$send_getLeaderboardCoroutine",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1804018c8",
+            "0x180401f45"
+          ],
+          "ghidra_source_sha256": "ca8ede882189580f5a0903e663bffe9e1f30bfc096644ea18d24750ac6606dfd"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "typeFullGame enum NAME",
+        "stage numeric"
+      ],
+      "response_fields": [
+        {
+          "index": "0..end",
+          "name": "rows",
+          "type": "!-separated row fields, rows separated by #",
+          "rule": "No true/session/PS4ID header. Row interpretation depends on requested game type."
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "No safe representation for zero rows is established: String.Split of empty plaintext gives one empty row, whose missing second field would fail.",
+        "Original scoring/sort order, maximum row count, ties, authorized score updates and per-game server statistics remain unproven."
+      ],
+      "native_observations": [
+        "Native0x180401860 constructs four fields for MiniGolf0,ChronoRace1,Pinball2,KartRace8,Memorion9; other types send encrypted empty plaintext.",
+        "Native response consumer0x1803EB040 dispatches by request type and splits whole decrypted body by #. Iterates every resulting segment from index0; no count, header, empty skipping or arbitrary trailer.",
+        "Each row splits !: MiniGolf requires player!hits!time, all copied unchanged to UI texts. Pinball and Memorion require player!hits, copied unchanged.",
+        "ChronoRace and KartRace require player!timeMilliseconds; time parses Single with InvariantCulture, divides by1000.0 and passes UIFullGameLeaderboardSpaces.FormatTime.",
+        "Rank is computed client-side index+1. Supported game UI uses requested stage-1 to select target containers."
+      ],
+      "minimum_success_fields": 1,
+      "response_delimiter": "#",
+      "response_consumer_evidence": {
+        "rva": "0x3eb040",
+        "va": "0x1803eb040",
+        "method": [
+          "NETGCloudSpace$$Send_GetLeaderboardProcess"
+        ],
+        "bounded_native_length": 6752,
+        "bounded_native_sha256": "3ef1e92643f7f2089ef931199d6253233bd708b4531f5741aa93d225b97b9031",
+        "ghidra_source_sha256": "cb6846e9bf5a9af80ddf0f3abf2201620f901d4c1e956ef79095343299428f9b"
+      }
+    },
+    {
+      "route": "GetLocomotionsServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_GetLocomotionsIDAssetsCoroutine>d__22$$MoveNext",
+          "va": "0x1803fbc20",
+          "rva": "0x3fbc20",
+          "literal": "/GetLocomotionsServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_GetLocomotionsIDAssetsCoroutine_d__22__MoveNext (NETGCloudSpace__Send_GetLocomotionsIDAssetsCoroutine_d__22_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1696,
+          "bounded_native_sha256": "7a466a45a537d5cc10935e1146a5f477352517f923f269942f49f52e483f0a41",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "ManagerInstance$$get_singleton",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.GameObject$$SetActive",
+            "UnityEngine.GameObject$$get_activeSelf",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$.ctor",
+            "System.String$$op_Inequality",
+            "System.Collections.Generic.List<object>$$Add",
+            "MenuWheelLocomotions$$AddLocomotionAssets"
+          ],
+          "literal_reference_vas": [
+            "0x1803fbc9b",
+            "0x1803fbd54"
+          ],
+          "ghidra_source_sha256": "8a61b83afc04f4cd93d581ad7227d9998bc03baca7a3deb7801726435e110213"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": "2..end",
+          "name": "asset_IDs",
+          "type": "string list",
+          "rule": "empty fields skipped; all remaining nonempty fields are IDs"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "0x1803FBC20 sends SessionGUID#PS4ID, decrypts response, and splits # with StringSplitOptions.None.",
+        "After true/local SessionGUID validation, hides loading indicator and only populates UI if its menu is active.",
+        "Builds List<string> from every nonempty field beginning index2. No count or nonempty trailer exists.",
+        "Empty list invokes the menu empty-state virtual callback; otherwise MenuWheelLocomotions.AddLocomotionAssets receives list."
+      ],
+      "minimum_success_fields": 2,
+      "empty_response": "true#<GUID>"
+    },
+    {
+      "route": "GetNewsServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_GetNewsCoroutine>d__14$$MoveNext",
+          "va": "0x1803fc410",
+          "rva": "0x3fc410",
+          "literal": "/GetNewsServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_GetNewsCoroutine_d__14__MoveNext (NETGcloudLogin__Send_GetNewsCoroutine_d__14_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1744,
+          "bounded_native_sha256": "62fc77944084b1dc8139bce80c90f9dd4ad8bcd6006f923377381b46315c1399",
+          "observed_calls": [
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.Int32$$Parse",
+            "UnityEngine.Object$$FindObjectOfType<object>",
+            "UnityEngine.Object$$op_Inequality",
+            "NewsManager$$CreateNew",
+            "NETGcloudLogin$$Send_GetNews",
+            "UnityEngine.WaitForSeconds$$.ctor",
+            "AES$$.ctor",
+            "UnityEngine.Random$$Range",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest"
+          ],
+          "literal_reference_vas": [
+            "0x1803fc475",
+            "0x1803fc909"
+          ],
+          "ghidra_source_sha256": "086199ef94553d9d0220314839d1bf03fbb275cc2048599745c410989d99bc11"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "GetPersonalSpacesServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_GetPersonalSpaces",
+          "va": "0x1803ecc10",
+          "rva": "0x3ecc10",
+          "literal": "GetPersonalSpacesServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_GetPersonalSpaces (NETGCloudSpace_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 400,
+          "bounded_native_sha256": "ec16ff24ec3110f284fc1fa2cc93088ee388784dd122b741329f0af04cf3af8f",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "System.Action<object>$$.ctor",
+            "System.Action<object, object>$$.ctor",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803ecc6a",
+            "0x1803ecd49"
+          ],
+          "ghidra_source_sha256": "736c32a0e2a225c0c0f8b7ed071dfe7371373a2a995bad5d77a70a971b0fa694"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true checked in generic sender"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID in generic sender"
+        },
+        {
+          "index": 3,
+          "name": "personal_space_names",
+          "type": "!-separated string list",
+          "rule": "exact name matching to navigator entries"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Send_GetPersonalSpaces0x1803ECC10 uses generic OnSend0x180414E40; handler GetPersonalSpaces0x1803E86A0 additionally validates field1 and minimum4 fields.",
+        "GetPersonalSpaces splits field3 on !, disables every navigator personal-space entry except name Home, then enables entries whose names match any returned token.",
+        "Home is always enabled independently of response names. Empty field3 leaves only Home; finishes NavigatorSelector.OnClickPersonalSpaceDelay."
+      ],
+      "minimum_success_fields": 4,
+      "empty_response": "true#<GUID>#<PS4ID>#",
+      "response_delimiter": "#"
+    },
+    {
+      "route": "GetPlayerPrefsServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_GetSelectedPlayerPrefsCoroutine>d__22$$MoveNext",
+          "va": "0x1803fcc40",
+          "rva": "0x3fcc40",
+          "literal": "/GetPlayerPrefsServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_GetSelectedPlayerPrefsCoroutine_d__22__MoveNext (NETGcloudLogin__Send_GetSelectedPlayerPrefsCoroutine_d__22_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1312,
+          "bounded_native_sha256": "6fe8c0d83c2de7e06047286d67f0ed091459f8fb6fa061498d435f771d186cff",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "UnityEngine.JsonUtility$$FromJson<object>",
+            "PlayerPrefsManager$$SetPlayerPref",
+            "NETGcloudLogin$$Send_GetAllPlayerPrefs",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803fcc9d",
+            "0x1803fcd9a"
+          ],
+          "ghidra_source_sha256": "567e3c011d37ffd62570052d7786102a0194fc29d9d05064f63e84aa5e41476d"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "GetSpaceEventServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_GetSpaceEventCoroutine>d__20$$MoveNext",
+          "va": "0x1803fd2b0",
+          "rva": "0x3fd2b0",
+          "literal": "/GetSpaceEventServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_GetSpaceEventCoroutine_d__20__MoveNext (NETGCloudSpace__Send_GetSpaceEventCoroutine_d__20_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1552,
+          "bounded_native_sha256": "48a4bb91d1205982ff330f766e59193ebcd7f05516eaf3193db996ca243e17ee",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.Boolean$$Parse",
+            "ManagerInstance$$get_singleton",
+            "UnityEngine.Object$$op_Inequality",
+            "SpaceEventManager$$LoadSpaceEvent",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803fd321",
+            "0x1803fd511"
+          ],
+          "ghidra_source_sha256": "5d3f66bcb85a1ed69f1918edb52e783f9939bce88142c354a24baa2dda632312"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "psidglobal"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "event_available",
+          "type": "bool",
+          "rule": "Boolean.Parse"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Native0x1803FD2B0 parses only response index2; no true or session checks.",
+        "When true and ManagerInstance.spaceEventManager exists, starts SpaceEventManager.LoadSpaceEvent(request psidglobal)."
+      ],
+      "minimum_success_fields": 3
+    },
+    {
+      "route": "GetrefusernameServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_GetGUIDByPodiumCoroutine>d__24$$MoveNext",
+          "va": "0x1803fabf0",
+          "rva": "0x3fabf0",
+          "literal": "/GetrefusernameServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_GetGUIDByPodiumCoroutine_d__24__MoveNext (NETGCloudSpace__Send_GetGUIDByPodiumCoroutine_d__24_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1504,
+          "bounded_native_sha256": "b857304c1d68e6f067b48b618860416890fa88a19c08eac477167b80f15a95aa",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals"
+          ],
+          "literal_reference_vas": [
+            "0x1803fac49",
+            "0x1803fae45"
+          ],
+          "ghidra_source_sha256": "6a82c200a32fcb271717ef7be7386cf76b8133b912b7b6316c8ef7512195d1df"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "username"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "reference_GUID",
+          "type": "string",
+          "rule": "passed unchanged to Action<string> callback"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Native coroutine0x1803FABF0 constructs three request fields, checks response true/local GUID and invokes callback with response2."
+      ],
+      "minimum_success_fields": 3
+    },
+    {
+      "route": "InWardrobeCheckerServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_InWardrobeCheckerCoroutine>d__35$$MoveNext",
+          "va": "0x1803fe1b0",
+          "rva": "0x3fe1b0",
+          "literal": "/InWardrobeCheckerServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_InWardrobeCheckerCoroutine_d__35__MoveNext (NETGcloudLogin__Send_InWardrobeCheckerCoroutine_d__35_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 800,
+          "bounded_native_sha256": "1cf30277559f5314a4cfe67588ac3066c5ff3be13ca43f5715fccbbeda93f3a6",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803fe209",
+            "0x1803fe2d2"
+          ],
+          "ghidra_source_sha256": "30a2cb8b8d7f20da2017ff138c8b959c1c39ba2371c580b2f6e20a85a2b9dbf6"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID"
+      ],
+      "response_fields": [],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Native0x1803FE1B0 creates AES request and sends GET; response download body is never read/decrypted.",
+        "Success only disposes request; network error is logged."
+      ],
+      "response_body_ignored": true
+    },
+    {
+      "route": "InfoServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_NetInfoCoroutine>d__27$$MoveNext",
+          "va": "0x1803fe620",
+          "rva": "0x3fe620",
+          "literal": "/InfoServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_NetInfoCoroutine_d__27__MoveNext (NETGcloudLogin__Send_NetInfoCoroutine_d__27_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1584,
+          "bounded_native_sha256": "7ad26b0e43bf397c7e8aecde79d8b307dc2ff9ed0007997589fc72b2f764e63e",
+          "observed_calls": [
+            "JG_CampSilverLake_AmbientSpook.<DelayReset>d__6$$System.IDisposable.Dispose",
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "MANAGERLogin$$get_singleton",
+            "AnimateTiledTextureOnTrail.VoidEvent$$.ctor",
+            "NETGcloudLogin$$Send_NetInfoCoroutine",
+            "UnityEngine.MonoBehaviour$$StartCoroutine",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803fe6ad",
+            "0x1803fe91f"
+          ],
+          "ghidra_source_sha256": "26a7357b64594371fbfa5d053a644871aa537604d53b0f828427b72d300d9956"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "N2AddUser",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_AddUserCoroutine>d__24$$MoveNext",
+          "va": "0x1803f6650",
+          "rva": "0x3f6650",
+          "literal": "/N2AddUser?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_AddUserCoroutine_d__24__MoveNext (NETGcloudLogin__Send_AddUserCoroutine_d__24_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2096,
+          "bounded_native_sha256": "f3e22012cacf2e017b659f43166fc612c2b13893d88ad5bd97221a47dcd4282c",
+          "observed_calls": [
+            "JG_CampSilverLake_AmbientSpook.<DelayReset>d__6$$System.IDisposable.Dispose",
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Enum$$ToString",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "AnimateTiledTextureOnTrail.VoidEvent$$.ctor",
+            "NETGcloudLogin$$Send_GenerateGUID",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803f66e7",
+            "0x1803f6b36"
+          ],
+          "ghidra_source_sha256": "1f0d6dc9ee1ae6b942c6c1d48d1d921b4917f629e139b7f15f3d97cf1adc3943"
+        }
+      ],
+      "request_fields": [
+        "PS4Info.PS4ID",
+        "username",
+        "Mail",
+        "isPlayStationPlus",
+        "PS4Info.region.ToString() enum NAME",
+        "PS4Info.platform.ToString() numeric"
+      ],
+      "response_fields": [],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend persistence, authorization, validation and semantic equivalence are unproven."
+      ],
+      "native_observations": [
+        "Coroutine0x1803F6650 concatenates six fields. No SessionGUID prefix. Uses AES.Encrypt, Uri.EscapeDataString, UnityWebRequest.Get.",
+        "Response body is never read/decrypted. If isNetworkError is false, immediately calls Send_GenerateGUID(callbackSignedIn wrapper); original application/HTTP status validation absent in this body."
+      ],
+      "response_body_ignored": true
+    },
+    {
+      "route": "N2GetSocialList",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_GetSocialList",
+          "va": "0x1803ecda0",
+          "rva": "0x3ecda0",
+          "literal": "N2GetSocialList",
+          "metadata_signature": "void NETGCloudSpace__Send_GetSocialList (NETGCloudSpace_o* __this, int32_t type, int32_t typeFriendlist, const MethodInfo* method);",
+          "bounded_native_length": 1008,
+          "bounded_native_sha256": "38f181726dcf234f16afff75db22bc4de354b4ab46c89d69b456b68fbccc6314",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "System.Action<object>$$.ctor",
+            "System.Action<object, object>$$.ctor",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803ece0f",
+            "0x1803ed0c7"
+          ],
+          "ghidra_source_sha256": "3c7467453ea3dd41bed395a5390388310cf54d189cda7f20a990e5fcf759f052"
+        }
+      ],
+      "request_fields": [
+        "PS4Info.SessionGUID",
+        "PS4Info.PS4ID",
+        "type.ToString()",
+        "typeFriendlist.ToString()"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused_by_special_social_path",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused_by_special_social_path",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "typeFriendlist_UI_destination",
+          "type": "int",
+          "rule": "0 wardrobe/shop;1 social"
+        },
+        {
+          "index": 3,
+          "name": "entry_count",
+          "type": "int"
+        },
+        {
+          "index": "4..4+count-1",
+          "name": "entries",
+          "type": "EntryData serialized SocialListEntryModel strings"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend persistence, authorization, validation and semantic equivalence are unproven."
+      ],
+      "native_observations": [
+        "Send_GetSocialList0x1803ECDA0 sends four fields via OnSend. SocialMainWindow.ShowList0x1804C3950 sends Friends(0,1),Silenced(1,1),Blocked(2,1).",
+        "OnSend.MoveNext0x180414E40 decrypts and splits #. The command string N2GetSocialList receives a special bypass: callback is invoked even when common true/session/PS4ID checks fail.",
+        "Get_GetSocialList0x1803E8C40 parses field2 integer UI destination and field3 integer count, creates count SocialListEntryModel values via EntryData.Deserialize from fields4 onward. Trailing fields are ignored by this local handler.",
+        "This is not the modern GetSocialList JSON response shape."
+      ],
+      "minimum_parser_fields": 4,
+      "response_parser_va": "0x1803e8c40",
+      "candidate_empty_task_text": "true#{SessionGUID}#1#0"
+    },
+    {
+      "route": "N2GetUserTypeSpace",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_GetUserTypeSpaceCoroutine>d__28$$MoveNext",
+          "va": "0x1803fda10",
+          "rva": "0x3fda10",
+          "literal": "/N2GetUserTypeSpace?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_GetUserTypeSpaceCoroutine_d__28__MoveNext (NETGCloudSpace__Send_GetUserTypeSpaceCoroutine_d__28_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1616,
+          "bounded_native_sha256": "456f09067c53921a2138f64aa6f49c9938f9c8de8d13fa7f398c8842b4ca9c34",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.Boolean$$Parse"
+          ],
+          "literal_reference_vas": [
+            "0x1803fda6d",
+            "0x1803fdced"
+          ],
+          "ghidra_source_sha256": "45973872a7a392ab7d3016befa1fc09ea7d4c1236eeb92f90512a9b2c949e1db"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "username",
+        "platform numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "user_space_available",
+          "type": "bool",
+          "rule": "Boolean.Parse then Action<bool> callback"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Native0x1803FDA10 sends four fields and parses only response index2; no true/session check.",
+        "Network failure invokes callback(false); response must contain at least3 fields."
+      ],
+      "minimum_success_fields": 3
+    },
+    {
+      "route": "N2SavePreset",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<OnSend_SavePresetCoroutine>d__14$$MoveNext",
+          "va": "0x1803e3480",
+          "rva": "0x3e3480",
+          "literal": "/N2SavePreset?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_SavePresetCoroutine_d__14__MoveNext (NETGcloudEditor__OnSend_SavePresetCoroutine_d__14_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 3152,
+          "bounded_native_sha256": "8627b7872911d27ae96c6d89b6ebfccfd6edf4ccf3b7bd1c36f946c8c6ecf871",
+          "observed_calls": [
+            "CE_Menu$$get_singleton",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.GameObject$$SetActive",
+            "NoControlsBtn$$DeactivateControls",
+            "NETGcloudEditor$$getPresetDataToSave",
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Debug$$Log",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Boolean$$Parse",
+            "MANAGEREditor$$get_singleton",
+            "NETGcloudEditor$$PresetSaved",
+            "UnityEngine.MonoBehaviour$$StartCoroutine",
+            "NoControlsBtn$$ActivateControls",
+            "UnityEngine.Networking.UnityWebRequest$$get_error"
+          ],
+          "literal_reference_vas": [
+            "0x1803e3517",
+            "0x1803e398b"
+          ],
+          "ghidra_source_sha256": "4434203ea6d5810f31a01a82a2c12a7015e24bf1445ef0e7833bb7508a1951a8"
+        },
+        {
+          "method": "NETGcloudEditor.<OnSend_SavePresetExitCoroutine>d__19$$MoveNext",
+          "va": "0x1803e4220",
+          "rva": "0x3e4220",
+          "literal": "/N2SavePreset?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_SavePresetExitCoroutine_d__19__MoveNext (NETGcloudEditor__OnSend_SavePresetExitCoroutine_d__19_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 3248,
+          "bounded_native_sha256": "9e105c3e8e3e88f431f58deca5f7b22c8f76597d1ed0883abf082ef9472a527b",
+          "observed_calls": [
+            "CE_Menu$$get_singleton",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.GameObject$$SetActive",
+            "NETGcloudEditor$$getPresetDataToSave",
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Debug$$Log",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Boolean$$Parse",
+            "MANAGEREditor$$get_singleton",
+            "NETGcloudEditor$$CloseWardrobeSavePreset",
+            "UnityEngine.MonoBehaviour$$StartCoroutine",
+            "UnityEngine.Networking.UnityWebRequest$$get_error"
+          ],
+          "literal_reference_vas": [
+            "0x1803e42a7",
+            "0x1803e4696"
+          ],
+          "ghidra_source_sha256": "117ff417699cfdafc28e3eb13113d8bc03e0fbc93f74039f1dfe6d47410a0c35"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "presetName",
+        "typeGender numeric",
+        "EntryData serialized preset"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact lowercase true"
+        },
+        {
+          "index": 1,
+          "name": "saved",
+          "type": "bool",
+          "rule": "Boolean.Parse must be true"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact EntryData reflection field ordering/primitive details tracked in avatar serializer report.",
+        "Original persistence/validation and parity unproven."
+      ],
+      "minimum_success_fields": 2,
+      "native_observations": [
+        "Save coroutine0x1803E3480 confirmed by avatar contract agent. Save-exit variant0x1803E4220 also uses same route; exact post-save flow still tracked separately.",
+        "Serialized preset is flat EntryData, not JSON: getPresetDataToSave0x1803C6680 constructs PresetMaleJson/FemaleJson and calls EntryData.Serialize0x1806A65B0. Per-field string is prefixed by UTF16 code unit(length+0x24); null uses literal nulls; floats use invariant culture.",
+        "450 male/462 female metadata field declarations are recorded in bootstrap-response-contracts.json."
+      ]
+    },
+    {
+      "route": "PlayerPrefsServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_CheckPlayerPrefsExistCoroutine>d__16$$MoveNext",
+          "va": "0x1803f7c10",
+          "rva": "0x3f7c10",
+          "literal": "/PlayerPrefsServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_CheckPlayerPrefsExistCoroutine_d__16__MoveNext (NETGcloudLogin__Send_CheckPlayerPrefsExistCoroutine_d__16_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 864,
+          "bounded_native_sha256": "dfbdd6befd046a6d8b60989ced2c2b8956be2bffc0b44cd4979731022ae81222",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "NETGcloudLogin$$Send_CheckPlayerPrefsExist"
+          ],
+          "literal_reference_vas": [
+            "0x1803f7c5b",
+            "0x1803f7d32"
+          ],
+          "ghidra_source_sha256": "c72b60e679a891d7fa5c3422702e1fb63145872209413d127183c09acf836a84"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "RemoveInWardrobeServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_RemoveInWardrobe>d__63$$MoveNext",
+          "va": "0x180415620",
+          "rva": "0x415620",
+          "literal": "/RemoveInWardrobeServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_RemoveInWardrobe_d__63__MoveNext (NETGCloudSpace__Send_RemoveInWardrobe_d__63_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1280,
+          "bounded_native_sha256": "dc5b6174a77d6ab19e9fc4709ca2207c7eaf42869e98a23c01701abcc4fa9ad8",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x180415683",
+            "0x1804158ad"
+          ],
+          "ghidra_source_sha256": "2eec6f95baa22ddde543ed3310722a7e75093a7cf737f0cb512324456d9c5b91"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "PS4Info.spaceParams.id_instance"
+      ],
+      "response_fields": [],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, entitlement rules and server semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Native0x180415620 reads instance string from PS4Info+0x80 -> SpaceParams+0x10, not psidglobal.",
+        "Response download body is never read/decrypted; network error is logged."
+      ],
+      "response_body_ignored": true
+    },
+    {
+      "route": "RemovePresetServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<OnSend_RemovePresetCoroutine>d__10$$MoveNext",
+          "va": "0x1803e2520",
+          "rva": "0x3e2520",
+          "literal": "/RemovePresetServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_RemovePresetCoroutine_d__10__MoveNext (NETGcloudEditor__OnSend_RemovePresetCoroutine_d__10_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1632,
+          "bounded_native_sha256": "7cfc46bd67a5cd0b8595380bf130e8a5992a1542c897ddfcbe94e5a20b218f3f",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "NETGcloudEditor$$ShowPresets",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e2583",
+            "0x1803e28ae"
+          ],
+          "ghidra_source_sha256": "902eff274bea50d74a1e9f3c65ff8563617854d0cc64dd3e72dcb71b0bcde015"
+        }
+      ],
+      "request_fields": [
+        "PS4Info.SessionGUID",
+        "PS4Info.PS4ID",
+        "presetname",
+        "currentPresetName",
+        "typeGender.ToString() numeric"
+      ],
+      "response_fields": [],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend persistence, authorization, validation and semantic equivalence are unproven."
+      ],
+      "native_observations": [
+        "Coroutine0x1803E2520 encrypts five fields; response body is never read/decrypted. On isNetworkError=false invokes ShowPresets(typeGender,false)."
+      ],
+      "response_body_ignored": true
+    },
+    {
+      "route": "RenamePresetServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<OnSend_RenamePresetCoroutine>d__12$$MoveNext",
+          "va": "0x1803e2cd0",
+          "rva": "0x3e2cd0",
+          "literal": "/RenamePresetServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnSend_RenamePresetCoroutine_d__12__MoveNext (NETGcloudEditor__OnSend_RenamePresetCoroutine_d__12_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1632,
+          "bounded_native_sha256": "cc75b0daab0dca22eb9ff2db2a97285adc544d1201ac495ec18bd88205eb859a",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "NETGcloudEditor$$ShowPresets",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e2d33",
+            "0x1803e305e"
+          ],
+          "ghidra_source_sha256": "2b701e43f82e8a2c12a2c7c663c03979ded23aa2596631e57c9ab08a5fbd806e"
+        }
+      ],
+      "request_fields": [
+        "PS4Info.SessionGUID",
+        "PS4Info.PS4ID",
+        "currentPresetLoadMenuName",
+        "presetrename",
+        "typeGender.ToString() numeric"
+      ],
+      "response_fields": [],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend persistence, authorization, validation and semantic equivalence are unproven."
+      ],
+      "native_observations": [
+        "Coroutine0x1803E2CD0 encrypts five fields; response body is never read/decrypted. On isNetworkError=false invokes ShowPresets(typeGender,false)."
+      ],
+      "response_body_ignored": true
+    },
+    {
+      "route": "ReportServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_ReportUser",
+          "va": "0x1803ed4c0",
+          "rva": "0x3ed4c0",
+          "literal": "ReportServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_ReportUser (NETGCloudSpace_o* __this, System_String_o* targetName, int32_t optionReport, System_String_o* text, const MethodInfo* method);",
+          "bounded_native_length": 1232,
+          "bounded_native_sha256": "5d2403dc736c0e8734e1b08522d9268840c545349de5e72ef0bf2ea15d071167",
+          "observed_calls": [
+            "System.String$$Equals",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "System.Action<object>$$.ctor",
+            "System.Action<object, object>$$.ctor",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803ed548",
+            "0x1803ed899"
+          ],
+          "ghidra_source_sha256": "ec1e43230d5631f08ca6e397fa6896ad70e49f4b1a9e92beb961618713a17304"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "optionReport numeric",
+        "targetName",
+        "text or literal 0 when empty"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "accepted",
+          "type": "bool",
+          "rule": "false shows UserPreviouslyReportedShow; true shows ReportSentHide"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization and entitlement/scheduling policy remain unproven."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 4,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send_ReportUser0x1803ED4C0 sends report option before targetName; empty text replaced with literal0.",
+        "Get_ReportUser0x1803E93A0 parses response3 bool after confirming session; no other response payload consumed."
+      ],
+      "response_consumer_evidence": {
+        "rva": "0x3e93a0",
+        "va": "0x1803e93a0",
+        "method": [
+          "NETGCloudSpace$$Get_ReportUser"
+        ],
+        "bounded_native_length": 304,
+        "bounded_native_sha256": "4d687edd9a96885de8c8f91aff00f676bd14faebfc0e8b83bf7ca83d7e6be6dc",
+        "ghidra_source_sha256": "eecb887c36e605633a6e1eaae68a302f490b8ccc5925228a4096c12a9129ca1b"
+      }
+    },
+    {
+      "route": "ResetDefaultPresetServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<Send_resetDefaultPresetCoroutine>d__16$$MoveNext",
+          "va": "0x1803e6cb0",
+          "rva": "0x3e6cb0",
+          "literal": "/ResetDefaultPresetServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__Send_resetDefaultPresetCoroutine_d__16__MoveNext (NETGcloudEditor__Send_resetDefaultPresetCoroutine_d__16_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2320,
+          "bounded_native_sha256": "fc93041187b3e7f6646e2ca5a56c0b3455568bb9ad447268892899cd34065e5d",
+          "observed_calls": [
+            "CE_Menu$$get_singleton",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.GameObject$$SetActive",
+            "NoControlsBtn$$DeactivateControls",
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "ManagerPreset$$ResetEditor",
+            "AnimateTiledTextureOnTrail.VoidEvent$$.ctor",
+            "ManagerPreset$$LoadMale",
+            "ManagerPreset$$LoadFemale",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e6d47",
+            "0x1803e70cb"
+          ],
+          "ghidra_source_sha256": "9a3b852cb153629c824b00fa7dd92eac2988ba5ba933bfc7008570c9a9e676a0"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "RewardClothServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<Send_rewardBeachTShirtCoroutine>d__14$$MoveNext",
+          "va": "0x1803ffd70",
+          "rva": "0x3ffd70",
+          "literal": "/RewardClothServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__Send_rewardBeachTShirtCoroutine_d__14__MoveNext (NETGCloudSpace__Send_rewardBeachTShirtCoroutine_d__14_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1504,
+          "bounded_native_sha256": "5f66a09ec9731a127ef4ad2f692ba0b6eb46fdead31def6b4c879a8a104c211b",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.Boolean$$Parse",
+            "ManagerInstance$$get_singleton"
+          ],
+          "literal_reference_vas": [
+            "0x1803ffdcd",
+            "0x1803fffde"
+          ],
+          "ghidra_source_sha256": "7ca23b2c318c68593e6f75fe990a7ea89e378218c656f646e263ae9dd4b8f3a3"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "reward numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "reward_granted",
+          "type": "bool",
+          "rule": "true with request reward==0 displays Beach reward added; otherwise finishes"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original server reward eligibility, asset grant/mutation, idempotency, cooldown and account entitlement rules remain unproven."
+      ],
+      "minimum_success_fields": 3,
+      "response_delimiter": "#",
+      "native_observations": [
+        "Native0x1803FFD70 reads only response2 bool, no true/session check.",
+        "Caller Send_rewardBeachTShirt0x1803EE650 chooses reward integer; exact item grant policy not recovered."
+      ]
+    },
+    {
+      "route": "RewardConsumeServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_RewardConsume",
+          "va": "0x1803ed990",
+          "rva": "0x3ed990",
+          "literal": "RewardConsumeServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_RewardConsume (NETGCloudSpace_o* __this, System_String_o* idasset, const MethodInfo* method);",
+          "bounded_native_length": 832,
+          "bounded_native_sha256": "01b0449c6183f6ec94950a45efd8f2d706a9d7f08e5ec9e4984df150e5e67170",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "System.Action<object>$$.ctor",
+            "System.Action<object, object>$$.ctor",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803eda02",
+            "0x1803edc1d"
+          ],
+          "ghidra_source_sha256": "2ba2394ac78f9ecfdb8c70cf03dbfe107ebc8e7bfd6b48ac2b8b57f5c2aa667b"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "idasset"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization and entitlement/scheduling policy remain unproven."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 3,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send_RewardConsume0x1803ED990 sends asset ID after identity.",
+        "Get_RewardConsume0x1803E94D0 only compares response1 with SessionGUID; no extra payload or local mutation observed."
+      ],
+      "response_consumer_evidence": {
+        "rva": "0x3e94d0",
+        "va": "0x1803e94d0",
+        "method": [
+          "NETGCloudSpace$$Get_RewardConsume"
+        ],
+        "bounded_native_length": 128,
+        "bounded_native_sha256": "4f784847621adb8d492e8a04393f21d7ea7a3f34ede61d831b170968276fcdb8",
+        "ghidra_source_sha256": "01e0fb93f10ff8619d2b1dacf24bc5484127b9f08c0706533ed7952b432f33dd"
+      }
+    },
+    {
+      "route": "SKLPromoServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_SKLPromoConsume",
+          "va": "0x1803ee1d0",
+          "rva": "0x3ee1d0",
+          "literal": "SKLPromoServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_SKLPromoConsume (NETGCloudSpace_o* __this, int32_t id, const MethodInfo* method);",
+          "bounded_native_length": 848,
+          "bounded_native_sha256": "111a589eb87b07f1925bf6e4466c8b51ed42fb523ab78d3e1f736157ceaf0c1d",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "System.Action<object>$$.ctor",
+            "System.Action<object, object>$$.ctor",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803ee23a",
+            "0x1803ee469"
+          ],
+          "ghidra_source_sha256": "4690667555562494607e61c45179f337f6750878fc8381301960baf698b34d11"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "id numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "sprite_id",
+          "type": "int",
+          "rule": "Int32.Parse then SKLPromoTrigger.SetSprites"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization and entitlement/scheduling policy remain unproven."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 4,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send_SKLPromoConsume0x1803EE1D0 appends id integer.",
+        "Get_SKLPromo0x1803E97B0 parses response3 int and invokes SetSprites."
+      ],
+      "response_consumer_evidence": {
+        "rva": "0x3e97b0",
+        "va": "0x1803e97b0",
+        "method": [
+          "NETGCloudSpace$$Get_SKLPromo"
+        ],
+        "bounded_native_length": 208,
+        "bounded_native_sha256": "7f3713c98eb66e6dca47cbc50dd21e955b98bcc156a34f15c7c84aec72f17806",
+        "ghidra_source_sha256": "5445c737097da9c337b000a7045572575b7c797c23f903eb95e5b5a4f3d4a766"
+      }
+    },
+    {
+      "route": "SKLPromoTriggerServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_SKLPromoCheckToSetAvailable",
+          "va": "0x1803ede80",
+          "rva": "0x3ede80",
+          "literal": "SKLPromoTriggerServlet",
+          "metadata_signature": "void NETGCloudSpace__Send_SKLPromoCheckToSetAvailable (NETGCloudSpace_o* __this, int32_t id, const MethodInfo* method);",
+          "bounded_native_length": 848,
+          "bounded_native_sha256": "4fab30e9c6ed4408384ee3265a20f413a4d2e8d246379e21e2c94bdf0b1a15f4",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "System.Action<object>$$.ctor",
+            "System.Action<object, object>$$.ctor",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803edeea",
+            "0x1803ee119"
+          ],
+          "ghidra_source_sha256": "4caae0c20695ba369d345c8d8bf20d169f3b9527adab35ef6c571f6146349448"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "id numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "already_available_or_consumed",
+          "type": "bool",
+          "rule": "false calls SKLPromoTrigger.Show; true disables SKLPromoTrigger.gBall GameObject"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization and entitlement/scheduling policy remain unproven."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 4,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send0x1803EDE80 appends id integer.",
+        "Get_SKLPromoCheckToSetAvailable0x1803E96A0 parses field3 bool, with false showing trigger and true disabling its gBall GameObject at +0x20.",
+        "Boolean semantic name is inferred from method name and branch effects; exact original server predicate unknown."
+      ],
+      "response_consumer_evidence": {
+        "rva": "0x3e96a0",
+        "va": "0x1803e96a0",
+        "method": [
+          "NETGCloudSpace$$Get_SKLPromoCheckToSetAvailable"
+        ],
+        "bounded_native_length": 272,
+        "bounded_native_sha256": "e24c2619dc17f799dd7e38562102797692e72c29da84e1d21011e33b724e644e",
+        "ghidra_source_sha256": "b1dc665b391769a152dc6d3f214cfd5dfde3f006fb4f47ce4681ca1791872b62"
+      }
+    },
+    {
+      "route": "SetLeaderboardServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<send_addStatisticsLeaderBoardCoroutine>d__33$$MoveNext",
+          "va": "0x180401100",
+          "rva": "0x401100",
+          "literal": "/SetLeaderboardServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__send_addStatisticsLeaderBoardCoroutine_d__33__MoveNext (NETGCloudSpace__send_addStatisticsLeaderBoardCoroutine_d__33_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1552,
+          "bounded_native_sha256": "1f1c7580dc69e4a2ae764c1531e731b7ef3b79e4f57cefd74c0974cf225a1c27",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Enum$$ToString",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest"
+          ],
+          "literal_reference_vas": [
+            "0x180401165",
+            "0x1804014b3"
+          ],
+          "ghidra_source_sha256": "748f22343d2c05d79936fc855ccc41e930febe0deb274c39163dc14dd3354be2"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "typeFullGame enum NAME (ChronoRace)",
+        "value numeric",
+        "stage numeric"
+      ],
+      "response_fields": [],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization, persistence and semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Native0x180401100 only constructs five fields when FullGameManager.Type==ChronoRace(1). Other type arguments send encrypted empty plaintext.",
+        "The request result body is never read/decrypted, regardless of game type."
+      ],
+      "response_body_ignored": true
+    },
+    {
+      "route": "SetPlayerPrefsServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<Send_selectedPlayerPrefCoroutine>d__40$$MoveNext",
+          "va": "0x1803e7710",
+          "rva": "0x3e7710",
+          "literal": "/SetPlayerPrefsServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__Send_selectedPlayerPrefCoroutine_d__40__MoveNext (NETGcloudEditor__Send_selectedPlayerPrefCoroutine_d__40_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1472,
+          "bounded_native_sha256": "27eb55b30e7fc2597d3e8de553bf891a9191c1f517622ba75fc57cbc5865eeec",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Enum$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e777f",
+            "0x1803e7a3b"
+          ],
+          "ghidra_source_sha256": "5eef0e08481fefc1e8aab49497195a304ded160ef1dff5c96f2f007fd3b77c6e"
+        }
+      ],
+      "request_fields": [
+        "PS4Info.SessionGUID",
+        "PS4Info.PS4ID",
+        "PlayerPrefsKeys.ToString() enum NAME",
+        "value"
+      ],
+      "response_fields": [],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend persistence, authorization, validation and semantic equivalence are unproven."
+      ],
+      "native_observations": [
+        "Legacy editor coroutine0x1803E7710 sends four fields and ignores response body. Modern SavePlayerPref differs: it sends only SessionGUID#keyName#value."
+      ],
+      "response_body_ignored": true
+    },
+    {
+      "route": "ShowPresetsServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<OnShowPresetsCoroutine>d__8$$MoveNext",
+          "va": "0x1803e5020",
+          "rva": "0x3e5020",
+          "literal": "/ShowPresetsServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__OnShowPresetsCoroutine_d__8__MoveNext (NETGcloudEditor__OnShowPresetsCoroutine_d__8_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1552,
+          "bounded_native_sha256": "8aa4bf51db55f09e2698b472d4e6f6e866f3daceb86214adc8a7924853893fbd",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "NETGcloudEditor$$PrintPresets",
+            "NETGcloudEditor$$ShowPresets",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e507d",
+            "0x1803e52d0"
+          ],
+          "ghidra_source_sha256": "5a5f3aa9b6a9b4621e7c594e0c49455263652f2d05c4a04f1553720b2517c72e"
+        }
+      ],
+      "request_fields": [
+        "PS4Info.SessionGUID",
+        "PS4Info.PS4ID",
+        "typeGender.ToString() numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact lowercase true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local SessionGUID"
+        },
+        {
+          "index": "2..end",
+          "name": "preset_names",
+          "type": "string sequence"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend persistence, authorization, validation and semantic equivalence are unproven."
+      ],
+      "native_observations": [
+        "Coroutine0x1803E5020 decrypts then splits on # with options0 and passes every field to PrintPresets0x1803C4D60.",
+        "PrintPresets checks exact true at0, local SessionGUID at1, then all remaining fields are preset names; no count or stripped trailer. Empty list is exactly true#SessionGUID."
+      ],
+      "candidate_empty_task_text": "true#{SessionGUID}",
+      "response_parser_va": "0x1803c4d60"
+    },
+    {
+      "route": "UserExistsServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_isExistPS4IDCoroutine>d__9$$MoveNext",
+          "va": "0x1803feda0",
+          "rva": "0x3feda0",
+          "literal": "/UserExistsServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_isExistPS4IDCoroutine_d__9__MoveNext (NETGcloudLogin__Send_isExistPS4IDCoroutine_d__9_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 3712,
+          "bounded_native_sha256": "ce9e8733240f7b32dd6aa55ac4192daa337537c7a1215b8cdbe28547bb294488",
+          "observed_calls": [
+            "JG_CampSilverLake_AmbientSpook.<DelayReset>d__6$$System.IDisposable.Dispose",
+            "AES$$.ctor",
+            "UnityEngine.Time$$get_time",
+            "System.Single$$ToString",
+            "PS4Info$$get_singleton",
+            "System.Boolean$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Boolean$$Parse",
+            "UnityEngine.Object$$FindObjectOfType<object>",
+            "UnityEngine.Object$$op_Inequality",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.Object$$Destroy",
+            "UnityEngine.GameObject$$.ctor",
+            "UnityEngine.GameObject$$AddComponent<object>",
+            "UnityEngine.GameObject$$GetComponent<object>",
+            "UnityEngine.Object$$DontDestroyOnLoad",
+            "AnimateTiledTextureOnTrail.VoidEvent$$.ctor",
+            "NETGcloudLogin$$Send_GenerateGUID",
+            "MANAGERLogin$$get_singleton",
+            "UnityEngine.EventSystems.EventSystem$$SetSelectedGameObject",
+            "UnityEngine.GameObject$$SetActive",
+            "MANAGERLogin$$OpenTOS",
+            "Assets.Scripts.Scene.Scenes$$get_Instance",
+            "Assets.Scripts.Scene.Scenes$$Load",
+            "NETGcloudLogin$$Send_isExistPS4ID"
+          ],
+          "literal_reference_vas": [
+            "0x1803fee86",
+            "0x1803ff2b2"
+          ],
+          "ghidra_source_sha256": "cd71d63544d612a3d28e7aafe2b5410476dc3b76b8f7c074cb9a5f9463c5ea70"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    },
+    {
+      "route": "WardrobeOptionItemServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGcloudEditor.<Send_assetUpdateStatusCoroutine>d__42$$MoveNext",
+          "va": "0x1803e5a80",
+          "rva": "0x3e5a80",
+          "literal": "/WardrobeOptionItemServlet?data={0}",
+          "metadata_signature": "bool NETGcloudEditor__Send_assetUpdateStatusCoroutine_d__42__MoveNext (NETGcloudEditor__Send_assetUpdateStatusCoroutine_d__42_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 4320,
+          "bounded_native_sha256": "fa79d12c1e37651f516b8b3a735230d068da6a1758172180308ff108c40ede12",
+          "observed_calls": [
+            "AES$$.ctor",
+            "System.String$$Concat",
+            "System.String$$op_Inequality",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "PS4Info$$get_singleton",
+            "System.Int32$$Parse",
+            "CE_Menu$$get_singleton",
+            "UnityEngine.GameObject$$GetComponent<object>",
+            "NETGcloudAEditor$$CW_Options_onCancel",
+            "MANAGEREditor$$get_singleton",
+            "System.Enum$$ToString",
+            "MANAGEREditor$$RepaintWardrobe",
+            "CE_StackMenus$$findLast",
+            "UnityEngine.GameObject$$get_transform",
+            "UnityEngine.Transform$$get_parent",
+            "UnityEngine.Transform$$get_childCount",
+            "UnityEngine.Transform$$GetChild",
+            "UnityEngine.Component$$GetComponent<object>",
+            "UnityEngine.Transform$$SetSiblingIndex",
+            "CW_Item$$asignImageFavourite",
+            "CW_Wardrobe$$ReOrder",
+            "UnityEngine.EventSystems.EventSystem$$SetSelectedGameObject",
+            "CE_StackMenus$$removeMenu",
+            "CE_SubBtns$$HideAll",
+            "NETGcloudEditor$$Send_assetUpdateStatus",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803e5b38",
+            "0x1803e5e3c"
+          ],
+          "ghidra_source_sha256": "c50dd3267cfdf161f2335a85a5f205ceac4e7a5d27bfc9cd7a5376a8292c3b8b"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID argument",
+        "sPS4ID argument",
+        "item argument",
+        "option argument",
+        "optional typeWardrobe argument when not empty"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match current local session"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original server authorization, invalid transition behavior, cross-category item collision handling, persistence and deletion retention policy remain unknown."
+      ],
+      "minimum_success_fields": 2,
+      "native_observations": [
+        "Coroutine0x1803E5A80 sends four fields and appends fifth only when typeWardrobe is not empty.",
+        "typeOption integer is task/coroutine state for local UI branches; it is not included in request. After success, option string is parsed as int and typeOption branches update editor UI.",
+        "CW_Options.onClick compares button option strings Favourite/Storage/Delete and current label ADD FAVOURITE / MOVE TO STORAGE / DELETE to select target status 0/1, 2/1, 3/1.",
+        "Returned response contains no item data: accepted true and matching SessionGUID cause local optimistic UI status/reordering or a GetInfo refresh."
+      ],
+      "option_enum": {
+        "encoding": "decimal string",
+        "meaning": "target CW_Wardrobe.typeassetStatus",
+        "values": {
+          "0": "Favourite",
+          "1": "Normal",
+          "2": "Storage",
+          "3": "Deleted"
+        }
+      },
+      "caller_actions": [
+        {
+          "action": "add favourite",
+          "option": 0,
+          "local_typeOption": 0,
+          "typeWardrobe_wire": null
+        },
+        {
+          "action": "remove favourite",
+          "option": 1,
+          "local_typeOption": 0,
+          "typeWardrobe_wire": null
+        },
+        {
+          "action": "move to storage",
+          "option": 2,
+          "local_typeOption": 1,
+          "typeWardrobe_wire": null
+        },
+        {
+          "action": "remove from storage",
+          "option": 1,
+          "local_typeOption": 1,
+          "typeWardrobe_wire": null
+        },
+        {
+          "action": "delete",
+          "option": 3,
+          "local_typeOption": 2,
+          "typeWardrobe_wire": "TypeWardrobe enum NAME: WARDROBE or STORAGE in observed view paths"
+        },
+        {
+          "action": "restore deleted",
+          "option": 1,
+          "local_typeOption": 2,
+          "typeWardrobe_wire": "TypeWardrobe enum NAME: DELETED in expected view path"
+        }
+      ],
+      "item_identifier": {
+        "source": "CE_StackMenus.findLast().gameObject.name.Substring(3,length-3)",
+        "rule": "Painted entry name is Img+itemID; the first three characters are removed, sending raw itemID.",
+        "not_sent": [
+          "gender",
+          "category",
+          "local typeOption"
+        ]
+      },
+      "success_effects": [
+        {
+          "condition": "typeOption=0, option=0",
+          "effect": "Set selected CW_Item.assetStatus=Favourite(0), enable favourite sprite, move tile to sibling index 1, reorder and close options."
+        },
+        {
+          "condition": "typeOption=0, option!=0 (normal UI sends 1)",
+          "effect": "Set selected CW_Item.assetStatus=Normal(1), clear favourite sprite, place after favourite entries, reorder and close options."
+        },
+        {
+          "condition": "typeOption=1, option=2",
+          "effect": "Close options and RepaintWardrobe(0): refresh source WARDROBE view."
+        },
+        {
+          "condition": "typeOption=1, option!=2 (normal UI sends 1)",
+          "effect": "Close options and RepaintWardrobe(1): refresh source STORAGE view."
+        },
+        {
+          "condition": "typeOption=2, option=3, typeWardrobe==WARDROBE",
+          "effect": "Close options and RepaintWardrobe(0): refresh source WARDROBE view."
+        },
+        {
+          "condition": "typeOption=2, option=3, typeWardrobe!=WARDROBE",
+          "effect": "Close options and RepaintWardrobe(1): refresh source STORAGE view."
+        },
+        {
+          "condition": "typeOption=2, option!=3 (normal UI sends 1)",
+          "effect": "Close options and RepaintWardrobe(2): refresh source DELETED view."
+        }
+      ],
+      "consumer_evidence": [
+        {
+          "rva": "0x4981c0",
+          "va": "0x1804981c0",
+          "method": [
+            "CW_Options$$onClick"
+          ],
+          "claim": "Six mutation call sites establish target status and local typeOption mapping.",
+          "bounded_native_length": 4672,
+          "bounded_native_sha256": "90a076e13e9d8d5e25d3761f3275779ae82359fdf6ad16080f8292d333b45368",
+          "ghidra_source_sha256": "af62fd3781b0392ae752399ec65a11009ed34fd16a914b84f99fbe5f0fbad4cc"
+        },
+        {
+          "rva": "0x3e5a80",
+          "va": "0x1803e5a80",
+          "method": [
+            "NETGcloudEditor.<Send_assetUpdateStatusCoroutine>d__42$$MoveNext"
+          ],
+          "claim": "Response authentication and complete local success effect branches.",
+          "bounded_native_length": 4320,
+          "bounded_native_sha256": "fa79d12c1e37651f516b8b3a735230d068da6a1758172180308ff108c40ede12",
+          "ghidra_source_sha256": "c50dd3267cfdf161f2335a85a5f205ceac4e7a5d27bfc9cd7a5376a8292c3b8b"
+        },
+        {
+          "rva": "0x6e4800",
+          "va": "0x1806e4800",
+          "method": [
+            "MANAGEREditor$$RepaintWardrobe"
+          ],
+          "claim": "View refresh reissues mode 0 asset query.",
+          "bounded_native_length": 288,
+          "bounded_native_sha256": "066287c57f27f8a1d470ff12441982526bcc2f506909ad64035c26752cc0e928",
+          "ghidra_source_sha256": "36b213fd40064fb8ac12ff8330df5dd3eb3dd823ae5d4ac4a6e2f9390cad4752"
+        }
+      ]
+    },
+    {
+      "route": "XSpacesGamesType0Servlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace$$Send_SKLMiniGameSuccess",
+          "va": "0x1803edcd0",
+          "rva": "0x3edcd0",
+          "literal": "XSpacesGamesType0Servlet",
+          "metadata_signature": "void NETGCloudSpace__Send_SKLMiniGameSuccess (NETGCloudSpace_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 432,
+          "bounded_native_sha256": "6fa7c99ee91a744aaf00213e0650f84a361ed583b4f2ab879e906c4fea120812",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.String$$Concat",
+            "System.Action<object>$$.ctor",
+            "System.Action<object, object>$$.ctor",
+            "NETGCloudSpace$$OnSend",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x1803edd2a",
+            "0x1803ede29"
+          ],
+          "ghidra_source_sha256": "c54323c53a5b51b1b9c27dfd2bd78327ef675232d4020d62fb91c492b82e8995"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "0 literal"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 4,
+          "name": "idReward",
+          "type": "int",
+          "rule": "Int32.Parse"
+        },
+        {
+          "index": 5,
+          "name": "isInserted",
+          "type": "bool",
+          "rule": "Boolean.Parse"
+        },
+        {
+          "index": 6,
+          "name": "cooldown",
+          "type": "double",
+          "rule": "Double.Parse using current culture"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization and entitlement/scheduling policy remain unproven."
+      ],
+      "response_delimiter": "#",
+      "minimum_success_fields": 7,
+      "native_observations": [
+        "Uses generic OnSend0x180414E40: AES GET wrapping, split#, exact true/local SessionGUID/local PS4ID validation before callback.",
+        "Send_SKLMiniGameSuccess0x1803EDCD0 appends literal#0.",
+        "Get_SKLMiniGameSuccess0x1803E9550 parses fields4,5,6 and passes them to UISKLMenu.ShowResult(idReward,isInserted,cooldown); names recovered from metadata signature."
+      ],
+      "response_consumer_evidence": {
+        "rva": "0x3e9550",
+        "va": "0x1803e9550",
+        "method": [
+          "NETGCloudSpace$$Get_SKLMiniGameSuccess"
+        ],
+        "bounded_native_length": 336,
+        "bounded_native_sha256": "8e3b5b8c6903e10ba997fe7a2e1f6f00aa42a7ea5a4aa9ffbf56cda3eefe714b",
+        "ghidra_source_sha256": "fd680de5be047581e12663ddf9bfcfba72e31b3e03b5163755f340dad8288f6e"
+      }
+    },
+    {
+      "route": "checkRewardAvailableServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<checkRewardAvailableCoroutine>d__35$$MoveNext",
+          "va": "0x1804161b0",
+          "rva": "0x4161b0",
+          "literal": "/checkRewardAvailableServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__checkRewardAvailableCoroutine_d__35__MoveNext (NETGCloudSpace__checkRewardAvailableCoroutine_d__35_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 1824,
+          "bounded_native_sha256": "38367f0abf92b0752b09b91e2855917ed091fce1085c7c51ff4de8bf08fb7635",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Enum$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Boolean$$Parse",
+            "NETGCloudSpace$$prepareRewardPanel",
+            "UnityEngine.MonoBehaviour$$StartCoroutine",
+            "ManagerInstance$$get_singleton",
+            "NETGCloudSpace$$checkRewardAvailableCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x18041621f",
+            "0x180416453"
+          ],
+          "ghidra_source_sha256": "d9d1e5e585c8a8f19b41a9778ebb0f31e6faeb92110e20bc96e89d6e10373512"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "Utils.RewardType enum NAME"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "available",
+          "type": "bool",
+          "rule": "true starts prepareRewardPanel(request rewardType); false finishes"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original server reward eligibility, asset grant/mutation, idempotency, cooldown and account entitlement rules remain unproven."
+      ],
+      "minimum_success_fields": 3,
+      "response_delimiter": "#",
+      "native_observations": [
+        "Native0x1804161B0 checks response0 exacttrue and response1 local SessionGUID before Boolean.Parse(response2).",
+        "Request enum uses System.Enum.ToString, not integer.",
+        "RewardType metadata: Halloween0, ArcheryBow1, ArcheryCarcaj2, Chess3, CastleSword4, PatricksDay2018=5, Cube6, CampSilverLake0=7, CampSilverLake1=8, CampSilverLake2=9, CampSilverLake3=10, GhostWolf11."
+      ]
+    },
+    {
+      "route": "checkRewardGameServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<checkRewardGameCoroutine>d__39$$MoveNext",
+          "va": "0x180416a20",
+          "rva": "0x416a20",
+          "literal": "/checkRewardGameServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__checkRewardGameCoroutine_d__39__MoveNext (NETGCloudSpace__checkRewardGameCoroutine_d__39_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 4128,
+          "bounded_native_sha256": "3e760be8e86e06452bca386686635601d3474146990a8770b7100c29101b3dcd",
+          "observed_calls": [
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "<PrivateImplementationDetails>$$ComputeStringHash",
+            "System.Boolean$$Parse",
+            "ManagerInstanceCube$$get_singletonCube",
+            "PopUpReward$$ShowDouble",
+            "ManagerInstanceNexus$$get_singletonNexus",
+            "ManagerInstanceCastle$$get_singletonCastle",
+            "PopUpReward$$Show",
+            "AirRacingManager$$get_singleton",
+            "ChronoRaceReward$$SetReward",
+            "ManagerInstanceCampSilverLake$$get_singletonPersonalSpaceCampSilverLake",
+            "JG_CampSilverLake_Killer_Launcher$$ShowReward",
+            "ManagerinstanceCutteridgeEstate$$get_singletonPersonalSpaceCutteridgeEstate",
+            "JG_Ghost_Minigame$$ShowReward",
+            "UnityEngine.Object$$FindObjectOfType<object>",
+            "UnityEngine.Object$$op_Inequality",
+            "System.String$$Replace",
+            "NPGather$$SetReward",
+            "ManagerInstance$$get_singleton",
+            "NETGCloudSpace$$checkRewardGameCoroutine",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x180416b11",
+            "0x180416df9"
+          ],
+          "ghidra_source_sha256": "3c860652efe822749c92dffcf1206c67db328175fa4611143d472474d8b12051"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "typeGame string",
+        "stage numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "already_owned",
+          "type": "bool",
+          "rule": "Boolean.Parse; true suppresses reward UI, false displays game-specific reward when eligible stage"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization, persistence and semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Native0x180416A20 sends four fields, validates true/session and dispatches on request typeGame name.",
+        "Recognized names: Cube, PatricksDay2018, ArcheryBow, ArcheryCarcaj, CastleSword, ChronoRace, CampSilverLake0..3, GhostWolf, Halloween, Chess.",
+        "Most false branches show PopUpReward or game-specific reward. ChronoRace and Halloween additionally suppress when stage==1. Unknown names finish without field2 access."
+      ],
+      "minimum_success_fields": 3,
+      "response_delimiter": "#"
+    },
+    {
+      "route": "checkStateNPFriendsServlet",
+      "also_in_40_task_routes": false,
+      "occurrences": [
+        {
+          "method": "NETGCloudSpace.<checkStateNPFriendsServlet>d__56$$MoveNext",
+          "va": "0x180417b90",
+          "rva": "0x417b90",
+          "literal": "/checkStateNPFriendsServlet?data={0}",
+          "metadata_signature": "bool NETGCloudSpace__checkStateNPFriendsServlet_d__56__MoveNext (NETGCloudSpace__checkStateNPFriendsServlet_d__56_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2944,
+          "bounded_native_sha256": "bc407bffdb9af8a60cd34a155987adfea212b95f99c610051963717dfc9c7c3e",
+          "observed_calls": [
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "PS4Info$$get_singleton",
+            "ManagerInstance$$get_singleton",
+            "UnityEngine.Component$$get_gameObject",
+            "UnityEngine.GameObject$$SetActive",
+            "System.Collections.Generic.List<object>$$RemoveAt",
+            "UnityEngine.EventSystems.EventSystem$$SetSelectedGameObject",
+            "System.Collections.Generic.List<ArraySegment<byte>>$$.ctor",
+            "PicnicNET.PicnicPlayerData$$.ctor",
+            "System.Collections.Generic.List<object>$$Add",
+            "System.Collections.Generic.List<object>$$Insert",
+            "SocialManager$$GetList",
+            "System.Int32$$ToString",
+            "NETGCloudSpace$$checkStateNPFriendsServlet",
+            "UnityEngine.MonoBehaviour$$StartCoroutine"
+          ],
+          "literal_reference_vas": [
+            "0x180417c4f",
+            "0x180417cd5"
+          ],
+          "ghidra_source_sha256": "2273b3ad4de20f565f0b39d73ede97bb752337f446da5b0f7bb82462c2f9e7e4"
+        }
+      ],
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "zero or more PS4Info.NPFriends usernames as separate fields"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": "3..end",
+          "name": "username_status_pairs",
+          "type": "(string,string)*",
+          "rule": "pairs are username, external status numeric string; every trailing pair consumed"
+        }
+      ],
+      "contract_status": "native_request_and_response_contract_recovered",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Original backend state, authorization, persistence and semantic parity remain unproven."
+      ],
+      "native_observations": [
+        "Request builder0x1803EEC10 appends each PS4Info.NPFriends username after GUID#PS4ID; no count.",
+        "Native0x180417B90 checks true/session; response length<3 invokes empty-list UI path.",
+        "Starting field3, loops by2 and constructs SocialListEntryModel: name=field, isFavourite=false, listType=PSN(4).",
+        "External status mapping:0->Offline(2),1->Online(0),2->Away(1),3->Wardrobe(3). Unknown status leaves default Online(0). Online entries inserted at list front, other statuses appended.",
+        "Passes assembled list to SocialManager.GetList. No per-entry platform field is assigned; constructor default remains."
+      ],
+      "minimum_success_fields": 2,
+      "empty_response": "true#<GUID>",
+      "response_delimiter": "#",
+      "response_consumer_evidence": [
+        {
+          "rva": "0x3eec10",
+          "va": "0x1803eec10",
+          "method": [
+            "NETGCloudSpace$$checkStateNPFriends"
+          ],
+          "bounded_native_length": 512,
+          "bounded_native_sha256": "edab2781b69d7e801247d55afa2669c5f440cc469969b9428d9d77bf14e882a0",
+          "ghidra_source_sha256": "4717f2b728f247b556cc7a3cf7225b9119126321298bbff90eebb4be2ea7c2d9"
+        },
+        {
+          "rva": "0x417b90",
+          "va": "0x180417b90",
+          "method": [
+            "NETGCloudSpace.<checkStateNPFriendsServlet>d__56$$MoveNext"
+          ],
+          "bounded_native_length": 2944,
+          "bounded_native_sha256": "bc407bffdb9af8a60cd34a155987adfea212b95f99c610051963717dfc9c7c3e",
+          "ghidra_source_sha256": "2273b3ad4de20f565f0b39d73ede97bb752337f446da5b0f7bb82462c2f9e7e4"
+        }
+      ]
+    },
+    {
+      "route": "spaceExistServlet",
+      "also_in_40_task_routes": true,
+      "occurrences": [
+        {
+          "method": "NETGcloudLogin.<Send_CheckSpaceExistCoroutine>d__37$$MoveNext",
+          "va": "0x1803f80c0",
+          "rva": "0x3f80c0",
+          "literal": "/spaceExistServlet?data={0}",
+          "metadata_signature": "bool NETGcloudLogin__Send_CheckSpaceExistCoroutine_d__37__MoveNext (NETGcloudLogin__Send_CheckSpaceExistCoroutine_d__37_o* __this, const MethodInfo* method);",
+          "bounded_native_length": 2176,
+          "bounded_native_sha256": "18d0e7a9f96cfaad107bedbbdad2cd6e6af182fb160256ee4b193fa7e77fa4a3",
+          "observed_calls": [
+            "AES$$.ctor",
+            "PS4Info$$get_singleton",
+            "System.Int32$$ToString",
+            "System.String$$Concat",
+            "AES$$Encrypt",
+            "System.Uri$$EscapeDataString",
+            "System.String$$Format",
+            "UnityEngine.Networking.UnityWebRequest$$Get",
+            "UnityEngine.Networking.UnityWebRequest$$SendWebRequest",
+            "UnityEngine.Networking.UnityWebRequest$$get_isNetworkError",
+            "UnityEngine.UIElements.BaseVisualTreeUpdater$$get_panel",
+            "System.Type$$InternalGetNameIfAvailable",
+            "AES$$Decrypt",
+            "System.String$$Split",
+            "System.String$$Equals",
+            "System.Boolean$$Parse",
+            "UnityEngine.Networking.UnityWebRequest$$get_error",
+            "UnityEngine.Debug$$Log"
+          ],
+          "literal_reference_vas": [
+            "0x1803f813d",
+            "0x1803f84cc"
+          ],
+          "ghidra_source_sha256": "a14d9b8ba244d25456ea0569f5773fd3b3a02f06c99e85c008af26976d28578a"
+        }
+      ],
+      "request_fields": null,
+      "response_fields": null,
+      "contract_status": "route_literal_native_recovered_fields_pending",
+      "reachability_status": "not_exhaustively_traced",
+      "server_semantic_parity": "unproven",
+      "unknowns": [
+        "Exact direct coroutine request and response semantics pending; do not assume equal to task parser solely from identical route name.",
+        "Original backend persistence/authorization/validation semantics unknown."
+      ]
+    }
+  ],
+  "limitations": [
+    "Direct route literals are native code evidence, not original server source.",
+    "Legacy coroutine bodies may coexist with public wrappers redirected to modern task classes. Reachability is a separate unresolved question.",
+    "Original server-only routes and other networking classes are outside this targeted inventory.",
+    "Request/response fields marked pending must not be treated as implemented or equivalent.",
+    "Request/response native contracts for all33 additional route names in this report are recovered for the documented consumers. This does not prove reachability, original server economic/authorization/state semantics, or completeness outside NETGcloudLogin/NETGcloudEditor/NETGCloudSpace."
+  ],
+  "legacy_generic_sender": {
+    "native_va": "0x180414e40",
+    "request": "GET HTTP_ADDRESS+\"/{command}?data=\"+Uri.EscapeDataString(AES.Encrypt(parameters))",
+    "response": "AES.Decrypt(downloadHandler.text).Split(#,None)",
+    "normal_acceptance": "field0 exact lowercase true, field1 local SessionGUID, field2 local PS4ID",
+    "special_case": "command N2GetSocialList invokes callback even if normal acceptance fails; its field2 is UI selector, not PS4ID.",
+    "delimiter_presence_precheck": "No common Contains(#) precheck observed in this legacy sender; unlike modern HTTPSender.ProcessResponse."
+  }
+}

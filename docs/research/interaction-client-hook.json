@@ -1,0 +1,232 @@
+{
+  "format_version": 2,
+  "scope": "Exact-build isolated client candidate; static validation informed by bounded prior private-client runtime observation. This final bridge revision has not been executed.",
+  "steam_baseline": {
+    "path": "work/evidence/GameAssembly.dll",
+    "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+    "size": 42310144
+  },
+  "composed_input": {
+    "path": "work/patched-client-keyboard-focus/GameAssembly.dll",
+    "sha256": "ec6f909d3af35c89cd287a2803b86839cd5d1b168bc1f76517eed2494c85e01b",
+    "size": 47281152
+  },
+  "candidate": {
+    "path": "work/interaction-registry-build/GameAssembly-final.dll",
+    "sha256": "e61302de37b2914a0eb6c2e93e173d300e7638653d0bd1b2eb39eef7de26ad39",
+    "size": 48939520
+  },
+  "bridge_dll": {
+    "path": "work/interaction-registry-build/NebulaRegistryBridge.dll",
+    "sha256": "07fa4033c844e6432b9e2809a1ed8eb64d30f80e985fa544d93baf2a1e456761",
+    "size": 926277
+  },
+  "wrapper_object": {
+    "sha256": "5c3ae6c80323ff2d8a7708d5f6614868917bd5ceabf8ec7a8d1346dfc061e8b3",
+    "size": 4057
+  },
+  "architecture": "AMD64 PE32+ / Windows x64 ABI",
+  "patch_sites": [
+    {
+      "name": "initial_begin",
+      "rva": "0x5eae90",
+      "length": 5,
+      "original": "e84ba32a00",
+      "original_target_rva": "0x8951e0",
+      "contract": "Begin initial, then call original FindObjects."
+    },
+    {
+      "name": "save_begin",
+      "rva": "0x6be9ac",
+      "length": 5,
+      "original": "e82f681d00",
+      "original_target_rva": "0x8951e0",
+      "contract": "Begin save, then call original FindObjects."
+    },
+    {
+      "name": "load_begin",
+      "rva": "0x6bd280",
+      "length": 5,
+      "original": "48895c2408",
+      "resume_rva": "0x6bd285",
+      "contract": "Begin load, replay displaced prologue, then resume."
+    },
+    {
+      "name": "initial_occupable",
+      "rva": "0x5eaec7",
+      "length": 5,
+      "original": "e8b4740200",
+      "original_target_rva": "0x612380",
+      "contract": "Call original first, then Record assigned occupable send_id."
+    },
+    {
+      "name": "initial_generic",
+      "rva": "0x5eaf1d",
+      "length": 5,
+      "original": "e83e61e6ff",
+      "original_target_rva": "0x451060",
+      "contract": "Call original first, then Record assigned generic send_id."
+    },
+    {
+      "name": "save_occupable",
+      "rva": "0x6beab7",
+      "length": 5,
+      "original": "e8c438f5ff",
+      "original_target_rva": "0x612380",
+      "contract": "Call original first, then Record with save owner."
+    },
+    {
+      "name": "save_generic",
+      "rva": "0x6beb17",
+      "length": 5,
+      "original": "e84425d9ff",
+      "original_target_rva": "0x451060",
+      "contract": "Call original first, then Record with save owner."
+    },
+    {
+      "name": "load_occupable",
+      "rva": "0x6cbc4a",
+      "length": 5,
+      "original": "e83167f4ff",
+      "original_target_rva": "0x612380",
+      "contract": "Call original first, then Record with load owner."
+    },
+    {
+      "name": "load_generic",
+      "rva": "0x6cbc8e",
+      "length": 5,
+      "original": "e8cd53d8ff",
+      "original_target_rva": "0x451060",
+      "contract": "Call original first, then Record with load owner."
+    },
+    {
+      "name": "initial_commit",
+      "rva": "0x5eafe1",
+      "length": 5,
+      "original": "e8ca14e300",
+      "original_target_rva": "0x141c4b0",
+      "contract": "Commit complete initial epoch, then call original SetResult."
+    },
+    {
+      "name": "save_commit",
+      "rva": "0x6bec57",
+      "length": 5,
+      "original": "e8c47dceff",
+      "original_target_rva": "0x3a6a20",
+      "contract": "Call original Send_SavePreset, then Commit save candidate."
+    },
+    {
+      "name": "load_commit",
+      "rva": "0x6ca8dc",
+      "length": 11,
+      "original": "488b5028488b4840ff5018",
+      "contract": "Replay completion delegate call, then Commit complete load epoch."
+    }
+  ],
+  "bridge_exports": [
+    "uint32_t NebulaRegistry_AbiVersion(void)",
+    "uint32_t NebulaRegistry_Initialize(const NebulaRegistryHostV1*)",
+    "uint32_t NebulaRegistry_Begin(uint32_t source, void *owner)",
+    "uint32_t NebulaRegistry_Record(void *component, uint32_t kind, uint32_t source, int32_t send_id, void *owner)",
+    "uint32_t NebulaRegistry_Commit(uint32_t source, void *owner)"
+  ],
+  "enums": {
+    "sources": {
+      "initial": 1,
+      "housing_save": 2,
+      "housing_load": 3
+    },
+    "kinds": {
+      "generic": 1,
+      "occupable": 2
+    }
+  },
+  "semantic_descriptor": {
+    "static_anchor": "unique active top-root name after stripping only exact trailing (Clone)",
+    "static_path": "sibling-index chain relative to and excluding anchor",
+    "furniture_anchor": "empty",
+    "furniture_path": "relative to and excluding placed ground root",
+    "dual_ids": "send_id is assigned component ID; receive_id is dense occupables-list index at commit"
+  },
+  "initial_load_handoff": {
+    "successful_initial": "always emits a complete housing-load namespace",
+    "owner_backed": "emit the full typed ground signature even when there are zero interaction entries; collected ground count must equal the validated owner list size",
+    "no_owner": "allowed only when load entries are empty, producing an explicit empty public-world load namespace and ground signature",
+    "fail_closed": [
+      "owner absent with housing records",
+      "malformed or partially collected nonzero ground list"
+    ]
+  },
+  "wire": {
+    "opcode": 97,
+    "outer": "97#guid#seq#zeroBasedPart#partCount#base64urlChunk",
+    "raw_utf8_chunk_bytes": 4096,
+    "max_parts": 256,
+    "base64_padding": false,
+    "telepathy_limit": 16384
+  },
+  "native_helpers": {
+    "component_transform": "0x1b85f10",
+    "component_game_object": "0x1b85ed0",
+    "transform_parent": "0x1b97190",
+    "sibling_index": "0x1b97210",
+    "get_components_internal": "0x1b87670",
+    "ground_parent": "0x8658e0",
+    "active_scene": "0x1bab240",
+    "scene_name": "0x1bacac0",
+    "scene_roots": "0x1bac930",
+    "object_name": "0x1b8c010",
+    "position_sret": "0x1b991e0",
+    "euler_sret": "0x1b98c70",
+    "tcp_send": "0x5e7820",
+    "metadata_initializer": "0x287160",
+    "telepathy_ctor": "0x12ddb60",
+    "telepathy_max_packet": "0x73f8e0"
+  },
+  "generic_methodinfo_slots": {
+    "Component.GetComponentInParent<HousingAssetGround>": "0x24fc3a0"
+  },
+  "rejected_component_enumeration_overload": {
+    "methodinfo_slot": "0x252de38",
+    "resolved_method_rva": "0x877040",
+    "runtime_type": "closed MethodInfo returning List<Component> with IEnumerable RGCTX",
+    "reason": "Incompatible with the required Component array enumeration; the production bridge has zero references to this slot.",
+    "replacement": "Non-generic GameObject.GetComponentsInternal at 0x1b87670, exact eight-argument ABI, Component System.Type recovered from IL2CPP parent metadata."
+  },
+  "new_section": {
+    "name": ".nbi",
+    "rva": "0x2fd2000",
+    "raw_offset": "0x2d17400",
+    "virtual_size": 1658188,
+    "raw_size": 1658368,
+    "code_size": 1536,
+    "xdata_size": 112,
+    "runtime_functions_added": 13
+  },
+  "guard": {
+    "tool": "tools/interaction_registry_patch.py",
+    "sha256": "911e8f8484c53017631baf29ca22b6ea56a7768c44b35c162c1625bdb3228850",
+    "report": "work/interaction-registry-build/interaction-registry-patch-final.json",
+    "report_sha256": "7760e123420a971049114a8e3b266e2b6cdb35078088f11af5c551af36b11b35",
+    "report_size": 9010,
+    "bridge_cpp_sha256": "484b0a6e86feeaa63c091695622206aa3d0718321c38ef3a1db7ce506079c4f3",
+    "original_changed_byte_count": 84,
+    "checks": [
+      "strict source/wrapper/DLL hashes",
+      "five exports present",
+      "helper prefixes and supported MethodInfo slots match",
+      "rejected MethodInfo slot has zero production references",
+      "complete initial-to-load handoff and exact ground-count checks",
+      "13 generated unwind records registered",
+      "PE reparses",
+      "only 12 approved original sites changed"
+    ]
+  },
+  "target_executed": false,
+  "steam_installation_changed": false,
+  "limitations": [
+    "A bounded prior runtime observation proved the rejected overload mismatch and informed the corrected helper; this final bridge revision has not been executed.",
+    "Any incomplete introspection, duplicate/missing anchor, dense-list mismatch, ground-count mismatch, or descriptor mismatch fails closed.",
+    "Save activation remains pending until the backend typed ground signature matches."
+  ]
+}

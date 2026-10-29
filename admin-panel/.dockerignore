@@ -1,0 +1,11 @@
+node_modules
+dist
+.astro
+.git
+.env*
+!.env.example
+secrets
+*.log
+test-results
+.vscode
+AGENTS.md

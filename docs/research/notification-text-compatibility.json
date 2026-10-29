@@ -1,0 +1,104 @@
+{
+  "format_version": 1,
+  "status": "static_candidate_prepared",
+  "scope": "Gift/Reward empty-body compatibility only; minigames deferred",
+  "build": {
+    "name": "Nebula Realms build11018722",
+    "il2cpp_metadata_version": 29,
+    "image_base": "0x180000000",
+    "original_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+    "rapid_wardrobe_input_sha256": "ce1a74588e74499e282699e160b966439ffb4c278e8bcef791951e28a57b0dd0",
+    "notification_candidate_sha256": "13158d2f08c9511c9cc283a6dda680081c5e1f6142bb86ddde1bfbd039de7fcb"
+  },
+  "observations": [
+    {
+      "source": "work/evidence/ghidra/functions/477470.c",
+      "sha256": "7559d564ab08df77e0edb5101c218763d65d4fc44897caf96d26a6e9644f94c7",
+      "facts": [
+        "ChatEntry.set_notification is RVA 0x477470",
+        "nullable notification storage begins at ChatEntry+0x108",
+        "original Gift body uses the original prefix, arguments, and suffix through String.Concat3",
+        "original Reward body uses the original Reward literal",
+        "final String.Format4 is called at RVA 0x477A02"
+      ]
+    },
+    {
+      "source": "work/evidence/ghidra/functions/610d40.c",
+      "sha256": "dfa0dd627343c65096982c1037e9d6104f418be52f2d57dff7d6e13df5ae7c73",
+      "facts": [
+        "GetguidByUsername initializes its result to String.Empty",
+        "the method searches the remote PlayerInfo dictionary"
+      ]
+    },
+    {
+      "source": "work/decompiled/dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850",
+      "facts": [
+        "NotificationData.type is offset 0x0 within the value",
+        "NotificationData.arguments is offset 0x20 within the value",
+        "Gift is type 3 and Reward is type 4"
+      ]
+    }
+  ],
+  "abi_proof": {
+    "redirect_rva": "0x477a02",
+    "original_call_hex": "e8990bef00",
+    "format_register": "rcx",
+    "timestamp_register": "rdx",
+    "colored_name_register": "r8",
+    "body_register": "r9",
+    "chat_entry_register": "rdi",
+    "method_info": "null at caller stack argument 5",
+    "basis": "Capstone decode of the exact rapid+wardrobe input bytes"
+  },
+  "authored_behavior": {
+    "required_gates": [
+      "body pointer is non-null",
+      "Il2CppString.length equals zero",
+      "Nullable.HasValue at ChatEntry+0x108 is true",
+      "type at ChatEntry+0x110 is 3 or 4"
+    ],
+    "gift": "String.Concat3(original prefix literal, ChatEntry+0x130 arguments, original suffix literal)",
+    "reward": "original Reward literal",
+    "pass_through": "null body, nonempty body, absent nullable, and every type other than 3/4",
+    "always_finishes_with": "original String.Format4"
+  },
+  "patch": {
+    "assembly": "outputs/nebula-preservation/client-fixes/notification_text.s",
+    "assembly_sha256": "3c2ffe73d58a207bed0d829cada33eb468f6f34e7ba4f05efff36a6bbceb646d",
+    "coff": "work/evidence/notification_text.o",
+    "coff_sha256": "9e65a06832343882297fee3763159d502e3eea330f7ea5252cfd8051479eacb7",
+    "patcher": "outputs/nebula-preservation/tools/notification_text_patch.py",
+    "manifest": "outputs/nebula-preservation/client-fixes/prepared-notification-copy.json",
+    "copy": "work/patched-client-notifications/GameAssembly.dll",
+    "new_section": ".nbn",
+    "new_section_rva": "0x2ca8000",
+    "code_bytes": 144,
+    "existing_runtime_functions_preserved": 138030
+  },
+  "verification": {
+    "report": "outputs/nebula-preservation/client-fixes/notification-text-offline-tests.json",
+    "pure_instruction_model_cases_passed": 16,
+    "synthetic_image_bases": [
+      "0x0",
+      "0x180000000"
+    ],
+    "target_executed": false,
+    "network_used": false,
+    "installation_changed": false
+  },
+  "excluded_changes": [
+    "unrelated gameplay or UI behavior; the intended notification text is changed",
+    "listeners or attachment",
+    "identity and purchase checks",
+    "security checks",
+    "native execution",
+    "minigames"
+  ],
+  "limitations": [
+    "No Unity/IL2CPP runtime test was performed.",
+    "Runtime rendering and GC behavior are untested.",
+    "Windows exception dispatch and generated unwind behavior are untested.",
+    "Static evidence is exact-build-specific and does not prove original-server parity."
+  ]
+}

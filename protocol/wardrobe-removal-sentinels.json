@@ -1,0 +1,273 @@
+{
+  "evidence": {
+    "native_utils_constructor": {
+      "path": "work/evidence/ghidra/functions/4e3030.c",
+      "rva": "0x4e3030",
+      "sha256": "27a0c92ddf76a437c2e927ccc5be45162bcde0240ca7dfb832625e71c321b162",
+      "meaning": "The client's second fixed string list (field +0x18) contains 30 removal sentinel IDs."
+    },
+    "native_wardrobe_click": {
+      "path": "work/evidence/ghidra/functions/49a8f0.c",
+      "rva": "0x49a8f0",
+      "sha256": "2b3ec7baafa783f8956b20ba3cb3b47cf74b1bccebf1086dd249e7dad9f546cf",
+      "meaning": "A clicked ID in Utils +0x18 takes the category-removal branch before ordinary asset loading."
+    },
+    "native_item_selection": {
+      "path": "work/evidence/ghidra/functions/497520.c",
+      "rva": "0x497520",
+      "sha256": "1e665ddeadebeff8b68d845b06a51ac1e4b46ff9933cc5631cd8090e128570a2",
+      "meaning": "The fixed sentinel IDs suppress the storage/delete options path; ordinary submit remains the removal action."
+    },
+    "asset_catalog": {
+      "path": "protocol/avatar-asset-catalog.json",
+      "sha256": "20275e008ee31ff464741325fbba0766a3b6189191c2c7cf64e66636f016b06f",
+      "meaning": "Ordinary wearable-backed sentinel IDs are validated against the unambiguous avatar asset catalog."
+    },
+    "raw_bundle_manifests": {
+      "path": "work/evidence/assets/bundle-manifests.json",
+      "sha256": "d4673f1229a7b3f3ce0813081590990e16897c91988ad9ec16745d010aa5cdb5",
+      "meaning": "Thumbnail-only removal controls are bound to exact shipped thumbnail bundle paths and manifest hashes."
+    }
+  },
+  "policy": {
+    "view": "ordinary_only",
+    "asset_status": 1,
+    "item_type": 1,
+    "display_name": "Remove",
+    "entitlement": false,
+    "storage_or_deleted_item": false
+  },
+  "sentinels": [
+    {
+      "item_id": "fSuscSN3skQI1sSa3oY6b5am4XLtkj5U",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_BEARD",
+      "bundle": "04/fsuscsn3skqi1ssa3oy6b5am4xltkj5u",
+      "manifest_sha256": "19060355a5a2171f84d0d4f9eff818d8f39e27c29507ce7c19e0627bafe9775c"
+    },
+    {
+      "item_id": "Re4801P6fhw66avurlr12fDu7x80q3Fe",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_HAIRSTYLE",
+      "bundle": "04/re4801p6fhw66avurlr12fdu7x80q3fe",
+      "manifest_sha256": "d1165e0abc5ca35a488b8833184d1c7646669c255118ddebd788835262f5dede"
+    },
+    {
+      "item_id": "G4q7p8V2H2W23CPU285X2d6r05vU0aCY",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_HAT",
+      "bundle": "04/g4q7p8v2h2w23cpu285x2d6r05vu0acy",
+      "manifest_sha256": "c53c61359e5fe1ae50c92e4fbd7ed5b00cbb4b51cb2eaac937b65b91644bb236"
+    },
+    {
+      "item_id": "U0AhIVK7xED678sfI8Mo4XP66qVNoYPf",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_NECK",
+      "bundle": "04/u0ahivk7xed678sfi8mo4xp66qvnoypf",
+      "manifest_sha256": "91c206933210806e35fd454ce893dbe0e1b7ae9b56bc4cd7f7a7b681ffcaf5b8"
+    },
+    {
+      "item_id": "PU8mJ4HLtIME6IcvNVwp32G3s54dSoC6",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_EARRINGL",
+      "bundle": "04/pu8mj4hltime6icvnvwp32g3s54dsoc6",
+      "manifest_sha256": "2dadfe6b70966d7728e34c2edb6fd14cfdb787de62979bc2e3467cd37844fa44"
+    },
+    {
+      "item_id": "k3XobrCEAYuaJEJNtiOE53ijEY4MGj2D",
+      "gender": "MALE",
+      "category": "CLOTH_BODY_WRISTBANDL",
+      "bundle": "04/k3xobrceayuajejntioe53ijey4mgj2d",
+      "manifest_sha256": "4645b3dd869965789f375105d09ceaba8656cd82324fb09d2a435096385fec80"
+    },
+    {
+      "item_id": "vm05PFa28TsPW6V58yCqqVOxd686YeJD",
+      "gender": "MALE",
+      "category": "CLOTH_BODY_WRISTBANDR",
+      "bundle": "04/vm05pfa28tspw6v58ycqqvoxd686yejd",
+      "manifest_sha256": "e0ec89da08f7e11c57219d621ee880dc5da59455912bcb890e11e43c48f250c8"
+    },
+    {
+      "item_id": "hYah4Q2DM6ed2T2Bp1rl0H8oy780Rd66",
+      "gender": "MALE",
+      "category": "CLOTH_BODY_LEG_ITEM",
+      "bundle": "04/hyah4q2dm6ed2t2bp1rl0h8oy780rd66",
+      "manifest_sha256": "20dc652e37a4628590c4a79b73d63f0e6401c83e0d6fb874bfa734c76831efc4"
+    },
+    {
+      "item_id": "c8dLnS5DTGH548D5PXbRKg751p0sPeVk",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_LEG_ITEM",
+      "bundle": "04/c8dlns5dtgh548d5pxbrkg751p0spevk",
+      "manifest_sha256": "136d36a97f8a5fd14a812c022085101994896513a3051fab23e68e07d8d1a1ec"
+    },
+    {
+      "item_id": "fUQpKWAl24j0Lb6UlOLdcEp4Ew0S8K4g",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_LEG_GARTER",
+      "bundle": "04/fuqpkwal24j0lb6uloldcep4ew0s8k4g",
+      "manifest_sha256": "7f09bc94a6f31798ff3d15c43f8f32b5dcc4de913676da5b2d27f5f7bf40082f"
+    },
+    {
+      "item_id": "ft6Os3EO67lO5541RN276BGQrYN67khb",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_HAT",
+      "bundle": "04/ft6os3eo67lo5541rn276bgqryn67khb",
+      "manifest_sha256": "a211d999c72de525e37dc438d2f303da734ae438091966307b5a95a07123ca78"
+    },
+    {
+      "item_id": "nqo143u4hxTOXMguDmM7d3H2h4w4yQns",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_NECK",
+      "bundle": "04/nqo143u4hxtoxmgudmm7d3h2h4w4yqns",
+      "manifest_sha256": "889d3ee0f52380a7caf1b3f21714173fa8ef419d870cbc35ba0ffd7252911aa5"
+    },
+    {
+      "item_id": "Q6b7njV4x1Tc80ol5807X011q1788o06",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_SUNGLASSES",
+      "bundle": "04/q6b7njv4x1tc80ol5807x011q1788o06",
+      "manifest_sha256": "76027178164ccb48face83c7e1ca444389f2d3c6d102a4c7e3f77ae958203ea9"
+    },
+    {
+      "item_id": "h3owRGM61qqkg2C667YUpv4o65C4V1eR",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_EARRINGL",
+      "bundle": "04/h3owrgm61qqkg2c667yupv4o65c4v1er",
+      "manifest_sha256": "56a507d72031ba279cb2268dd8034115268aac0d20478861d18d169762612433"
+    },
+    {
+      "item_id": "V1rIqwo1S2v87I3BX2rQal6Dm6hxI5Lf",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_EARRINGR",
+      "bundle": "04/v1riqwo1s2v87i3bx2rqal6dm6hxi5lf",
+      "manifest_sha256": "92416d215bf38db320d0651f374edf0e03d7313dfe7dd985338f3a414e4a1c9d"
+    },
+    {
+      "item_id": "F6MQBOH328gAPIxQ7lna30M480dKdDp7",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_FACEITEM",
+      "bundle": "04/f6mqboh328gapixq7lna30m480dkddp7",
+      "manifest_sha256": "642a75c3e462e09fd864b6389a4d52f1a44f3010d37e7bf7993fc2e9a621af58"
+    },
+    {
+      "item_id": "lP12opBugOEH38lRIqS3BKl0UfjBo6HA",
+      "gender": "FEMALE",
+      "category": "CLOTH_HEAD_ITEMS",
+      "bundle": "04/lp12opbugoeh38lriqs3bkl0ufjbo6ha",
+      "manifest_sha256": "c83f3494007075c803095746ccbdeafe4f27e3eb60eb21da9e8834867d8c2b5f"
+    },
+    {
+      "item_id": "UC7K011COpOwmwJrl08h8u7152rK0ubs",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_WRISTBANDL",
+      "bundle": "04/uc7k011copowmwjrl08h8u7152rk0ubs",
+      "manifest_sha256": "ac2c4a51640bb51fb766108dd97389662839d6e040d4371fb1547e05e4749a05"
+    },
+    {
+      "item_id": "FPduaDRh1Dewj5JM73625AvwiTPpBDB8",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_WRISTBANDR",
+      "bundle": "04/fpduadrh1dewj5jm73625avwitppbdb8",
+      "manifest_sha256": "e1e90935989e20dab7056e2c211e1629184e62825faf6e39b262d13ef6cebdf7"
+    },
+    {
+      "item_id": "c4713kO5O2040Vmt0S85jWBLgqgF622r",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_NAILS",
+      "bundle": "04/c4713ko5o2040vmt0s85jwblgqgf622r",
+      "manifest_sha256": "9db6ce9ddac079f82c9c98db41ff010e2ac44b0f0b3bfd949b51ac0ae357c384"
+    },
+    {
+      "item_id": "wcdkkgqK5JjXb7h78aPa6r2wLMA8QjRJ",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_SUNGLASSES",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/wcdkkgqk5jjxb7h78apa6r2wlma8qjrjthumbnail",
+      "manifest_sha256": "fca8ead8ce101ec3893fecb756ab91a8ac5b353a1b0e3421a78d66fde2c418aa",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_SUNGLASSES/wcdkkgqK5JjXb7h78aPa6r2wLMA8QjRJ/wcdkkgqK5JjXb7h78aPa6r2wLMA8QjRJThumbnail.png"
+    },
+    {
+      "item_id": "mRWJyYhIWgH1WwJJ1UM4R0Y7SV6vpVwb",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_EARRINGR",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/mrwjyyhiwgh1wwjj1um4r0y7sv6vpvwbthumbnail",
+      "manifest_sha256": "198af9c32ccde09e3322299d66bdf22d4b51658de00d22176e991cb4b1b8170f",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_EARRINGR/mRWJyYhIWgH1WwJJ1UM4R0Y7SV6vpVwb/mRWJyYhIWgH1WwJJ1UM4R0Y7SV6vpVwbThumbnail.png"
+    },
+    {
+      "item_id": "rKD36W46o4h4orgf3tNHKEyappy8lGmB",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_FACEITEM",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/rkd36w46o4h4orgf3tnhkeyappy8lgmbthumbnail",
+      "manifest_sha256": "283a1e1af24e7601533d3ee3a182ea7d223dea3c1f562262548c93e3a06dd71f",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM/rKD36W46o4h4orgf3tNHKEyappy8lGmB/rKD36W46o4h4orgf3tNHKEyappy8lGmBThumbnail.png"
+    },
+    {
+      "item_id": "qpFU47sT7xbY5r3145Y1i37seLNIO1Ep",
+      "gender": "MALE",
+      "category": "CLOTH_HEAD_ITEMS",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/qpfu47st7xby5r3145y1i37selnio1epthumbnail",
+      "manifest_sha256": "479b4169ec96cea00d98653e3eed10f355f5f09cf3aa5340ac4ba2c0844a9d91",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_ITEMS/qpFU47sT7xbY5r3145Y1i37seLNIO1Ep/qpFU47sT7xbY5r3145Y1i37seLNIO1EpThumbnail.png"
+    },
+    {
+      "item_id": "up7KSlYi5P4IAeLR3i6484dIUd3WHEnF",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_TORSO_APPAREL",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/up7kslyi5p4iaelr3i6484diud3whenfthumbnail",
+      "manifest_sha256": "b60137d6b8423cd4a4ac60f8ddcc6461f3ad6c61f23220bb74d91734baada34f",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL/up7KSlYi5P4IAeLR3i6484dIUd3WHEnF/up7KSlYi5P4IAeLR3i6484dIUd3WHEnFThumbnail.png"
+    },
+    {
+      "item_id": "X8e5I1oyt7Ip81wXsC8Q47Q6p8uIkL10",
+      "gender": "MALE",
+      "category": "CLOTH_BODY_TORSO_APPAREL",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/x8e5i1oyt7ip81wxsc8q47q6p8uikl10thumbnail",
+      "manifest_sha256": "5a3502fd41ddec981bef640f86cd28b5dd316abd321f2a3a3956800335e2c450",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/X8e5I1oyt7Ip81wXsC8Q47Q6p8uIkL10/X8e5I1oyt7Ip81wXsC8Q47Q6p8uIkL10Thumbnail.png"
+    },
+    {
+      "item_id": "gvR7gjJ4tN0nkG43SLy3sLYv1142T3Xd",
+      "gender": "MALE",
+      "category": "CLOTH_BODY_HANDITEML",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/gvr7gjj4tn0nkg43sly3slyv1142t3xdthumbnail",
+      "manifest_sha256": "cf26ec13a4f054e372971a8eb49c530b9fe67e8b075469fdac06c0259420233e",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_HANDITEML/gvR7gjJ4tN0nkG43SLy3sLYv1142T3Xd/gvR7gjJ4tN0nkG43SLy3sLYv1142T3XdThumbnail.png"
+    },
+    {
+      "item_id": "hsY4NSag3gX00wwSVa7HUhJT47WN5pdB",
+      "gender": "MALE",
+      "category": "CLOTH_BODY_HANDITEMR",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/hsy4nsag3gx00wwsva7huhjt47wn5pdbthumbnail",
+      "manifest_sha256": "360deb20139dd3342f26f038a854ae8971df943d628926a075ec1d0773e33246",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_HANDITEMR/hsY4NSag3gX00wwSVa7HUhJT47WN5pdB/hsY4NSag3gX00wwSVa7HUhJT47WN5pdBThumbnail.png"
+    },
+    {
+      "item_id": "U1x3ObBwxx18t0EX56ad2OtKs4IpBtAN",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_HANDITEML",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/u1x3obbwxx18t0ex56ad2otks4ipbtanthumbnail",
+      "manifest_sha256": "ead0fbbba595db1e0a9b201abb477ccbf62018913d100dd924fc137ac03653e3",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_HANDITEML/U1x3ObBwxx18t0EX56ad2OtKs4IpBtAN/U1x3ObBwxx18t0EX56ad2OtKs4IpBtANThumbnail.png"
+    },
+    {
+      "item_id": "BwF5g8KBNOn7lbSrDW617ABsLHag4kEX",
+      "gender": "FEMALE",
+      "category": "CLOTH_BODY_HANDITEMR",
+      "evidence_kind": "thumbnail_control",
+      "bundle": "th/bwf5g8kbnon7lbsrdw617abslhag4kexthumbnail",
+      "manifest_sha256": "96e89066308a3384d60fad683da3710ba30da3a053ad65f233f2ee666fd87d69",
+      "thumbnail_asset_path": "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_HANDITEMR/BwF5g8KBNOn7lbSrDW617ABsLHag4kEX/BwF5g8KBNOn7lbSrDW617ABsLHag4kEXThumbnail.png"
+    }
+  ]
+}
+

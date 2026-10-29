@@ -1,0 +1,83 @@
+{
+  "format": "nebula-release-input-v1",
+  "app_id": "919290",
+  "build_id": "11018722",
+  "status": "provisional",
+  "review": "PENDING: locally reconstructed targets, source/toolchain verification and acceptance. Do not mark production ready.",
+  "originals": "LOCAL_SUPPORTED_STEAM_INSTALL",
+  "review_evidence": [],
+  "artifacts": [
+    {
+      "path": "GameAssembly.dll",
+      "target": "LOCAL_REBUILT_TARGETS/GameAssembly.dll",
+      "target_sha256": "0ec5e89f91010e205b19ee4de29a4167c1deb7312a45733a866dbebec64a13ab",
+      "accepted_existing": [
+        "0ec5e89f91010e205b19ee4de29a4167c1deb7312a45733a866dbebec64a13ab",
+        "6fc2fcdf0e4178b96069f25e4f2e8fcacf8af3c33fb68c4f144ae6a5fd4dd4df",
+        "8460554e5287fe8e3c5fe475f65379da971bcccf2f21f716f2ca82d6e029b9fd",
+        "b1485d5d5e0797c2570e609952eb76dac9f7ae03f083879ea73565c3f7405c50"
+      ]
+    },
+    {
+      "path": "Nebula Realms_Data/il2cpp_data/Metadata/global-metadata.dat",
+      "accepted_existing": [
+        "69cf396cfb86d1e22ae110c032b7fa707250b6aec3978f42d0b5197f9956248b"
+      ]
+    },
+    {
+      "path": "Nebula Realms_Data/globalgamemanagers",
+      "target": "LOCAL_REBUILT_TARGETS/Nebula Realms_Data/globalgamemanagers",
+      "target_sha256": "94316afc2c49cda26f6cee95411cbba024f7848f490f2813a342da708063b100",
+      "accepted_existing": [
+        "94316afc2c49cda26f6cee95411cbba024f7848f490f2813a342da708063b100"
+      ]
+    },
+    {
+      "path": "Nebula Realms_Data/StreamingAssets/StandaloneWindows/s/charactereditor",
+      "target": "LOCAL_REBUILT_TARGETS/Nebula Realms_Data/StreamingAssets/StandaloneWindows/s/charactereditor",
+      "target_sha256": "8a8c6da6b42055a969805d37c91b07e446cbfa3fecce8656d878156d12ddf127",
+      "accepted_existing": [
+        "8a8c6da6b42055a969805d37c91b07e446cbfa3fecce8656d878156d12ddf127",
+        "9a2cdcaa9ac356fe95df9b5a5ad5df6bba93330ad1591685553031729628d3c4"
+      ]
+    },
+    {
+      "path": "NebulaRegistryBridge.dll",
+      "target": "LOCAL_REBUILT_TARGETS/NebulaRegistryBridge.dll",
+      "target_sha256": "e493d6fa9af94df6626e950ee8e4483ede10d94fc81405b394090dd0e047ef10",
+      "accepted_existing": [
+        "e493d6fa9af94df6626e950ee8e4483ede10d94fc81405b394090dd0e047ef10"
+      ]
+    },
+    {
+      "path": "NebulaAutomation.dll",
+      "target": "LOCAL_REBUILT_TARGETS/NebulaAutomation.dll",
+      "target_sha256": "9bc94001498bf118153f92b2c59c065157742332730a7576f94ae406f2e32a26",
+      "accepted_existing": [
+        "1206103a7a2437fe1a34c5aff623e71601ff631dee1ab2c4f6a9a5e3ea7339b7",
+        "2b8c0c27a98e5e78178f1de42e92a39e683c710f212dacaf86f1418f39723bdc",
+        "679cb5e3010631d0c9b618192fa51e49187d423b6394cb01900f4538a63e97f8",
+        "bec96d7ced572d31cc29adbf88d05c3f8fd9600b2969e355a669a50e9ad962ab",
+        "d5f198b418db2c4dd47b5b758c102aa1d90c79f137eb628eae9abac773f7f4b3",
+        "df511fd3b71a017c11d6153fc0a564470a08200a727f454271533d02b9c4b19e"
+      ]
+    },
+    {
+      "path": "NebulaPublicAccess.dll",
+      "target": "LOCAL_REBUILT_TARGETS/NebulaPublicAccess.dll",
+      "target_sha256": "8d6d812dbff42bd38cd5763dbbb969609125d5540af9a38745b76f2d3f0d79b5",
+      "accepted_existing": [
+        "25fc9e96abb29ffaf50bb67c6a744a5fa069263a6516a61c2f26309a17d24493",
+        "8d6d812dbff42bd38cd5763dbbb969609125d5540af9a38745b76f2d3f0d79b5"
+      ]
+    },
+    {
+      "path": "steam_appid.txt",
+      "target": "LOCAL_REBUILT_TARGETS/steam_appid.txt",
+      "target_sha256": "ca5a02ea6e4c173b7c2e5caf0f6f2616cbe9f98e893d5644ba7d36973171491f",
+      "accepted_existing": [
+        "ca5a02ea6e4c173b7c2e5caf0f6f2616cbe9f98e893d5644ba7d36973171491f"
+      ]
+    }
+  ]
+}

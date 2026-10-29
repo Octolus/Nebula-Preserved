@@ -1,0 +1,3833 @@
+{
+  "backend_tests": {
+    "environment": "isolated_public_source_stage",
+    "passed": true,
+    "promoted_source_byte_equal": true,
+    "run": 186,
+    "skipped_private_evidence": 3
+  },
+  "builds_launched": false,
+  "files": [
+    {
+      "path": "backend/README.md",
+      "sha256": "dbddf3eebd975bf23ad6af3b0117a84c4be3cea1e8bef6c334e1d92ea8137a16",
+      "size": 3964
+    },
+    {
+      "path": "backend/admin.py",
+      "sha256": "d16e58bf3de42baf4b6df1f162e094f6f7eb286c4400d7c6c3bce1638c81f855",
+      "size": 3418
+    },
+    {
+      "path": "backend/allocation.py",
+      "sha256": "ef97aa8eb987a172e29d2c7ea4d4b276842b20a4e31b0d799ec58d0c58f8bb12",
+      "size": 13082
+    },
+    {
+      "path": "backend/avatar.py",
+      "sha256": "be380c107b6e9307bd58b348814a9f955f21b02b9e23c920562e3f413887beea",
+      "size": 3164
+    },
+    {
+      "path": "backend/avatar_native_save.py",
+      "sha256": "633a50aa4a67886d9a9317cee2e812865e22dc5fa9ab8cfb90999a3cff24cf48",
+      "size": 1160
+    },
+    {
+      "path": "backend/consumable_admin.py",
+      "sha256": "c93f1e9a6b39665534d2b37c0614b5a7940a348640a3fe2f4067359cca200113",
+      "size": 1918
+    },
+    {
+      "path": "backend/consumables.py",
+      "sha256": "9669ce3733cc00af4718d3c4fe0c6a368ee8358dd8b1ce5180a4b9a9daf8ed2f",
+      "size": 13484
+    },
+    {
+      "path": "backend/gathering.py",
+      "sha256": "b02088bce5537399f023b9373698214a6e2e08b184eefda8693207e0e60020cc",
+      "size": 24519
+    },
+    {
+      "path": "backend/gathering_admin.py",
+      "sha256": "f984385bd68cd5beb853ee58c87e10883ee7d0893e760dfcda7908e1c2b5c65d",
+      "size": 4290
+    },
+    {
+      "path": "backend/housing.py",
+      "sha256": "cc98d456c2263c01c6d0c30fc89ca4b3fe3503f2d917b4fd8678a60b80e5d1d9",
+      "size": 21224
+    },
+    {
+      "path": "backend/housing_admin.py",
+      "sha256": "d74a661eefd0ed26051dc0a2afcd66c91abc1fea242f3b26455f03979a72a489",
+      "size": 2253
+    },
+    {
+      "path": "backend/instance_lifecycle.py",
+      "sha256": "304cbea9454e61500d48d1f71c949438782d802fe64cb2829fc1161554961abd",
+      "size": 21819
+    },
+    {
+      "path": "backend/interaction_registry.py",
+      "sha256": "27b04bc54dc2a474a7fb3cd43e145a90443893e41fa622e1e35484e63b904342",
+      "size": 13140
+    },
+    {
+      "path": "backend/notifications.py",
+      "sha256": "ad964e8e2b32e9941b6a609c69883292e5de2036cce75b4fc926795f157c5836",
+      "size": 8604
+    },
+    {
+      "path": "backend/requirements.txt",
+      "sha256": "9f0a37bb7bf77736dee0b1b1ead2a7a4c0fa70f4e1808d636114208468ae5237",
+      "size": 39
+    },
+    {
+      "path": "backend/resource_admin.py",
+      "sha256": "55587393ada6cb6f4969e0b0db1d727cb8b9907482a996e9db7f9d134cf6f6e3",
+      "size": 1805
+    },
+    {
+      "path": "backend/resource_selection.py",
+      "sha256": "b5655fa066d1d2421c509e6996ba1ec9572061817767a3fd56b9b8870af6b6db",
+      "size": 10255
+    },
+    {
+      "path": "backend/resources.py",
+      "sha256": "a22fcdf348c8fe03f6ca9a05312212a10c5420df90410f676d2ba56eb7d7e80c",
+      "size": 6079
+    },
+    {
+      "path": "backend/rewards.py",
+      "sha256": "bb9621699304c9a4b9954d2a64c16622f30d231d6b4d54a8da551221432765a2",
+      "size": 16899
+    },
+    {
+      "path": "backend/rewards_admin.py",
+      "sha256": "2fed537260a56f7e06571694d7c2786e1c22cceec456c881fb51c0854f88bf23",
+      "size": 2819
+    },
+    {
+      "path": "backend/server.py",
+      "sha256": "75374f89cb03751d8cb36fc22918c4ca76b1d61e77370120735c3339e75ec0fd",
+      "size": 8645
+    },
+    {
+      "path": "backend/service.py",
+      "sha256": "dfd0b663f197ebb4e38b4dd19c20e708b07260f6f0ebc381630972783620d1d4",
+      "size": 49645
+    },
+    {
+      "path": "backend/shop.py",
+      "sha256": "4604a7c110dacc67ae38b18aecc8fa62868b9b06b04da71b067222784fe6e45b",
+      "size": 28939
+    },
+    {
+      "path": "backend/shop_admin.py",
+      "sha256": "dcaf348750e693b75b78cd34ef0dc73efcba22f4a1cd4d0f3ee1511e363e11c8",
+      "size": 4916
+    },
+    {
+      "path": "backend/state.py",
+      "sha256": "4020d28a0161b5c5a2e77dded11d17c70b5563b6931e4d24d73648635f097d64",
+      "size": 36886
+    },
+    {
+      "path": "backend/test_identity.py",
+      "sha256": "14c9e04e68699e49e16a6f910974bcaebffb5c3ace99556be5fedf5d60eac866",
+      "size": 1933
+    },
+    {
+      "path": "backend/tests/test_admin_entrypoints.py",
+      "sha256": "072c1f6de25faf3ae08e0893b022ab3110f17f3a32a4858275805d54164cabfc",
+      "size": 2904
+    },
+    {
+      "path": "backend/tests/test_allocation.py",
+      "sha256": "d9a9b1d7f9cbf9a80434d7e0123354442ef359ea13ad57329c29b53e69549a60",
+      "size": 6583
+    },
+    {
+      "path": "backend/tests/test_atomic.py",
+      "sha256": "3877d0050d1a8b711672c0c69c824f9ee3faa21eac1c8e0a37bcf83f23ab52ab",
+      "size": 4894
+    },
+    {
+      "path": "backend/tests/test_avatar_native_save.py",
+      "sha256": "97538833f987e53c56d5cf62abf47de9930fd77cfafd2f77683073693f5548cf",
+      "size": 7891
+    },
+    {
+      "path": "backend/tests/test_avatar_persistence.py",
+      "sha256": "9cfa22549504ebdb7d89d398b11dcab682d15b4fd1f55c8e4e217e37fdf207d9",
+      "size": 13732
+    },
+    {
+      "path": "backend/tests/test_consumables.py",
+      "sha256": "b94d7c04d7e5d30780607287b9b8fdc0bf3dc1f56946c9c655ae00b495a6cf3f",
+      "size": 6490
+    },
+    {
+      "path": "backend/tests/test_contracts.py",
+      "sha256": "d74c39234160a4e1f663a588369befea6223bc1e9b81585dd673a2f023de1be0",
+      "size": 49380
+    },
+    {
+      "path": "backend/tests/test_core_readiness.py",
+      "sha256": "a870b05b95463da0d8dc6fa8ad0ad78906855ebbcd3e209857b83dc23b6bac9f",
+      "size": 6717
+    },
+    {
+      "path": "backend/tests/test_gathering.py",
+      "sha256": "20464f7085bc4bb0d8bf3982547fe5508702358924c8225c3447f4743bc01cef",
+      "size": 11402
+    },
+    {
+      "path": "backend/tests/test_http_adapter_errors.py",
+      "sha256": "f2fc744737b87229bfb566c4a8a3f0fafd94a044a0045e7f7b8aa16533208841",
+      "size": 7573
+    },
+    {
+      "path": "backend/tests/test_instance_lifecycle.py",
+      "sha256": "4187277ffe7dda3148bd793684ec588d1dfb1b26fc6c223c24bbbf6b7be6c4ba",
+      "size": 22711
+    },
+    {
+      "path": "backend/tests/test_interaction_registry.py",
+      "sha256": "9e5eef8d6b8908d4776111b27b7d17afa738fb22a3148abd3a502d0f137770a8",
+      "size": 4517
+    },
+    {
+      "path": "backend/tests/test_local_test_identity_gate.py",
+      "sha256": "c8233883bd5eed5ba6268d5ed33ddcdef6368e86c4be0621d690a73624d1fca4",
+      "size": 8504
+    },
+    {
+      "path": "backend/tests/test_network_config.py",
+      "sha256": "24cc723079471114b742aa00a91af6540c604223dbfd1f1bdcfb5d5d5660a68a",
+      "size": 4378
+    },
+    {
+      "path": "backend/tests/test_nonmini_readiness.py",
+      "sha256": "5ecf0c86ae2f323577f554b82e29bd6347e7079598046ce098998829dcaa908c",
+      "size": 11553
+    },
+    {
+      "path": "backend/tests/test_notification_integration.py",
+      "sha256": "f09f28fad6d8a49d468d46f677190d292c84a16def179e662052b8c977445dd5",
+      "size": 5253
+    },
+    {
+      "path": "backend/tests/test_notifications.py",
+      "sha256": "2775987ce5f19b16532133dfae9668bb8a0db4db51da50e8cf819cce59b36136",
+      "size": 9158
+    },
+    {
+      "path": "backend/tests/test_resources.py",
+      "sha256": "171e606fbe3505ddddf05b5f67f81b397ee5d5ecbb7327eb97b7b3267b6d7dad",
+      "size": 7034
+    },
+    {
+      "path": "backend/tests/test_rewards.py",
+      "sha256": "b87ccb7e16ad528d435ceffd547d6bbb84ab2c5bc673d68c613906dc4232f946",
+      "size": 13631
+    },
+    {
+      "path": "backend/tests/test_settings_native.py",
+      "sha256": "8b3ab8a1262b2d5508f4072267647db799216d24da985901ab85f920b5dbc23a",
+      "size": 6007
+    },
+    {
+      "path": "backend/tests/test_shop.py",
+      "sha256": "5e64485c64df152efb190f69136d046e65025f3ebcee9c1e17f51f02a3613a1d",
+      "size": 17744
+    },
+    {
+      "path": "backend/tests/test_shop_seed.py",
+      "sha256": "529365e20f078c45fd4328b83ff2c5d7d65b7e8ea339d9e56b32a9aae5b3276b",
+      "size": 7795
+    },
+    {
+      "path": "backend/tests/test_state_publication.py",
+      "sha256": "9a0e8cb341cee200e3164bc6de9016f79b90d3fc67bb2b8514ef6627506cef4d",
+      "size": 2559
+    },
+    {
+      "path": "backend/tests/test_state_refresh.py",
+      "sha256": "2dff81fec648338c20c1482728c44494fcbacbc2bf2f6d2a07f9e7ddb85a622d",
+      "size": 3162
+    },
+    {
+      "path": "backend/tests/test_wardrobe_removal.py",
+      "sha256": "342da53b229f307cb8099d444f4d4e1805d955d4d614e355e522f78b5bf50d22",
+      "size": 11396
+    },
+    {
+      "path": "backend/wire.py",
+      "sha256": "53aa05c27f6ae64adeb5ff2e9b9ad57c4d92c82a7701887c38129c8a7e62302f",
+      "size": 2058
+    },
+    {
+      "path": "experimental/resource-selection-persistence-v2/README.md",
+      "sha256": "347688114948fee0388bd0044f0c00e0884118a56e95d98a31473614aad90175",
+      "size": 3893
+    },
+    {
+      "path": "experimental/resource-selection-persistence-v2/backend/resource_selection.py",
+      "sha256": "b5655fa066d1d2421c509e6996ba1ec9572061817767a3fd56b9b8870af6b6db",
+      "size": 10255
+    },
+    {
+      "path": "experimental/resource-selection-persistence-v2/base-pins.json",
+      "sha256": "64fa33691fb88af2bb6a8c4c1cf3503a8f51557af0d9d0a41d71ce6fa470cf81",
+      "size": 474
+    },
+    {
+      "path": "experimental/resource-selection-persistence-v2/merge.py",
+      "sha256": "de35947da320305ed71f709011d93874ad8ee3eea8101cd71167593d6a362f0a",
+      "size": 7596
+    },
+    {
+      "path": "experimental/resource-selection-persistence-v2/mirror-server/NebulaResourceSelections.cs",
+      "sha256": "23c98fccdafae5d017baf5f36dca0b13d482355b84f7b4e18f303bd8065feaa3",
+      "size": 4908
+    },
+    {
+      "path": "experimental/resource-selection-persistence-v2/server-methods.inc",
+      "sha256": "b89c2978296608381ed7354be8176128fc4969d22f36269b685f9cb09dc28865",
+      "size": 5733
+    },
+    {
+      "path": "experimental/resource-selection-persistence-v2/test_resource_selection.py",
+      "sha256": "7c893e3b2601cb35f07e49805e2c27433fc5f2ebe402933602ab61733765fa42",
+      "size": 9503
+    },
+    {
+      "path": "mirror-server/Build.ps1",
+      "sha256": "5815a681a72cf618bc3f3f31f365fb7033fc9966f918391832e6592a89130e6e",
+      "size": 2879
+    },
+    {
+      "path": "mirror-server/BuildLinux.ps1",
+      "sha256": "89a3019c9e60f5d89609d609192c0db581b246b79c72a7c32e176ac84b60bde9",
+      "size": 3740
+    },
+    {
+      "path": "mirror-server/README.md",
+      "sha256": "97cec394056157146cfa8c63a53a71958c86a907b52b69015c55e5217bafd38d",
+      "size": 4252
+    },
+    {
+      "path": "mirror-server/Start-CoreTest.ps1",
+      "sha256": "4d0d8c98a47527dc352860c52c3669be323fb2240906a5f609a1d69f633206e1",
+      "size": 4987
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Editor.meta",
+      "sha256": "c4d2dc804894edb631a5e1a3a29e136039282926bb9102fced0e98aad9c1e39c",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Editor/PreservationBuild.cs",
+      "sha256": "0f288163b1c1dda7d7d97701f1752dac1f386e38ff8228312a66adc2e703124c",
+      "size": 2281
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Editor/PreservationBuild.cs.meta",
+      "sha256": "00e0e3a8a721c2eebac2ec6da9d84a47ad1587d5c219fed4df51372cbe5d0d86",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror.meta",
+      "sha256": "8ae1a6443f795423e57c6d13887d36807905ab94d52e6a33e7e834ce3eb07dad",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/CompilerSymbols.meta",
+      "sha256": "6040bbe2574548b466f54b8afb6940673bf51e3a44ac5dd7d0c7dcee745e506b",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/CompilerSymbols/Mirror.CompilerSymbols.asmdef",
+      "sha256": "b60f7bb5fed1640ef5e5263c6746fad4820d51f022b00dddb96bc9255d677b7a",
+      "size": 341
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/CompilerSymbols/Mirror.CompilerSymbols.asmdef.meta",
+      "sha256": "f1e84eecc2781c1df8c2d553d6630de1e01548dc47d38aab1eb70ef27329ba66",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/CompilerSymbols/PreprocessorDefine.cs",
+      "sha256": "6b914a3cc4e1dc63295087f3560eb2f0662ba4a81b4850d5b545606d7fd1530c",
+      "size": 2191
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/CompilerSymbols/PreprocessorDefine.cs.meta",
+      "sha256": "57b61f534bf5eae2066079fcbd6a4016f9e60df6f78e18f6cdd3ded23becd432",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor.meta",
+      "sha256": "63a2b788fb5038706a624df2f6932295be0f1773c2b89dcfccf888a28a274570",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/AndroidManifestHelper.cs",
+      "sha256": "ad692e74b25bb4b3a27da25cfc07ffa4282c9d40092ab14c2a6450ac89decbb1",
+      "size": 3692
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/AndroidManifestHelper.cs.meta",
+      "sha256": "2724798fc7f736c74f2361d4009d57c04d8e29c912ab136c7a2a208d7232679e",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/EditorHelper.cs",
+      "sha256": "5caa1baed890f70667a520f35101163db7644f13876e1a09b7469d604c6a30d4",
+      "size": 896
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/EditorHelper.cs.meta",
+      "sha256": "82808b392fc6f11ec17ad8a92bae556b67d29ec5ead40af307d4618196f53e3f",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty.meta",
+      "sha256": "934ffdb89a4ab657a03c842eaa3c7afe89e660e6d2b7c2cfae5e90f63dd43e45",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/EnterPlayModeSettingsCheck.cs",
+      "sha256": "a4fc13a56eb0c6ba23c668ef64c38aca18ec53b72a9b08dd4aacc90842cb937c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/EnterPlayModeSettingsCheck.cs.meta",
+      "sha256": "7353560c8b0da24274795fbd7aea37dffcfb529a31a22806aba1837dc79475ce",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/LogLevelWindow.cs",
+      "sha256": "fd85dd97af55d26f868d0ead7f4c5674873668c525f3650e3d0dbcad7a90614f",
+      "size": 56
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/LogLevelWindow.cs.meta",
+      "sha256": "3c244b832fcaeb1ceaa729265e185f2167184ad83dcef48a05b7dc7376dbc80e",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging.meta",
+      "sha256": "590f021ea8899303ea8535985ba7fe5898df7c80090f4f7b31f5a84cc7cd0aac",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/LogLevelWindow.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/LogLevelWindow.cs.meta",
+      "sha256": "603e5f1c039c91d044c55a8b3df3f79b6805a2c53fb8219cca277cfe8e7cef0d",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/LogLevelsGUI.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/LogLevelsGUI.cs.meta",
+      "sha256": "5c2989483fcdf156134b887eacdbe556518dd6be670c07455207cf72591e8de0",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/LogSettingsEditor.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/LogSettingsEditor.cs.meta",
+      "sha256": "a0a0e22ac4b374efba75d321106c163713359d9b0a9df04be2e15a78b536b1ef",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/NetworkLogSettingsEditor.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/Logging/NetworkLogSettingsEditor.cs.meta",
+      "sha256": "7c1065d6fe2f52e64971da498699ef4647a4e699ab71bcd4cea2d42918b6bd55",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/ScriptableObjectUtility.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Empty/ScriptableObjectUtility.cs.meta",
+      "sha256": "86e120ca75816f3ac9c1e7b0a5ead3a4938b777244efd535504e0a13d0e50067",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Icon.meta",
+      "sha256": "4ea69c6a8f1420da9142d150d616b2a7bdf0b8663e05fab9829e58acb9befcb8",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Icon/MirrorIcon.png",
+      "sha256": "5f1ee2247319c7a4e5d1ab13ad4981c21c5a408299ae4158050a63ac7f1eba47",
+      "size": 138247
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Icon/MirrorIcon.png.meta",
+      "sha256": "ba063845e378adef5fb51260b4ee9d4e9b773ab8a629e30ec4f02c6bfa62da44",
+      "size": 2608
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/InspectorHelper.cs",
+      "sha256": "f5dfe08094e51320cd661992dc0dc63d024b73ca48f124c2bec48286db3e3e02",
+      "size": 2692
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/InspectorHelper.cs.meta",
+      "sha256": "080d810d44692b593e6f4a08eed465e32796003b888ba0cb7f053aa81d67298d",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Mirror.Editor.asmdef",
+      "sha256": "36f47c2f59ff57f4532e97e6709aee4a7365018cb7688a498b38d9a9c8dd8991",
+      "size": 440
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Mirror.Editor.asmdef.meta",
+      "sha256": "f6f0c84052197428d59c9654718dce3ff45c9337488fd1c43f4a58594ad4b721",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkBehaviourInspector.cs",
+      "sha256": "4e0131948cd46a51b3a0d252a3ebad8903b65a1ce2512d4e8bbd54c5345c81b3",
+      "size": 3605
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkBehaviourInspector.cs.meta",
+      "sha256": "e0c6314b82a145c4a6c9dbe6936be89f4dbe5ae21f05a46fe1f588abd35797e8",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkInformationPreview.cs",
+      "sha256": "5494bfd9bd40c8e078dd7e4def5e1e2d35b22ed5929419877e1ad9c83e0f3515",
+      "size": 11619
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkInformationPreview.cs.meta",
+      "sha256": "714b554a88b9134652a0857fd54b7f74fba420448c19952c5edde404a2a66978",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkManagerEditor.cs",
+      "sha256": "14b4930eef462327790bad656733be48789e815b8d39c2af8619942bf1d17db2",
+      "size": 3788
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkManagerEditor.cs.meta",
+      "sha256": "191736a9bc92518e3a35e323588328fafd7cfa8636b25fbab0185e59edbcbbf2",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkScenePostProcess.cs",
+      "sha256": "2ab5402f68f11a6e17a887c3696a1a2b189a365a11a7e52f8159e3ef41f26805",
+      "size": 5543
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/NetworkScenePostProcess.cs.meta",
+      "sha256": "7b105dac67d8c5007300607f4f23fd4e35831b2f41ef6f3ca3ffb0f9d2c662bf",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SceneDrawer.cs",
+      "sha256": "f8955fbd3dbac1c88b7e2a7cef3d764f08541d0c65f363ccab0edfa7c5b9f944",
+      "size": 1948
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SceneDrawer.cs.meta",
+      "sha256": "c821ce9216e08e497b4a172b06f2012a9ae6d6514ece560c0fbfb6b165597cb7",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SyncObjectCollectionsDrawer.cs",
+      "sha256": "b4fb6cf508d01eb821664a2ffca986bbe98b925a6e22ec9c38e0cf597c77306a",
+      "size": 3168
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SyncObjectCollectionsDrawer.cs.meta",
+      "sha256": "b62b4c496f85371479954a481ce962161b6e44cc948af601c2c171e6737377a8",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SyncVarAttributeDrawer.cs",
+      "sha256": "86fc43300551f6edba68cf36a6c0f596220ae6921865debce7dfd6aaddafe45d",
+      "size": 1194
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SyncVarAttributeDrawer.cs.meta",
+      "sha256": "39c5d3db0a0120825a69ca1f1dacc32012126136614fb8ca2a407ab1592e64af",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SyncVarDrawer.cs",
+      "sha256": "faa507495279b5bf49bbcf97e48a1acae4c8d5003ae7f6bd0c5c7106ca164c31",
+      "size": 1454
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/SyncVarDrawer.cs.meta",
+      "sha256": "c81eb7fbea62246910573465357dcc3109732d25e8ec61ab719e12a0da8379ee",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver.meta",
+      "sha256": "a4f631cf1dbce8f770d6708fac4d6e51754693dd30fbae4be6c442bd063465e0",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/AssemblyInfo.cs",
+      "sha256": "29eda74a5a2a9cbce6c519fcc7410e3cb900ad31d67db5fe8baa1e774a5f9fcb",
+      "size": 90
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/AssemblyInfo.cs.meta",
+      "sha256": "eb2e6cfed98620348b8c875f5679a7ae992d063a280eda657ab16270a79715ca",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty.meta",
+      "sha256": "e0078598489ab837977ab160bd982362bf5e170832ca52ae2e6113f6eb0dc8c5",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/GenericArgumentResolver.cs",
+      "sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15",
+      "size": 21
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/GenericArgumentResolver.cs.meta",
+      "sha256": "031b6efefe0a56b1fc37a85cf4ebafe68c180226441f15cc77105131ee05a6ed",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/MessageClassProcessor.cs",
+      "sha256": "34536595e2147d5d9739523bd99d8af1264c944aa99cec2c4861fae539bc2aab",
+      "size": 21
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/MessageClassProcessor.cs.meta",
+      "sha256": "c151d90ad20232f750cbb34a79ef768bb55191e2a95fb98a90358cdc7fd5ea6e",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/Program.cs",
+      "sha256": "7fa0673a2797260e39bc312e5dff31d410d9d6f138c9ddaf7e6e26b7516bf518",
+      "size": 21
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/Program.cs.meta",
+      "sha256": "8be6431f32434296f0481b163fc746459c1bb87d5c642ddec1409d63cb13e757",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/SyncDictionaryProcessor.cs",
+      "sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15",
+      "size": 21
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/SyncDictionaryProcessor.cs.meta",
+      "sha256": "5bcf081caf72b860f116c7b820bec24ce0b1f976210628f07fd55311575e76c0",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/SyncEventProcessor.cs",
+      "sha256": "2ef90e3cb73b182eb7eb6001dfaa3d6784d2874402737ced7675cb8afe490024",
+      "size": 20
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/SyncEventProcessor.cs.meta",
+      "sha256": "f7b6ec6d10ef213aeabbed3c6825165bb611533965bfc5ba0acf7e882d476dab",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/SyncListProcessor.cs",
+      "sha256": "a0ea4a7f165ed2d738132f8436df361a8ed1cce6c766a6dc66393fd1fb348a15",
+      "size": 21
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Empty/SyncListProcessor.cs.meta",
+      "sha256": "dbf100a5644c3132c2762c13b98f761d919c15c63d1ea06b26026ad33d2999a1",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPoint.meta",
+      "sha256": "11760eb1e1dd09140fbc397e743205561834f2b357cdfd6b5dd102d59b664390",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPoint/CompilationFinishedHook.cs",
+      "sha256": "696a82d857da48145c7106b398014b03436c2cdd514cb8116c6339724372ed5f",
+      "size": 7691
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPoint/CompilationFinishedHook.cs.meta",
+      "sha256": "928dd5ad1e469f79d1cc3d360adea681ab765afad5d750cf2f559dcfa1ce4335",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPoint/CompilationFinishedLogger.cs",
+      "sha256": "f1ad27229d599137411ca410d668d55920eebd0a35aff9c8d747a5a05367a2e0",
+      "size": 1058
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPoint/CompilationFinishedLogger.cs.meta",
+      "sha256": "e84d17cf5a15676a08d757d8e6bbd3264b623a237a770209a1595525cb2f6f4d",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPoint/EnterPlayModeHook.cs",
+      "sha256": "9a6f51227a31423587f047d584faf105e45c113daa6e985ee91ac7abc9c88a51",
+      "size": 1846
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPoint/EnterPlayModeHook.cs.meta",
+      "sha256": "f5e75a1caa5fa507bb474f5175a19f28f5af58460e71ec415de07965d943d88e",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor.meta",
+      "sha256": "2cc759d3c470ab95ea733761477ad3426d2db80dc65b27c3a0a096f0cde2fdf7",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/CompiledAssemblyFromFile.cs",
+      "sha256": "7b98dc1f84e137250056495cfb795b0423ebccc15e924b6ef78aeb52738c9b0c",
+      "size": 1317
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/CompiledAssemblyFromFile.cs.meta",
+      "sha256": "713eda11d36e8baf9880fead322ab785faa1ed5edfb4b508e500d9e667a545dc",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorAssemblyResolver.cs",
+      "sha256": "f4c5da4c5cb666d1c87e89374856fcdfead2daec831eb4d7d9574a329460be82",
+      "size": 6793
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorAssemblyResolver.cs.meta",
+      "sha256": "c84d2d990fab6ce2cd94cd25d8670b773c245c12be63725ffeee5f1bdb93cf39",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorFromFile.cs",
+      "sha256": "e32e7447336e414448d6f8853b413a5f8537b80e620eb935624b22f2396e3be4",
+      "size": 2226
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorFromFile.cs.meta",
+      "sha256": "efff3d2e8d95075f5ea15e56dff6b7cf4cac72d3405d7f54cc57f14caf0c3e1a",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorHook.cs",
+      "sha256": "04f6810de154d1af231be68976e73d7d8cb47163e65107c8652a4f371a3e6979",
+      "size": 7926
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorHook.cs.meta",
+      "sha256": "b79027d816c71fc6da4e2417bf5f965683f2995010d8adc073bcb309434926b5",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorLogger.cs",
+      "sha256": "632feb7aedaa6df2ab6d05141ca9d9f2bae17ccae6f5a0ce9e38384adac606fd",
+      "size": 2615
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorLogger.cs.meta",
+      "sha256": "e328599fea86278c884adea900f44a988bb43699b770f3f0684433d81276bd90",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorReflectionImporter.cs",
+      "sha256": "c269047f31b2cabed31a1460bea874286797299446aab8a47c4c653d52ea2472",
+      "size": 1468
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorReflectionImporter.cs.meta",
+      "sha256": "3ba16595904fd9ff9a065fa7dc5d087745ef3e74d59082cc8fe7ce6fdb8215e0",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorReflectionImporterProvider.cs",
+      "sha256": "f9525a2daacebdbd438180ecf30bc80b2d51ef9d01a9a56514dd965474a5c9cc",
+      "size": 645
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/EntryPointILPostProcessor/ILPostProcessorReflectionImporterProvider.cs.meta",
+      "sha256": "b6ca4edc86bf443774ecb91ce72d254c6cd5776cc6d990d3ac6621ffa689fd9c",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Extensions.cs",
+      "sha256": "566c979120628d9399bc40c35db48af43975d851a8b30153d6cd68cf87c9d29c",
+      "size": 13817
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Extensions.cs.meta",
+      "sha256": "f13d51ada986aea8691ebc7aa86d0c5c2e88fdf7ef0fe3b983005036a4e17d75",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Helpers.cs",
+      "sha256": "e87db8a89283dfcd050a4dea30dcbe714267a2b74bbae6a525834d7f9f3d6277",
+      "size": 897
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Helpers.cs.meta",
+      "sha256": "4c018665fe2aa7067a09be5f763eaa75545496449b5c81508219f833b927342b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Logger.cs",
+      "sha256": "3d3c31d4ca2cdfb143e773ae3d66785560a21ac2c1d1761fe82d37fabfbf514c",
+      "size": 349
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Logger.cs.meta",
+      "sha256": "d887c82e1c82031badff47d81a6a792e7ac1b4d2ba0e2fde0e3fda4580015fe5",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors.meta",
+      "sha256": "9eede75405e7542979b596659b187e5489d557a59b9848af7a2dcfcf291f2fec",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/CommandProcessor.cs",
+      "sha256": "dc4961fd508152ae1f12ee990b69cdc96ca6bf83838a251417494ef0baa84768",
+      "size": 5485
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/CommandProcessor.cs.meta",
+      "sha256": "b045add70791b0098f8ee9816d764f8ac5334793ca108188831b66f772239e95",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/MethodProcessor.cs",
+      "sha256": "2ebcd7d0d351cb066b0b9ea35624bf2beaa44c3dda8fbde51c7f4a20771ed04d",
+      "size": 6026
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/MethodProcessor.cs.meta",
+      "sha256": "0ca9362dfff5d403e6720db55e0533ff9965b3d3695f8128001401b331cbc4b6",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/MonoBehaviourProcessor.cs",
+      "sha256": "fc9343c96e2d92076d725023f85a7fdb85e112f63169d2634166e64077200131",
+      "size": 2217
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/MonoBehaviourProcessor.cs.meta",
+      "sha256": "82ab7da9fbcaf557b55f50e94347a3a5f36ad83bf75c00a32f43e7509333dbf9",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/NetworkBehaviourProcessor.cs",
+      "sha256": "80a714cb8921784a2207e10350408f8607d26d73f444b4491d05c8f7554fd11e",
+      "size": 43553
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/NetworkBehaviourProcessor.cs.meta",
+      "sha256": "688a7bfd28d85ff571b1b5bfd339771279e5795ae12cc6be588464879d5be8bd",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/ReaderWriterProcessor.cs",
+      "sha256": "ef83e599180cf5fef46d1edba2e1d25d53324f7c5459993c089d6d70af72d8bf",
+      "size": 11332
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/ReaderWriterProcessor.cs.meta",
+      "sha256": "d99126740dc68ba35addbb7e13e7d325e2039a05ca4fb25002c9feaa03b60f39",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/RpcProcessor.cs",
+      "sha256": "08988fb2c016300c5dfb0b259c3f8d11eb605f5c4d7970392d45cf4e1c97f904",
+      "size": 4345
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/RpcProcessor.cs.meta",
+      "sha256": "ab6ac9c616f55c3e14490bf5748835430db6d82f0698b30a6f8bf9e8a958b4a1",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/ServerClientAttributeProcessor.cs",
+      "sha256": "d8d02259a45d45935fe2673c63c55c986c8712e54fb0dcbe63ebb890fe8e6015",
+      "size": 6866
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/ServerClientAttributeProcessor.cs.meta",
+      "sha256": "1213c4ac2add233c4a20a167d2fef8823cdc94e20fe3e2ba7aaa6f1cec39a711",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncObjectInitializer.cs",
+      "sha256": "31ae4c14079dc0db178f8ed4c662d7cff70c15193ee0ec9ddf78d02398a62aee",
+      "size": 1245
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncObjectInitializer.cs.meta",
+      "sha256": "72f4d50e1aa5ffb7eb025cead06359d70870d26e4d2a1b84df10b123b20ff8e4",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncObjectProcessor.cs",
+      "sha256": "f52789241b6419d5370a5f2a78c71e5b6f38e1e5b7bbe6dbf18e38415cd1846a",
+      "size": 3665
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncObjectProcessor.cs.meta",
+      "sha256": "1bbc607193aad360b944c059135ddc0ff5736f9895eb4b43755685fec8328d55",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncVarAttributeAccessReplacer.cs",
+      "sha256": "99449f032f1599ad2f264c392f59f3b8ee367dbb54460947abea20e6c034c963",
+      "size": 7266
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncVarAttributeAccessReplacer.cs.meta",
+      "sha256": "dc33568686aeb11843fb00f5a9f84e88790069afdbdb8d2fec3f0511c7dc94fe",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncVarAttributeProcessor.cs",
+      "sha256": "1994f5e751372b7292d8f8f7a62af31d631b4420d19ea9c302de88c1501dd201",
+      "size": 21305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/SyncVarAttributeProcessor.cs.meta",
+      "sha256": "e7d252eda75642a4525151fecd414b9e6d6845cd5ab9f987b0d811dbbe0aed65",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/TargetRpcProcessor.cs",
+      "sha256": "1cdb332a41cbce98eed123cb8a43faffb4447146f7c8f1616a8f2698e0dbcfd9",
+      "size": 5984
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Processors/TargetRpcProcessor.cs.meta",
+      "sha256": "4a2bf4a09372f99e9f7cc5c226e66da28ce0e469258c7a317a02308a09cd1750",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Readers.cs",
+      "sha256": "8a37f084c73a336ae233bbe7f1c759ca4c29a6685e1f7203b30c129f27edd4d8",
+      "size": 17520
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Readers.cs.meta",
+      "sha256": "cb567f25165a548e26b6e73177de3c44f03798c1977524185e9c171224faf2eb",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Resolvers.cs",
+      "sha256": "1a3855d11e8b6ff078bf24522b4cdf742c7ba5ad64a60650b6762c43078d2090",
+      "size": 3625
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Resolvers.cs.meta",
+      "sha256": "ec75358bcb29032c87c4c1e8a40305e0e870f44595c4caa54e75becea6d54e39",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/SyncVarAccessLists.cs",
+      "sha256": "c3c8862e91dc5a29d7fce833c6ee75e218bc43edf2fc9cc78dfc3b359e31a3dc",
+      "size": 1440
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/SyncVarAccessLists.cs.meta",
+      "sha256": "f39e655f6729a5af8d63b8f5e9bb62e259afe95cee3dde97c28f878665e99acc",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/TypeReferenceComparer.cs",
+      "sha256": "db420ce1bcb07594ad00e261476d6c7fc0ccb6b231b96d51a555d4f66c49a2f0",
+      "size": 424
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/TypeReferenceComparer.cs.meta",
+      "sha256": "49faa8a25c66db9ebeb7dc2e2ca9ae5fdf05e2af4e8c9320598bcf34ca540574",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Unity.Mirror.CodeGen.asmdef",
+      "sha256": "2d3e1d4b2d55c3ccce0cde03d7621a96aec677233eac4affd3d4e448cef90629",
+      "size": 480
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Unity.Mirror.CodeGen.asmdef.meta",
+      "sha256": "c47adac0337eb1bd76f17c6743123695253cb015de935a974299cbd19357c4e8",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Weaver.cs",
+      "sha256": "a6931391b4b09708a4566969c9ea4cf1bd0e91396c1595211893cbf8bb4e2e8f",
+      "size": 10376
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Weaver.cs.meta",
+      "sha256": "1d8b6ff4ed8907ed8db4dc292703eadc65571497b18addbe858a59257cc5cb6d",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/WeaverExceptions.cs",
+      "sha256": "2a94235761bd47e6ceef8c7cd43b692ebce2c6dc7452c3c01264e0e046689658",
+      "size": 926
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/WeaverExceptions.cs.meta",
+      "sha256": "da89cbbb3566ac1a9f842d71105caa68836819a517e8a9a359eaa45d0848dd80",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/WeaverTypes.cs",
+      "sha256": "5785e6bf4d3c56da9d52c7b6b0e38052d34e6f68e7b98d5845452e4609a22d1f",
+      "size": 9863
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/WeaverTypes.cs.meta",
+      "sha256": "5ebc8f59383255881d4fb191549b4e4c169e2691c0d0b774a52fe36d02a2a3d4",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Writers.cs",
+      "sha256": "5158ad23eba3f188c95b1a73c8ba716fa7f0e9668a510740ecbc5d3e5d221f97",
+      "size": 15934
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Editor/Weaver/Writers.cs.meta",
+      "sha256": "cc4907d30ff2dcdd3eaa006f19b9e7a17018bd7901e002243f2bc4e079aed504",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/LICENSE",
+      "sha256": "f2bd880228e66b357e920571babb8488198d266818ea127e80cab069c259e234",
+      "size": 1147
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/LICENSE.meta",
+      "sha256": "c56f4aae7877096b305f18a16006a38152986510becec90af11be0cb72a01e5f",
+      "size": 155
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins.meta",
+      "sha256": "8d403196bfd0ce9b1ed67fde5e69ff233ce0fc2ccb4580a954ecb13d79bf142f",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil.meta",
+      "sha256": "a42b187bea8706a3ca28343673f33429f33f690b6140d5bce00a32d784ae1746",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/License.txt",
+      "sha256": "521b1b698f6ba3870a3af24e443af1f927a83b3db1f83eee94fb40c175241859",
+      "size": 1209
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/License.txt.meta",
+      "sha256": "4a0c48e61835176e19b67b244b21afab11a05e89930ac797f4e2cc41b78db296",
+      "size": 165
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll",
+      "sha256": "2634466c09fd41920a98e773c050ce3c9438900a70f93859fc3055fd8e95ee05",
+      "size": 43520
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll.meta",
+      "sha256": "4e398763873c5ee670a1373fa7df7e424209f28a717c588f9c089b01ccc9ce93",
+      "size": 1768
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll",
+      "sha256": "524e1c46f47cedf1e10255551d6020609baee7c7fd54741b882cf6465b10e4c9",
+      "size": 87552
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll.meta",
+      "sha256": "8cb23463fd87a0f692f9a7cbdd0b69a59966bae9534298f6bfcedfae44d6213b",
+      "size": 1768
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll",
+      "sha256": "3894a25bcc175dc107ed5ab78c807791ddd218af43fc92876567552d28faf3ff",
+      "size": 27648
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll.meta",
+      "sha256": "7716cfc49b625357a22da4cabe20fb5abc2ab97226676ea1d99bdb4ca01d048b",
+      "size": 1768
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll",
+      "sha256": "95e4c2a039bd231183625b608e50b8c7edf85536d6a74faeac8e19db2779497b",
+      "size": 340992
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll.meta",
+      "sha256": "482912d357bd0f0753652e371f63dd2c7a6bc5a08a3b3752eb63c36405044da1",
+      "size": 1808
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime.meta",
+      "sha256": "c73999185e29cba7963ff88d575bb745669b4171f0458015a58627614b0dc6fc",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/AssemblyInfo.cs",
+      "sha256": "f6d40c01b5847aac32f20d1d7c03f445829d4422547e8fd9b4ff7b78c48330ba",
+      "size": 618
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/AssemblyInfo.cs.meta",
+      "sha256": "c7eea0fe535484056fc92545edb935af0e15332a48fe4ff2e85c6eceee8275b2",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Attributes.cs",
+      "sha256": "85c5477860306919c81874b86c2e3e13d55d32ccdf09e7efc979f31030f20b50",
+      "size": 3072
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Attributes.cs.meta",
+      "sha256": "ab4f0658d8f25d69e1a10319c2f59b6d8993c306a49581c3271ad4471f7bc59e",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Batching.meta",
+      "sha256": "0e551e588b7f14b3bfac6c37ceea9dabdee291b2f154e98178c283e7df3e2a2f",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Batching/Batcher.cs",
+      "sha256": "9b36403083abd6f3de749dad2b86e9281d8308dd9523a5debf1115a3ef081594",
+      "size": 5064
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Batching/Batcher.cs.meta",
+      "sha256": "21445dcc238deab2a87fd5f3db9d6aad38df114b86f13405f75c3cd62278073e",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Batching/Unbatcher.cs",
+      "sha256": "2f3ba58b17cecccf5a81567b80e467c6b4dbeec9f2a497eb54f1e7d2c49ea238",
+      "size": 5422
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Batching/Unbatcher.cs.meta",
+      "sha256": "0406d83e48e0897c37dde2faabf4a326f1e85be9faa31878b103e43433c66523",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Compression.cs",
+      "sha256": "c2ac77a114fdf5acb62bdbffdabd7e705c2c1d8bbe89f528404d96f7ceb47ca2",
+      "size": 16204
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Compression.cs.meta",
+      "sha256": "1e9baeaa5e299caf18b4fa9b128c3106225a1088d6b9d3e84c9e04699e118db7",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty.meta",
+      "sha256": "6bbc1b078a75f1955b3c661ca022426b40328a6dd252914a0b34bd09d571f193",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/ClientScene.cs",
+      "sha256": "2672ae8de167a35cf6a6cb3b0c12e4cd14c52ee22f083ee1137c7229255e7ef3",
+      "size": 43
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/ClientScene.cs.meta",
+      "sha256": "698151bd48135ca30b395e8e3aa07c2bf8f814a804b3420c0231ab2525ee965f",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud.meta",
+      "sha256": "1ffc833f6fce8f24cfbeb80d416aed1e8d62adfa17e8fb5e1c7dadc245401ded",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ApiConnector.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ApiConnector.cs.meta",
+      "sha256": "de90032a70d5ddc42691848c60c76ef17e4692dab999f3ccfc961df3d26cead7",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ApiUpdater.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ApiUpdater.cs.meta",
+      "sha256": "e0c41ddd7bff8eb3c58ca4c0af862cf2f434783589b7d74575bf0da32832b2ae",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Ball.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Ball.cs.meta",
+      "sha256": "a5f159e03c7076083236aa51536ab92e05c19b285504633df1af2bbd8048bf41",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/BallManager.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/BallManager.cs.meta",
+      "sha256": "15a76fb5183c44394d9ec8fdcc07b6acd741448dc3f2e5e2074909b03d160086",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/BaseApi.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/BaseApi.cs.meta",
+      "sha256": "a808a5e65b4888e70c29aec80e49a494102bb3a2d5ebaa4066064ccf13590462",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Events.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Events.cs.meta",
+      "sha256": "e270d3d959b915e0eeca05add623b3f68a11bd76f63e52183cc63c08e36416d0",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Extensions.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Extensions.cs.meta",
+      "sha256": "5e723749b9965ba03f3ecd20f2cf08df695a406fc66ddcfc3c0d788937021eac",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ICoroutineRunner.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ICoroutineRunner.cs.meta",
+      "sha256": "8922d8197b448d45c7094ffbaaf73ee94d09d0205ff4cd731b7583da2337773b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/IRequestCreator.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/IRequestCreator.cs.meta",
+      "sha256": "d5e15f77c8a22e5d60eb2ed57bf46ffc07c48382b3c83582840b6530913c0fc2",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/IUnityEqualCheck.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/IUnityEqualCheck.cs.meta",
+      "sha256": "96f73708f03e2a553eb08fea3bd0edf864ca9837552496854dc63dd9d79e8fbe",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/InstantiateNetworkManager.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/InstantiateNetworkManager.cs.meta",
+      "sha256": "f8b0cb394ede51f2055cf751e4cf39e596f8fc0299b3fcf5278de081a91aeb32",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/JsonStructs.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/JsonStructs.cs.meta",
+      "sha256": "5935e08e879953ed5656d45338f47dc7edd9fa4bb6489dd91784f0e60c15210e",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServer.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServer.cs.meta",
+      "sha256": "21e12c3d6dd7f9d56ee7ee7d409ee9a4e332e2a2c09470acdddf25b81d358b1a",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerBaseApi.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerBaseApi.cs.meta",
+      "sha256": "98494b94442c040e9e3e1a05ca05b6f3555072956ae2f501212a1327f2a71d85",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerClientApi.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerClientApi.cs.meta",
+      "sha256": "74559984ab113b49ead20f285fcd65c330a5b24c3774600868b2edb963eb38f6",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerJson.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerJson.cs.meta",
+      "sha256": "21d4f83cdb7ed8eab7ee3e546983d275cbc7425f5b2d816691948c469674608c",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerServerApi.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ListServerServerApi.cs.meta",
+      "sha256": "c058307153f660d010d2459041eabfd27b3978f08cd7aa5e57c6d11926e8c815",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Logger.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Logger.cs.meta",
+      "sha256": "ef48ee16fd23262678ed4522ddd5f167858ab475069c70e7e67052d701e4097c",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/NetworkManagerListServer.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/NetworkManagerListServer.cs.meta",
+      "sha256": "24e7602b529b5f01e4795f1e4b6010b7c34fb0829d67abbdcc8b9ec38bb0741f",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/NetworkManagerListServerPong.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/NetworkManagerListServerPong.cs.meta",
+      "sha256": "49c4994a42af36d42eb96b04404ab43e1afbf3018a25a1c2895fc412610daec4",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Player.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/Player.cs.meta",
+      "sha256": "f2565bc95a53cbbba5e2238c07e3a402ebcb0b9a5b85e5d77429c1baa2566f28",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/QuickListServerDebug.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/QuickListServerDebug.cs.meta",
+      "sha256": "7e0622b2326fea14404b1e33230be2e07da89ca1de2a64e374250a019373d62d",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/QuitButtonHUD.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/QuitButtonHUD.cs.meta",
+      "sha256": "51fa021fbc12d4f2fe75069fe1b59c1563562375f5044808cdf03b47ad99fac9",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/RequestCreator.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/RequestCreator.cs.meta",
+      "sha256": "010c611b9aee43e94760eff78b8393a9be842d4f304715b131432aa37858295b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ServerListManager.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ServerListManager.cs.meta",
+      "sha256": "b8fee14826b82e19d632c6428ac1dcc958f73ae692ad80a97a958c769a3b67be",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ServerListUI.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ServerListUI.cs.meta",
+      "sha256": "e110a24017dee63bf2d03d4094ab1d8409c0b73dbe6b55107e9a233f71567e2b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ServerListUIItem.cs",
+      "sha256": "09c7726d18323846964e45d8dce6f88eff23085b1c7caadefd63c0acf52ca65c",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Cloud/ServerListUIItem.cs.meta",
+      "sha256": "d0d1c6bcc2375d0a75505f0fd4fdda71b095bd61f3bff276febfc7236ed20ef7",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/DotNetCompatibility.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/DotNetCompatibility.cs.meta",
+      "sha256": "b5d08f2a81b39fcab555c77bb8b9e77481a00426520e94643dc8f34b5ebe72ee",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/FallbackTransport.cs",
+      "sha256": "66f1ba6c5699160ae008a7a952365d54fca844020716d9bdb4856717c3ab0981",
+      "size": 21
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/FallbackTransport.cs.meta",
+      "sha256": "8c9ffe66d732e0efda27936afb0b86d4f2592d59c3c67f1eb4f02def59e83551",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/LogFactory.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/LogFactory.cs.meta",
+      "sha256": "8bbef76f71da47486de115edfba5c2ab4a01980c5c7505f0d472145f133071de",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/LogFilter.cs",
+      "sha256": "bd3fa9e22b716f9359a4585cae86554c29e218d1a4be7566f363b0d1b011ab46",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/LogFilter.cs.meta",
+      "sha256": "c9662fd5c649fa57a8c1a9c844d422aa9d0140d21bdc1eee7039b4e0f6bf55f0",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging.meta",
+      "sha256": "096f8c75b73df12a5d97ff8fd5482a67acc8c8cf46aa1e1a8dc5739ea48fa757",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/ConsoleColorLogHandler.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/ConsoleColorLogHandler.cs.meta",
+      "sha256": "0231b1de0b2449352b953461106831fcc506de858d3f5ccbe723a4f36283addd",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/EditorLogSettingsLoader.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/EditorLogSettingsLoader.cs.meta",
+      "sha256": "48b4c104c7171117d5cb1c631858409811b5179531ad0aabcc0e893e3a03c18b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/LogFactory.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/LogFactory.cs.meta",
+      "sha256": "45ac0c2370d46bcc132d7adf37c5cbd3b1de63e1f5b22973a48873268fc87182",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/LogSettings.cs",
+      "sha256": "9076ef684744dccaeea52f5ebd38cd469813d6c7f778b4748933668f896e244d",
+      "size": 25
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/LogSettings.cs.meta",
+      "sha256": "cf42e385bf0bd4e4d696a13579dfc7b49edf973de9afd1ffbe9b97155fa28063",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/NetworkHeadlessLogger.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/NetworkHeadlessLogger.cs.meta",
+      "sha256": "081d9b4837aaa539ccf0f5219f9c28a933dbff4d282ccae821f745606e0de7a5",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/NetworkLogSettings.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/Logging/NetworkLogSettings.cs.meta",
+      "sha256": "81e946aef5248143d21bc545bccdf7de51eec3da94b9d80d9657f63085f31cb8",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkMatchChecker.cs",
+      "sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkMatchChecker.cs.meta",
+      "sha256": "6f74db50a2d0fc62eef49e6b543f10df1d68a3f989e94472c24b07e3a1030b30",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkOwnerChecker.cs",
+      "sha256": "5e203323ae272288c2a54b7ccf94d8ce29cbbad417d5d70100a6a32032b2c713",
+      "size": 26
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkOwnerChecker.cs.meta",
+      "sha256": "095a0f599b5ff61ea313bd366a9b8d7c990596016899548c548de430936e3f1d",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkProximityChecker.cs",
+      "sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkProximityChecker.cs.meta",
+      "sha256": "55f929b7ed0c9ea0b074ede2064efb390209306dcc025eec4023a3553b2a05fe",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkSceneChecker.cs",
+      "sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkSceneChecker.cs.meta",
+      "sha256": "083bc96d25ed4af3a0d3b4497b5e191776660a3e4ae08f9fa489da16d0cdf8e9",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkVisibility.cs",
+      "sha256": "ad418e99bffc1c4e4c731939d6ff1059084af28b7efe015d1ba9a5287a29b2fd",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/NetworkVisibility.cs.meta",
+      "sha256": "c3f95809cc68375f55f7997f0529a7b0df21f94d00de28e993302bfc9df40b54",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/StringHash.cs",
+      "sha256": "f50948c2dd36d74f63e60844aab45f6d305f3dedec18bd5226867c7200970a94",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Empty/StringHash.cs.meta",
+      "sha256": "f7c470ba55b2efac35104c284b1d6ec8d3f7aedf19de243a5802fb21181eb29a",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/ExponentialMovingAverage.cs",
+      "sha256": "1bef5d0028923a94116026e97b9ee6407316ec5c235a8fb5213c266d9ac57ba4",
+      "size": 1160
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/ExponentialMovingAverage.cs.meta",
+      "sha256": "a03032bf40462a7dcce44837232ca676f9d1640e8f594e1c93dd7d57f825d786",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Extensions.cs",
+      "sha256": "cc103bb011b0282f96dc8f7727d0d97e7ecd3adbac7d231c475ca18f6112ef7b",
+      "size": 1712
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Extensions.cs.meta",
+      "sha256": "279140e3efb6412078b6111173dc0bf129d1f54ec8c11ed6d1e7c5b8713470f4",
+      "size": 308
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/InterestManagement.cs",
+      "sha256": "2c852846065c5611b5a98320052a103cdb6a961a449e13c7fb67e8f80e026dd7",
+      "size": 4653
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/InterestManagement.cs.meta",
+      "sha256": "5945cba98f69556d338a56a8235fddd9b6555e1313e9f55bfd9dd05e179710d7",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/LocalConnectionToClient.cs",
+      "sha256": "9e9e526d1072bb3df091872ecc19adba99a6b7d7c3a4fda68c57fe795c962b68",
+      "size": 1934
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/LocalConnectionToClient.cs.meta",
+      "sha256": "07e2fdb25022ddc8856e35753bd871320168b1f462c7712f037b08c177bbcbe4",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/LocalConnectionToServer.cs",
+      "sha256": "dacdf3dda2b8804971b3b569bdb380113c71a02286f231a4af8fe85cb8adf69c",
+      "size": 5216
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/LocalConnectionToServer.cs.meta",
+      "sha256": "883dacf73ca4c71df5bfe8bc8b712829346ab95234412480de348fd006538886",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Mathd.cs",
+      "sha256": "c3293d0e07ebb49ff5ac13084189a6a137772c80f8e0d9144fcf7268fdbc15d4",
+      "size": 1086
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Mathd.cs.meta",
+      "sha256": "19ad8aa4621bf70f8b66bc2220ecd15536d2939af57f72bd2eb06141fa07bece",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/MessagePacking.cs",
+      "sha256": "fbfa8278e1453e976f397f36b060d71e820ea6badecb624c64d7f9064a429bd1",
+      "size": 6477
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/MessagePacking.cs.meta",
+      "sha256": "d73f718347eb32a561b569bd801f3a1aa1b2b9da37ad4ed970031c27b2438f72",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Messages.cs",
+      "sha256": "45467e31f4d001552deddbc21c793eb48196e5dd6766db1982f081cec1c81852",
+      "size": 3227
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Messages.cs.meta",
+      "sha256": "f7c8a8ce5d3ada397b126113d38106731c386a5f6f0f33c602d54a9f2d71d21a",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Mirror.asmdef",
+      "sha256": "aa688faf6fad64228764dc93e5218f11a5ab4167f51b970946f0d98937452141",
+      "size": 380
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Mirror.asmdef.meta",
+      "sha256": "1b2a59cb10ce7b71a001e8ac82af8fb5ac2d6cb129f3289a7752bf357d31f7da",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkAuthenticator.cs",
+      "sha256": "3e6d7e33b193876c8fb2cc9e229f712f561d8d19e1d5ace35813beb6de29d981",
+      "size": 3785
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkAuthenticator.cs.meta",
+      "sha256": "ec40f62a6fc3317ba8db79803519b6138e82c59395980cf1fdbbfee60ea93660",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkBehaviour.cs",
+      "sha256": "ec5d7ff6c429f6897fa40ef4b8627fe958d3cbde54a61dda3bdf16f499ef7a7e",
+      "size": 48026
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkBehaviour.cs.meta",
+      "sha256": "99336d1188c484c7df76c9c54499ad3a33533e13963ce002620fcbe1013b49f2",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkClient.cs",
+      "sha256": "7d9a38eb0216f8e09d60be8ef51cd9034587b43bedfa0cb9d24870d9cad9f111",
+      "size": 71403
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkClient.cs.meta",
+      "sha256": "067b35435886455034e61c45c6508efc3376337e05338680aa5e190842f3ff9a",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkConnection.cs",
+      "sha256": "99d64d81318ab53aea171419a6798b0e54e3b0a81efb6835bda426929f31c3de",
+      "size": 11378
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkConnection.cs.meta",
+      "sha256": "a6c13f6e4c8562d39b54f4ad83d4bf2b5ee2f07c7f20d5a68e8707b5224ae31b",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkConnectionToClient.cs",
+      "sha256": "c8079ffb73e5379d24f1ae3519ccf6e944e10eeae1a5c8676cdb2d355ad4a6f0",
+      "size": 3961
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkConnectionToClient.cs.meta",
+      "sha256": "55016a0ddb86dc3be1fddd96aac19499e09d8cde68bd805d67a714f51e0f8f54",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkConnectionToServer.cs",
+      "sha256": "d1bfaa30485fe8ad16fd1b3ce6e5f8bfb1860cf8eba0bd4bc7d3b3e949e29c82",
+      "size": 975
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkConnectionToServer.cs.meta",
+      "sha256": "d9faba41b1460c05d74ddbaadd977f5618a3e60712083019fb728a38b8bdb506",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkDiagnostics.cs",
+      "sha256": "9bacb7561c65178810ddf7efa9ef2e548f55fe85f062e2c3ebaebdbd22a6fb38",
+      "size": 2424
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkDiagnostics.cs.meta",
+      "sha256": "8a0d8d206a97ff82bc075b515244df26e031adcb1c1f46097f1af49d8438ac34",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkIdentity.cs",
+      "sha256": "6a5abf9267b122ebf74506b25658bbe1463e6c783bddd2307a429c882baaac08",
+      "size": 61305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkIdentity.cs.meta",
+      "sha256": "6b20825de9347f4258d3a85c9a83ddb18606e8fd3651323e52b761557e94bdc9",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkLoop.cs",
+      "sha256": "e107cbe669bc181818a6fe65ed9be7e177b0f5479c2500417d19af5a100e0328",
+      "size": 9620
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkLoop.cs.meta",
+      "sha256": "52f3f6a90cfdd774dda1cd1211f607ed11a1d8c83292a138cf5b081173fb6159",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkManager.cs",
+      "sha256": "b4fa8c2259d0e58caf38a49fe1973815d91920f8b7c4fc4150361dd81627facc",
+      "size": 60730
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkManager.cs.meta",
+      "sha256": "b5e87787c582bb2b5fa76231db5e25a968854584041a83f9520eadf4a9c8e5bc",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkManagerHUD.cs",
+      "sha256": "ee059b8b41cd25aeddc1f826f186f03a5c2b2cafc301818529305be2554cac83",
+      "size": 4795
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkManagerHUD.cs.meta",
+      "sha256": "e635a87ebcd76a1ac7c949a05353af3d2715cc1de3d24dc2943029dcec12edce",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkMessage.cs",
+      "sha256": "188c4d6656563ac7b42ce887fa98df46fb1349f85f7ed13af74aecd9c93f7dd5",
+      "size": 64
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkMessage.cs.meta",
+      "sha256": "61bf08dd95cda96a663d13c06d3bcc9fee7225e2c895400a07c3b0117c54cc95",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReader.cs",
+      "sha256": "2e07c61f89fe7a7e3e7868e46171a3f20348edcd09cf121b92c8f5a8fde90405",
+      "size": 8549
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReader.cs.meta",
+      "sha256": "64f9e6f41cc80386dbd27ec16fdd158e14eac91ad022a70e29aa5113f5f48d6b",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReaderExtensions.cs",
+      "sha256": "e9671bf7daa66ead9077b4b38ba83d21377de48ff581065b01f1c9a4eb72dfc1",
+      "size": 18293
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReaderExtensions.cs.meta",
+      "sha256": "25f1b8933daa1bf888b54a6e511827d6e3cacd234856b9591e5f051aaf5f0a9e",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReaderPool.cs",
+      "sha256": "54a489536b3b6a8022e38726d354fa107aec25bf414efccdeddfd076c4edbb19",
+      "size": 2349
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReaderPool.cs.meta",
+      "sha256": "d27b204fbc0add4749915dbd4a3f9605aacd7b33a13cf779358c41bf6e75fa0c",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReaderPooled.cs",
+      "sha256": "67199b1579d95f4cf6b1bfe04809cffd00bb7fc936a56ade0ef80381801bbf64",
+      "size": 995
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkReaderPooled.cs.meta",
+      "sha256": "4c6548fe4d5c4a9f5b4487c7523b24f842de2a01f1f5a80a87090d4d8a694ac8",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkServer.cs",
+      "sha256": "3e263f3ce31f0fd58274519fafc7febd26677e96b5ef2c8ee6252fb0143a19cb",
+      "size": 80045
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkServer.cs.meta",
+      "sha256": "3c49799a8c2ebcf39a6808ee56fc4c24a59af9ddbe86f87b0cfefd955ff4f0ab",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkStartPosition.cs",
+      "sha256": "2f8cc9ea82b836f9608763a8d9a9db16db305c03bd0e41f1bd4886dc9301e72f",
+      "size": 652
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkStartPosition.cs.meta",
+      "sha256": "101ab3220335ef51be053520a7161d2371d239c551c3998a7257dfab26ccd292",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkTime.cs",
+      "sha256": "69c8350c20e9ee10c9b78540282f1694c77d3c79f2c9987bbd990ab2d44c398c",
+      "size": 6950
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkTime.cs.meta",
+      "sha256": "0913cd7e46b5cd10d870b35b96854f2c8fc087dabd9910e98eb722fa7e84c08a",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriter.cs",
+      "sha256": "7e76dc137d40cf7d04dc2e89c4096e8286d4fb2ef9f848b0d82e3b1a2e8e001d",
+      "size": 8097
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriter.cs.meta",
+      "sha256": "cedb3fdce291c006dad828e0651f34a0ad306307aa977b9974b9c37dfae41084",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriterExtensions.cs",
+      "sha256": "4dbf55c98e613afe50814bc2e15aa902959e75d37c51ed2550c55d22b28c4293",
+      "size": 18945
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriterExtensions.cs.meta",
+      "sha256": "62ec07a8bff6f414bbd24287a56e7cc2cebedd2b81aa0bd790ccc31f8a12e363",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriterPool.cs",
+      "sha256": "2580f2efe6834bb8631c3307427264645eab6589c7272fef06fcaf65b66517ea",
+      "size": 1796
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriterPool.cs.meta",
+      "sha256": "8b354eca5678433e2e6c292b3dee37f49da19dfea7dd866f180ab3cec5828bf4",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriterPooled.cs",
+      "sha256": "5756314b3493f0a97fbbb45b618c1a37f5e0351e2f7b9ab5ae4321bc04bee0c8",
+      "size": 706
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/NetworkWriterPooled.cs.meta",
+      "sha256": "92d9c88c7cc239d8db6743c3e67903fc2815c00927549e5104106858a255e9de",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Pool.cs",
+      "sha256": "c57e872ed84afd863bb289549b98331ec74a3cc391154afa1c7433489cfab135",
+      "size": 1555
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Pool.cs.meta",
+      "sha256": "771893fb56ffba13d58d5f69268364eaee0673a30bd5459c9d8e6593230a4a21",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/RemoteCalls.cs",
+      "sha256": "328455e823e66ae8e126d3d86048ac0b662d485862d1715903c66d2e611e3f4c",
+      "size": 6830
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/RemoteCalls.cs.meta",
+      "sha256": "31629a6144804143378d465444d8d4df6900536c7dd3fe54a396c2d8b4fba909",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SnapshotInterpolation.meta",
+      "sha256": "223a582aff55ab2d5999fdb3291d089c4649c26438b62f5f03a7331ba97f3ccd",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SnapshotInterpolation/Snapshot.cs",
+      "sha256": "61a002675a3b154be0f5b88ad8d57a681b0db010363fd3424ddfb1f57dba754c",
+      "size": 867
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SnapshotInterpolation/Snapshot.cs.meta",
+      "sha256": "41bb04c9d3193e5ad13a199f2cc919b9be7b570dbe5b24bf88593091a0d613c2",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SnapshotInterpolation/SnapshotInterpolation.cs",
+      "sha256": "ba4cf77d5ea35ea4ebaae71f6e6e540f9cd566f0ef01c3f78ca7b55b54b11d37",
+      "size": 17287
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SnapshotInterpolation/SnapshotInterpolation.cs.meta",
+      "sha256": "946364b88762a090880c317841e233784ee4bcf4a19579c39669bdcb47729399",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncDictionary.cs",
+      "sha256": "cd99577dddf672cb44ed7d424fb453fb7de810f71d0b8fdf47e827f3a44cd55c",
+      "size": 10567
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncDictionary.cs.meta",
+      "sha256": "579620d3429a87417d9fcb08fb2dba65085908d12bf1bc0b17940058be386d00",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncList.cs",
+      "sha256": "67e3e63b1bf2c8d9ef5bc1620f9558c70e2a2032c436aea5dbc4c7dbfec9113f",
+      "size": 12626
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncList.cs.meta",
+      "sha256": "9c4715dfe6d9d0da400879fb86f0f25fb9619d47eb39e5fb3a103a04aa89ae37",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncObject.cs",
+      "sha256": "6a711822f0964c41c06edd87fc9c709776621379d7d7b97a3d0d091f5fda4d79",
+      "size": 2517
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncObject.cs.meta",
+      "sha256": "5e93655c28893f7068d1e1a094635e2b7927399a998947d86495886fa0d0454c",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncSet.cs",
+      "sha256": "3a1439003a1c1acc6b12acd709fd45f27d9dc9e785381f1440da3f53b10f27a5",
+      "size": 10519
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncSet.cs.meta",
+      "sha256": "10e137cc483eef001e18c2519a4b6087e998e0ada1754a2ae519a48ab9375889",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVar.cs",
+      "sha256": "b8c8ddbb5313be5dbe4b37fc143ebf3db27ea97489b776eb0e12d5cafccc8912",
+      "size": 6603
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVar.cs.meta",
+      "sha256": "de1c3968e9e3c93e359fab3957d7be6d8630c907e7d0423dad724ffa27a6741f",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVarGameObject.cs",
+      "sha256": "5ced918c8e8bcc40450059663be5f79d14e6979cdc4d2679f0ff84d0b2f38411",
+      "size": 6018
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVarGameObject.cs.meta",
+      "sha256": "7b1f149d8266a526fc4d931367d6bdb04bcab8e5e57c4b6eb8211865b60a6a0e",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVarNetworkBehaviour.cs",
+      "sha256": "98a89d5cab01bfade8a0e3a7104b19e5e72717ca53313ff4f4761040c5c7901f",
+      "size": 8196
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVarNetworkBehaviour.cs.meta",
+      "sha256": "d359544627dad548b71bb55be3ddc9473489b51b0b1dcc2e87832f8d8da1a199",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVarNetworkIdentity.cs",
+      "sha256": "a949ae943e931a3b3419298419be94da655672fbf490f288480c9bbe1d8f3da7",
+      "size": 5353
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/SyncVarNetworkIdentity.cs.meta",
+      "sha256": "f9901869f2ec5cdebf3ad174b203612ed07497acff51db2d9d5106da364e8084",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transport.cs",
+      "sha256": "7503e6ad884cc9125b50990544866fa53a8f0b7fc2eb2fc56bd7c73301253d63",
+      "size": 8901
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transport.cs.meta",
+      "sha256": "fcccd3cbcc73fd340e93a4cc87419fef28af89746532461c047f08988e26d36d",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports.meta",
+      "sha256": "3d841103b057616c70d6c505b8d26bf5cd5f1faf7505e7083ebb4b9e9aaa2813",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP.meta",
+      "sha256": "b32df92459b5422a6a0a8a7ea39c409fcc77b1e8a5c5114405c90825f54555c0",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/MirrorTransport.meta",
+      "sha256": "26856f88cb89a36a8723f43c2ddc110a49e55d23ad35617f64f060aaf3c00bcb",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/MirrorTransport/KcpTransport.cs",
+      "sha256": "bfb5dc3d84ba2890cd34543f91eb0c74e1f619ee595ffcf5dcbfa354a44dbf65",
+      "size": 17027
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/MirrorTransport/KcpTransport.cs.meta",
+      "sha256": "901bf86aa484ba0dddd0209cec71a75eb106d0a2bbe033e61b5853e999df0ff6",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k.meta",
+      "sha256": "47952ffecddfc598590590352e2a01c4dc6c9e3d4e642ab223ac9cfb18bb5870",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/LICENSE",
+      "sha256": "cb8d1ca3226e9bc0f71d02d60a32eb3b504dbc47e1a88c73baf275f06c60566b",
+      "size": 1171
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/LICENSE.meta",
+      "sha256": "cd81242a787505aaf213d1da22cc465e1b6fda28b046d97cf1e09c30e001e92c",
+      "size": 162
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/VERSION",
+      "sha256": "860be159e793910a1bc2dac8dffd98dbd3bf1170ddcfdf28fe1c45754dddb747",
+      "size": 5891
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/VERSION.meta",
+      "sha256": "c0349bbd6ae4c034952b55d6ed59cb4ba8900948689df8e8bd657e0f9b50bd1c",
+      "size": 162
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel.meta",
+      "sha256": "02ef64af2cde8f3e98bbc7adbdea9a4b803e315b060e5a64ad9a95ead0c5d601",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/Extensions.cs",
+      "sha256": "84731a3ed02f0cd40af35876ad33e9cd48ffbd6e29003b2ee6bec315dde2814f",
+      "size": 1248
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/Extensions.cs.meta",
+      "sha256": "8de4c756a082e19b54e52af9bb04632d71d471d68eaac34c75b2444b93df1220",
+      "size": 85
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpChannel.cs",
+      "sha256": "57c2ac515b9e7062a9b8adbc3013cffca0ea251e8e3780dc8e73c835dc4e4097",
+      "size": 244
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpChannel.cs.meta",
+      "sha256": "7837f4fcae9b4f0855ebf29b88f4f9868a17e8b9b2dca0e20ba230ac493d2773",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpClient.cs",
+      "sha256": "780e362437e11712a470b38c969fe52b6fe184018ef2354393a731efde82e2d3",
+      "size": 4947
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpClient.cs.meta",
+      "sha256": "65485f9ff9e599e6efef9e6e0a8041f9d92ccfed926d7d1407f4f49f84aa23a6",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpClientConnection.cs",
+      "sha256": "23f55906b38f93587867ad521ea3211ea6352c0e97c38f094af0e941a2a77335",
+      "size": 6363
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpClientConnection.cs.meta",
+      "sha256": "e31b219a7c568b90b72953e134aa9a2124d0a2011349913e528f0494208aa05c",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpConnection.cs",
+      "sha256": "74e534cc5c78341ecbb85a00a3a8b1892a6a2b31e1994d45daf8a7cecdb074a7",
+      "size": 28602
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpConnection.cs.meta",
+      "sha256": "c3266914bc28b7aa5af3003281c4a8fba5a985c8ae2eeb06cdf9f4bc1310eb78",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpHeader.cs",
+      "sha256": "5acc6d1d04f842730344a590339841271a39bedbb1247a86ef3e7724625268af",
+      "size": 810
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpHeader.cs.meta",
+      "sha256": "f36708cf2583ab88b681af106d6793407c8deeaf50b22c4c18ccd89447acbb27",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpServer.cs",
+      "sha256": "f0ba7a1830ce1304a15221a38c1fd124c4ce33c8532cb394eb1a781eebf11476",
+      "size": 17048
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpServer.cs.meta",
+      "sha256": "2bcf3393a78232101bde8c32e4e492996415c3c1c312eac1dc63a80039482365",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpServerConnection.cs",
+      "sha256": "f0aa6e84a78d8fe9b27fb86f874ae16f8e493dd6cef9630d6d49adc3ac046a5c",
+      "size": 994
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/KcpServerConnection.cs.meta",
+      "sha256": "83a0e40004d97c347e98a9911077a0b342f38e44f668725ccdf7727064567674",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/Log.cs",
+      "sha256": "1625af908ba3f78da59f131595b867cfdbe4b0881e03c9755f3c87b2196c7d64",
+      "size": 468
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/Log.cs.meta",
+      "sha256": "c7c1e6af527ae95e86256b8daa6d1fb6be3f5006a068e910c49f12d76027ba8b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc.meta",
+      "sha256": "9776e64f2b3694697072e55745d126478f41383d22d4f5acce4ec2f0dec14279",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpClientConnectionNonAlloc.cs",
+      "sha256": "e32a336cd4f0a43e5fc5ab23a2a6251d987a1d0cba2daeba9a00159874534b4c",
+      "size": 866
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpClientConnectionNonAlloc.cs.meta",
+      "sha256": "95f63a29fce088c1a2adb031378045a616d5e11f16dd19363b17ad91e43f3009",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpClientNonAlloc.cs",
+      "sha256": "a8b8e7db646fce99c8e84b71023b3fb147b5da4d81a13a01277340264d91a117",
+      "size": 557
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpClientNonAlloc.cs.meta",
+      "sha256": "b7506ce4fe5cbd7da45234f9bfae752287cd2025c039ea78e04a575c514e777e",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpServerConnectionNonAlloc.cs",
+      "sha256": "399676b640f4789592088d143d5dcd631b4cb7888fb0c67cfc67202b0e983275",
+      "size": 1181
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpServerConnectionNonAlloc.cs.meta",
+      "sha256": "5986f44e452cdaf050332166c163f3db6405ee64536f172986989c74fb4001b2",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpServerNonAlloc.cs",
+      "sha256": "02f4c4c304fbe40f98a5e4ad22a41a3883b25c988537531dec3c64261676067f",
+      "size": 3339
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/highlevel/NonAlloc/KcpServerNonAlloc.cs.meta",
+      "sha256": "1d5decf155c15dfe22e5c610a179604758d5943e0e7ecf71601671c227f112e9",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp.meta",
+      "sha256": "70b6fb7c6df3c4598325e73ff4d42104e4bb5d01cad464855e7b46f7b5edfd17",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/AssemblyInfo.cs",
+      "sha256": "a93d95d9ffea5028abe9660c20d3bf4467a18168a0baa8772776174b38546cdc",
+      "size": 87
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/AssemblyInfo.cs.meta",
+      "sha256": "48d0c163fb16d80d1aeb8fb1e4f05b092372775ca117fa3c54396bbb1d36d68c",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Kcp.cs",
+      "sha256": "3092ce6095b8360efc0d4c75e99ca9855f62e2f5df9187a11f1504695164b57f",
+      "size": 37941
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Kcp.cs.meta",
+      "sha256": "8dfb1a0332705f81e2713d97a81e4fad15503b65252a8682e45a1eb163b4bce3",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Pool.cs",
+      "sha256": "1c9aab54294d692ae3c3b7c0af958ebf0296ac7741ed4aef699bf6f4c6d20d66",
+      "size": 1573
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Pool.cs.meta",
+      "sha256": "0b9b5137a9b16eef9ece33e82c82e5d225e572b61763bca1cb6508fd6f51f745",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Segment.cs",
+      "sha256": "343cb7908e9bb9748fad66a309948c3718f668f056a825a036d2df24342e69f3",
+      "size": 2422
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Segment.cs.meta",
+      "sha256": "d355b757104d546ad28e086f279ef50aad1da8bbe9243718a645b581a8efefa8",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Utils.cs",
+      "sha256": "c461d0ceeec163ab93925c4058c690032d468ed9bc3c80c08d5754383fc25f70",
+      "size": 2334
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp/Utils.cs.meta",
+      "sha256": "01166ac362b7c75e47a860b8a56b1ba0e5834ca45b57ead80ba450e4e605382f",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp2k.asmdef",
+      "sha256": "9a0e9169283a57bcf0510d785293b239b8e9500d5ee0605503fc67baa9728ec2",
+      "size": 379
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/kcp2k.asmdef.meta",
+      "sha256": "6ae6dbf93df40c7cf204bf705687663ddcbd955263be2a8dc4add12426c94544",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation.meta",
+      "sha256": "135a7a0df50c8d05b15a83e1801a9be27cce8a781b90553320ecb7dda0969c5d",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/LICENSE",
+      "sha256": "af7966e0cc35d29827a54305c52e5f7291b17367c1b1a7c63ef1925ec70806db",
+      "size": 1113
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/LICENSE.meta",
+      "sha256": "7cba3fc7dc9eeb902e736ea38771c33f025f2d87354e9eb911e47fc54bab8d8c",
+      "size": 162
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts.meta",
+      "sha256": "6c40c84f460e0499cd4d29cb2066a469ec84f6d9238c87a70f88c5c1f2a043b4",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/AssemblyInfo.cs",
+      "sha256": "9544c656701ca2b0dc500effd7dc444fedfa982a51ec1f30026a02bb55a65764",
+      "size": 99
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/AssemblyInfo.cs.meta",
+      "sha256": "e7ee4a9db5af423d83ef2b484383de1b06f67ec59568b60df6ae656ea3699589",
+      "size": 88
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/Extensions.cs",
+      "sha256": "109750aeeeeeff31ad3aee7a02a650fb4f51d217931874225399a8d6166c13bd",
+      "size": 2337
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/Extensions.cs.meta",
+      "sha256": "3331d5ec153fcc984685e24f1935399f46c83ff3c30efde142353da6c367e2de",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/IPEndPointNonAlloc.cs",
+      "sha256": "942eac5eef45d5dceff2af8590a74bd98edd522d953ad477cff5d20cd3dfa877",
+      "size": 11118
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/IPEndPointNonAlloc.cs.meta",
+      "sha256": "31dc02a6057a368c794ac61d706fcbf52ebb07ae53250b7826112074190c9004",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/where-allocations.asmdef",
+      "sha256": "d5b7cc6507424f0cafea3a69bf1cd558471f5484ffdec9c1c44872572504a074",
+      "size": 337
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/Scripts/where-allocations.asmdef.meta",
+      "sha256": "f064e1a57ff627122c641c09fd7a789932855207ae7c4d19b49d1381bd4c4874",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/VERSION",
+      "sha256": "8fb21ad90a7efe2ef531f251ba991b580f63908e9cfcb4e7a9db893b5570556a",
+      "size": 36
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/VERSION.meta",
+      "sha256": "737b79c7577dc99f7393673b686a07c3f03ff238f8c0b12fcc3598e19700e9c3",
+      "size": 162
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/LatencySimulation.cs",
+      "sha256": "4ad62fd7611332ed88360d59c9f54b0d51401b7cf2e1699597afe76b9a939d83",
+      "size": 11691
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/LatencySimulation.cs.meta",
+      "sha256": "4560d3e63465bd49453de41687f949643c28bfb0904768b863ff1ed8208f0f9e",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/MiddlewareTransport.cs",
+      "sha256": "6e1c04885deef5692be7484d3aff63c6cb010feec6135bda1655ff82bfe149d9",
+      "size": 2772
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/MiddlewareTransport.cs.meta",
+      "sha256": "7c6403f5fef1e752852e50a95d7225b693723521056a7a7a11d4399355500734",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/MultiplexTransport.cs",
+      "sha256": "2fb60dea4c48119c1ab39a5c13ff2bd8c95a236749c82414a8e167b7ab1f655a",
+      "size": 10181
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/MultiplexTransport.cs.meta",
+      "sha256": "74a8fbfee3e6fabd7693e2929ed14736ac9e902ac163015dfc3dfc0e4c14a299",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport.meta",
+      "sha256": "a364c820dfd0c38695aa27ac841c8d60ce7a6c7447dba5300d80551df87d0180",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/.cert.example.Json",
+      "sha256": "5e3d3e4209a7d2a44a2bc266595b72dbae54dc9935f2cf458ecc7c4bc667d73e",
+      "size": 419
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/AssemblyInfo.cs",
+      "sha256": "c680c3617eda8622b4e844d95a45a1fda5f7270fb6798f30e13f94e853fa7bf5",
+      "size": 243
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/AssemblyInfo.cs.meta",
+      "sha256": "8279341d46f698c55deeb4ac8897e3799c638d29703b891331b4d101b3d68f6b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/CHANGELOG.md",
+      "sha256": "ca795b6deef0b5c6743ae631090b3f6949e9a579d96541ddf2833084ec1fe2b8",
+      "size": 2023
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/CHANGELOG.md.meta",
+      "sha256": "57059c8f0670c628aab5aee91d088d6b8eead9040e9efde15b718cde70d83557",
+      "size": 165
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client.meta",
+      "sha256": "a30841892555a9101e90a3069e3cc3bb4d5e7ef0cdfec9bc83da031d28fab9f3",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/SimpleWebClient.cs",
+      "sha256": "c6624797e2aa52bfcb40b560227251b190bf0f4b46faa4d5d3906b5cbd55426e",
+      "size": 3409
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/SimpleWebClient.cs.meta",
+      "sha256": "54523c06503c4cdd89503002dc55370ed694863b29cdc08d0dd6795615b6a350",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/StandAlone.meta",
+      "sha256": "c122a103653edfb8bfa94f911a13fecb478272601e80369b25c700d59f676293",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/StandAlone/ClientHandshake.cs",
+      "sha256": "727d99b025c133e94e26990c54e23ef5219e7d86a22697bcb0aa987474deb2c0",
+      "size": 3052
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/StandAlone/ClientHandshake.cs.meta",
+      "sha256": "48765936128fa5cc1f2350ac66ed457b5c0c38a4c36cf66e02260e0843eacd41",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/StandAlone/ClientSslHelper.cs",
+      "sha256": "331fc22375d125c8c5fa934637f589cea6cb3042d60e35e389cef55f6562b74d",
+      "size": 1431
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/StandAlone/ClientSslHelper.cs.meta",
+      "sha256": "43004f5b4135015fa120111f168905d99c8e81082afc41f602d74eeb5ab573d8",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/StandAlone/WebSocketClientStandAlone.cs",
+      "sha256": "419cc2f82feec28f999987ef80dae6442651ea7acbbd980d038fc9a18a6da471",
+      "size": 4686
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/StandAlone/WebSocketClientStandAlone.cs.meta",
+      "sha256": "4826407f0bf2452af27aad177a6065448e9ac039d9e7bfdfa589652b01891a27",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl.meta",
+      "sha256": "53d643ed682c663d45d854c755b8cb34c4dbee07a90742913abb23c4f095f06f",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl/SimpleWebJSLib.cs",
+      "sha256": "0ab5ae2aeac4dbeedf9ef3ea86616af601a55532998e02d623ff900906e705c6",
+      "size": 1435
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl/SimpleWebJSLib.cs.meta",
+      "sha256": "d092c6ac355125b926e1f59fbfcbbef3c766c42c258dc79071edbdeaba6de246",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl/WebSocketClientWebGl.cs",
+      "sha256": "10d87632a28ef979ebb8f9b7f1bd577efb05e402e700046c1f91f134b305a5eb",
+      "size": 4450
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl/WebSocketClientWebGl.cs.meta",
+      "sha256": "1318ea511557af6f708f1a6e9a05cc7f380f58b07748d077be47d5e64f64c732",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl/plugin.meta",
+      "sha256": "d60db0f44ee43d5a12127a72f241541254e03880336ae9e955f2e11cceac289d",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl/plugin/SimpleWeb.jslib",
+      "sha256": "2fefe9a8cc3f3d7ae261f345b3f4d315fa9a5015e77a1e202a2e6a12ed0beb42",
+      "size": 3401
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Client/Webgl/plugin/SimpleWeb.jslib.meta",
+      "sha256": "caa6069d1e6baa1184e38556f362bc7a403cd1d3dff8f193a3e97ee46892aad2",
+      "size": 722
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common.meta",
+      "sha256": "fce03ac0e3e9558e01dd829e1bec233a6a3b1706dbdff0a07e3a793a6af50c02",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/BufferPool.cs",
+      "sha256": "86d994f663072b84b1aa5e1a10a6c58788664caa0dabebad2965bdbf1decd84f",
+      "size": 8647
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/BufferPool.cs.meta",
+      "sha256": "acb753e7a0b95360086b872a49e10d2107f39c7dfa1ce43cefce092fb5dbc648",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Connection.cs",
+      "sha256": "8a8a2978653e9cc607ccf255e46793ad0d47e8463a4dd8bc17c41dfbf7ec2526",
+      "size": 2821
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Connection.cs.meta",
+      "sha256": "4cf827112796658a85af4fab48a9173cd7f3a04ffa32784c7749ed18abf66ba6",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Constants.cs",
+      "sha256": "3b16f8ea2d19ed7b2064d17131a28e92f3665aa896db4ede0809178f6def5606",
+      "size": 2389
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Constants.cs.meta",
+      "sha256": "37e36d45f858720eba866b1d6d29831f86fbcaec7d48b00de8e5bfb5680afe68",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/EventType.cs",
+      "sha256": "ca9775158a7d675690e549720c6e13227b390f2a63dc13b5dc085c41b072cd40",
+      "size": 148
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/EventType.cs.meta",
+      "sha256": "49aa6d15aeea8aa796c0db383d8afe844cc6782c1f98b0364a89a16060075a28",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Log.cs",
+      "sha256": "c735922387a28b1ab780935c9eb9e0f0af0930c13078acff7ddb29d819480d19",
+      "size": 3926
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Log.cs.meta",
+      "sha256": "6a5cae7345ea341e3bb8ae7a335248ed17b631836f86c27772181fd7d2787a11",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Message.cs",
+      "sha256": "4b94b495f4b7c7b5467534cb577d7ae05d1a995587468a7eccec97d3c7c6611a",
+      "size": 1204
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Message.cs.meta",
+      "sha256": "8c027cb8a780991cce46d51958473dfd38a16d32f1746dca1d7db4b35ed15a1b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/MessageProcessor.cs",
+      "sha256": "56b320be231e35797187369923e3e97f21712d59f760cc71409fb4368ceec8c8",
+      "size": 7234
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/MessageProcessor.cs.meta",
+      "sha256": "d0a60c72afc6cbb2e25c0772c5c8c7c0eea5830f491efde48a9b46825a9c7af0",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/ReadHelper.cs",
+      "sha256": "ebb782663ba3f412adab38cb42770a7f1fb89718d1d0cecfbf402671f722dd08",
+      "size": 4037
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/ReadHelper.cs.meta",
+      "sha256": "f77af5f2fbb9e01d56301ea90d9016ca1eda7a97ac7799cd1d88294dfbc625d5",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/ReceiveLoop.cs",
+      "sha256": "45344d4e42d66ba5c47d36b49f24d91d2807e83c18372204da0cb5f3ffcc456f",
+      "size": 10528
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/ReceiveLoop.cs.meta",
+      "sha256": "c39d47882ef48e0fc59d6074c39770c9b13439532dfd00e159fb9b1703d598cd",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/SendLoop.cs",
+      "sha256": "76dcf866c9d08e147bb27f8cfc98e03ae07241eec0bb966279c20b93d1d0dd06",
+      "size": 8095
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/SendLoop.cs.meta",
+      "sha256": "3c8f4a4a01afe1c9162b8a6ab464f9a817eedac74c7b84019dbc29588ad8f790",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/TcpConfig.cs",
+      "sha256": "8c6f1bff62699f846294c9743987320b03645887f52865f57257ee0109948e32",
+      "size": 703
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/TcpConfig.cs.meta",
+      "sha256": "b998cac73eddb5bcedb05c3f6f8aec14831e4ed873d01dd5e1b66a919bd03c42",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Utils.cs",
+      "sha256": "03f1b1cd1d47fa891b5b34aca446233c462b8e9d407684af2cdd2ff4c086638a",
+      "size": 278
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Common/Utils.cs.meta",
+      "sha256": "023dc9fd0c6569deae09551da42c58a25987efb30d17673aeef93fa5f48be161",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/LICENSE",
+      "sha256": "9afe516cc2fbb9ecc7453f63e201d2f4b7c907061b6f1cfd0b5e072f50f8778a",
+      "size": 1090
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/LICENSE.meta",
+      "sha256": "93ddac9fb995660e896f6da4208eae2455f10acd157a567c28fecc758cee4399",
+      "size": 162
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/README.txt",
+      "sha256": "d7dd7abe2b81c0e98e5640244af3742900fbd9632ea16dc89cc5ea607e86c015",
+      "size": 680
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/README.txt.meta",
+      "sha256": "92310973c5f3bda3095d25d4413c32a794ff2808c226be3f8b2ff94e9e9e76d7",
+      "size": 165
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server.meta",
+      "sha256": "28ee08e19041e11e7c38e36c94b61360460792b08c70d6aa7412c85d678a9d8c",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/ServerHandshake.cs",
+      "sha256": "e6095653476558fcec22e5a099541df49be96ca80fce92344a8a44159dac2daf",
+      "size": 5147
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/ServerHandshake.cs.meta",
+      "sha256": "bced993f88afb04995644375befb92b61bf3b19452c3fb647e7e4de05af888d5",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/ServerSslHelper.cs",
+      "sha256": "ded1ff248c9533b2fbe1c0bf4a878f05d36b4275b534d21d05ae42eccf37fdaf",
+      "size": 2246
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/ServerSslHelper.cs.meta",
+      "sha256": "e7a51141ed6489f9f6f109e2612bbc5ea40087899cc3aaaaaf66f66aa808dc7b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/SimpleWebServer.cs",
+      "sha256": "61cc524073ed52e4c13af8046f2acd9e77adc556cd336829c8bab452dc1de684",
+      "size": 3965
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/SimpleWebServer.cs.meta",
+      "sha256": "beb18787286d30363a219dd530339f0c1133eb8629226100ba00b8864395b6c9",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/WebSocketServer.cs",
+      "sha256": "6909a70e1f0acab86d2bcfbe2951db642540a220e4c6b50340540844a8a72ada",
+      "size": 7855
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/Server/WebSocketServer.cs.meta",
+      "sha256": "0c0fc2beca6d5e40804452da3c342afad8116f59325b318ac365303acf2e4de1",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/SimpleWebTransport.asmdef",
+      "sha256": "f14e1e57de24758d3f21ea9e9a3eb12619f571398d08a3f2f862bacbd4a83b22",
+      "size": 337
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/SimpleWebTransport.asmdef.meta",
+      "sha256": "87f41e70e1b6fa3e49e72b5a7fa04eb3b075c1b34af5622a47bf491fa7de0e51",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/SimpleWebTransport.cs",
+      "sha256": "e3a38f639650c110209dcbfc906fb821ef37ad0e64d626690eff3a5eda0ff396",
+      "size": 10215
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/SimpleWebTransport.cs.meta",
+      "sha256": "6c47d547c5ba50b572cd6394d380031e8633c9b401f0c075d9d063d40fc722a7",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/SslConfigLoader.cs",
+      "sha256": "fca428e9057b0dba6b345963da2152b6d65114b8adc748ef999af8e3f28b8a4d",
+      "size": 1552
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/SslConfigLoader.cs.meta",
+      "sha256": "6c72dfa62fc28e19cfc80596ab5f608ec4f8e70f28a54c237a4c8f38dcb426ff",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy.meta",
+      "sha256": "9ff99e8a3eb5e2ac08a12b01fbbe3b9a5708cd5d3d2aa7838037c221c0a6c4ec",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy.meta",
+      "sha256": "75d8c32c5bc0a3f80fb1ccb7ae706fde05bd35460b0bf5967fda337bbe8bbb19",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Client.cs",
+      "sha256": "28d2d99f3f8f950452a149d7feb90a00c469b3e4da25f4e0ab2b950357e02706",
+      "size": 17193
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Client.cs.meta",
+      "sha256": "dbd4458f3daef1269e8b98e90476635b671194abd2c6fd9db8abcaaefb085eed",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Common.cs",
+      "sha256": "1ed5408798477a66094eabe6acfc8107afd2fac592badbb2ee80e1790ac148aa",
+      "size": 1580
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Common.cs.meta",
+      "sha256": "89cd362d28e556e60624358dc2008b5423004c3c45c05793f3b1c536a50f1b75",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/ConnectionState.cs",
+      "sha256": "fb236627a02b4e2a7ca96a24bc64b9c9b8c4fef2262a6ad87e8df8554977a21a",
+      "size": 1339
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/ConnectionState.cs.meta",
+      "sha256": "f9d6a964433b8f9fc2604c85a25086dc4e5298d1690a08e5152f836207043bd1",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty.meta",
+      "sha256": "192199910529a9ac7021852714dd83b1d2c2ffc6e89b31a593ea57b05ea285b5",
+      "size": 180
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/Logger.cs",
+      "sha256": "d352baa5050d2a9f4396618550e90a53e9f7af0388bda12e3eea8b85fe8167b4",
+      "size": 24
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/Logger.cs.meta",
+      "sha256": "f5a04274f90fe748d0a41e3c4e2cba88216d62c88d76d2206f79c3a0237989ac",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/Message.cs",
+      "sha256": "d352baa5050d2a9f4396618550e90a53e9f7af0388bda12e3eea8b85fe8167b4",
+      "size": 24
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/Message.cs.meta",
+      "sha256": "a8351caa58400d66d8b476a97a19bbdcbff291026a51a2f6344b87047f8ba734",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/SafeQueue.cs",
+      "sha256": "12395d555a0d7dda0389c8dc452f7504f5cc477b67b3efad86f09abe05abcaaa",
+      "size": 26
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/SafeQueue.cs.meta",
+      "sha256": "f051eec8fe6250bd51c39fb2db3ef160412947b02c158cd899ca9eb76974fc2c",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/ThreadExtensions.cs",
+      "sha256": "73e16836028bfc5a6ae471bfeb49c2c94b91a43937e029a6984bfb064bf02c66",
+      "size": 23
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Empty/ThreadExtensions.cs.meta",
+      "sha256": "a1e017a0a502782312da5d295f9a0f338e67cf94bf20fec59de4d5cb4e5377da",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/EventType.cs",
+      "sha256": "f2708cfa10704314dc331096c981e11373d085ae1fb2d4453e8730ab62fd4147",
+      "size": 128
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/EventType.cs.meta",
+      "sha256": "67f5f541536e20786efea9569aa99148b066c5939c4e8fb3ae06b6153a06066e",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/LICENSE",
+      "sha256": "3e27a14c7f1b1cc5cd614682e3096a1c5419c06f2bd56bdd60f56fb9c64b4188",
+      "size": 1094
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/LICENSE.meta",
+      "sha256": "76bb406cf0e0e24cfb82b61209f2dec49213198338f2f57236e938344f85d17e",
+      "size": 162
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Log.cs",
+      "sha256": "34d218b4e94a6c90f7aa9bece55b114187f55f8547c5bf6c83b87396bf6ec272",
+      "size": 551
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Log.cs.meta",
+      "sha256": "4b1184d7dacd0a1e20a0533ed5754e95cf7c449c05d4dd189355cbbb73424970",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/MagnificentReceivePipe.cs",
+      "sha256": "d05e8fb29f1236bb6df4b1dadda94444176719b0b0f55282ae4924585ac42885",
+      "size": 8617
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/MagnificentReceivePipe.cs.meta",
+      "sha256": "cbfde4909f6b8e3558ee41445fbf69e6a41cd0bfd1f8a7c680da439ac88d4a0b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/MagnificentSendPipe.cs",
+      "sha256": "df5a8ffbb8fab46f9ad9f82b359a7c828c75359fd65927ebbf2c27c44c58ec67",
+      "size": 6691
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/MagnificentSendPipe.cs.meta",
+      "sha256": "c9a70fb1fe618242fede644d34b2e717023387e078e2913e6b11015f76724978",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/NetworkStreamExtensions.cs",
+      "sha256": "815696b96f00ef9248d100373facdc255abad3b0bcab469551c1ce809e74c281",
+      "size": 2659
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/NetworkStreamExtensions.cs.meta",
+      "sha256": "b36a6a5bb452d9a8f0a4a5201f71b6171de898ec76870100ebe0299b3e114ded",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Pool.cs",
+      "sha256": "f565372afdd3834eaa1cd4b0c80fb1564a4f446a3ecb2fecfafca4524549e78c",
+      "size": 1071
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Pool.cs.meta",
+      "sha256": "3631fbc0ddfeeb26bd7771f9e6a590263378e11ccd2eaf6571305e8b3f06cd23",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Server.cs",
+      "sha256": "b8d9c4f95695c8c9905399749e8726a8a342ee7be7aa9d78d9f4c0053ab43695",
+      "size": 19822
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Server.cs.meta",
+      "sha256": "e6ffc2b392b2a76152fb5982d211204ddef45109f8edbf11fa1e7721203f37d2",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Telepathy.asmdef",
+      "sha256": "37b5f9c10356ee2630dfb5566c61a7436fa3b2b3c7e2b87705133f4e6875cf9c",
+      "size": 304
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Telepathy.asmdef.meta",
+      "sha256": "2c87d336a54ae40b49ea597829f991e8b2bb559c59797bd774ff27bd63dac45e",
+      "size": 173
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/ThreadFunctions.cs",
+      "sha256": "4a53fb10d4860a4a1e7b44ae0e03eca5e0e9cfae7a1b9d1b7e5c4e3f86406525",
+      "size": 11917
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/ThreadFunctions.cs.meta",
+      "sha256": "734f4529d825abecf7356ffda9f0ebf3e7868979c4528e39904018b2f5e5fa5e",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Utils.cs",
+      "sha256": "0518d70079d1afe216cf378dbc12c6411d8ff7b1441575e8c8101ae425317dbd",
+      "size": 771
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Utils.cs.meta",
+      "sha256": "58cd9dc25d9df550b7aa9d35fc5489afbb262ff9951bd9c15f526052bf2df10b",
+      "size": 254
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/VERSION",
+      "sha256": "1eedf8df8039a817a7f2c4496eee2579f861a22cc43a91e09ca26cc0698b2e51",
+      "size": 3079
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/VERSION.meta",
+      "sha256": "c70d0b39b0f58b9ba3721698057e6181ed57caae6c48a91105abd286c63066e5",
+      "size": 162
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/TelepathyTransport.cs",
+      "sha256": "5bb320e981e472f95d8bfed00ebf7d7102b9c31d1399db7aacf0ac1c42308baa",
+      "size": 12231
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/TelepathyTransport.cs.meta",
+      "sha256": "b18b55b3e27859a7beb055c16c18f943cf95f5de3ca4bb4c75f894e088acd16e",
+      "size": 308
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Utils.cs",
+      "sha256": "0abd5c728e8d4395d92520105641220a798417a092504008766a70a7af0f73f6",
+      "size": 4282
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Utils.cs.meta",
+      "sha256": "327446186ca1bfc688ae2a2f53aad347c6b34147bfc69777c9e1560fd0cffa86",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation.meta",
+      "sha256": "de90f98c3ae4ba18db42c63bcf868895b0f904476d14c45fa040747903945efb",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaAnimationWire.cs",
+      "sha256": "d9f8922861bc6264bb451be402b37b8ce351625186d69b7f2f18cb8bea1063bb",
+      "size": 1902
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaAnimationWire.cs.meta",
+      "sha256": "9070318a3d7815a1b31a4ac7299cd7a7f297b87a938f66b03e5eb1746f940382",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaApplicationCrypto.cs",
+      "sha256": "b5926d0caac85ccd6e80db60183acaee6712e4babca0352ada56abbd253df882",
+      "size": 2315
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaApplicationCrypto.cs.meta",
+      "sha256": "4edd966634c55250f2aa86cff06120bddcfcb23486b1bac176bcf0e85a44f1ee",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaCoreReadiness.cs",
+      "sha256": "9fad14b4da6696462b9be1a7ea2a81a580cc5ee5d87adfc25e88fcbe8bec68d7",
+      "size": 2892
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaCoreReadiness.cs.meta",
+      "sha256": "fa3a73d3e31353e364a654c6985fbcf23519affeb9b89755c78cacd87ded6ab3",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInformationalNotifications.cs",
+      "sha256": "aacbcb38aec91fb75ea899209aa432fe37bf148793e4f478957222c675e62eb2",
+      "size": 4447
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInformationalNotifications.cs.meta",
+      "sha256": "a6dd323151a8a3c45601cac1d84fac22193471c85fd4acd22c58b2e2d99f80f0",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceAccounts.cs",
+      "sha256": "2197d383c96465fd707feabb7ff7969786131ac120b75dc2264c0d332c0a0f1b",
+      "size": 7277
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceAccounts.cs.meta",
+      "sha256": "b34bf0c1fc3b1e65bd4238c8f8547195466427bdc55510e4820239afae938179",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstancePresence.cs",
+      "sha256": "4364b0c8176bf2d2926fb92b3317dc8bf6cd0b777a765ea83d81c0d09510fccd",
+      "size": 1153
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstancePresence.cs.meta",
+      "sha256": "6bee43c57f9805a10e46416c1c6e09fd7b75eb59dd0e2e83b3da8a4689bd9c4f",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+      "sha256": "dd5422d8447ced6c76e4ab3ba0b4b4673298dca6319fcb119859d3c69aa0a985",
+      "size": 112599
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs.meta",
+      "sha256": "a56a7f00394f1afbbd19f8bf181dcaedeb44e7e38b89d93b9c56184bd6040ae2",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInteractionRegistry.cs",
+      "sha256": "21556e1a70f3270e98e7a5bfbb9a22178917cc4ef82a22bf0921a93c6f0dd54a",
+      "size": 28604
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInteractionRegistry.cs.meta",
+      "sha256": "91a9f7ea25348b418e7281db57b1b981a248946782087515adcc95b13052c669",
+      "size": 60
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaMinigameState.cs",
+      "sha256": "dc1447b650b6a0bd47347102713e063ab58dc3ad241053ed5fb650ec225324c3",
+      "size": 24566
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaMinigameState.cs.meta",
+      "sha256": "43b289870d9b3539a4d165b2690ff08e5ef4e0273345c9b4af5d37a7af4b7745",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaMirrorCommands.cs",
+      "sha256": "552cff5dd5da57e723f980209828bffa54a3f3407f16e060e60e0d563a369e3f",
+      "size": 6002
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaMirrorCommands.cs.meta",
+      "sha256": "0f270fde5a391609ac02c826ff437fb6f9b1a1c3e51a4b683e29a67e8c74f451",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaMirrorProbe.cs",
+      "sha256": "6d09fa892bd51cee1eb338950dfe1f53b6129adfcf774c2514992e9e7f687f9f",
+      "size": 4030
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaMirrorProbe.cs.meta",
+      "sha256": "dd6485536f6bdd2915a5d8d69336cce39547db0cb402d48b084231e0a40621a5",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaNotificationInbox.cs",
+      "sha256": "194814843cd47e11096b42b44564e1589d13173fe9ac38c2b360963799af4612",
+      "size": 10231
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaNotificationInbox.cs.meta",
+      "sha256": "6e736e05d9f3905b2fac502f34084ca3cf6dedb82adf90f442165cef47b79b48",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaResourceSelections.cs",
+      "sha256": "23c98fccdafae5d017baf5f36dca0b13d482355b84f7b4e18f303bd8065feaa3",
+      "size": 4908
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaResourceSelections.cs.meta",
+      "sha256": "50d73a54f35c20509d38e972b09b54691b3a676381278690c48dc59c2c0fda5c",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSocialMailbox.cs",
+      "sha256": "65213f909341ecf3fe497dfbedbeae24a5ca8274fa6d0f0ad4ed4712d3db30cd",
+      "size": 7814
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSocialMailbox.cs.meta",
+      "sha256": "775403b3bebc9896aa36f951c9a5a06191f9112148f59d20ec066baec17e43e0",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSocialRelationSnapshot.cs",
+      "sha256": "85164f122e839b601c6bd486894db1031f0ff2fa352f8ae6d9bb889a8ba86ca2",
+      "size": 3452
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSocialRelationSnapshot.cs.meta",
+      "sha256": "7ce6c222d0cf97ebabe5640299dfe3f4362f78bb19827f9d02f5f8bdded0a4e6",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSocialState.cs",
+      "sha256": "4625560166d5b4b7b8b893279935733fd0fd25c4b50f493d491c1d01891de0ba",
+      "size": 17969
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSocialState.cs.meta",
+      "sha256": "b63aef28f726028a47e420dce5bffba66ef90c7669167ee299756dcac6f24559",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSpawnState.cs",
+      "sha256": "3b70f692f6afe1363b9cde7a615b25c5003fa3920d509ea03081ffb2f983a4f8",
+      "size": 1457
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaSpawnState.cs.meta",
+      "sha256": "1a1c23c7f995fd5071e2dab5eb135c5dd349d1abfa5b20bd784bfa8fa6940648",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaWorldState.cs",
+      "sha256": "32cbc6072b781d038941a8bbeceda374f6e4c9616956573278f5ec84f28cb75d",
+      "size": 17740
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaWorldState.cs.meta",
+      "sha256": "f34d2cd546d91d9095f5a81917f8a68a9482bf39b184c80c2a89697046b86e24",
+      "size": 59
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/Probe.unity",
+      "sha256": "1e4d3517d23750d2470a70d35343e19f34e3cf209416bc0d169ab73601fc5044",
+      "size": 3539
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/Probe.unity.meta",
+      "sha256": "7ccc8c3b7e0dc2293dce043cc093b0bb14942a82c73802cdb4f22c7dc6fe2a35",
+      "size": 155
+    },
+    {
+      "path": "mirror-server/UnityProject/Packages/manifest.json",
+      "sha256": "e46a46ea6fa883a1df3c29969a3cd3592a21ff94b82b32619537503fdab7ab8a",
+      "size": 385
+    },
+    {
+      "path": "mirror-server/UnityProject/Packages/packages-lock.json",
+      "sha256": "5bcf5c542ec183b4f9dbba53d1f7610bdd5138420ed2850d7bea20b43f97a9bd",
+      "size": 1611
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/AudioManager.asset",
+      "sha256": "9543c41dbfc7d3951217c4dd9481ed026eb8e529b85ecf4463969a0fea747729",
+      "size": 523
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/ClusterInputManager.asset",
+      "sha256": "40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623",
+      "size": 114
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/DynamicsManager.asset",
+      "sha256": "785919ec02924b9125bd572087d9e3ceb1844b1cceb3ff6144c1c1f56cd79047",
+      "size": 1575
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/EditorBuildSettings.asset",
+      "sha256": "1942c088ddfeeef348fdf12390e2a2d6da51056e197458d67969d44e7b2cbbd3",
+      "size": 160
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/EditorSettings.asset",
+      "sha256": "4b842c80c4e630b6cb5416b817aba84b97014072e1ab555b08742344687ccdf5",
+      "size": 1691
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/GraphicsSettings.asset",
+      "sha256": "87bac5a6c9c3246744f81dd6b6df6db039b519976a9b0e552760754ee8ac3816",
+      "size": 2825
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/InputManager.asset",
+      "sha256": "d0f454ddb880912abcae92e3e12957a7446786ba89e24937e019ff3bbc0d4300",
+      "size": 5816
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/MemorySettings.asset",
+      "sha256": "25fb3fdd1ce94347ccdcf23d5d5e446055ca81d8b3756a7df85d614645a71ac4",
+      "size": 1265
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/MultiplayerManager.asset",
+      "sha256": "aba89fd1a1ddad182727ad82727e536d27372e90328a8196da2a4560398983dd",
+      "size": 157
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/NavMeshAreas.asset",
+      "sha256": "7ebbf8f53b8033104e1878b95ca07a28d0954092d81c220f14196a42f651e658",
+      "size": 1361
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/Physics2DSettings.asset",
+      "sha256": "7280037ac908e26d4519825446c92c80a8520308016b171522760b535aadcbc0",
+      "size": 1863
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/PhysicsCoreProjectSettings2D.asset",
+      "sha256": "bedc5339a832c60dc3f11b84abc4f4384dbfa20b0cd9ad6c444b907e751fc35e",
+      "size": 151
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/PresetManager.asset",
+      "sha256": "29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c",
+      "size": 146
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/ProjectAuditorSettings.asset",
+      "sha256": "9e68444b9bda981e2927a98df9edf69ea88362f0c6b7f3c81b39b9d515d2a416",
+      "size": 1036
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/ProjectSettings.asset",
+      "sha256": "e92ab2f9958d9a1e78af5b2b0d96a2ebb118cd6cc501691beb9393c80d1827a8",
+      "size": 21338
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/ProjectVersion.txt",
+      "sha256": "87289075c168cdd875e46a5fc308d15c686987848a70c7ce47faf40196ac0e20",
+      "size": 83
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/QualitySettings.asset",
+      "sha256": "f1f893b1be47ad2442f58338dd7c860dc1986bb317e2f5bb31084454ffabbf4c",
+      "size": 9802
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/SceneTemplateSettings.json",
+      "sha256": "bb9098b3bfcde78d93e264b96f7b77b5430e64e8c57a7aad7f5a5d9c3945e16a",
+      "size": 3535
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/TagManager.asset",
+      "sha256": "996628fdc904025b83606bbfbda4fe08c0bbe916475146110e77cdc2f22c2013",
+      "size": 443
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/TimeManager.asset",
+      "sha256": "3396f52fdc16d445024e01d7a2d99db6f0a37569d1d73c0302e9ffb857d90287",
+      "size": 305
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/UnityConnectSettings.asset",
+      "sha256": "bfd9b4ad7ba0f6044f0957cd427df1d8e49dcf9453fdfc35dac74c64bbffa8f3",
+      "size": 1191
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/VFXManager.asset",
+      "sha256": "d2937fe93ff49c2ce60f888056b70ebc0a1df7dd5e22dab3fa41678c2a3f3858",
+      "size": 558
+    },
+    {
+      "path": "mirror-server/UnityProject/ProjectSettings/VersionControlSettings.asset",
+      "sha256": "e199cdfa6a8f2bf33cfd47e549198f13e3eb2a5099e908fdb4e0f14d939ccc6b",
+      "size": 172
+    },
+    {
+      "path": "mirror-server/provenance.json",
+      "sha256": "0b22a7d9cb41d148d60786cfa9c1317b8380af4bcbeda179b19d0ed62f5d47bd",
+      "size": 66450
+    },
+    {
+      "path": "protocol/README.md",
+      "sha256": "4b533af7d4ca1d56694f6aa79f5af034b3553429853af857891897d9152ecb13",
+      "size": 1217
+    },
+    {
+      "path": "protocol/avatar-asset-catalog.json",
+      "sha256": "b494b3a5564aaffb15ea705de22957559202a4dfcb4862f433690807adfa583e",
+      "size": 9200145
+    },
+    {
+      "path": "protocol/avatar-default-catalog.json",
+      "sha256": "12efa2c6a993a0405a892037b85aca0843a74900a9e5d0e2a204765b6e0bb7dd",
+      "size": 19678
+    },
+    {
+      "path": "protocol/avatar-female-save-compensation.json",
+      "sha256": "08f84f0259a29b32e7b917b66ac9e92ab7551ec761d9243bfb01d0c43dedc273",
+      "size": 6018
+    },
+    {
+      "path": "protocol/avatar-metadata-schemas.json",
+      "sha256": "5412c1143e41a969f5f1c1e32cfafa41f3c58380334958d7ca1d0475058fb9aa",
+      "size": 858137
+    },
+    {
+      "path": "protocol/avatar-neutral-female.json",
+      "sha256": "470a1c3e2c03efd1946a3640882ecd7409ba61a0d79a5ff8168d87c51408c64a",
+      "size": 12463
+    },
+    {
+      "path": "protocol/avatar-neutral-male.json",
+      "sha256": "9b7c7280f5b6395c5d4821c4de0f129b93817599c7db77ab76c2d984f7f71f93",
+      "size": 11489
+    },
+    {
+      "path": "protocol/bootstrap-response-contracts.json",
+      "sha256": "4cb914d399691606648ac4d4c17ac6b5c6edf7110ea77399581db2d166bf7a7f",
+      "size": 404260
+    },
+    {
+      "path": "protocol/core-test-readiness.json",
+      "sha256": "1617e853339e8aaabc1054c3c17f546f89d8edc24c7f738d83224fbb83fcc6be",
+      "size": 28887
+    },
+    {
+      "path": "protocol/housing-interaction-manifest.json",
+      "sha256": "f77acee87bafa476823ccbd1d37afacd9d8cf892306a2680b9c4a280a285b9f0",
+      "size": 1472934
+    },
+    {
+      "path": "protocol/housing-placement-contracts.json",
+      "sha256": "dbab3074a04fa4a0bd7f7fab26b82b9710b1f7c80a956342ab96417f5be3992e",
+      "size": 413831
+    },
+    {
+      "path": "protocol/http-nonminigame-gap-audit.json",
+      "sha256": "88bad5b0aa22e7e846fdb2804c0aa5c589a2e12a9aa9f5fd3e3b70b74604f64f",
+      "size": 501174
+    },
+    {
+      "path": "protocol/interaction-mapping-bridge.json",
+      "sha256": "13d0c5d075240178ba66456a75f0599d2c9579182848de62f4153040ab4dca7c",
+      "size": 10514
+    },
+    {
+      "path": "protocol/notification-contracts.json",
+      "sha256": "f7a27694b95a0a86a06b1a2f41a83a6e4b83684c1a1d83f556b0f118369d4799",
+      "size": 56533
+    },
+    {
+      "path": "protocol/resource-entitlements.json",
+      "sha256": "d6048c34549592d8b282ebd56379627f394d7a136ab8eb7dddada76626132059",
+      "size": 486260
+    },
+    {
+      "path": "protocol/skl-promo-catalog.json",
+      "sha256": "78f9f79fc42354a63904c9271e1a877afa741d8c7dca6058985cba2f29e7c7aa",
+      "size": 10492
+    },
+    {
+      "path": "protocol/static-interaction-manifest.json",
+      "sha256": "82a72e7b84a6db4f06f8fd64451b3edb49256d24517da7f7dfe3918607d3a4c2",
+      "size": 1334402
+    },
+    {
+      "path": "protocol/wardrobe-removal-sentinels.json",
+      "sha256": "72e5dad87f780148efe976992b6858f04197cb3824b9c6ba61277e640224d41d",
+      "size": 12396
+    },
+    {
+      "path": "tools/README.md",
+      "sha256": "8049236ac18c0a135b858b097faceb8cc6cea579901efd6852d240f15d28a2a7",
+      "size": 1496
+    },
+    {
+      "path": "tools/avatar_entry_codec.py",
+      "sha256": "4626363ae1d54a6b682fafaae02d95b193e7a00a7ebbc5a0b24e4d03388946d2",
+      "size": 9944
+    },
+    {
+      "path": "tools/core_runtime_peer.py",
+      "sha256": "b14d6c6d23eda7bf35bb3ea8e43708516b3f8cd1b5dac4f0b5dab52ff1929510",
+      "size": 31992
+    },
+    {
+      "path": "tools/instance_supervisor.py",
+      "sha256": "d6357ced2733805582e26f3cb4db90e76d999b50c4c80a8f4b4945e27e4bef37",
+      "size": 44988
+    },
+    {
+      "path": "tools/interaction_mapping_bridge.py",
+      "sha256": "fa37775aa132b301f0dfcf7217c5a14d625e634b5c165f9a3def3250696ad1c6",
+      "size": 11170
+    },
+    {
+      "path": "tools/package_linux_server.py",
+      "sha256": "61c34322f019ff5d6ecf4e1b099cd5ac6ce0f60fb1442b516be05e1cf0b45bea",
+      "size": 5694
+    },
+    {
+      "path": "tools/repair_native_female_presets.py",
+      "sha256": "f66a3bdce02c2c872d2a14e7cfa369cd8e46676bd67e0b5548619e4e02fe494d",
+      "size": 7062
+    },
+    {
+      "path": "tools/research/INVENTORY.json",
+      "sha256": "094236d220bd6b777b75844999256db65647674a664200a13273ac93100aa83a",
+      "size": 19767
+    },
+    {
+      "path": "tools/research/README.md",
+      "sha256": "a203abb327efb1f5c6f2e427696c1631a2c1c51bc1e3ca98c7b2f545755b86b7",
+      "size": 4889
+    },
+    {
+      "path": "tools/research/_research_paths.py",
+      "sha256": "35ca40b9b0d4f3413c811aca6136ad587fa653a7397f16ceb60491c621c66229",
+      "size": 1116
+    },
+    {
+      "path": "tools/research/avatar-catalog.py",
+      "sha256": "89f0b561f507041773dad22fd550c26571a339330239847894c9caf12bb76bc0",
+      "size": 6754
+    },
+    {
+      "path": "tools/research/avatar-entrydata.py",
+      "sha256": "083b41b11035f7e3d3a32c7c22a52aef2ddfddc0be58c32e6df3091b2d603005",
+      "size": 205
+    },
+    {
+      "path": "tools/research/avatar-extract.py",
+      "sha256": "4441f80e8b36497e261d23f34e5e88a3fb97dfcb6a004330b814d5128aefacad",
+      "size": 2019
+    },
+    {
+      "path": "tools/research/avatar-native.py",
+      "sha256": "7c87be99edaa515ffb73e3c0c8279db1a6a4a6f5ba20877cc81edda655229ef7",
+      "size": 3852
+    },
+    {
+      "path": "tools/research/avatar-neutral-seed.py",
+      "sha256": "e5a6b6c27bca98c7b70cd17b03778e4d21f7eb6b9af119be5f4ce7787eeba875",
+      "size": 9078
+    },
+    {
+      "path": "tools/research/avatar-prefab.py",
+      "sha256": "a503fe15752a108447653231bf097a1de62d68a15dfc5cf0c415871c837d9715",
+      "size": 5548
+    },
+    {
+      "path": "tools/research/avatar-report.py",
+      "sha256": "bf4de8da4884132a7f4b7d56a5ed5ca549071c686524d1e1a6e00e7fe9255fc9",
+      "size": 10191
+    },
+    {
+      "path": "tools/research/avatar-static-check.py",
+      "sha256": "17e540ff91cd92c72afa1ab940f6000ea36b47e8da1c82335ab9ad0395db9cf6",
+      "size": 4291
+    },
+    {
+      "path": "tools/research/avatar-unresolved.py",
+      "sha256": "c497a8f0d305577dd5d9906203a14219c4fb1aa23eb3a3d9a7dd56aaef0eae1f",
+      "size": 2409
+    },
+    {
+      "path": "tools/research/build_housing_interaction_manifest.py",
+      "sha256": "16d916584881fbc61cbba2c50ca0b03204649368243743ef6ece1ba3d6fedfac",
+      "size": 24836
+    },
+    {
+      "path": "tools/research/build_static_interaction_manifest.py",
+      "sha256": "1adb7b0fd0f2ff69435f4f9971c69d2d337fc6894916e613267e9eda4b99e269",
+      "size": 24242
+    },
+    {
+      "path": "tools/research/correct_generic_id_evidence.py",
+      "sha256": "aad159a26ceb54d850c2e829ffb0a49285672a063f7866faeb661a6a4d7c7404",
+      "size": 3005
+    },
+    {
+      "path": "tools/research/extract_protocol_metadata.py",
+      "sha256": "642f274cb9344b28377c4d11ea2e02895c7cadb88ed885a48ab3929de5b6f28d",
+      "size": 10352
+    },
+    {
+      "path": "tools/research/extract_skl_promo_assets.py",
+      "sha256": "e9c8b30b12bdebeaf423fd6574945fa9190e54bb560b263eb2e1fd9aeb71c623",
+      "size": 4740
+    },
+    {
+      "path": "tools/research/gathering_branch_audit.py",
+      "sha256": "21ccfb3de60fe17b41f0ad89f89ebc76ea8793b15becd8290d2a8c4643c5e764",
+      "size": 9101
+    },
+    {
+      "path": "tools/research/gathering_contracts.py",
+      "sha256": "3786f34c37c66ac8c5dfad53d306426d990a4c92a958da2e061f9dba73ff901e",
+      "size": 8886
+    },
+    {
+      "path": "tools/research/inspect_animation_entitlements.py",
+      "sha256": "95abe40a9303d08f2b5afac6bb3c30c63e4288227113b3adf7c91a78742fa065",
+      "size": 8246
+    },
+    {
+      "path": "tools/research/inspect_assets.py",
+      "sha256": "fd29a113ca7e47df851cac5f6dcd6f27c20594648dbf4f17e03df66d8b8372b9",
+      "size": 7796
+    },
+    {
+      "path": "tools/research/inspect_avatar_morphs.py",
+      "sha256": "c7fb58b6101380d7a048d46d611551d17b66be64add471c1c58feb6ec0780775",
+      "size": 5207
+    },
+    {
+      "path": "tools/research/inspect_interaction_client_hooks.py",
+      "sha256": "bd160aeb1c99a27aa13eae8586453220e08627db06ae3966f6d2a7ac3c98cc14",
+      "size": 9258
+    },
+    {
+      "path": "tools/research/inspect_minigame_scene.py",
+      "sha256": "ca444b58bde0531ae94dd8c3b5e1c1960f75b7ab943012fd20da29ae0349831d",
+      "size": 4297
+    },
+    {
+      "path": "tools/research/inspect_mirror_commands.py",
+      "sha256": "6daa923a19c6cbd82e8ecc5a3abec2c6336bb7cbf3cad8ecf02ab26984848ba3",
+      "size": 8860
+    },
+    {
+      "path": "tools/research/inspect_native.py",
+      "sha256": "b07f62d94e8195c52d34b9e1f7ea5d50afcd18e56304ce7e6637738264ee5461",
+      "size": 2512
+    },
+    {
+      "path": "tools/research/inspect_player_prefab.py",
+      "sha256": "4914647a92b373118e5229a0f4b37b6d51901465d375ad2049cc4a1c6fa1f344",
+      "size": 4128
+    },
+    {
+      "path": "tools/research/inspect_protocol_native.py",
+      "sha256": "d8705cfc00e473afbad924d848d77e16f2d264e696f0770c620113777dbad782",
+      "size": 4659
+    },
+    {
+      "path": "tools/research/inspect_resource_catalog.py",
+      "sha256": "e8ef65eafb5f3ee35971c0191a915a2cac414abd3d9472d152704e0f734f59fc",
+      "size": 8478
+    },
+    {
+      "path": "tools/research/inspect_world_interactions.py",
+      "sha256": "9a91ba78aff76636db7f65ac30b532e4e095e82eaeb7f6554645baad74ef3002",
+      "size": 7924
+    },
+    {
+      "path": "tools/research/interaction_registry_patch.py",
+      "sha256": "bb94f7ebffba39683202466911202edadf989f249b1d001070f88e3c40a13cb2",
+      "size": 20208
+    },
+    {
+      "path": "tools/research/keyboard_buttons_offline_tests.py",
+      "sha256": "1bb5e91b8d845248045664c4528f6bbc9efa100cce703b485b806dd84f41b01c",
+      "size": 9578
+    },
+    {
+      "path": "tools/research/keyboard_buttons_patch.py",
+      "sha256": "89c9a78efad2f453e1ecdd61cb4279047394ec5d1e5c097a69465fe9e667a0fd",
+      "size": 18074
+    },
+    {
+      "path": "tools/research/keyboard_focus_offline_tests.py",
+      "sha256": "656bb27f7b32048f4f410fa092a4917a76e08af73c06ba207e854aff6833f0e4",
+      "size": 6624
+    },
+    {
+      "path": "tools/research/keyboard_focus_patch.py",
+      "sha256": "0bd19d6038d1baece459eb743b22e95965ca5204416e5a1318e2bed5aef0fe96",
+      "size": 14706
+    },
+    {
+      "path": "tools/research/keyboard_housing_audit.py",
+      "sha256": "7724d0dd4ec8b96e5049d2b51ad5a4792d1827f6b1c3264865b74d4470ee3f3b",
+      "size": 10569
+    },
+    {
+      "path": "tools/research/keyboard_housing_input_patch.py",
+      "sha256": "8dcabec8a16f1b0555e7acefbce379d660912afe70a2c220c86fc344bbbd3e4f",
+      "size": 6826
+    },
+    {
+      "path": "tools/research/keyboard_input_patch.py",
+      "sha256": "aa1549d65a1e274f4bab0a6ec7018001a387c7c742176ee4df0244937f0b4d44",
+      "size": 9051
+    },
+    {
+      "path": "tools/research/loader_bootstrap_audit.py",
+      "sha256": "4e61627d1eb162275d53e0a5059017094461f073f4724955fc7703280dc0599f",
+      "size": 21350
+    },
+    {
+      "path": "tools/research/minigame_contracts.py",
+      "sha256": "5b631ca8b48fcb7819d601869f4f0948c65a2a88ebde54f3f632f82e8ec7ef4a",
+      "size": 33886
+    },
+    {
+      "path": "tools/research/mixed_world_registry.py",
+      "sha256": "dcb49d7848b46ad79e9a90de2032a08071e5dcb5df93e2e66f423961a8bc4543",
+      "size": 12905
+    },
+    {
+      "path": "tools/research/mixed_world_registry_checks.py",
+      "sha256": "e099c797bbc839645f7bc8758dc3fce97c09688bdac2d790b7cf17d56bb4c8da",
+      "size": 3883
+    },
+    {
+      "path": "tools/research/native_test_identity_patch.py",
+      "sha256": "5c2452b05d7c90542e0a5e4ff2e157af7e560d5dbcece137c2e94e8c50c1c8ff",
+      "size": 14862
+    },
+    {
+      "path": "tools/research/neck_thin_load_patch.py",
+      "sha256": "ae02967ae5ce7d639c6836c2216aa1ddce952d0e177078d8c87fce6726559671",
+      "size": 13086
+    },
+    {
+      "path": "tools/research/network_surface_report.py",
+      "sha256": "6d7fb05bf3ecb246976b9c4761de710aa6f34654ba9bb2dd184ceaa60a85cf72",
+      "size": 13335
+    },
+    {
+      "path": "tools/research/network_surface_scan.py",
+      "sha256": "cb863ac9aefdfb91680e117027989ebf91978fae03624a9f59b27553b5e0a46e",
+      "size": 13118
+    },
+    {
+      "path": "tools/research/notification_contracts.py",
+      "sha256": "7f76c85148994423828db9d2bf285cf9da065edd0b604dc1432ff0755f1574f8",
+      "size": 29354
+    },
+    {
+      "path": "tools/research/notification_text_offline_tests.py",
+      "sha256": "e96d00a688133ea7752de71283f5aac75520003f5ac3d3753873655d22b9b534",
+      "size": 9783
+    },
+    {
+      "path": "tools/research/notification_text_patch.py",
+      "sha256": "02a6f47d191e689151f76058767c18bd07cb3335da58338b8f1bb60b2b814bd4",
+      "size": 15926
+    },
+    {
+      "path": "tools/research/notification_text_review.py",
+      "sha256": "dab821f08ae1f1838c064c3c6eed952450f63b2e5aaa411cd272d39a12fc6651",
+      "size": 18490
+    },
+    {
+      "path": "tools/research/preset_input_patch.py",
+      "sha256": "1b522f782a92d11fffd407d82ff7c8323f75927378b14d1ba6a9a1cc1f3b5572",
+      "size": 13558
+    },
+    {
+      "path": "tools/research/rapid_boat_offline_tests.py",
+      "sha256": "8e84212d4f13813c90df904dc1b83fcf27872d224bf2724bb44eefcd60c7e46e",
+      "size": 13351
+    },
+    {
+      "path": "tools/research/rapid_boat_patch.py",
+      "sha256": "e0cdc83e9fdd88cf1701a11c66a9d4a53d2f56fb713bdc4cd96aeb364270e752",
+      "size": 16859
+    },
+    {
+      "path": "tools/research/rapid_boat_report.py",
+      "sha256": "4681e5153514d60367da19bc23eaa15c6e97a7ca2eda85be9b8badd82ff83c68",
+      "size": 6540
+    },
+    {
+      "path": "tools/research/rewards_second_pass.py",
+      "sha256": "bc51bfbe1921227bac171cc3b0e33b1f0a2f81ce20975f65e979c6487974742a",
+      "size": 15000
+    },
+    {
+      "path": "tools/research/run_research.py",
+      "sha256": "103581429ea49c4b98b163ecb43baa8f20b9d5d71b93d379cc7c1437f5299ab5",
+      "size": 2262
+    },
+    {
+      "path": "tools/research/settings_preservation_patch.py",
+      "sha256": "80e08ca9d364f7375ab548262b6163d9475219007541d0b6c104d7573f80a959",
+      "size": 17533
+    },
+    {
+      "path": "tools/research/shop_second_pass.py",
+      "sha256": "e532dee6ed16bef1009757b41be73462e2a4789283a7ae73aa57434b33fb1495",
+      "size": 9935
+    },
+    {
+      "path": "tools/research/tcp_callers.py",
+      "sha256": "da6c3a68b4d0e921a4c8c2499cdd5b16465d7b0d46cd0f8dfb64ff5c5ce303ea",
+      "size": 1774
+    },
+    {
+      "path": "tools/research/tcp_extract_findings.py",
+      "sha256": "d3fb6c8ce611fdb061953aa9a50696aa32da784ba53a92e2735df028a84c9e59",
+      "size": 2681
+    },
+    {
+      "path": "tools/research/tcp_inspect.py",
+      "sha256": "b9121f9b916f78edc46b3fffba9fc5f55ae5e39e994e4af1260363d87484155c",
+      "size": 3364
+    },
+    {
+      "path": "tools/research/tcp_wardrobe_patch_spec.py",
+      "sha256": "91d268ba9b72da0840e08e1d6636f81026a9aa111a41040d5fa23ea7aee7f7f0",
+      "size": 6923
+    },
+    {
+      "path": "tools/research/tcp_world_spawn_report.py",
+      "sha256": "b9a0594c1bb31b18e4cd95b9890ee25e04fd50a4bdc389c4726ccf2b62cfab03",
+      "size": 14492
+    },
+    {
+      "path": "tools/research/tcp_world_spawn_xrefs.py",
+      "sha256": "feba7de998c08d653f1ccd81530ae39958f2764fc0f5e2ce8ca8cfba9eb29e80",
+      "size": 3094
+    },
+    {
+      "path": "tools/research/tcp_world_spawns.py",
+      "sha256": "077bc634cb331fdf0c40af9e75cdbde3b23646f89b1a69e92e213009e45f7548",
+      "size": 4714
+    },
+    {
+      "path": "tools/research/tcp_write_contracts.py",
+      "sha256": "bccd117802c2396b6bde430b82f74c122724faa5ac4684440378dec8a90a6dda",
+      "size": 37640
+    },
+    {
+      "path": "tools/research/world_loading_assets.py",
+      "sha256": "14f014b101e27defbc9e298def966d7b88c6d84396f2e36c5f87cd49fd05d05a",
+      "size": 4091
+    },
+    {
+      "path": "tools/research/world_loading_audit.py",
+      "sha256": "67401d37507e5da5097c05bea572134d237da94bc0fbf7862bc9bdaf0e83edb1",
+      "size": 2187
+    },
+    {
+      "path": "tools/research/world_loading_pipeline.py",
+      "sha256": "f6fb3c05d6eda795cab60c0c8d10454b4d01903b8deb18a78f1607a608f5950b",
+      "size": 22131
+    },
+    {
+      "path": "tools/research/world_loading_report.py",
+      "sha256": "dfce4e970b2c406111e20a8332e232743d018b33b0056fb6ce2280fe81098e9e",
+      "size": 11679
+    },
+    {
+      "path": "tools/research/world_loading_xrefs.py",
+      "sha256": "adfdbd8211fbf356c2098cf9d078858839a67b4c60ed333f607f1e4317ff819c",
+      "size": 2839
+    },
+    {
+      "path": "tools/seed_local_shops.py",
+      "sha256": "aea055270cd0dbec2126187391d3aa759f709c61e194118b31358941020983bd",
+      "size": 10854
+    },
+    {
+      "path": "tools/social_runtime_peer.py",
+      "sha256": "c156e001b73fd87b18d06f7b2993dfc078c51b90b3f758eee8d57f25c224f36f",
+      "size": 12400
+    }
+  ],
+  "game_assets_included": false,
+  "historical_portable_merge_recipe_passed": true,
+  "historical_resource_overlay_reapply_supported": false,
+  "kind": "portable_source_only_component_inventory",
+  "listeners_started": false,
+  "mirror_upstream_verified_hashes": 245,
+  "primary_resource_selection_tests": {
+    "environment": "isolated_public_source_stage",
+    "passed": true,
+    "promoted_source_byte_equal": true,
+    "run": 13,
+    "tested_module": "backend/resource_selection.py"
+  },
+  "private_account_state_included": false,
+  "research_scripts_curated": 67,
+  "research_source_only_syntax_checks": 69,
+  "source_integration": {
+    "current_session_authority_guards": true,
+    "durable_resource_selections": true,
+    "native_acceptance_complete": false,
+    "new_client_helper_promoted": false,
+    "private_unity_linux_weaver_build_passed": true,
+    "relocated_public_unity_build_verified": false,
+    "server_files_promoted": 12
+  },
+  "receipt_status": "historical_component_receipt",
+  "current_source_inventory": {
+    "path": "SOURCE-INVENTORY.json",
+    "path_base": "repository_root"
+  },
+  "historical_scope_note": "Historical resource-selection component receipt. Its original file rows and validation claims are retained unchanged as evidence for that earlier source selection. Later authentication, housing, management, deployment and documentation integration superseded some rows. Use the repository-root SOURCE-INVENTORY.json for the current publication snapshot; this historical receipt does not certify the final composed runtime."
+}

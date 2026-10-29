@@ -1,0 +1,15 @@
+[Unit]
+Description=Nebula preservation Docker stack
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/nebula-preserved
+ExecStart=/usr/bin/docker compose --env-file runtime.env -f compose.yaml -f compose.public.yaml -f compose.host.yaml up -d --no-build --wait --wait-timeout 180
+ExecStop=/usr/bin/docker compose --env-file runtime.env -f compose.yaml -f compose.public.yaml -f compose.host.yaml stop --timeout 45
+TimeoutStartSec=240
+TimeoutStopSec=120
+[Install]
+WantedBy=multi-user.target

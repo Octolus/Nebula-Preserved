@@ -1,0 +1,622 @@
+[
+  {
+    "id": "fixture-initial",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-wallet-initial-a",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Fixture A#40#150"
+  },
+  {
+    "id": "fixture-wallet-initial-b",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#Fixture B#1#3"
+  },
+  {
+    "id": "fixture-shop-catalog",
+    "op": "http",
+    "route": "GetShopDataShopServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#false#false#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-shop-features",
+    "op": "http",
+    "route": "GetFeaturesServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-shop-genders",
+    "op": "http",
+    "route": "GetGenderDataShopServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-shop#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-shop-types",
+    "op": "http",
+    "route": "GetShopTypeDataShopServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-shop#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-shop-items",
+    "op": "http",
+    "route": "GetItemAssetsDataServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-shop#0#companions#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-shop-bundle-items",
+    "op": "http",
+    "route": "NPShopBundleItemsServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-bundle-buy#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-buy-price-denied",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-buy#19#7#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 409,
+    "category": "atomicity"
+  },
+  {
+    "id": "fixture-after-wrong-price",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-initial"
+  },
+  {
+    "id": "fixture-buy-success",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-buy#20#7#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#OK"
+  },
+  {
+    "id": "fixture-after-buy",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-buy-idempotent",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-buy#20#7#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#ISPURCHASED"
+  },
+  {
+    "id": "fixture-after-buy-duplicate",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-buy"
+  },
+  {
+    "id": "fixture-owned-after-buy",
+    "op": "http",
+    "route": "NPShopIsItemPurchasedServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-buy#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#True"
+  },
+  {
+    "id": "fixture-wallet-after-buy",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Fixture A#40#130"
+  },
+  {
+    "id": "fixture-bundle-success",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-bundle-buy#25#6#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#OK"
+  },
+  {
+    "id": "fixture-after-bundle",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-bundle-idempotent",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-bundle-buy#25#6#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#ISPURCHASED"
+  },
+  {
+    "id": "fixture-after-bundle-duplicate",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-bundle"
+  },
+  {
+    "id": "fixture-bundle-midgrant-rollback",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-bundle-rollback#10#6#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 404,
+    "category": "atomicity"
+  },
+  {
+    "id": "fixture-after-bundle-rollback",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-bundle"
+  },
+  {
+    "id": "fixture-wallet-after-rollback",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Fixture A#40#105"
+  },
+  {
+    "id": "fixture-gift-price-denied",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-gift#Fixture B#14#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 409,
+    "category": "atomicity"
+  },
+  {
+    "id": "fixture-after-gift-wrong-price",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-bundle"
+  },
+  {
+    "id": "fixture-gift-success",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-gift#Fixture B#15#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#OK#Fixture B#fixture-pet-gift"
+  },
+  {
+    "id": "fixture-after-gift",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-gift-idempotent",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-gift#Fixture B#15#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#ISPURCHASED#Fixture B#fixture-pet-gift"
+  },
+  {
+    "id": "fixture-after-gift-duplicate",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-gift"
+  },
+  {
+    "id": "fixture-wallet-after-gift",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Fixture A#40#90"
+  },
+  {
+    "id": "fixture-block-friend",
+    "op": "http",
+    "route": "N2AddBlock",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#Fixture B#1#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "authority"
+  },
+  {
+    "id": "fixture-blocked-gift-denied",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-pet-gift#Fixture B#15#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 403,
+    "category": "authority"
+  },
+  {
+    "id": "fixture-unblock-friend",
+    "op": "http",
+    "route": "N2RemoveBlock",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#Fixture B#1#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "authority"
+  },
+  {
+    "id": "fixture-after-block-cycle",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-gift"
+  },
+  {
+    "id": "fixture-reward-unowned",
+    "op": "http",
+    "route": "CheckOwnGenericReward",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-generic#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "false#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#false"
+  },
+  {
+    "id": "fixture-reward-claim",
+    "op": "http",
+    "route": "GenericReward",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-generic#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "false#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#true"
+  },
+  {
+    "id": "fixture-after-generic-reward",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-reward-duplicate",
+    "op": "http",
+    "route": "GenericReward",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-generic#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence",
+    "expected_plaintext": "false#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#false"
+  },
+  {
+    "id": "fixture-after-generic-duplicate",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-generic-reward"
+  },
+  {
+    "id": "fixture-reward-owned",
+    "op": "http",
+    "route": "CheckOwnGenericReward",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-generic#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "false#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#true"
+  },
+  {
+    "id": "fixture-coffee-reward",
+    "op": "http",
+    "route": "RewardConsumeServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-coffee#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a"
+  },
+  {
+    "id": "fixture-after-coffee-reward",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-coffee-reward-duplicate",
+    "op": "http",
+    "route": "RewardConsumeServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-coffee#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a"
+  },
+  {
+    "id": "fixture-after-coffee-duplicate",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-coffee-reward"
+  },
+  {
+    "id": "fixture-coffee-balance",
+    "op": "http",
+    "route": "GetConsumablePriceServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#coffee#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#coffee##1#local token#2#false"
+  },
+  {
+    "id": "fixture-coffee-other-account",
+    "op": "http",
+    "route": "GetConsumablePriceServlet",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#coffee#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "isolation",
+    "expected_plaintext": "true#000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#coffee##1#local token#0#false"
+  },
+  {
+    "id": "fixture-locomotion-reward",
+    "op": "http",
+    "route": "RewardConsumeServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-locomotion#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-cinema-capability",
+    "op": "http",
+    "route": "CinemaInteractionNPServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-after-cinema",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-cinema-idempotent",
+    "op": "http",
+    "route": "CinemaInteractionNPServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence"
+  },
+  {
+    "id": "fixture-after-cinema-duplicate",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-cinema"
+  },
+  {
+    "id": "fixture-companions-a",
+    "op": "http",
+    "route": "GetCompanionsServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "isolation"
+  },
+  {
+    "id": "fixture-locomotions-a",
+    "op": "http",
+    "route": "GetLocomotionsServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "isolation"
+  },
+  {
+    "id": "fixture-purchases-a",
+    "op": "http",
+    "route": "GetPurchases",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "isolation"
+  },
+  {
+    "id": "fixture-companions-b",
+    "op": "http",
+    "route": "GetCompanionsServlet",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "isolation"
+  },
+  {
+    "id": "fixture-locomotions-b",
+    "op": "http",
+    "route": "GetLocomotionsServlet",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "isolation"
+  },
+  {
+    "id": "fixture-purchases-b",
+    "op": "http",
+    "route": "GetPurchases",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "isolation"
+  },
+  {
+    "id": "fixture-housing-owner-load-empty",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Home#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-housing-visitor-write-denied",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#(Home'101(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(nullDA044fFy8Xtm2U2J1DuRolDt63P431gI8'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'2.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0(90.0%0%0%0%0)nulls#1#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 403,
+    "category": "authority"
+  },
+  {
+    "id": "fixture-housing-part0-duplicate",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#(Home'101DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8DA044fFy8Xtm2U2J1DuRolDt63P431gI8(null'101'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'1.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0(90.0'0.0%0%0%0%0)nulls#0#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence"
+  },
+  {
+    "id": "fixture-before-partial-reopen",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-partial-process-reopen",
+    "op": "process_restart",
+    "category": "persistence"
+  },
+  {
+    "id": "fixture-after-partial-reopen",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-before-partial-reopen"
+  },
+  {
+    "id": "fixture-housing-part1-commit",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#(Home'101(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(nullDA044fFy8Xtm2U2J1DuRolDt63P431gI8'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'2.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0(90.0%0%0%0%0)nulls#1#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-after-whole-commit",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "fixture-housing-read-committed",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Home#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "configured_success"
+  },
+  {
+    "id": "fixture-housing-part1-idempotent",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#(Home'101(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(null(nullDA044fFy8Xtm2U2J1DuRolDt63P431gI8'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'2.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'101'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0'0.0(90.0%0%0%0%0)nulls#1#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "idempotence"
+  },
+  {
+    "id": "fixture-after-housing-duplicate",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-whole-commit"
+  },
+  {
+    "id": "fixture-housing-visitor-read-absent-owner",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "plaintext": "000149e2fb97bfd25d5a04ded21b7014#fixture-parity-b#Home#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 503,
+    "category": "authority"
+  },
+  {
+    "id": "fixture-before-complete-reopen",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-after-whole-commit"
+  },
+  {
+    "id": "fixture-complete-process-reopen",
+    "op": "process_restart",
+    "category": "persistence"
+  },
+  {
+    "id": "fixture-after-complete-reopen",
+    "op": "snapshot",
+    "category": "typed_durable_state",
+    "reference_same_state_as": "fixture-before-complete-reopen"
+  },
+  {
+    "id": "fixture-housing-after-process-reopen",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Home#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "persistence"
+  },
+  {
+    "id": "fixture-wallet-after-process-reopen",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "persistence",
+    "expected_plaintext": "true#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#Fixture A#40#90"
+  },
+  {
+    "id": "fixture-reward-after-process-reopen",
+    "op": "http",
+    "route": "CheckOwnGenericReward",
+    "plaintext": "d66e80aa156c638746900ed7ea53584e#fixture-parity-a#fixture-generic#StandaloneWindows",
+    "method": "GET",
+    "expected_status": 200,
+    "category": "persistence",
+    "expected_plaintext": "false#d66e80aa156c638746900ed7ea53584e#fixture-parity-a#true"
+  }
+]

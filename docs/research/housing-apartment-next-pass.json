@@ -1,0 +1,116 @@
+{
+  "format_version": 1,
+  "scope": "Static apartment entry, ownership, visit and furnishing readiness; no live game or service mutation",
+  "recommended_executable_apartment": {
+    "owner_ps4_id_selector": "existing local native account",
+    "instance_id_local_policy": "linux-native-home",
+    "logical_space_key": "Home",
+    "psidglobal": "Home",
+    "scene_bundle": "s/home",
+    "scene_asset": "Assets/Scenes/Spaces/Home.unity",
+    "scene_manifest_sha256": "2bf1b0db32ec4999237426382967ba79e0e51e5e7db73e9093e07341f931a27d",
+    "logic_bundle": "s/homelogicprefab",
+    "logic_bundle_sha256": "ee7b9a4a76a0ae9f7a8b08f8ef03b30e8d07d6d132714c9ad65a738fddfd9441",
+    "wall_slots": 6,
+    "ceiling_slots": 6,
+    "floor_areas": 4,
+    "selection_reason": "Exact shipped personal space with a closed empty generic-interaction registry; no unresolved dynamic IDs are needed for the first entry/furnishing trial"
+  },
+  "verified_furnished_alternative": {
+    "logical_space_key": "LakeApartment",
+    "psidglobal": "LakeApartment",
+    "scene_bundle": "s/lakeapartment",
+    "scene_asset": "Assets/Scenes/Apartments/LakeApartment.unity",
+    "logic_bundle": "s/lakeapartmentlogicprefab",
+    "wall_slots": 8,
+    "ceiling_slots": 3,
+    "floor_areas": 5,
+    "defer_reason": "Its static generic registry uses IDs 0 through 5 but the subtype mapping is not yet proven; it is not the smallest first executable trial"
+  },
+  "minimal_exact_grants": [
+    {
+      "channel": "ground",
+      "item_id": "A044fFy8Xtm2U2J1DuRolDt63P431gI8",
+      "table": "HOUSING_CHAIR",
+      "bundle": "01/a044ffy8xtm2u2j1duroldt63p431gi8",
+      "bundle_sha256": "7445c57458c85548ae213ba3cb6516945a7c77691bff20ee733b7f7a607223b6",
+      "placement_cost": 1,
+      "local_display_label": "Serene Chair",
+      "label_policy": "Derived from shipped object/mesh name; not claimed original commerce metadata"
+    },
+    {
+      "channel": "wall",
+      "item_id": "ACnfTMSTgKIQ0tgMY06575CJjCNE8M71",
+      "table": "HOUSING_WALLHANGING",
+      "bundle": "01/acnftmstgkiq0tgmy06575cjjcne8m71",
+      "bundle_sha256": "1746faa7f78fa9ce4789a57a8a5fe4107e31f0d207bdfea3259cfc0b7c0dac67",
+      "placement_cost": 1,
+      "local_display_label": "Great Wave Canvas",
+      "label_policy": "Derived from shipped object/material name; not claimed original commerce metadata"
+    },
+    {
+      "channel": "ceiling",
+      "item_id": "BVS0Nb01WuRs5xd2iFAuI1uQBprDwG1q",
+      "table": "HOUSING_LIGHT",
+      "bundle": "01/bvs0nb01wurs5xd2ifaui1uqbprdwg1q",
+      "bundle_sha256": "d1ba690594b1f210fa0a1bee4df2fec1ae544ddbe22ec85e25757e8fbfb48b7c",
+      "placement_cost": 1,
+      "local_display_label": "Ceiling Fan",
+      "label_policy": "Derived from shipped object name; not claimed original commerce metadata"
+    }
+  ],
+  "recovered_flow": [
+    "GetPersonalSpacesServlet enables the exact navigator key returned in field3 (Home remains a native special case)",
+    "N2LoadSpace selects an explicitly bound instance and N2SpaceLoading returns the fresh instance descriptor",
+    "N2HousingReadPreset returns the ten-array layout and owner GUID",
+    "GetHousingTypeServlet exposes only explicitly granted canonical shipped items",
+    "HousingSavePresetServletParts merges native sparse part0/part1 and validates ownership, class, budget and scene slots",
+    "Visitors may read the owner's layout but the backend rejects visitor writes"
+  ],
+  "native_furnishing_gate": {
+    "Initialize_0x6c4080": "Edit UI initializes only when the ManagerInstance remote-player dictionary count is zero and the local player is inside the authored house collider; otherwise the one-user popup path runs.",
+    "LoadAssetsFromServer_0x6c4520": "Read path is unconditional, so visitors can view the owner's furnished layout.",
+    "SetUIMode_0x6c5e00": "No later owner-GUID check exists.",
+    "SaveAssetsAtServer_0x6c4dc0": "Serializes and sends without a client owner check; server-side owner authorization is mandatory and implemented.",
+    "visitor_result": "Owner alone may furnish. Owner plus visitor cannot enter edit mode; a visitor sees the owner as a remote player and is blocked by ShowOnlyOneUserPopUp."
+  },
+  "implemented_hardening": [
+    "All 31 personal-space bindings require case-exact shipped Unity scene names; SorcerersEyrie maps to authored scene SorcerersEyrie1",
+    "instance-housing.json exports only account-owned exact bindings with format_version, generation and bindings",
+    "Export is a read-only database operation and uses the existing atomic snapshot publisher",
+    "Desired-GUID joins require the current, freshly present owning session; stale owner GUIDs and visitor-of-visitor joins fail closed"
+  ],
+  "instance_housing_schema": {
+    "format_version": 1,
+    "generation": "finite Unix timestamp",
+    "bindings": [
+      {
+        "instance_id": "local stable instance ID",
+        "psidglobal": "case-exact shipped Unity scene",
+        "owner_ps4_id": "existing local account ID",
+        "logical_space_key": "case-exact navigator key"
+      }
+    ]
+  },
+  "boundaries": [
+    "The instance ID is explicit local policy; it is not a recovered retired-service identifier.",
+    "No separate floor-behaviour grant exists in the recovered catalog. All 28 HOUSING_FLOORING records use HousingAssetGround.",
+    "Original commerce, prices and display names remain unknown; grants are explicit local administration.",
+    "HousingReadPreset field4 is native guidOwner/disconnect authority. The service now permits an owning requester's own current GUID when allocated to the exact binding before presence publication, while visitors require the unique current owner GUID allocated and fresh-present in that exact instance.",
+    "Multipart requests contain no revision identifier; cross-save interleaving cannot be reconstructed from the wire contract.",
+    "No live furniture-layout TCP producer or automatic visitor refresh is recovered. Furnish while alone; visitors must reload/re-enter after a save. See housing-live-sync-next-pass.json."
+  ],
+  "phase62_native_sha256": {
+    "0x6c4080 HousingManager.Initialize": "07581b55d3eff6ff8430428228c42524626b3212b9488b73821fc94caa70ef4d",
+    "0x6c4520 HousingManager.LoadAssetsFromServer": "5013bb3565ff42440df70568b082b808f729ecfd6c8956da1e2383cb1b7d5af0",
+    "0x6c4dc0 HousingManager.SaveAssetsAtServer": "ca960456d6d29a8c57cddf0384bc3764388014b535e2fb37ec19c0e39aebe8e3",
+    "0x6c5e00 HousingManager.SetUIMode": "38f2b45468d9450a3353c407c4d0bb7d7504a776eede1d7066936f90c3af6c16",
+    "0x6c6010 HousingManager.ShowOnlyOneUserPopUp": "1d941840db00387067f240a2a9fd5ea5199735ce6cae5de27a88ebc007483860"
+  },
+  "source_sha256": {
+    "housing-placement-contracts.json": "58948e93a1cfb4e952d007d7289bcaf58b2431d7804f1532725225fa0cdacc4e",
+    "http-nonminigame-gap-audit.json": "3731b841cec326a712f9f9794d2f33607b28eb3b0daccbd2eec946647ead1d04",
+    "asset-summary.json": "5263ef77d91a727d6c6c37396b99f5a6ada2465bcbe51526edcbdc6907bd7538",
+    "s-preinitiload-components.json": "33a0a31876860f9c01b7ba34f5a4e503f268d871034c58dc6b3b70def1425954"
+  }
+}

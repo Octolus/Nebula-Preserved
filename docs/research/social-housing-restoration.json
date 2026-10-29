@@ -1,0 +1,244 @@
+{
+  "format_version": 1,
+  "utc": "2026-10-28T22:39:59.570797+00:00",
+  "scope": "Source reconstruction, socket-free managed checks, a separately recorded actual two-protocol-fixture WSL Nexus/Home validation, and one later bounded unhooked native cross-instance private-chat presentation pass. Broader native social/housing UI remains unproven.",
+  "game_ready": false,
+  "networking_parity_proven": false,
+  "new_runtime_tests_performed": true,
+  "sources": {
+    "mirror-server/UnityProject/Assets/Preservation/NebulaCoreReadiness.cs": "af55f1657098d55d27705bbfbcb88cd4046f55d3d299436c45ae97e7d4ab06bc",
+    "mirror-server/UnityProject/Assets/Preservation/NebulaSocialMailbox.cs": "65213f909341ecf3fe497dfbedbeae24a5ca8274fa6d0f0ad4ed4712d3db30cd",
+    "mirror-server/UnityProject/Assets/Preservation/NebulaSocialState.cs": "2227a08cdec98b96390f2083f21100bbec4dd77d4ebaad185dbd288758c5e4f1",
+    "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs": "62bfe401b8b0720328ae16acb97db22823164fb0a1989dbfa12f7ab060b2d3e2",
+    "tools/social_runtime_peer.py": "552620ef03f3017b267a58b810eac476032cc67eec5c47d32cdd04bd819ce2ee",
+    "tools/offline-mirror-tests/CoreSocialChecks.cs": "714858d84399e6565f60e59a8c11638c25c6948ca4b0ba538bb9fcb4bf8ff628",
+    "tools/offline-mirror-tests/UnityJsonChecksShim.cs": "7dd2f5de4866d8cd48bebc74f26d4afce289e543deb9104da3238ea3866d11b2",
+    "tools/offline-mirror-tests/Program.cs": "e6f084d82309f8a5c287e63a9e3c69d9b20c39fc79c5fc689613341cece20fb1",
+    "tools/offline-mirror-tests/OfflineMirrorChecks.csproj": "d11b6e4ba266de3d3544670699445613d69c89882fc0873f91cfe90b87a5860a",
+    "mirror-server/UnityProject/Assets/Preservation/NebulaInstancePresence.cs": "4364b0c8176bf2d2926fb92b3317dc8bf6cd0b777a765ea83d81c0d09510fccd"
+  },
+  "native_sources": {
+    "0x5d7790": {
+      "path": "work/evidence/ghidra/functions/5d7790.c",
+      "sha256": "d497f60b1c674fba479c2dc54357a1187cf8f13ab2ddc9f6b6dd6a5da20642cc"
+    },
+    "0x5d7a70": {
+      "path": "work/evidence/ghidra/functions/5d7a70.c",
+      "sha256": "19c74b49492d101edd479f75ec214a395600121986a8a0741c741b77edfe693a"
+    },
+    "0x4629c0": {
+      "path": "work/evidence/ghidra/functions/4629c0.c",
+      "sha256": "7a89d712505df8cd547312e73c9d5c5b859a80c9ce7fc9eb16b4375874e32a24"
+    },
+    "0x5df8a0": {
+      "path": "work/evidence/ghidra/functions/5df8a0.c",
+      "sha256": "9d2ea523a63c0d3e472c652ac2473450872d63dcf76ae00574b94d15d0e4c6a2"
+    },
+    "0x488fe0": {
+      "path": "work/evidence/ghidra/functions/488fe0.c",
+      "sha256": "70a44ab46dc36e4f19fdca7a836d470fabb41a401dcff3526c45bb89f479be55"
+    },
+    "0x47e050": {
+      "path": "work/evidence/ghidra/functions/47e050.c",
+      "sha256": "aaf1a77ab47711cb0794a97261cf8a89fdde984629958341f098a1708b454bc3"
+    },
+    "0x5deab0": {
+      "path": "work/evidence/ghidra/functions/5deab0.c",
+      "sha256": "04c27c9e82ce10c163269bd4c75c09999622627ce717db509207fe52b283dcc0"
+    },
+    "0x5df620": {
+      "path": "work/evidence/ghidra/functions/5df620.c",
+      "sha256": "9937b923ae8e4cee6a00cde3895f7d830fe372d4cbdba587b15645e83cb0147f"
+    },
+    "0x6bdb40": {
+      "path": "work/evidence/ghidra/functions/6bdb40.c",
+      "sha256": "b8c05e9e24205deb77fb3b8112b62783786226645eba7aa310651284b7942349"
+    },
+    "0x4784c0": {
+      "path": "work/evidence/ghidra/functions/4784c0.c",
+      "sha256": "0ed235d3c6fb7a80195b91a043f0a9ac608ee160441c2c88d8b30f44ed8ff9ac"
+    },
+    "0x4673c0": {
+      "path": "work/evidence/ghidra/functions/4673c0.c",
+      "sha256": "5cc825d644542b372f5fd7fdcc1847d004c21c90f56dbb98cc6eca7b26633461"
+    },
+    "0x467330": {
+      "path": "work/evidence/ghidra/functions/467330.c",
+      "sha256": "0f6401bd9940a5ee1ead1e63d4c711235cd36fb68faf9c24816c52fd9457fafc"
+    }
+  },
+  "profile": {
+    "name": "nonmini-core-v1",
+    "legacy_nexus_scope_preserved": true,
+    "public_scenes": [
+      "Nexus",
+      "LeafPark",
+      "Beach",
+      "Cinema"
+    ],
+    "personal_navigator_names": [
+      "Home",
+      "Greenhouse",
+      "Waterfall",
+      "StarCrawlers",
+      "BlueWaveHideout",
+      "DressingRoom",
+      "CutteridgeEstate",
+      "TheMoonlightRoom",
+      "LeChalet",
+      "LakeApartment",
+      "SereneGarden",
+      "WoodlandClearing",
+      "TheNebulian",
+      "SorcerersEyrie",
+      "ZeroDistrictDen",
+      "CampSilverLake",
+      "FlyingDevice",
+      "Deadquarters",
+      "HollyridgeEstate",
+      "WinterSnowGlobe",
+      "TokyoApartment",
+      "NebuHouse",
+      "WestValleyApartment",
+      "WhisperingHillsMansion",
+      "CliffApartment",
+      "TheCrypt",
+      "ForgottenStation",
+      "GreekSummerHouse",
+      "MountainHideout",
+      "GingerbreadHouse",
+      "WindMillFarmHouse"
+    ],
+    "excluded_mixed_scenes": [
+      "CampSilverLake",
+      "CutteridgeEstate",
+      "SorcerersEyrie"
+    ],
+    "eligible_personal_count": 28,
+    "requirements": [
+      "bilateral explicit profile opt-in",
+      "actual bound listener",
+      "fresh per-instance descriptor",
+      "zero Board and Darts tables",
+      "exact canonical case-sensitive scene name",
+      "reviewed SceneInventory verified",
+      "personal: fresh backend binding matching instance and scene, valid logical personal name and existing current owner account"
+    ],
+    "parity_and_game_ready_remain_false": true
+  },
+  "housing_handoff": {
+    "filename": "instance-housing.json",
+    "schema": {
+      "format_version": 1,
+      "generation": "Unix seconds, age0..15s",
+      "bindings": [
+        {
+          "instance_id": "safe configured instance identifier",
+          "psidglobal": "exact loaded scene",
+          "owner_ps4_id": "existing current exported account",
+          "logical_space_key": "exact shipped personal navigator name"
+        }
+      ]
+    },
+    "descriptor_fields": [
+      "scene_registry_verified",
+      "housing_bound",
+      "housing_owner"
+    ]
+  },
+  "implemented_social_changes": [
+    "Current global account identity resolution with duplicate username/platform rejection; remote presence requires fresh matching actual-bound status and connected+announced avatar snapshot.",
+    "Same-host per-instance short-lived social-relay files; typed envelope only, current sessions/allocation checked again at delivery. No arbitrary wire payload or network destination.",
+    "TCP19 request0/private,1/friend,6/invite crosses processes; native asymmetric S2C19 fields constructed from trusted identities.",
+    "TCP26 accept0/1 consumes shared correlated request once;1 produces existing durable friend-event importer format;0 produces shared session chat consent. Invite6 still uses HTTP, never26.",
+    "Type5 friend-accepted bookkeeping, relation21..25/28 refresh and private13/typing11/12 route across same-host instances.",
+    "Pending requests/chat consent survive a transport-only same-GUID world switch; invalidated HTTP sessions revoke them. RequestTTL300s, consentTTL86400s; active/current presence remains mandatory for sending.",
+    "Friendship overlays synchronize acceptance/removal across processes while awaiting HTTP durable snapshot publication."
+  ],
+  "queue_policy": {
+    "root": "social-relay/<target-instance>/",
+    "event_ttl_seconds": 15,
+    "maximum_accepted_ttl_seconds": 30,
+    "maximum_pending_per_target": 512,
+    "drain_maximum": 128,
+    "drain_interval_seconds": 0.25,
+    "delivery": "best effort for current online sessions; not durable offline social inbox",
+    "private_text": "short-lived file transport, deleted after delivery/rejection; never written into instance journal",
+    "failure_limit": "process crash during a claimed delivery can lose that live notification; orphan processing files may remain for operator cleanup; no exactly-once claim"
+  },
+  "validation": {
+    "managed_checks_passed": 184,
+    "new_core_social_checks": 51,
+    "prior_checks_unchanged": 133,
+    "fixture_socket_forbidden_checks": 8,
+    "managed_json_test_shim": "System.Text.Json test-only substitute for Unity JsonUtility; Unity serialization still requires coordinated player build/native validation",
+    "unity_build": {
+      "path": "outputs/nebula-preservation/mirror-server/build-linux-validation.json",
+      "sha256": "eea3ccb21331e78a8f8f6701d395cb4991474dc4557e49e3f542aa903f8ca1ec",
+      "utc": "2026-10-28T22:33:46.0772950Z",
+      "exit_code": 0
+    },
+    "listeners_started_this_pass": true,
+    "game_started_this_pass": false,
+    "live_fixture_assertions": 43
+  },
+  "remaining_gaps": [
+    "Native cross-instance friend acceptance/invite UI and Home entry/editor/place/rotate/delete/save/reload remain unproven. One native cross-instance private-chat presentation path now passes; two-fixture Linux protocol/HTTP flows pass43 assertions.",
+    "Placed Generic94 IDs are not admitted. Native SaveAtServer reinitializes children and advances counters; neither serialized path IDs nor count proves cross-client wire mapping.",
+    "Occupables8/9/10 accept native nonnegative IDs, but dynamic furniture correspondence across clients is not proven; future source-bound bridge must cover occupancy and generics.",
+    "No recovered furniture-layout TCP producer proves automatic refresh of visitors already inside when owner saves; until a proven refresh flow is implemented, validate owner save and visitor/new-session reload separately.",
+    "Eleven ordinary interactions across the three mixed scenes remain closed pending numeric registration authority. Deferring minigames does not complete those interactions.",
+    "Notification types7/8/9/13 and unknown original server policies are not synthesized from enum names. FullGame/SpaceGame paths remain deferred with minigames.",
+    "One native plus protocol fixture is not two native clients, external reachability, production authentication, or full original networking parity."
+  ],
+  "runtime_followup": {
+    "path": "deployment/nonmini-social-runtime-validation.json",
+    "sha256": "f32a762caa7484eaf32d2a898d77b80a88d421fe3042371bacd102117c1e180e",
+    "validation_passed": true,
+    "two_protocol_fixtures": true,
+    "native_client_executed": false,
+    "native_client_executed_scope": "This false value belongs to the referenced isolated 43-assertion runtime report, not the separate later native follow-up.",
+    "separate_later_native_private_chat_followup": true,
+    "current_blocker": "Broader native notification/invite controls and Home editor/world UI still require controlled verification; dynamic placed interaction IDs remain unresolved."
+  },
+  "native_cross_instance_private_chat": {
+    "passed": true,
+    "native_pid": 25748,
+    "native_space": "Home",
+    "peer_fixture_space": "Nexus",
+    "gameassembly_sha256": "ec6f909d3af35c89cd287a2803b86839cd5d1b168bc1f76517eed2494c85e01b",
+    "rendered_author": "Preservation Integration Peer",
+    "screenshot": "outputs/nebula-preservation/runtime-screenshots/home-cross-instance-private-chat.png",
+    "screenshot_sha256": "55e67fb5bb376fa16af93dc85c528a17e84ce18510966832a28e541387376ba7",
+    "static_correction": "At 0x4674cc the author-lookup-null branch formats data.group in #FFFFFF; UNKNOWN_PLAYER belongs to the separate returned-author/nickname-null path at 0x4675d1.",
+    "label_patch_needed": false,
+    "static_report": "work/private-chat-author-label-static.md"
+  },
+  "presence_publication": {
+    "type": "NebulaInstancePresence",
+    "instance_id": "exact configured safe id",
+    "psidglobal": "exact loaded scene",
+    "other_fields": [
+      "format_version",
+      "generation",
+      "players:[{guid,status}]"
+    ],
+    "regression_checks": 3,
+    "actual_runtime_invite_lookup_passed": true
+  },
+  "home_spawn_evidence": {
+    "path": "deployment/nonmini-social-runtime-evidence/home-spawn-points.json",
+    "sha256": "61d54563c5f3077468a020967952ddf937a3cc853cc22cb2ae12a22b3cd85c58",
+    "native_functions": [
+      "0x5dfdc0",
+      "0x5ea260"
+    ],
+    "finding": "OnAvatarLoaded always starts MoveAvatarDelay; it uses loaded ManagerInstance.spawnPoints. Home references one active identity-ancestry spawn. No server coordinate override added.",
+    "position": {
+      "x": -0.13199999928474426,
+      "y": 13.319000244140625,
+      "z": -1.4700000286102295
+    },
+    "native_runtime_unproven": true
+  }
+}

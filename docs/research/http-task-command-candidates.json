@@ -1,0 +1,852 @@
+[
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPAddBlock$$.cctor",
+    "evidence_id": "NEB-STATIC-606260",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251cf40",
+        "value": "N2AddBlock"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251cf40",
+        "value": "N2AddBlock"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251cf40",
+        "value": "N2AddBlock"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPAddSilenced$$.cctor",
+    "evidence_id": "NEB-STATIC-6066B0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251cfc8",
+        "value": "N2AddSilenced"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251cfc8",
+        "value": "N2AddSilenced"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251cfc8",
+        "value": "N2AddSilenced"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPChecker$$.cctor",
+    "evidence_id": "NEB-STATIC-607B50",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c860",
+        "value": "CheckerServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c860",
+        "value": "CheckerServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c860",
+        "value": "CheckerServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPCheckIsInWardrobe$$.cctor",
+    "evidence_id": "NEB-STATIC-606B50",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824eafc0",
+        "value": "Send_CheckIsInWardrobeServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824eafc0",
+        "value": "Send_CheckIsInWardrobeServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824eafc0",
+        "value": "Send_CheckIsInWardrobeServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPCheckPlayerPrefs$$.cctor",
+    "evidence_id": "NEB-STATIC-606D70",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824d83c0",
+        "value": "PlayerPrefsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824d83c0",
+        "value": "PlayerPrefsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824d83c0",
+        "value": "PlayerPrefsServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPCheckSpaceExist$$.cctor",
+    "evidence_id": "NEB-STATIC-607430",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e4c60",
+        "value": "spaceExistServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e4c60",
+        "value": "spaceExistServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e4c60",
+        "value": "spaceExistServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGenerateGUID.<>c$$.cctor",
+    "evidence_id": "NEB-STATIC-619060",
+    "referenced_literals": []
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGenerateGUID$$.cctor",
+    "evidence_id": "NEB-STATIC-608200",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c020",
+        "value": "ChannelGUIDServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c020",
+        "value": "ChannelGUIDServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c020",
+        "value": "ChannelGUIDServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetAllInWardrobe$$.cctor",
+    "evidence_id": "NEB-STATIC-608560",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ee060",
+        "value": "GetAllInWardrobe"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ee060",
+        "value": "GetAllInWardrobe"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ee060",
+        "value": "GetAllInWardrobe"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetCinemaFilms$$.cctor",
+    "evidence_id": "NEB-STATIC-608AB0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ee528",
+        "value": "GetCinemaFilmsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ee528",
+        "value": "GetCinemaFilmsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ee528",
+        "value": "GetCinemaFilmsServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetIinitInfosNeeded$$.cctor",
+    "evidence_id": "NEB-STATIC-608E90",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824eef40",
+        "value": "GetIinitInfosNeededServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824eef40",
+        "value": "GetIinitInfosNeededServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824eef40",
+        "value": "GetIinitInfosNeededServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetLastUsedPreset$$.cctor",
+    "evidence_id": "NEB-STATIC-60FD80",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef1e8",
+        "value": "GetLastUsedPreset"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef1e8",
+        "value": "GetLastUsedPreset"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef1e8",
+        "value": "GetLastUsedPreset"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetLoadPresetByName$$.cctor",
+    "evidence_id": "NEB-STATIC-621710",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef380",
+        "value": "GetLoadPresetByName"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef380",
+        "value": "GetLoadPresetByName"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef380",
+        "value": "GetLoadPresetByName"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetNews$$.cctor",
+    "evidence_id": "NEB-STATIC-621BA0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef408",
+        "value": "GetNewsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef408",
+        "value": "GetNewsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef408",
+        "value": "GetNewsServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetPlayerLabelInfo$$.cctor",
+    "evidence_id": "NEB-STATIC-622320",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824d8228",
+        "value": "PlayerLabelInfoServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824d8228",
+        "value": "PlayerLabelInfoServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824d8228",
+        "value": "PlayerLabelInfoServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetPlayerPrefs$$.cctor",
+    "evidence_id": "NEB-STATIC-622660",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef628",
+        "value": "GetPlayerPrefsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef628",
+        "value": "GetPlayerPrefsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef628",
+        "value": "GetPlayerPrefsServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetPresetGame$$.cctor",
+    "evidence_id": "NEB-STATIC-62A3C0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef6b0",
+        "value": "GetPresetGameServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef6b0",
+        "value": "GetPresetGameServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef6b0",
+        "value": "GetPresetGameServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetPurchases$$.cctor",
+    "evidence_id": "NEB-STATIC-635290",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef848",
+        "value": "GetPurchases"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef848",
+        "value": "GetPurchases"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ef848",
+        "value": "GetPurchases"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetRelationship$$.cctor",
+    "evidence_id": "NEB-STATIC-635690",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d150",
+        "value": "N2GetRelationship"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d150",
+        "value": "N2GetRelationship"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d150",
+        "value": "N2GetRelationship"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPGetSocialList$$.cctor",
+    "evidence_id": "NEB-STATIC-635920",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824efc80",
+        "value": "GetSocialList"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824efc80",
+        "value": "GetSocialList"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824efc80",
+        "value": "GetSocialList"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPRemoveBlock$$.cctor",
+    "evidence_id": "NEB-STATIC-637B10",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d360",
+        "value": "N2RemoveBlock"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d360",
+        "value": "N2RemoveBlock"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d360",
+        "value": "N2RemoveBlock"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPRemoveFriend$$.cctor",
+    "evidence_id": "NEB-STATIC-637F60",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d3e8",
+        "value": "N2RemoveFriend"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d3e8",
+        "value": "N2RemoveFriend"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d3e8",
+        "value": "N2RemoveFriend"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPRemoveSilenced$$.cctor",
+    "evidence_id": "NEB-STATIC-6383B0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d468",
+        "value": "N2RemoveSilenced"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d468",
+        "value": "N2RemoveSilenced"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d468",
+        "value": "N2RemoveSilenced"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPResetDefaultPreset$$.cctor",
+    "evidence_id": "NEB-STATIC-638A50",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e3a78",
+        "value": "ResetDefaultPresetServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e3a78",
+        "value": "ResetDefaultPresetServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e3a78",
+        "value": "ResetDefaultPresetServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSavePlayerPref$$.cctor",
+    "evidence_id": "NEB-STATIC-63A120",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e8dd0",
+        "value": "SavePlayerPref"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e8dd0",
+        "value": "SavePlayerPref"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e8dd0",
+        "value": "SavePlayerPref"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSendNetInfo$$.cctor",
+    "evidence_id": "NEB-STATIC-63AB50",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824fdf20",
+        "value": "InfoServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824fdf20",
+        "value": "InfoServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824fdf20",
+        "value": "InfoServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPServerStatus$$.cctor",
+    "evidence_id": "NEB-STATIC-63AEC0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c650",
+        "value": "CheckServerStatusServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c650",
+        "value": "CheckServerStatusServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251c650",
+        "value": "CheckServerStatusServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSetIsInWardrobe$$.cctor",
+    "evidence_id": "NEB-STATIC-63BDE0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ed5f8",
+        "value": "SetUserInWardrobe"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ed5f8",
+        "value": "SetUserInWardrobe"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824ed5f8",
+        "value": "SetUserInWardrobe"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSTMBuyCrystals$$.cctor",
+    "evidence_id": "NEB-STATIC-638FC0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7920",
+        "value": "STMBuyCrystals"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7920",
+        "value": "STMBuyCrystals"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7920",
+        "value": "STMBuyCrystals"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSTMCompleteOrder$$.cctor",
+    "evidence_id": "NEB-STATIC-6394F0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e79a8",
+        "value": "STMCompleteOrder"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e79a8",
+        "value": "STMCompleteOrder"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e79a8",
+        "value": "STMCompleteOrder"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSTMCompleteSucceededOrders$$.cctor",
+    "evidence_id": "NEB-STATIC-6396F0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7a30",
+        "value": "STMCompleteSucceededOrders"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7a30",
+        "value": "STMCompleteSucceededOrders"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7a30",
+        "value": "STMCompleteSucceededOrders"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSTMGetUserInfo$$.cctor",
+    "evidence_id": "NEB-STATIC-639980",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7ab8",
+        "value": "STMGetUserInfo"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7ab8",
+        "value": "STMGetUserInfo"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x1824e7ab8",
+        "value": "STMGetUserInfo"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPToggleFavorite$$.cctor",
+    "evidence_id": "NEB-STATIC-63CB30",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d570",
+        "value": "N2ToggleFavorite"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d570",
+        "value": "N2ToggleFavorite"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d570",
+        "value": "N2ToggleFavorite"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPUserExist$$.cctor",
+    "evidence_id": "NEB-STATIC-63D8B0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x182527850",
+        "value": "UserExistsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x182527850",
+        "value": "UserExistsServlet"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x182527850",
+        "value": "UserExistsServlet"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.HTTPSpaceLoading$$.cctor",
+    "evidence_id": "NEB-STATIC-63C6E0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d4f0",
+        "value": "N2SpaceLoading"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d4f0",
+        "value": "N2SpaceLoading"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d4f0",
+        "value": "N2SpaceLoading"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.N2.HTTPAddUserOnline$$.cctor",
+    "evidence_id": "NEB-STATIC-634B40",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d048",
+        "value": "N2AddUserOnline"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d048",
+        "value": "N2AddUserOnline"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d048",
+        "value": "N2AddUserOnline"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.N2.HTTPGetPsidglobalAndGuidByUsernamePlatform$$.cctor",
+    "evidence_id": "NEB-STATIC-634F40",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d0d0",
+        "value": "N2GetPsidglobalAndGuidByUsernamePlatform"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d0d0",
+        "value": "N2GetPsidglobalAndGuidByUsernamePlatform"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d0d0",
+        "value": "N2GetPsidglobalAndGuidByUsernamePlatform"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.N2.HTTPLoadSpace$$.cctor",
+    "evidence_id": "NEB-STATIC-636130",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d2e0",
+        "value": "N2LoadSpace"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d2e0",
+        "value": "N2LoadSpace"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d2e0",
+        "value": "N2LoadSpace"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.N2.HTTPN2HousingReadPreset.<>c$$.cctor",
+    "evidence_id": "NEB-STATIC-642740",
+    "referenced_literals": []
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.N2.HTTPN2HousingReadPreset$$.cctor",
+    "evidence_id": "NEB-STATIC-636930",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d258",
+        "value": "N2HousingReadPreset"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d258",
+        "value": "N2HousingReadPreset"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d258",
+        "value": "N2HousingReadPreset"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.N2.HTTPN2UserExist$$.cctor",
+    "evidence_id": "NEB-STATIC-6376C0",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d678",
+        "value": "N2UserExist"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d678",
+        "value": "N2UserExist"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d678",
+        "value": "N2UserExist"
+      }
+    ]
+  },
+  {
+    "method": "Assets.Scripts.HTTPs.Tasks.N2.HTTPUpdateUserOnline$$.cctor",
+    "evidence_id": "NEB-STATIC-63CD50",
+    "referenced_literals": [
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d5f8",
+        "value": "N2UpdateUserOnline"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d5f8",
+        "value": "N2UpdateUserOnline"
+      },
+      {
+        "kind": "il2cpp-string-slot",
+        "va": "0x18251d5f8",
+        "value": "N2UpdateUserOnline"
+      }
+    ]
+  }
+]

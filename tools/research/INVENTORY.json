@@ -1,0 +1,546 @@
+{
+  "copied": [
+    {
+      "bytes": 6754,
+      "path": "avatar-catalog.py",
+      "sha256": "89f0b561f507041773dad22fd550c26571a339330239847894c9caf12bb76bc0",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 205,
+      "path": "avatar-entrydata.py",
+      "sha256": "083b41b11035f7e3d3a32c7c22a52aef2ddfddc0be58c32e6df3091b2d603005",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 2019,
+      "path": "avatar-extract.py",
+      "sha256": "4441f80e8b36497e261d23f34e5e88a3fb97dfcb6a004330b814d5128aefacad",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 3852,
+      "path": "avatar-native.py",
+      "sha256": "7c87be99edaa515ffb73e3c0c8279db1a6a4a6f5ba20877cc81edda655229ef7",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 9078,
+      "path": "avatar-neutral-seed.py",
+      "sha256": "e5a6b6c27bca98c7b70cd17b03778e4d21f7eb6b9af119be5f4ce7787eeba875",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 5548,
+      "path": "avatar-prefab.py",
+      "sha256": "a503fe15752a108447653231bf097a1de62d68a15dfc5cf0c415871c837d9715",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 10191,
+      "path": "avatar-report.py",
+      "sha256": "bf4de8da4884132a7f4b7d56a5ed5ca549071c686524d1e1a6e00e7fe9255fc9",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 4291,
+      "path": "avatar-static-check.py",
+      "sha256": "17e540ff91cd92c72afa1ab940f6000ea36b47e8da1c82335ab9ad0395db9cf6",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 2409,
+      "path": "avatar-unresolved.py",
+      "sha256": "c497a8f0d305577dd5d9906203a14219c4fb1aa23eb3a3d9a7dd56aaef0eae1f",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 24836,
+      "path": "build_housing_interaction_manifest.py",
+      "sha256": "16d916584881fbc61cbba2c50ca0b03204649368243743ef6ece1ba3d6fedfac",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 24242,
+      "path": "build_static_interaction_manifest.py",
+      "sha256": "1adb7b0fd0f2ff69435f4f9971c69d2d337fc6894916e613267e9eda4b99e269",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 3005,
+      "path": "correct_generic_id_evidence.py",
+      "sha256": "aad159a26ceb54d850c2e829ffb0a49285672a063f7866faeb661a6a4d7c7404",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 10352,
+      "path": "extract_protocol_metadata.py",
+      "sha256": "642f274cb9344b28377c4d11ea2e02895c7cadb88ed885a48ab3929de5b6f28d",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 4740,
+      "path": "extract_skl_promo_assets.py",
+      "sha256": "e9c8b30b12bdebeaf423fd6574945fa9190e54bb560b263eb2e1fd9aeb71c623",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 9101,
+      "path": "gathering_branch_audit.py",
+      "sha256": "21ccfb3de60fe17b41f0ad89f89ebc76ea8793b15becd8290d2a8c4643c5e764",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 8886,
+      "path": "gathering_contracts.py",
+      "sha256": "3786f34c37c66ac8c5dfad53d306426d990a4c92a958da2e061f9dba73ff901e",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 8246,
+      "path": "inspect_animation_entitlements.py",
+      "sha256": "95abe40a9303d08f2b5afac6bb3c30c63e4288227113b3adf7c91a78742fa065",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 7796,
+      "path": "inspect_assets.py",
+      "sha256": "fd29a113ca7e47df851cac5f6dcd6f27c20594648dbf4f17e03df66d8b8372b9",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 5207,
+      "path": "inspect_avatar_morphs.py",
+      "sha256": "c7fb58b6101380d7a048d46d611551d17b66be64add471c1c58feb6ec0780775",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 9258,
+      "path": "inspect_interaction_client_hooks.py",
+      "sha256": "bd160aeb1c99a27aa13eae8586453220e08627db06ae3966f6d2a7ac3c98cc14",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 4297,
+      "path": "inspect_minigame_scene.py",
+      "sha256": "ca444b58bde0531ae94dd8c3b5e1c1960f75b7ab943012fd20da29ae0349831d",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 8860,
+      "path": "inspect_mirror_commands.py",
+      "sha256": "6daa923a19c6cbd82e8ecc5a3abec2c6336bb7cbf3cad8ecf02ab26984848ba3",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 2512,
+      "path": "inspect_native.py",
+      "sha256": "b07f62d94e8195c52d34b9e1f7ea5d50afcd18e56304ce7e6637738264ee5461",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 4128,
+      "path": "inspect_player_prefab.py",
+      "sha256": "4914647a92b373118e5229a0f4b37b6d51901465d375ad2049cc4a1c6fa1f344",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 4659,
+      "path": "inspect_protocol_native.py",
+      "sha256": "d8705cfc00e473afbad924d848d77e16f2d264e696f0770c620113777dbad782",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 8478,
+      "path": "inspect_resource_catalog.py",
+      "sha256": "e8ef65eafb5f3ee35971c0191a915a2cac414abd3d9472d152704e0f734f59fc",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 7924,
+      "path": "inspect_world_interactions.py",
+      "sha256": "9a91ba78aff76636db7f65ac30b532e4e095e82eaeb7f6554645baad74ef3002",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 20208,
+      "path": "interaction_registry_patch.py",
+      "sha256": "bb94f7ebffba39683202466911202edadf989f249b1d001070f88e3c40a13cb2",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 9578,
+      "path": "keyboard_buttons_offline_tests.py",
+      "sha256": "1bb5e91b8d845248045664c4528f6bbc9efa100cce703b485b806dd84f41b01c",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 18074,
+      "path": "keyboard_buttons_patch.py",
+      "sha256": "89c9a78efad2f453e1ecdd61cb4279047394ec5d1e5c097a69465fe9e667a0fd",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 6624,
+      "path": "keyboard_focus_offline_tests.py",
+      "sha256": "656bb27f7b32048f4f410fa092a4917a76e08af73c06ba207e854aff6833f0e4",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 14706,
+      "path": "keyboard_focus_patch.py",
+      "sha256": "0bd19d6038d1baece459eb743b22e95965ca5204416e5a1318e2bed5aef0fe96",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 10569,
+      "path": "keyboard_housing_audit.py",
+      "sha256": "7724d0dd4ec8b96e5049d2b51ad5a4792d1827f6b1c3264865b74d4470ee3f3b",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 6826,
+      "path": "keyboard_housing_input_patch.py",
+      "sha256": "8dcabec8a16f1b0555e7acefbce379d660912afe70a2c220c86fc344bbbd3e4f",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 9051,
+      "path": "keyboard_input_patch.py",
+      "sha256": "aa1549d65a1e274f4bab0a6ec7018001a387c7c742176ee4df0244937f0b4d44",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 21350,
+      "path": "loader_bootstrap_audit.py",
+      "sha256": "4e61627d1eb162275d53e0a5059017094461f073f4724955fc7703280dc0599f",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 33886,
+      "path": "minigame_contracts.py",
+      "sha256": "5b631ca8b48fcb7819d601869f4f0948c65a2a88ebde54f3f632f82e8ec7ef4a",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 12905,
+      "path": "mixed_world_registry.py",
+      "sha256": "dcb49d7848b46ad79e9a90de2032a08071e5dcb5df93e2e66f423961a8bc4543",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 3883,
+      "path": "mixed_world_registry_checks.py",
+      "sha256": "e099c797bbc839645f7bc8758dc3fce97c09688bdac2d790b7cf17d56bb4c8da",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 14862,
+      "path": "native_test_identity_patch.py",
+      "sha256": "5c2452b05d7c90542e0a5e4ff2e157af7e560d5dbcece137c2e94e8c50c1c8ff",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 13086,
+      "path": "neck_thin_load_patch.py",
+      "sha256": "ae02967ae5ce7d639c6836c2216aa1ddce952d0e177078d8c87fce6726559671",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 13335,
+      "path": "network_surface_report.py",
+      "sha256": "6d7fb05bf3ecb246976b9c4761de710aa6f34654ba9bb2dd184ceaa60a85cf72",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 13118,
+      "path": "network_surface_scan.py",
+      "sha256": "cb863ac9aefdfb91680e117027989ebf91978fae03624a9f59b27553b5e0a46e",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 29354,
+      "path": "notification_contracts.py",
+      "sha256": "7f76c85148994423828db9d2bf285cf9da065edd0b604dc1432ff0755f1574f8",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 9783,
+      "path": "notification_text_offline_tests.py",
+      "sha256": "e96d00a688133ea7752de71283f5aac75520003f5ac3d3753873655d22b9b534",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 15926,
+      "path": "notification_text_patch.py",
+      "sha256": "02a6f47d191e689151f76058767c18bd07cb3335da58338b8f1bb60b2b814bd4",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 18490,
+      "path": "notification_text_review.py",
+      "sha256": "dab821f08ae1f1838c064c3c6eed952450f63b2e5aaa411cd272d39a12fc6651",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 13558,
+      "path": "preset_input_patch.py",
+      "sha256": "1b522f782a92d11fffd407d82ff7c8323f75927378b14d1ba6a9a1cc1f3b5572",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 13351,
+      "path": "rapid_boat_offline_tests.py",
+      "sha256": "8e84212d4f13813c90df904dc1b83fcf27872d224bf2724bb44eefcd60c7e46e",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 16859,
+      "path": "rapid_boat_patch.py",
+      "sha256": "e0cdc83e9fdd88cf1701a11c66a9d4a53d2f56fb713bdc4cd96aeb364270e752",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 6540,
+      "path": "rapid_boat_report.py",
+      "sha256": "4681e5153514d60367da19bc23eaa15c6e97a7ca2eda85be9b8badd82ff83c68",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 15000,
+      "path": "rewards_second_pass.py",
+      "sha256": "bc51bfbe1921227bac171cc3b0e33b1f0a2f81ce20975f65e979c6487974742a",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 17533,
+      "path": "settings_preservation_patch.py",
+      "sha256": "80e08ca9d364f7375ab548262b6163d9475219007541d0b6c104d7573f80a959",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 9935,
+      "path": "shop_second_pass.py",
+      "sha256": "e532dee6ed16bef1009757b41be73462e2a4789283a7ae73aa57434b33fb1495",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 1774,
+      "path": "tcp_callers.py",
+      "sha256": "da6c3a68b4d0e921a4c8c2499cdd5b16465d7b0d46cd0f8dfb64ff5c5ce303ea",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 2681,
+      "path": "tcp_extract_findings.py",
+      "sha256": "d3fb6c8ce611fdb061953aa9a50696aa32da784ba53a92e2735df028a84c9e59",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 3364,
+      "path": "tcp_inspect.py",
+      "sha256": "b9121f9b916f78edc46b3fffba9fc5f55ae5e39e994e4af1260363d87484155c",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 6923,
+      "path": "tcp_wardrobe_patch_spec.py",
+      "sha256": "91d268ba9b72da0840e08e1d6636f81026a9aa111a41040d5fa23ea7aee7f7f0",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 14492,
+      "path": "tcp_world_spawn_report.py",
+      "sha256": "b9a0594c1bb31b18e4cd95b9890ee25e04fd50a4bdc389c4726ccf2b62cfab03",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 3094,
+      "path": "tcp_world_spawn_xrefs.py",
+      "sha256": "feba7de998c08d653f1ccd81530ae39958f2764fc0f5e2ce8ca8cfba9eb29e80",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 4714,
+      "path": "tcp_world_spawns.py",
+      "sha256": "077bc634cb331fdf0c40af9e75cdbde3b23646f89b1a69e92e213009e45f7548",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 37640,
+      "path": "tcp_write_contracts.py",
+      "sha256": "bccd117802c2396b6bde430b82f74c122724faa5ac4684440378dec8a90a6dda",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 4091,
+      "path": "world_loading_assets.py",
+      "sha256": "14f014b101e27defbc9e298def966d7b88c6d84396f2e36c5f87cd49fd05d05a",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 2187,
+      "path": "world_loading_audit.py",
+      "sha256": "67401d37507e5da5097c05bea572134d237da94bc0fbf7862bc9bdaf0e83edb1",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 22131,
+      "path": "world_loading_pipeline.py",
+      "sha256": "f6fb3c05d6eda795cab60c0c8d10454b4d01903b8deb18a78f1607a608f5950b",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 11679,
+      "path": "world_loading_report.py",
+      "sha256": "dfce4e970b2c406111e20a8332e232743d018b33b0056fb6ce2280fe81098e9e",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    },
+    {
+      "bytes": 2839,
+      "path": "world_loading_xrefs.py",
+      "sha256": "adfdbd8211fbf356c2098cf9d078858839a67b4c60ed333f607f1e4317ff819c",
+      "status": "ported_paths_static_syntax_only_operator_fixtures_required"
+    }
+  ],
+  "game_binaries_assets_included": false,
+  "imported_module_names": [
+    "UnityPy",
+    "__future__",
+    "_research_paths",
+    "argparse",
+    "avatar_entry_codec",
+    "bisect",
+    "build_housing_interaction_manifest",
+    "capstone",
+    "collections",
+    "copy",
+    "extract_protocol_metadata",
+    "gc",
+    "hashlib",
+    "importlib",
+    "interaction_registry_patch",
+    "ipaddress",
+    "json",
+    "keyboard_buttons_patch",
+    "mixed_world_registry",
+    "notification_text_patch",
+    "pathlib",
+    "pefile",
+    "rapid_boat_offline_tests",
+    "rapid_boat_patch",
+    "re",
+    "struct",
+    "subprocess",
+    "sys",
+    "tempfile",
+    "typing",
+    "unittest",
+    "yaml"
+  ],
+  "kind": "source_only_static_research_inventory",
+  "omitted": [
+    {
+      "path": "avatar_entry_codec.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "build_reconstruction_status.py",
+      "reason": "Historical installation/runtime checkpoint publisher."
+    },
+    {
+      "path": "capture_frame.py",
+      "reason": "Desktop frame capture; not a static research tool."
+    },
+    {
+      "path": "core_runtime_peer.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "instance_supervisor.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "interaction_mapping_bridge.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "make_client_copy.py",
+      "reason": "Historical client preparation; current patcher is exported separately."
+    },
+    {
+      "path": "make_endpoint_metadata_copy.py",
+      "reason": "Historical client preparation; current patcher is exported separately."
+    },
+    {
+      "path": "nonmini_surface_status.py",
+      "reason": "Historical status publisher tied to omitted receipts."
+    },
+    {
+      "path": "package_linux_server.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "prepare_test_client.py",
+      "reason": "Historical private client preparation."
+    },
+    {
+      "path": "probe_client.py",
+      "reason": "Client process/runtime probe."
+    },
+    {
+      "path": "refresh_checkpoint_evidence.py",
+      "reason": "Historical private checkpoint publisher."
+    },
+    {
+      "path": "refresh_overviews.py",
+      "reason": "Historical status publisher tied to omitted receipts."
+    },
+    {
+      "path": "repair_native_female_presets.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "run_interaction_registry_integration.py",
+      "reason": "Legacy process/listener orchestration."
+    },
+    {
+      "path": "run_managed_instances_integration.py",
+      "reason": "Legacy process/listener orchestration."
+    },
+    {
+      "path": "seed_local_shops.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "social_runtime_peer.py",
+      "reason": "Already curated in tools/; unchanged."
+    },
+    {
+      "path": "validate_offline.py",
+      "reason": "Investigation-wide orchestrator requiring omitted build projects and private evidence."
+    }
+  ],
+  "portable_bootstrap": [
+    {
+      "path": "_research_paths.py",
+      "sha256": "35ca40b9b0d4f3413c811aca6136ad587fa653a7397f16ceb60491c621c66229"
+    },
+    {
+      "path": "run_research.py",
+      "sha256": "103581429ea49c4b98b163ecb43baa8f20b9d5d71b93d379cc7c1437f5299ab5"
+    },
+    {
+      "path": "README.md",
+      "sha256": "a203abb327efb1f5c6f2e427696c1631a2c1c51bc1e3ca98c7b2f545755b86b7"
+    }
+  ],
+  "raw_evidence_included": false,
+  "scripts_executed": false,
+  "validation": {
+    "all69_python_sources_syntax_valid": true,
+    "historical_tools_executed": false,
+    "list_mode_67_names": true,
+    "raw_fixtures_included": false
+  }
+}

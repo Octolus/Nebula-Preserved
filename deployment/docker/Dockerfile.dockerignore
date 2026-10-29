@@ -1,0 +1,34 @@
+# Dockerfile-specific context ignore: automatic with this deployment Dockerfile.
+# Deliberate allowlist: no work/, .git/, test DB, credential, original game or key.
+**
+!THIRD_PARTY_NOTICES.md
+!docs/LICENSING.md
+!mirror-server/UnityProject/Assets/Mirror/LICENSE
+!mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/LICENSE
+!mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/SimpleWebTransport/LICENSE
+!mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/LICENSE
+!mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/KCP/kcp2k/where-allocation/LICENSE
+!backend/
+!backend/**
+!protocol/
+!protocol/**
+!tools/
+!tools/**
+!deployment/
+!deployment/docker/
+!deployment/docker/Dockerfile
+!deployment/docker/entrypoint.py
+!deployment/docker/healthcheck.py
+!deployment/docker/requirements.lock.txt
+!deployment/docker/private-linux/
+!deployment/docker/private-linux/**
+**/__pycache__/
+**/*.pyc
+**/*.sqlite*
+**/*.db
+**/*.jsonl
+**/*.log
+**/.env*
+**/*.pem
+**/*.key
+**/*.pfx

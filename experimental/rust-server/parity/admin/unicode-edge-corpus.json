@@ -1,0 +1,29 @@
+[
+  {
+    "id": "admin-unicode-edge-before",
+    "op": "snapshot"
+  },
+  {
+    "id": "admin-unicode16-unassigned-in-source",
+    "op": "admin",
+    "tail": "users/fixture-parity-a/staff-label",
+    "method": "POST",
+    "body": {
+      "reason": "Synthetic parity audit",
+      "label": "\u1c89"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 0123456789abcdef0123456789abcdef",
+      "X-Management-Actor": "owner",
+      "Idempotency-Key": "admin-unicode16-unassigned-in-source"
+    },
+    "query": {},
+    "expected_status": 400
+  },
+  {
+    "id": "admin-unicode-edge-after",
+    "op": "snapshot",
+    "same_as": "admin-unicode-edge-before"
+  }
+]

@@ -1,0 +1,10 @@
+# Pull-only deployment. Compose >=2.24.4; preserve the base state/auth/port policy.
+services:
+  server:
+    image: "${NEBULA_SERVER_IMAGE:-${NEBULA_IMAGE_PREFIX:?Set NEBULA_IMAGE_PREFIX to ghcr.io/owner/repo}-server:${NEBULA_IMAGE_TAG:-latest}}"
+    build: !reset null
+  panel:
+    image: "${NEBULA_PANEL_IMAGE:-${NEBULA_IMAGE_PREFIX:?Set NEBULA_IMAGE_PREFIX to ghcr.io/owner/repo}-panel:${NEBULA_IMAGE_TAG:-latest}}"
+    build: !reset null
+  public-game:
+    image: "${NEBULA_SERVER_IMAGE:-${NEBULA_IMAGE_PREFIX:?Set NEBULA_IMAGE_PREFIX to ghcr.io/owner/repo}-server:${NEBULA_IMAGE_TAG:-latest}}"

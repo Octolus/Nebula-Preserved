@@ -1,0 +1,523 @@
+{
+  "activation_ready": false,
+  "auth_gift_source_receipt_sha256": "04688c65bbf84dccb9d0658ad1e76ff582bc85dd013c593248945b72dc4ee689",
+  "auth_independent_review_sha256": "6695e4e035e08ea5b638e15d82e8e63c31f18f24441794e40cc541e87024778f",
+  "backend_source_variant_sha256": "625e69baf1f0245148056384b0a481cb635da94ecffca5ae2a6a08953b957702",
+  "changed_or_added_files": [
+    {
+      "before_sha256": "cc98d456c2263c01c6d0c30fc89ca4b3fe3503f2d917b4fd8678a60b80e5d1d9",
+      "path": "backend/housing.py",
+      "sha256": "8b7b08c826b9abefa339cb01c0d76057273f589dc739b6b51d347cd0b546f327",
+      "size": 21307
+    },
+    {
+      "before_sha256": null,
+      "path": "backend/public_access.py",
+      "sha256": "87b7c78f15cf6d985c2cb6178712fd74065c67a3618b43f07bee44c01ecb73b5",
+      "size": 10229
+    },
+    {
+      "before_sha256": null,
+      "path": "backend/public_access_admin.py",
+      "sha256": "5cfbfd409eaf2c875ee2f1b1ec00a85b0da6764b8721c400678cb6055358b660",
+      "size": 3803
+    },
+    {
+      "before_sha256": null,
+      "path": "backend/remote_gateway.py",
+      "sha256": "59f9e1a7a37024912be4950b936bc628fbc1642d6fa43cf8ab8f09c70e4c14f5",
+      "size": 14860
+    },
+    {
+      "before_sha256": "75374f89cb03751d8cb36fc22918c4ca76b1d61e77370120735c3339e75ec0fd",
+      "path": "backend/server.py",
+      "sha256": "20701718111558d8e3d1ddc21b2e85c0c905c864d4c94c2a80e4cbf016dc515e",
+      "size": 10605
+    },
+    {
+      "before_sha256": "dfd0b663f197ebb4e38b4dd19c20e708b07260f6f0ebc381630972783620d1d4",
+      "path": "backend/service.py",
+      "sha256": "02bd5dae184a0ab3dd63d5cedd97d00b7510ef8ab8a28f7148f7506514842dd9",
+      "size": 50581
+    },
+    {
+      "before_sha256": "4604a7c110dacc67ae38b18aecc8fa62868b9b06b04da71b067222784fe6e45b",
+      "path": "backend/shop.py",
+      "sha256": "f5fbcdb6532c8b07f0c7896e2df39735aa6e7ef5728f605f997055cce0c9ac76",
+      "size": 30302
+    },
+    {
+      "before_sha256": "4020d28a0161b5c5a2e77dded11d17c70b5563b6931e4d24d73648635f097d64",
+      "path": "backend/state.py",
+      "sha256": "acbecdb0b46c57d925a7768872b91e3b66ab37392495228b540e2d8c31f2607b",
+      "size": 38340
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/backup_state.py",
+      "sha256": "d0dc40f29996aaa38899dce4556ab45b9f6554a002ad97804b50dff18e49d7df",
+      "size": 2765
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/migrate_public_access.py",
+      "sha256": "ae0a4c861448b376466a0a6f43e0c7e07e5521ece7c3f1a74cb538c67b8dbf93",
+      "size": 1008
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/nebula-managed-http.service.in",
+      "sha256": "9b2459a9c8aa21eeb057775e585311f8d282ee939e933e1641d6cd14ed1608ad",
+      "size": 895
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/nebula-remote-gateway.service.in",
+      "sha256": "d0e4e85ffdb85ed1d14c1fc3785b22fcbad6e712e4a3de8cba55b3030ce40c59",
+      "size": 1075
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/nebula.env.example",
+      "sha256": "23316b1033a44b6c198a9712dce269ae1d9567f860b3a419ee30bb07d856c0a9",
+      "size": 723
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/nginx.conf.example",
+      "sha256": "ba70bb645190f93d7a0f61a33484bde3ef2bc04826c29dc09f5f867c92a3df34",
+      "size": 995
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/README.md",
+      "sha256": "491b0ceae31221b5cdea5b8c161c3ebf48d4bb0de795f55db6735af543016415",
+      "size": 13673
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/remote-gateway.env.example",
+      "sha256": "07db16a1244980cb9bc2e5311b94caecb25f91e2e375a69a2037286a7222a792",
+      "size": 358
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/RUNTIME-BUNDLE.md",
+      "sha256": "31f4efcb779276ada75681d65fdc06ff4b1c039fe2062953212ae39891e67254",
+      "size": 5597
+    },
+    {
+      "before_sha256": null,
+      "path": "deployment/remote-tls/STATUS.json",
+      "sha256": "ce58ca44bb35fcd8bbe417a51ac73748c37bd0feee5d6696390183c0588ce91e",
+      "size": 1284
+    }
+  ],
+  "format": "nebula-current-auth-tls-source-curation-v1",
+  "not_included": [
+    "Generated credentials/certificates/keys/databases",
+    "Native game binaries or final nine-artifact release bundle",
+    "Private Rust transport fixture test additions"
+  ],
+  "prior_backend_inventory": "Historical pre-auth inventory; changed paths are superseded by this map",
+  "retained_documents_and_patcher": [
+    {
+      "path": "client-patches/README.md",
+      "sha256": "5cedfe317cafa3310a4b2cf0eaa0b6a0daee0642f9fa20dc59f2befbd723ae09"
+    },
+    {
+      "path": "client-patches/INVENTORY.md",
+      "sha256": "7f916b27e59a94c527f72aa534d4bb81d5001792df93712aec159b318643b097"
+    },
+    {
+      "path": "client-patches/PROVENANCE.md",
+      "sha256": "7bf08f69cd0c29cfe270b5309b311e4ce0d648d8ee92f6e4d70b933751ff4b5d"
+    },
+    {
+      "path": "README.md",
+      "sha256": "c6e2d0fe211a366c2504606da617fe39a3eda351991cb2d63acf39863b308752"
+    },
+    {
+      "path": "docs/PROGRESS.md",
+      "sha256": "74ca343dd33f573699e32b7ddad8817bb12c9add4960c16fad522778166e9d4b"
+    },
+    {
+      "path": "docs/PACKAGING-CHECKS.md",
+      "sha256": "3214153976fb2d4f32b0d993cdf003195c271e10c97a0e87c957350c373e2a4a"
+    },
+    {
+      "path": "patcher/README.md",
+      "sha256": "0e243ad2dc2fd6d32dc90f0aacb12561f1b73e239ec029aa933e989ee2581e39"
+    },
+    {
+      "path": "client-patches/SOURCE-INVENTORY.json",
+      "sha256": "83c04c4f5d6b1880aea0fb8c8876c688d2e49a227a53f9401b80d83b763b40cf"
+    },
+    {
+      "path": "client-patches/SOURCE-PROVENANCE.json",
+      "sha256": "09fb652450e08ce60b4949d182b28ffa39f23f86a2df06b47e07985890e8f8f2"
+    },
+    {
+      "path": "patcher/Cargo.toml",
+      "sha256": "a4cafa1d33580e8aedc1f8669d2f078658b06a8bde500766400312f347dbede6"
+    },
+    {
+      "path": "patcher/Cargo.lock",
+      "sha256": "0947dbe38863f05dc2d8d2eda8a9ea11052bd76ae5d025d9ddb6b9bd0c10e7ae"
+    },
+    {
+      "path": "patcher/src/credentials.rs",
+      "sha256": "0e49f384ba50e23a7eaab4d6aaa45c73ed8aef4062f04d38f3a858096de8ba5c"
+    },
+    {
+      "path": "patcher/src/delta.rs",
+      "sha256": "b11afdd6cce88077c050f89a169a8819f7770b2ff6680e13b18575b06bea9cd9"
+    },
+    {
+      "path": "patcher/src/discovery.rs",
+      "sha256": "c151f69d541d7b4d63a7d755d6577ade75e03b7d354f7292b7803573100261fd"
+    },
+    {
+      "path": "patcher/src/endpoint.rs",
+      "sha256": "feaed817f57cc92660b0ad3ef7a67173b64dcd3c1afc8f55ad533a8dcc3e62ed"
+    },
+    {
+      "path": "patcher/src/main.rs",
+      "sha256": "71b9b05d3d4dd9556a2dfc212f2b2dd68b50607ca188b422d328dbf5c8db5d63"
+    },
+    {
+      "path": "patcher/src/manifest.rs",
+      "sha256": "79b9b5c4e1e046a8c59de3cdcf7daec8a24711f91f6a99238b2e5ca3e5c43d63"
+    },
+    {
+      "path": "patcher/src/remote.rs",
+      "sha256": "167f29481c6e9983c5771e89c9065d64a1591f3022b33eed5f7ba2b5aef08281"
+    },
+    {
+      "path": "patcher/src/transaction.rs",
+      "sha256": "698f84ee0fd409da22f5ae0149257d1981095049ff544f39f3afecb79228585d"
+    },
+    {
+      "path": "patcher/src/unityfs.rs",
+      "sha256": "c37e5edb43599cfa1736188e6011fd9be8d97febae4f4d6291a89484f6dd7561"
+    },
+    {
+      "path": "patcher/tools/accept_backup_update.py",
+      "sha256": "df915032db5c8932b2a4cae725490d7697209381d92da3c836c90a222e94e4f2"
+    }
+  ],
+  "source_only": true,
+  "unchanged_runtime_dependencies": [
+    {
+      "path": "backend/README.md",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "dbddf3eebd975bf23ad6af3b0117a84c4be3cea1e8bef6c334e1d92ea8137a16"
+    },
+    {
+      "path": "backend/SOURCE-INVENTORY.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "94f08630b3946506f7ce582c263aee8fbd140d6e31ec1ad404b9e78f26df89a1"
+    },
+    {
+      "path": "backend/admin.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "d16e58bf3de42baf4b6df1f162e094f6f7eb286c4400d7c6c3bce1638c81f855"
+    },
+    {
+      "path": "backend/allocation.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "ef97aa8eb987a172e29d2c7ea4d4b276842b20a4e31b0d799ec58d0c58f8bb12"
+    },
+    {
+      "path": "backend/avatar.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "be380c107b6e9307bd58b348814a9f955f21b02b9e23c920562e3f413887beea"
+    },
+    {
+      "path": "backend/avatar_native_save.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "633a50aa4a67886d9a9317cee2e812865e22dc5fa9ab8cfb90999a3cff24cf48"
+    },
+    {
+      "path": "backend/consumable_admin.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "c93f1e9a6b39665534d2b37c0614b5a7940a348640a3fe2f4067359cca200113"
+    },
+    {
+      "path": "backend/consumables.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "9669ce3733cc00af4718d3c4fe0c6a368ee8358dd8b1ce5180a4b9a9daf8ed2f"
+    },
+    {
+      "path": "backend/gathering.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "b02088bce5537399f023b9373698214a6e2e08b184eefda8693207e0e60020cc"
+    },
+    {
+      "path": "backend/gathering_admin.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "f984385bd68cd5beb853ee58c87e10883ee7d0893e760dfcda7908e1c2b5c65d"
+    },
+    {
+      "path": "backend/housing_admin.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "d74a661eefd0ed26051dc0a2afcd66c91abc1fea242f3b26455f03979a72a489"
+    },
+    {
+      "path": "backend/instance_lifecycle.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "304cbea9454e61500d48d1f71c949438782d802fe64cb2829fc1161554961abd"
+    },
+    {
+      "path": "backend/interaction_registry.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "27b04bc54dc2a474a7fb3cd43e145a90443893e41fa622e1e35484e63b904342"
+    },
+    {
+      "path": "backend/notifications.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "ad964e8e2b32e9941b6a609c69883292e5de2036cce75b4fc926795f157c5836"
+    },
+    {
+      "path": "backend/requirements.txt",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "9f0a37bb7bf77736dee0b1b1ead2a7a4c0fa70f4e1808d636114208468ae5237"
+    },
+    {
+      "path": "backend/resource_admin.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "55587393ada6cb6f4969e0b0db1d727cb8b9907482a996e9db7f9d134cf6f6e3"
+    },
+    {
+      "path": "backend/resource_selection.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "b5655fa066d1d2421c509e6996ba1ec9572061817767a3fd56b9b8870af6b6db"
+    },
+    {
+      "path": "backend/resources.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "a22fcdf348c8fe03f6ca9a05312212a10c5420df90410f676d2ba56eb7d7e80c"
+    },
+    {
+      "path": "backend/rewards.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "bb9621699304c9a4b9954d2a64c16622f30d231d6b4d54a8da551221432765a2"
+    },
+    {
+      "path": "backend/rewards_admin.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "2fed537260a56f7e06571694d7c2786e1c22cceec456c881fb51c0854f88bf23"
+    },
+    {
+      "path": "backend/shop_admin.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "dcaf348750e693b75b78cd34ef0dc73efcba22f4a1cd4d0f3ee1511e363e11c8"
+    },
+    {
+      "path": "backend/test_identity.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "14c9e04e68699e49e16a6f910974bcaebffb5c3ace99556be5fedf5d60eac866"
+    },
+    {
+      "path": "backend/wire.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "53aa05c27f6ae64adeb5ff2e9b9ad57c4d92c82a7701887c38129c8a7e62302f"
+    },
+    {
+      "path": "protocol/README.md",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "4b533af7d4ca1d56694f6aa79f5af034b3553429853af857891897d9152ecb13"
+    },
+    {
+      "path": "protocol/avatar-asset-catalog.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "b494b3a5564aaffb15ea705de22957559202a4dfcb4862f433690807adfa583e"
+    },
+    {
+      "path": "protocol/avatar-default-catalog.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "12efa2c6a993a0405a892037b85aca0843a74900a9e5d0e2a204765b6e0bb7dd"
+    },
+    {
+      "path": "protocol/avatar-female-save-compensation.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "08f84f0259a29b32e7b917b66ac9e92ab7551ec761d9243bfb01d0c43dedc273"
+    },
+    {
+      "path": "protocol/avatar-metadata-schemas.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "5412c1143e41a969f5f1c1e32cfafa41f3c58380334958d7ca1d0475058fb9aa"
+    },
+    {
+      "path": "protocol/avatar-neutral-female.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "470a1c3e2c03efd1946a3640882ecd7409ba61a0d79a5ff8168d87c51408c64a"
+    },
+    {
+      "path": "protocol/avatar-neutral-male.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "9b7c7280f5b6395c5d4821c4de0f129b93817599c7db77ab76c2d984f7f71f93"
+    },
+    {
+      "path": "protocol/bootstrap-response-contracts.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "4cb914d399691606648ac4d4c17ac6b5c6edf7110ea77399581db2d166bf7a7f"
+    },
+    {
+      "path": "protocol/core-test-readiness.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "1617e853339e8aaabc1054c3c17f546f89d8edc24c7f738d83224fbb83fcc6be"
+    },
+    {
+      "path": "protocol/housing-interaction-manifest.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "f77acee87bafa476823ccbd1d37afacd9d8cf892306a2680b9c4a280a285b9f0"
+    },
+    {
+      "path": "protocol/housing-placement-contracts.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "dbab3074a04fa4a0bd7f7fab26b82b9710b1f7c80a956342ab96417f5be3992e"
+    },
+    {
+      "path": "protocol/http-nonminigame-gap-audit.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "88bad5b0aa22e7e846fdb2804c0aa5c589a2e12a9aa9f5fd3e3b70b74604f64f"
+    },
+    {
+      "path": "protocol/interaction-mapping-bridge.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "13d0c5d075240178ba66456a75f0599d2c9579182848de62f4153040ab4dca7c"
+    },
+    {
+      "path": "protocol/notification-contracts.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "f7a27694b95a0a86a06b1a2f41a83a6e4b83684c1a1d83f556b0f118369d4799"
+    },
+    {
+      "path": "protocol/resource-entitlements.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "d6048c34549592d8b282ebd56379627f394d7a136ab8eb7dddada76626132059"
+    },
+    {
+      "path": "protocol/skl-promo-catalog.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "78f9f79fc42354a63904c9271e1a877afa741d8c7dca6058985cba2f29e7c7aa"
+    },
+    {
+      "path": "protocol/static-interaction-manifest.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "82a72e7b84a6db4f06f8fd64451b3edb49256d24517da7f7dfe3918607d3a4c2"
+    },
+    {
+      "path": "protocol/wardrobe-removal-sentinels.json",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "72e5dad87f780148efe976992b6858f04197cb3824b9c6ba61277e640224d41d"
+    },
+    {
+      "path": "tools/README.md",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "8049236ac18c0a135b858b097faceb8cc6cea579901efd6852d240f15d28a2a7"
+    },
+    {
+      "path": "tools/avatar_entry_codec.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "4626363ae1d54a6b682fafaae02d95b193e7a00a7ebbc5a0b24e4d03388946d2"
+    },
+    {
+      "path": "tools/core_runtime_peer.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "b14d6c6d23eda7bf35bb3ea8e43708516b3f8cd1b5dac4f0b5dab52ff1929510"
+    },
+    {
+      "path": "tools/instance_supervisor.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "d6357ced2733805582e26f3cb4db90e76d999b50c4c80a8f4b4945e27e4bef37"
+    },
+    {
+      "path": "tools/interaction_mapping_bridge.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "fa37775aa132b301f0dfcf7217c5a14d625e634b5c165f9a3def3250696ad1c6"
+    },
+    {
+      "path": "tools/package_linux_server.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "61c34322f019ff5d6ecf4e1b099cd5ac6ce0f60fb1442b516be05e1cf0b45bea"
+    },
+    {
+      "path": "tools/repair_native_female_presets.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "f66a3bdce02c2c872d2a14e7cfa369cd8e46676bd67e0b5548619e4e02fe494d"
+    },
+    {
+      "path": "tools/seed_local_shops.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "aea055270cd0dbec2126187391d3aa759f709c61e194118b31358941020983bd"
+    },
+    {
+      "path": "tools/social_runtime_peer.py",
+      "role": "unchanged-current-backend-protocol-tools",
+      "sha256": "c156e001b73fd87b18d06f7b2993dfc078c51b90b3f758eee8d57f25c224f36f"
+    },
+    {
+      "path": "client-patches/public-access/CMakeLists.txt",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6"
+    },
+    {
+      "path": "client-patches/public-access/NebulaPublicAccess.cpp",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "4d6023c1d55ed94530969c0af947ac22313f3a77870a89c66873cf34e800fe83"
+    },
+    {
+      "path": "client-patches/public-access/NebulaPublicAccess.h",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "000d5c5437bc93f754ca26dba04113754c1a30634620120cef6d2151f663a9f5"
+    },
+    {
+      "path": "client-patches/public-access/NebulaRemoteBootstrap.cpp",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae"
+    },
+    {
+      "path": "client-patches/public-access/NebulaRemoteBootstrap.h",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "9560fce1b72cf3692bb2e0a6e4ce03a20acf8bb0c358a7f96978ad315748f123"
+    },
+    {
+      "path": "client-patches/public-access/RemoteTransportPin.h.in",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4"
+    },
+    {
+      "path": "experimental/remote-transport/client/Cargo.toml",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "f622d400a37260d959d82e64265f07af7bdf7e25f450cebaa55b6e4d9148abe7"
+    },
+    {
+      "path": "experimental/remote-transport/client/Cargo.lock",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "fd35df676549266ec5b87fee58046410cd191b32a32a6d938564670454d87bde"
+    },
+    {
+      "path": "experimental/remote-transport/client/src/main.rs",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "24cf0da500869896a386c096d0dbcca992176b8cc85190ebb3835da791af79bc"
+    },
+    {
+      "path": "deployment/instance-supervisor/nebula-instance-supervisor.service",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "adcade597101a75aa1050c1e03345982bf419ddbf44bd86da9f7dbf3b91d61f2"
+    },
+    {
+      "path": "experimental/remote-transport/THIRD_PARTY_NOTICES.md",
+      "role": "unchanged-remote-runtime-source",
+      "sha256": "49260c8d1498f7a78dbe31a44141c01b1590498b48852de65ed4170ff256d78a"
+    }
+  ],
+  "receipt_status": "historical_component_receipt",
+  "current_source_inventory": {
+    "path": "SOURCE-INVENTORY.json",
+    "path_base": "repository_root"
+  },
+  "historical_scope_note": "Historical authentication/TLS component receipt. Its original input, file and dependency hashes are retained unchanged. Later source composition, including housing and management integration, can supersede these rows. Use the repository-root SOURCE-INVENTORY.json for current publication hashes. Native client TLS acceptance remains a separate gate; this historical map does not certify the final runtime."
+}

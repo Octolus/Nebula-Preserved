@@ -1,0 +1,590 @@
+{
+  "format": "nebula-curated-client-source-v2",
+  "baseline": "70-site networking-only development default plus retained V9 legacy optional pipeline; native public TLS acceptance pending",
+  "source_records": [
+    {
+      "path": "client-patches/INVENTORY.md",
+      "sha256": "cb549b7d8181bcbfa3e081bd9e2bff5b0f6132087dc59f2efe9a1909a593248b"
+    },
+    {
+      "path": "client-patches/README.md",
+      "sha256": "d6b9ae5729933b9a6123cb95eff0a4520bb383ddf6e32cfe66c3b7960fd9e7f7"
+    },
+    {
+      "path": "client-patches/build_client_targets.py",
+      "sha256": "accda2b80f10462d9ed84eafbf55e2a158aae2af35912d92632ec679f4d8f834"
+    },
+    {
+      "path": "client-patches/build_helpers.py",
+      "sha256": "e7c7dcf63fc6762063bc479b557d740cd5b7253ddf79da1702044cb01e08359e"
+    },
+    {
+      "path": "client-patches/native-automation/appearance_core.inc",
+      "sha256": "7f1e275978a6e1a21f63366a6742bcae43f297cec7c1bfc25404d83335a1639c"
+    },
+    {
+      "path": "client-patches/native-automation/automation.cpp",
+      "sha256": "b65879629df0f709614dcdaee63fea427925d1628637cf48dfd11db89ffe1b80"
+    },
+    {
+      "path": "client-patches/native-automation/automation.s",
+      "sha256": "8f64ec52d25e5dfc2299dc1423c70249827e48f1e79bedcbb3cb74b44f74bc34"
+    },
+    {
+      "path": "client-patches/native-automation/automation_capture.h",
+      "sha256": "e446da9691b7a7dcce0f56713a57c3627318f63da5777a3a4ede285a295cb27a"
+    },
+    {
+      "path": "client-patches/native-automation/automation_desktop.h",
+      "sha256": "3e66245bc4b1f8325d7da2e0decff5c73b5def4c04e2ce9549e787d790bdbc2c"
+    },
+    {
+      "path": "client-patches/native-automation/automation_editor_mutation.h",
+      "sha256": "fc16ceeca1a437cd1489dd0b5e58bf53b344841006012d76e46f811b9cad34df"
+    },
+    {
+      "path": "client-patches/native-automation/automation_files.h",
+      "sha256": "849bd35f7c4a9b086e00af12be54eecdce4677e0c86ea4842ef8840e036764d7"
+    },
+    {
+      "path": "client-patches/native-automation/automation_login.h",
+      "sha256": "950d57d478690f768e05499459312e25795dd766c78b4c11066c64026f31aaaf"
+    },
+    {
+      "path": "client-patches/native-automation/automation_preset.h",
+      "sha256": "bcaa9b021e1308e6400df9e767384cffa0e68a1b8d7b6928bf47585d22163c43"
+    },
+    {
+      "path": "client-patches/native-automation/automation_protocol.h",
+      "sha256": "8e1e41208a72112415e973fd4c16738092442946c0835ca6be900ec14dfdd1c8"
+    },
+    {
+      "path": "client-patches/native-automation/automation_session_path.h",
+      "sha256": "a3d37e9489b6bc3582039095ebbca1b08b066c0dd22bc4106b5f0eb3b177adbc"
+    },
+    {
+      "path": "client-patches/native-automation/automation_store.cpp",
+      "sha256": "94bb6d967a4f693d3de5ad3c6a0f1ea985e53af7c912d4fdc30a2ab071f3bc32"
+    },
+    {
+      "path": "client-patches/native-automation/automation_store.h",
+      "sha256": "8c4fbfd1d9651673aded21f6319a80de4b3f38e39f205c74bb4e887ca82b5f36"
+    },
+    {
+      "path": "client-patches/native-automation/automation_store_binding.h",
+      "sha256": "5f9e6575c90f8912511484cc5d48f789db0a7515c38f9f3e5008f7e519e38d9b"
+    },
+    {
+      "path": "client-patches/native-automation/automation_types.h",
+      "sha256": "6a249b4ed6e9091ade49869102d74550d287a50186a41df474f8d0cb1945945e"
+    },
+    {
+      "path": "client-patches/native-automation/automation_wardrobe.h",
+      "sha256": "b5c028da235b80c62f5f373c1ea2830f51284121b7c7b8ea740396e99e3f483d"
+    },
+    {
+      "path": "client-patches/native-automation/character_exit_core.inc",
+      "sha256": "acf7c4e7f3774c9c4f75469195549b528a62fba57c9743bf449fa9d301cc06bf"
+    },
+    {
+      "path": "client-patches/native-automation/economy_actions.h",
+      "sha256": "9d9656a23b9aa8bc9f278c6b893a2025b1da0a9c1eec53c04e74c3079cc20a95"
+    },
+    {
+      "path": "client-patches/native-automation/economy_callback_generations.cpp",
+      "sha256": "a7341643ee75a4ac53c89e15b419a561e66ad5e61ccade91e81a8233d6107c8e"
+    },
+    {
+      "path": "client-patches/native-automation/economy_callback_generations.h",
+      "sha256": "58f57239557e3cc16b86be696f0d2ddb8c29591773599f7ed18b6c40e6ac7f5a"
+    },
+    {
+      "path": "client-patches/native-automation/economy_store_module.cpp",
+      "sha256": "804d8d3fd12aba6e32bb1243e5ad1b175eaf6d55c7a534e9facdfeae7a4ca116"
+    },
+    {
+      "path": "client-patches/native-automation/economy_store_module.h",
+      "sha256": "c48e62ed71a8b60ddea2018155617bdf8e30975c2ca4ddd987e3faf66a614c48"
+    },
+    {
+      "path": "client-patches/native-automation/economy_store_policy.h",
+      "sha256": "bb90e88893e26fdc9515c13fc6997bcad5e72c562275852942b6aed2ac46957a"
+    },
+    {
+      "path": "client-patches/native-automation/economy_v16_adapter.cpp",
+      "sha256": "5759b7d90fa9513ad168ff8a802e1bf2e0a6c68618099f8383407b938e69ecb8"
+    },
+    {
+      "path": "client-patches/native-automation/economy_v16_adapter.h",
+      "sha256": "94785d2b7f304c42e2b5513a5333e4ba02c72103698b7b565cb7ac4e5ad31d1c"
+    },
+    {
+      "path": "client-patches/native-automation/extension_hooks.inc",
+      "sha256": "223a8e39c6dcb68d104487c9eea414709f821e3aedfe8c9e6fa872e532816854"
+    },
+    {
+      "path": "client-patches/native-automation/frame_capture_module.cpp",
+      "sha256": "f478181a9f7d47edddd146790cd9614733c5e4967a3e3bb0d29d0a4559f876f1"
+    },
+    {
+      "path": "client-patches/native-automation/frame_capture_module.h",
+      "sha256": "8b5883833e2b2221bc3130c6e77149fe0fb6b5354d2c8458fdc2c361a1e1f610"
+    },
+    {
+      "path": "client-patches/native-automation/frame_capture_policy.h",
+      "sha256": "3d54be357ad32fb1acfd211dc9040f1b2c53f94de4093481d96a82729b9a3d75"
+    },
+    {
+      "path": "client-patches/native-automation/friend_request_probe.inc",
+      "sha256": "098cfa97b9755a080dc36ef2f7cc4b820e992376add66126686ef754e5fecb27"
+    },
+    {
+      "path": "client-patches/native-automation/friend_request_probe_policy.h",
+      "sha256": "47c053cd6e5dba91a1d59168490fa5938f6b92a6e253216386cf5a11fe507073"
+    },
+    {
+      "path": "client-patches/native-automation/housing_native.inc",
+      "sha256": "5a4a971b356f10da5a2a300f921ebcbfc3c855e2bcdc9b8248f036c876459649"
+    },
+    {
+      "path": "client-patches/native-automation/housing_wiring.inc",
+      "sha256": "bcb920ddf49d6f2f05f22bc3e20262679fe3dadb5f8be32ce491ad5db4a210c3"
+    },
+    {
+      "path": "client-patches/native-automation/join_queue_gate.cpp",
+      "sha256": "21c0bb8054b70e640ce149ed882f84f74744068fe42324b819e7e17f2e54f003"
+    },
+    {
+      "path": "client-patches/native-automation/join_queue_gate.h",
+      "sha256": "957b3cd423964d5ede86771a92ed6174d88c8febfbf6056e71271719456cb7e2"
+    },
+    {
+      "path": "client-patches/native-automation/movement_native_core.h",
+      "sha256": "9975e925c45bd67c5b6045250fb3f06d1192c62e9f3620f0edae557a92789885"
+    },
+    {
+      "path": "client-patches/native-automation/movement_policy.h",
+      "sha256": "3eb2c383bbf5b244fb650ee06fefdc028638ea5adca59adfbc6d73ebe838a044"
+    },
+    {
+      "path": "client-patches/native-automation/movement_profile.h",
+      "sha256": "9b3c726bf841fb50b4915e47d4cb0de28a14115485879b3166b4c4c9a1f4296d"
+    },
+    {
+      "path": "client-patches/native-automation/peer_pose_core.inc",
+      "sha256": "bf6093a391887a711cefb5e9d85f8e35db7ca5b0fbd00a1a03079f3ae3cb3a8d"
+    },
+    {
+      "path": "client-patches/native-automation/public_chat_core.inc",
+      "sha256": "bda043d4d8a4683bf08c09f7708248f0d9ea87a1aee2bd8003f9e9b4bbb74a5a"
+    },
+    {
+      "path": "client-patches/native-automation/resource_navigation_core.inc",
+      "sha256": "5924df271f7c6fb88b764131041da6302be75fa7cc085741b9bb81ed71a28869"
+    },
+    {
+      "path": "client-patches/native-automation/resource_navigation_module.cpp",
+      "sha256": "6ad210d90734bf114f18e49ee15be715385d50ffc328a2fc65abf2a1781d3a0a"
+    },
+    {
+      "path": "client-patches/native-automation/resource_navigation_module.h",
+      "sha256": "7b1303f3bbae2dd455f51b86f1605f9d5c7e372a5e9985fd140cc854ffc4110a"
+    },
+    {
+      "path": "client-patches/native-automation/resource_player_info_netid.inc",
+      "sha256": "726694d38b2002005afecea1048518d878cc4e61468a71a94fc25621277610af"
+    },
+    {
+      "path": "client-patches/native-automation/resource_selection.h",
+      "sha256": "c56e63fe7d181261c04a85dcc885a8acbf5eeb3a0eba9a0929f6191b309fa091"
+    },
+    {
+      "path": "client-patches/native-automation/resource_ui_core.inc",
+      "sha256": "6c57fd97dd3025a41b10a85670d4461218a47b33457de94ca0062c941be1b66a"
+    },
+    {
+      "path": "client-patches/native-automation/resource_ui_module.cpp",
+      "sha256": "7f18cac351a8cbb8b0ff973e24c7efef5007464611e7f9dfa0c95efec7e0f7a6"
+    },
+    {
+      "path": "client-patches/native-automation/resource_ui_module.h",
+      "sha256": "7b23c37d763d5d0fd5751feee5aebc9331e30ef7d457d06bb7acbfde19be40e7"
+    },
+    {
+      "path": "client-patches/native-automation/row_matcher_diagnostic.inc",
+      "sha256": "6d4f36ca8327ffd6a31db2e2eea9b785ade7fc7067d14d5a5d97c9524b629679"
+    },
+    {
+      "path": "client-patches/native-automation/settings_native_core.inc",
+      "sha256": "7005e673fbab6ae1d0f8a8e160e9cb3a7193161448d726cc9cb7fe91805631a1"
+    },
+    {
+      "path": "client-patches/native-automation/settings_open_core.inc",
+      "sha256": "c319d4dfee0c07c6a145666851da1380ebca42ac6163d6a7f95681dc67e07801"
+    },
+    {
+      "path": "client-patches/native-automation/settings_open_diagnostic.inc",
+      "sha256": "f3ecd589fc3cb49887ea8e37bd042499726605ee767f9ae6fadcdc1823bc5a87"
+    },
+    {
+      "path": "client-patches/native-automation/settings_sidebar_core.inc",
+      "sha256": "f3794b1d6bbc9d42dd6f8da46ff002a5b6f6a3fd67b5d017c8ae24bccf4658b6"
+    },
+    {
+      "path": "client-patches/native-automation/settings_sidebar_policy.h",
+      "sha256": "f8b7a5875274c8c5c49603a50fbe2a0616d64e30fba7aab992e90745c7331a3d"
+    },
+    {
+      "path": "client-patches/native-automation/social_module.cpp",
+      "sha256": "0e0e5667594c99d756191c77940cd871b571ee2ac22bf13d7508aa0321d3a32d"
+    },
+    {
+      "path": "client-patches/native-automation/social_module.h",
+      "sha256": "e23b7a599773a0ee7cf8c479f008f2404c35bde51099991039fde985a4b0c4eb"
+    },
+    {
+      "path": "client-patches/native-automation/social_owned_identity_diagnostic.inc",
+      "sha256": "ff3d69628eaa04cafcd540944ee4fc522eb98ee989f992b2db8d436e5066e2ac"
+    },
+    {
+      "path": "client-patches/native-automation/social_player_info_netid.inc",
+      "sha256": "d35b21b8b2506e6c61c61b788fd60b90278938f967bcbd65a1fb37d8fa052779"
+    },
+    {
+      "path": "client-patches/native-automation/store_policy.h",
+      "sha256": "374ca09d4ed038dbed7dee7df875151aeb89498e2702969a1d4e02e4864e8bec"
+    },
+    {
+      "path": "client-patches/native-automation/test_store_module.cpp",
+      "sha256": "e50763f8f5a6adc9c93c10aa839893013f35f4be294dc818c2a55319a7b9f432"
+    },
+    {
+      "path": "client-patches/native-automation/v16_shared_core.inc",
+      "sha256": "91f9fd65bcfba60eca17d428ce2ec33121eccf0a00c08dcc84bffda47ef4bcf5"
+    },
+    {
+      "path": "client-patches/native-automation/v16_snapshot.inc",
+      "sha256": "6f7818b6ec9b17e9a553858cd0befc2c0dccf31d5079d4da62f43fe17099d40c"
+    },
+    {
+      "path": "client-patches/native-automation/v16_social_core.inc",
+      "sha256": "bf2fed924e55b9d2969750f550b45790f177d41159ca5a6c1ac7f05e8aa8a5ab"
+    },
+    {
+      "path": "client-patches/native-registry/interaction_registry_bridge.cpp",
+      "sha256": "ebfea7fb5fec6d448fffd3c8d26d20b1701595e94f8e5060bb00b7f7ba468746"
+    },
+    {
+      "path": "client-patches/native-registry/interaction_registry_bridge_abi.h",
+      "sha256": "7d1ca53eb1c9f2df22b3e7595a5b1bfb72e52403e630b0fceaf106526b06b426"
+    },
+    {
+      "path": "client-patches/network-only/README.md",
+      "sha256": "1e5f86a96d95974a830c8a527c34ccc9f0498bbe5781e8ceb09ded843787b7af"
+    },
+    {
+      "path": "client-patches/network-only/build_network_client.py",
+      "sha256": "542ac86af07627700c3c2afb4b82995c4473dd9acc959a9d89e3df7a0a680d00"
+    },
+    {
+      "path": "client-patches/network-only/native-automation/join_queue_gate.cpp",
+      "sha256": "21c0bb8054b70e640ce149ed882f84f74744068fe42324b819e7e17f2e54f003"
+    },
+    {
+      "path": "client-patches/network-only/native-automation/join_queue_gate.h",
+      "sha256": "957b3cd423964d5ede86771a92ed6174d88c8febfbf6056e71271719456cb7e2"
+    },
+    {
+      "path": "client-patches/network-only/native-automation/movement_profile.h",
+      "sha256": "9b3c726bf841fb50b4915e47d4cb0de28a14115485879b3166b4c4c9a1f4296d"
+    },
+    {
+      "path": "client-patches/network-only/native-automation/test_join_queue_gate.cpp",
+      "sha256": "351daf287f80b425319f2226c6e96a1314d576036e5d5d86dfa3fa08336e815b"
+    },
+    {
+      "path": "client-patches/network-only/native-registry/interaction_registry_bridge.cpp",
+      "sha256": "ebfea7fb5fec6d448fffd3c8d26d20b1701595e94f8e5060bb00b7f7ba468746"
+    },
+    {
+      "path": "client-patches/network-only/native-registry/interaction_registry_bridge_abi.h",
+      "sha256": "7d1ca53eb1c9f2df22b3e7595a5b1bfb72e52403e630b0fceaf106526b06b426"
+    },
+    {
+      "path": "client-patches/network-only/network-profile-contract.json",
+      "sha256": "1a9aaf52cc2d7159fb00901d78808764cf0a310d567121a5ce40e51bcc395147"
+    },
+    {
+      "path": "client-patches/network-only/parent-source-pins.json",
+      "sha256": "95a1269a237cfead756b3fa59654dd0d0285750129e71caa561e7bee06ff7f3d"
+    },
+    {
+      "path": "client-patches/network-only/pe-composition/network_hooks.py",
+      "sha256": "f69f8709b89e701f880267c6551c91d8f003d4a902984b37d4dbbb62d83eb443"
+    },
+    {
+      "path": "client-patches/network-only/pe-composition/network_hooks.s",
+      "sha256": "3a8a941d3a8c326ea9e8393fc2b66474f543a915c69153cd8434c7def6ce44ae"
+    },
+    {
+      "path": "client-patches/network-only/pe-composition/unitywebrequest-get-calls.json",
+      "sha256": "2e5fc6cdad195b25105be17bd3a89001a502b4b873b6c08c81a6c1fc891fed1a"
+    },
+    {
+      "path": "client-patches/network-only/public-access/CMakeLists.txt",
+      "sha256": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6"
+    },
+    {
+      "path": "client-patches/network-only/public-access/NebulaPublicAccess.cpp",
+      "sha256": "3251b02c09cb297537a827db461e7ed05f204a4f575231091946db1181047e2c"
+    },
+    {
+      "path": "client-patches/network-only/public-access/NebulaPublicAccess.h",
+      "sha256": "000d5c5437bc93f754ca26dba04113754c1a30634620120cef6d2151f663a9f5"
+    },
+    {
+      "path": "client-patches/network-only/public-access/NebulaRemoteBootstrap.cpp",
+      "sha256": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae"
+    },
+    {
+      "path": "client-patches/network-only/public-access/NebulaRemoteBootstrap.h",
+      "sha256": "91620d7e88beaed8d86d423f18c6ca8d5ba42ead87dbf826dec58a2472c1ad1b"
+    },
+    {
+      "path": "client-patches/network-only/public-access/README.md",
+      "sha256": "835539034d19cb74b83ec4fc3729a9bf3d9bfacb878df5d63d803fc992c615de"
+    },
+    {
+      "path": "client-patches/network-only/public-access/RemoteTransportPin.h.in",
+      "sha256": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4"
+    },
+    {
+      "path": "client-patches/network-only/public-access/parent-source-pins.json",
+      "sha256": "8022759be99b2b9ce4ecd388b9426d5e506b1097c05c9ebaf1a5f1833a553a56"
+    },
+    {
+      "path": "client-patches/network-only/public-access/run_checks.py",
+      "sha256": "1cf9bb24c1a908a005c45010183b4bafbc2e6a5aed8c4367113760207e8971f6"
+    },
+    {
+      "path": "client-patches/network-only/public-access/test_public_consumer.cpp",
+      "sha256": "0d9363753fa9e28f8d90efc32e86dd99b5cc792ef72690d926954f1ace759b92"
+    },
+    {
+      "path": "client-patches/network-only/recipes/interaction_registry_patch.py",
+      "sha256": "6a65a9eab4340d759a5fc7509622b2fd741bae473fc8a954cadd7d7cb24ffdee"
+    },
+    {
+      "path": "client-patches/network-only/recipes/make_client_copy.py",
+      "sha256": "979570d9e150457dfd916d1321412047bf372914e153907d994fa53a8838710d"
+    },
+    {
+      "path": "client-patches/network-only/recipes/rapid_boat_patch.py",
+      "sha256": "3f30588cbcc1ac5753091fb1333b1bc64a57a6e96c6a3f37e82aac484e7c4d04"
+    },
+    {
+      "path": "client-patches/network-only/recipes/settings_preservation_patch.py",
+      "sha256": "a633ceb73192ee5ee920543b96ad4ea431a334006f6c32ae0682a103de6f65a3"
+    },
+    {
+      "path": "client-patches/network-only/run_checks.py",
+      "sha256": "1e87bb0a976c5d83c58802e8c248c5b2e7d29df5d71d12c3121627bf16318c93"
+    },
+    {
+      "path": "client-patches/network-only/shims/interaction_registry_bridge.s",
+      "sha256": "efd230c15283b07927d83f927c8f5419a9c35ffa776e8e1affb04152ce360870"
+    },
+    {
+      "path": "client-patches/network-only/shims/rapid_boat_exit.s",
+      "sha256": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66"
+    },
+    {
+      "path": "client-patches/network-only/source-lock.json",
+      "sha256": "3ef766cca2acd749d3ec071f5000e699992e1b9d9f0299bb23e312ca991d6c2e"
+    },
+    {
+      "path": "client-patches/network-only/test_network_shim.cpp",
+      "sha256": "6d24dfc8a3098ba11bd91f9951880d37548d729fe517e104f372987251d5b44c"
+    },
+    {
+      "path": "client-patches/network-only/verify_network_client.py",
+      "sha256": "919e79d136c7ac12829ffef83c5128caf4ade2bb43ae44263b4262b3f4c64885"
+    },
+    {
+      "path": "client-patches/pe-composition/compose_iat_corrected.py",
+      "sha256": "7e9106c91f32ca2932916a8a92cd817a8aa10b7ea467d4b91e881aa1159b2cdf"
+    },
+    {
+      "path": "client-patches/pe-composition/economy-callback-hooks.json",
+      "sha256": "ede3f026cab87cd905ae2368efd302082bde4562961ab9efc658cdf4932640e0"
+    },
+    {
+      "path": "client-patches/pe-composition/join_queue_patch.py",
+      "sha256": "49c2827347c988795de82db11783abba5f08f350ddbe5fa0bb58073104c28618"
+    },
+    {
+      "path": "client-patches/pe-composition/join_queue_shim.s",
+      "sha256": "50dbd68cae3f0cee12f3dc6cec65a308a88a4eefdf68e3c8ba0ae7d08178c172"
+    },
+    {
+      "path": "client-patches/pe-composition/movement_shims.s",
+      "sha256": "be9e47a9a26e8b2caa441f1ac5afb37437fa7c095a8ede87265b97adec6262f7"
+    },
+    {
+      "path": "client-patches/pe-composition/unitywebrequest-get-calls.json",
+      "sha256": "3701dd476b1f8085807a4cef4f49e604455c1324641a843862731e7f60ffae94"
+    },
+    {
+      "path": "client-patches/public-access/CMakeLists.txt",
+      "sha256": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6"
+    },
+    {
+      "path": "client-patches/public-access/NebulaPublicAccess.cpp",
+      "sha256": "4d6023c1d55ed94530969c0af947ac22313f3a77870a89c66873cf34e800fe83"
+    },
+    {
+      "path": "client-patches/public-access/NebulaPublicAccess.h",
+      "sha256": "000d5c5437bc93f754ca26dba04113754c1a30634620120cef6d2151f663a9f5"
+    },
+    {
+      "path": "client-patches/public-access/NebulaRemoteBootstrap.cpp",
+      "sha256": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae"
+    },
+    {
+      "path": "client-patches/public-access/NebulaRemoteBootstrap.h",
+      "sha256": "9560fce1b72cf3692bb2e0a6e4ce03a20acf8bb0c358a7f96978ad315748f123"
+    },
+    {
+      "path": "client-patches/public-access/README.md",
+      "sha256": "ca883ac70619b8e351140aa7389685f12a4fc4b69c61fc447875d45cbbb3a2a0"
+    },
+    {
+      "path": "client-patches/public-access/RemoteTransportPin.h.in",
+      "sha256": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4"
+    },
+    {
+      "path": "client-patches/recipes/eyes_lifetime_patch.py",
+      "sha256": "c380b597de877e49fe1f70c0a4dc15a43d0bd60c877dfc54bcf551dfe886f7d0"
+    },
+    {
+      "path": "client-patches/recipes/interaction_registry_patch.py",
+      "sha256": "6a65a9eab4340d759a5fc7509622b2fd741bae473fc8a954cadd7d7cb24ffdee"
+    },
+    {
+      "path": "client-patches/recipes/keyboard_buttons_patch.py",
+      "sha256": "d40a1814197e37168bdccf47314123abd400a384b163443adfff219444f1a244"
+    },
+    {
+      "path": "client-patches/recipes/keyboard_focus_patch.py",
+      "sha256": "cb8156a3cc4ab0f0114ae5736ad18a10086e220abf8b00e89767a0d46eb0a955"
+    },
+    {
+      "path": "client-patches/recipes/keyboard_housing_input_patch.py",
+      "sha256": "0a1b4fd06fcbb57c62b02859a0c89d4ebb49688f55b07cd4ab4ff48a8bae6324"
+    },
+    {
+      "path": "client-patches/recipes/keyboard_input_patch.py",
+      "sha256": "5f75c258008fcb8c1e1ea7b0cffc62391420ecf6315f970f635d105a9b212c72"
+    },
+    {
+      "path": "client-patches/recipes/make_client_copy.py",
+      "sha256": "979570d9e150457dfd916d1321412047bf372914e153907d994fa53a8838710d"
+    },
+    {
+      "path": "client-patches/recipes/neck_thin_load_patch.py",
+      "sha256": "653c38a4b200b7d01adae91a5e6659ce547c6996bec057921a387884a87de6ff"
+    },
+    {
+      "path": "client-patches/recipes/notification_text_patch.py",
+      "sha256": "621e0a570a20404d7dc3c94bdb871966e3c6fd7f7668025b05752979f0acdae7"
+    },
+    {
+      "path": "client-patches/recipes/preset_input_patch.py",
+      "sha256": "be1d00a3c764ae884fd7e8a19bd53899c24c054e3da77fd1dcb2439e756a79ab"
+    },
+    {
+      "path": "client-patches/recipes/rapid_boat_patch.py",
+      "sha256": "3f30588cbcc1ac5753091fb1333b1bc64a57a6e96c6a3f37e82aac484e7c4d04"
+    },
+    {
+      "path": "client-patches/recipes/settings_preservation_patch.py",
+      "sha256": "a633ceb73192ee5ee920543b96ad4ea431a334006f6c32ae0682a103de6f65a3"
+    },
+    {
+      "path": "client-patches/recipes/steam_update_pump_patch.py",
+      "sha256": "ff038f301edfc8673bb9a87cbbb22c94a6a76a2ec03f74f6afa577212a642e86"
+    },
+    {
+      "path": "client-patches/requirements-dev.txt",
+      "sha256": "569a5975409c2817c328ef70819260e256bf128a3093d75775544a96d1da14e2"
+    },
+    {
+      "path": "client-patches/shims/automation.s",
+      "sha256": "8f64ec52d25e5dfc2299dc1423c70249827e48f1e79bedcbb3cb74b44f74bc34"
+    },
+    {
+      "path": "client-patches/shims/interaction_registry_bridge.s",
+      "sha256": "efd230c15283b07927d83f927c8f5419a9c35ffa776e8e1affb04152ce360870"
+    },
+    {
+      "path": "client-patches/shims/keyboard_buttons.s",
+      "sha256": "009c99a34f9114bc95db0eccafa0e4f8e4034368d986589e202f59afb3be0f48"
+    },
+    {
+      "path": "client-patches/shims/notification_text.s",
+      "sha256": "3c2ffe73d58a207bed0d829cada33eb468f6f34e7ba4f05efff36a6bbceb646d"
+    },
+    {
+      "path": "client-patches/shims/rapid_boat_exit.s",
+      "sha256": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66"
+    },
+    {
+      "path": "client-patches/source-lock.json",
+      "sha256": "4399d7a031de47a1870feddd7c6299c6a56a4e7a73d047ec1a2867a794b9bf62"
+    },
+    {
+      "path": "client-patches/verify_targets.py",
+      "sha256": "3282b374e15e15ea4e6082399e0f173c964fac3ae5c7edba3981814b9b5aec54"
+    }
+  ],
+  "inventory": "client-patches/SOURCE-INVENTORY.json",
+  "source_record_scope": "136 exact authored source records across the networking-only default, matching PublicAccess consumer and retained optional pipeline; runtime evidence excluded.",
+  "original_game_files_included": false,
+  "decompiler_listings_included": false,
+  "private_credentials_included": false,
+  "production_ready": false,
+  "source_file_count": 136,
+  "legacy_optional_profiles": {
+    "default": {
+      "ga_sha256": "d59155564b142aa24dcfab03a47290d43261dccbfd55ea3a06543fffe65fda04",
+      "helper_sha256": "c880fb8df3265da1432ff3e6683156e2941abf972ad23df8e15699f38fea6e19",
+      "original_cursor_preserved": true,
+      "settings_cursor_safe_profile": false
+    },
+    "free-mouse": {
+      "ga_sha256": "39ad8c096357f4a1e56b90524175f67b8e6cc88dcedf2c3bc0fbf87178271e3b",
+      "helper_sha256": "68415abf23ee90cbc3e9c6294097c0387eea8b29ddae42eb1fbc290739573083",
+      "original_cursor_preserved": false,
+      "settings_cursor_safe_profile": true
+    }
+  },
+  "profiles": {
+    "network-only": {
+      "ga_sha256": "bc923d5b5f4e2ae4e8bad6f7767cc229dd1fa532cefde04bec31b57e74821d5f",
+      "helper_sha256": "8b7f7470945f3eea25613031adeaf522dc177b8a386fb006fedc0afb4ea201e3",
+      "helper_name": "NebulaNetworkBridge.dll",
+      "public_access_sha256": "d0a37cfd1e47e9ec706d92c8b29dd9b29a4cfc9ca5c9891b0f427ba2510a93aa",
+      "remote_sidecar_sha256": "cfda7d033e93fe78a8150c6a11a6f3b1d66bc5e417f49ee869a0630f855c8420",
+      "original_input_assets_preserved": true,
+      "original_cursor_preserved": true,
+      "test_automation_included": false,
+      "application_get_sites": 70,
+      "engine_www_unchanged": true,
+      "direct_artifacts": 6,
+      "remote_artifacts": 7,
+      "configured_direct_https_supported": false,
+      "native_runtime_accepted": false
+    }
+  },
+  "network_only_source_lock_sha256": "3ef766cca2acd749d3ec071f5000e699992e1b9d9f0299bb23e312ca991d6c2e"
+}

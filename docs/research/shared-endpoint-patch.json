@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "scope": "parameterized_private_il2cpp29_endpoint_metadata_copy",
+  "source_sha256": "c59807c2950c1051202ae7d96744d126be4c489c7719f7e2d8d207f8f75681c1",
+  "metadata_version": 29,
+  "literal_record_layout": [
+    "uint32 length",
+    "uint32 data_index"
+  ],
+  "header_fields": {
+    "string_literal_records_offset": 8,
+    "string_literal_records_byte_count": 12,
+    "string_literal_data_offset": 16,
+    "string_literal_data_byte_count": 20
+  },
+  "parameter_contract": {
+    "api_origin": "canonical htt[local-path] with optional port and no credentials/path/query/fragment",
+    "advertise_ip": "canonical IPv4 without port",
+    "default_api_origin": "htt[local-path]",
+    "default_advertise_ip": "127.0.0.1",
+    "default_copy_sha256": "76e10da141d2daacd99c0976f362ddbf9463321aeef69ea464230565202885fd"
+  },
+  "custom_layout": {
+    "name": "appended_full_literal_data_blob",
+    "literal_records": 12850,
+    "algorithm": [
+      "copy complete original literal-data blob to EOF",
+      "append four complete replacement byte strings",
+      "repoint only selected literal records",
+      "update header literal-data offset and byte count",
+      "reparse and verify all unselected records/indexes/contents"
+    ],
+    "truncation_allowed": false
+  },
+  "prepared_example": {
+    "api_origin": "htt[local-path]",
+    "advertise_ip": "203.0.113.10",
+    "copy_path": "work/patched-client-shared-endpoint/global-metadata.dat",
+    "manifest_path": "outputs/nebula-preservation/client-fixes/prepared-shared-endpoint-copy.json",
+    "copy_sha256": "08e1d5d33f89ea41c887dc183664597f33d853b5424efd5301fa1c30c8cebc10",
+    "file_size": 8831812
+  },
+  "verification": {
+    "actual_original_used": true,
+    "default_byte_identity_checked": true,
+    "longer_origin_checked": true,
+    "unselected_record_index_length_content_checked": true,
+    "unchanged_original_prefix_outside_header_and_selected_records_checked": true,
+    "malformed_origin_ip_header_overlap_and_hash_checked": true,
+    "runtime_executed": false,
+    "listener_started": false
+  },
+  "limitations": [
+    "Only four exact compiled literals are changed.",
+    "Dynamic/backend-returned/asset/config/Steam and other endpoints remain outside scope.",
+    "Static metadata parser success is not runtime proof.",
+    "No licensing, ownership or ticket check is bypassed."
+  ],
+  "sha256": {
+    "tools/make_endpoint_metadata_copy.py": "b766eb814419d64f89bd5323850abc026f31fc1c306424fbb28ca3407774b7d4",
+    "tools/tests/test_endpoint_metadata.py": "01235ab8f87499ec916ccb88a0c214eb348ec3d5083ee85027ff8afbbfda1c50"
+  }
+}

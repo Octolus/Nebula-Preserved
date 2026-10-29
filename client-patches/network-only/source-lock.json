@@ -1,0 +1,26 @@
+{
+  "format": "network-only-source-lock-v2",
+  "files": {
+    "recipes/make_client_copy.py": "979570d9e150457dfd916d1321412047bf372914e153907d994fa53a8838710d",
+    "recipes/rapid_boat_patch.py": "3f30588cbcc1ac5753091fb1333b1bc64a57a6e96c6a3f37e82aac484e7c4d04",
+    "recipes/interaction_registry_patch.py": "6a65a9eab4340d759a5fc7509622b2fd741bae473fc8a954cadd7d7cb24ffdee",
+    "recipes/settings_preservation_patch.py": "a633ceb73192ee5ee920543b96ad4ea431a334006f6c32ae0682a103de6f65a3",
+    "shims/rapid_boat_exit.s": "b7a5d05492b108785573fb258ddb9728f81c9a396aa49fc6b966c9b141eaec66",
+    "shims/interaction_registry_bridge.s": "efd230c15283b07927d83f927c8f5419a9c35ffa776e8e1affb04152ce360870",
+    "native-registry/interaction_registry_bridge.cpp": "ebfea7fb5fec6d448fffd3c8d26d20b1701595e94f8e5060bb00b7f7ba468746",
+    "native-registry/interaction_registry_bridge_abi.h": "7d1ca53eb1c9f2df22b3e7595a5b1bfb72e52403e630b0fceaf106526b06b426",
+    "pe-composition/unitywebrequest-get-calls.json": "2e5fc6cdad195b25105be17bd3a89001a502b4b873b6c08c81a6c1fc891fed1a",
+    "native-automation/join_queue_gate.cpp": "21c0bb8054b70e640ce149ed882f84f74744068fe42324b819e7e17f2e54f003",
+    "native-automation/join_queue_gate.h": "957b3cd423964d5ede86771a92ed6174d88c8febfbf6056e71271719456cb7e2",
+    "native-automation/movement_profile.h": "9b3c726bf841fb50b4915e47d4cb0de28a14115485879b3166b4c4c9a1f4296d",
+    "network-profile-contract.json": "1a9aaf52cc2d7159fb00901d78808764cf0a310d567121a5ce40e51bcc395147",
+    "pe-composition/network_hooks.py": "f69f8709b89e701f880267c6551c91d8f003d4a902984b37d4dbbb62d83eb443",
+    "pe-composition/network_hooks.s": "3a8a941d3a8c326ea9e8393fc2b66474f543a915c69153cd8434c7def6ce44ae",
+    "public-access/CMakeLists.txt": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6",
+    "public-access/NebulaPublicAccess.cpp": "3251b02c09cb297537a827db461e7ed05f204a4f575231091946db1181047e2c",
+    "public-access/NebulaPublicAccess.h": "000d5c5437bc93f754ca26dba04113754c1a30634620120cef6d2151f663a9f5",
+    "public-access/NebulaRemoteBootstrap.cpp": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae",
+    "public-access/NebulaRemoteBootstrap.h": "91620d7e88beaed8d86d423f18c6ca8d5ba42ead87dbf826dec58a2472c1ad1b",
+    "public-access/RemoteTransportPin.h.in": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4"
+  }
+}

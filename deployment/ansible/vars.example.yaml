@@ -1,0 +1,11 @@
+# Keep your filled-in copy outside the repository.
+nebula_public_ip: 192.0.2.10
+nebula_image_archive: /absolute/private/path/images.tar
+nebula_image_archive_sha256: REPLACE_WITH_SHA256
+nebula_server_image: nebula-preserved-server:host-reviewed
+nebula_panel_image: nebula-preserved-panel:host-reviewed
+nebula_build_report_sha256: REPLACE_WITH_SHA256
+nebula_server_sha256: REPLACE_WITH_SHA256
+nebula_managed_sha256: REPLACE_WITH_SHA256
+nebula_max_processes: 2
+nebula_verify_reboot: false

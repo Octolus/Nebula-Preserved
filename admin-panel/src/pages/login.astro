@@ -1,0 +1,19 @@
+---
+import '../styles/global.css';
+import { LoginForm } from '../components/login-form';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sign in · Nebula</title>
+    <meta name="robots" content="noindex,nofollow" />
+  </head>
+  <body class="grid min-h-screen place-items-center bg-muted/30 p-5">
+    <main class="w-full max-w-sm">
+      <LoginForm client:load />
+    </main>
+  </body>
+</html>

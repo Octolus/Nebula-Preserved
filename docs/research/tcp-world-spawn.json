@@ -1,0 +1,417 @@
+{
+  "scope": "Static native and serialized-asset reconstruction only. No game, Unity editor play mode, client, server, listening socket or connection/protocol test was run for this audit.",
+  "conclusion": "In the modern OnConnected avatar-loaded path, the client places its local NebulaPlayer at one of six Nexus ManagerInstance.spawnPoints and copies its forward vector before revealing the scene. Earlier transport/preset coordinates do not determine the final arrival position in this path.",
+  "confidence": {
+    "native_path": "direct bounded x64 instructions and Ghidra pseudocode",
+    "coordinates": "parsed serialized Unity Transform trees and identity prefab root; not observed runtime coordinates",
+    "global_behavior": "bounded initial-load path; not a proof about later gameplay teleports, scene edits, collision settling or all modes"
+  },
+  "binary": {
+    "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+    "preferred_image_base": "0x180000000"
+  },
+  "loading": [
+    {
+      "method": "Scenes.<LoadLogicPrefab>d__19.MoveNext",
+      "rva": "0x5e8480",
+      "finding": "Builds s/ + Scenes.Active + logicprefab, then awaits NebulaAssetBundleManager.Load. For Active=nexus this is s/nexuslogicprefab; it does not use s/pre/nexuslogicprefab."
+    },
+    {
+      "method": "NebulaAssetBundleManager.<Load>d__15.MoveNext",
+      "rva": "0x617b10",
+      "finding": "Loads dependencies, resolves StreamingAssets/platform/relativePath, loads bundle and all assets asynchronously, returns request.asset. This stage does not instantiate or place the prefab."
+    },
+    {
+      "method": "SpacePREFAB.<Initialize>d__4.MoveNext",
+      "rva": "0x46fa80",
+      "call_rva": "0x46fcca",
+      "finding": "After await LoadLogicPrefab, calls the one-argument Object.Instantiate<GameObject>(asset) overload at 0x8953d0, without parent/position/rotation parameters; no transform setter occurs in this body. Loads optional event prefab, destroys loading camera/ScreenLoader, then calls ManagerInstance.Launch at 0x46feaf."
+    },
+    {
+      "method": "ManagerInstanceNexus.Init",
+      "rva": "0x4377f0",
+      "finding": "Calls TCPInit; initializes cinema and optional night cycle. Does not replace spawnPoints. Bounded scans of 54 ManagerInstance/ManagerInstanceNexus methods find no memory operand displacement 0x160; this is scoped negative evidence, not a global field-use proof."
+    }
+  ],
+  "serialized_controller": {
+    "bundle": "s/nexuslogicprefab",
+    "bundle_sha256": "7a555fddd0bf0743444f60a3eacf0533cc6ce3a546995b6bd6ffc2ed10bd5f66",
+    "asset_file": "CAB-c5363acfac84eb34fd358ba601dc24dd",
+    "class": "ManagerInstanceNexus",
+    "path_id": -7098812427836398199,
+    "game_object": {
+      "m_FileID": 0,
+      "m_PathID": 6732933490008056622
+    },
+    "raw_sha256": "7dbe6365f08a8d303e329f5c3cc8636d8080a71478acdc7c3b515f1b112fc9e8",
+    "field": "ManagerInstance.spawnPoints",
+    "instance_offset": "0x160",
+    "root": {
+      "asset_file": "CAB-c5363acfac84eb34fd358ba601dc24dd",
+      "transform_path_id": -210717316301481082,
+      "game_object_path_id": -891990196986080857,
+      "name": "NexusLogicPREFAB",
+      "active_self": true,
+      "local_position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "local_rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "local_scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "father": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "raw_sha256": "955ac398e52a90e4f0f0c22b0905989979bd90eea634b1f6a542dc22824bd055"
+    }
+  },
+  "spawn_points": [
+    {
+      "index": 0,
+      "name": "Spawn Point Origin",
+      "transform_path_id": -6156842241099354577,
+      "game_object_path_id": -7889965561787082457,
+      "position_xyz": [
+        -22.110000610351562,
+        19.322999954223633,
+        27.309999465942383
+      ],
+      "rotation_xyzw": [
+        0.0,
+        0.835127055644989,
+        0.0,
+        0.550057053565979
+      ],
+      "forward_xyz": [
+        0.9187350551626281,
+        0.0,
+        -0.3948744368925823
+      ],
+      "transform_raw_sha256": "98162318d9185321f24da48899fcecede3ac00e3b51e9c8c06c85be48e5cef8e"
+    },
+    {
+      "index": 1,
+      "name": "Spawn Point Park",
+      "transform_path_id": 2965147469171295281,
+      "game_object_path_id": -5523066334316869093,
+      "position_xyz": [
+        34.5099983215332,
+        19.31999969482422,
+        65.97000122070312
+      ],
+      "rotation_xyzw": [
+        -0.0,
+        0.9554213881492615,
+        0.0,
+        -0.29524585604667664
+      ],
+      "forward_xyz": [
+        -0.5641684112588656,
+        0.0,
+        -0.8256599134203269
+      ],
+      "transform_raw_sha256": "e292d6e7aafe4f0079bf71733b814d95f5e5bab8925e7ef3fe271ac517e42164"
+    },
+    {
+      "index": 2,
+      "name": "Spawn Point Bowling",
+      "transform_path_id": -8439589371330713728,
+      "game_object_path_id": 2045740597300048185,
+      "position_xyz": [
+        -7.230000019073486,
+        19.34000015258789,
+        41.709999084472656
+      ],
+      "rotation_xyzw": [
+        0.0,
+        0.9704265594482422,
+        0.0,
+        0.24139660596847534
+      ],
+      "forward_xyz": [
+        0.46851535558494106,
+        0.0,
+        -0.8834553859094534
+      ],
+      "transform_raw_sha256": "16b4bc7e4644ab838a909d006171410f6eb714300ae1a61a0add4696d95c5fac"
+    },
+    {
+      "index": 3,
+      "name": "Spawn Point Beach",
+      "transform_path_id": 7877514380706886611,
+      "game_object_path_id": -4497612524318524024,
+      "position_xyz": [
+        67.0,
+        19.31100082397461,
+        -24.0
+      ],
+      "rotation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "forward_xyz": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "transform_raw_sha256": "ecf7316fa4c78e0ec5f159569f717c101cf0bb847e2f04f35f758121548367b1"
+    },
+    {
+      "index": 4,
+      "name": "Spawn Point Dome",
+      "transform_path_id": 7459093048511770470,
+      "game_object_path_id": -5262972963229541124,
+      "position_xyz": [
+        46.83000183105469,
+        20.079999923706055,
+        20.190000534057617
+      ],
+      "rotation_xyzw": [
+        -0.0,
+        0.7293935418128967,
+        0.0,
+        -0.6840943694114685
+      ],
+      "forward_xyz": [
+        -0.9979480300785823,
+        0.0,
+        -0.06402983257788719
+      ],
+      "transform_raw_sha256": "6518b3405cdc3657c9e257cf3a5b931acf2cf127b6063a819f8221127a78c5dc"
+    },
+    {
+      "index": 5,
+      "name": "Spawn Point Cinema",
+      "transform_path_id": 6354698535567923801,
+      "game_object_path_id": -891800095970958872,
+      "position_xyz": [
+        10.1899995803833,
+        19.479999542236328,
+        -60.72999954223633
+      ],
+      "rotation_xyzw": [
+        0.0,
+        0.2588191032409668,
+        0.0,
+        0.9659258127212524
+      ],
+      "forward_xyz": [
+        0.5000001052916332,
+        0.0,
+        0.8660253474787538
+      ],
+      "transform_raw_sha256": "d32a2c4aec6d916693766af0641e2704a01e586665171b29442e7de4f47aafe3"
+    }
+  ],
+  "native_placement": {
+    "method": "OnConnectedProcessor.<MoveAvatarDelay>d__3.MoveNext",
+    "rva": "0x5ea260",
+    "steps": [
+      {
+        "rva": "0x5ea2be",
+        "action": "Read ManagerInstance.spawnPoints at instance offset 0x160."
+      },
+      {
+        "rva": "0x5ea2d6",
+        "action": "UnityEngine.Random.Range(int 0, array.Length) chooses one element. No saved-position or server-coordinate field is read in this selection."
+      },
+      {
+        "rva": "0x5ea335",
+        "action": "Disable Memory.localPlayerInfo.nebulaPlayer.PlayerControl.controller."
+      },
+      {
+        "rva": "0x5ea382",
+        "action": "Read selected spawn Transform.position."
+      },
+      {
+        "rva": "0x5ea3ac",
+        "action": "Assign that position to the local NebulaPlayer Transform."
+      },
+      {
+        "rva": "0x5ea3f0",
+        "action": "Read selected spawn Transform.forward."
+      },
+      {
+        "rva": "0x5ea41a",
+        "action": "Assign that forward vector to local NebulaPlayer Transform.forward."
+      },
+      {
+        "rva": "0x5ea473",
+        "action": "Set local player Animator bool AnimInfinite to false."
+      },
+      {
+        "rva": "0x5ea5a7",
+        "action": "Align NebulaCamManager.cameraPivotY X/Z to spawn; its Y is PlayerLabel.targetCam Transform.position.y minus float 0.45. This is a separate transform from the avatar root."
+      },
+      {
+        "rva": "0x5ea5f5",
+        "action": "Re-enable local CharacterController collider."
+      },
+      {
+        "rva": "0x5ea60e",
+        "action": "Store coroutine state 1 and yield null for one frame."
+      },
+      {
+        "rva": "0x5ea650",
+        "action": "Resumed state hides ScreenLoader; then clears ManagerInstance.isChatMenuLocked at offset 0x272."
+      }
+    ],
+    "local_reference_chain": [
+      "ManagerInstance.Memory(+0x2c0)",
+      "Memory.localPlayerInfo(+0x10)",
+      "PlayerInfo.nebulaPlayer(+0x30)"
+    ],
+    "controller_reference_chain": [
+      "NebulaPlayer.playerControl(+0x28)",
+      "NebulaPlayerControl.controller(+0x28)"
+    ],
+    "selection": "Random.Range(0,6); client RNG state is not recovered, so no single spawn index can be predicted statically."
+  },
+  "ordering": [
+    "Scene logic prefab is loaded and instantiated before ManagerInstance.Launch initializes/connects networking.",
+    "CreatePlayer(0x5f6a80) -> CREATEPLAYER.MoveNext(0x6033e0) instantiates the gender base, then CreateGhost(0x5f63e0) applies AvatarInfo.lastPos to the NebulaPlayer root for both local and remote avatars.",
+    "Asset assembly completes through PostInstantiateAssets(0x5fc840) and End(0x5f6ef0); CREATEPLAYER.MoveNext then clears loading flags and invokes NebulaPlayerAvatar.OnAvatarLoaded(+0xf8) with NebulaPlayer.GUID(+0xa0).",
+    "OnConnectedProcessor avatar-loading continuation calls OnAvatarLoaded at 0x5dfdc0.",
+    "OnAvatarLoaded initializes local control/random idle, sends its stored application opcode 1 through TCPClient.Send, then constructs MoveAvatarDelay state 0 and starts it on the local NebulaPlayer.",
+    "MoveAvatarDelay state 0 sets avatar position/forward to a chosen scene point, then yields null. State1 hides the loading screen and unlocks chat menu."
+  ],
+  "saved_position": {
+    "finding": "HTTPGetPresetGame.OnResponse(0x622740) parses LastPosJson xyz and passes that Vector3 into AvatarInfo.ctor(0x605d40). AvatarInfo.lastPos is actually applied early by NebulaPlayerAvatar.CreateGhost(0x5f63e0): param_2 is NebulaPlayer, param_3 is AvatarInfo; it copies AvatarInfo+0x60/+0x68 into a Vector3 and calls Transform.set_position. Both local and remote paths converge before this assignment; isLocal at+0x9c only gates the earlier PS4Info.gender update. The reviewed later MoveAvatarDelay never reads LastPos; it supersedes this initial position for the local player. Remote avatars retain the initial HTTP position until other movement updates.",
+    "application_chain": [
+      "HTTPGetPresetGame.OnResponse(0x622740)",
+      "AvatarInfo.ctor(0x605d40)",
+      "NebulaPlayerAvatar.CreatePlayer(0x5f6a80)",
+      "CREATEPLAYER.MoveNext(0x6033e0)",
+      "NebulaPlayerAvatar.CreateGhost(0x5f63e0)",
+      "PostInstantiateAssets(0x5fc840)",
+      "End(0x5f6ef0)",
+      "local OnAvatarLoaded(0x5dfdc0)",
+      "local MoveAvatarDelay(0x5ea260)"
+    ],
+    "cross_audit": "Exact earlier application/order supplied by the avatar agent from its existing static audit; original source files are hashed below.",
+    "not_claimed": "This does not claim LastPos is unused by remote-avatar construction, wardrobes, persistence, personal spaces, alternate paths or later teleports."
+  },
+  "server_implications": [
+    "Do not claim Mirror initial position(0,0,0) is a verified safe/visible Nexus arrival point. The client later moves its own root to a scene spawn before ScreenLoader.Hide.",
+    "The C2S opcode 1 send precedes this final local placement and carries no chosen spawn index or coordinates in the recovered application message.",
+    "Preserving this client behavior requires the real scene logic prefab, valid local player/control/camera/label components and completion of avatar load. Sending only an HTTP LastPos or Mirror position cannot replace those initialization steps.",
+    "Server ownership and later NetworkTransform replication are a separate Mirror contract. This static spawn audit does not establish a successful connection or a working world session."
+  ],
+  "known_limits": [
+    "No RNG/runtime selection observed.",
+    "No assertion about collider settling after the one-frame yield.",
+    "No full global proof that another component cannot later move the prefab/player.",
+    "No original server code or original server spawn policy was recovered.",
+    "No target runtime testing under current user constraint."
+  ],
+  "sources": [
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-world-spawn-assets.json",
+      "sha256": "c428083943d4a2a07f0654475649cc1a9826f6ce9439efa00e10969e8eb2ad21"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-world-spawn-native.json",
+      "sha256": "4e91804484243a736dede7250b5e7afd0bc33d7900f94ac03b92890850abf0f8"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-world-loader-native.json",
+      "sha256": "67b4a394d839f0c5a932e974667cc3ee45a42359707213682af824823d8372b3"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-world-prefab-native.json",
+      "sha256": "30ae86e9b02bbefecf42440883556a0a181c59c2ed9c842731feb7d217dc8786"
+    },
+    {
+      "path": "outputs\\nebula-preservation\\protocol\\tcp-world-spawn-xrefs.json",
+      "sha256": "85f0f1c42d7dc7ebb763a8c9bc9139aa42665aece03951c512c47dedf6674b3b"
+    },
+    {
+      "path": "work\\decompiled\\dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\5ea260.c",
+      "sha256": "a70dd10e6da7f67e275a40882ee36a04dcfbbadb245c59eca198ec858f289512"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\5dfdc0.c",
+      "sha256": "14f31fa8fb7cfc6293f3626afd1175427a17fe3c93b01ec84d793b8979960fd8"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\4382a0.c",
+      "sha256": "18592349c9db75e8ff25c7cd9be1c1b6aa517a3cf2e670c7fa92c70f207cd926"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\438a00.c",
+      "sha256": "dbb2a2575bad0afcbe766c83a043dce69bcfe6ab1dd83cc5617c198a7ad46501"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\438a10.c",
+      "sha256": "254e34fd2cd30d5883f5c6783f2611ccc849b6ec47998615738634bc439bbcd0"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\43bd90.c",
+      "sha256": "c0ff4f599ecf7b4d78b6b02cd7b4059f4202593565df7ecff32a2fd5c5cfc442"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\43be60.c",
+      "sha256": "4522e4815383d231a94c38d212044b1b9e98e2f01efa11df7aa6111d40ea5b1b"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\43c820.c",
+      "sha256": "2b5521830044a485d977b8abdec51fd1ef24d1ee98fdd201d290641ba752189e"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\4377f0.c",
+      "sha256": "0e127c345e00d4b56c332a8ebda6340584fa4aea3290d70e542dad7658d2d58a"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\5e8480.c",
+      "sha256": "5d54dae6f7c8997a653ca9fb5d0370e34cdf8fb089318c0f43cb4325dd3d97a9"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\617b10.c",
+      "sha256": "b7b894377bf53a93a7167f9eca62f2145ed08828c1ca88a35fd5ab3bbde8d809"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\46fa80.c",
+      "sha256": "a11c0187f7067b4babc2dcfe16ec0bd4c43efda230ba5e69e8afda1bd5f80d89"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\5f6a80.c",
+      "sha256": "c9815c8f7afee68d4c3df5098eb1bb69a76b0cd245ed6d7dcf7bbf3bdd6f2602"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\6033e0.c",
+      "sha256": "cf8cccef6352be653eb664092d5f8cd87debe6fff63d207880427742f24a342a"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\5f63e0.c",
+      "sha256": "6b385d9b329105fa0ef308956b9c441e5bd95d08a353479f648ed46008e9faf7"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\5fc840.c",
+      "sha256": "2dd7640ced0addddeaf44328afc5700610dacda7d2165433e244124d477e2dbd"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\5f6ef0.c",
+      "sha256": "a7cc0808456ef455e556087cce13b976545923fe0550391db4d8e67cb4032e9f"
+    },
+    {
+      "path": "work\\evidence\\ghidra\\functions\\622740.c",
+      "sha256": "de3978496da5f2dcecf62bfb0e331cf10b8829650d8ecfec10903be38a33f7d4"
+    }
+  ]
+}

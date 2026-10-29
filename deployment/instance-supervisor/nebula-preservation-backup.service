@@ -1,0 +1,15 @@
+[Unit]
+Description=Consistent Nebula preservation state backup
+
+[Service]
+Type=oneshot
+User=nebula
+Group=nebula
+EnvironmentFile=/etc/nebula-preservation/nebula.env
+ExecStart=/opt/nebula-preservation/.venv/bin/python /opt/nebula-preservation/tools/backup_state.py --state-dir ${NEBULA_STATE_DIR} --destination ${NEBULA_BACKUP_DIR} --keep 14
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/nebula-preservation /var/backups/nebula-preservation

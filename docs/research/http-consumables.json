@@ -1,0 +1,141 @@
+{
+  "format_version": 1,
+  "scope": "coffee and oktoberfest; picnic/minigames deferred",
+  "routes": {
+    "GetConsumablePriceServlet": {
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "consumableID",
+        "tableID decimal"
+      ],
+      "observed_table_id": 0,
+      "response_fields": [
+        "true",
+        "SessionGUID",
+        "PS4ID",
+        "consumableID",
+        "unused",
+        "price_display",
+        "price_type_display",
+        "user_amounts_display",
+        "rewarded_bool"
+      ],
+      "minimum_fields": 9,
+      "producer": {
+        "rva": "0x3ea820",
+        "sha256": "5236d6f03a177f387e84caa2d77bb4194a007e1b8483c60b8cf2bf58ae84b067"
+      },
+      "consumers": [
+        {
+          "kind": "coffee",
+          "rva": "0x405790",
+          "sha256": "94faad4443aa7728a35d34ac14fcdcbf0658d444b75bfefa6cc63e95e2b11457"
+        },
+        {
+          "kind": "oktoberfest",
+          "rva": "0x4090c0",
+          "sha256": "a06efd87a19b1b800ee86de3cdc352dba8e01404515c2cf7f1cabeddb466d2b4"
+        }
+      ],
+      "observation": "fields 5, 6 and 7 are display strings; field 8 is Boolean.Parse"
+    },
+    "GetConsumableServlet": {
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "consumableID",
+        "tableID decimal"
+      ],
+      "observed_table_id": 0,
+      "response_fields": [
+        "true",
+        "SessionGUID",
+        "PS4ID",
+        "consumableID",
+        "unused",
+        "success_bool",
+        "opaque_tcp_value",
+        "giveRewardIndex_int"
+      ],
+      "minimum_fields": 8,
+      "producer": {
+        "rva": "0x3eab80",
+        "sha256": "d9fb2bc171177394cf2c852acec95aeabaed282ffda3337b40f058be94f897e6"
+      },
+      "consumers": [
+        {
+          "kind": "coffee",
+          "rva": "0x4190b0",
+          "sha256": "7cadf67a3efc544c714836908f8a35028243290397fd5ca173141b71cadb19d8",
+          "tcp": "44#GUID#coffee#opaque_tcp_value"
+        },
+        {
+          "kind": "oktoberfest",
+          "rva": "0x419ba0",
+          "sha256": "a37893c7c200667158cad742d867663578f5b262ee17db103138e0deff90457c",
+          "tcp": "46#GUID#oktoberfest#opaque_tcp_value"
+        }
+      ],
+      "observation": "field 6 is copied verbatim and is not numeric-parsed; field 7 is a separate Int32"
+    }
+  },
+  "receipt_handoff": {
+    "policy": "local_consumable_receipt_v1",
+    "pending_directory": "consumable-receipts",
+    "claimed_directory": "consumable-claims",
+    "receipt_id": "lowercase UUID-N (32 hex)",
+    "fields": [
+      "format_version",
+      "policy",
+      "receipt_id",
+      "guid",
+      "ps4_id",
+      "kind",
+      "table_id",
+      "use_count",
+      "reward_index",
+      "issued_at",
+      "expires_at"
+    ],
+    "claim": "validate exact schema and identity, then exclusive same-volume move",
+    "trust_boundary": "trusted server-local filesystem; not a signed bearer token"
+  },
+  "initializer_evidence": [
+    {
+      "rva": "0x403280",
+      "method": "FoodTruckManager.InitPlayerCoffee",
+      "status": "focused native body exported and inspected",
+      "sha256": "d453c54842dbda41d97a27da8e3abfebf4d86563c9a2d2924ccaa1941e718fb1"
+    },
+    {
+      "rva": "0x403e40",
+      "method": "OktoberFestManager.InitPlayerOktoberFest",
+      "status": "focused native body exported and inspected",
+      "sha256": "09cb853d04fdad7d969fd4e48b7b2f224ef1e3180e52ee05b42e16e697a685b2"
+    },
+    {
+      "rva": "0x404800",
+      "method": "Consumable.InitConsumable",
+      "observation": "supplied integer is written to current and maximum counters",
+      "status": "focused native body exported and inspected",
+      "sha256": "606f2927578ce327681ad281bd0195fcc95a994d4f507180dc1b9f7d50e4fa71"
+    }
+  ],
+  "local_policy": {
+    "default_grants": 0,
+    "real_payment": false,
+    "unit_deduction": "one per successfully published receipt",
+    "prop_use_count": "positive Int32 explicitly configured by administrator",
+    "receipt_ttl_seconds_default": 300,
+    "scene_authorization": "separate instance-owned active compatible scene registry"
+  },
+  "unknowns": [
+    "original prices, currencies, balances and transaction rules",
+    "original field 6 payload grammar and anti-replay mechanism",
+    "original reward catalog and giveRewardIndex semantics",
+    "original per-kind/default prop use counts",
+    "original receipt lifetime",
+    "whether any other consumable callers exist outside bounded evidence"
+  ]
+}

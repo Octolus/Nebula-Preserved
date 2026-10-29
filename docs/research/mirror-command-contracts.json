@@ -1,0 +1,246 @@
+{
+  "format_version": 1,
+  "scope": "Static root-player Mirror command contracts; not all scene entities or runtime proof",
+  "binary_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+  "game_launched": false,
+  "listener_started": false,
+  "networking_parity_proven": false,
+  "hash_algorithm": "UInt32 unchecked, seed23, for each UTF16 code unit h=h*31+c; transmit full signed Int32 bits",
+  "component_provenance": "mirror-player-state.json rootNetworkBehaviours: index0 disabled Mirror.NetworkTransform(clientAuthority1), index1 NebulaPlayerSyncVars",
+  "commands": [
+    {
+      "name": "speed",
+      "component_index": 1,
+      "rva": "0x614560",
+      "signature_literal_rva": "0x24f9ac8",
+      "signature": "System.Void Assets.Scripts.NebulaPlayers.NebulaPlayerSyncVars::SetSpeed(System.Single)",
+      "function_hash_signed_int32": 421014902,
+      "channel": 0,
+      "requires_authority": true,
+      "payload": "float32 little endian, exactly4 bytes",
+      "reply_rpc": null,
+      "evidence": {
+        "rva": "0x614560",
+        "path": "work/evidence/ghidra/functions/614560.c",
+        "sha256": "4bf35201c7bcdf728557c0436181a9253821212cac67a01bc1ac98b7ffc4a786"
+      },
+      "runtime_reachability_proven": false
+    },
+    {
+      "name": "transform_sync",
+      "component_index": 0,
+      "rva": "0x12687e0",
+      "signature_literal_rva": "0x24faf80",
+      "signature": "System.Void Mirror.NetworkTransformBase::CmdClientToServerSync(System.Nullable`1<UnityEngine.Vector3>,System.Nullable`1<UnityEngine.Quaternion>,System.Nullable`1<UnityEngine.Vector3>)",
+      "function_hash_signed_int32": -1415757549,
+      "channel": 1,
+      "requires_authority": true,
+      "payload": "byte presence flag + optional Vector3; byte flag + optional Quaternion; byte flag + optional Vector3",
+      "reply_rpc": {
+        "signature": "System.Void Mirror.NetworkTransformBase::RpcServerToClientSync(System.Nullable`1<UnityEngine.Vector3>,System.Nullable`1<UnityEngine.Quaternion>,System.Nullable`1<UnityEngine.Vector3>)",
+        "literal_rva": "0x24fb1a0",
+        "function_hash_signed_int32": -2121586808,
+        "include_owner": true
+      },
+      "evidence": {
+        "rva": "0x12687e0",
+        "path": "work/evidence/ghidra/functions/12687e0.c",
+        "sha256": "2a5538b8fcf2b1e65044c397761a7c34e9e0868d3f102ac932564855e6f5ab50"
+      },
+      "runtime_reachability_proven": false
+    },
+    {
+      "name": "teleport",
+      "component_index": 0,
+      "rva": "0x1268cc0",
+      "signature_literal_rva": "0x24fb008",
+      "signature": "System.Void Mirror.NetworkTransformBase::CmdTeleport(UnityEngine.Vector3)",
+      "function_hash_signed_int32": -788685907,
+      "channel": 0,
+      "requires_authority": true,
+      "payload": "Vector3 destination, exactly12 bytes",
+      "reply_rpc": {
+        "signature": "System.Void Mirror.NetworkTransformBase::RpcTeleport(UnityEngine.Vector3)",
+        "literal_rva": "0x24fb228",
+        "function_hash_signed_int32": 165611234,
+        "include_owner": true
+      },
+      "evidence": {
+        "rva": "0x1268cc0",
+        "path": "work/evidence/ghidra/functions/1268cc0.c",
+        "sha256": "94729d929900d14ff8ff0c8ec38d9657e90bef52bdb806abb8fae99efa5f2282"
+      },
+      "runtime_reachability_proven": false
+    },
+    {
+      "name": "teleport_rotation",
+      "component_index": 0,
+      "rva": "0x1268b30",
+      "signature_literal_rva": "0x24fb090",
+      "signature": "System.Void Mirror.NetworkTransformBase::CmdTeleport(UnityEngine.Vector3,UnityEngine.Quaternion)",
+      "function_hash_signed_int32": -840469116,
+      "channel": 0,
+      "requires_authority": true,
+      "payload": "Vector3 destination then Quaternion rotation, exactly28 bytes",
+      "reply_rpc": {
+        "signature": "System.Void Mirror.NetworkTransformBase::RpcTeleport(UnityEngine.Vector3,UnityEngine.Quaternion)",
+        "literal_rva": "0x24fb2b0",
+        "function_hash_signed_int32": -84918609,
+        "include_owner": true
+      },
+      "evidence": {
+        "rva": "0x1268b30",
+        "path": "work/evidence/ghidra/functions/1268b30.c",
+        "sha256": "ebfe90668c9699c6fbb2a7fcb2fc20b9099f698133f9c72575d79c92cda115b9"
+      },
+      "runtime_reachability_proven": false
+    },
+    {
+      "name": "obsolete_teleport_rotation",
+      "component_index": 0,
+      "rva": "0x1268910",
+      "signature_literal_rva": "0x24fb118",
+      "signature": "System.Void Mirror.NetworkTransformBase::CmdTeleportAndRotate(UnityEngine.Vector3,UnityEngine.Quaternion)",
+      "function_hash_signed_int32": -1564373760,
+      "channel": 0,
+      "requires_authority": true,
+      "payload": "Vector3 destination then Quaternion rotation, exactly28 bytes; shares modern two-argument user body",
+      "reply_rpc": {
+        "signature": "System.Void Mirror.NetworkTransformBase::RpcTeleport(UnityEngine.Vector3,UnityEngine.Quaternion)",
+        "literal_rva": "0x24fb2b0",
+        "function_hash_signed_int32": -84918609,
+        "include_owner": true
+      },
+      "evidence": {
+        "rva": "0x1268910",
+        "path": "work/evidence/ghidra/functions/1268910.c",
+        "sha256": "1579db0f5664d66a852549521e1c636e7e4e85255cb4693937d403903c858363"
+      },
+      "runtime_reachability_proven": false
+    }
+  ],
+  "direct_call_references": [
+    {
+      "call_rva": "0x6130f2",
+      "target_rva": "0x614560",
+      "caller_rva": "0x612ed0",
+      "caller_names": [
+        "Assets.Scripts.NebulaPlayers.NebulaPlayerControl$$Move"
+      ],
+      "pseudocode_available": true,
+      "instruction_boundary_verified": true
+    }
+  ],
+  "native_evidence": [
+    {
+      "rva": "0x127f270",
+      "path": "work/evidence/ghidra/functions/127f270.c",
+      "sha256": "c6a7b6c0b6ebd63bd41514ed102fd7c1412d812721766749ccfc0b80e0427756"
+    },
+    {
+      "rva": "0x1284a00",
+      "path": "work/evidence/ghidra/functions/1284a00.c",
+      "sha256": "1d1a60a3d934de6d85a3dc288469a9ec3cf73cdf44555c23b2329780549582af"
+    },
+    {
+      "rva": "0x1284d50",
+      "path": "work/evidence/ghidra/functions/1284d50.c",
+      "sha256": "7f5d36c622c0eac47c8374bc8006f730082e3a319b73599e974349ab54f48182"
+    },
+    {
+      "rva": "0x12db260",
+      "path": "work/evidence/ghidra/functions/12db260.c",
+      "sha256": "387a6e88a7825e9dedddb825e4f1355561d19292e186e591e3387691e26b6ac5"
+    },
+    {
+      "rva": "0x12da160",
+      "path": "work/evidence/ghidra/functions/12da160.c",
+      "sha256": "c1403e29e388123217ec3addb5005052f08f7b8c158c0ec9f44bae7151070707"
+    },
+    {
+      "rva": "0x12d89a0",
+      "path": "work/evidence/ghidra/functions/12d89a0.c",
+      "sha256": "3b8cfcfa6052938812222b1b709670e9fbd98cb365dcf7f9d7f2ef100aae5337"
+    },
+    {
+      "rva": "0x614850",
+      "path": "work/evidence/ghidra/functions/614850.c",
+      "sha256": "08cb2682210c157210a73306c09030736cde51176ccb5c87ba0c87930d9ba803"
+    },
+    {
+      "rva": "0x614240",
+      "path": "work/evidence/ghidra/functions/614240.c",
+      "sha256": "05edd5a5c632f4de341b7c867307b82b496bae516aa14413c649e1c584b42843"
+    },
+    {
+      "rva": "0x614970",
+      "path": "work/evidence/ghidra/functions/614970.c",
+      "sha256": "56c3832e20749ba8cc72799a9485f3b3fa556cff959606e00ebaa8d0d2e3f5ce"
+    },
+    {
+      "rva": "0x614380",
+      "path": "work/evidence/ghidra/functions/614380.c",
+      "sha256": "43a376244b5efa024a3a0c1859689a493924e92af84301afb79c6da48238a7e0"
+    },
+    {
+      "rva": "0x614040",
+      "path": "work/evidence/ghidra/functions/614040.c",
+      "sha256": "e5b56eea7fa87cc4787f973faf6f2f14964ba63e97efc63ccdc69e98da0eb255"
+    },
+    {
+      "rva": "0x1270f70",
+      "path": "work/evidence/ghidra/functions/1270f70.c",
+      "sha256": "98a12a51f02a7ff37646df88330221d99ceb742fab563281b806f916ba5763d1"
+    },
+    {
+      "rva": "0x1270400",
+      "path": "work/evidence/ghidra/functions/1270400.c",
+      "sha256": "ecb93b468ec7a19a80e6b35fea994bae309047522e7ec65b6e93eb66ee0da977"
+    },
+    {
+      "rva": "0x12708c0",
+      "path": "work/evidence/ghidra/functions/12708c0.c",
+      "sha256": "05ced2bd1b18abcea15521a2c6c5c04b717f83fe0da40e7a2f1e5a4cd7005bbe"
+    },
+    {
+      "rva": "0x12707a0",
+      "path": "work/evidence/ghidra/functions/12707a0.c",
+      "sha256": "2015df7499a4cd04d4d80f85de3c63c90f8a21c611328d0379e083250da1b7a1"
+    },
+    {
+      "rva": "0x126cf50",
+      "path": "work/evidence/ghidra/functions/126cf50.c",
+      "sha256": "745b8530f78c9c1c718ad075abee99f226a1c3ef1f873366d8c9cb7aa7e9c088"
+    },
+    {
+      "rva": "0x126cb90",
+      "path": "work/evidence/ghidra/functions/126cb90.c",
+      "sha256": "314c59df6b5abe58ff961cc7f6344013331995727c34baf662080ec74eb62000"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "work/decompiled/stringliteral.json",
+      "sha256": "a2965a41dc983140388dc19f2392671618aad9115776ba9d70dc8481e328dd84"
+    },
+    {
+      "path": "work/decompiled/script.json",
+      "sha256": "7c2d1d0fbe78783799fb78499b9150ec516d30f626f6cf4949cb0d552a17de4a"
+    },
+    {
+      "path": "outputs/nebula-preservation/mirror-server/UnityProject/Assets/Preservation/NebulaMirrorCommands.cs",
+      "sha256": "552cff5dd5da57e723f980209828bffa54a3f3407f16e060e60e0d563a369e3f"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/mirror-player-state.json",
+      "sha256": "8363a3ff8af9e8aeaec0b5259225db9be6a11595635c8aad0e3d1f0dcb59d0bf"
+    }
+  ],
+  "replacement_policy_and_limits": [
+    "SetSpeed sends a float but its shipped UserCode method is an empty return at sharedRVA0x35a740. InvokeUserCode reads the float and checks type/server state without assigning it. Therefore assigning the accepted value to cached speed and replicating SyncVar is an explicit new local server policy, inferred from the client speed SyncVar consumer, not recovered server behavior.",
+    "Transform command payload/RPC mapping and includeOwner/channel flags are native-derived. The raw replacement caches authoritative pose and forwards the matching RPC rather than running an original server-side interpolation component.",
+    "All commands require a bound ready spawned connection and its own netId. Malformed, extra, nonfinite and degenerate-rotation values are rejected as local validation.",
+    "Prefab component0 is disabled; registration does not prove ordinary gameplay sends its commands. The direct E8 references list has a bounded linear-instruction scope and omits indirect/virtual/inlined calls.",
+    "No additional NetworkIdentity scene-object registry, original scheduling/authority, server physics, anticheat or original speed thresholds are established by these contracts."
+  ]
+}

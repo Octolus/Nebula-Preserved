@@ -1,0 +1,256 @@
+{
+  "scope": "Static installed-build world-loading path and local dependencies",
+  "binary_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+  "metadata_sha256": "7c2d1d0fbe78783799fb78499b9150ec516d30f626f6cf4949cb0d552a17de4a",
+  "stages": [
+    {
+      "stage": "boot",
+      "evidence": [
+        "0x68b170",
+        "0x69f440",
+        "0x3afd00"
+      ],
+      "order": [
+        "Initialize modern local bundle manager",
+        "Start independent game-music initializer",
+        "Initialize Scenes",
+        "Await nav load",
+        "Await s/nebulaplayer load",
+        "Load preinitiload in Single mode",
+        "PreInitLOAD.Start loads InitLOAD in Single mode"
+      ],
+      "caveat": "PreInitLOAD is bounded assembly evidence in world-loading-preinit-native.json; built-in ScreenLoader exists before PreInitLOAD.Start."
+    },
+    {
+      "stage": "allocate",
+      "evidence": [
+        "0x6ec320",
+        "0x3d5a40",
+        "0x400ae0",
+        "0x635bf0",
+        "0x635990",
+        "0x63c370",
+        "0x63c190",
+        "0x6427c0"
+      ],
+      "initial_request_scene": "Login",
+      "initial_request_is_space_to_load": true,
+      "server_status_success": 1,
+      "load_space_request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "psidglobal",
+        "isTesting Boolean",
+        "noIdSpace",
+        "desiredGuid"
+      ],
+      "load_space_response_fields": [
+        "SessionGUID",
+        "isBanned Boolean",
+        "noFreeSlot Boolean"
+      ],
+      "space_loading_request_fields": [
+        "SessionGUID",
+        "PS4ID"
+      ],
+      "space_loading_ready_response_fields": [
+        "SessionGUID",
+        "ready Boolean",
+        "id_instance",
+        "psidglobal",
+        "ip",
+        "port decimal"
+      ],
+      "ready_false_retry": {
+        "seconds": 1.0,
+        "time": "scaled WaitForSeconds",
+        "limit_observed": null
+      },
+      "requirement": "Map initial Login allocation sentinel to a concrete available scene; ready response psidglobal is a literal local scene key, not the unique instance ID."
+    },
+    {
+      "stage": "join_and_load",
+      "evidence": [
+        "0x63beb0",
+        "0x5e9800",
+        "0x46fa80",
+        "0x5e8480",
+        "0x5e9470"
+      ],
+      "maxusers_hardcoded": 32,
+      "response_field_mapping": {
+        "id_instance": "SpaceParams+0x10",
+        "psidglobal": "SpaceParams+0x18",
+        "ip": "SpaceParams+0x28",
+        "port": "SpaceParams+0x30"
+      },
+      "scene_path": "Application.streamingAssetsPath/StandaloneWindows/s/{response.psidglobal.ToLower()}",
+      "mode": "Additive (1)",
+      "logic_bundle": "s/{Scenes.Active}logicprefab",
+      "event_bundle": "s/{Scenes.Active}spaceevent",
+      "logic_required": true,
+      "event_optional": true,
+      "not_loading_new_scene_branch": "isSpaceToLoad=false invokes InitPlayerTCP directly"
+    },
+    {
+      "stage": "mirror_connect",
+      "evidence": [
+        "0x438a10",
+        "0x43c820",
+        "0x4386b0",
+        "0x438520",
+        "0x438f80"
+      ],
+      "network_address": "HTTP SpaceParams.ip -> ManagerInstance+0x260 -> inherited NetworkManager.networkAddress+0x38",
+      "port": "HTTP SpaceParams.port -> ManagerInstance+0x268 -> TelepathyTransport.port+0x68 (ushort)",
+      "connect": "TCPClient.Connect -> Mirror.NetworkManager.StartClient",
+      "on_client_connect": "base NetworkManager.OnClientConnect then NetworkClient.AddPlayer",
+      "watchdog": {
+        "seconds": 30.0,
+        "time": "WaitForSecondsRealtime",
+        "failure": "Close client and reallocate current scene/instance with isSpaceToLoad=false",
+        "does_not_cover": "Transport-connected avatar/HTTP/asset stalls"
+      }
+    },
+    {
+      "stage": "spawn_then_app_zero",
+      "evidence": [
+        "0x6e82a0",
+        "0x5ea6e0",
+        "0x5eb3a0"
+      ],
+      "must_precede_app_zero": [
+        "Mirror local player identity spawn",
+        "Connection.identity/netId assigned"
+      ],
+      "client_start": "NebulaPlayer.Start -> SetPlayer; local branch sets Memory.LocalNebulaPlayerToConnected, player GUID, input and local PlayerInfo",
+      "pending_announcement": "1#netId#SessionGUID#username#numericPlatform",
+      "app_zero_wait": "UniTask.WaitUntil(Memory.LocalNebulaPlayerToConnected is Unity-valid)",
+      "callback": "PlayerLabelInfo request and local NebulaPlayer.LoadAvatar(SessionGUID, OnAvatarLoaded)",
+      "parallel_initialization": [
+        "All active NebulaOccupable.Initialize",
+        "All active GenericInteractable.Initialize",
+        "Registered SpaceGameManager values"
+      ],
+      "response_count_gate_observed": false,
+      "risk": "OnConnected constructs netId-bearing announcement before WaitUntil, so sending app0 before Mirror spawn can dereference null identity."
+    },
+    {
+      "stage": "avatar_and_close",
+      "evidence": [
+        "0x6e7af0",
+        "0x622740",
+        "0x5f63e0",
+        "0x6033e0",
+        "0x5dfdc0",
+        "0x5ea260"
+      ],
+      "dependency": "GetPresetGame response must satisfy exact avatar contract, item table catalog and locally resolvable assets",
+      "early_position": "CreateGhost copies HTTP AvatarInfo.lastPos to the instantiated player root for local and remote players",
+      "avatar_complete": "PostInstantiateAssets -> End -> clear creation queue/loading flags -> OnAvatarLoaded callback(GUID)",
+      "connected_callback": [
+        "Animation controller",
+        "Enable NetworkTransform",
+        "Companion and locomotion",
+        "Fire GetAllInWardrobe asynchronously",
+        "Destroy prior local player if present",
+        "Initialize player control and RandomIdle",
+        "Send stored C2S1 announcement",
+        "Start MoveAvatarDelay"
+      ],
+      "local_override": "MoveAvatarDelay chooses a serialized Nexus spawn point, applies position/forward/camera, then yields null once",
+      "close": [
+        "SpinCircle.Hide",
+        "ScreenLoader.Hide",
+        "ManagerInstance.isChatMenuLocked+0x272=false"
+      ],
+      "server_roster_or_state_ack_required_to_close": false,
+      "caveat": "Uncaught exceptions or missing local resources can prevent callback completion; absence of an explicit reply-count gate is not proof all optional requests are safe to omit."
+    }
+  ],
+  "findings": {
+    "modern_allocation": {
+      "result": "HTTP direct allocation followed by Mirror is the active traced modern path",
+      "separate_loadbalancer_server_required_by_trace": false,
+      "scene_response_must_be_literal": true,
+      "distinguish_request_Login_sentinel": true
+    },
+    "legacy_loadbalancer": {
+      "getters": {
+        "0x12499a0": "104.196.161.5",
+        "0x12499d0": "104.196.60.146",
+        "0x1249a00": 28000
+      },
+      "direct_getter_call": "get_Ip called at 0x42ab8c from PS4Info.Init; assigns ipLoadBalancer",
+      "modern_socket_use_observed": false,
+      "legacy_dto_typeinfo_references": 0,
+      "limitation": "E8/E9 byte-position candidates do not cover virtual, indirect, reflection or inlined calls."
+    },
+    "local_assets": {
+      "remote_manifest_needed_in_traced_modern_path": false,
+      "scene_loader": "Local AssetBundle.LoadFromFileAsync; first scene path; SceneManager.LoadSceneAsync",
+      "modern_asset_loader": "Local file/cache; missing bundle returns null; no HTTP fallback",
+      "shared_dependency_loader": "Loads local skinmaterials only; not a generic manifest dependency resolver",
+      "resources_fallback": "Only bounded local filename rewrite for enye-containing item IDs; no HTTP fallback observed",
+      "optional_missing": "s/nexusspaceevent returns null and is skipped",
+      "legacy_url": "Embedded assetbundleserverurl htt[local-path] belongs to legacy AssetBundles manager; active use not established",
+      "new_loader_patch_justified_by_trace": false
+    },
+    "readiness": {
+      "ready": false,
+      "target_execution": false,
+      "connections": false,
+      "claim": "Static path reconstruction; no end-to-end or 1:1 runtime equivalence claim"
+    },
+    "remaining_core_dependencies": [
+      "Bootstrap identity/session and prerequisite HTTP tasks must produce the exact recovered callbacks; see bootstrap-response-contracts.",
+      "Initial Login allocation sentinel must resolve to an available instance and literal scene key.",
+      "Mirror identity spawn/component order/payload must match the shipped prefab and precede application opcode0.",
+      "GetPresetGame/PlayerLabelInfo, avatar EntryData catalog/assets and avatar completion callback must be valid.",
+      "GetAllInWardrobe nonempty responses require the documented copied-client loop fix and PlayerLabelJson elements; empty OK# suppresses callback in the original path.",
+      "Local scene, logic, nav, player, UI and skinmaterials objects must deserialize and instantiate in the shipped player; file presence does not establish runtime compatibility.",
+      "World occupancy/interactables/state replies and remote presence remain required for restored behavior even though no aggregate reply count gates ScreenLoader.Hide."
+    ],
+    "limits": [
+      "Only bounded bootstrap/Nexus roots and their shipped text-manifest dependencies were hashed, not every avatar/housing asset.",
+      "All14 built-in boot MonoBehaviour headers resolve; full typetree parsing fails for12 and those errors are preserved. All9 Nexus MonoBehaviour headers resolve; selected loader full-typetree parsing has0 errors.",
+      "Ghidra output is native pseudocode, includes merged tails/generic names/indirect-call warnings, and is not recovered original C#.",
+      "Legacy absence findings are scoped to the traced modern path and direct-call candidate scan.",
+      "No server, listener, game, client or connection was started by this audit."
+    ]
+  },
+  "supporting_artifacts": [
+    {
+      "path": "world-loading-assets.json",
+      "sha256": "be70c901e8fc09ef854651c3d7d77806e40eed72d59e39b650b6e77c14f7abcb"
+    },
+    {
+      "path": "world-loading-methods.json",
+      "sha256": "8fed8271ea855cf24cb3f82ed7889db9cf325672515a4332bd625aa38e080083"
+    },
+    {
+      "path": "world-loading-xrefs.json",
+      "sha256": "eeed0db990bc56dec5ee033c1982897f04ad1459a9d5b0743f017798718a95f4"
+    },
+    {
+      "path": "world-loading-native.json",
+      "sha256": "9788467ec2c87b7cfb3fbc6de44d9e63293b9f63d80bcd54770b20939f31f94c"
+    },
+    {
+      "path": "world-loading-preinit-native.json",
+      "sha256": "9509b4f816362e70590bc00b06cdac11a571c01b3141285b9ee2cd368b7b43c3"
+    },
+    {
+      "path": "tcp-world-spawn.json",
+      "sha256": "4794f9b80e29204329645b21677d637d1cd374c77809b8c3b316c56e631fa34a"
+    },
+    {
+      "path": "tcp-wardrobe-patch.json",
+      "sha256": "e1c133770b2651da58351ef06451efad473a9f6032b131cea024794bfcabf21c"
+    },
+    {
+      "path": "bootstrap-response-contracts.json",
+      "sha256": "e1660a821c682768a38e0a70e2e48c9187180e31596c0a8b2d6508abe993a0de"
+    }
+  ]
+}

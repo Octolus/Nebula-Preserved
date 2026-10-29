@@ -1,0 +1,3616 @@
+[
+  {
+    "id": "no-trailer:ChannelGUIDServlet",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:ChannelGUIDServlet",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:ChannelGUIDServlet",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:CheckIfSpaceStillExistServlet",
+    "op": "http",
+    "route": "CheckIfSpaceStillExistServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:CheckIfSpaceStillExistServlet",
+    "op": "http",
+    "route": "CheckIfSpaceStillExistServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:CheckIfSpaceStillExistServlet",
+    "op": "http",
+    "route": "CheckIfSpaceStillExistServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:CheckOwnGenericReward",
+    "op": "http",
+    "route": "CheckOwnGenericReward",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:CheckOwnGenericReward",
+    "op": "http",
+    "route": "CheckOwnGenericReward",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:CheckOwnGenericReward",
+    "op": "http",
+    "route": "CheckOwnGenericReward",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:CheckServerStatusServlet",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:CheckServerStatusServlet",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:CheckServerStatusServlet",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:CheckerServlet",
+    "op": "http",
+    "route": "CheckerServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:CheckerServlet",
+    "op": "http",
+    "route": "CheckerServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:CheckerServlet",
+    "op": "http",
+    "route": "CheckerServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:CinemaInteractionNPServlet",
+    "op": "http",
+    "route": "CinemaInteractionNPServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:CinemaInteractionNPServlet",
+    "op": "http",
+    "route": "CinemaInteractionNPServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:CinemaInteractionNPServlet",
+    "op": "http",
+    "route": "CinemaInteractionNPServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GenericReward",
+    "op": "http",
+    "route": "GenericReward",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GenericReward",
+    "op": "http",
+    "route": "GenericReward",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GenericReward",
+    "op": "http",
+    "route": "GenericReward",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetAllInWardrobe",
+    "op": "http",
+    "route": "GetAllInWardrobe",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetAllInWardrobe",
+    "op": "http",
+    "route": "GetAllInWardrobe",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetAllInWardrobe",
+    "op": "http",
+    "route": "GetAllInWardrobe",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetCinemaFilmsServlet",
+    "op": "http",
+    "route": "GetCinemaFilmsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetCinemaFilmsServlet",
+    "op": "http",
+    "route": "GetCinemaFilmsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetCinemaFilmsServlet",
+    "op": "http",
+    "route": "GetCinemaFilmsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetCompanionsServlet",
+    "op": "http",
+    "route": "GetCompanionsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetCompanionsServlet",
+    "op": "http",
+    "route": "GetCompanionsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetCompanionsServlet",
+    "op": "http",
+    "route": "GetCompanionsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetConsumablePriceServlet",
+    "op": "http",
+    "route": "GetConsumablePriceServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetConsumablePriceServlet",
+    "op": "http",
+    "route": "GetConsumablePriceServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetConsumablePriceServlet",
+    "op": "http",
+    "route": "GetConsumablePriceServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetConsumableServlet",
+    "op": "http",
+    "route": "GetConsumableServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetConsumableServlet",
+    "op": "http",
+    "route": "GetConsumableServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetConsumableServlet",
+    "op": "http",
+    "route": "GetConsumableServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetFeaturesServlet",
+    "op": "http",
+    "route": "GetFeaturesServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetFeaturesServlet",
+    "op": "http",
+    "route": "GetFeaturesServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetFeaturesServlet",
+    "op": "http",
+    "route": "GetFeaturesServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetGenderDataShopServlet",
+    "op": "http",
+    "route": "GetGenderDataShopServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetGenderDataShopServlet",
+    "op": "http",
+    "route": "GetGenderDataShopServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetGenderDataShopServlet",
+    "op": "http",
+    "route": "GetGenderDataShopServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetHousingTypeServlet",
+    "op": "http",
+    "route": "GetHousingTypeServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetHousingTypeServlet",
+    "op": "http",
+    "route": "GetHousingTypeServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetHousingTypeServlet",
+    "op": "http",
+    "route": "GetHousingTypeServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetIinitInfosNeededServlet",
+    "op": "http",
+    "route": "GetIinitInfosNeededServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetIinitInfosNeededServlet",
+    "op": "http",
+    "route": "GetIinitInfosNeededServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetIinitInfosNeededServlet",
+    "op": "http",
+    "route": "GetIinitInfosNeededServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetInfoServlet",
+    "op": "http",
+    "route": "GetInfoServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetInfoServlet",
+    "op": "http",
+    "route": "GetInfoServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetInfoServlet",
+    "op": "http",
+    "route": "GetInfoServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetItemAssetsDataServlet",
+    "op": "http",
+    "route": "GetItemAssetsDataServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetItemAssetsDataServlet",
+    "op": "http",
+    "route": "GetItemAssetsDataServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetItemAssetsDataServlet",
+    "op": "http",
+    "route": "GetItemAssetsDataServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetLastUsedPreset",
+    "op": "http",
+    "route": "GetLastUsedPreset",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetLastUsedPreset",
+    "op": "http",
+    "route": "GetLastUsedPreset",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetLastUsedPreset",
+    "op": "http",
+    "route": "GetLastUsedPreset",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetLoadPresetByName",
+    "op": "http",
+    "route": "GetLoadPresetByName",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetLoadPresetByName",
+    "op": "http",
+    "route": "GetLoadPresetByName",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetLoadPresetByName",
+    "op": "http",
+    "route": "GetLoadPresetByName",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetLocomotionsServlet",
+    "op": "http",
+    "route": "GetLocomotionsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetLocomotionsServlet",
+    "op": "http",
+    "route": "GetLocomotionsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetLocomotionsServlet",
+    "op": "http",
+    "route": "GetLocomotionsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetNewsServlet",
+    "op": "http",
+    "route": "GetNewsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetNewsServlet",
+    "op": "http",
+    "route": "GetNewsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetNewsServlet",
+    "op": "http",
+    "route": "GetNewsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetPersonalSpacesServlet",
+    "op": "http",
+    "route": "GetPersonalSpacesServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetPersonalSpacesServlet",
+    "op": "http",
+    "route": "GetPersonalSpacesServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetPersonalSpacesServlet",
+    "op": "http",
+    "route": "GetPersonalSpacesServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetPlayerPrefsServlet",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetPlayerPrefsServlet",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetPlayerPrefsServlet",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetPresetGameServlet",
+    "op": "http",
+    "route": "GetPresetGameServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetPresetGameServlet",
+    "op": "http",
+    "route": "GetPresetGameServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetPresetGameServlet",
+    "op": "http",
+    "route": "GetPresetGameServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetPurchases",
+    "op": "http",
+    "route": "GetPurchases",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetPurchases",
+    "op": "http",
+    "route": "GetPurchases",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetPurchases",
+    "op": "http",
+    "route": "GetPurchases",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 403
+  },
+  {
+    "id": "no-trailer:GetShopDataShopServlet",
+    "op": "http",
+    "route": "GetShopDataShopServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetShopDataShopServlet",
+    "op": "http",
+    "route": "GetShopDataShopServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetShopDataShopServlet",
+    "op": "http",
+    "route": "GetShopDataShopServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetShopInfoPlayerShop",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetShopInfoPlayerShop",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetShopInfoPlayerShop",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetShopTypeDataShopServlet",
+    "op": "http",
+    "route": "GetShopTypeDataShopServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetShopTypeDataShopServlet",
+    "op": "http",
+    "route": "GetShopTypeDataShopServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetShopTypeDataShopServlet",
+    "op": "http",
+    "route": "GetShopTypeDataShopServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetSocialList",
+    "op": "http",
+    "route": "GetSocialList",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetSocialList",
+    "op": "http",
+    "route": "GetSocialList",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetSocialList",
+    "op": "http",
+    "route": "GetSocialList",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetSpaceEventServlet",
+    "op": "http",
+    "route": "GetSpaceEventServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetSpaceEventServlet",
+    "op": "http",
+    "route": "GetSpaceEventServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetSpaceEventServlet",
+    "op": "http",
+    "route": "GetSpaceEventServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_GatherConsume",
+    "op": "http",
+    "route": "Get_GatherConsume",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_GatherConsume",
+    "op": "http",
+    "route": "Get_GatherConsume",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_GatherConsume",
+    "op": "http",
+    "route": "Get_GatherConsume",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_GatherConsumeReward",
+    "op": "http",
+    "route": "Get_GatherConsumeReward",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_GatherConsumeReward",
+    "op": "http",
+    "route": "Get_GatherConsumeReward",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_GatherConsumeReward",
+    "op": "http",
+    "route": "Get_GatherConsumeReward",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_GatherMedievalVillage",
+    "op": "http",
+    "route": "Get_GatherMedievalVillage",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_GatherMedievalVillage",
+    "op": "http",
+    "route": "Get_GatherMedievalVillage",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_GatherMedievalVillage",
+    "op": "http",
+    "route": "Get_GatherMedievalVillage",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_GatherPhaseGame",
+    "op": "http",
+    "route": "Get_GatherPhaseGame",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_GatherPhaseGame",
+    "op": "http",
+    "route": "Get_GatherPhaseGame",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_GatherPhaseGame",
+    "op": "http",
+    "route": "Get_GatherPhaseGame",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_GatherStatus",
+    "op": "http",
+    "route": "Get_GatherStatus",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_GatherStatus",
+    "op": "http",
+    "route": "Get_GatherStatus",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_GatherStatus",
+    "op": "http",
+    "route": "Get_GatherStatus",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_npGather",
+    "op": "http",
+    "route": "Get_npGather",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_npGather",
+    "op": "http",
+    "route": "Get_npGather",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_npGather",
+    "op": "http",
+    "route": "Get_npGather",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_npGatherChristmas",
+    "op": "http",
+    "route": "Get_npGatherChristmas",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_npGatherChristmas",
+    "op": "http",
+    "route": "Get_npGatherChristmas",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_npGatherChristmas",
+    "op": "http",
+    "route": "Get_npGatherChristmas",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Get_npGatherProcessItem",
+    "op": "http",
+    "route": "Get_npGatherProcessItem",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Get_npGatherProcessItem",
+    "op": "http",
+    "route": "Get_npGatherProcessItem",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Get_npGatherProcessItem",
+    "op": "http",
+    "route": "Get_npGatherProcessItem",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:GetrefusernameServlet",
+    "op": "http",
+    "route": "GetrefusernameServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:GetrefusernameServlet",
+    "op": "http",
+    "route": "GetrefusernameServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:GetrefusernameServlet",
+    "op": "http",
+    "route": "GetrefusernameServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:HousingReadPresetServlet",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:HousingReadPresetServlet",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:HousingReadPresetServlet",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:HousingSavePresetServletParts",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:HousingSavePresetServletParts",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:HousingSavePresetServletParts",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:InWardrobeCheckerServlet",
+    "op": "http",
+    "route": "InWardrobeCheckerServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:InWardrobeCheckerServlet",
+    "op": "http",
+    "route": "InWardrobeCheckerServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:InWardrobeCheckerServlet",
+    "op": "http",
+    "route": "InWardrobeCheckerServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:InfoServlet",
+    "op": "http",
+    "route": "InfoServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:InfoServlet",
+    "op": "http",
+    "route": "InfoServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:InfoServlet",
+    "op": "http",
+    "route": "InfoServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2AddBlock",
+    "op": "http",
+    "route": "N2AddBlock",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2AddBlock",
+    "op": "http",
+    "route": "N2AddBlock",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2AddBlock",
+    "op": "http",
+    "route": "N2AddBlock",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2AddSilenced",
+    "op": "http",
+    "route": "N2AddSilenced",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2AddSilenced",
+    "op": "http",
+    "route": "N2AddSilenced",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2AddSilenced",
+    "op": "http",
+    "route": "N2AddSilenced",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2AddUser",
+    "op": "http",
+    "route": "N2AddUser",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2AddUser",
+    "op": "http",
+    "route": "N2AddUser",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2AddUser",
+    "op": "http",
+    "route": "N2AddUser",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2AddUserOnline",
+    "op": "http",
+    "route": "N2AddUserOnline",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2AddUserOnline",
+    "op": "http",
+    "route": "N2AddUserOnline",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2AddUserOnline",
+    "op": "http",
+    "route": "N2AddUserOnline",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2GetPsidglobalAndGuidByUsernamePlatform",
+    "op": "http",
+    "route": "N2GetPsidglobalAndGuidByUsernamePlatform",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2GetPsidglobalAndGuidByUsernamePlatform",
+    "op": "http",
+    "route": "N2GetPsidglobalAndGuidByUsernamePlatform",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2GetPsidglobalAndGuidByUsernamePlatform",
+    "op": "http",
+    "route": "N2GetPsidglobalAndGuidByUsernamePlatform",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2GetRelationship",
+    "op": "http",
+    "route": "N2GetRelationship",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2GetRelationship",
+    "op": "http",
+    "route": "N2GetRelationship",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2GetRelationship",
+    "op": "http",
+    "route": "N2GetRelationship",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2GetSocialList",
+    "op": "http",
+    "route": "N2GetSocialList",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2GetSocialList",
+    "op": "http",
+    "route": "N2GetSocialList",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2GetSocialList",
+    "op": "http",
+    "route": "N2GetSocialList",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2GetUserTypeSpace",
+    "op": "http",
+    "route": "N2GetUserTypeSpace",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2GetUserTypeSpace",
+    "op": "http",
+    "route": "N2GetUserTypeSpace",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2GetUserTypeSpace",
+    "op": "http",
+    "route": "N2GetUserTypeSpace",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2HousingReadPreset",
+    "op": "http",
+    "route": "N2HousingReadPreset",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2HousingReadPreset",
+    "op": "http",
+    "route": "N2HousingReadPreset",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2HousingReadPreset",
+    "op": "http",
+    "route": "N2HousingReadPreset",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2LoadSpace",
+    "op": "http",
+    "route": "N2LoadSpace",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2LoadSpace",
+    "op": "http",
+    "route": "N2LoadSpace",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2LoadSpace",
+    "op": "http",
+    "route": "N2LoadSpace",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2RemoveBlock",
+    "op": "http",
+    "route": "N2RemoveBlock",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2RemoveBlock",
+    "op": "http",
+    "route": "N2RemoveBlock",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2RemoveBlock",
+    "op": "http",
+    "route": "N2RemoveBlock",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2RemoveFriend",
+    "op": "http",
+    "route": "N2RemoveFriend",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2RemoveFriend",
+    "op": "http",
+    "route": "N2RemoveFriend",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2RemoveFriend",
+    "op": "http",
+    "route": "N2RemoveFriend",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2RemoveSilenced",
+    "op": "http",
+    "route": "N2RemoveSilenced",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2RemoveSilenced",
+    "op": "http",
+    "route": "N2RemoveSilenced",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2RemoveSilenced",
+    "op": "http",
+    "route": "N2RemoveSilenced",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2SavePreset",
+    "op": "http",
+    "route": "N2SavePreset",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2SavePreset",
+    "op": "http",
+    "route": "N2SavePreset",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2SavePreset",
+    "op": "http",
+    "route": "N2SavePreset",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2SpaceLoading",
+    "op": "http",
+    "route": "N2SpaceLoading",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2SpaceLoading",
+    "op": "http",
+    "route": "N2SpaceLoading",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2SpaceLoading",
+    "op": "http",
+    "route": "N2SpaceLoading",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2ToggleFavorite",
+    "op": "http",
+    "route": "N2ToggleFavorite",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2ToggleFavorite",
+    "op": "http",
+    "route": "N2ToggleFavorite",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2ToggleFavorite",
+    "op": "http",
+    "route": "N2ToggleFavorite",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2UpdateUserOnline",
+    "op": "http",
+    "route": "N2UpdateUserOnline",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2UpdateUserOnline",
+    "op": "http",
+    "route": "N2UpdateUserOnline",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2UpdateUserOnline",
+    "op": "http",
+    "route": "N2UpdateUserOnline",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:N2UserExist",
+    "op": "http",
+    "route": "N2UserExist",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:N2UserExist",
+    "op": "http",
+    "route": "N2UserExist",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:N2UserExist",
+    "op": "http",
+    "route": "N2UserExist",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:NPShopBundleItemsServlet",
+    "op": "http",
+    "route": "NPShopBundleItemsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:NPShopBundleItemsServlet",
+    "op": "http",
+    "route": "NPShopBundleItemsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:NPShopBundleItemsServlet",
+    "op": "http",
+    "route": "NPShopBundleItemsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:NPShopBuyItemServlet",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:NPShopBuyItemServlet",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:NPShopBuyItemServlet",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:NPShopGiftItemServlet",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:NPShopGiftItemServlet",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:NPShopGiftItemServlet",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:NPShopIsItemPurchasedServlet",
+    "op": "http",
+    "route": "NPShopIsItemPurchasedServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:NPShopIsItemPurchasedServlet",
+    "op": "http",
+    "route": "NPShopIsItemPurchasedServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:NPShopIsItemPurchasedServlet",
+    "op": "http",
+    "route": "NPShopIsItemPurchasedServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:NPShopSyncCrystalsServlet",
+    "op": "http",
+    "route": "NPShopSyncCrystalsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:NPShopSyncCrystalsServlet",
+    "op": "http",
+    "route": "NPShopSyncCrystalsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:NPShopSyncCrystalsServlet",
+    "op": "http",
+    "route": "NPShopSyncCrystalsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:PlayerLabelInfoServlet",
+    "op": "http",
+    "route": "PlayerLabelInfoServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:PlayerLabelInfoServlet",
+    "op": "http",
+    "route": "PlayerLabelInfoServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:PlayerLabelInfoServlet",
+    "op": "http",
+    "route": "PlayerLabelInfoServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:PlayerPrefsServlet",
+    "op": "http",
+    "route": "PlayerPrefsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:PlayerPrefsServlet",
+    "op": "http",
+    "route": "PlayerPrefsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:PlayerPrefsServlet",
+    "op": "http",
+    "route": "PlayerPrefsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:RemoveInWardrobeServlet",
+    "op": "http",
+    "route": "RemoveInWardrobeServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:RemoveInWardrobeServlet",
+    "op": "http",
+    "route": "RemoveInWardrobeServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:RemoveInWardrobeServlet",
+    "op": "http",
+    "route": "RemoveInWardrobeServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:RemovePresetServlet",
+    "op": "http",
+    "route": "RemovePresetServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:RemovePresetServlet",
+    "op": "http",
+    "route": "RemovePresetServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:RemovePresetServlet",
+    "op": "http",
+    "route": "RemovePresetServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:RenamePresetServlet",
+    "op": "http",
+    "route": "RenamePresetServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:RenamePresetServlet",
+    "op": "http",
+    "route": "RenamePresetServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:RenamePresetServlet",
+    "op": "http",
+    "route": "RenamePresetServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:ReportServlet",
+    "op": "http",
+    "route": "ReportServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:ReportServlet",
+    "op": "http",
+    "route": "ReportServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:ReportServlet",
+    "op": "http",
+    "route": "ReportServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:ResetDefaultPresetServlet",
+    "op": "http",
+    "route": "ResetDefaultPresetServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:ResetDefaultPresetServlet",
+    "op": "http",
+    "route": "ResetDefaultPresetServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:ResetDefaultPresetServlet",
+    "op": "http",
+    "route": "ResetDefaultPresetServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:RewardClothServlet",
+    "op": "http",
+    "route": "RewardClothServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:RewardClothServlet",
+    "op": "http",
+    "route": "RewardClothServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:RewardClothServlet",
+    "op": "http",
+    "route": "RewardClothServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:RewardConsumeServlet",
+    "op": "http",
+    "route": "RewardConsumeServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:RewardConsumeServlet",
+    "op": "http",
+    "route": "RewardConsumeServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:RewardConsumeServlet",
+    "op": "http",
+    "route": "RewardConsumeServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:SKLPromoServlet",
+    "op": "http",
+    "route": "SKLPromoServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:SKLPromoServlet",
+    "op": "http",
+    "route": "SKLPromoServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:SKLPromoServlet",
+    "op": "http",
+    "route": "SKLPromoServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:SKLPromoTriggerServlet",
+    "op": "http",
+    "route": "SKLPromoTriggerServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:SKLPromoTriggerServlet",
+    "op": "http",
+    "route": "SKLPromoTriggerServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:SKLPromoTriggerServlet",
+    "op": "http",
+    "route": "SKLPromoTriggerServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:STMGetUserInfo",
+    "op": "http",
+    "route": "STMGetUserInfo",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:STMGetUserInfo",
+    "op": "http",
+    "route": "STMGetUserInfo",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:STMGetUserInfo",
+    "op": "http",
+    "route": "STMGetUserInfo",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:SavePlayerPref",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:SavePlayerPref",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:SavePlayerPref",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Send_CheckIsInWardrobeServlet",
+    "op": "http",
+    "route": "Send_CheckIsInWardrobeServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Send_CheckIsInWardrobeServlet",
+    "op": "http",
+    "route": "Send_CheckIsInWardrobeServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Send_CheckIsInWardrobeServlet",
+    "op": "http",
+    "route": "Send_CheckIsInWardrobeServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Send_GatherInitInSpace",
+    "op": "http",
+    "route": "Send_GatherInitInSpace",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Send_GatherInitInSpace",
+    "op": "http",
+    "route": "Send_GatherInitInSpace",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Send_GatherInitInSpace",
+    "op": "http",
+    "route": "Send_GatherInitInSpace",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:Send_GatherMedievalVillageConsume",
+    "op": "http",
+    "route": "Send_GatherMedievalVillageConsume",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:Send_GatherMedievalVillageConsume",
+    "op": "http",
+    "route": "Send_GatherMedievalVillageConsume",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:Send_GatherMedievalVillageConsume",
+    "op": "http",
+    "route": "Send_GatherMedievalVillageConsume",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:SetPlayerPrefsServlet",
+    "op": "http",
+    "route": "SetPlayerPrefsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:SetPlayerPrefsServlet",
+    "op": "http",
+    "route": "SetPlayerPrefsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:SetPlayerPrefsServlet",
+    "op": "http",
+    "route": "SetPlayerPrefsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:SetUserInWardrobe",
+    "op": "http",
+    "route": "SetUserInWardrobe",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:SetUserInWardrobe",
+    "op": "http",
+    "route": "SetUserInWardrobe",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:SetUserInWardrobe",
+    "op": "http",
+    "route": "SetUserInWardrobe",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:ShowPresetsServlet",
+    "op": "http",
+    "route": "ShowPresetsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:ShowPresetsServlet",
+    "op": "http",
+    "route": "ShowPresetsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:ShowPresetsServlet",
+    "op": "http",
+    "route": "ShowPresetsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:UserExistsServlet",
+    "op": "http",
+    "route": "UserExistsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:UserExistsServlet",
+    "op": "http",
+    "route": "UserExistsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:UserExistsServlet",
+    "op": "http",
+    "route": "UserExistsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:WardrobeOptionItemServlet",
+    "op": "http",
+    "route": "WardrobeOptionItemServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:WardrobeOptionItemServlet",
+    "op": "http",
+    "route": "WardrobeOptionItemServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:WardrobeOptionItemServlet",
+    "op": "http",
+    "route": "WardrobeOptionItemServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:checkRewardAvailableServlet",
+    "op": "http",
+    "route": "checkRewardAvailableServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:checkRewardAvailableServlet",
+    "op": "http",
+    "route": "checkRewardAvailableServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:checkRewardAvailableServlet",
+    "op": "http",
+    "route": "checkRewardAvailableServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:checkStateNPFriendsServlet",
+    "op": "http",
+    "route": "checkStateNPFriendsServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:checkStateNPFriendsServlet",
+    "op": "http",
+    "route": "checkStateNPFriendsServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:checkStateNPFriendsServlet",
+    "op": "http",
+    "route": "checkStateNPFriendsServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:checkerToServerDownMaintenanceServlet",
+    "op": "http",
+    "route": "checkerToServerDownMaintenanceServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:checkerToServerDownMaintenanceServlet",
+    "op": "http",
+    "route": "checkerToServerDownMaintenanceServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:checkerToServerDownMaintenanceServlet",
+    "op": "http",
+    "route": "checkerToServerDownMaintenanceServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "no-trailer:spaceExistServlet",
+    "op": "http",
+    "route": "spaceExistServlet",
+    "plaintext": "synthetic",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bad-platform:spaceExistServlet",
+    "op": "http",
+    "route": "spaceExistServlet",
+    "plaintext": "synthetic#UnknownPlatform",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "empty-fields:spaceExistServlet",
+    "op": "http",
+    "route": "spaceExistServlet",
+    "plaintext": "#StandaloneWindows",
+    "category": "arity",
+    "expected_status": 400
+  },
+  {
+    "id": "http-post",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "category": "adapter",
+    "expected_status": 400,
+    "method": "POST",
+    "plaintext": "a#b#StandaloneWindows"
+  },
+  {
+    "id": "http-missing-query",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "category": "adapter",
+    "expected_status": 400
+  },
+  {
+    "id": "http-invalid-base64",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "category": "adapter",
+    "expected_status": 400,
+    "data": "%%%"
+  },
+  {
+    "id": "http-empty-ciphertext",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "category": "adapter",
+    "expected_status": 400,
+    "data": ""
+  },
+  {
+    "id": "http-invalid-padding",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "category": "adapter",
+    "expected_status": 400,
+    "data": "AAAAAAAAAAAAAAAAAAAAAA=="
+  },
+  {
+    "id": "unknown-route",
+    "op": "http",
+    "route": "UnreconstructedSyntheticRoute",
+    "method": "GET",
+    "plaintext": "x#StandaloneWindows",
+    "category": "unsupported",
+    "expected_status": 501
+  },
+  {
+    "id": "state-after-malformed",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "login-a",
+    "op": "http",
+    "route": "N2UserExist",
+    "method": "GET",
+    "plaintext": "Parity A#v72#false#parity-synthetic-a#1.25#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200,
+    "expected_plaintext": "parity-synthetic-a##preservation#false#false##"
+  },
+  {
+    "id": "channel-a",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "method": "GET",
+    "plaintext": "parity-synthetic-a#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200,
+    "expected_plaintext": "true#"
+  },
+  {
+    "id": "login-b",
+    "op": "http",
+    "route": "N2UserExist",
+    "method": "GET",
+    "plaintext": "Parity B#v72#false#parity-synthetic-b#1.25#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200,
+    "expected_plaintext": "parity-synthetic-b##preservation#false#false##"
+  },
+  {
+    "id": "channel-b",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "method": "GET",
+    "plaintext": "parity-synthetic-b#bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200,
+    "expected_plaintext": "true#"
+  },
+  {
+    "id": "state-after-login",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "server-status",
+    "op": "http",
+    "route": "CheckServerStatusServlet",
+    "method": "GET",
+    "plaintext": "Parity A#4.125#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200,
+    "expected_plaintext": "true#Parity A#4.125#1"
+  },
+  {
+    "id": "checker",
+    "op": "http",
+    "route": "CheckerServlet",
+    "method": "GET",
+    "plaintext": "Parity A###4.125#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200,
+    "expected_plaintext": "OK#4.125#false##"
+  },
+  {
+    "id": "steam-fixture",
+    "op": "http",
+    "route": "STMGetUserInfo",
+    "method": "GET",
+    "plaintext": "#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "legacy-exists",
+    "op": "http",
+    "route": "UserExistsServlet",
+    "method": "GET",
+    "plaintext": "parity-synthetic-a#v72#false#parity-synthetic-a#1.25#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "legacy-mismatch",
+    "op": "http",
+    "route": "UserExistsServlet",
+    "method": "GET",
+    "plaintext": "other-id#v72#false#parity-synthetic-a#1.25#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 409
+  },
+  {
+    "id": "channel-uppercase",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "method": "GET",
+    "plaintext": "parity-synthetic-a#AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA#StandaloneWindows",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "channel-too-short",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "method": "GET",
+    "plaintext": "parity-synthetic-a#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#StandaloneWindows",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "bootstrap",
+    "op": "http",
+    "route": "GetIinitInfosNeededServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "prefs-read-a",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "prefs-trigger",
+    "op": "http",
+    "route": "PlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200,
+    "expected_plaintext": "true#"
+  },
+  {
+    "id": "purchases-a",
+    "op": "http",
+    "route": "GetPurchases",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "purchases-b",
+    "op": "http",
+    "route": "GetPurchases",
+    "method": "GET",
+    "plaintext": "46f3bc1e1c25829b52524855f16fa3dc#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "news",
+    "op": "http",
+    "route": "GetNewsServlet",
+    "method": "GET",
+    "plaintext": "42#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "news-range",
+    "op": "http",
+    "route": "GetNewsServlet",
+    "method": "GET",
+    "plaintext": "100#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "news-unicode-digit",
+    "op": "http",
+    "route": "GetNewsServlet",
+    "method": "GET",
+    "plaintext": "\u0661#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "maintenance",
+    "op": "http",
+    "route": "checkerToServerDownMaintenanceServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "online-a",
+    "op": "http",
+    "route": "N2AddUserOnline",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Nexus#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "online-heartbeat",
+    "op": "http",
+    "route": "N2UpdateUserOnline",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "telemetry-minimal",
+    "op": "http",
+    "route": "InfoServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-local#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "save-pref:MasterVolume",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#MasterVolume#0.375#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "save-pref:status",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#status#Synthetic status \u2603#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "save-pref:NotificationLoginFriend",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#NotificationLoginFriend#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "save-pref:PlatformOnly",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#PlatformOnly#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "save-pref:NameColorSelectedIndex",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#NameColorSelectedIndex#{\"x\":0.2,\"y\":0.3,\"z\":0.4}#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "reject-pref:MasterVolume:NaN",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#MasterVolume#NaN#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "reject-pref:MasterVolume:Infinity",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#MasterVolume#Infinity#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "reject-pref:MasterVolume:3.5e38",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#MasterVolume#3.5e38#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "reject-pref:PlatformOnly:2",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#PlatformOnly#2#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "reject-pref:MissingPreference:1",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#MissingPreference#1#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "reject-pref:NameColorSelectedIndex:{\"x\":1,\"y\":2}",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#NameColorSelectedIndex#{\"x\":1,\"y\":2}#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "prefs-after-write",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "prefs-other-unchanged",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "46f3bc1e1c25829b52524855f16fa3dc#parity-synthetic-b#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 200
+  },
+  {
+    "id": "prefs-cross-account",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-b#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 403
+  },
+  {
+    "id": "prefs-unknown-session",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "00000000000000000000000000000000#parity-synthetic-a#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 403
+  },
+  {
+    "id": "state-after-preferences",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "companion-empty",
+    "op": "http",
+    "route": "GetCompanionsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "locomotion-empty",
+    "op": "http",
+    "route": "GetLocomotionsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "personal-space-empty",
+    "op": "http",
+    "route": "GetPersonalSpacesServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "companion-cross-account",
+    "op": "http",
+    "route": "GetCompanionsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-b#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 403
+  },
+  {
+    "id": "locomotion-cross-account",
+    "op": "http",
+    "route": "GetLocomotionsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-b#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 403
+  },
+  {
+    "id": "avatar-remote:0",
+    "op": "http",
+    "route": "GetLastUsedPreset",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#46f3bc1e1c25829b52524855f16fa3dc#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "avatar-named:0",
+    "op": "http",
+    "route": "GetLoadPresetByName",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#512e6551a63b14fac7ac3b5a5b39dd58#0#Default#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "preset-list:0",
+    "op": "http",
+    "route": "ShowPresetsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "avatar-remote:1",
+    "op": "http",
+    "route": "GetLastUsedPreset",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#46f3bc1e1c25829b52524855f16fa3dc#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "avatar-named:1",
+    "op": "http",
+    "route": "GetLoadPresetByName",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#512e6551a63b14fac7ac3b5a5b39dd58#1#Default#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "preset-list:1",
+    "op": "http",
+    "route": "ShowPresetsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "avatar-game",
+    "op": "http",
+    "route": "GetPresetGameServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#512e6551a63b14fac7ac3b5a5b39dd58#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "label-remote",
+    "op": "http",
+    "route": "PlayerLabelInfoServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#46f3bc1e1c25829b52524855f16fa3dc#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "wardrobe-check",
+    "op": "http",
+    "route": "Send_CheckIsInWardrobeServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#46f3bc1e1c25829b52524855f16fa3dc#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "wardrobe-heartbeat",
+    "op": "http",
+    "route": "InWardrobeCheckerServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "wardrobe-remove",
+    "op": "http",
+    "route": "RemoveInWardrobeServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Nexus#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "wardrobe-empty-category",
+    "op": "http",
+    "route": "GetInfoServlet",
+    "method": "GET",
+    "plaintext": "0#512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0#missing-category#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "wardrobe-list",
+    "op": "http",
+    "route": "GetInfoServlet",
+    "method": "GET",
+    "plaintext": "0#512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0#CLOTH_BODY_TORSO#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-add:N2AddBlock",
+    "op": "http",
+    "route": "N2AddBlock",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-duplicate:N2AddBlock",
+    "op": "http",
+    "route": "N2AddBlock",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "idempotence",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-add:N2AddSilenced",
+    "op": "http",
+    "route": "N2AddSilenced",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-duplicate:N2AddSilenced",
+    "op": "http",
+    "route": "N2AddSilenced",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "idempotence",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-add:N2ToggleFavorite",
+    "op": "http",
+    "route": "N2ToggleFavorite",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-duplicate:N2ToggleFavorite",
+    "op": "http",
+    "route": "N2ToggleFavorite",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "idempotence",
+    "expected_status": 200
+  },
+  {
+    "id": "social-modern:0",
+    "op": "http",
+    "route": "GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "social-legacy:0",
+    "op": "http",
+    "route": "N2GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "social-modern:1",
+    "op": "http",
+    "route": "GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "social-legacy:1",
+    "op": "http",
+    "route": "N2GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "social-modern:2",
+    "op": "http",
+    "route": "GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#2#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "social-legacy:2",
+    "op": "http",
+    "route": "N2GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#2#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relationship",
+    "op": "http",
+    "route": "N2GetRelationship",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#46f3bc1e1c25829b52524855f16fa3dc#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relationship-reverse",
+    "op": "http",
+    "route": "N2GetRelationship",
+    "method": "GET",
+    "plaintext": "46f3bc1e1c25829b52524855f16fa3dc#parity-synthetic-b#512e6551a63b14fac7ac3b5a5b39dd58#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 200
+  },
+  {
+    "id": "social-invalid-list",
+    "op": "http",
+    "route": "GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#4#StandaloneWindows",
+    "category": "unsupported",
+    "expected_status": 501
+  },
+  {
+    "id": "relation-remove:N2RemoveBlock",
+    "op": "http",
+    "route": "N2RemoveBlock",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-remove:N2RemoveSilenced",
+    "op": "http",
+    "route": "N2RemoveSilenced",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "relation-remove-unknown-friend",
+    "op": "http",
+    "route": "N2RemoveFriend",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity Missing#1#StandaloneWindows",
+    "category": "idempotence",
+    "expected_status": 200
+  },
+  {
+    "id": "lookup-unavailable",
+    "op": "http",
+    "route": "N2GetPsidglobalAndGuidByUsernamePlatform",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#Parity B#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "reference-username",
+    "op": "http",
+    "route": "GetrefusernameServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Parity B#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "external-friends-empty",
+    "op": "http",
+    "route": "checkStateNPFriendsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "space-event-empty",
+    "op": "http",
+    "route": "GetSpaceEventServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Nexus#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "space-type-unavailable",
+    "op": "http",
+    "route": "N2GetUserTypeSpace",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Parity B#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "allocation-no-listener",
+    "op": "http",
+    "route": "N2LoadSpace",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Nexus#false###StandaloneWindows",
+    "category": "readiness",
+    "expected_status": 503
+  },
+  {
+    "id": "allocation-loading-empty",
+    "op": "http",
+    "route": "N2SpaceLoading",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "readiness",
+    "expected_status": 200
+  },
+  {
+    "id": "housing-empty:0",
+    "op": "http",
+    "route": "GetHousingTypeServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "housing-empty:1",
+    "op": "http",
+    "route": "GetHousingTypeServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "housing-empty:2",
+    "op": "http",
+    "route": "GetHousingTypeServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#2#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "housing-empty:3",
+    "op": "http",
+    "route": "GetHousingTypeServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#3#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "housing-no-allocation",
+    "op": "http",
+    "route": "HousingReadPresetServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Home#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 403
+  },
+  {
+    "id": "housing-alias-no-allocation",
+    "op": "http",
+    "route": "N2HousingReadPreset",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Home#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 403
+  },
+  {
+    "id": "housing-invalid-entry",
+    "op": "http",
+    "route": "HousingSavePresetServletParts",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-invalid#0#StandaloneWindows",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "space-liveness-empty",
+    "op": "http",
+    "route": "spaceExistServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#127.0.0.1#29001#Nexus#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "instance-liveness-empty",
+    "op": "http",
+    "route": "CheckIfSpaceStillExistServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-instance#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "wardrobe-members-unallocated",
+    "op": "http",
+    "route": "GetAllInWardrobe",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#synthetic-instance#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 403
+  },
+  {
+    "id": "wardrobe-entry-unallocated",
+    "op": "http",
+    "route": "SetUserInWardrobe",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#synthetic-instance#1#MALE###0#1#1#1#0#0#0#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 403
+  },
+  {
+    "id": "wardrobe-item-unknown",
+    "op": "http",
+    "route": "WardrobeOptionItemServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-missing-item#2#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 404
+  },
+  {
+    "id": "legacy-pref-save",
+    "op": "http",
+    "route": "SetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Music#0.25#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "preset-reset-copy",
+    "op": "http",
+    "route": "ResetDefaultPresetServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#SyntheticCopy#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "preset-rename-copy",
+    "op": "http",
+    "route": "RenamePresetServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#SyntheticCopy#SyntheticRenamed#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "preset-remove-copy",
+    "op": "http",
+    "route": "RemovePresetServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#SyntheticRenamed#SyntheticRenamed#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "preset-reset-default-selection",
+    "op": "http",
+    "route": "ResetDefaultPresetServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Default#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "preset-invalid-serialization",
+    "op": "http",
+    "route": "N2SavePreset",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Invalid#0#synthetic-invalid#StandaloneWindows",
+    "category": "malformed",
+    "expected_status": 400
+  },
+  {
+    "id": "account-add-existing",
+    "op": "http",
+    "route": "N2AddUser",
+    "method": "GET",
+    "plaintext": "parity-synthetic-a#Parity A##false#local#1#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "report-empty-target",
+    "op": "http",
+    "route": "ReportServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0##synthetic#StandaloneWindows",
+    "category": "edge",
+    "expected_status": 400
+  },
+  {
+    "id": "consumable-default-price:coffee",
+    "op": "http",
+    "route": "GetConsumablePriceServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#coffee#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "consumable-no-balance:coffee",
+    "op": "http",
+    "route": "GetConsumableServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#coffee#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "consumable-default-price:oktoberfest",
+    "op": "http",
+    "route": "GetConsumablePriceServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#oktoberfest#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "consumable-no-balance:oktoberfest",
+    "op": "http",
+    "route": "GetConsumableServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#oktoberfest#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "shop-empty:GetFeaturesServlet",
+    "op": "http",
+    "route": "GetFeaturesServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "shop-empty:GetShopInfoPlayerShop",
+    "op": "http",
+    "route": "GetShopInfoPlayerShop",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "shop-list-empty",
+    "op": "http",
+    "route": "GetShopDataShopServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#false#false#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "shop-genders-empty",
+    "op": "http",
+    "route": "GetGenderDataShopServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-shop#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "shop-types-empty",
+    "op": "http",
+    "route": "GetShopTypeDataShopServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-shop#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "shop-items-empty",
+    "op": "http",
+    "route": "GetItemAssetsDataServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-shop#0#0#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "shop-bundle-missing",
+    "op": "http",
+    "route": "NPShopBundleItemsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-offer#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "shop-buy-missing",
+    "op": "http",
+    "route": "NPShopBuyItemServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-offer#0#0#0#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "shop-gift-not-friend",
+    "op": "http",
+    "route": "NPShopGiftItemServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-offer#Parity B#0#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 403
+  },
+  {
+    "id": "shop-owned-missing",
+    "op": "http",
+    "route": "NPShopIsItemPurchasedServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-offer#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "shop-receipt-cannot-mint",
+    "op": "http",
+    "route": "NPShopSyncCrystalsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-receipt##1000000#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 200
+  },
+  {
+    "id": "reward-own-unconfigured",
+    "op": "http",
+    "route": "CheckOwnGenericReward",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-reward#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "reward-available-unconfigured",
+    "op": "http",
+    "route": "checkRewardAvailableServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Halloween#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "reward-missing:GenericReward",
+    "op": "http",
+    "route": "GenericReward",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-reward#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "reward-missing:RewardClothServlet",
+    "op": "http",
+    "route": "RewardClothServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "reward-missing:RewardConsumeServlet",
+    "op": "http",
+    "route": "RewardConsumeServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#coffee#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "reward-missing:SKLPromoServlet",
+    "op": "http",
+    "route": "SKLPromoServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-promo#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "reward-missing:SKLPromoTriggerServlet",
+    "op": "http",
+    "route": "SKLPromoTriggerServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-promo#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "reward-missing:CinemaInteractionNPServlet",
+    "op": "http",
+    "route": "CinemaInteractionNPServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#0#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_GatherStatus",
+    "op": "http",
+    "route": "Get_GatherStatus",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_GatherPhaseGame",
+    "op": "http",
+    "route": "Get_GatherPhaseGame",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_GatherConsume",
+    "op": "http",
+    "route": "Get_GatherConsume",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#0#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_GatherConsumeReward",
+    "op": "http",
+    "route": "Get_GatherConsumeReward",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#0#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_npGather",
+    "op": "http",
+    "route": "Get_npGather",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-event#1#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_npGatherProcessItem",
+    "op": "http",
+    "route": "Get_npGatherProcessItem",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#synthetic-event#1#1#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_npGatherChristmas",
+    "op": "http",
+    "route": "Get_npGatherChristmas",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Nexus#0#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Send_GatherInitInSpace",
+    "op": "http",
+    "route": "Send_GatherInitInSpace",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#Nexus#1#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 404
+  },
+  {
+    "id": "gathering-default:Get_GatherMedievalVillage",
+    "op": "http",
+    "route": "Get_GatherMedievalVillage",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 200
+  },
+  {
+    "id": "gathering-default:Send_GatherMedievalVillageConsume",
+    "op": "http",
+    "route": "Send_GatherMedievalVillageConsume",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#1#StandaloneWindows",
+    "category": "unconfigured",
+    "expected_status": 409
+  },
+  {
+    "id": "state-before-restart",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "restart-store",
+    "op": "restart",
+    "category": "persistence"
+  },
+  {
+    "id": "state-after-restart",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "prefs-after-restart",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "persistence",
+    "expected_status": 200
+  },
+  {
+    "id": "avatar-after-restart",
+    "op": "http",
+    "route": "GetLastUsedPreset",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#512e6551a63b14fac7ac3b5a5b39dd58#0#StandaloneWindows",
+    "category": "persistence",
+    "expected_status": 200
+  },
+  {
+    "id": "social-after-restart",
+    "op": "http",
+    "route": "GetSocialList",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#1#StandaloneWindows",
+    "category": "persistence",
+    "expected_status": 200
+  },
+  {
+    "id": "restart-probe-process",
+    "op": "process_restart",
+    "category": "persistence"
+  },
+  {
+    "id": "state-after-process-restart",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  },
+  {
+    "id": "prefs-after-process-restart",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "persistence",
+    "expected_status": 200
+  },
+  {
+    "id": "avatar-after-process-restart",
+    "op": "http",
+    "route": "GetLastUsedPreset",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#512e6551a63b14fac7ac3b5a5b39dd58#0#StandaloneWindows",
+    "category": "persistence",
+    "expected_status": 200
+  },
+  {
+    "id": "new-current-session",
+    "op": "http",
+    "route": "ChannelGUIDServlet",
+    "method": "GET",
+    "plaintext": "parity-synthetic-a#cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc#StandaloneWindows",
+    "category": "happy",
+    "expected_status": 200
+  },
+  {
+    "id": "old-session-read",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#parity-synthetic-a#StandaloneWindows",
+    "category": "historical_session",
+    "expected_status": 200
+  },
+  {
+    "id": "old-session-write-denied",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "512e6551a63b14fac7ac3b5a5b39dd58#MasterVolume#0.5#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 403
+  },
+  {
+    "id": "new-session-write",
+    "op": "http",
+    "route": "SavePlayerPref",
+    "method": "GET",
+    "plaintext": "77ae9804ee7e9304423587b50926a7a7#MasterVolume#0.25#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 200
+  },
+  {
+    "id": "new-session-read",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "77ae9804ee7e9304423587b50926a7a7#parity-synthetic-a#StandaloneWindows",
+    "category": "authority",
+    "expected_status": 200
+  },
+  {
+    "id": "other-account-still-isolated",
+    "op": "http",
+    "route": "GetPlayerPrefsServlet",
+    "method": "GET",
+    "plaintext": "46f3bc1e1c25829b52524855f16fa3dc#parity-synthetic-b#StandaloneWindows",
+    "category": "isolation",
+    "expected_status": 200
+  },
+  {
+    "id": "state-final",
+    "op": "snapshot",
+    "category": "typed_durable_state"
+  }
+]

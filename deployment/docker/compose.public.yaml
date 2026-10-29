@@ -1,0 +1,9 @@
+# Compose >=2.24.4. Completely replace private HTTP/raw scene host mappings.
+services:
+  server:
+    environment:
+      NEBULA_MODE: public
+      COMPOSE_PROFILES: public
+    ports: !override
+      - "${NEBULA_HOST_BIND:-0.0.0.0}:8444:8444/tcp"
+      - "${NEBULA_HOST_BIND:-0.0.0.0}:8443:8443/tcp"

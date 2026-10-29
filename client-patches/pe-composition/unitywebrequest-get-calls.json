@@ -1,0 +1,637 @@
+{
+  "format_version": 1,
+  "source_inventory": "source inventory hash retained; local analysis excluded",
+  "source_inventory_sha256": "eb8ab30e13321d6fa51eaef24193242289e1f27bc66fa6820e86de7efea2142d",
+  "source_binary": "user-supplied exact layered GameAssembly.dll",
+  "source_binary_sha256": "8460554e5287fe8e3c5fe475f65379da971bcccf2f21f716f2ca82d6e029b9fd",
+  "reviewed_target_rva": "0x1d9b350",
+  "corresponding_send_target_rva": "0x1d9b890",
+  "corresponding_send_application_call_count": 69,
+  "get_send_caller_sets_equal": true,
+  "wrapper_export": "NebulaPublicAccess_Get",
+  "direct_call_count": 69,
+  "calls": [
+    {
+      "call_rva": "0x3ba38e",
+      "file_offset": "0x3b938e",
+      "original_hex": "e8bd0f9e01",
+      "caller_rva": "0x3b0040",
+      "caller_names": [
+        "NETGcloudAEditor.<OnGet_LoadPresetCoroutine>d__11$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3bb451",
+      "file_offset": "0x3ba451",
+      "original_hex": "e8fafe9d01",
+      "caller_rva": "0x3bb330",
+      "caller_names": [
+        "HousingNETGcloud.<OnSend>d__25$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3bbd49",
+      "file_offset": "0x3bad49",
+      "original_hex": "e802f69d01",
+      "caller_rva": "0x3bb9e0",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_GetCurrentPresetCoroutine>d__9$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3ccc42",
+      "file_offset": "0x3cbc42",
+      "original_hex": "e809e79c01",
+      "caller_rva": "0x3cc690",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_GetIDAssetsCoroutine>d__31$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3cdb14",
+      "file_offset": "0x3ccb14",
+      "original_hex": "e837d89c01",
+      "caller_rva": "0x3cd710",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_GetLastUsedPresetCoroutine>d__29$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3ce873",
+      "file_offset": "0x3cd873",
+      "original_hex": "e8d8ca9c01",
+      "caller_rva": "0x3ce2e0",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_RefreshIDAssetsCoroutine>d__33$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3cf714",
+      "file_offset": "0x3ce714",
+      "original_hex": "e837bc9c01",
+      "caller_rva": "0x3cf330",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_RemovePresetCoroutine>d__15$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3cfec4",
+      "file_offset": "0x3ceec4",
+      "original_hex": "e887b49c01",
+      "caller_rva": "0x3cfae0",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_RenamePresetCoroutine>d__17$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3d0800",
+      "file_offset": "0x3cf800",
+      "original_hex": "e84bab9c01",
+      "caller_rva": "0x3d0290",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_SavePresetCoroutine>d__19$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3d14eb",
+      "file_offset": "0x3d04eb",
+      "original_hex": "e8609e9c01",
+      "caller_rva": "0x3d1010",
+      "caller_names": [
+        "NETGcloudAEditor.<OnSend_SavePresetExitCoroutine>d__24$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3d2105",
+      "file_offset": "0x3d1105",
+      "original_hex": "e846929c01",
+      "caller_rva": "0x3d1df0",
+      "caller_names": [
+        "NETGcloudAEditor.<OnShowPresetsCoroutine>d__13$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3d2c74",
+      "file_offset": "0x3d1c74",
+      "original_hex": "e8d7869c01",
+      "caller_rva": "0x3d2850",
+      "caller_names": [
+        "NETGcloudAEditor.<Send_assetUpdateStatusCoroutine>d__37$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3d3f83",
+      "file_offset": "0x3d2f83",
+      "original_hex": "e8c8739c01",
+      "caller_rva": "0x3d3b30",
+      "caller_names": [
+        "NETGcloudAEditor.<Send_resetDefaultPresetCoroutine>d__21$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3d4831",
+      "file_offset": "0x3d3831",
+      "original_hex": "e81a6b9c01",
+      "caller_rva": "0x3d44b0",
+      "caller_names": [
+        "NETGcloudAEditor.<Send_selectedPlayerPrefCoroutine>d__35$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3d758b",
+      "file_offset": "0x3d658b",
+      "original_hex": "e8c03d9c01",
+      "caller_rva": "0x3d6f30",
+      "caller_names": [
+        "NETGcloudEditor.<OnGet_LoadPresetCoroutine>d__38$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3df066",
+      "file_offset": "0x3de066",
+      "original_hex": "e8e5c29b01",
+      "caller_rva": "0x3dece0",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_GetCurrentPresetCoroutine>d__28$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3dfea1",
+      "file_offset": "0x3deea1",
+      "original_hex": "e8aab49b01",
+      "caller_rva": "0x3df950",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_GetIDAssetsCoroutine>d__33$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e0d04",
+      "file_offset": "0x3dfd04",
+      "original_hex": "e847a69b01",
+      "caller_rva": "0x3e0900",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_GetLastUsedPresetCoroutine>d__31$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e1a63",
+      "file_offset": "0x3e0a63",
+      "original_hex": "e8e8989b01",
+      "caller_rva": "0x3e14d0",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_RefreshIDAssetsCoroutine>d__35$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e2904",
+      "file_offset": "0x3e1904",
+      "original_hex": "e8478a9b01",
+      "caller_rva": "0x3e2520",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_RemovePresetCoroutine>d__10$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e30b4",
+      "file_offset": "0x3e20b4",
+      "original_hex": "e897829b01",
+      "caller_rva": "0x3e2cd0",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_RenamePresetCoroutine>d__12$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e3a12",
+      "file_offset": "0x3e2a12",
+      "original_hex": "e839799b01",
+      "caller_rva": "0x3e3480",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_SavePresetCoroutine>d__14$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e471d",
+      "file_offset": "0x3e371d",
+      "original_hex": "e82e6c9b01",
+      "caller_rva": "0x3e4220",
+      "caller_names": [
+        "NETGcloudEditor.<OnSend_SavePresetExitCoroutine>d__19$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e5335",
+      "file_offset": "0x3e4335",
+      "original_hex": "e816609b01",
+      "caller_rva": "0x3e5020",
+      "caller_names": [
+        "NETGcloudEditor.<OnShowPresetsCoroutine>d__8$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e5ea4",
+      "file_offset": "0x3e4ea4",
+      "original_hex": "e8a7549b01",
+      "caller_rva": "0x3e5a80",
+      "caller_names": [
+        "NETGcloudEditor.<Send_assetUpdateStatusCoroutine>d__42$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e7121",
+      "file_offset": "0x3e6121",
+      "original_hex": "e82a429b01",
+      "caller_rva": "0x3e6cb0",
+      "caller_names": [
+        "NETGcloudEditor.<Send_resetDefaultPresetCoroutine>d__16$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3e7a91",
+      "file_offset": "0x3e6a91",
+      "original_hex": "e8ba389b01",
+      "caller_rva": "0x3e7710",
+      "caller_names": [
+        "NETGcloudEditor.<Send_selectedPlayerPrefCoroutine>d__40$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f5a49",
+      "file_offset": "0x3f4a49",
+      "original_hex": "e802599a01",
+      "caller_rva": "0x3f57e0",
+      "caller_names": [
+        "NETGcloudLogin.<CheckServerStatusCoroutine>d__30$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f60c1",
+      "file_offset": "0x3f50c1",
+      "original_hex": "e88a529a01",
+      "caller_rva": "0x3f5fa0",
+      "caller_names": [
+        "NETGcloudNPGather.<OnSend>d__14$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f6b8c",
+      "file_offset": "0x3f5b8c",
+      "original_hex": "e8bf479a01",
+      "caller_rva": "0x3f6650",
+      "caller_names": [
+        "NETGcloudLogin.<Send_AddUserCoroutine>d__24$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f7166",
+      "file_offset": "0x3f6166",
+      "original_hex": "e8e5419a01",
+      "caller_rva": "0x3f6fd0",
+      "caller_names": [
+        "NETGcloudLogin.<Send_ChannelGUIDCoroutine>d__11$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f77f5",
+      "file_offset": "0x3f67f5",
+      "original_hex": "e8563b9a01",
+      "caller_rva": "0x3f7540",
+      "caller_names": [
+        "NETGCloudSpace.<Send_CheckOwnGenericRewardCoroutine>d__16$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f7d88",
+      "file_offset": "0x3f6d88",
+      "original_hex": "e8c3359a01",
+      "caller_rva": "0x3f7c10",
+      "caller_names": [
+        "NETGcloudLogin.<Send_CheckPlayerPrefsExistCoroutine>d__16$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f8531",
+      "file_offset": "0x3f7531",
+      "original_hex": "e81a2e9a01",
+      "caller_rva": "0x3f80c0",
+      "caller_names": [
+        "NETGcloudLogin.<Send_CheckSpaceExistCoroutine>d__37$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f8ed3",
+      "file_offset": "0x3f7ed3",
+      "original_hex": "e878249a01",
+      "caller_rva": "0x3f8a90",
+      "caller_names": [
+        "NETGcloudLogin.<Send_CheckerServletCoroutine>d__7$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f97e5",
+      "file_offset": "0x3f87e5",
+      "original_hex": "e8661b9a01",
+      "caller_rva": "0x3f9530",
+      "caller_names": [
+        "NETGCloudSpace.<Send_GenericRewardCoroutine>d__18$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3f9e00",
+      "file_offset": "0x3f8e00",
+      "original_hex": "e84b159a01",
+      "caller_rva": "0x3f9c00",
+      "caller_names": [
+        "NETGcloudLogin.<Send_GetCinemaFilmsCoroutine>d__20$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fa594",
+      "file_offset": "0x3f9594",
+      "original_hex": "e8b70d9a01",
+      "caller_rva": "0x3fa400",
+      "caller_names": [
+        "NETGCloudSpace.<Send_GetCompanionsIDAssetsCoroutine>d__26$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3faea5",
+      "file_offset": "0x3f9ea5",
+      "original_hex": "e8a6049a01",
+      "caller_rva": "0x3fabf0",
+      "caller_names": [
+        "NETGCloudSpace.<Send_GetGUIDByPodiumCoroutine>d__24$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fb717",
+      "file_offset": "0x3fa717",
+      "original_hex": "e834fc9901",
+      "caller_rva": "0x3fb570",
+      "caller_names": [
+        "NETGcloudLogin.<Send_GetIinitInfosNeededCoroutine>d__18$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fbdb4",
+      "file_offset": "0x3fadb4",
+      "original_hex": "e897f59901",
+      "caller_rva": "0x3fbc20",
+      "caller_names": [
+        "NETGCloudSpace.<Send_GetLocomotionsIDAssetsCoroutine>d__22$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fc971",
+      "file_offset": "0x3fb971",
+      "original_hex": "e8dae99901",
+      "caller_rva": "0x3fc410",
+      "caller_names": [
+        "NETGcloudLogin.<Send_GetNewsCoroutine>d__14$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fcdff",
+      "file_offset": "0x3fbdff",
+      "original_hex": "e84ce59901",
+      "caller_rva": "0x3fcc40",
+      "caller_names": [
+        "NETGcloudLogin.<Send_GetSelectedPlayerPrefsCoroutine>d__22$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fd571",
+      "file_offset": "0x3fc571",
+      "original_hex": "e8dadd9901",
+      "caller_rva": "0x3fd2b0",
+      "caller_names": [
+        "NETGCloudSpace.<Send_GetSpaceEventCoroutine>d__20$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fdd4d",
+      "file_offset": "0x3fcd4d",
+      "original_hex": "e8fed59901",
+      "caller_rva": "0x3fda10",
+      "caller_names": [
+        "NETGCloudSpace.<Send_GetUserTypeSpaceCoroutine>d__28$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fe328",
+      "file_offset": "0x3fd328",
+      "original_hex": "e823d09901",
+      "caller_rva": "0x3fe1b0",
+      "caller_names": [
+        "NETGcloudLogin.<Send_InWardrobeCheckerCoroutine>d__35$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3fe975",
+      "file_offset": "0x3fd975",
+      "original_hex": "e8d6c99901",
+      "caller_rva": "0x3fe620",
+      "caller_names": [
+        "NETGcloudLogin.<Send_NetInfoCoroutine>d__27$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x3ff31a",
+      "file_offset": "0x3fe31a",
+      "original_hex": "e831c09901",
+      "caller_rva": "0x3feda0",
+      "caller_names": [
+        "NETGcloudLogin.<Send_isExistPS4IDCoroutine>d__9$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x40003e",
+      "file_offset": "0x3ff03e",
+      "original_hex": "e80db39901",
+      "caller_rva": "0x3ffd70",
+      "caller_names": [
+        "NETGCloudSpace.<Send_rewardBeachTShirtCoroutine>d__14$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x401513",
+      "file_offset": "0x400513",
+      "original_hex": "e8389e9901",
+      "caller_rva": "0x401100",
+      "caller_names": [
+        "NETGCloudSpace.<send_addStatisticsLeaderBoardCoroutine>d__33$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x401fa5",
+      "file_offset": "0x400fa5",
+      "original_hex": "e8a6939901",
+      "caller_rva": "0x401860",
+      "caller_names": [
+        "NETGCloudSpace.<send_getLeaderboardCoroutine>d__30$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x41488d",
+      "file_offset": "0x41388d",
+      "original_hex": "e8be6a9801",
+      "caller_rva": "0x414760",
+      "caller_names": [
+        "ShopNETGcloud.<OnSend>d__49$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x414f6d",
+      "file_offset": "0x413f6d",
+      "original_hex": "e8de639801",
+      "caller_rva": "0x414e40",
+      "caller_names": [
+        "NETGCloudSpace.<OnSend>d__72$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x415903",
+      "file_offset": "0x414903",
+      "original_hex": "e8485a9801",
+      "caller_rva": "0x415620",
+      "caller_names": [
+        "NETGCloudSpace.<Send_RemoveInWardrobe>d__63$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x4164b3",
+      "file_offset": "0x4154b3",
+      "original_hex": "e8984e9801",
+      "caller_rva": "0x4161b0",
+      "caller_names": [
+        "NETGCloudSpace.<checkRewardAvailableCoroutine>d__35$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x416e59",
+      "file_offset": "0x415e59",
+      "original_hex": "e8f2449801",
+      "caller_rva": "0x416a20",
+      "caller_names": [
+        "NETGCloudSpace.<checkRewardGameCoroutine>d__39$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x417d3e",
+      "file_offset": "0x416d3e",
+      "original_hex": "e80d369801",
+      "caller_rva": "0x417b90",
+      "caller_names": [
+        "NETGCloudSpace.<checkStateNPFriendsServlet>d__56$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x447699",
+      "file_offset": "0x446699",
+      "original_hex": "e8b23c9501",
+      "caller_rva": "0x447530",
+      "caller_names": [
+        "BlueWaveHideoutNETGCloud.<OnSend>d__15$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x447be9",
+      "file_offset": "0x446be9",
+      "original_hex": "e862379501",
+      "caller_rva": "0x447a80",
+      "caller_names": [
+        "CastleNETGCloud.<OnSend>d__15$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x4483d9",
+      "file_offset": "0x4473d9",
+      "original_hex": "e8722f9501",
+      "caller_rva": "0x448270",
+      "caller_names": [
+        "XPNET.<OnSend>d__8$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x46e6cd",
+      "file_offset": "0x46d6cd",
+      "original_hex": "e87ecc9201",
+      "caller_rva": "0x46e360",
+      "caller_names": [
+        "MITM_Space.<CheckIfSpaceStillExist>d__5$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x4ec566",
+      "file_offset": "0x4eb566",
+      "original_hex": "e8e5ed8a01",
+      "caller_rva": "0x4ec1c0",
+      "caller_names": [
+        "FullGameNETGCloud.<AddToPoolFullGame>d__32$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x4ed11a",
+      "file_offset": "0x4ec11a",
+      "original_hex": "e831e28a01",
+      "caller_rva": "0x4ecd80",
+      "caller_names": [
+        "FullGameNETGCloud.<CheckIsFirstToJoinFullGame>d__31$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x4ee0a9",
+      "file_offset": "0x4ed0a9",
+      "original_hex": "e8a2d28a01",
+      "caller_rva": "0x4edf40",
+      "caller_names": [
+        "FullGameNETGCloud.<OnSend>d__41$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x53aede",
+      "file_offset": "0x539ede",
+      "original_hex": "e86d048601",
+      "caller_rva": "0x53ad70",
+      "caller_names": [
+        "ArcheryCupidManager.<OnSend>d__31$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x57728c",
+      "file_offset": "0x57628c",
+      "original_hex": "e8bf408201",
+      "caller_rva": "0x577120",
+      "caller_names": [
+        "FootRaceManager.<OnSend>d__36$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x5a9256",
+      "file_offset": "0x5a8256",
+      "original_hex": "e8f5207f01",
+      "caller_rva": "0x5a9100",
+      "caller_names": [
+        "UIMemorionGame.<OnSend>d__26$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x6a04ee",
+      "file_offset": "0x69f4ee",
+      "original_hex": "e85dae6f01",
+      "caller_rva": "0x6a0380",
+      "caller_names": [
+        "GatherMedievalVillage.<OnSend>d__18$$MoveNext"
+      ]
+    },
+    {
+      "call_rva": "0x6ac50a",
+      "file_offset": "0x6ab50a",
+      "original_hex": "e841ee6e01",
+      "caller_rva": "0x6ac0a0",
+      "caller_names": [
+        "IndividualAssembler.<CreateIndividualPlayer>d__56$$MoveNext"
+      ]
+    }
+  ],
+  "policy": "Patch only these embedded call sites; runtime/config/network input supplies no RVA."
+}

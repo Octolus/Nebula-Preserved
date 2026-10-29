@@ -1,0 +1,43 @@
+{
+  "scope": "synthetic protocol acceptance only; native-client acceptance unproven",
+  "desktop_dependency": false,
+  "desktop_lock_changed": false,
+  "windows_gateway_signal_lifecycle_shim": true,
+  "source_sha256": {
+    "experimental/remote-transport/server/remote_gateway.py": "59f9e1a7a37024912be4950b936bc628fbc1642d6fa43cf8ab8f09c70e4c14f5",
+    "backend/wire.py": "53aa05c27f6ae64adeb5ff2e9b9ad57c4d92c82a7701887c38129c8a7e62302f",
+    "backend/public_access.py": "87b7c78f15cf6d985c2cb6178712fd74065c67a3618b43f07bee44c01ecb73b5",
+    "backend/allocation.py": "ef97aa8eb987a172e29d2c7ea4d4b276842b20a4e31b0d799ec58d0c58f8bb12"
+  },
+  "public_protocol_tree_sha256": "6ed7264eaaf46733ff09d5f4b53522355dd1b3b6592fcfb42fa2c7b8840fd28b",
+  "rust_binary_sha256": "8df20c772bdb8a99afdf261ccf2669f4c1221f18bef09107dcaa871c2e827578",
+  "test_ca_sha256": "642fb3acd28f48b98a7cfa27eea80d3cbb377f4ec4d9f1c1f61601f3822169e1",
+  "checks": [
+    "actual Rust CLI HTTP listener; public-access flag off",
+    "encrypted HTTP bootstrap/session/login and managed single-port world allocation",
+    "existing public-access migration and synthetic salted credential; raw credential retained only in memory",
+    "fresh CA-verified loopback IP SAN TLS, ALPN nebula-game/1, exact NRT1 85-byte credential, OK01",
+    "incorrect TLS hostname rejected by certificate verification",
+    "Ready/AddPlayer, source-layout spawn, exact opcode 1 current GUID, authenticated presence",
+    "forged foreign GUID after valid binding rejected and upstream presence removed",
+    "live credential revocation tears down TLS/upstream within revalidation window and removes presence",
+    "revoked credential denied for subsequent NRT1 admission"
+  ],
+  "result": "passed",
+  "cleanup": {
+    "owned_processes": [
+      {
+        "name": "gateway",
+        "exited": true
+      },
+      {
+        "name": "rust",
+        "exited": true
+      }
+    ],
+    "private_key_deleted": true
+  },
+  "sources_unchanged": true,
+  "public_protocol_unchanged": true,
+  "desktop_lock_independent_design": "headless subprocess/network/file APIs only; desktop lock state not inspected or changed"
+}

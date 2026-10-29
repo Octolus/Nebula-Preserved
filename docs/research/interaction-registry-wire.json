@@ -1,0 +1,95 @@
+{
+  "format_version": 1,
+  "status": "implemented_offline_not_live_validated",
+  "c2s": {
+    "envelope": "97#guid#seq#partIndex#partCount#base64urlChunk#StandaloneWindows",
+    "chunking": {
+      "part_index": "zero-based",
+      "part_count": "1..256",
+      "max_decoded_chunk_bytes": 4096,
+      "max_reassembled_bytes": 1048576,
+      "assembly_timeout_seconds": 10,
+      "ordering": "strict contiguous; duplicates and gaps denied",
+      "embedded_seq": "must equal outer seq"
+    },
+    "base64url": {
+      "alphabet": "RFC4648 URL-safe",
+      "padding": "forbidden",
+      "unit": "each independently encoded contiguous UTF8 byte slice"
+    },
+    "json_property_order": [
+      "v",
+      "source",
+      "scene",
+      "seq",
+      "entries",
+      "ground_sig"
+    ],
+    "fields": {
+      "v": "integer exactly 1",
+      "source": "initial | load | save",
+      "scene": "case-exact current Unity scene",
+      "seq": "strictly increasing nonnegative int64 per connection",
+      "entries": "complete namespace map; initial is static, load/save is persisted furniture",
+      "ground_sig": "empty for initial; complete compact durable ground order for load/save"
+    },
+    "entry_property_order": [
+      "kind",
+      "send_id",
+      "receive_id",
+      "anchor",
+      "path",
+      "class",
+      "slot",
+      "ground_index",
+      "item_id"
+    ],
+    "entry": {
+      "kind": "generic | occupable",
+      "send_id": "nonnegative int32 used by this component's outgoing C2S packet",
+      "receive_id": "nonnegative int32 consumed by this client's incoming receiver",
+      "anchor": "static exact unique top-root name after stripping only trailing (Clone); empty for furniture",
+      "path": "nonnegative int32[] relative to and excluding the static anchor or placed ground root",
+      "class": "case-exact concrete MonoScript class",
+      "slot": "zero-based index in the full GameObject m_Component array",
+      "ground_index": "-1 for static; compact persisted ground-array index for furniture",
+      "item_id": "empty for static; exact canonical housing item ID for furniture",
+      "dual_id_reason": "RemoveOccupable removes a dense-list element without renumbering the component counter ID. Occupable send_id and receive_id can diverge after delete/save/readd. Generic IDs must remain equal."
+    },
+    "ground_signature_property_order": [
+      "item_id",
+      "index",
+      "tx",
+      "ty",
+      "tz",
+      "r"
+    ],
+    "ground_signature": "Array in compact persisted load order. Transform numbers are IEEE754 float32 round-trip JSON numbers; negative zero normalizes to positive zero. Server compares typed float32 bits, not raw JSON or a client digest."
+  },
+  "s2c_optional_ack": {
+    "accepted": "97#guid#seq#1#accepted",
+    "pending_or_denied": "97#guid#seq#0#reason",
+    "client_dependency": "none in v1; server owns queue/snapshot release and native v1 need not parse this ack"
+  },
+  "trust_snapshot": {
+    "path": "instance-interactions.json",
+    "publisher": "backend/interaction_registry.py",
+    "instances": "Exact housing binding plus reviewed static scene manifest, typed durable ground signature, and expanded reviewed furniture component entries.",
+    "unresolved_policy": "Any layout item whose prefab manifest is unresolved denies the whole instance registry."
+  },
+  "lifecycle": {
+    "initial": "Complete static map. Deferred minigame and separate-protocol members must be present for ID completeness but are denied for 94 relay.",
+    "load": "Complete durable furniture map and exact authoritative ground signature, for owners and visitors.",
+    "save": "Candidate map freezes furniture interaction immediately. It remains pending for at most 10 seconds until backend-published typed ground signature matches.",
+    "epoch_change": "Generic and occupancy state is cleared. Pending owner can commit against new authority. Stale mapped visitors are disconnected to force normal HTTP layout reload and a fresh registry.",
+    "queue": "A bridge-required profile opts the authenticated peer in before its first 97. At most 64 pre-ready opcode 8/94 packets are queued; stale numeric IDs are discarded when a complete trusted map commits. 9/10 fail closed until ready. Queue flush and semantic snapshots happen only after both namespaces are ready.",
+    "compatibility": "Legacy profiles retain earlier raw behavior. The nonmini-semantic-v1 profile requires the bridge in process metadata and never permits raw fallback even if the client hook fails to load."
+  },
+  "translation": {
+    "8": "Resolve sender send_id to semantic occupable key; reply 10##recipient receive_id when free or 9#requester#recipient receive_id#occupant when held.",
+    "9": "Resolve sender send_id and claim atomically. Success delivers recipient receive_id to every ready peer including sender. Any rejected opcode9 from an authenticated opted-in peer disconnects it to reload, because native seats animate before every possible server rejection and expose no proven rollback packet; conflicts retain typed registry_occupable_claim_conflict evidence.",
+    "10": "Verify semantic occupant and deliver recipient receive_id to every ready opt-in peer including sender.",
+    "94": "Validate semantic ordinary policy and extension arity, retain by semantic key, and deliver recipient receive_id to every ready opt-in peer including sender."
+  },
+  "readiness_boundary": "The explicit nonmini-semantic-v1 validation scope admits only a fresh complete trusted descriptor; mixed scenes include all deferred keys but deny them at relay. This does not set game_ready, protocol_complete, or networking parity true."
+}

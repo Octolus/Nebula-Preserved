@@ -1,0 +1,602 @@
+[
+  {
+    "value": "PlayerLabelInfoServlet",
+    "address": "0x24D8228"
+  },
+  {
+    "value": "PlayerPrefsServlet",
+    "address": "0x24D83C0"
+  },
+  {
+    "value": "ReportServlet",
+    "address": "0x24E2ED8"
+  },
+  {
+    "value": "ResetDefaultPresetServlet",
+    "address": "0x24E3A78"
+  },
+  {
+    "value": "RewardConsumeServlet",
+    "address": "0x24E48D0"
+  },
+  {
+    "value": "spaceExistServlet",
+    "address": "0x24E4C60"
+  },
+  {
+    "value": "/AddToPoolFullGameServlet?data={0}",
+    "address": "0x24E5EC0"
+  },
+  {
+    "value": "/Applications",
+    "address": "0x24E5F48"
+  },
+  {
+    "value": "/CameraEffects/",
+    "address": "0x24E5FD0"
+  },
+  {
+    "value": "/ChannelGUIDServlet?data={0}",
+    "address": "0x24E6058"
+  },
+  {
+    "value": "/CheckIfSpaceStillExistServlet?data={0}",
+    "address": "0x24E60E0"
+  },
+  {
+    "value": "/CheckIsAvailableToJoinFullGameServlet?data={0}",
+    "address": "0x24E6168"
+  },
+  {
+    "value": "/CheckServerStatusServlet?data={0}",
+    "address": "0x24E6278"
+  },
+  {
+    "value": "/CheckerServlet?data={0}",
+    "address": "0x24E6300"
+  },
+  {
+    "value": "/EULA/",
+    "address": "0x24E6388"
+  },
+  {
+    "value": "/FBX/",
+    "address": "0x24E6410"
+  },
+  {
+    "value": "SKLPromoServlet",
+    "address": "0x24E6470"
+  },
+  {
+    "value": "SKLPromoTriggerServlet",
+    "address": "0x24E64F8"
+  },
+  {
+    "value": "/GetCinemaFilmsServlet?data={0}",
+    "address": "0x24E65A0"
+  },
+  {
+    "value": "/GetCompanionsServlet?data={0}",
+    "address": "0x24E6628"
+  },
+  {
+    "value": "/GetIinitInfosNeededServlet?data={0}",
+    "address": "0x24E66B0"
+  },
+  {
+    "value": "/GetInfoServlet?data={0}",
+    "address": "0x24E6738"
+  },
+  {
+    "value": "/GetLeaderboardServlet?data={0}",
+    "address": "0x24E67C0"
+  },
+  {
+    "value": "/GetLocomotionsServlet?data={0}",
+    "address": "0x24E6848"
+  },
+  {
+    "value": "/GetNewsServlet?data={0}",
+    "address": "0x24E68D0"
+  },
+  {
+    "value": "/GetPlayerPrefsServlet?data={0}",
+    "address": "0x24E6958"
+  },
+  {
+    "value": "/GetPresetGameServlet?data={0}",
+    "address": "0x24E69E0"
+  },
+  {
+    "value": "/GetSpaceEventServlet?data={0}",
+    "address": "0x24E6A68"
+  },
+  {
+    "value": "/GetrefusernameServlet?data={0}",
+    "address": "0x24E6AF0"
+  },
+  {
+    "value": "/InWardrobeCheckerServlet?data={0}",
+    "address": "0x24E6B78"
+  },
+  {
+    "value": "/InfoServlet?data={0}",
+    "address": "0x24E6C00"
+  },
+  {
+    "value": "/Maps/",
+    "address": "0x24E6D10"
+  },
+  {
+    "value": "/PlayerPrefsServlet?data={0}",
+    "address": "0x24E6F30"
+  },
+  {
+    "value": "/RemoveInWardrobeServlet?data={0}",
+    "address": "0x24E6FB8"
+  },
+  {
+    "value": "/RemovePresetServlet?data={0}",
+    "address": "0x24E7040"
+  },
+  {
+    "value": "/RenamePresetServlet?data={0}",
+    "address": "0x24E70C8"
+  },
+  {
+    "value": "/ResetDefaultPresetServlet?data={0}",
+    "address": "0x24E7150"
+  },
+  {
+    "value": "/RewardClothServlet?data={0}",
+    "address": "0x24E71D8"
+  },
+  {
+    "value": "/SavePresetServlet?data={0}",
+    "address": "0x24E7260"
+  },
+  {
+    "value": "/SetLeaderboardServlet?data={0}",
+    "address": "0x24E72E8"
+  },
+  {
+    "value": "/SetPlayerPrefsServlet?data={0}",
+    "address": "0x24E7370"
+  },
+  {
+    "value": "/ShowPresetsServlet?data={0}",
+    "address": "0x24E73F8"
+  },
+  {
+    "value": "/StandaloneWindows",
+    "address": "0x24E7480"
+  },
+  {
+    "value": "/TOS/",
+    "address": "0x24E7508"
+  },
+  {
+    "value": "/UserExistsServlet?data={0}",
+    "address": "0x24E7590"
+  },
+  {
+    "value": "/WardrobeOptionItemServlet?data={0}",
+    "address": "0x24E7618"
+  },
+  {
+    "value": "/Wardrobe_EAB/",
+    "address": "0x24E76A0"
+  },
+  {
+    "value": "/checkRewardAvailableServlet?data={0}",
+    "address": "0x24E79D0"
+  },
+  {
+    "value": "/checkRewardGameServlet?data={0}",
+    "address": "0x24E7A58"
+  },
+  {
+    "value": "/checkStateNPFriendsServlet?data={0}",
+    "address": "0x24E7AE0"
+  },
+  {
+    "value": "/etc/terminfo",
+    "address": "0x24E7BF0"
+  },
+  {
+    "value": "/f/",
+    "address": "0x24E7C78"
+  },
+  {
+    "value": "/lib/terminfo",
+    "address": "0x24E7D00"
+  },
+  {
+    "value": "/s\n",
+    "address": "0x24E7E10"
+  },
+  {
+    "value": "/s/",
+    "address": "0x24E7E98"
+  },
+  {
+    "value": "/skinmaterials",
+    "address": "0x24E7F20"
+  },
+  {
+    "value": "/spaceExistServlet?data={0}",
+    "address": "0x24E7FA8"
+  },
+  {
+    "value": "/usr/lib/terminfo",
+    "address": "0x24E8030"
+  },
+  {
+    "value": "/usr/share",
+    "address": "0x24E80B8"
+  },
+  {
+    "value": "/usr/share/templates",
+    "address": "0x24E8140"
+  },
+  {
+    "value": "/usr/share/terminfo",
+    "address": "0x24E81C8"
+  },
+  {
+    "value": "Send_CheckIsInWardrobeServlet",
+    "address": "0x24EAFC0"
+  },
+  {
+    "value": "SetCooldownServlet",
+    "address": "0x24ECC70"
+  },
+  {
+    "value": "GetActiveStagesServlet",
+    "address": "0x24EDFD8"
+  },
+  {
+    "value": "GetBestScoreArcheryServlet",
+    "address": "0x24EE1F8"
+  },
+  {
+    "value": "GetBestScoreBoatMiniGameServlet",
+    "address": "0x24EE280"
+  },
+  {
+    "value": "GetCinemaFilmsServlet",
+    "address": "0x24EE528"
+  },
+  {
+    "value": "GetConsumablePriceServlet",
+    "address": "0x24EE638"
+  },
+  {
+    "value": "GetConsumableServlet",
+    "address": "0x24EE6C0"
+  },
+  {
+    "value": "GetCooldownServlet",
+    "address": "0x24EE7D0"
+  },
+  {
+    "value": "GetFeaturesServlet",
+    "address": "0x24EEC10"
+  },
+  {
+    "value": "GetFullGameLeaderboardServlet",
+    "address": "0x24EEC98"
+  },
+  {
+    "value": "GetGenderDataShopServlet",
+    "address": "0x24EED20"
+  },
+  {
+    "value": "GetHousingTypeServlet",
+    "address": "0x24EEEB8"
+  },
+  {
+    "value": "GetIinitInfosNeededServlet",
+    "address": "0x24EEF40"
+  },
+  {
+    "value": "GetItemAssetsDataServlet",
+    "address": "0x24EF0D8"
+  },
+  {
+    "value": "GetLastScoreServlet",
+    "address": "0x24EF160"
+  },
+  {
+    "value": "GetLeaderboardArcheryServlet",
+    "address": "0x24EF270"
+  },
+  {
+    "value": "GetLeaderboardBoatMiniGameServlet",
+    "address": "0x24EF2F8"
+  },
+  {
+    "value": "GetNewsServlet",
+    "address": "0x24EF408"
+  },
+  {
+    "value": "GetOpenGamesServlet",
+    "address": "0x24EF490"
+  },
+  {
+    "value": "GetPersonalSpacesServlet",
+    "address": "0x24EF5A0"
+  },
+  {
+    "value": "GetPlayerPrefsServlet",
+    "address": "0x24EF628"
+  },
+  {
+    "value": "GetPresetGameServlet",
+    "address": "0x24EF6B0"
+  },
+  {
+    "value": "GetShopDataShopServlet",
+    "address": "0x24EFAF0"
+  },
+  {
+    "value": "GetShopTypeDataShopServlet",
+    "address": "0x24EFBF8"
+  },
+  {
+    "value": "application/channels/channel/clientProviders",
+    "address": "0x24F6660"
+  },
+  {
+    "value": "application/channels/channel/serverProviders",
+    "address": "0x24F66E8"
+  },
+  {
+    "value": "application/octet-stream",
+    "address": "0x24F6770"
+  },
+  {
+    "value": "HousingReadPresetServlet",
+    "address": "0x24F7018"
+  },
+  {
+    "value": "HousingSavePresetServletParts",
+    "address": "0x24F70A0"
+  },
+  {
+    "value": "INSTRUCTIONS\n\nCheckers is played by two opponents, on opposite sides of the gameboard. One player has the dark pieces; the other has the light pieces. Players alternate turns. A player may not move an opponent's piece. A move consists of moving a piece diagonally to an adjacent unoccupied square. If the adjacent square contains an opponent's piece, and the square immediately beyond it is vacant, the piece may be captured (and removed from the game) by jumping over it.\n\nOnly the dark squares of the checkered board are used.A piece may move only diagonally into an unoccupied square. Capturing is mandatory in most official rules, although some rule variations make capturing optional when presented.[5] In almost all variants, the player without pieces remaining, or who cannot move due to being blocked, loses the game.\n\nMen\n\nUncrowned pieces (men) move one step diagonally forward, and capture an opponent's piece by moving two consecutive steps in the same line, jumping over the piece on the first step. Multiple enemy pieces may be captured in a single turn provided this is done by successive jumps made by a single piece; the jumps do not need to be in the same line but may \"zigzag\" (change diagonal direction).\n\nKings\n\nWhen a man reaches the crownhead or kings row (the farthest row forward), it becomes a king, and is marked by placing an additional piece on top of the first man, and acquires additional powers including the ability to move backwards and (in variants in which they cannot already do so) capture backwards. The same as men, a king can make successive jumps in a single turn provided that each jump captures an enemy man or king.",
+    "address": "0x24F9CB8"
+  },
+  {
+    "value": "TCPConnectionChecker: client disconnected",
+    "address": "0x24FBE60"
+  },
+  {
+    "value": "InWardrobeChecker",
+    "address": "0x24FCD10"
+  },
+  {
+    "value": "InfoServlet",
+    "address": "0x24FDF20"
+  },
+  {
+    "value": "AddScoreArcheryServlet",
+    "address": "0x24FF540"
+  },
+  {
+    "value": "AddScoreBoatMiniGameServlet",
+    "address": "0x24FF5C8"
+  },
+  {
+    "value": "AddStatisticsServlet",
+    "address": "0x24FF650"
+  },
+  {
+    "value": "AddXPServlet",
+    "address": "0x24FF760"
+  },
+  {
+    "value": "checkerToServerDownMaintenanceServlet",
+    "address": "0x24FFE50"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517628"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x25176A0"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517720"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517798"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517810"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517888"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517908"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517980"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517A00"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517A78"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517AF8"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517B70"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517BF0"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517C60"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517CD8"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517D50"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517DC8"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517E38"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517EB0"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517F20"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2517F98"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2518008"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2518080"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x25180F8"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2518178"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x25181F0"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2518270"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x25182E8"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2518368"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x25183E0"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2518460"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x25184D8"
+  },
+  {
+    "value": "MemorionServlet",
+    "address": "0x2518500"
+  },
+  {
+    "value": "htt[local-path]",
+    "address": "0x2518558"
+  },
+  {
+    "value": "http[local-path]",
+    "address": "0x2518650"
+  },
+  {
+    "value": "ChannelGUIDServlet",
+    "address": "0x251C020"
+  },
+  {
+    "value": "CheckServerStatusServlet",
+    "address": "0x251C650"
+  },
+  {
+    "value": "CheckerServlet",
+    "address": "0x251C860"
+  },
+  {
+    "value": "Checkers",
+    "address": "0x251C8E0"
+  },
+  {
+    "value": "Checking PC",
+    "address": "0x251C9E8"
+  },
+  {
+    "value": "CinemaInteractionNPServlet",
+    "address": "0x251D540"
+  },
+  {
+    "value": "NPShopBundleItemsServlet",
+    "address": "0x251E0C8"
+  },
+  {
+    "value": "NPShopBuyItemServlet",
+    "address": "0x251E150"
+  },
+  {
+    "value": "NPShopGiftItemServlet",
+    "address": "0x251E1D0"
+  },
+  {
+    "value": "NPShopIsItemPurchasedServlet",
+    "address": "0x251E258"
+  },
+  {
+    "value": "NPShopSyncCrystalsServlet",
+    "address": "0x251E2D8"
+  },
+  {
+    "value": "Content-Type",
+    "address": "0x2522C90"
+  },
+  {
+    "value": "CreateGameServlet",
+    "address": "0x25261A0"
+  },
+  {
+    "value": "UserExistsServlet",
+    "address": "0x2527850"
+  },
+  {
+    "value": "XSpacesGamesType0Servlet",
+    "address": "0x2530A60"
+  }
+]

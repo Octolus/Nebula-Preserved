@@ -1,0 +1,116 @@
+name: Windows patcher
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      publish:
+        description: Publish assets only for an existing v* tag after all checks
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: patcher-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+env:
+  RUST_TOOLCHAIN: '1.97.1'
+  RUST_TARGET: x86_64-pc-windows-msvc
+
+jobs:
+  quality:
+    uses: ./.github/workflows/quality.yml
+    permissions:
+      contents: read
+
+  build:
+    needs: quality
+    runs-on: windows-2025
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Configure isolated build paths
+        run: |
+          "CARGO_TARGET_DIR=$env:RUNNER_TEMP/patcher-target" >> $env:GITHUB_ENV
+          $flags = @("--remap-path-prefix=$env:GITHUB_WORKSPACE=/source", "--remap-path-prefix=$env:RUNNER_TEMP=/build")
+          "CARGO_ENCODED_RUSTFLAGS=$($flags -join [char]31)" >> $env:GITHUB_ENV
+      - name: Check out source without persisted credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1; Node 24
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust MSVC toolchain
+        run: |
+          rustup toolchain install $env:RUST_TOOLCHAIN --profile minimal --component rustfmt --target $env:RUST_TARGET
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          rustup run $env:RUST_TOOLCHAIN rustc --version
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Check Rust formatting
+        run: |
+          cargo +$env:RUST_TOOLCHAIN fmt --manifest-path patcher/Cargo.toml --all -- --check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Test locked Windows x64 patcher
+        run: |
+          cargo +$env:RUST_TOOLCHAIN test --manifest-path patcher/Cargo.toml --locked --target $env:RUST_TARGET
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build locked Windows x64 release
+        run: |
+          cargo +$env:RUST_TOOLCHAIN build --manifest-path patcher/Cargo.toml --locked --release --target $env:RUST_TARGET
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Package EXE and documentation only
+        env:
+          SOURCE_COMMIT: ${{ github.sha }}
+        run: |
+          python -B scripts/package_windows_patcher.py --binary "$env:CARGO_TARGET_DIR/$env:RUST_TARGET/release/nebula-preservation-patcher.exe" --output-dir "$env:RUNNER_TEMP/patcher-dist" --commit "$env:SOURCE_COMMIT"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload checked patcher artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2; Node 24
+        with:
+          name: windows-x64-patcher
+          path: |
+            ${{ runner.temp }}/patcher-dist/nebula-preservation-patcher-windows-x64.zip
+            ${{ runner.temp }}/patcher-dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    needs: [quality, build]
+    if: >-
+      github.event_name != 'pull_request' &&
+      startsWith(github.ref, 'refs/tags/v') &&
+      (github.event_name == 'push' || inputs.publish == true)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifact from this checked workflow run
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2; Node 24
+        with:
+          name: windows-x64-patcher
+          path: patcher-dist
+      - name: Verify archive checksum
+        working-directory: patcher-dist
+        run: sha256sum --check SHA256SUMS
+      - name: Publish unsigned patcher assets for the existing tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" --verify-tag --target "$RELEASE_COMMIT" --title "$RELEASE_TAG" --notes "Unsigned Windows x64 patcher executable. A separately reviewed preservation bundle and published manifest SHA256 are required; this archive contains no game files or patch bundle. See docs/PATCHER-RELEASE.md in the source."
+          fi
+          gh release upload "$RELEASE_TAG" patcher-dist/nebula-preservation-patcher-windows-x64.zip patcher-dist/SHA256SUMS

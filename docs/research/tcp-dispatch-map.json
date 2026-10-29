@@ -1,0 +1,717 @@
+{
+  "evidence": "tcp-handlers-native.json ManagerInstance.SetTCPClient RVA 0x439f60",
+  "scope": "Direct allocation TypeInfo and immediate opcode arguments at every TCPClient.RegisterHandler call within this method; no runtime observation.",
+  "registrations": [
+    {
+      "opcode": 0,
+      "handler": "Assets.Scripts.TCPs.Processors.OnConnectedProcessor",
+      "process_rva": "0x5e0570",
+      "registration_call_va": "0x18043a498",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "OnConnected"
+    },
+    {
+      "opcode": 1,
+      "handler": "Assets.Scripts.TCPs.Processors.PlayerJoinedProcessor",
+      "process_rva": "0x5e4660",
+      "registration_call_va": "0x18043a4d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "PlayerJoined"
+    },
+    {
+      "opcode": 5,
+      "handler": "Assets.Scripts.TCPs.Processors.AnimProcessor",
+      "process_rva": "0x5d6fb0",
+      "registration_call_va": "0x18043a518",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Anim"
+    },
+    {
+      "opcode": 2,
+      "handler": "Assets.Scripts.TCPs.Processors.TransformProcessor",
+      "process_rva": "0x5e7ed0",
+      "registration_call_va": "0x18043a558",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Transform"
+    },
+    {
+      "opcode": 17,
+      "handler": "Assets.Scripts.TCPs.Processors.CompanionProcessor",
+      "process_rva": "0x5d7c20",
+      "registration_call_va": "0x18043a598",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "UpdateCompanion"
+    },
+    {
+      "opcode": 9,
+      "handler": "Assets.Scripts.TCPs.Processors.OccupableProcessor",
+      "process_rva": "0x5dfa40",
+      "registration_call_va": "0x18043a5d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Occupable"
+    },
+    {
+      "opcode": 10,
+      "handler": "Assets.Scripts.TCPs.Processors.LeaveOccupableProcessor",
+      "process_rva": "0x5dc440",
+      "registration_call_va": "0x18043a618",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "LeaveOccupable"
+    },
+    {
+      "opcode": 11,
+      "handler": "Assets.Scripts.TCPs.Processors.StartTypingProcessor",
+      "process_rva": "0x5e70c0",
+      "registration_call_va": "0x18043a658",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "StartTyping"
+    },
+    {
+      "opcode": 12,
+      "handler": "Assets.Scripts.TCPs.Processors.StopTypingProcessor",
+      "process_rva": "0x5e7580",
+      "registration_call_va": "0x18043a698",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "StopTyping"
+    },
+    {
+      "opcode": 13,
+      "handler": "Assets.Scripts.TCPs.Processors.ChatMessageProcessor",
+      "process_rva": "0x5d7790",
+      "registration_call_va": "0x18043a6d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "ChatMessage"
+    },
+    {
+      "opcode": 15,
+      "handler": "Assets.Scripts.TCPs.Processors.UpdateLocomotionProcessor",
+      "process_rva": "0x5ec4d0",
+      "registration_call_va": "0x18043a718",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "UpdateLocomotion"
+    },
+    {
+      "opcode": 18,
+      "handler": "Assets.Scripts.TCPs.Processors.PlayerPrefsProcessor",
+      "process_rva": "0x5e4670",
+      "registration_call_va": "0x18043a758",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "PlayerPref"
+    },
+    {
+      "opcode": 14,
+      "handler": "Assets.Scripts.TCPs.Processors.OnRemoteDisconnectedProcessor",
+      "process_rva": "0x5e0c60",
+      "registration_call_va": "0x18043a798",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "OnRemoteDisconnected"
+    },
+    {
+      "opcode": 21,
+      "handler": "Assets.Scripts.TCPs.Processors.RemoveFriendProcessor",
+      "process_rva": "0x5d6db0",
+      "registration_call_va": "0x18043a7d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "RemoveFriend"
+    },
+    {
+      "opcode": 22,
+      "handler": "Assets.Scripts.TCPs.Processors.RemoveSilencedProcessor",
+      "process_rva": "0x5d6db0",
+      "registration_call_va": "0x18043a818",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "RemoveSilenced"
+    },
+    {
+      "opcode": 23,
+      "handler": "Assets.Scripts.TCPs.Processors.AddSilencedProcessor",
+      "process_rva": "0x5d6db0",
+      "registration_call_va": "0x18043a858",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "AddSilenced"
+    },
+    {
+      "opcode": 24,
+      "handler": "Assets.Scripts.TCPs.Processors.AddBlockProcessor",
+      "process_rva": "0x5d6bc0",
+      "registration_call_va": "0x18043a898",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "AddBlock"
+    },
+    {
+      "opcode": 25,
+      "handler": "Assets.Scripts.TCPs.Processors.RemoveBlockProcessor",
+      "process_rva": "0x5e55e0",
+      "registration_call_va": "0x18043a8d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "RemoveBlock"
+    },
+    {
+      "opcode": 19,
+      "handler": "Assets.Scripts.TCPs.Processors.NotificationProcessor",
+      "process_rva": "0x5df8a0",
+      "registration_call_va": "0x18043a918",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Notification"
+    },
+    {
+      "opcode": 27,
+      "handler": "Assets.Scripts.TCPs.Processors.ToJoinNotificationProcessor",
+      "process_rva": "0x5e7db0",
+      "registration_call_va": "0x18043a958",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "ToJoinNotification"
+    },
+    {
+      "opcode": 28,
+      "handler": "Assets.Scripts.TCPs.Processors.RelationshipUpdatedProcessor",
+      "process_rva": "0x5e54d0",
+      "registration_call_va": "0x18043a998",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "RelationshipUpdated"
+    },
+    {
+      "opcode": 29,
+      "handler": "Assets.Scripts.TCPs.Processors.SetIsInWardrobeProcessor",
+      "process_rva": "0x5e6530",
+      "registration_call_va": "0x18043a9d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "SetIsInWardrobe"
+    },
+    {
+      "opcode": 30,
+      "handler": "Assets.Scripts.TCPs.Processors.ChangeDayNightAtServerProcessor",
+      "process_rva": "0x5d7650",
+      "registration_call_va": "0x18043aa18",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "DayNightCycle"
+    },
+    {
+      "opcode": 31,
+      "handler": "Assets.Scripts.TCPs.Processors.BoatTokenToInstantiateProcessor",
+      "process_rva": "0x5d72a0",
+      "registration_call_va": "0x18043aa58",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "BoatTokenToInstantiate"
+    },
+    {
+      "opcode": 32,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardInitializeGameProcessor",
+      "process_rva": "0x5d95b0",
+      "registration_call_va": "0x18043aa98",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_InitGame"
+    },
+    {
+      "opcode": 33,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardSelectGameProcessor",
+      "process_rva": "0x5d97f0",
+      "registration_call_va": "0x18043aad8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_SelectGame"
+    },
+    {
+      "opcode": 34,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardStartGameProcessor",
+      "process_rva": "0x5d9830",
+      "registration_call_va": "0x18043ab18",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_StartGame"
+    },
+    {
+      "opcode": 36,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardLeaveGameProcessor",
+      "process_rva": "0x5d9690",
+      "registration_call_va": "0x18043ab58",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_LeaveGame"
+    },
+    {
+      "opcode": 35,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardMakeMoveProcessor",
+      "process_rva": "0x5d96d0",
+      "registration_call_va": "0x18043ab98",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_MakeMove"
+    },
+    {
+      "opcode": 37,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardSynchronizeGameProcessor",
+      "process_rva": "0x5d9870",
+      "registration_call_va": "0x18043abd8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_SyncGame"
+    },
+    {
+      "opcode": 39,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardInitializeGameOneWayProcessor",
+      "process_rva": "0x5d9570",
+      "registration_call_va": "0x18043ac18",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_InitGameOneWay"
+    },
+    {
+      "opcode": 40,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardSelectGameOneWayProcessor",
+      "process_rva": "0x5d97b0",
+      "registration_call_va": "0x18043ac58",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_SelectGameOneWay"
+    },
+    {
+      "opcode": 41,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardStartGameOneWayProcessor",
+      "process_rva": "0x5d9830",
+      "registration_call_va": "0x18043ac98",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_StartGameOneWay"
+    },
+    {
+      "opcode": 42,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardRivalLeaveOneWayProcessor",
+      "process_rva": "0x5d9690",
+      "registration_call_va": "0x18043acd8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_LeaveGameOneWay"
+    },
+    {
+      "opcode": 43,
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardMoveOneWayProcessor",
+      "process_rva": "0x5d9770",
+      "registration_call_va": "0x18043ad18",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Board_msg_MakeMoveOneWay"
+    },
+    {
+      "opcode": 44,
+      "handler": "Assets.Scripts.TCPs.Processors.FoodTruck.GetFoodTruckConsumablesProcessor",
+      "process_rva": "0x5dbcc0",
+      "registration_call_va": "0x18043ad58",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "FoodTruck_msg_GotConsumable"
+    },
+    {
+      "opcode": 45,
+      "handler": "Assets.Scripts.TCPs.Processors.FoodTruck.GetFoodTruckConsumablesOneWayProcessor",
+      "process_rva": "0x5dbc00",
+      "registration_call_va": "0x18043ad98",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "FoodTruck_msg_GotConsumableOneWay"
+    },
+    {
+      "opcode": 46,
+      "handler": "Assets.Scripts.TCPs.Processors.OktoberFest.GetOktoberFestConsumables",
+      "process_rva": "0x5dbfb0",
+      "registration_call_va": "0x18043add8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "OktoberFest_msg_GotConsumable"
+    },
+    {
+      "opcode": 47,
+      "handler": "Assets.Scripts.TCPs.Processors.OktoberFest.GetOktoberFestConsumablesOneWay",
+      "process_rva": "0x5dbef0",
+      "registration_call_va": "0x18043ae18",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "OktoberFest_msg_GotConsumableOneWay"
+    },
+    {
+      "opcode": 51,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolInitializeGameProcessor",
+      "process_rva": "0x5dc070",
+      "registration_call_va": "0x18043ae58",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_InitGame"
+    },
+    {
+      "opcode": 53,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolSelectGameProcessor",
+      "process_rva": "0x5dc3c0",
+      "registration_call_va": "0x18043ae98",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_SelectGame"
+    },
+    {
+      "opcode": 52,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolLeaveGameProcessor",
+      "process_rva": "0x5dc200",
+      "registration_call_va": "0x18043aed8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_LeaveGame"
+    },
+    {
+      "opcode": 54,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolStartGameProcessor",
+      "process_rva": "0x5dc400",
+      "registration_call_va": "0x18043af18",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_StartGame"
+    },
+    {
+      "opcode": 55,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveCueProcessor",
+      "process_rva": "0x5dc340",
+      "registration_call_va": "0x18043af58",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_MakeMove"
+    },
+    {
+      "opcode": 56,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveBallsProcessor",
+      "process_rva": "0x5dc300",
+      "registration_call_va": "0x18043af98",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_EndsMove"
+    },
+    {
+      "opcode": 57,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveFaultProcessor",
+      "process_rva": "0x5dc380",
+      "registration_call_va": "0x18043afd8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_MoveFoul"
+    },
+    {
+      "opcode": 59,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolLeaveGameOneWayMsgProcessor",
+      "process_rva": "0x5dc110",
+      "registration_call_va": "0x18043b018",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_LeaveGameOneWay"
+    },
+    {
+      "opcode": 60,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolStartGameOneWayMsgProcessor",
+      "process_rva": "0x5dc400",
+      "registration_call_va": "0x18043b058",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_StartGameOneWay"
+    },
+    {
+      "opcode": 61,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveCueOneWayMsgProcessor",
+      "process_rva": "0x5dc340",
+      "registration_call_va": "0x18043b098",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_MakeMoveOneWay"
+    },
+    {
+      "opcode": 62,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveBallsOneWayMsgProcessor",
+      "process_rva": "0x5dc300",
+      "registration_call_va": "0x18043b0d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_EndsMoveOneWay"
+    },
+    {
+      "opcode": 63,
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveFaultOneWayMsgProcessor",
+      "process_rva": "0x5dc380",
+      "registration_call_va": "0x18043b118",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Pool_msg_MoveFoulOneWay"
+    },
+    {
+      "opcode": 64,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingInitializeGameProcessor",
+      "process_rva": "0x5d9d30",
+      "registration_call_va": "0x18043b158",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_InitGame"
+    },
+    {
+      "opcode": 65,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingLeaveGameProcessor",
+      "process_rva": "0x5da230",
+      "registration_call_va": "0x18043b198",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_LeaveGame"
+    },
+    {
+      "opcode": 66,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStartGameProcessor",
+      "process_rva": "0x5da760",
+      "registration_call_va": "0x18043b1d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_ReadyGame"
+    },
+    {
+      "opcode": 68,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingBallShotProcessor",
+      "process_rva": "0x5d9c30",
+      "registration_call_va": "0x18043b218",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_ShotGame"
+    },
+    {
+      "opcode": 69,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStrikePinsProcessor",
+      "process_rva": "0x5daf60",
+      "registration_call_va": "0x18043b258",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_PinsGame"
+    },
+    {
+      "opcode": 70,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingTurnBowlingGameProcessor",
+      "process_rva": "0x5db7e0",
+      "registration_call_va": "0x18043b298",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_TurnGame"
+    },
+    {
+      "opcode": 71,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingSyncBowlingGameProcessor",
+      "process_rva": "0x5dafa0",
+      "registration_call_va": "0x18043b2d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_SyncGame"
+    },
+    {
+      "opcode": 72,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingInitializeGameOneWayProcessor",
+      "process_rva": "0x5d9c70",
+      "registration_call_va": "0x18043b318",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_InitGameOneWay"
+    },
+    {
+      "opcode": 73,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingLeaveGameOneWayProcessor",
+      "process_rva": "0x5d9de0",
+      "registration_call_va": "0x18043b358",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_LeaveGameOneWay"
+    },
+    {
+      "opcode": 74,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStartGameOneWayProcessor",
+      "process_rva": "0x5da2e0",
+      "registration_call_va": "0x18043b398",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_ReadyGameOneWay"
+    },
+    {
+      "opcode": 76,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingBallShotOneWayProcessor",
+      "process_rva": "0x5d98b0",
+      "registration_call_va": "0x18043b3d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_ShotGameOneWay"
+    },
+    {
+      "opcode": 77,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStrikePinsOneWayProcessor",
+      "process_rva": "0x5dabe0",
+      "registration_call_va": "0x18043b418",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_PinsGameOneWay"
+    },
+    {
+      "opcode": 78,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingTurnBowlingGameOneWayProcessor",
+      "process_rva": "0x5db460",
+      "registration_call_va": "0x18043b458",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_TurnGameOneWay"
+    },
+    {
+      "opcode": 79,
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingSyncPositionOneWayProcessor",
+      "process_rva": "0x5db1f0",
+      "registration_call_va": "0x18043b498",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Bowling_msg_SyncPositionOneWay"
+    },
+    {
+      "opcode": 80,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsInitializeGameProcessor",
+      "process_rva": "0x5db860",
+      "registration_call_va": "0x18043b4d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_InitGame"
+    },
+    {
+      "opcode": 82,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsSelectGameProcessor",
+      "process_rva": "0x5dbb40",
+      "registration_call_va": "0x18043b518",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_SelectGame"
+    },
+    {
+      "opcode": 81,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsLeaveGameProcessor",
+      "process_rva": "0x5db9c0",
+      "registration_call_va": "0x18043b558",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_LeaveGame"
+    },
+    {
+      "opcode": 84,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsStartGameProcessor",
+      "process_rva": "0x5dbb80",
+      "registration_call_va": "0x18043b598",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_StartGame"
+    },
+    {
+      "opcode": 85,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsMakeMoveProcessor",
+      "process_rva": "0x5dbac0",
+      "registration_call_va": "0x18043b5d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_MakeMove"
+    },
+    {
+      "opcode": 86,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsSynchronizeGameProcessor",
+      "process_rva": "0x5dbbc0",
+      "registration_call_va": "0x18043b618",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_SyncGame"
+    },
+    {
+      "opcode": 87,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsInitializeGameOneWayMsgProcessor",
+      "process_rva": "0x5db820",
+      "registration_call_va": "0x18043b658",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_InitGameOneWay"
+    },
+    {
+      "opcode": 89,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsSelectGameOneWayProcessor",
+      "process_rva": "0x5dbb00",
+      "registration_call_va": "0x18043b698",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_SelectGameOneWay"
+    },
+    {
+      "opcode": 88,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsLeaveGameOneWayMsgProcessor",
+      "process_rva": "0x5db8c0",
+      "registration_call_va": "0x18043b6d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_LeaveGameOneWay"
+    },
+    {
+      "opcode": 90,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsStartGameOneWayMsgProcessor",
+      "process_rva": "0x5dbb80",
+      "registration_call_va": "0x18043b718",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_StartGameOneWay"
+    },
+    {
+      "opcode": 91,
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsMakeMoveOneWayMsgProcessor",
+      "process_rva": "0x5dbac0",
+      "registration_call_va": "0x18043b758",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Darts_msg_MakeMoveOneWay"
+    },
+    {
+      "opcode": 92,
+      "handler": "Assets.Scripts.TCPs.Processors.AnimParameterProcessor",
+      "process_rva": "0x5d6e90",
+      "registration_call_va": "0x18043b798",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "AnimParameter"
+    },
+    {
+      "opcode": 93,
+      "handler": "Assets.Scripts.TCPs.Processors.UpdateAnimationLayerProcessor",
+      "process_rva": "0x5ec380",
+      "registration_call_va": "0x18043b7d8",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "UpdateAnimationLayer"
+    },
+    {
+      "opcode": 94,
+      "handler": "Assets.Scripts.TCPs.Processors.GenericinteractableProcessor",
+      "process_rva": "0x5d91b0",
+      "registration_call_va": "0x18043b818",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "Genericinteractable"
+    },
+    {
+      "opcode": 96,
+      "handler": "Assets.Scripts.TCPs.Processors.GetInstanceClosingProcessor",
+      "process_rva": "0x5dbd80",
+      "registration_call_va": "0x18043b858",
+      "direction_evidence": "clientbound: registered in client receive dispatch table",
+      "enum_name": "GetInstanceClosing"
+    }
+  ],
+  "opcodes_without_client_handler": [
+    {
+      "name": "GetCurrentAnim",
+      "opcode": 3
+    },
+    {
+      "name": "SetCurrentAnim",
+      "opcode": 4
+    },
+    {
+      "name": "GetCurrentCompanion",
+      "opcode": 6
+    },
+    {
+      "name": "Companion",
+      "opcode": 7
+    },
+    {
+      "name": "GetOccupable",
+      "opcode": 8
+    },
+    {
+      "name": "GetCurrentLocomotion",
+      "opcode": 16
+    },
+    {
+      "name": "GetCurrentPosition",
+      "opcode": 20
+    },
+    {
+      "name": "NotificationAccepted",
+      "opcode": 26
+    },
+    {
+      "name": "Board_msg_SyncTable",
+      "opcode": 38
+    },
+    {
+      "name": "Pinball_msg_addScore",
+      "opcode": 48
+    },
+    {
+      "name": "Pinball_msg_getBestScore",
+      "opcode": 49
+    },
+    {
+      "name": "Pinball_msg_getLeaderboard",
+      "opcode": 50
+    },
+    {
+      "name": "Pool_msg_SyncGame",
+      "opcode": 58
+    },
+    {
+      "name": "Bowling_msg_StartGame",
+      "opcode": 67
+    },
+    {
+      "name": "Bowling_msg_StartGameOneWay",
+      "opcode": 75
+    },
+    {
+      "name": "Darts_msg_SelectMode",
+      "opcode": 83
+    },
+    {
+      "name": "NotificationGameDeclined",
+      "opcode": 95
+    }
+  ],
+  "unknown": "No client handler does not alone prove a serverbound opcode; confirm send construction before assigning direction."
+}

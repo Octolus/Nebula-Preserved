@@ -1,0 +1,206 @@
+{
+  "format_version": 1,
+  "status": "static_candidate_prepared",
+  "scope": "Controller-first keyboard fallback for ten PadPS4 button methods",
+  "build": {
+    "name": "Nebula Realms build11018722",
+    "image_base": "0x180000000",
+    "input_sha256": "13158d2f08c9511c9cc283a6dda680081c5e1f6142bb86ddde1bfbd039de7fcb",
+    "candidate_sha256": "3ddc1eb903eda90be06cc7079e2afa584d250b4430455b86564150fa05949703"
+  },
+  "mapping": [
+    {
+      "method": "Cross",
+      "rva": "0x6a8f40",
+      "key": "E",
+      "keycode": 101
+    },
+    {
+      "method": "Circle",
+      "rva": "0x6a8e20",
+      "key": "Escape",
+      "keycode": 27
+    },
+    {
+      "method": "Square",
+      "rva": "0x6a9b20",
+      "key": "Tab",
+      "keycode": 9
+    },
+    {
+      "method": "Triangle",
+      "rva": "0x6a9bd0",
+      "key": "F",
+      "keycode": 102
+    },
+    {
+      "method": "L1",
+      "rva": "0x6a9400",
+      "key": "Q",
+      "keycode": 113
+    },
+    {
+      "method": "R1",
+      "rva": "0x6a9760",
+      "key": "R",
+      "keycode": 114
+    },
+    {
+      "method": "L3",
+      "rva": "0x6a9520",
+      "key": "LeftShift",
+      "keycode": 304
+    },
+    {
+      "method": "R3",
+      "rva": "0x6a98c0",
+      "key": "C",
+      "keycode": 99
+    },
+    {
+      "method": "Share",
+      "rva": "0x6a9a70",
+      "key": "P",
+      "keycode": 112
+    },
+    {
+      "method": "Options",
+      "rva": "0x6a96b0",
+      "key": "M",
+      "keycode": 109
+    }
+  ],
+  "observed_native_contract": {
+    "is_blocked_controls_offset": "0x10",
+    "reset_true_original_semantics": "down this frame",
+    "reset_false_original_semantics": "held state",
+    "get_key_down_int_rva": "0x1bd8730",
+    "get_key_int_rva": "0x1bd8770",
+    "all_entry_stolen_bytes": "48895c2408",
+    "stolen_instruction": "mov qword ptr [rsp+8], rbx",
+    "stolen_instruction_rip_relative": false
+  },
+  "authored_policy": {
+    "original_method_called_first": true,
+    "original_true_suppresses_keyboard": true,
+    "keyboard_requires_original_false": true,
+    "keyboard_requires_unblocked_controls": true,
+    "reset_true_helper": "UnityEngine.Input.GetKeyDownInt",
+    "reset_false_helper": "UnityEngine.Input.GetKeyInt",
+    "helper_method_info": "null"
+  },
+  "artifacts": {
+    "assembly": "outputs/nebula-preservation/client-fixes/keyboard_buttons.s",
+    "assembly_sha256": "009c99a34f9114bc95db0eccafa0e4f8e4034368d986589e202f59afb3be0f48",
+    "coff": "work/evidence/keyboard_buttons.o",
+    "coff_sha256": "d6fc963f20d236473ce8d60b5e2e2cac257086e195e8d9303907eae578bbcf93",
+    "patcher": "outputs/nebula-preservation/tools/keyboard_buttons_patch.py",
+    "offline_tests": "outputs/nebula-preservation/tools/keyboard_buttons_offline_tests.py",
+    "offline_test_report": "work/evidence/keyboard-buttons-offline-tests.json",
+    "manifest": "outputs/nebula-preservation/client-fixes/prepared-keyboard-buttons-copy.json",
+    "copy": "work/patched-client-keyboard-buttons/GameAssembly.dll"
+  },
+  "pe": {
+    "new_section": ".nbk",
+    "new_section_rva": "0x2e3d000",
+    "authored_code_bytes": 416,
+    "existing_runtime_functions_preserved": 138031,
+    "new_runtime_function": [
+      "0x2e3d0a0",
+      "0x2e3d0fc",
+      "0x2e3d1a0"
+    ],
+    "prior_sections_preserved": [
+      ".nbp",
+      ".nbn"
+    ],
+    "writable_executable_section_added": false
+  },
+  "verification": {
+    "pure_instruction_model_cases_passed": 120,
+    "synthetic_image_bases": [
+      "0x0",
+      "0x180000000"
+    ],
+    "path_guard_cases_passed": 3,
+    "offline_preparation_target_executed": false,
+    "subsequent_unhooked_runtime_test": true,
+    "runtime_tested_methods": [
+      "L3",
+      "R3",
+      "Options"
+    ],
+    "runtime_untested_methods": [
+      "Cross",
+      "Circle",
+      "Square",
+      "Triangle",
+      "L1",
+      "R1",
+      "Share"
+    ],
+    "options_m_opened_menu": true,
+    "options_screenshot": "outputs/nebula-preservation/runtime-screenshots/options-settled.png",
+    "options_screenshot_sha256": "9e2cb9e8ba694119048bcffb03c116ed54227e63c77fe2407afe042e7cfd6059",
+    "arrow_and_return_ui_navigation_observed": true,
+    "arrow_and_return_are_separate_input_manager_evidence": true,
+    "character_editor_and_clothing_view_opened": true,
+    "owned_blue_torso_selected": true,
+    "one_right_height_increment_visibly_changed_slider_and_avatar": true,
+    "character_preset_screenshot": "outputs/nebula-preservation/runtime-screenshots/character-preset.png",
+    "character_preset_screenshot_sha256": "8c77d30d5f48caa7d97c55bcf0121fcedd63b093d8be9d6213ff0888e824a841",
+    "l3_left_shift_focused_chat": false,
+    "l3_left_shift_focus_success_inference_retracted": true,
+    "computer_access_shift_l_observed_chat_is_focused": 0,
+    "computer_access_shift_l_observed_chat_is_typing": 0,
+    "computer_access_shift_l_probe": {
+      "path": "work/integration-state/chat-focus-explicit-shift-l-recheck.json",
+      "sha256": "816365f550a9cb2a3f9187e653de2bf7aff7735b835d0bd8cee31cc09dcbbaaa",
+      "all_observed_manager_and_pad_gates_clear": true,
+      "physical_keyboard_left_shift_never_works_claimed": false
+    },
+    "f8_l3_followup": {
+      "protocol": "outputs/nebula-preservation/protocol/keyboard-focus-compatibility.json",
+      "candidate_sha256": "ec6f909d3af35c89cd287a2803b86839cd5d1b168bc1f76517eed2494c85e01b",
+      "native_focus_probe": "work/integration-state/chat-focus-f8-first-native-press.json",
+      "native_focus_probe_sha256": "65dc9cae764ab84e329dbe12a866cb2bb24c68b61df194e8a4118865993e345d",
+      "chat_is_focused_after_f8": 1
+    },
+    "r3_c_showed_chat": true,
+    "return_started_input_via_separate_input_manager": true,
+    "linux_public_chat_roundtrip_visible": true,
+    "linux_public_chat_screenshot": "outputs/nebula-preservation/runtime-screenshots/linux-public-chat.png",
+    "linux_public_chat_screenshot_sha256": "db9b7c1cdbe7abafbb3862ebe9c13b3543448ca8cfb715800fb5247bb440f5bb",
+    "dated_intermediate_save_preset_blank_rectangle_observed": true,
+    "later_preset_v2_named_save_list_and_load_passed": true,
+    "preset_save_blank_screenshot": "outputs/nebula-preservation/runtime-screenshots/preset-save-blank.png",
+    "preset_save_blank_screenshot_sha256": "d114cb10b5e6c2c213067ff8f0c2d5702e355dc711149e40b2f58065cf3f83d2",
+    "installed_world_input_sha256": "70a141380052f0c2eb0d64c8bad71961648fe9791d79a6b2da37924b9bff4775",
+    "w_movement_is_separate_world_axis_evidence": true,
+    "w_discrete_press_count": 20,
+    "w_translation_world_units": 5.131479731560391,
+    "held_walking_or_camera_proven": false,
+    "instrumented_failure_audit": "outputs/nebula-preservation/protocol/instrumented-exception-failure.json",
+    "exception_helper_interception_retired": true,
+    "offline_preparation_network_used": false,
+    "subsequent_runtime_network_used": true,
+    "installation_changed": false
+  },
+  "excluded_changes": [
+    "controller synthesis",
+    "UI or listener logic",
+    "attachment",
+    "identity, purchase, reward, or security checks",
+    "chat behavior",
+    "native runtime injection"
+  ],
+  "limitations": [
+    "Options/M and R3/C have successful direct runtime coverage among the ten original PadPS4 wrapper mappings; L3/LeftShift was directly attempted through Computer Access Shift_L but did not toggle focus.",
+    "Arrow/Return UI navigation and measured W movement exercise the separate InputManager copy, not the remaining seven PadPS4 wrappers.",
+    "Twenty discrete W presses prove translation but not held-key behavior or camera control.",
+    "The earlier blank Save Preset rectangle is retained as dated history; later V2 preset save/list/load does not add PadPS4 wrapper coverage.",
+    "No original GameAssembly or Unity helper instruction executed in the offline model.",
+    "Windows exception dispatch through all stubs, trampolines, and generated unwind metadata has not been stress-tested.",
+    "The two successful original wrapper paths do not prove the other mappings or full gameplay coverage; a later F8/L3 compatibility copy has separate narrow runtime proof."
+  ]
+}

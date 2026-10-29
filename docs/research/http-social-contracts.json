@@ -1,0 +1,434 @@
+{
+  "format_version": 1,
+  "steam_appid": 919290,
+  "steam_buildid": 11018722,
+  "gameassembly_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+  "evidence_scope": "Static metadata, bounded x64, focused offline Ghidra and socket-forbidden Python tests. No game/server/listener/connections.",
+  "native_pseudocode_is_original_source": false,
+  "all_networking_parity_proven": false,
+  "routes": [
+    {
+      "route": "N2GetSocialList",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "listType Int32 decimal",
+        "typeFriendlist Int32 decimal"
+      ],
+      "response_fields": [
+        "unused",
+        "unused",
+        "selector Int32",
+        "count Int32",
+        "count EntryData strings from index4"
+      ],
+      "minimum_fields": 4,
+      "selector_values": {
+        "0": "wardrobe/shop gifting UI",
+        "1": "social UI"
+      },
+      "observed_menu_types": {
+        "0": "Friends",
+        "1": "Silenced",
+        "2": "Blocked"
+      },
+      "empty_response": "true#<GUID>#<selector>#0",
+      "response_guards": "N2-specific generic sender bypass; consumer reads selector/count only",
+      "entrydata_public_order": [
+        {
+          "name": "isFavourite",
+          "type": "bool",
+          "offset": "0x18",
+          "lexical": "True/False"
+        },
+        {
+          "name": "status",
+          "type": "SocialManager.Status enum",
+          "offset": "0x1C",
+          "lexical": "Online/Away/Offline/Wardrobe"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "offset": "0x20",
+          "lexical": "exact username"
+        },
+        {
+          "name": "platform",
+          "type": "int32",
+          "offset": "0x28",
+          "lexical": "0 PS4;1 StandaloneWindows"
+        },
+        {
+          "name": "listType",
+          "type": "SocialManager.ListType enum",
+          "offset": "0x2C",
+          "lexical": "Friends/Silenced/Blocked/SpaceUsers/PSN"
+        }
+      ],
+      "entrydata_grammar": "Concatenate five tokens; each has one UTF16 code unit prefix chr(0x24+UTF16Length(text)) then text. No separators/escaping; null sentinel nulls.",
+      "golden_example": {
+        "fields": [
+          false,
+          "Offline",
+          "Other",
+          1,
+          "Friends"
+        ],
+        "wire": ")False+Offline)Other%1+Friends"
+      },
+      "evidence": [
+        "0x3ecda0",
+        "0x414e40",
+        "0x3e8c40",
+        "0x6a65b0",
+        "0x6a5d10",
+        "0x6a59f0",
+        "0x6a5020"
+      ]
+    },
+    {
+      "route": "GetSocialList",
+      "request_fields": [
+        "SessionGUID",
+        "type Int32 decimal"
+      ],
+      "response_fields": [
+        "unused",
+        "JSON {lUsernames:List<string>}"
+      ],
+      "minimum_fields": 2,
+      "empty_response": "OK#{\"lUsernames\":[]}",
+      "semantic_limit": "No direct caller of Process found in verified game-code range0x352000..0x900000. Mapping0/1/2 to ListType is explicitly local inference.",
+      "evidence": [
+        "0x635780",
+        "0x635700"
+      ]
+    },
+    {
+      "route": "N2GetPsidglobalAndGuidByUsernamePlatform",
+      "request_fields": [
+        "SessionGUID",
+        "username",
+        "platform Int32 decimal"
+      ],
+      "response_fields": [
+        "unused",
+        "psidglobal",
+        "GUID"
+      ],
+      "minimum_fields": 3,
+      "offline_response": "OK##",
+      "evidence": [
+        "0x634c00",
+        "0x634bb0",
+        "0x488fe0"
+      ]
+    },
+    {
+      "route": "N2GetRelationship",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "targetGUID"
+      ],
+      "response_fields": [
+        "unused",
+        "unused",
+        "unused",
+        "unused",
+        "relationship Int32"
+      ],
+      "exact_fields": 5,
+      "codes": {
+        "0": "None",
+        "1": "Friend",
+        "2": "Favorite",
+        "3": "Ignored/local isSilenced",
+        "4": "SilentBy/local isSilencer",
+        "5": "BlockedUsers/local isBlocked",
+        "6": "UserBlockedBy/local isBlocker"
+      },
+      "evidence": [
+        "0x635350",
+        "0x635300",
+        "0x6ec430"
+      ]
+    }
+  ],
+  "implementation": {
+    "files": [
+      "backend/service.py",
+      "backend/state.py",
+      "backend/tests/test_contracts.py"
+    ],
+    "total_routes": 51,
+    "added_routes_count": 4,
+    "replacement_policies": [
+      "Only correlated trusted Mirror approval events create symmetric friendship; no HTTP AddFriend endpoint invented.",
+      "HTTP RemoveFriend removes reciprocal friend/favorite rows for a uniquely identified local target. Original backend transaction semantics unknown.",
+      "Overlap priority aligned with instance: own block5 > reverse block6 > own silenced3 > reverse silenced4 > favorite2 > friend1 > none0.",
+      "Deterministic ordering: favorites first, online before offline, then exact username/platform. Original ordering unknown.",
+      "Only observed legacy list types0/1/2 and selectors0/1 implemented; other social selections including external PSN return501.",
+      "Ambiguous username/platform returns409. Unknown/offline lookup returns empty psidglobal/GUID.",
+      "Online status requires fresh instance-authored presence. Positive lookup also requires ready matching allocation.",
+      "Legacy numeric relation platforms migrate to canonical enum names."
+    ],
+    "snapshots": {
+      "instance-accounts.json": {
+        "format_version": 1,
+        "generation": "Unixseconds",
+        "accounts": "existing account schema unchanged",
+        "added_fields": {
+          "companion_ids": "string array of explicit catalog-validated companion grants",
+          "locomotion_ids": "string array of explicit catalog-validated locomotion grants"
+        }
+      },
+      "instance-relations.json": {
+        "format_version": 1,
+        "generation": "Unixseconds",
+        "relations": [
+          {
+            "ps4_id": "owner ID",
+            "target": "exact username",
+            "target_platform": "PS4|StandaloneWindows",
+            "kind": "friend|favorite|block|silenced"
+          }
+        ]
+      },
+      "instance-presence.json": {
+        "writer": "Mirror social layer",
+        "format_version": 1,
+        "generation": "Unixseconds;age0..15seconds",
+        "players": [
+          {
+            "guid": "bound GUID",
+            "status": "0 Online/1 Away/3 Wardrobe"
+          }
+        ]
+      },
+      "atomicity": "Individual output files replaced atomically; same generation but no cross-file transaction claimed. Old account-only readers remain compatible."
+    },
+    "friend_event_handoff": {
+      "path": "friend-events/<event_id>.json",
+      "format_version": 1,
+      "event_id": "lowercase UUID N or D; filename matches supplied spelling; SQLite receipt normalizes D",
+      "operation": [
+        "accept_friendship",
+        "remove_friendship"
+      ],
+      "actor_ps4_id": "bound actor",
+      "other_ps4_id": "bound target",
+      "created_at": "finite nonnegative Unixseconds",
+      "policy": "correlated_online_request_v1",
+      "producer": "Mirror correlates native TCP19 request/recipient TCP26 type1 approval or correlated removal before writing immutable event.",
+      "import": "Before HTTP handlers and account export. SQLite receipt and both directional changes commit together; repeated IDs apply once. Timestamp ordered, remove wins exact timestamp tie, older late event cannot override newer pair state. HTTP removals record chronology.",
+      "invalid_events": "Malformed/unsupported/conflicting-ID/unknown-account files remain unacknowledged; no relation change.",
+      "limit": "Local preservation file handoff, not original server implementation evidence. No live cross-process test.",
+      "encoding": "UTF8 with optional BOM"
+    },
+    "validation": {
+      "suite": "python -m unittest discover -s outputs/nebula-preservation/backend/tests -v",
+      "result": "26 pass (19 contract/state +7 resource)",
+      "socket_guard": "All tests patch socket.socket to raise."
+    },
+    "resource_integration": {
+      "source_contract": "protocol/resource-entitlements.json",
+      "helper": "ResourceEntitlements(store,ResourceCatalog(catalog.protocol_dir))",
+      "routes": [
+        "GetPurchases",
+        "GetCompanionsServlet",
+        "GetLocomotionsServlet"
+      ],
+      "no_automatic_grants": true
+    }
+  },
+  "metadata_source": {
+    "path": "work/decompiled/dump.cs",
+    "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850",
+    "social_type": "SocialListEntryModel TypeDef1190",
+    "platform_enum": "PS4Info.Platform PS4=0,StandaloneWindows=1"
+  },
+  "evidence": [
+    {
+      "rva": "0x3ecda0",
+      "va": "0x1803ecda0",
+      "method": [
+        "NETGCloudSpace$$Send_GetSocialList"
+      ],
+      "claims": "Legacy request GUID#PS4ID#typeInt#typeFriendlistInt.",
+      "bounded_native_length": 1008,
+      "bounded_native_sha256": "38f181726dcf234f16afff75db22bc4de354b4ab46c89d69b456b68fbccc6314",
+      "ghidra_source_sha256": "3c7467453ea3dd41bed395a5390388310cf54d189cda7f20a990e5fcf759f052"
+    },
+    {
+      "rva": "0x414e40",
+      "va": "0x180414e40",
+      "method": [
+        "NETGCloudSpace.<OnSend>d__72$$MoveNext"
+      ],
+      "claims": "Generic sender AES wraps and splits response #. N2GetSocialList specifically bypasses normal true/session/PS4ID response guards.",
+      "bounded_native_length": 1424,
+      "bounded_native_sha256": "fd66dc58c7bfd5bb6b2dcb80b746da31dd531b4d617e011ff6c1ae41bf22b399",
+      "ghidra_source_sha256": "2a1fa89b646a2651915ef9a675666f9c2bd74b1b234a48bef99d2b84567b361f"
+    },
+    {
+      "rva": "0x3e8c40",
+      "va": "0x1803e8c40",
+      "method": [
+        "NETGCloudSpace$$Get_GetSocialList"
+      ],
+      "claims": "Response[2] Int32 selector0 wardrobe/shop or1 social, [3] Int32 count, count EntryData entries from4.",
+      "bounded_native_length": 1888,
+      "bounded_native_sha256": "74d1a1560d7cc70813965673e7e8e254e3117a4c52fc48ffa8fff66c9e249b79",
+      "ghidra_source_sha256": "595743797e510152c04684f2799043e7f2ce80c42b67e20e18e247bf65d98ab9"
+    },
+    {
+      "rva": "0x635780",
+      "va": "0x180635780",
+      "method": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPGetSocialList$$Process"
+      ],
+      "claims": "Modern request GUID#typeInt using Int32.ToString.",
+      "bounded_native_length": 416,
+      "bounded_native_sha256": "97e627e866ba343cb70b3ad2f9d40814ef276e6fc1436836cce5b6096d2f2214",
+      "ghidra_source_sha256": "00a83ab518fb7d1bf0fa565908dffd07c97d62ab31054fad1faba35e40a618aa"
+    },
+    {
+      "rva": "0x635700",
+      "va": "0x180635700",
+      "method": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPGetSocialList$$OnResponse"
+      ],
+      "claims": "Modern response[1] FromJson<ListSocial>; public lUsernames passed to callback.",
+      "bounded_native_length": 128,
+      "bounded_native_sha256": "6d939f67acb7d790efd71366b6113478405e75ce40320ff350d6dc1181047bb0",
+      "ghidra_source_sha256": "4cf53bd900e84622cb1a98c74d457a55fa02cf464ca7225b51f2d8d9aa321de7"
+    },
+    {
+      "rva": "0x634c00",
+      "va": "0x180634c00",
+      "method": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPGetPsidglobalAndGuidByUsernamePlatform$$Process"
+      ],
+      "claims": "Lookup request GUID#username#platformInt.",
+      "bounded_native_length": 832,
+      "bounded_native_sha256": "98d1f685139a85004d0b87a4ce7c015d7fd43f9d29489ad5cfe6cfd2c523bdc1",
+      "ghidra_source_sha256": "54d028246448a3d5a4da99396c3c7ea0a723b5f84f33ea27d1bfdc0751c6f0dc"
+    },
+    {
+      "rva": "0x634bb0",
+      "va": "0x180634bb0",
+      "method": [
+        "Assets.Scripts.HTTPs.Tasks.N2.HTTPGetPsidglobalAndGuidByUsernamePlatform$$OnResponse"
+      ],
+      "claims": "Lookup response min3; callback(response[1],response[2]).",
+      "bounded_native_length": 80,
+      "bounded_native_sha256": "2b2a04bea13746ba992e4288bec1e5112711245767ca9e1121dbfd556afce484",
+      "ghidra_source_sha256": "67a6261f0b3621dddf5be95d3483ef1be1ab777b8a712c6edc708dafcadddedf"
+    },
+    {
+      "rva": "0x488fe0",
+      "va": "0x180488fe0",
+      "method": [
+        "NotificationsManager.<>c$$<AcceptNotification>b__17_0"
+      ],
+      "claims": "Invite callback first string psidglobal, second GUID. Empty psidglobal shows cannot-connect; nonempty calls LoadSpace(psidglobal,empty,true,GUID).",
+      "bounded_native_length": 384,
+      "bounded_native_sha256": "a745f238ef51ab03429c8f5c897dececf70d25a45c3a3563f58650088763b4c5",
+      "ghidra_source_sha256": "70a44ab46dc36e4f19fdca7a836d470fabb41a401dcff3526c45bb89f479be55"
+    },
+    {
+      "rva": "0x635350",
+      "va": "0x180635350",
+      "method": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPGetRelationship$$Process"
+      ],
+      "claims": "Relationship request GUID#PS4ID#targetGUID.",
+      "bounded_native_length": 832,
+      "bounded_native_sha256": "7921631599221b519d72a0430359406f7c167a802678b8c98e2f0d499e327712",
+      "ghidra_source_sha256": "4ca89901666fc85f0c0423a5a14c45bc76eeaeec1a744e7f18d581c6f32c57ee"
+    },
+    {
+      "rva": "0x635300",
+      "va": "0x180635300",
+      "method": [
+        "Assets.Scripts.HTTPs.Tasks.HTTPGetRelationship$$OnResponse"
+      ],
+      "claims": "Relationship response exact5fields, Int32.Parse(response[4]); no header/identity checks.",
+      "bounded_native_length": 80,
+      "bounded_native_sha256": "d52e5283df5da0983787beebc732f49e234db9557cfd234bf17debec18dd3bd3",
+      "ghidra_source_sha256": "ff5484aa3d43b118d75926008aa484bc2731011507054ab101eecc4c3786dc40"
+    },
+    {
+      "rva": "0x6ec430",
+      "va": "0x1806ec430",
+      "method": [
+        "NebulaPlayer.<>c__DisplayClass118_0$$<SetRemoteRelation>b__0"
+      ],
+      "claims": "Jump table1..6 sets isFriend+B8,isFavorite+B9,isSilenced+B4,isSilencer+B5,isBlocked+B6,isBlocker+B7. Block branches deactivate remote object/remove interactable.",
+      "bounded_native_length": 432,
+      "bounded_native_sha256": "47dd31901b43d215574791282371e976b2d73a7df7fffd7a78bb672be4a43c59"
+    },
+    {
+      "rva": "0x6a65b0",
+      "va": "0x1806a65b0",
+      "method": [
+        "EntryData$$Serialize"
+      ],
+      "claims": "Serialize obtains public Type.GetFields and calls SerializeFields.",
+      "bounded_native_length": 128,
+      "bounded_native_sha256": "e7c04fe7fa51a0df948102b6fa598e082d45f3a9e6b647d9df6d7c17e52c8bc4",
+      "ghidra_source_sha256": "574bd8e25bc46c585e2f9132ab2a755cd1bc4a27f6c5dc2d0ecc5ea2f577ae02"
+    },
+    {
+      "rva": "0x6a5d10",
+      "va": "0x1806a5d10",
+      "method": [
+        "EntryData$$SerializeFields"
+      ],
+      "claims": "Primitive/enum ToString except float invariant special-case; prefix char(UTF16Length+0x24), then lexical value, no separator.",
+      "bounded_native_length": 2208,
+      "bounded_native_sha256": "f7e9b32fed7c68883cd950a0233a3a13086b039bc180af7178d68a1424640830",
+      "ghidra_source_sha256": "26c38f134e58794fee4f6dbe4ec1bfcda1471d4841a038b0e33b9f4c8d59e8c7"
+    },
+    {
+      "rva": "0x6a59f0",
+      "va": "0x1806a59f0",
+      "method": [
+        "EntryData$$Deserialize"
+      ],
+      "claims": "Deserialize obtains public Type.GetFields, resets private textIndex and calls DeserializeFields.",
+      "bounded_native_length": 96,
+      "bounded_native_sha256": "e298f31421622208f1421e28a4f06473a1301f2792c0102e860907660e1627e0",
+      "ghidra_source_sha256": "e7d832b88d0b8af2343fda2145e543529c4a04a4ce872ddd68155cbbbf5ccd58"
+    },
+    {
+      "rva": "0x6a5020",
+      "va": "0x1806a5020",
+      "method": [
+        "EntryData$$DeserializeFields"
+      ],
+      "claims": "Enum fields use Enum.Parse. Private EntryData.textIndex is not public data.",
+      "bounded_native_length": 2512,
+      "bounded_native_sha256": "0f5ebddb9ffb4d26ff156d06857477a197e52318fe8fffa174023c4b94e272b2",
+      "ghidra_source_sha256": "a651d4c40ddd37f431c8a2bd0a27bd5561e1c00a2f00217a069078d361446904"
+    },
+    {
+      "rva": "0x6a32c0",
+      "va": "0x1806a32c0",
+      "method": [
+        "AES$$Encrypt"
+      ],
+      "claims": "AES.Encrypt globally appends #PS4 or #StandaloneWindows before UTF8/encryption, including all direct legacy callers.",
+      "bounded_native_length": 528,
+      "bounded_native_sha256": "c813b530eebdd52c6675b1cbe67e4508e0112f538588f821bc36125749faef14",
+      "ghidra_source_sha256": "c2028f80ad05c0e7a4d98f72be91dd066e059c64a0c300d9e38454937b2822aa"
+    }
+  ],
+  "remaining_unknowns": [
+    "Original social DB policy, list ordering/pagination, PSN API, overlap precedence and full server parity unproven.",
+    "Modern list selection meaning is not native caller-proven.",
+    "No launch, listener, connection probe, live status flip or readiness claim."
+  ]
+}

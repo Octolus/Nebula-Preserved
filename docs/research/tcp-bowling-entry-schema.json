@@ -1,0 +1,51 @@
+[
+  {
+    "name": "playerDataPublic",
+    "type": {
+      "array": {
+        "object": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "PS4ID",
+            "type": "string"
+          },
+          {
+            "name": "GUID",
+            "type": "string"
+          },
+          {
+            "name": "ready",
+            "type": "bool"
+          },
+          {
+            "name": "color",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "currentTime",
+    "type": "long"
+  },
+  {
+    "name": "state",
+    "type": {
+      "enum": [
+        "Free",
+        "Rejected",
+        "Awaiting",
+        "Ready",
+        "Playing"
+      ]
+    }
+  },
+  {
+    "name": "turnIndex",
+    "type": "int"
+  }
+]

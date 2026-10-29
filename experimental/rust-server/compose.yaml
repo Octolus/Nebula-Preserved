@@ -1,0 +1,35 @@
+name: nebula-rust-experimental
+services:
+  candidate:
+    image: nebula-preserved-rust:candidate
+    platform: linux/amd64
+    build:
+      context: ../..
+      dockerfile: experimental/rust-server/Dockerfile
+    # Linux-only local testing: no routable HTTP or Mirror listener by default.
+    network_mode: host
+    init: true
+    restart: unless-stopped
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 256
+    stop_signal: SIGINT
+    stop_grace_period: 45s
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=128m,mode=1777
+    volumes:
+      - candidate-state:/var/lib/nebula-rust
+    command:
+      - serve
+      - --bind
+      - 127.0.0.1:8088
+      - --state-dir
+      - /var/lib/nebula-rust
+      - --protocol-dir
+      - /opt/nebula/protocol
+      # Append --managed-instances only for an explicit managed-world test.
+      # Keep --world-bind and --advertised-ip on loopback for this local profile.
+volumes:
+  candidate-state:

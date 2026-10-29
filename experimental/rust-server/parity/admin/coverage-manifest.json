@@ -1,0 +1,566 @@
+{
+  "format_version": 1,
+  "comparison_target": "AUTHORED_PRESERVATION_REFERENCE",
+  "source_digest": "ee84a152511488426825d36492ab27128c4cdf78cee0f6da88fc3521560e10b3",
+  "source_hashes": [
+    {
+      "source": "backend/management.py",
+      "sha256": "95d91a0e6986073e3d83f77c9e8beae523bcd9a671d0547c28913e1445dc4375"
+    },
+    {
+      "source": "backend/moderation.py",
+      "sha256": "d04da047a53e1d00e2d1ee730b58e6ba0d4a753c08d95809ed40bc58ca787a48"
+    },
+    {
+      "source": "backend/public_access.py",
+      "sha256": "87b7c78f15cf6d985c2cb6178712fd74065c67a3618b43f07bee44c01ecb73b5"
+    },
+    {
+      "source": "backend/resources.py",
+      "sha256": "a22fcdf348c8fe03f6ca9a05312212a10c5420df90410f676d2ba56eb7d7e80c"
+    },
+    {
+      "source": "backend/shop.py",
+      "sha256": "f5fbcdb6532c8b07f0c7896e2df39735aa6e7ef5728f605f997055cce0c9ac76"
+    },
+    {
+      "source": "backend/state.py",
+      "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+    }
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "route": "health",
+      "exercised_case_ids": [
+        "admin-missing-auth",
+        "admin-bad-auth",
+        "admin-missing-actor",
+        "admin-unknown-actor",
+        "admin-disabled-actor",
+        "admin-origin-denied",
+        "admin-headers-lowercase",
+        "admin-origin-lowercase-denied",
+        "admin-read-health",
+        "admin-disabled-moderator-denied",
+        "admin-disabled-role-survives-reopen"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "me",
+      "exercised_case_ids": [
+        "admin-me-moderator",
+        "admin-me-admin",
+        "admin-me-owner"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "roles",
+      "exercised_case_ids": [
+        "admin-read-roles"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "capabilities",
+      "exercised_case_ids": [
+        "admin-read-capabilities"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "stats",
+      "exercised_case_ids": [
+        "admin-read-stats",
+        "admin-final-stats"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "moderation/status",
+      "exercised_case_ids": [
+        "admin-read-moderation-status",
+        "admin-maintenance-status"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "moderation/events",
+      "exercised_case_ids": [
+        "admin-read-moderation-events",
+        "admin-final-events"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "moderation/reports",
+      "exercised_case_ids": [
+        "admin-read-moderation-reports",
+        "admin-report-read",
+        "admin-report-read-resolved"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "moderation/news",
+      "exercised_case_ids": [
+        "admin-read-moderation-news",
+        "admin-news-read",
+        "admin-news-after-process-reopen"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users",
+      "exercised_case_ids": [
+        "admin-users",
+        "admin-users-search-literal",
+        "admin-users-page",
+        "admin-users-limit-zero",
+        "admin-users-cursor-invalid",
+        "admin-search-too-long",
+        "admin-users-limit-overflow",
+        "admin-users-cursor-overflow"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "operators",
+      "exercised_case_ids": [
+        "admin-forged-role-denied",
+        "admin-read-operators",
+        "admin-operators-admin-denied"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "audit",
+      "exercised_case_ids": [
+        "admin-read-audit",
+        "admin-wallet-audit",
+        "admin-final-audit"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "transactions",
+      "exercised_case_ids": [
+        "admin-read-transactions",
+        "admin-wallet-ledger"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "catalog",
+      "exercised_case_ids": [
+        "admin-catalog-companions",
+        "admin-catalog-locomotions",
+        "admin-catalog-housing",
+        "admin-catalog-offer",
+        "admin-catalog-kind-denied",
+        "admin-catalog-wardrobe"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users/{account}",
+      "exercised_case_ids": [
+        "admin-user-missing",
+        "admin-user-a",
+        "admin-renamed-profile"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users/{account}/wallet",
+      "exercised_case_ids": [
+        "admin-user-a-wallet",
+        "admin-wallet-current-a",
+        "admin-wallet-isolated-b",
+        "admin-wallet-other-actor-b",
+        "admin-wallet-after-process-reopen"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users/{account}/moderation",
+      "exercised_case_ids": [
+        "admin-user-a-moderation",
+        "admin-staff-status",
+        "admin-muted-status",
+        "admin-banned-status",
+        "admin-unbanned-status"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users/{account}/owned",
+      "exercised_case_ids": [
+        "admin-user-a-owned",
+        "admin-granted-owned"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users/{account}/transactions",
+      "exercised_case_ids": [
+        "admin-user-a-transactions"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users/{account}/audit",
+      "exercised_case_ids": [
+        "admin-user-a-audit"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "GET",
+      "route": "users/{account}/purchases",
+      "exercised_case_ids": [
+        "admin-user-a-purchases",
+        "admin-granted-purchases"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/wallet-adjustments",
+      "exercised_case_ids": [
+        "admin-post-auth-before-body",
+        "admin-post-content-type",
+        "admin-post-object-null",
+        "admin-post-object-array",
+        "admin-post-object-bool",
+        "admin-post-object-string",
+        "admin-post-size-limit",
+        "admin-moderator-wallet-denied",
+        "admin-wallet-no-key",
+        "admin-wallet-bool-denied",
+        "admin-wallet-underflow-denied",
+        "admin-wallet-extra-field-denied",
+        "admin-wallet-zero-denied",
+        "admin-wallet-level-denied",
+        "admin-wallet-overflow-denied",
+        "admin-wallet-short-key-denied",
+        "admin-wallet-control-reason-denied",
+        "admin-wallet-credit",
+        "admin-wallet-replay",
+        "admin-wallet-conflict",
+        "admin-wallet-other-actor-same-key"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/items",
+      "exercised_case_ids": [
+        "admin-grant-missing-housing",
+        "admin-grant-companion",
+        "admin-grant-existing-companion",
+        "admin-grant-offer"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/rename",
+      "exercised_case_ids": [
+        "admin-rename-b"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/ban",
+      "exercised_case_ids": [
+        "admin-ban",
+        "admin-equal-higher-sanction-denied"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/unban",
+      "exercised_case_ids": [
+        "admin-unban"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/kick",
+      "exercised_case_ids": [
+        "admin-kick"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/mute",
+      "exercised_case_ids": [
+        "admin-mute"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/unmute",
+      "exercised_case_ids": [
+        "admin-unmute"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "users/{account}/staff-label",
+      "exercised_case_ids": [
+        "admin-staff-unicode-format",
+        "admin-staff-unicode-private-use",
+        "admin-staff-unicode-unassigned",
+        "admin-staff-unicode-delete",
+        "admin-staff-unicode-delimiter",
+        "admin-staff-admin-denied",
+        "admin-staff-richtext-denied",
+        "admin-staff-label"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "moderation/maintenance",
+      "exercised_case_ids": [
+        "admin-maintenance"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "moderation/reports/{report}",
+      "exercised_case_ids": [
+        "admin-report-review",
+        "admin-report-status-denied"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "moderation/news",
+      "exercised_case_ids": [
+        "admin-news-publish",
+        "admin-news-replay"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "moderation/news/{news}/archive",
+      "exercised_case_ids": [],
+      "case_evidence": "NOT_PROVEN",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "operators/{operator}",
+      "exercised_case_ids": [
+        "admin-admin-operator-denied",
+        "admin-last-owner-denied",
+        "admin-disable-moderator"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    },
+    {
+      "method": "POST",
+      "route": "operators/{operator}/player-link",
+      "exercised_case_ids": [
+        "admin-owner-player-link"
+      ],
+      "case_evidence": "EXERCISED",
+      "full_contract_parity": "NOT_PROVEN"
+    }
+  ],
+  "route_count": 36,
+  "get_patterns": 21,
+  "post_patterns": 15,
+  "exercised_route_patterns": 35,
+  "normalization": {
+    "base_clock_whitelist": "fixtures/normalization.json",
+    "extra_table_clock_columns": {
+      "management_operators": [
+        "created_at",
+        "updated_at"
+      ],
+      "management_audit": [
+        "created_at"
+      ],
+      "management_requests": [
+        "created_at"
+      ],
+      "management_wallet_ledger": [
+        "created_at"
+      ],
+      "moderation_events": [
+        "created_at"
+      ],
+      "moderation_revoked_sessions": [
+        "revoked_at"
+      ],
+      "moderation_report_reviews": [
+        "updated_at"
+      ],
+      "local_reports": [
+        "created_at"
+      ]
+    },
+    "flat_payload_clock_keys": [
+      "created_at",
+      "end_at",
+      "granted_at",
+      "last_avatar_save_at",
+      "last_login_at",
+      "started_at",
+      "updated_at"
+    ],
+    "payload_locations": [
+      "command.before/after",
+      "audit/event.before/after",
+      "users.items",
+      "operators.items",
+      "users/{account}",
+      "users/{account}/owned.items",
+      "users/{account}/purchases.items",
+      "reports.items",
+      "news.items",
+      "audit/event/ledger.items",
+      "management_audit.before_json/after_json",
+      "moderation_events.before_json/after_json",
+      "management_requests.response_json.before/after",
+      "moderation_news",
+      "moderation_maintenance"
+    ],
+    "uuid_locations": [
+      "command.request_id",
+      "audit/event/ledger.request_id",
+      "management_audit.request_id",
+      "management_wallet_ledger.request_id",
+      "moderation_events.request_id",
+      "moderation_revoked_sessions.request_id",
+      "management_requests.response_json.request_id",
+      "news.news_id",
+      "news event target_id"
+    ],
+    "uuid_rule": "32 lowercase hex request IDs correlate to the exact command case; bootstrap IDs correlate to audit ordinal+operator; news UUID must equal the known publishing request UUID. Replayed IDs retain their first correlation.",
+    "invariants": [
+      "UUID syntax and cross-table correlations",
+      "news.date_label equals UTC ISO seconds of created_at",
+      "maintenance end-start duration is exact integer minutes",
+      "durable audit and receipt JSON must be canonical before normalization",
+      "clock zero/null/numeric storage type preserved",
+      "within-probe no-change assertions preserve every raw value"
+    ],
+    "forbidden": [
+      "arbitrary UUID removal",
+      "fingerprint normalization",
+      "schema/extra-table removal",
+      "array reordering",
+      "business-value normalization",
+      "unknown clock columns"
+    ]
+  },
+  "unexercised_contracts": [
+    {
+      "contract": "News archive route",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Successful direct wardrobe, locomotion and housing admin grants",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Duplicate raw JSON keys, invalid UTF-8/raw JSON and actual HTTP body framing",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Secret/operator file loading, listeners/TLS and header duplication",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Concurrent idempotent commands and database busy/constraint fault injection",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Runtime sync publication failure/retry and client acknowledgement",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Timed ban/mute/news expiry boundaries and maintenance expiry",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Exhaustive Unicode scalar classification and operator-protected policy combinations",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "contract": "Abrupt process crash durability and original-client acceptance",
+      "status": "NOT_PROVEN"
+    }
+  ],
+  "original_server_semantics": "NOT_PROVEN",
+  "one_to_one_parity": "NOT_PROVEN"
+}

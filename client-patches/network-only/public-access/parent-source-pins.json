@@ -1,0 +1,11 @@
+{
+  "format": "public-loopback-parent-source-v1",
+  "files": {
+    "CMakeLists.txt": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6",
+    "NebulaPublicAccess.cpp": "4d6023c1d55ed94530969c0af947ac22313f3a77870a89c66873cf34e800fe83",
+    "NebulaPublicAccess.h": "000d5c5437bc93f754ca26dba04113754c1a30634620120cef6d2151f663a9f5",
+    "NebulaRemoteBootstrap.cpp": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae",
+    "NebulaRemoteBootstrap.h": "9560fce1b72cf3692bb2e0a6e4ce03a20acf8bb0c358a7f96978ad315748f123",
+    "RemoteTransportPin.h.in": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4"
+  }
+}

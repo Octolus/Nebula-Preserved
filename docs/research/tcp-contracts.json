@@ -1,0 +1,5700 @@
+{
+  "scope": "Static reconstruction of modern TCPs.TCPClient over Mirror. No game/client/server launch, connection, packet capture, or protocol execution test was performed for this analysis.",
+  "binary": {
+    "path": "work/evidence/GameAssembly.dll",
+    "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+    "preferred_image_base": "0x180000000"
+  },
+  "notation": "Field indices are zero based AFTER ProcessorQueue removes opcode. C2S fields listed BEFORE AES.Encrypt globally appends '#' + platform enum NAME. S2C field lists describe client requirements, not proof of the retired server implementation.",
+  "transport": {
+    "carrier": "global NebulaMessage : Mirror.NetworkMessage { string data; }",
+    "channel": 0,
+    "application_delimiter": "#",
+    "split_options": "None; preserve empty entries",
+    "opcode": "decimal Int32 in first decrypted token",
+    "client_send_suffix": "# + PS4Info.Platform.ToString()",
+    "cipher": "AES-128-ECB, PKCS7, UTF8 plaintext, standard Base64 ciphertext",
+    "key_derivation": "first16bytes(SHA1(UTF8('[cipher-material-omitted]')))",
+    "key_hex": "f794fdd76962dfc07ba2efa75c7cf887",
+    "application_length_prefix": null,
+    "outer_framing": "Mirror/Telepathy; see Mirror compatibility findings. # is an application delimiter, not a TCP packet boundary."
+  },
+  "enums": {
+    "TCPs.TypeTCP": {
+      "OnConnected": 0,
+      "PlayerJoined": 1,
+      "Transform": 2,
+      "GetCurrentAnim": 3,
+      "SetCurrentAnim": 4,
+      "Anim": 5,
+      "GetCurrentCompanion": 6,
+      "Companion": 7,
+      "GetOccupable": 8,
+      "Occupable": 9,
+      "LeaveOccupable": 10,
+      "StartTyping": 11,
+      "StopTyping": 12,
+      "ChatMessage": 13,
+      "OnRemoteDisconnected": 14,
+      "UpdateLocomotion": 15,
+      "GetCurrentLocomotion": 16,
+      "UpdateCompanion": 17,
+      "PlayerPref": 18,
+      "Notification": 19,
+      "GetCurrentPosition": 20,
+      "RemoveFriend": 21,
+      "RemoveSilenced": 22,
+      "AddSilenced": 23,
+      "AddBlock": 24,
+      "RemoveBlock": 25,
+      "NotificationAccepted": 26,
+      "ToJoinNotification": 27,
+      "RelationshipUpdated": 28,
+      "SetIsInWardrobe": 29,
+      "DayNightCycle": 30,
+      "BoatTokenToInstantiate": 31,
+      "Board_msg_InitGame": 32,
+      "Board_msg_SelectGame": 33,
+      "Board_msg_StartGame": 34,
+      "Board_msg_MakeMove": 35,
+      "Board_msg_LeaveGame": 36,
+      "Board_msg_SyncGame": 37,
+      "Board_msg_SyncTable": 38,
+      "Board_msg_InitGameOneWay": 39,
+      "Board_msg_SelectGameOneWay": 40,
+      "Board_msg_StartGameOneWay": 41,
+      "Board_msg_LeaveGameOneWay": 42,
+      "Board_msg_MakeMoveOneWay": 43,
+      "FoodTruck_msg_GotConsumable": 44,
+      "FoodTruck_msg_GotConsumableOneWay": 45,
+      "OktoberFest_msg_GotConsumable": 46,
+      "OktoberFest_msg_GotConsumableOneWay": 47,
+      "Pinball_msg_addScore": 48,
+      "Pinball_msg_getBestScore": 49,
+      "Pinball_msg_getLeaderboard": 50,
+      "Pool_msg_InitGame": 51,
+      "Pool_msg_LeaveGame": 52,
+      "Pool_msg_SelectGame": 53,
+      "Pool_msg_StartGame": 54,
+      "Pool_msg_MakeMove": 55,
+      "Pool_msg_EndsMove": 56,
+      "Pool_msg_MoveFoul": 57,
+      "Pool_msg_SyncGame": 58,
+      "Pool_msg_LeaveGameOneWay": 59,
+      "Pool_msg_StartGameOneWay": 60,
+      "Pool_msg_MakeMoveOneWay": 61,
+      "Pool_msg_EndsMoveOneWay": 62,
+      "Pool_msg_MoveFoulOneWay": 63,
+      "Bowling_msg_InitGame": 64,
+      "Bowling_msg_LeaveGame": 65,
+      "Bowling_msg_ReadyGame": 66,
+      "Bowling_msg_StartGame": 67,
+      "Bowling_msg_ShotGame": 68,
+      "Bowling_msg_PinsGame": 69,
+      "Bowling_msg_TurnGame": 70,
+      "Bowling_msg_SyncGame": 71,
+      "Bowling_msg_InitGameOneWay": 72,
+      "Bowling_msg_LeaveGameOneWay": 73,
+      "Bowling_msg_ReadyGameOneWay": 74,
+      "Bowling_msg_StartGameOneWay": 75,
+      "Bowling_msg_ShotGameOneWay": 76,
+      "Bowling_msg_PinsGameOneWay": 77,
+      "Bowling_msg_TurnGameOneWay": 78,
+      "Bowling_msg_SyncPositionOneWay": 79,
+      "Darts_msg_InitGame": 80,
+      "Darts_msg_LeaveGame": 81,
+      "Darts_msg_SelectGame": 82,
+      "Darts_msg_SelectMode": 83,
+      "Darts_msg_StartGame": 84,
+      "Darts_msg_MakeMove": 85,
+      "Darts_msg_SyncGame": 86,
+      "Darts_msg_InitGameOneWay": 87,
+      "Darts_msg_LeaveGameOneWay": 88,
+      "Darts_msg_SelectGameOneWay": 89,
+      "Darts_msg_StartGameOneWay": 90,
+      "Darts_msg_MakeMoveOneWay": 91,
+      "AnimParameter": 92,
+      "UpdateAnimationLayer": 93,
+      "Genericinteractable": 94,
+      "NotificationGameDeclined": 95,
+      "GetInstanceClosing": 96
+    },
+    "PS4Info.Platform": {
+      "All": -1,
+      "PS4": 0,
+      "StandaloneWindows": 1
+    },
+    "Chat.ChatType": {
+      "Space": 0,
+      "SocialInternal": 1
+    },
+    "NotificationsManager.NotificationType": {
+      "Chat": 0,
+      "Friend": 1,
+      "FullGame": 2,
+      "Gift": 3,
+      "Reward": 4,
+      "Friend_Accepted": 5,
+      "InviteToJoin": 6,
+      "AskToJoin": 7,
+      "AceptedToJoin": 8,
+      "NewInstanceIsCreated": 9,
+      "FullGame_Declined": 10,
+      "SpaceGame": 11,
+      "SpaceGame_Declined": 12,
+      "SocialToJoin": 13
+    },
+    "PlayerPrefsManager.PlayerPrefsKeys": {
+      "mood": 0,
+      "status": 1,
+      "DisplayOthersName": 2,
+      "DisplayOthersStatus": 3,
+      "DisplayOthersMood": 4,
+      "DisplayMyName": 5,
+      "DisplayMyStatus": 6,
+      "DisplayMyMood": 7,
+      "MasterVolume": 8,
+      "Music": 9,
+      "Fx": 10,
+      "Ambient": 11,
+      "InvertYAxis": 12,
+      "ProfanityFilter": 13,
+      "ChatFontSize": 14,
+      "NameColorSelectedIndex": 15,
+      "spaceTutorialPhase": 16,
+      "editorTutorialPhase": 17,
+      "velocityCam": 18,
+      "NotificationLoginFriend": 19,
+      "ShowPets": 20,
+      "PlatformOnly": 21
+    },
+    "NebulaPlayerAnim.TypeAnim": {
+      "Dance": 0,
+      "Gesture": 1,
+      "Seating": 2,
+      "Pose": 3,
+      "Seating_Trigger": 4,
+      "SeatSelection": 5,
+      "Bowling": 6,
+      "Snowball": 7
+    },
+    "NebulaPlayerAnim.TypeCycle": {
+      "AnimInfinite": 0,
+      "AnimCycle": 1,
+      "AnimInfiniteCycle": 2
+    },
+    "UnityEngine.AnimatorControllerParameterType": {
+      "Float": 1,
+      "Int": 3,
+      "Bool": 4,
+      "Trigger": 9
+    },
+    "BowlingGameManager.LaneState": {
+      "Free": 0,
+      "Rejected": 1,
+      "Awaiting": 2,
+      "Ready": 3,
+      "Playing": 4
+    },
+    "BowlingGameManager.State": {
+      "Inactive": 0,
+      "InactiveClose": 1,
+      "Waiting": 2,
+      "StartGame": 3,
+      "InitTurn": 4,
+      "WaitTurn": 5,
+      "SelectBallPosition": 6,
+      "SelectBallDirection": 7,
+      "SelectBallStrength": 8,
+      "SelectBallSpin": 9,
+      "BallMoveSendData": 10,
+      "BallMoveAction": 11,
+      "BallMoveWaitServer": 12,
+      "CleanLane": 13,
+      "EndShot": 14,
+      "ChangeTurn": 15,
+      "PlayerPenalty": 16,
+      "ConfirmExit": 17,
+      "Results": 18
+    }
+  },
+  "json_shapes": {
+    "NebulaPlayerTransform.TransformData": {
+      "position": {
+        "x": "float32",
+        "y": "float32",
+        "z": "float32"
+      },
+      "rotation": {
+        "x": "float32",
+        "y": "float32",
+        "z": "float32",
+        "w": "float32"
+      }
+    },
+    "PlayerPrefsManager.ColorData": {
+      "x": "float32",
+      "y": "float32",
+      "z": "float32"
+    }
+  },
+  "entry_data_shapes": {
+    "BowlingGameManager.BowlingPanelData": [
+      {
+        "name": "playerDataPublic",
+        "type": "BowlingGameManager.BowlingPlayerDataPublic[]"
+      },
+      {
+        "name": "currentTime",
+        "type": "int64"
+      },
+      {
+        "name": "state",
+        "type": "enum:BowlingGameManager.LaneState; canonical lexical name"
+      },
+      {
+        "name": "turnIndex",
+        "type": "int32"
+      }
+    ],
+    "BowlingGameManager.BowlingPlayerDataPublic": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "PS4ID",
+        "type": "string"
+      },
+      {
+        "name": "GUID",
+        "type": "string"
+      },
+      {
+        "name": "ready",
+        "type": "bool; True/False"
+      },
+      {
+        "name": "color",
+        "type": "string"
+      }
+    ]
+  },
+  "binary_converter_float": {
+    "encode": "float32 bits -> two UTF16 code units: low16, high16 on this little-endian build",
+    "decode": "first2UTF16 code units ->4little-endian bytes -> float32",
+    "escaping_observed": false,
+    "evidence_rvas": [
+      "0x4d3ea0",
+      "0x4d4260",
+      "0x4d4020",
+      "0x4d4140"
+    ],
+    "runtime_tested": false
+  },
+  "transitive_findings": [
+    {
+      "feature": "InviteToJoin notification acceptance",
+      "evidence_rvas": [
+        "0x47e050",
+        "0x488fe0"
+      ],
+      "observed": "Type6 uses HTTP identity-resolution callback rather than modern TCP26. Callback checks resolved psidglobal nonempty, then NETGcloudLogin.LoadSpace(psidglobal, empty noIdSpace, true, resolvedGuid, null). Empty psidglobal shows CannotConnectIsNotInSpace and clears pad lock."
+    },
+    {
+      "feature": "FullGame notification acceptance",
+      "evidence_rvas": [
+        "0x439ad0",
+        "0x4499b0",
+        "0x449250"
+      ],
+      "observed": "Type2 passes notification.arguments to ManagerInstance.Send_AcceptFullGameNotification. Splits at first !, retains prefix through ! for EntryData.Deserialize, uses suffix to instantiate FullGameNETGCloud.OpenGameEntry subtype. Disconnect callback selects scene by FullGameManager.Type enum name, loads if absent, waits then calls FullGameManager.LaunchMultiScene(openGame). No modern TCP26 send in reviewed continuations; downstream FullGame/GCloud mode is a separate dependency."
+    },
+    {
+      "feature": "FoodTruck/OktoberFest receiver effect",
+      "evidence_rvas": [
+        "0x404da0",
+        "0x4087f0"
+      ],
+      "observed": "Resolve guid through Memory; missing player ignored. Find existing PlayerCoffee(Clone) or PlayerOktoberFest(Clone) child. If absent, instantiate configured prefab under player transform and InitPlayerCoffee/InitPlayerOktoberFest(received count, player). Existing consumable refresh sets current times field0x18 to maximum field0x1c, ignoring new received count in that branch. Local player also receives drink/help UI. This packet equips/refills a consumable prop; it is not proof of account inventory persistence."
+    }
+  ],
+  "independent_minigame_scope": {
+    "path": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+    "sha256": "b17c32a608d01ecbfe1aa8f02309ae838c53337a2ca3b07f5c028df167142da9",
+    "coverage": {
+      "registered_clientbound": 34,
+      "clientbound_contracts": 34,
+      "clientbound_missing": [],
+      "serverbound_emitters": 19,
+      "enum_only_unregistered": [
+        {
+          "opcode": 38,
+          "name": "Board_msg_SyncTable"
+        },
+        {
+          "opcode": 58,
+          "name": "Pool_msg_SyncGame"
+        },
+        {
+          "opcode": 83,
+          "name": "Darts_msg_SelectMode"
+        }
+      ],
+      "pending_evidence_rvas": []
+    },
+    "basis": "Independent static BoardGames/Darts/Pool audit; original contract preserved in source document."
+  },
+  "serverbound": [
+    {
+      "opcode": 1,
+      "fields": [
+        {
+          "name": "netId",
+          "type": "uint32"
+        },
+        {
+          "name": "sessionGuid",
+          "type": "string"
+        },
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32:PS4Info.Platform"
+        }
+      ],
+      "behavior": "Stored on OnConnected; actually sent only from local OnAvatarLoaded after HTTP label/avatar and scene-interactable initialization. Numeric platform precedes global platform-name suffix.",
+      "evidence_rvas": [
+        "0x5ea6e0",
+        "0x5dfdc0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "PlayerJoined"
+    },
+    {
+      "opcode": 2,
+      "fields": [
+        {
+          "name": "netId",
+          "type": "uint32"
+        },
+        {
+          "name": "transform",
+          "type": "json:NebulaPlayerTransform.TransformData"
+        }
+      ],
+      "behavior": "SendData uses local Mirror identity.netId and JsonUtility.ToJson. Position-distance gate can suppress send; typeTCP initialized to2. Separate Mirror NetworkTransform also exists.",
+      "evidence_rvas": [
+        "0x615000",
+        "0x6156b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Transform"
+    },
+    {
+      "opcode": 3,
+      "fields": [
+        {
+          "name": "requesterGuid",
+          "type": "string"
+        },
+        {
+          "name": "targetGuid",
+          "type": "string"
+        }
+      ],
+      "behavior": "Sent after remote avatar loaded to request current animation.",
+      "evidence_rvas": [
+        "0x5f2070",
+        "0x5e42d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "GetCurrentAnim"
+    },
+    {
+      "opcode": 4,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "netId",
+          "type": "int32:-1 or signed local Mirror netId"
+        },
+        {
+          "name": "typeanim",
+          "type": "int32:NebulaPlayerAnim.TypeAnim"
+        },
+        {
+          "name": "typecycle",
+          "type": "int32:NebulaPlayerAnim.TypeCycle"
+        },
+        {
+          "name": "anim",
+          "type": "string"
+        },
+        {
+          "name": "originalNamesCount",
+          "type": "int32"
+        },
+        {
+          "name": "originalNames",
+          "type": "string[]",
+          "start": 6,
+          "count_field": 5
+        }
+      ],
+      "behavior": "SetCurrentAnim removes locomotion first, sets/loads local animation then sends4. Field1 is the metadata Int32 netId parameter. Seat/emote callers pass -1; RandomIdle.Initialize0x43e740 instead passes PlayerInfo.get_NetId0x616a70, preserving the UInt32 Mirror identity bits as signed Int32 decimal text. OnConnectedProcessor.OnAvatarLoaded0x5dfdc0 calls RandomIdle.Initialize at0x5e0223 before sending the stored C2S1 announcement at0x5e024f, so an own-netId animation can precede announcement. Preservation admission checks -1 or unchecked((int)peer.netId), retains GUID ownership validation and does not require announcement; this is a reconstruction policy, not proof of retired server rules. Names are joined with #. For no names, the final string field is empty after count0. Clientbound animation uses5 and omits field1.",
+      "evidence_rvas": [
+        "0x44aed0",
+        "0x5f4500",
+        "0x6157c0",
+        "0x5dfdc0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "direct_caller_audit": {
+        "scope": "Static scan of all executable-section E8 instructions targeting SetCurrentAnim0x5f4500; 22 direct calls, 21 passing0xffffffff and one passing the local Mirror netId. Indirect and inlined callers are not exhaustively established by this count.",
+        "own_netid_producer": "RandomIdle.Initialize0x43e740; only its local-player branch sends this update",
+        "signed_conversion": "The getter returns UInt32 in EAX; the caller writes those bits to the Int32 fifth parameter; SetCurrentAnim calls Int32.ToString. UInt32 values at or above0x80000000 therefore appear as negative decimal Int32 values.",
+        "native_ranges": [
+          {
+            "rva": "0x43e740",
+            "end_rva_exclusive": "0x43e810",
+            "sha256": "7958c62275e2cdb1b21379031dc51941089c1c6940850368b2bf0b7e6adcc55e"
+          },
+          {
+            "rva": "0x616a70",
+            "end_rva_exclusive": "0x616aa0",
+            "sha256": "789b398707e27783f96e5565012f0c3ea7d17fbc2ce6184f304f5c13dddfb0f5"
+          }
+        ],
+        "native_instructions": [
+          {
+            "rva": "0x43e7cb",
+            "bytes": "e8a0821d00",
+            "observation": "CALL PlayerInfo.get_NetId0x616a70"
+          },
+          {
+            "rva": "0x43e7e6",
+            "bytes": "89442420",
+            "observation": "MOV [RSP+0x20],EAX: fifth argument before CALL"
+          },
+          {
+            "rva": "0x43e7f0",
+            "bytes": "e80b5d1b00",
+            "observation": "CALL SetCurrentAnim0x5f4500; EDX=1 and R8D=1"
+          },
+          {
+            "rva": "0x5e0223",
+            "bytes": "e818e5e5ff",
+            "observation": "CALL RandomIdle.Initialize0x43e740"
+          },
+          {
+            "rva": "0x5e024f",
+            "bytes": "e8cc750000",
+            "observation": "Later CALL TCPClient.Send0x5e7820 for stored announcement"
+          }
+        ],
+        "getter_path": "PlayerInfo+0x30 -> NebulaPlayer+0xf8 -> NetworkIdentity+0x28",
+        "binary": "work/evidence/GameAssembly.dll; SHA256 in top-level binary record",
+        "runtime_observed_field_value": null
+      },
+      "enum_name": "SetCurrentAnim"
+    },
+    {
+      "opcode": 6,
+      "fields": [
+        {
+          "name": "requesterGuid",
+          "type": "string"
+        },
+        {
+          "name": "targetGuid",
+          "type": "string"
+        }
+      ],
+      "behavior": "GetCurrentCompanion request after remote avatar loaded. Response behavior cannot be proven from absent server source; client receiver is opcode17.",
+      "evidence_rvas": [
+        "0x5e3b10",
+        "0x5e42d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "GetCurrentCompanion"
+    },
+    {
+      "opcode": 8,
+      "fields": [
+        {
+          "name": "requesterGuid",
+          "type": "string"
+        },
+        {
+          "name": "occupableId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Each NebulaOccupable.Initialize registers itself with local interactor and requests occupancy state.",
+      "evidence_rvas": [
+        "0x612380"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "GetOccupable"
+    },
+    {
+      "opcode": 9,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "occupableId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Seat/animation selection requests occupancy. Server must resolve occupant/race and generate S2C9 third field; response cannot be a raw echo.",
+      "evidence_rvas": [
+        "0x6159f0",
+        "0x44b2f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Occupable"
+    },
+    {
+      "opcode": 10,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "occupableId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "NebulaOccupable.LeaveInteract sends before local cleanup.",
+      "evidence_rvas": [
+        "0x612700"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "LeaveOccupable"
+    },
+    {
+      "opcode": 11,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "groupName",
+          "type": "string"
+        }
+      ],
+      "behavior": "Sent when input starts for active chat tab; tab Notifications excluded.",
+      "evidence_rvas": [
+        "0x5f0320"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "StartTyping"
+    },
+    {
+      "opcode": 12,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        }
+      ],
+      "behavior": "Sent by both PC OnMessageWritten and PS4 dialog result before sending chat.",
+      "evidence_rvas": [
+        "0x463310",
+        "0x4625b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "StopTyping"
+    },
+    {
+      "opcode": 13,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "groupName",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "name": "chatType",
+          "type": "int32:Chat.ChatType"
+        }
+      ],
+      "behavior": "SendMessage strips literal '<', '>', '#' to empty then keeps only first space in each consecutive ASCII-space run. No CR/LF sanitizer observed here. Does not apply CustomEncrypt. Platform is the passed ChatTab platform; global suffix is sender platform name.",
+      "evidence_rvas": [
+        "0x4640c0",
+        "0x463310",
+        "0x4625b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "ChatMessage"
+    },
+    {
+      "opcode": 15,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "locomotionName",
+          "type": "string"
+        }
+      ],
+      "behavior": "Locomotion UI sends selected resource or empty. RemoveLocomotion sends trailing # for empty name. Empty field must be preserved before AES suffix.",
+      "evidence_rvas": [
+        "0x4b9be0",
+        "0x5f3c60"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "UpdateLocomotion"
+    },
+    {
+      "opcode": 16,
+      "fields": [
+        {
+          "name": "requesterGuid",
+          "type": "string"
+        },
+        {
+          "name": "targetGuid",
+          "type": "string"
+        }
+      ],
+      "behavior": "GetCurrentLocomotion request after remote avatar loaded; client receiver is15.",
+      "evidence_rvas": [
+        "0x5e3d80",
+        "0x5e42d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "GetCurrentLocomotion"
+    },
+    {
+      "opcode": 17,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "companionName",
+          "type": "string"
+        }
+      ],
+      "behavior": "Pet UI sends selected resource or empty; boat paths also remove companion with empty string.",
+      "evidence_rvas": [
+        "0x4c0b00",
+        "0x451e00"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "UpdateCompanion"
+    },
+    {
+      "opcode": 18,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "key",
+          "type": "int32:PlayerPrefsManager.PlayerPrefsKeys"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "behavior": "HTTPSavePlayerPref.OnResponse sends only when HTTP result first token equals lowercase true and returned guid equals local SessionGUID; key limited to0,1,15,21. Other preference saves do not send in this callback.",
+      "evidence_rvas": [
+        "0x6399f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "PlayerPref"
+    },
+    {
+      "opcode": 19,
+      "fields": [
+        {
+          "name": "senderUsername",
+          "type": "string"
+        },
+        {
+          "name": "targetUsername",
+          "type": "string"
+        },
+        {
+          "name": "notificationType",
+          "type": "int32:NotificationsManager.NotificationType"
+        },
+        {
+          "name": "targetPlatform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Observed private-chat request(type0), friend request(type1), invite(type6) constructors. Unlike clientbound19, no arguments/ticks in these reviewed request constructors; other paths may extend.",
+      "evidence_rvas": [
+        "0x6e8f80",
+        "0x4c6a60"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "variant_scope": "reviewed private-chat/friend/invite constructors",
+      "enum_name": "Notification"
+    },
+    {
+      "opcode": 20,
+      "fields": [
+        {
+          "name": "requesterGuid",
+          "type": "string"
+        },
+        {
+          "name": "targetGuid",
+          "type": "string"
+        }
+      ],
+      "behavior": "GetCurrentPosition request after remote avatar loaded; response schema inferred to use transform receiver2, not established from server source.",
+      "evidence_rvas": [
+        "0x5e3ff0",
+        "0x5e42d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "GetCurrentPosition"
+    },
+    {
+      "opcode": 21,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "targetUsername",
+          "type": "string"
+        },
+        {
+          "name": "targetPlatform",
+          "type": "int32",
+          "optional": true
+        }
+      ],
+      "behavior": "Standard callbacks emit guid, target username, platform; SocialOptionsSpaceUsers.OnAddFriend branch emits guid,target username with platform OMITTED. Preserve variant distinction; sender platform suffix remains global.",
+      "evidence_rvas": [
+        "0x4c5db0",
+        "0x6ed5a0",
+        "0x4c9530"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "variants": [
+        {
+          "source_rva": "0x4c9530",
+          "fields": [
+            "guid",
+            "targetUsername"
+          ]
+        }
+      ],
+      "enum_name": "RemoveFriend"
+    },
+    {
+      "opcode": 22,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "targetUsername",
+          "type": "string"
+        },
+        {
+          "name": "targetPlatform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "RemoveSilenced callbacks emit these three fields; receiver echo shape differs (username,platform only).",
+      "evidence_rvas": [
+        "0x4c6140",
+        "0x6ed8e0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "RemoveSilenced"
+    },
+    {
+      "opcode": 23,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "targetUsername",
+          "type": "string"
+        },
+        {
+          "name": "targetPlatform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "AddSilenced confirmation callback.",
+      "evidence_rvas": [
+        "0x6edc20"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "AddSilenced"
+    },
+    {
+      "opcode": 24,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "targetUsername",
+          "type": "string"
+        },
+        {
+          "name": "targetPlatform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Block confirmation callbacks. Client local relation visibility refresh accompanies the command.",
+      "evidence_rvas": [
+        "0x4cbf60",
+        "0x6ed260"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "AddBlock"
+    },
+    {
+      "opcode": 25,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "targetUsername",
+          "type": "string"
+        },
+        {
+          "name": "targetPlatform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "RemoveBlock callback emits guid,target username,platform.",
+      "evidence_rvas": [
+        "0x4c64d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "RemoveBlock"
+    },
+    {
+      "opcode": 26,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "notificationPlayerName",
+          "type": "string"
+        },
+        {
+          "name": "notificationType",
+          "type": "int32:NotificationsManager.NotificationType"
+        },
+        {
+          "name": "notificationPlatform",
+          "type": "int32",
+          "optional": true
+        }
+      ],
+      "behavior": "AcceptNotification: type11 SpaceGame sends only guid,playerName,11 (platform OMITTED); ordinary branch includes type/platform. Type6 InviteToJoin instead resolves identity through HTTP and calls NETGcloudLogin.LoadSpace; type2 FullGame parses arguments and hands off to FullGameManager.LaunchMultiScene. See transitive findings. No receive registration for26.",
+      "evidence_rvas": [
+        "0x47e050",
+        "0x488fe0",
+        "0x439ad0",
+        "0x4499b0",
+        "0x449250"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "variants": [
+        {
+          "notification_type": 11,
+          "fields": [
+            "guid",
+            "notificationPlayerName",
+            "11"
+          ]
+        }
+      ],
+      "semantic_gaps": [
+        "downstream FullGame/GCloud networking and original notification persistence"
+      ],
+      "enum_name": "NotificationAccepted"
+    },
+    {
+      "opcode": 29,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        }
+      ],
+      "behavior": "ManagerInstance.OnSetIsWardrobe sends local SessionGUID; HTTP wardrobe flow precedes callback.",
+      "evidence_rvas": [
+        "0x4393e0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "SetIsInWardrobe"
+    },
+    {
+      "opcode": 30,
+      "fields": [
+        {
+          "name": "newState",
+          "type": "System.Boolean.ToString string"
+        }
+      ],
+      "behavior": "DayNightTrigger.Interact sends logical inverse of local state; no guid in request. S2C format differs.",
+      "evidence_rvas": [
+        "0x44f580"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "DayNightCycle"
+    },
+    {
+      "opcode": 31,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "requested",
+          "type": "System.Boolean.ToString string"
+        },
+        {
+          "name": "boatToken",
+          "type": "int32"
+        }
+      ],
+      "behavior": "HarbourEnter.Callback observed requested=True and token field from HarbourEnter+0x20; other boat source also needs authority review.",
+      "evidence_rvas": [
+        "0x451640"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "BoatTokenToInstantiate"
+    },
+    {
+      "opcode": 32,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "PS4ID",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "behavior": "Disable interaction colliders, activate local table/menu, request seat.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53f370"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_InitGame"
+    },
+    {
+      "opcode": 33,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int",
+          "note": "GetCurrentTableForUser(sessionGUID)"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "BoardGamesManager.GameRules/int"
+        }
+      ],
+      "behavior": "Request selected board rules.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53fd20"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_SelectGame"
+    },
+    {
+      "opcode": 34,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "behavior": "Request match start.",
+      "client_validation": [],
+      "notes": [
+        "The managed totalplayers argument is not serialized by this implementation."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5400c0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_StartGame"
+    },
+    {
+      "opcode": 35,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int",
+          "note": "GetCurrentTableForUser(sessionGUID)"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<BoardGameLogic.Move>"
+        }
+      ],
+      "behavior": "Submit serialized move string.",
+      "client_validation": [],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53f9e0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_MakeMove"
+    },
+    {
+      "opcode": 36,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableID",
+          "type": "int"
+        }
+      ],
+      "behavior": "Request leave.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53f730"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_LeaveGame"
+    },
+    {
+      "opcode": 37,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        }
+      ],
+      "behavior": "Request board-table snapshot; a delayed coroutine invokes this sender after initialization.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x540370",
+        "0x551d50"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_SyncGame"
+    },
+    {
+      "opcode": 44,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "literal": "coffee"
+        },
+        {
+          "name": "consumableValue",
+          "type": "string"
+        }
+      ],
+      "behavior": "UiFoodTruckMenuInit.GetConsumable sends after HTTP callback matches local guid, coffee tag, Boolean success. Last payload copied from HTTP field6, meaning not inferred beyond consumableValue. HTTP field7 updates UI integer separately. Literal #coffee# inserts delimiters.",
+      "evidence_rvas": [
+        "0x4190b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "FoodTruck_msg_GotConsumable"
+    },
+    {
+      "opcode": 46,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "literal": "oktoberfest"
+        },
+        {
+          "name": "consumableValue",
+          "type": "string"
+        }
+      ],
+      "behavior": "Same UI/HTTP gating as coffee; literal #oktoberfest# then HTTP field6 copied. S2C46 uses four fields, S2C47 three.",
+      "evidence_rvas": [
+        "0x419ba0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "OktoberFest_msg_GotConsumable"
+    },
+    {
+      "opcode": 51,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "behavior": "After one coroutine yield, activate table/menu and request initialization.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5a98c0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_InitGame"
+    },
+    {
+      "opcode": 52,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "behavior": "After one coroutine yield, request leave.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5a9af0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_LeaveGame"
+    },
+    {
+      "opcode": 53,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "int"
+        },
+        {
+          "index": 3,
+          "name": "numberOfPlayers",
+          "type": "int",
+          "note": "(selectedRules != 0)+1"
+        }
+      ],
+      "behavior": "Set rules locally before sending. Rules0 chooses one player; other values choose two.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5a9e70"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_SelectGame"
+    },
+    {
+      "opcode": 54,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "totalplayers",
+          "type": "int"
+        }
+      ],
+      "behavior": "Forward after coroutine yield; record player count and busy flag.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5aa3c0",
+        "0x59f180"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_StartGame"
+    },
+    {
+      "opcode": 55,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "cueAngleX",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 3,
+          "name": "cueAngleY",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 4,
+          "name": "spinX",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 5,
+          "name": "spinY",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 6,
+          "name": "force",
+          "type": "float/InvariantCulture"
+        }
+      ],
+      "behavior": "Submit cue shot parameters.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x59a850",
+        "0x59e9c0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_MakeMove"
+    },
+    {
+      "opcode": 56,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "blockWordCount",
+          "type": "int",
+          "note": "M=3*(N+1), counts fields starting at N"
+        },
+        {
+          "index": 3,
+          "name": "ballCount",
+          "type": "int",
+          "note": "N=rulesScript.balls.Length"
+        },
+        {
+          "index": "4+2*i",
+          "name": "ballX[i]",
+          "type": "float/InvariantCulture",
+          "note": "i=0..N-1, localPosition.x"
+        },
+        {
+          "index": "5+2*i",
+          "name": "ballZ[i]",
+          "type": "float/InvariantCulture",
+          "note": "localPosition.z, not Vector3.y"
+        },
+        {
+          "index": "4+2*N+i",
+          "name": "pocketed[i]",
+          "type": "int/0-or-1"
+        },
+        {
+          "index": "4+3*N",
+          "name": "whiteFirstTouched",
+          "type": "int"
+        },
+        {
+          "index": "5+3*N",
+          "name": "whiteLastTouched",
+          "type": "int"
+        }
+      ],
+      "behavior": "Report local physics result including white-ball contact identifiers.",
+      "client_validation": [],
+      "notes": [
+        "M is not present in the peer S2C payload. Full request has 6+3*N fields before platform tail."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x59a810",
+        "0x59ddc0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_EndsMove"
+    },
+    {
+      "opcode": 57,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "whiteX",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 3,
+          "name": "whiteZ",
+          "type": "float/InvariantCulture"
+        }
+      ],
+      "behavior": "Report white-ball relocation using local position X/Z.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x59a8a0",
+        "0x59ed60"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_MoveFoul"
+    },
+    {
+      "opcode": 64,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "PS4ID",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "BowlingGameManager.Send_InitializeGame sends local SessionGUID, PS4ID and trigger/lane id.",
+      "evidence_rvas": [
+        "0x552ea0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_InitGame"
+    },
+    {
+      "opcode": 65,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "PS4ID",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Lane.Send_LeaveGame sends local SessionGUID, PS4ID and tableId. Server must produce updated panel, not echo these fields.",
+      "evidence_rvas": [
+        "0x54c3d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_LeaveGame"
+    },
+    {
+      "opcode": 66,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "UIBowlingMain.OnSelect sends ready/select command. No C2S67 construction observed in reviewed paths.",
+      "evidence_rvas": [
+        "0x5634e0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_ReadyGame"
+    },
+    {
+      "opcode": 68,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "position",
+          "type": "float32-invariant"
+        },
+        {
+          "name": "angle",
+          "type": "float32-invariant"
+        },
+        {
+          "name": "strength",
+          "type": "float32-invariant"
+        },
+        {
+          "name": "spin",
+          "type": "float32-invariant"
+        }
+      ],
+      "behavior": "Send_BallShot formats four ordinary decimal floats using InvariantCulture; these are not BinaryConverter strings. Clientbound shot omits guid or uses OK acknowledgement.",
+      "evidence_rvas": [
+        "0x54b8b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_ShotGame"
+    },
+    {
+      "opcode": 69,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "declaredLength",
+          "type": "int32",
+          "expression": "7*pinCount+1"
+        },
+        {
+          "name": "pinCount",
+          "type": "int32"
+        },
+        {
+          "name": "pins",
+          "type": "repeated7: BinaryConverter float32 local position x/y/z, local Euler x/y/z, literal0",
+          "start": 4,
+          "stride": 7,
+          "count_field": 3
+        }
+      ],
+      "behavior": "Send_StrikePins builds declaredLength and count then seven tokens per pin. BinaryConverter float strings are raw low/high16-bit UTF16 code units; no escaping observed. Receiver format omits guid and declaredLength.",
+      "evidence_rvas": [
+        "0x54c750",
+        "0x4d4260"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_PinsGame"
+    },
+    {
+      "opcode": 70,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "nextTurnIndex",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Send_ChangeTurn computes increment/wrap and skips empty player GUID slots, then sends candidate next index. Receiver only reads lane id; retired server authority/validation not recoverable here.",
+      "evidence_rvas": [
+        "0x54bff0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_TurnGame"
+    },
+    {
+      "opcode": 71,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Emitted from inactive-lane OneWay/ready handlers. Receiver requires a full panel snapshot with additional actor and EntryData fields, not an echo.",
+      "evidence_rvas": [
+        "0x5d98b0",
+        "0x5da760",
+        "0x5dabe0",
+        "0x5db460",
+        "0x5d9de0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_SyncGame"
+    },
+    {
+      "opcode": 80,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "behavior": "Request interaction/seat.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55c5e0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_InitGame"
+    },
+    {
+      "opcode": 81,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "behavior": "Request leave.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55cb90"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_LeaveGame"
+    },
+    {
+      "opcode": 82,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableID",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "DartsGameManager.GameRules/int"
+        },
+        {
+          "index": 3,
+          "name": "numberOfPlayers",
+          "type": "int"
+        }
+      ],
+      "behavior": "Request rules and player count.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55d240"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_SelectGame"
+    },
+    {
+      "opcode": 84,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableID",
+          "type": "int"
+        }
+      ],
+      "behavior": "Request start.",
+      "client_validation": [],
+      "notes": [
+        "The managed totalplayers argument is not serialized."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55d730"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_StartGame"
+    },
+    {
+      "opcode": 85,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int",
+          "note": "GetCurrentTableForUser(sessionGUID); logs and returns -1 if no seat"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<DartsRules.DartShotData>"
+        }
+      ],
+      "behavior": "Send caller-provided serialized move.",
+      "client_validation": [],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55ce40"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_MakeMove"
+    },
+    {
+      "opcode": 86,
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        }
+      ],
+      "behavior": "Request snapshot; initialization schedules a delayed invocation.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55d9f0",
+        "0x561e90"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_SyncGame"
+    },
+    {
+      "opcode": 92,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "type": "int32:AnimatorControllerParameterType"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "behavior": "NebulaPlayerAnim.SendParameter forwards parameter update.",
+      "evidence_rvas": [
+        "0x5f3ee0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "AnimParameter"
+    },
+    {
+      "opcode": 94,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "interactableId",
+          "type": "int32"
+        },
+        {
+          "name": "newState",
+          "type": "System.Boolean.ToString string"
+        },
+        {
+          "name": "extension",
+          "type": "string[]",
+          "start": 3
+        }
+      ],
+      "behavior": "GenericInteractable.SendData emits inverse of current state then appends every strings[] parameter separated by #. Extension subtype dependent.",
+      "evidence_rvas": [
+        "0x451100"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "semantic_gaps": [
+        "APITPInteractables subtype extension schemas"
+      ],
+      "enum_name": "Genericinteractable"
+    },
+    {
+      "opcode": 95,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "notificationPlayerName",
+          "type": "string"
+        },
+        {
+          "name": "notificationPlatform",
+          "type": "int32"
+        },
+        {
+          "name": "declineType",
+          "type": "int32:NotificationsManager.NotificationType"
+        }
+      ],
+      "behavior": "DismissNotification and DeclineAll emit only for incoming FullGame2 or SpaceGame11. declineType=10 FullGame_Declined or12 SpaceGame_Declined. No receive registration for95.",
+      "evidence_rvas": [
+        "0x47fa70",
+        "0x47f160"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "NotificationGameDeclined"
+    }
+  ],
+  "clientbound": [
+    {
+      "opcode": 0,
+      "fields": [],
+      "behavior": "Ignores incoming fields. Starts async local-player/avatar initialization. See handshake sequence; send only after Mirror local player spawn.",
+      "evidence_rvas": [
+        "0x5e0570",
+        "0x5ea6e0",
+        "0x5dfdc0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "ignores_all_fields": true,
+      "enum_name": "OnConnected",
+      "handler": "Assets.Scripts.TCPs.Processors.OnConnectedProcessor"
+    },
+    {
+      "opcode": 1,
+      "fields": [
+        {
+          "name": "netId",
+          "type": "uint32"
+        },
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32:PS4Info.Platform"
+        }
+      ],
+      "behavior": "Ignores existing guid. Requires remotePlayersToBuild[netId] populated by a prior Mirror spawn. Removes pending object, sets guid/identity, adds Memory remote, loads HTTP label/avatar. Callback requests locomotion/companion/position/animation.",
+      "evidence_rvas": [
+        "0x5e4660",
+        "0x5e43c0",
+        "0x5e42d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "PlayerJoined",
+      "handler": "Assets.Scripts.TCPs.Processors.PlayerJoinedProcessor"
+    },
+    {
+      "opcode": 2,
+      "fields": [
+        {
+          "name": "netId",
+          "type": "int32"
+        },
+        {
+          "name": "transform",
+          "type": "json:NebulaPlayerTransform.TransformData"
+        }
+      ],
+      "behavior": "Looks up player by netId, deserializes JSON and sets Transform.position and rotation directly. Unknown player ignored.",
+      "evidence_rvas": [
+        "0x5e7ed0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Transform",
+      "handler": "Assets.Scripts.TCPs.Processors.TransformProcessor"
+    },
+    {
+      "opcode": 5,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "typeanim",
+          "type": "int32:NebulaPlayerAnim.TypeAnim"
+        },
+        {
+          "name": "typecycle",
+          "type": "int32:NebulaPlayerAnim.TypeCycle"
+        },
+        {
+          "name": "anim",
+          "type": "string"
+        },
+        {
+          "name": "originalNamesCount",
+          "type": "int32"
+        },
+        {
+          "name": "originalNames",
+          "type": "string[]",
+          "start": 5,
+          "count_field": 4
+        }
+      ],
+      "behavior": "Looks up guid and calls SetAnim. Count controls exact array slice; the platform suffix must not become an animation name.",
+      "evidence_rvas": [
+        "0x5d6fb0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Anim",
+      "handler": "Assets.Scripts.TCPs.Processors.AnimProcessor"
+    },
+    {
+      "opcode": 9,
+      "fields": [
+        {
+          "name": "requesterGuid",
+          "type": "string"
+        },
+        {
+          "name": "occupableId",
+          "type": "int32"
+        },
+        {
+          "name": "occupantGuid",
+          "type": "string"
+        }
+      ],
+      "behavior": "Empty occupant ignored. If requesterGuid equals occupantGuid, local NebulaInteractor.SetOccupable(id, occupantGuid). Otherwise updates local interactable[id] with occupantGuid. Semantic names inferred from this comparison and C2S seat request.",
+      "evidence_rvas": [
+        "0x5dfa40",
+        "0x6159f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "naming_inference": true,
+      "enum_name": "Occupable",
+      "handler": "Assets.Scripts.TCPs.Processors.OccupableProcessor"
+    },
+    {
+      "opcode": 10,
+      "fields": [
+        {
+          "name": "unused0",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "occupableId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Clears occupantGuid to empty on local occupable list[id]; token0 not read.",
+      "evidence_rvas": [
+        "0x5dc440"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "LeaveOccupable",
+      "handler": "Assets.Scripts.TCPs.Processors.LeaveOccupableProcessor"
+    },
+    {
+      "opcode": 11,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "groupName",
+          "type": "string"
+        }
+      ],
+      "behavior": "Known player and existing chat tab required; applies player relationship/platform display checks, invokes typing bubble path.",
+      "evidence_rvas": [
+        "0x5e70c0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "StartTyping",
+      "handler": "Assets.Scripts.TCPs.Processors.StartTypingProcessor"
+    },
+    {
+      "opcode": 12,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        }
+      ],
+      "behavior": "Known player required; applies relationship/platform checks and deletes typing bubble.",
+      "evidence_rvas": [
+        "0x5e7580"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "StopTyping",
+      "handler": "Assets.Scripts.TCPs.Processors.StopTypingProcessor"
+    },
+    {
+      "opcode": 13,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "groupName",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "name": "chatType",
+          "type": "int32:Chat.ChatType"
+        }
+      ],
+      "behavior": "ChatType 0 uses group/presence/relationship/platform filtering. Nonzero type bypasses those normal space-chat filters. Nonempty group delivered through pooled Chat.ChatMessageData and Chat.OnMessageReceived. No CustomDecrypt in this receive path.",
+      "evidence_rvas": [
+        "0x5d7790",
+        "0x5d7a70"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "ChatMessage",
+      "handler": "Assets.Scripts.TCPs.Processors.ChatMessageProcessor"
+    },
+    {
+      "opcode": 14,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        }
+      ],
+      "behavior": "Removes Memory remote/interactable and can append disconnected message to private chat. In personal space, owner departure starts HTTPCheckIsInWardrobe before kick decision. Mirror destroy is a separate transport event.",
+      "evidence_rvas": [
+        "0x5e0c60",
+        "0x5e0dd0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "OnRemoteDisconnected",
+      "handler": "Assets.Scripts.TCPs.Processors.OnRemoteDisconnectedProcessor"
+    },
+    {
+      "opcode": 15,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "locomotionName",
+          "type": "string"
+        }
+      ],
+      "behavior": "Known player.UpdateLocomotion; empty string represents removal in C2S sources.",
+      "evidence_rvas": [
+        "0x5ec4d0",
+        "0x5f3c60"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "UpdateLocomotion",
+      "handler": "Assets.Scripts.TCPs.Processors.UpdateLocomotionProcessor"
+    },
+    {
+      "opcode": 17,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "companionName",
+          "type": "string"
+        }
+      ],
+      "behavior": "Known player.UpdateCompanion. Registration uses opcode17 UpdateCompanion; enum7 Companion has no client receive registration.",
+      "evidence_rvas": [
+        "0x5d7c20",
+        "0x439f60"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "UpdateCompanion",
+      "handler": "Assets.Scripts.TCPs.Processors.CompanionProcessor"
+    },
+    {
+      "opcode": 18,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "key",
+          "type": "int32:PlayerPrefsManager.PlayerPrefsKeys"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "behavior": "Applies if guid is in Memory or local SessionGUID. Receiver implements mood0/status1/label-display2,3,4/color15/platformOnly21; other keys no effect in reviewed branch body. See preference details.",
+      "evidence_rvas": [
+        "0x5e4670",
+        "0x5e4780"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "PlayerPref",
+      "handler": "Assets.Scripts.TCPs.Processors.PlayerPrefsProcessor"
+    },
+    {
+      "opcode": 19,
+      "fields": [
+        {
+          "name": "playerName",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        },
+        {
+          "name": "type",
+          "type": "int32:NotificationsManager.NotificationType"
+        },
+        {
+          "name": "arguments",
+          "type": "string"
+        },
+        {
+          "name": "ticks",
+          "type": "int64"
+        }
+      ],
+      "behavior": "Constructs NotificationData(type, playerName, platform, ticks, arguments) and Push. Chat notification type0 suppressed when isChatRestricted. Direction differs from C2S19 request shape.",
+      "evidence_rvas": [
+        "0x5df8a0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Notification",
+      "handler": "Assets.Scripts.TCPs.Processors.NotificationProcessor"
+    },
+    {
+      "opcode": 21,
+      "fields": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Resolves guid from username/platform and calls SetRemoteRelation(false). Shares native body with op22/23.",
+      "evidence_rvas": [
+        "0x5d6db0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "RemoveFriend",
+      "handler": "Assets.Scripts.TCPs.Processors.RemoveFriendProcessor"
+    },
+    {
+      "opcode": 22,
+      "fields": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Resolves guid from username/platform and calls SetRemoteRelation(false). Shares native body with op21/23.",
+      "evidence_rvas": [
+        "0x5d6db0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "RemoveSilenced",
+      "handler": "Assets.Scripts.TCPs.Processors.RemoveSilencedProcessor"
+    },
+    {
+      "opcode": 23,
+      "fields": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Resolves guid from username/platform and calls SetRemoteRelation(false). Shares native body with op21/22.",
+      "evidence_rvas": [
+        "0x5d6db0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "AddSilenced",
+      "handler": "Assets.Scripts.TCPs.Processors.AddSilencedProcessor"
+    },
+    {
+      "opcode": 24,
+      "fields": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Resolves guid from username/platform and refreshes relation/avatar visibility; exact child callback effect remains to audit.",
+      "evidence_rvas": [
+        "0x5d6bc0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "semantic_gaps": [
+        "child visibility callback"
+      ],
+      "enum_name": "AddBlock",
+      "handler": "Assets.Scripts.TCPs.Processors.AddBlockProcessor"
+    },
+    {
+      "opcode": 25,
+      "fields": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Resolves guid from username/platform and refreshes relation/avatar visibility; exact child callback effect remains to audit.",
+      "evidence_rvas": [
+        "0x5e55e0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "semantic_gaps": [
+        "child visibility callback"
+      ],
+      "enum_name": "RemoveBlock",
+      "handler": "Assets.Scripts.TCPs.Processors.RemoveBlockProcessor"
+    },
+    {
+      "opcode": 27,
+      "fields": [
+        {
+          "name": "unread0",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "unread1",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "unread2",
+          "type": "string",
+          "used": false
+        }
+      ],
+      "behavior": "Only checks field count: <3 => CannotConnectIsFull and reset Pad input; >=3 => HTTPSpaceLoading(IsFromNotification=true), request local SessionGUID#PS4ID. Does not inspect values. Extra trailing platform tokens would influence this count gate.",
+      "evidence_rvas": [
+        "0x5e7db0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "fields_are_length_gate_only": true,
+      "enum_name": "ToJoinNotification",
+      "handler": "Assets.Scripts.TCPs.Processors.ToJoinNotificationProcessor"
+    },
+    {
+      "opcode": 28,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "relationType",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Nonempty known guid -> UpdateRemoteRelation(relationType).",
+      "evidence_rvas": [
+        "0x5e54d0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "RelationshipUpdated",
+      "handler": "Assets.Scripts.TCPs.Processors.RelationshipUpdatedProcessor"
+    },
+    {
+      "opcode": 29,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        }
+      ],
+      "behavior": "Remote guid enters wardrobe ghost/deactivation; local guid switches CharacterEditor and adds wardrobe checker. No Boolean field read.",
+      "evidence_rvas": [
+        "0x5e6530"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "SetIsInWardrobe",
+      "handler": "Assets.Scripts.TCPs.Processors.SetIsInWardrobeProcessor"
+    },
+    {
+      "opcode": 30,
+      "fields": [
+        {
+          "name": "unused0",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "isDay",
+          "type": "System.Boolean.Parse string"
+        }
+      ],
+      "behavior": "Reads token1 only; calls DayNightCycle.StartCycle(!isDay). C2S request has only bool payload, so echo is wrong.",
+      "evidence_rvas": [
+        "0x5d7650"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "DayNightCycle",
+      "handler": "Assets.Scripts.TCPs.Processors.ChangeDayNightAtServerProcessor"
+    },
+    {
+      "opcode": 31,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "allowed",
+          "type": "System.Boolean.Parse string"
+        },
+        {
+          "name": "boatToken",
+          "type": "int32"
+        }
+      ],
+      "behavior": "If allowed and player exists, sets HarbourEnter/BoatTripManager token, starts delayed boat instantiate/seat paths, removes coffee prop if present.",
+      "evidence_rvas": [
+        "0x5d72a0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "BoatTokenToInstantiate",
+      "handler": "Assets.Scripts.TCPs.Processors.BoatTokenToInstantiateProcessor"
+    },
+    {
+      "opcode": 32,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/int"
+        },
+        {
+          "index": 2,
+          "name": "tableData",
+          "type": "EntryData<BoardGamesTable.Data>",
+          "note": "Consumed in Free/Awaiting branches"
+        }
+      ],
+      "behavior": "Store tableID/tableState. Free: initialPlayer=true, reset table, decode data, mark local player, select rules and seat avatar; manager becomes Awaiting. Awaiting: initialPlayer=false, decode data, join/rival UI, seat avatar. Busy states display their branch UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Decoded GUID/PS4ID arrays are indexed as two seats by subsequent UI/seat logic; preserve both slots, using empty strings for empty seats."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "State is Int32.Parse here, unlike several Enum.Parse handlers."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53d360",
+        "0x5d95b0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_InitGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardInitializeGameProcessor"
+    },
+    {
+      "opcode": 33,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "BoardGamesManager.GameRules/Enum.Parse"
+        }
+      ],
+      "behavior": "When manager is Awaiting(2), store gameRules and display selected-game instructions.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53e700",
+        "0x5d97f0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_SelectGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardSelectGameProcessor"
+    },
+    {
+      "opcode": 34,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "behavior": "If manager Awaiting, reset/activate table, select existing tableData.gameRules, activate game camera and menus. Local initialPlayer flag selects Your turn/Control versus Rival turn/Waiting UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "No player-count or match-state field is parsed."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53ea60",
+        "0x5d9830"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_StartGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardStartGameProcessor"
+    },
+    {
+      "opcode": 35,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "newMatchState",
+          "type": "BoardGamesManager.GameState/Enum.Parse"
+        },
+        {
+          "index": 3,
+          "name": "playerIndex",
+          "type": "int"
+        }
+      ],
+      "behavior": "Call CheckNewMatchState without applying a move. For local table, P1Turn/P2Turn may display Chess Check; all other parsed states go to ShowMatchResults.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "This is not the C2S35 layout and has no serialized move field."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5d96d0",
+        "0x53cbe0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_MakeMove",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardMakeMoveProcessor"
+    },
+    {
+      "opcode": 36,
+      "fields": [
+        {
+          "index": 0,
+          "name": "departingGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "behavior": "Clear matching GUID and PS4ID seats; local leave restores avatar controls/transform; rival leave updates table/UI and initial-player state.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53dc00",
+        "0x5d9690"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_LeaveGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardLeaveGameProcessor"
+    },
+    {
+      "opcode": 37,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": "1..N-1",
+          "name": "boardState[0..N-2]",
+          "type": "BoardTableSnapshot",
+          "note": "N=local table count; native loop stops at i<N"
+        },
+        {
+          "index": "N",
+          "name": "unreadLastBoardStateSlot",
+          "type": "opaque",
+          "note": "This slot is skipped by the observed loop"
+        },
+        {
+          "index": "N+1+2*j",
+          "name": "seat0GUID[j]",
+          "type": "string",
+          "note": "j=0..N-1"
+        },
+        {
+          "index": "N+2+2*j",
+          "name": "seat1GUID[j]",
+          "type": "string",
+          "note": "j=0..N-1"
+        }
+      ],
+      "behavior": "Decode board states for tables0..N-2, then consume GUID pairs from N+1 onward; resolve avatars from Memory and place them at seats.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "GUID pair loop continues to payload end; odd or excessive pairs can cause bounds failure."
+      ],
+      "notes": [
+        "Candidate full snapshot has 1+3*N fields; server's exact canonical snapshot construction remains unobserved.",
+        "Preserve the skipped slot N: silently correcting this apparent off-by-one changes the client's GUID offsets.",
+        "BoardTableSnapshot begins with one decimal rules character; rules>0 dispatches remainder to concrete board.DeserializeTable."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53ecf0",
+        "0x541310",
+        "0x540f00",
+        "0x5d9870"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_SyncGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardSynchronizeGameProcessor"
+    },
+    {
+      "opcode": 39,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "tableData",
+          "type": "EntryData<BoardGamesTable.Data>"
+        }
+      ],
+      "behavior": "Deserialize into existing tableData; no local-seat initialization.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53d2e0",
+        "0x5d9570"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_InitGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardInitializeGameOneWayProcessor"
+    },
+    {
+      "opcode": 40,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "BoardGamesManager.GameRules/Enum.Parse"
+        }
+      ],
+      "behavior": "When manager is Awaiting(2), store tableData.gameRules.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53e590",
+        "0x5d97b0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_SelectGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardSelectGameOneWayProcessor"
+    },
+    {
+      "opcode": 41,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "behavior": "If manager Awaiting, reset/activate table, select existing tableData.gameRules, activate game camera and menus. Local initialPlayer flag selects Your turn/Control versus Rival turn/Waiting UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "No player-count or match-state field is parsed."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53ea60",
+        "0x5d9830"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_StartGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardStartGameOneWayProcessor"
+    },
+    {
+      "opcode": 42,
+      "fields": [
+        {
+          "index": 0,
+          "name": "departingGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "behavior": "Clear matching GUID and PS4ID seats; local leave restores avatar controls/transform; rival leave updates table/UI and initial-player state.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53dc00",
+        "0x5d9690"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_LeaveGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardRivalLeaveOneWayProcessor"
+    },
+    {
+      "opcode": 43,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "newMatchState",
+          "type": "BoardGamesManager.GameState/Enum.Parse"
+        },
+        {
+          "index": 3,
+          "name": "playerIndex",
+          "type": "int"
+        },
+        {
+          "index": 4,
+          "name": "move",
+          "type": "EntryData<BoardGameLogic.Move>"
+        }
+      ],
+      "behavior": "Allocate/decode Move, call BoardGamesBoard.input.ApplyMove(playerIndex,move) (input virtual slot10), then CheckNewMatchState. Concrete input replay effects appear in board_move_replay below.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "ApplyMove is dispatched through board.input+0x38, not a direct BoardGameLogic.MakeMove call."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x53e430",
+        "0x53cbe0",
+        "0x5327b0",
+        "0x538ff0",
+        "0x550a10",
+        "0x5d9770"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Board_msg_MakeMoveOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Board.GetBoardMoveOneWayProcessor"
+    },
+    {
+      "opcode": 44,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "unused1",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "literal": "coffee"
+        },
+        {
+          "name": "numberOfConsumables",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Only tag coffee accepted; FoodTruckManager.Set(guid,count). Token1 is unread. Server response needs one extra field compared with reviewed C2S44.",
+      "evidence_rvas": [
+        "0x5dbcc0",
+        "0x404da0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "FoodTruck_msg_GotConsumable",
+      "handler": "Assets.Scripts.TCPs.Processors.FoodTruck.GetFoodTruckConsumablesProcessor"
+    },
+    {
+      "opcode": 45,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "unused1",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "literal": "coffee"
+        },
+        {
+          "name": "numberOfConsumables",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Same effective parsing as44; tag coffee then FoodTruckManager.Set(guid,count).",
+      "evidence_rvas": [
+        "0x5dbc00",
+        "0x404da0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "FoodTruck_msg_GotConsumableOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.FoodTruck.GetFoodTruckConsumablesOneWayProcessor"
+    },
+    {
+      "opcode": 46,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "unused1",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "literal": "oktoberfest"
+        },
+        {
+          "name": "numberOfConsumables",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Only tag oktoberfest accepted; OktoberFestManager.Set(guid,count). Token1 is unread.",
+      "evidence_rvas": [
+        "0x5dbfb0",
+        "0x4087f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "OktoberFest_msg_GotConsumable",
+      "handler": "Assets.Scripts.TCPs.Processors.OktoberFest.GetOktoberFestConsumables"
+    },
+    {
+      "opcode": 47,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "literal": "oktoberfest"
+        },
+        {
+          "name": "numberOfConsumables",
+          "type": "int32"
+        }
+      ],
+      "behavior": "OneWay variant removes unused token1: checks tag at1 and count at2. Do not reuse normal46 layout.",
+      "evidence_rvas": [
+        "0x5dbef0",
+        "0x4087f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "OktoberFest_msg_GotConsumableOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.OktoberFest.GetOktoberFestConsumablesOneWay"
+    },
+    {
+      "opcode": 51,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        },
+        {
+          "index": 3,
+          "name": "rivalName",
+          "type": "string",
+          "note": "Only Awaiting branch"
+        },
+        {
+          "index": 4,
+          "name": "rulesID",
+          "type": "int",
+          "note": "Only Awaiting branch"
+        }
+      ],
+      "behavior": "Store myTableID and require table interaction. Free branch opens rule selection if local state Awaiting/Inactive; Awaiting decodes rival/rules, sets two players and join menu; Full/Playing show busy UI; Ready returns.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "Only branches that read rivalName/rulesID require those final two fields."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5995f0",
+        "0x5dc070"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_InitGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolInitializeGameProcessor"
+    },
+    {
+      "opcode": 52,
+      "fields": [],
+      "behavior": "Virtual DeactivateTable call; reply payload is ignored by this body.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5457f0",
+        "0x5dc200"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_LeaveGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolLeaveGameProcessor"
+    },
+    {
+      "opcode": 53,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "numberOfPlayers",
+          "type": "int"
+        }
+      ],
+      "behavior": "Use previously selected rules; initialize rule/ball state arrays and solo/multiplayer UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "Field2 is player count, not rulesID. Rules came from local selection or Init Awaiting branch."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x599eb0",
+        "0x59be10",
+        "0x5dc3c0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_SelectGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolSelectGameProcessor"
+    },
+    {
+      "opcode": 54,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "role",
+          "type": "string",
+          "note": "Literal playerOne selects index0; every other non-null string selects index1"
+        },
+        {
+          "index": 2,
+          "name": "rivalName",
+          "type": "optional string"
+        }
+      ],
+      "behavior": "Only if table currentState Awaiting(1), set localPlayerIndex and optional rival name, then InitState(StartGame2).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Role must be non-null; only playerOne is explicitly compared."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x59a180",
+        "0x59bf20",
+        "0x59c050",
+        "0x5dc400"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_StartGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolStartGameProcessor"
+    },
+    {
+      "opcode": 55,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrAngleX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "cueAngleY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 3,
+          "name": "spinX",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 4,
+          "name": "spinY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 5,
+          "name": "force",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        }
+      ],
+      "behavior": "OK: doMoveShotFromServer=false, gotMoveShotFromServer=true. Replay: store five shot floats, doMoveShot=true, gotMoveShot=true.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum6. String comparison is exact OK. Float parsing does not add range/finite checks."
+      ],
+      "notes": [
+        "Opcode55 and61 share receive parser; recipient policy is not proved by names."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x599a50",
+        "0x59bb40",
+        "0x5dc340"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_MakeMove",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveCueProcessor"
+    },
+    {
+      "opcode": 56,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrBallCount",
+          "type": "literal OK | int/N"
+        },
+        {
+          "index": "2+2*i",
+          "name": "ballX[i]",
+          "type": "float/InvariantCulture",
+          "note": "Replay i=0..N-1"
+        },
+        {
+          "index": "3+2*i",
+          "name": "ballZ[i]",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": "2+2*N+i",
+          "name": "pocketed[i]",
+          "type": "int/equals1"
+        },
+        {
+          "index": "2+3*N",
+          "name": "whiteFirstTouched",
+          "type": "int"
+        },
+        {
+          "index": "3+3*N",
+          "name": "whiteLastTouched",
+          "type": "int"
+        }
+      ],
+      "behavior": "OK acknowledges without replay; otherwise fill existing net position/pocket arrays and white contact IDs. Set gotMoveBall=true and doMoveBall=(not OK). Apply_MoveBalls later consumes arrays.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum4+3*N for N>=0. N must fit existing net arrays; no semantic contact-ID/range validation observed.",
+        "Pocket flag is true only for integer1; other parsed integers become false."
+      ],
+      "notes": [
+        "No GUID or M block-word count is read in this direction. Direct C2S echo is incompatible."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5999e0",
+        "0x59b8f0",
+        "0x59b540",
+        "0x5dc300"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_EndsMove",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveBallsProcessor"
+    },
+    {
+      "opcode": 57,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrWhiteX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "whiteZ",
+          "type": "float/InvariantCulture",
+          "note": "Replay only"
+        }
+      ],
+      "behavior": "OK acknowledges without replay; otherwise write white-ball net X/Z to positions[0]. Set gotMoveFoul=true and doMoveFoul=(not OK).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Replay requires initialized positions[0] and3 fields; ACK2 fields. No finite/table-position bounds check observed."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x599c20",
+        "0x59bcd0",
+        "0x5dc380"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_MoveFoul",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveFaultProcessor"
+    },
+    {
+      "opcode": 59,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "behavior": "RivalGone: ignore Inactive/Awaiting/finished states; otherwise show rival-gone UI for local table and reset. Wrapper clears busy flag and conditionally local XP flag.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x599da0",
+        "0x5dc110"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_LeaveGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolLeaveGameOneWayMsgProcessor"
+    },
+    {
+      "opcode": 60,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "role",
+          "type": "string",
+          "note": "Literal playerOne selects index0; every other non-null string selects index1"
+        },
+        {
+          "index": 2,
+          "name": "rivalName",
+          "type": "optional string"
+        }
+      ],
+      "behavior": "Only if table currentState Awaiting(1), set localPlayerIndex and optional rival name, then InitState(StartGame2).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Role must be non-null; only playerOne is explicitly compared."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x59a180",
+        "0x59bf20",
+        "0x59c050",
+        "0x5dc400"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_StartGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolStartGameOneWayMsgProcessor"
+    },
+    {
+      "opcode": 61,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrAngleX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "cueAngleY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 3,
+          "name": "spinX",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 4,
+          "name": "spinY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 5,
+          "name": "force",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        }
+      ],
+      "behavior": "OK: doMoveShotFromServer=false, gotMoveShotFromServer=true. Replay: store five shot floats, doMoveShot=true, gotMoveShot=true.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum6. String comparison is exact OK. Float parsing does not add range/finite checks."
+      ],
+      "notes": [
+        "Opcode55 and61 share receive parser; recipient policy is not proved by names."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x599a50",
+        "0x59bb40",
+        "0x5dc340"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_MakeMoveOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveCueOneWayMsgProcessor"
+    },
+    {
+      "opcode": 62,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrBallCount",
+          "type": "literal OK | int/N"
+        },
+        {
+          "index": "2+2*i",
+          "name": "ballX[i]",
+          "type": "float/InvariantCulture",
+          "note": "Replay i=0..N-1"
+        },
+        {
+          "index": "3+2*i",
+          "name": "ballZ[i]",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": "2+2*N+i",
+          "name": "pocketed[i]",
+          "type": "int/equals1"
+        },
+        {
+          "index": "2+3*N",
+          "name": "whiteFirstTouched",
+          "type": "int"
+        },
+        {
+          "index": "3+3*N",
+          "name": "whiteLastTouched",
+          "type": "int"
+        }
+      ],
+      "behavior": "OK acknowledges without replay; otherwise fill existing net position/pocket arrays and white contact IDs. Set gotMoveBall=true and doMoveBall=(not OK). Apply_MoveBalls later consumes arrays.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum4+3*N for N>=0. N must fit existing net arrays; no semantic contact-ID/range validation observed.",
+        "Pocket flag is true only for integer1; other parsed integers become false."
+      ],
+      "notes": [
+        "No GUID or M block-word count is read in this direction. Direct C2S echo is incompatible."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x5999e0",
+        "0x59b8f0",
+        "0x59b540",
+        "0x5dc300"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_EndsMoveOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveBallsOneWayMsgProcessor"
+    },
+    {
+      "opcode": 63,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrWhiteX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "whiteZ",
+          "type": "float/InvariantCulture",
+          "note": "Replay only"
+        }
+      ],
+      "behavior": "OK acknowledges without replay; otherwise write white-ball net X/Z to positions[0]. Set gotMoveFoul=true and doMoveFoul=(not OK).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Replay requires initialized positions[0] and3 fields; ACK2 fields. No finite/table-position bounds check observed."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x599c20",
+        "0x59bcd0",
+        "0x5dc380"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Pool_msg_MoveFoulOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveFaultOneWayMsgProcessor"
+    },
+    {
+      "opcode": 64,
+      "fields": [
+        {
+          "name": "actorGuid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "panel",
+          "type": "EntryData:BowlingGameManager.BowlingPanelData"
+        }
+      ],
+      "behavior": "Marks lane.imIn=true then Get_InitializeGame. Panel is EntryData, not JSON. Actor guid selects playerDataPublic[i].GUID; PS4ID comparison identifies local seat. Free0/Awaiting2 initialize and seat; Playing4 closes local join menu and clears imIn; Rejected1/Ready3 return. See tcp-bowling.md.",
+      "evidence_rvas": [
+        "0x5d9d30",
+        "0x552bd0",
+        "0x547a10"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_InitGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingInitializeGameProcessor"
+    },
+    {
+      "opcode": 65,
+      "fields": [
+        {
+          "name": "actorGuid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "panel",
+          "type": "EntryData:BowlingGameManager.BowlingPanelData"
+        }
+      ],
+      "behavior": "Marks lane.imOut=true then Get_LeaveGame. Compares previous and new panel players to stand/remove departed players, refresh score UI, deactivate on local/last departure, and request ChangeTurn15 if current player departed.",
+      "evidence_rvas": [
+        "0x5da230",
+        "0x552c40",
+        "0x547eb0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_LeaveGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingLeaveGameProcessor"
+    },
+    {
+      "opcode": 66,
+      "fields": [
+        {
+          "name": "actorGuid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "panel",
+          "type": "EntryData:BowlingGameManager.BowlingPanelData"
+        }
+      ],
+      "behavior": "Inactive lane: caches message with action74 and requests C2S71. Active lane: only when previous panel state Awaiting2, re-initializes with new panel; if new state Ready3 invokes Get_StartGame. The latter sets panel Playing4 and requests local State.StartGame3. Opcode67 BowlingStart has no receive registration.",
+      "evidence_rvas": [
+        "0x5da760",
+        "0x547a10",
+        "0x548740"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_ReadyGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStartGameProcessor"
+    },
+    {
+      "opcode": 68,
+      "fields": [
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "positionOrAck",
+          "type": "float32-invariant or literal OK"
+        },
+        {
+          "name": "angle",
+          "type": "float32-invariant",
+          "optional_when_ack": true
+        },
+        {
+          "name": "strength",
+          "type": "float32-invariant",
+          "optional_when_ack": true
+        },
+        {
+          "name": "spin",
+          "type": "float32-invariant",
+          "optional_when_ack": true
+        }
+      ],
+      "behavior": "OK sets gotMoveShot=true and doMoveShot=false, without parsing floats. Otherwise copies four InvariantCulture floats, resets/repositions ball, prepares remote player shot animation and marks doMoveShot/gotMoveShot=true.",
+      "evidence_rvas": [
+        "0x5d9c30",
+        "0x552af0",
+        "0x5473b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_ShotGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingBallShotProcessor"
+    },
+    {
+      "opcode": 69,
+      "fields": [
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "pinCountOrAck",
+          "type": "int32 or literal OK"
+        },
+        {
+          "name": "pins",
+          "type": "repeated 7 fields: BinaryConverter float32 position x/y/z, Euler x/y/z, unread string",
+          "start": 2,
+          "stride": 7,
+          "count_field": 1,
+          "optional_when_ack": true
+        }
+      ],
+      "behavior": "OK sets gotMovePins=true/doMovePins=false. Otherwise parses pinCount, decodes six two-UTF16-unit float strings per pin into net positions/Euler arrays; advances7 tokens per pin and ignores seventh. No score or turn index read here.",
+      "evidence_rvas": [
+        "0x5daf60",
+        "0x552d20",
+        "0x548ea0",
+        "0x4d4140"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_PinsGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStrikePinsProcessor"
+    },
+    {
+      "opcode": 70,
+      "fields": [
+        {
+          "name": "laneId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Requests local State.ChangeTurn15. No server-supplied next-turn index read by receiver; local state machine handles turn progression.",
+      "evidence_rvas": [
+        "0x5db7e0",
+        "0x552b60",
+        "0x5479f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_TurnGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingTurnBowlingGameProcessor"
+    },
+    {
+      "opcode": 71,
+      "fields": [
+        {
+          "name": "actorGuid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "panel",
+          "type": "EntryData:BowlingGameManager.BowlingPanelData"
+        }
+      ],
+      "behavior": "Ignored if existing panel Playing4 or no cached synchronization message. Otherwise activates lane, Get_StartGame using full panel field2, schedules cached-message replay, clears cache. Shipped replay reads cached lane at field3 despite modern layouts using0/1 and coroutine expects old actions3211/3212/3214/3215 rather than74/76/77/78; unresolved compatibility gap.",
+      "evidence_rvas": [
+        "0x5dafa0",
+        "0x548740",
+        "0x5534b0",
+        "0x5618c0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "semantic_gaps": [
+        "stale cached-message field index and old action numbers"
+      ],
+      "enum_name": "Bowling_msg_SyncGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingSyncBowlingGameProcessor"
+    },
+    {
+      "opcode": 72,
+      "fields": [
+        {
+          "name": "actorGuid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "panel",
+          "type": "EntryData:BowlingGameManager.BowlingPanelData"
+        }
+      ],
+      "behavior": "Activates lane GameObject then same initialize consumer as64; does not mark imIn=true.",
+      "evidence_rvas": [
+        "0x5d9c70",
+        "0x552bd0",
+        "0x547a10"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_InitGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingInitializeGameOneWayProcessor"
+    },
+    {
+      "opcode": 73,
+      "fields": [
+        {
+          "name": "actorGuid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "panel",
+          "type": "EntryData:BowlingGameManager.BowlingPanelData"
+        }
+      ],
+      "behavior": "If local lane State.Inactive0, sends C2S71 sync request and returns without caching this leave packet. Otherwise handles leave only for existing panel LaneState2/3/4. Same EntryData payload as65.",
+      "evidence_rvas": [
+        "0x5d9de0",
+        "0x552c40",
+        "0x547eb0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_LeaveGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingLeaveGameOneWayProcessor"
+    },
+    {
+      "opcode": 74,
+      "fields": [
+        {
+          "name": "actorGuid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "panel",
+          "type": "EntryData:BowlingGameManager.BowlingPanelData"
+        }
+      ],
+      "behavior": "Same ready/start state path as66; cache action74 on inactive lane. Get_StartGame counts nonempty names, seats non-turn players, stands turnIndex player, sets turn index and resets frame.",
+      "evidence_rvas": [
+        "0x5da2e0",
+        "0x547a10",
+        "0x548740"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_ReadyGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStartGameOneWayProcessor"
+    },
+    {
+      "opcode": 76,
+      "fields": [
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "positionOrAck",
+          "type": "float32-invariant or literal OK"
+        },
+        {
+          "name": "angle",
+          "type": "float32-invariant",
+          "optional_when_ack": true
+        },
+        {
+          "name": "strength",
+          "type": "float32-invariant",
+          "optional_when_ack": true
+        },
+        {
+          "name": "spin",
+          "type": "float32-invariant",
+          "optional_when_ack": true
+        }
+      ],
+      "behavior": "Inactive lane: caches message with action76 and requests C2S71. Otherwise forwards to same ball-shot consumer as68.",
+      "evidence_rvas": [
+        "0x5d98b0",
+        "0x552af0",
+        "0x5473b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_ShotGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingBallShotOneWayProcessor"
+    },
+    {
+      "opcode": 77,
+      "fields": [
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "pinCountOrAck",
+          "type": "int32 or literal OK"
+        },
+        {
+          "name": "pins",
+          "type": "repeated 7 fields: BinaryConverter float32 position x/y/z, Euler x/y/z, unread string",
+          "start": 2,
+          "stride": 7,
+          "count_field": 1,
+          "optional_when_ack": true
+        }
+      ],
+      "behavior": "Inactive lane: caches message with action77 and requests C2S71. Otherwise same pins consumer as69.",
+      "evidence_rvas": [
+        "0x5dabe0",
+        "0x552d20",
+        "0x548ea0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_PinsGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingStrikePinsOneWayProcessor"
+    },
+    {
+      "opcode": 78,
+      "fields": [
+        {
+          "name": "laneId",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Inactive lane: caches message with action78 and requests C2S71. Otherwise same ChangeTurn consumer as70.",
+      "evidence_rvas": [
+        "0x5db460",
+        "0x552b60",
+        "0x5479f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_TurnGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingTurnBowlingGameOneWayProcessor"
+    },
+    {
+      "opcode": 79,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "laneId",
+          "type": "int32"
+        },
+        {
+          "name": "seatIndex",
+          "type": "int32"
+        }
+      ],
+      "behavior": "Finds player and disables capsule collider if not already disabled. Negative seatIndex returns after disabling; nonnegative seat teleports position/rotation to lane scene seat. Already disabled collider returns before teleport.",
+      "evidence_rvas": [
+        "0x5db1f0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "Bowling_msg_SyncPositionOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Bowling.GetBowlingSyncPositionOneWayProcessor"
+    },
+    {
+      "opcode": 80,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        },
+        {
+          "index": "3..",
+          "name": "tableBlock",
+          "type": "DartsTableBlock",
+          "note": "Only Free/Awaiting branches decode"
+        }
+      ],
+      "behavior": "Store tableID/state; require interacting table. Free sets initialPlayer/localPlayerIndex0 and rule menu; Awaiting sets initialPlayer=false/localPlayerIndex1 and join/rival UI. Decode player/table data in these branches.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected.",
+        "Player count must fit existing players[] (constructor allocates two entries); all referenced block fields required."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55a1d0",
+        "0x55e1b0",
+        "0x5db860"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_InitGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsInitializeGameProcessor"
+    },
+    {
+      "opcode": 81,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        }
+      ],
+      "behavior": "Set manager tableState; remove manager's remembered GUID/PS4ID from selected table; restore local avatar or update rival/rules state as applicable.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "Departure identity is not in this reply; remembered manager.GUID/PS4ID is used."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55b1e0",
+        "0x55ee30",
+        "0x5db9c0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_LeaveGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsLeaveGameProcessor"
+    },
+    {
+      "opcode": 82,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "numberOfPlayers",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "DartsGameManager.GameRules/Enum.Parse"
+        }
+      ],
+      "behavior": "Store base playerCount and tableData.numberOfPlayers, instantiate selected rules and display instructions.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55bbd0",
+        "0x55e470",
+        "0x5dbb40"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_SelectGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsSelectGameProcessor"
+    },
+    {
+      "opcode": 84,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": "1..",
+          "name": "tableBlock",
+          "type": "DartsTableBlock"
+        }
+      ],
+      "behavior": "Decode TableBlock then Get_StartGame. Start uses existing rules/table state, initializes rules, positions local avatar/camera, hides other users and sets tableState=Playing(4).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Player count must fit allocated players[] and complete block."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values.",
+        "DartsGameTable.Get_StartGame has no additional payload field reads."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55bed0",
+        "0x55e1b0",
+        "0x55e5c0",
+        "0x5dbb80"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_StartGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsStartGameProcessor"
+    },
+    {
+      "opcode": 85,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<DartsRules.DartShotData>"
+        }
+      ],
+      "behavior": "If rulesScript exists, call MakePassiveMove. In rules state Pointing(4), deserialize shot, set dart local X/Y while preserving Z, raycast from dart position/forward to resolve DartboardField/target marker, request next state Shoting(5). In other states queue the raw shot string. Rival-active UI timer is adjusted separately.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "MakePassiveMove relies on initialized shot/dart/table objects and uses Unity raycast results; it is not a server score parser."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "No OK acknowledgement sentinel or server score field is checked by this manager."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55b950",
+        "0x56c670",
+        "0x5dbac0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_MakeMove",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsMakeMoveProcessor"
+    },
+    {
+      "opcode": 86,
+      "fields": [
+        {
+          "index": 0,
+          "name": "rememberedGUID",
+          "type": "string"
+        },
+        {
+          "index": "1..",
+          "name": "tableBlocks",
+          "type": "DartsTableBlock[]",
+          "note": "Sequential local table order; no table index/count prefix"
+        }
+      ],
+      "behavior": "Remember field0 GUID; deserialize each table block advancing by playerCount+2. Active nonempty tables set rules and InitRules.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "No extra trailing field: payload-end drives the next-table loop.",
+        "Each player count must fit allocated array; number of blocks must fit local tables."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55bff0",
+        "0x55e1b0",
+        "0x55ea00",
+        "0x5dbbc0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_SyncGame",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsSynchronizeGameProcessor"
+    },
+    {
+      "opcode": 87,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableData",
+          "type": "EntryData<DartsGameTable.TableData>"
+        }
+      ],
+      "behavior": "Deserialize tableData only; this is not the full TableBlock used by Init/Start/Sync.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55a150",
+        "0x5db820"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_InitGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsInitializeGameOneWayMsgProcessor"
+    },
+    {
+      "opcode": 88,
+      "fields": [
+        {
+          "index": 0,
+          "name": "departingGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        }
+      ],
+      "behavior": "Set manager state; remove supplied departingGUID with manager's remembered PS4ID; local/rival branches restore controls or signal rival gone and award local game-related XP.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55aa60",
+        "0x55ee30",
+        "0x5db8c0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_LeaveGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsLeaveGameOneWayMsgProcessor"
+    },
+    {
+      "opcode": 89,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "DartsGameManager.GameRules/Enum.Parse"
+        }
+      ],
+      "behavior": "When manager Awaiting(2), set rules; field1 is not parsed as player count.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55ba60",
+        "0x5dbb00"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_SelectGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsSelectGameOneWayProcessor"
+    },
+    {
+      "opcode": 90,
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": "1..",
+          "name": "tableBlock",
+          "type": "DartsTableBlock"
+        }
+      ],
+      "behavior": "Decode TableBlock then Get_StartGame. Start uses existing rules/table state, initializes rules, positions local avatar/camera, hides other users and sets tableState=Playing(4).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Player count must fit allocated players[] and complete block."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values.",
+        "DartsGameTable.Get_StartGame has no additional payload field reads."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55bed0",
+        "0x55e1b0",
+        "0x55e5c0",
+        "0x5dbb80"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_StartGameOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsStartGameOneWayMsgProcessor"
+    },
+    {
+      "opcode": 91,
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<DartsRules.DartShotData>"
+        }
+      ],
+      "behavior": "If rulesScript exists, call MakePassiveMove. In rules state Pointing(4), deserialize shot, set dart local X/Y while preserving Z, raycast from dart position/forward to resolve DartboardField/target marker, request next state Shoting(5). In other states queue the raw shot string. Rival-active UI timer is adjusted separately.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "MakePassiveMove relies on initialized shot/dart/table objects and uses Unity raycast results; it is not a server score parser."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "No OK acknowledgement sentinel or server score field is checked by this manager."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser",
+      "evidence_rvas": [
+        "0x55b950",
+        "0x56c670",
+        "0x5dbac0"
+      ],
+      "basis": "independent static minigame audit",
+      "external_contract_source": "outputs\\nebula-preservation\\protocol\\minigame-contracts.json",
+      "enum_name": "Darts_msg_MakeMoveOneWay",
+      "handler": "Assets.Scripts.TCPs.Processors.Darts.GetDartsMakeMoveOneWayMsgProcessor"
+    },
+    {
+      "opcode": 92,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "type": "int32:AnimatorControllerParameterType"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "behavior": "Known player animation.SetParameter(parameter,type,value).",
+      "evidence_rvas": [
+        "0x5d6e90"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "AnimParameter",
+      "handler": "Assets.Scripts.TCPs.Processors.AnimParameterProcessor"
+    },
+    {
+      "opcode": 93,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "layerName",
+          "type": "string"
+        },
+        {
+          "name": "weight",
+          "type": "int32 converted to float"
+        }
+      ],
+      "behavior": "Finds animation layer by name and SetLayerWeight((float)weight). Native 0x5ec49b MOVD and0x5ec4a2 CVTDQ2PS preserve integer conversion omitted by Ghidra signature.",
+      "evidence_rvas": [
+        "0x5ec380"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "UpdateAnimationLayer",
+      "handler": "Assets.Scripts.TCPs.Processors.UpdateAnimationLayerProcessor"
+    },
+    {
+      "opcode": 94,
+      "fields": [
+        {
+          "name": "guid",
+          "type": "string"
+        },
+        {
+          "name": "interactableId",
+          "type": "int32"
+        },
+        {
+          "name": "state",
+          "type": "System.Boolean.Parse string"
+        },
+        {
+          "name": "extension",
+          "type": "string[]",
+          "start": 3
+        }
+      ],
+      "behavior": "Finds APITPInteractables with matching id; only on state change invokes state-true/state-false virtual callback with entire field array, then updates current state. Extension is subtype dependent and not generically decoded here.",
+      "evidence_rvas": [
+        "0x5d91b0"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "semantic_gaps": [
+        "APITPInteractables subtype extension schemas"
+      ],
+      "enum_name": "Genericinteractable",
+      "handler": "Assets.Scripts.TCPs.Processors.GenericinteractableProcessor"
+    },
+    {
+      "opcode": 96,
+      "fields": [
+        {
+          "name": "unused0",
+          "type": "string",
+          "used": false
+        },
+        {
+          "name": "instanceId",
+          "type": "string"
+        }
+      ],
+      "behavior": "If token1 equals current instance id: owner-disconnected UI, disables input and RedirectToNexus. Token0 ignored.",
+      "evidence_rvas": [
+        "0x5dbd80"
+      ],
+      "basis": "statically observed native body and IL2CPP declarations",
+      "enum_name": "GetInstanceClosing",
+      "handler": "Assets.Scripts.TCPs.Processors.GetInstanceClosingProcessor"
+    }
+  ],
+  "unregistered_clientbound_enum_values": [
+    {
+      "name": "GetCurrentAnim",
+      "opcode": 3
+    },
+    {
+      "name": "SetCurrentAnim",
+      "opcode": 4
+    },
+    {
+      "name": "GetCurrentCompanion",
+      "opcode": 6
+    },
+    {
+      "name": "Companion",
+      "opcode": 7
+    },
+    {
+      "name": "GetOccupable",
+      "opcode": 8
+    },
+    {
+      "name": "GetCurrentLocomotion",
+      "opcode": 16
+    },
+    {
+      "name": "GetCurrentPosition",
+      "opcode": 20
+    },
+    {
+      "name": "NotificationAccepted",
+      "opcode": 26
+    },
+    {
+      "name": "Board_msg_SyncTable",
+      "opcode": 38
+    },
+    {
+      "name": "Pinball_msg_addScore",
+      "opcode": 48
+    },
+    {
+      "name": "Pinball_msg_getBestScore",
+      "opcode": 49
+    },
+    {
+      "name": "Pinball_msg_getLeaderboard",
+      "opcode": 50
+    },
+    {
+      "name": "Pool_msg_SyncGame",
+      "opcode": 58
+    },
+    {
+      "name": "Bowling_msg_StartGame",
+      "opcode": 67
+    },
+    {
+      "name": "Bowling_msg_StartGameOneWay",
+      "opcode": 75
+    },
+    {
+      "name": "Darts_msg_SelectMode",
+      "opcode": 83
+    },
+    {
+      "name": "NotificationGameDeclined",
+      "opcode": 95
+    }
+  ],
+  "ghidra_evidence": [
+    {
+      "rva": "0x404da0",
+      "path": "work\\evidence\\ghidra\\functions\\404da0.c",
+      "sha256": "18234c19c1953bb6fa5d44103167b22ff78b98a257a6629dce3df901c15d441a"
+    },
+    {
+      "rva": "0x4087f0",
+      "path": "work\\evidence\\ghidra\\functions\\4087f0.c",
+      "sha256": "29b809f45f6e8ffbf6af3c421af82ccd200a3d9f63607026602107ab57403a8d"
+    },
+    {
+      "rva": "0x4190b0",
+      "path": "work\\evidence\\ghidra\\functions\\4190b0.c",
+      "sha256": "7cadf67a3efc544c714836908f8a35028243290397fd5ca173141b71cadb19d8"
+    },
+    {
+      "rva": "0x419ba0",
+      "path": "work\\evidence\\ghidra\\functions\\419ba0.c",
+      "sha256": "a37893c7c200667158cad742d867663578f5b262ee17db103138e0deff90457c"
+    },
+    {
+      "rva": "0x4393e0",
+      "path": "work\\evidence\\ghidra\\functions\\4393e0.c",
+      "sha256": "6c1ce5cbc66950c50457690b2cd07c041b4c66535f9998124928665f320285c1"
+    },
+    {
+      "rva": "0x439ad0",
+      "path": "work\\evidence\\ghidra\\functions\\439ad0.c",
+      "sha256": "9a9306d38933efbf459d9d139a0694a0447ea3acb6bdf3568f9375702ad4fb68"
+    },
+    {
+      "rva": "0x439f60",
+      "path": "work\\evidence\\ghidra\\functions\\439f60.c",
+      "sha256": "ce831f73b74e28aea9d0ed6f92090b63039c4b9d5488f861da9e6bcbbc1cd3ba"
+    },
+    {
+      "rva": "0x449250",
+      "path": "work\\evidence\\ghidra\\functions\\449250.c",
+      "sha256": "1c97afeb7994aa3959c185c8686e727c7623e0b1ecd3767f45a67f15f69270ad"
+    },
+    {
+      "rva": "0x4499b0",
+      "path": "work\\evidence\\ghidra\\functions\\4499b0.c",
+      "sha256": "6f245a177d5327c419c18deb57a1cec357525a226131f09c7c50ed2a373a968d"
+    },
+    {
+      "rva": "0x44aed0",
+      "path": "work\\evidence\\ghidra\\functions\\44aed0.c",
+      "sha256": "c8dc6c4c15f6031a954dd13914efd1cefa6cacbab3256ee2d9639bbd115a2f9b"
+    },
+    {
+      "rva": "0x44b2f0",
+      "path": "work\\evidence\\ghidra\\functions\\44b2f0.c",
+      "sha256": "3e2be1da4aefe94439be72a9998065a1e987afe07412550fc625bd0b6d3ad384"
+    },
+    {
+      "rva": "0x44f580",
+      "path": "work\\evidence\\ghidra\\functions\\44f580.c",
+      "sha256": "1ab579694966f9bce7ae33eba591acfd9ac82edd03904e8fd30da757d3b2b4e0"
+    },
+    {
+      "rva": "0x451100",
+      "path": "work\\evidence\\ghidra\\functions\\451100.c",
+      "sha256": "dba4dac1937ed2057e36b1c8050715a36353e226d6295c7b7ac2427fd7055cdb"
+    },
+    {
+      "rva": "0x451640",
+      "path": "work\\evidence\\ghidra\\functions\\451640.c",
+      "sha256": "2825f6b16410e47ce1f7575d60bad4ea2c3ff4952784022f56774e43c608fa16"
+    },
+    {
+      "rva": "0x451e00",
+      "path": "work\\evidence\\ghidra\\functions\\451e00.c",
+      "sha256": "5666bb84b69212fdc9da57db3d8ce346846a5905df027b45a81deb31e0697db6"
+    },
+    {
+      "rva": "0x4625b0",
+      "path": "work\\evidence\\ghidra\\functions\\4625b0.c",
+      "sha256": "6e5d716117a9d3ed154d9cf49be16515c29f7fe286c9d3498724e912dabe84ab"
+    },
+    {
+      "rva": "0x463310",
+      "path": "work\\evidence\\ghidra\\functions\\463310.c",
+      "sha256": "30f25ebdb71c290c038c3bbc7d5588ff30e2a57b4d6fa45b8646dfab88ec35f9"
+    },
+    {
+      "rva": "0x4640c0",
+      "path": "work\\evidence\\ghidra\\functions\\4640c0.c",
+      "sha256": "22d5a922097ce167ba12ca472d5646ed29e71d941b612f4bcbb50c9b6da2236e"
+    },
+    {
+      "rva": "0x47e050",
+      "path": "work\\evidence\\ghidra\\functions\\47e050.c",
+      "sha256": "aaf1a77ab47711cb0794a97261cf8a89fdde984629958341f098a1708b454bc3"
+    },
+    {
+      "rva": "0x47f160",
+      "path": "work\\evidence\\ghidra\\functions\\47f160.c",
+      "sha256": "f73e8dda352f8f25087fa010839ca50c6da225068abe362c0e354d19b3b5b514"
+    },
+    {
+      "rva": "0x47fa70",
+      "path": "work\\evidence\\ghidra\\functions\\47fa70.c",
+      "sha256": "c6734af64f497e4c8b6a39690b53ffc7f085c47e106edf0a470529546d99385f"
+    },
+    {
+      "rva": "0x488fe0",
+      "path": "work\\evidence\\ghidra\\functions\\488fe0.c",
+      "sha256": "70a44ab46dc36e4f19fdca7a836d470fabb41a401dcff3526c45bb89f479be55"
+    },
+    {
+      "rva": "0x4b9be0",
+      "path": "work\\evidence\\ghidra\\functions\\4b9be0.c",
+      "sha256": "f9aeeaa2744152ceb173bdacd66b8aac2f6c5cff0babecadc346074ad2179855"
+    },
+    {
+      "rva": "0x4c0b00",
+      "path": "work\\evidence\\ghidra\\functions\\4c0b00.c",
+      "sha256": "52787b1f1fb61a3f00fdcb3de6cc5cf43d1b06a23a94134ff00449da8959438c"
+    },
+    {
+      "rva": "0x4c5db0",
+      "path": "work\\evidence\\ghidra\\functions\\4c5db0.c",
+      "sha256": "d0893a5329f408a9b01c8e42b71ebe3e68ee177301dd0be78d7eb9b4faffe6ed"
+    },
+    {
+      "rva": "0x4c6140",
+      "path": "work\\evidence\\ghidra\\functions\\4c6140.c",
+      "sha256": "1a17af03518678d60bcfee4bac13090935c1cf0e34a9a6585f06af0c170528d4"
+    },
+    {
+      "rva": "0x4c64d0",
+      "path": "work\\evidence\\ghidra\\functions\\4c64d0.c",
+      "sha256": "e1e40bcfecd375b35d48e636839be7572fa79f456750cabaf4d46b956e864768"
+    },
+    {
+      "rva": "0x4c6a60",
+      "path": "work\\evidence\\ghidra\\functions\\4c6a60.c",
+      "sha256": "48b572a229fd286e21a1a00c5822779b6047129ae814a1fa30d2c20bdd39b83b"
+    },
+    {
+      "rva": "0x4c9530",
+      "path": "work\\evidence\\ghidra\\functions\\4c9530.c",
+      "sha256": "43c0cbc79ef8fdc3e939799917692c13421bc0e274246a6f29bbd85a95cfe34b"
+    },
+    {
+      "rva": "0x4cbf60",
+      "path": "work\\evidence\\ghidra\\functions\\4cbf60.c",
+      "sha256": "e58b7b800c8c197c5cee51c83cec25db86cd2e8b47858b10f97f31d3d4f2f06b"
+    },
+    {
+      "rva": "0x4d3ea0",
+      "path": "work\\evidence\\ghidra\\functions\\4d3ea0.c",
+      "sha256": "568d2305dcc25ac6f24e69e7955e94b9d2a42fcdff6e43c6d4b719252841df09"
+    },
+    {
+      "rva": "0x4d4020",
+      "path": "work\\evidence\\ghidra\\functions\\4d4020.c",
+      "sha256": "359b49bd9c72b231cf598258fa9004c061ff04e2a773bcc6e302b05c5a570f9f"
+    },
+    {
+      "rva": "0x4d4140",
+      "path": "work\\evidence\\ghidra\\functions\\4d4140.c",
+      "sha256": "b534cb9aa4e9fb067afb32059334058146d2a1f79a6617203e8094f90c06390e"
+    },
+    {
+      "rva": "0x4d4260",
+      "path": "work\\evidence\\ghidra\\functions\\4d4260.c",
+      "sha256": "914584ad4c1d33c3f6a2cf73512ecc8aec152907bd9853aeb0929707c6c38d48"
+    },
+    {
+      "rva": "0x5327b0",
+      "path": "work\\evidence\\ghidra\\functions\\5327b0.c",
+      "sha256": "c514b794bfcb507d1a02c38708bf9ea46cb0a05476430514279359eb702ddac7"
+    },
+    {
+      "rva": "0x538ff0",
+      "path": "work\\evidence\\ghidra\\functions\\538ff0.c",
+      "sha256": "bb011fc2d7545fe74bbb3acff15e1d6999d99b20f7fb4520dfa168b2da71b146"
+    },
+    {
+      "rva": "0x53cbe0",
+      "path": "work\\evidence\\ghidra\\functions\\53cbe0.c",
+      "sha256": "9fb5a35069eb488fb75baa378de62933222cc341ebca0021eb444f300200f5b5"
+    },
+    {
+      "rva": "0x53d2e0",
+      "path": "work\\evidence\\ghidra\\functions\\53d2e0.c",
+      "sha256": "3de8f4e8e477fc39b8182fa2bbc4ac7c1f566646d2bd4e2661ed54375ee3c6bd"
+    },
+    {
+      "rva": "0x53d360",
+      "path": "work\\evidence\\ghidra\\functions\\53d360.c",
+      "sha256": "6a59284aeb743dbfb389ebaed10dc88442996a17f6475196b1788bf75501886e"
+    },
+    {
+      "rva": "0x53dc00",
+      "path": "work\\evidence\\ghidra\\functions\\53dc00.c",
+      "sha256": "96fa2458bda42709f893002cad6768dfcd4d758dd055a018c3d0b833869bbb9e"
+    },
+    {
+      "rva": "0x53e430",
+      "path": "work\\evidence\\ghidra\\functions\\53e430.c",
+      "sha256": "e3aec7bd052deed13d6c5168285214dcf331d51cd0d78d560e6b7e1774d04943"
+    },
+    {
+      "rva": "0x53e590",
+      "path": "work\\evidence\\ghidra\\functions\\53e590.c",
+      "sha256": "9b6028257abd5c6383c39b5f4194d6b0a28910a3628a0897fc505c001cf7b7c2"
+    },
+    {
+      "rva": "0x53e700",
+      "path": "work\\evidence\\ghidra\\functions\\53e700.c",
+      "sha256": "b5074095c22c7af482131ff1fc4a4c7652b19e896b7a08733526231acbdd6499"
+    },
+    {
+      "rva": "0x53ea60",
+      "path": "work\\evidence\\ghidra\\functions\\53ea60.c",
+      "sha256": "4397e2a42598c8b759dfa2ea5015a0adc6b2c817769a3f92ff200e32ccc745c7"
+    },
+    {
+      "rva": "0x53ecf0",
+      "path": "work\\evidence\\ghidra\\functions\\53ecf0.c",
+      "sha256": "cbe6f8f6cd04a315207c09a7b3e8ce79e857075ac26823f86a5d0a74d2cd0dfc"
+    },
+    {
+      "rva": "0x53f370",
+      "path": "work\\evidence\\ghidra\\functions\\53f370.c",
+      "sha256": "af99f1ad806f6070a79ee0df3bdd10508eea07dbab7790d875951dfd56ffb7ed"
+    },
+    {
+      "rva": "0x53f730",
+      "path": "work\\evidence\\ghidra\\functions\\53f730.c",
+      "sha256": "0396993365eb52153ac1123cbe8e7fdc2c6489ba03c1f9405abf56e2418bb6f5"
+    },
+    {
+      "rva": "0x53f9e0",
+      "path": "work\\evidence\\ghidra\\functions\\53f9e0.c",
+      "sha256": "1d05da4c0cbdf768aece0e326361320abb59dd9dbbcee3c218cdf9748ca00790"
+    },
+    {
+      "rva": "0x53fd20",
+      "path": "work\\evidence\\ghidra\\functions\\53fd20.c",
+      "sha256": "773b99c3cf79c5972b99505e783cb27cd2db3f57ac8bff2e11479cd554264c71"
+    },
+    {
+      "rva": "0x5400c0",
+      "path": "work\\evidence\\ghidra\\functions\\5400c0.c",
+      "sha256": "3027e9fd1c69761ae3346b9c3593caf2eaf46123a894c487916791ede55b4b5d"
+    },
+    {
+      "rva": "0x540370",
+      "path": "work\\evidence\\ghidra\\functions\\540370.c",
+      "sha256": "1265a2a120434050ecef9fc954f3f7f2c835d3cfab2f2a657434978e9dce9b84"
+    },
+    {
+      "rva": "0x540f00",
+      "path": "work\\evidence\\ghidra\\functions\\540f00.c",
+      "sha256": "368dabfc2971ed2e69c77968ae4d843678dab14116ddd3175f6c596e17d65ef6"
+    },
+    {
+      "rva": "0x541310",
+      "path": "work\\evidence\\ghidra\\functions\\541310.c",
+      "sha256": "f9f920b7661b766d894d0ae13c61d0d4dd0d2672cd571684e3699179b2b82858"
+    },
+    {
+      "rva": "0x5457f0",
+      "path": "work\\evidence\\ghidra\\functions\\5457f0.c",
+      "sha256": "16e1209141b68b0a1bdb8c2f1af420fcbb09b91716b9c9817e0c88bacbb8895c"
+    },
+    {
+      "rva": "0x5473b0",
+      "path": "work\\evidence\\ghidra\\functions\\5473b0.c",
+      "sha256": "d45213454a3d16346cd093a74e658f2ec4435416f9c0472f2d53a1a2538a7f3e"
+    },
+    {
+      "rva": "0x5479f0",
+      "path": "work\\evidence\\ghidra\\functions\\5479f0.c",
+      "sha256": "9ea9638973ab763a35712c48cb7a011eabcde43a24f144d1607bec93ec393e8b"
+    },
+    {
+      "rva": "0x547a10",
+      "path": "work\\evidence\\ghidra\\functions\\547a10.c",
+      "sha256": "3200c50864fda53259cf6aa69bbde5ed36161c49c2dbc58a682974524f14190e"
+    },
+    {
+      "rva": "0x547eb0",
+      "path": "work\\evidence\\ghidra\\functions\\547eb0.c",
+      "sha256": "fa60feeef34bc298365e15a314d78618261babc67cc83150ba01a3cc8fad7c78"
+    },
+    {
+      "rva": "0x548740",
+      "path": "work\\evidence\\ghidra\\functions\\548740.c",
+      "sha256": "087b08bce741f28dcc07eac9938ba7da23e9faf682d35c2c87b10d692fd566ad"
+    },
+    {
+      "rva": "0x548ea0",
+      "path": "work\\evidence\\ghidra\\functions\\548ea0.c",
+      "sha256": "929ddf174eafbe8ba9f233d5288eb52de6d8c2b72f9c3f47c6abd06ea09ebf3b"
+    },
+    {
+      "rva": "0x54b8b0",
+      "path": "work\\evidence\\ghidra\\functions\\54b8b0.c",
+      "sha256": "20ffd2c49f8e933ef8cf2ddd399361dc024d98d8c2f0f7c939f18c52b5ef5f21"
+    },
+    {
+      "rva": "0x54bff0",
+      "path": "work\\evidence\\ghidra\\functions\\54bff0.c",
+      "sha256": "8bda8f5c3cfd1ed1b9da48412fa667864d63477a90c020fc76140780cb897e19"
+    },
+    {
+      "rva": "0x54c3d0",
+      "path": "work\\evidence\\ghidra\\functions\\54c3d0.c",
+      "sha256": "b28c0a9ce66ff0a42c25dc8be60c4110c056e9e9348207ec085c2a78d54f6d40"
+    },
+    {
+      "rva": "0x54c750",
+      "path": "work\\evidence\\ghidra\\functions\\54c750.c",
+      "sha256": "7006ffb9865d195d83366ea49e348583f07597f3bb8961153f7f6bf1c2eece6d"
+    },
+    {
+      "rva": "0x550a10",
+      "path": "work\\evidence\\ghidra\\functions\\550a10.c",
+      "sha256": "07db9ba75e3f4573e13c82d824de18c52583e8efc7c5a46d083772dba50048db"
+    },
+    {
+      "rva": "0x551d50",
+      "path": "work\\evidence\\ghidra\\functions\\551d50.c",
+      "sha256": "dc184840f0db6e4803d6c852d9bc60ec4c1fcdcc9c7bacf1b2d320a9357eb208"
+    },
+    {
+      "rva": "0x552af0",
+      "path": "work\\evidence\\ghidra\\functions\\552af0.c",
+      "sha256": "8527d825313244206509258741bccff2875bd544e76ea5e8fbdcc4c04ab73911"
+    },
+    {
+      "rva": "0x552b60",
+      "path": "work\\evidence\\ghidra\\functions\\552b60.c",
+      "sha256": "c1a62872321a328cc77080f13752f50e022570f694a6f1714e1371dc39a40874"
+    },
+    {
+      "rva": "0x552bd0",
+      "path": "work\\evidence\\ghidra\\functions\\552bd0.c",
+      "sha256": "b4eae42df5633928a62f39b7273d04e264a3b34301adc28cc71f26af3f64c8e2"
+    },
+    {
+      "rva": "0x552c40",
+      "path": "work\\evidence\\ghidra\\functions\\552c40.c",
+      "sha256": "ed444c79c95de55ea82195e0ae8e8b360968671d54f93ee99dd02b055058b39b"
+    },
+    {
+      "rva": "0x552d20",
+      "path": "work\\evidence\\ghidra\\functions\\552d20.c",
+      "sha256": "4e7ad0e0f93b1ee054e289b3dd56639202b4a0f2b08d9a30909b3d5d50279558"
+    },
+    {
+      "rva": "0x552ea0",
+      "path": "work\\evidence\\ghidra\\functions\\552ea0.c",
+      "sha256": "7b07caad68f9b6bb31143abb7bf32391a156fcc36ae3d764b5212fc125ea5ceb"
+    },
+    {
+      "rva": "0x5534b0",
+      "path": "work\\evidence\\ghidra\\functions\\5534b0.c",
+      "sha256": "5ea9417183cc81ac9dfed07ea71c7171fc2f365d5e635dc523a11d6de79469cf"
+    },
+    {
+      "rva": "0x55a150",
+      "path": "work\\evidence\\ghidra\\functions\\55a150.c",
+      "sha256": "705c9eb94fbde8b9c2c124c08438c7fa3d8eb15ce835736d4ff67f34b2d14924"
+    },
+    {
+      "rva": "0x55a1d0",
+      "path": "work\\evidence\\ghidra\\functions\\55a1d0.c",
+      "sha256": "0ffdf881a13862109b74b62ec40fcd259fcefae25db3e298895523fdb93e295b"
+    },
+    {
+      "rva": "0x55aa60",
+      "path": "work\\evidence\\ghidra\\functions\\55aa60.c",
+      "sha256": "1a955fe7ec0e3eb0d0a9fa341c1d618fcad61dba3a702988e48fbedbdfe567fe"
+    },
+    {
+      "rva": "0x55b1e0",
+      "path": "work\\evidence\\ghidra\\functions\\55b1e0.c",
+      "sha256": "79a5f3964e2a0b15dd73fe5430ac1ed7a76e6dab56fe606ef3a2d21558fa9ced"
+    },
+    {
+      "rva": "0x55b950",
+      "path": "work\\evidence\\ghidra\\functions\\55b950.c",
+      "sha256": "7ed8166f4cc740c1dc3cf9c9f7e022be0cd655e537d81d4cefc6f8663e2f2f8f"
+    },
+    {
+      "rva": "0x55ba60",
+      "path": "work\\evidence\\ghidra\\functions\\55ba60.c",
+      "sha256": "754a749a99a3c957ec54a6709c77917ec1c8bb394788d476a9746227a2c58565"
+    },
+    {
+      "rva": "0x55bbd0",
+      "path": "work\\evidence\\ghidra\\functions\\55bbd0.c",
+      "sha256": "3fd75d69cfbc6bb3aa7e350f1ab7d47642e0f1204dd891be44f561d84076217c"
+    },
+    {
+      "rva": "0x55bed0",
+      "path": "work\\evidence\\ghidra\\functions\\55bed0.c",
+      "sha256": "2030099cf58a14124dcfae6a25edb4766dd1ecdd031d1aa917b3d6105bb70bcb"
+    },
+    {
+      "rva": "0x55bff0",
+      "path": "work\\evidence\\ghidra\\functions\\55bff0.c",
+      "sha256": "e62d5032ce637e21dec6db8f26969e025a678d679092bae9b0b4165e95589849"
+    },
+    {
+      "rva": "0x55c5e0",
+      "path": "work\\evidence\\ghidra\\functions\\55c5e0.c",
+      "sha256": "cb13eff06fc87d0b46ebf62226558d10ab97c568e83a1cf62738255c9de3900a"
+    },
+    {
+      "rva": "0x55cb90",
+      "path": "work\\evidence\\ghidra\\functions\\55cb90.c",
+      "sha256": "4fad4cd5fa4b16c89401e31693ac59be44c6a0690f4c0cd05e752b0c89c38f94"
+    },
+    {
+      "rva": "0x55ce40",
+      "path": "work\\evidence\\ghidra\\functions\\55ce40.c",
+      "sha256": "720d8f6fc3beeb845506d47d935a936d0e54eb88abf079581f4be54582447fec"
+    },
+    {
+      "rva": "0x55d240",
+      "path": "work\\evidence\\ghidra\\functions\\55d240.c",
+      "sha256": "c66e7c48a9e4e7cacab52c347d473d4ed89f3ca02fb6943e659152bc04253bbf"
+    },
+    {
+      "rva": "0x55d730",
+      "path": "work\\evidence\\ghidra\\functions\\55d730.c",
+      "sha256": "d8267ea44f2b0dc3009def510e5a811752c8017862631b45ba7ba1b1781ea537"
+    },
+    {
+      "rva": "0x55d9f0",
+      "path": "work\\evidence\\ghidra\\functions\\55d9f0.c",
+      "sha256": "a6cc8792ab66c69faee0e3244e9041072a7fe4e5947217fe2ef9dcfdf90df2ca"
+    },
+    {
+      "rva": "0x55e1b0",
+      "path": "work\\evidence\\ghidra\\functions\\55e1b0.c",
+      "sha256": "f76bede1ff0a517e0426a4bb2119c8e6064ab99963383986c8ce82f405712363"
+    },
+    {
+      "rva": "0x55e470",
+      "path": "work\\evidence\\ghidra\\functions\\55e470.c",
+      "sha256": "60181a22dbfe308dc3e8f99fd67d52774a197ccd1364e41f3007faab091481a2"
+    },
+    {
+      "rva": "0x55e5c0",
+      "path": "work\\evidence\\ghidra\\functions\\55e5c0.c",
+      "sha256": "22f92cacff1b71cb3c16a5d5413c6b367ebcf86ecdfb20e0c9c75485a1906110"
+    },
+    {
+      "rva": "0x55ea00",
+      "path": "work\\evidence\\ghidra\\functions\\55ea00.c",
+      "sha256": "6b8dfb3b6f0062e0ceba86b5748aebd9b5d9c3aa4ed3c838e107b1dd173438d6"
+    },
+    {
+      "rva": "0x55ee30",
+      "path": "work\\evidence\\ghidra\\functions\\55ee30.c",
+      "sha256": "816b65e8aff798bcfabbe7bf9dcb0cf4b291b92846839c2a14c667e2555abaa1"
+    },
+    {
+      "rva": "0x5618c0",
+      "path": "work\\evidence\\ghidra\\functions\\5618c0.c",
+      "sha256": "2acfa97da1eb13a4206d51e9f4ae85b2e60fe98d2aa108d5f93a1a2d39d929bc"
+    },
+    {
+      "rva": "0x561e90",
+      "path": "work\\evidence\\ghidra\\functions\\561e90.c",
+      "sha256": "f5bbf7e5ff95e2a2bd286191f444b7922c0264f5fcadfbef601a0953c591f66c"
+    },
+    {
+      "rva": "0x5634e0",
+      "path": "work\\evidence\\ghidra\\functions\\5634e0.c",
+      "sha256": "d48efad4ed3956fd34ba3d801fb536cfd7b82e81cfb8337ed8050ffd46d9c0d9"
+    },
+    {
+      "rva": "0x56c670",
+      "path": "work\\evidence\\ghidra\\functions\\56c670.c",
+      "sha256": "08033032b9ca4359dde3aee884ccdbf2318504afa201c13c0dee07500845d48c"
+    },
+    {
+      "rva": "0x5995f0",
+      "path": "work\\evidence\\ghidra\\functions\\5995f0.c",
+      "sha256": "0b996626929ad7860334dc2185e9091cfcb74518608ee7184c0eaad08e9da754"
+    },
+    {
+      "rva": "0x5999e0",
+      "path": "work\\evidence\\ghidra\\functions\\5999e0.c",
+      "sha256": "4e26119412c670827ae5eb38a7b1b97c0ae39272b1b4a3f5331d4469dcec8f8d"
+    },
+    {
+      "rva": "0x599a50",
+      "path": "work\\evidence\\ghidra\\functions\\599a50.c",
+      "sha256": "480df9f2494a6fe23a71fad77dd6073b61e33038f828313e5ba5114099baaa9a"
+    },
+    {
+      "rva": "0x599c20",
+      "path": "work\\evidence\\ghidra\\functions\\599c20.c",
+      "sha256": "c10dc6936d90719226849c050acfc79c7b558a248caa0359700451b74c5b5836"
+    },
+    {
+      "rva": "0x599da0",
+      "path": "work\\evidence\\ghidra\\functions\\599da0.c",
+      "sha256": "20948074b3d2163be923f58246d3321523723ecd752d344a537412533d2d7569"
+    },
+    {
+      "rva": "0x599eb0",
+      "path": "work\\evidence\\ghidra\\functions\\599eb0.c",
+      "sha256": "660c84e5bafc6c000a1d13ec33bb10a379e7c4003beb051057e5f724e73a6200"
+    },
+    {
+      "rva": "0x59a180",
+      "path": "work\\evidence\\ghidra\\functions\\59a180.c",
+      "sha256": "84746296c6fe58a83b7427f9cb01ec1c9e35ded8e2b64f7fb88a4d61a22b5903"
+    },
+    {
+      "rva": "0x59a810",
+      "path": "work\\evidence\\ghidra\\functions\\59a810.c",
+      "sha256": "6af84b5bffe41fd2bac812f4fd985d5bdf86c6614938712cdc34b36948f139f5"
+    },
+    {
+      "rva": "0x59a850",
+      "path": "work\\evidence\\ghidra\\functions\\59a850.c",
+      "sha256": "2f03d62256a2adf0d1e53d21ab715973c647af064396e1751e8ec111ba0870f3"
+    },
+    {
+      "rva": "0x59a8a0",
+      "path": "work\\evidence\\ghidra\\functions\\59a8a0.c",
+      "sha256": "5aaf055c9994c0e7aef91be4128eb2f31c7d78e025c5b01cbd95e59903c5405d"
+    },
+    {
+      "rva": "0x59b540",
+      "path": "work\\evidence\\ghidra\\functions\\59b540.c",
+      "sha256": "df7e5176cdb7e4e0a4a380f32f88e6837ffa48f8f70a2b7db19e7dab0f625cb6"
+    },
+    {
+      "rva": "0x59b8f0",
+      "path": "work\\evidence\\ghidra\\functions\\59b8f0.c",
+      "sha256": "11dd171f17f9bdcbc1f0e43766f0097e4c33544b34cdaeb54fece2b26eba70cb"
+    },
+    {
+      "rva": "0x59bb40",
+      "path": "work\\evidence\\ghidra\\functions\\59bb40.c",
+      "sha256": "db9a4d183884d8366f2fbb9d27bb1404f91929978abc6e6a26d1926719498656"
+    },
+    {
+      "rva": "0x59bcd0",
+      "path": "work\\evidence\\ghidra\\functions\\59bcd0.c",
+      "sha256": "81254d6258d8040e2469a04adabfde7f5ecf19f574c0fe475551ba0dd38819e9"
+    },
+    {
+      "rva": "0x59be10",
+      "path": "work\\evidence\\ghidra\\functions\\59be10.c",
+      "sha256": "2aa38d3f58966a3a19120f265ae481db00a50364044f21db6c5e4ef17a3b93dc"
+    },
+    {
+      "rva": "0x59bf20",
+      "path": "work\\evidence\\ghidra\\functions\\59bf20.c",
+      "sha256": "4089af0cae3a229918219c1e4eb20113fb48f1f7abdc1c1877207b1e5a0d9035"
+    },
+    {
+      "rva": "0x59c050",
+      "path": "work\\evidence\\ghidra\\functions\\59c050.c",
+      "sha256": "cfd89a5c45230212df08623d5e5ebe312378c221c21f278ed6e85eec7394ce37"
+    },
+    {
+      "rva": "0x59ddc0",
+      "path": "work\\evidence\\ghidra\\functions\\59ddc0.c",
+      "sha256": "e03dcbf19f2eb07363c8ccf3b650e5034f406d053f7b85631d4e0b8e62660333"
+    },
+    {
+      "rva": "0x59e9c0",
+      "path": "work\\evidence\\ghidra\\functions\\59e9c0.c",
+      "sha256": "7a3a514e7a59bc67f9381e10226215efa8671f9f1db8ac9242cad2e9c6f2e9f8"
+    },
+    {
+      "rva": "0x59ed60",
+      "path": "work\\evidence\\ghidra\\functions\\59ed60.c",
+      "sha256": "67fbcc8fd4509b3bc9bc719bd35a6422d79252856abbd86d60cef8482165250d"
+    },
+    {
+      "rva": "0x59f180",
+      "path": "work\\evidence\\ghidra\\functions\\59f180.c",
+      "sha256": "ca05b4a7e95c8b13d730d03823a345f594e2281d54aa2de128dc4147de06dd14"
+    },
+    {
+      "rva": "0x5a98c0",
+      "path": "work\\evidence\\ghidra\\functions\\5a98c0.c",
+      "sha256": "58783ffafad8f90618cba93612948c69700f93cf65998287f23dbe9d3c4aec57"
+    },
+    {
+      "rva": "0x5a9af0",
+      "path": "work\\evidence\\ghidra\\functions\\5a9af0.c",
+      "sha256": "b5cfa665a3422a1adbf3633684e106f423a7fe68f282de2c7e60277d4c7ef7f5"
+    },
+    {
+      "rva": "0x5a9e70",
+      "path": "work\\evidence\\ghidra\\functions\\5a9e70.c",
+      "sha256": "adb310be71522a31baea8f6329fd1f51ea0ef211e16227f5c2388682c3631644"
+    },
+    {
+      "rva": "0x5aa3c0",
+      "path": "work\\evidence\\ghidra\\functions\\5aa3c0.c",
+      "sha256": "59f48d6bb1bd48c2d92f2e7c06589a3c5f70ddecf15b80006e6ad034df752a03"
+    },
+    {
+      "rva": "0x5d6bc0",
+      "path": "work\\evidence\\ghidra\\functions\\5d6bc0.c",
+      "sha256": "6084e0e40d9a7262a728df9bf6f323c545fe566f7049be92d44a4cce2a1139f7"
+    },
+    {
+      "rva": "0x5d6db0",
+      "path": "work\\evidence\\ghidra\\functions\\5d6db0.c",
+      "sha256": "78c0d16e0eb1c60cef67f68d20a5434e4e98e177feab01f030372cd9b0553b92"
+    },
+    {
+      "rva": "0x5d6e90",
+      "path": "work\\evidence\\ghidra\\functions\\5d6e90.c",
+      "sha256": "cf8d69a83270564257ccda50e9bbc5fc211c67cc9f937fa674c79897dbad8641"
+    },
+    {
+      "rva": "0x5d6fb0",
+      "path": "work\\evidence\\ghidra\\functions\\5d6fb0.c",
+      "sha256": "38f0a95c9eb9b80faf7fcd440e671b0ed8045e2a2a7db51e59c366c4856e28ad"
+    },
+    {
+      "rva": "0x5d72a0",
+      "path": "work\\evidence\\ghidra\\functions\\5d72a0.c",
+      "sha256": "0807b8d576e0d66e3742a3be8c634f14d0ed513b244007ee8e4b1aff5ef4d1c4"
+    },
+    {
+      "rva": "0x5d7650",
+      "path": "work\\evidence\\ghidra\\functions\\5d7650.c",
+      "sha256": "ae64e9636ea8531ca7457ae9d779eebe4463a9061b763257b69a8338ae040ca5"
+    },
+    {
+      "rva": "0x5d7790",
+      "path": "work\\evidence\\ghidra\\functions\\5d7790.c",
+      "sha256": "d497f60b1c674fba479c2dc54357a1187cf8f13ab2ddc9f6b6dd6a5da20642cc"
+    },
+    {
+      "rva": "0x5d7a70",
+      "path": "work\\evidence\\ghidra\\functions\\5d7a70.c",
+      "sha256": "19c74b49492d101edd479f75ec214a395600121986a8a0741c741b77edfe693a"
+    },
+    {
+      "rva": "0x5d7c20",
+      "path": "work\\evidence\\ghidra\\functions\\5d7c20.c",
+      "sha256": "d09f6a3a727840378f43c25d150717ba88db13e9d7c55b422538f23c2be546c9"
+    },
+    {
+      "rva": "0x5d7e90",
+      "path": "work\\evidence\\ghidra\\functions\\5d7e90.c",
+      "sha256": "904fab44800fb22c62978995c4c0f3f8d7242b0388c05b4200d9202069f25da8"
+    },
+    {
+      "rva": "0x5d7f90",
+      "path": "work\\evidence\\ghidra\\functions\\5d7f90.c",
+      "sha256": "3b8d61df8b97fabb2a8c46d3686466f9fceaa068d15322c37d82b9f0b0920e81"
+    },
+    {
+      "rva": "0x5d8090",
+      "path": "work\\evidence\\ghidra\\functions\\5d8090.c",
+      "sha256": "55489b913157c6eb826f4ed60ff45dfec0428daa597e3ac4632eafefb190cb23"
+    },
+    {
+      "rva": "0x5d8800",
+      "path": "work\\evidence\\ghidra\\functions\\5d8800.c",
+      "sha256": "7707e527eb3e8bb7b154aebcba3d2d921c163ec1d92024c63136e962068be5f9"
+    },
+    {
+      "rva": "0x5d9010",
+      "path": "work\\evidence\\ghidra\\functions\\5d9010.c",
+      "sha256": "ad55dc541c33d219e82e59c5df39404f2496950890c433631114cbd376e025e7"
+    },
+    {
+      "rva": "0x5d90d0",
+      "path": "work\\evidence\\ghidra\\functions\\5d90d0.c",
+      "sha256": "907babe24b92816c770828668c27787cc12ee3121970a956eebe4baa3c93fa98"
+    },
+    {
+      "rva": "0x5d91b0",
+      "path": "work\\evidence\\ghidra\\functions\\5d91b0.c",
+      "sha256": "6a9192923f2ad0786510e5cc0fcf3bd956266c48bd4cc858dc234706071730fc"
+    },
+    {
+      "rva": "0x5d9570",
+      "path": "work\\evidence\\ghidra\\functions\\5d9570.c",
+      "sha256": "c81689028c0d19e3f1e4dcfb07eb919a446629fb942f84273ad2e34ab4b19cb7"
+    },
+    {
+      "rva": "0x5d95b0",
+      "path": "work\\evidence\\ghidra\\functions\\5d95b0.c",
+      "sha256": "e8c71e21324a687ddf07aabedc8ab64b32b8583fdac8a3c7dde2b8723365fe97"
+    },
+    {
+      "rva": "0x5d9690",
+      "path": "work\\evidence\\ghidra\\functions\\5d9690.c",
+      "sha256": "5ea0dbc8ac87cdc52436ec5bf7607751fe3c5d89650fc3b465aa9d5484850866"
+    },
+    {
+      "rva": "0x5d96d0",
+      "path": "work\\evidence\\ghidra\\functions\\5d96d0.c",
+      "sha256": "188b4f787ca16b485f8eb22309d34bb165aff77fe7b8f140f2f175534752b41b"
+    },
+    {
+      "rva": "0x5d9770",
+      "path": "work\\evidence\\ghidra\\functions\\5d9770.c",
+      "sha256": "751db1bb8e692bf714c487e6a34f4ee67f8ff0a4adbc00ca29785aa8710f3ffc"
+    },
+    {
+      "rva": "0x5d97b0",
+      "path": "work\\evidence\\ghidra\\functions\\5d97b0.c",
+      "sha256": "ad28e735409ae9afb18ae99a548f06c787207ba12b81ebf555441e122fb3e168"
+    },
+    {
+      "rva": "0x5d97f0",
+      "path": "work\\evidence\\ghidra\\functions\\5d97f0.c",
+      "sha256": "67abd0e4fc28491c67d18edbeebf23c5d8c939f0ce674a517269dbdd1fb469c7"
+    },
+    {
+      "rva": "0x5d9830",
+      "path": "work\\evidence\\ghidra\\functions\\5d9830.c",
+      "sha256": "07f5d16c6a7642d9239d2ab5f20d690ab3dd58b9dc0c0f7549f052bdc6772e37"
+    },
+    {
+      "rva": "0x5d9870",
+      "path": "work\\evidence\\ghidra\\functions\\5d9870.c",
+      "sha256": "645649aede773fac4eae37f48ca78662876b615fa79943de18d1d43ebc4b6605"
+    },
+    {
+      "rva": "0x5d98b0",
+      "path": "work\\evidence\\ghidra\\functions\\5d98b0.c",
+      "sha256": "b7cbfb0ef14cbb6d5469b69e470564a690ab3c9194fd4f75ecdac45ee15d924f"
+    },
+    {
+      "rva": "0x5d9c30",
+      "path": "work\\evidence\\ghidra\\functions\\5d9c30.c",
+      "sha256": "2982b8334f69ababce18dea6d293997256a2e305763846120268ef3e9d0cc665"
+    },
+    {
+      "rva": "0x5d9c70",
+      "path": "work\\evidence\\ghidra\\functions\\5d9c70.c",
+      "sha256": "bb92523cf9763d97f2e4d5ee497a3a35e0beef7d8369da8f963b415da199fd07"
+    },
+    {
+      "rva": "0x5d9d30",
+      "path": "work\\evidence\\ghidra\\functions\\5d9d30.c",
+      "sha256": "f818d482af7739662d2797106f1ccab6956a3f4bc6108a17ce7ae501877cadc7"
+    },
+    {
+      "rva": "0x5d9de0",
+      "path": "work\\evidence\\ghidra\\functions\\5d9de0.c",
+      "sha256": "94ba54f1ff4067c177da6f0a8a8429ba8297594b166709b3dfa0d9f070e9624a"
+    },
+    {
+      "rva": "0x5da230",
+      "path": "work\\evidence\\ghidra\\functions\\5da230.c",
+      "sha256": "4b703257549ec53a4dc2c6afb57df0b6a1a416dfbc6aa7ec1c743666f5afdba4"
+    },
+    {
+      "rva": "0x5da2e0",
+      "path": "work\\evidence\\ghidra\\functions\\5da2e0.c",
+      "sha256": "772e32ab30f3df41c2b9d3dacb3f98616a65abfe1f898d58d86b95a378441996"
+    },
+    {
+      "rva": "0x5da760",
+      "path": "work\\evidence\\ghidra\\functions\\5da760.c",
+      "sha256": "7af80c5e4278ef9af544cce19188c35c19f2db4d15d3a4d655d003319bcd6736"
+    },
+    {
+      "rva": "0x5dabe0",
+      "path": "work\\evidence\\ghidra\\functions\\5dabe0.c",
+      "sha256": "d9ea9e1d632583fab182b5b500eff5001cdb5ece177a379d8018613361c48ff7"
+    },
+    {
+      "rva": "0x5daf60",
+      "path": "work\\evidence\\ghidra\\functions\\5daf60.c",
+      "sha256": "76dcc515d09fa546385e6f64e26d2dd4d15c721c4654735954539318ec0becd1"
+    },
+    {
+      "rva": "0x5dafa0",
+      "path": "work\\evidence\\ghidra\\functions\\5dafa0.c",
+      "sha256": "da4f0755a6e7db96953cadb7fedf5ac3080b53947ea4753f30603913e082aa8a"
+    },
+    {
+      "rva": "0x5db1f0",
+      "path": "work\\evidence\\ghidra\\functions\\5db1f0.c",
+      "sha256": "51ad7ee0b7d92faf140ca820f66d123fd481660af5899809bb817bf5da70ebe9"
+    },
+    {
+      "rva": "0x5db460",
+      "path": "work\\evidence\\ghidra\\functions\\5db460.c",
+      "sha256": "680dc99389ac5e50c4a2c9334469c6b6a373d79d176f1f2d116c40623f0d5413"
+    },
+    {
+      "rva": "0x5db7e0",
+      "path": "work\\evidence\\ghidra\\functions\\5db7e0.c",
+      "sha256": "0d6ab1ab54fe15f6a3bcf3457b478322055d0d3e22f235e7cdb03beab3312513"
+    },
+    {
+      "rva": "0x5db820",
+      "path": "work\\evidence\\ghidra\\functions\\5db820.c",
+      "sha256": "7277907118d676d236b11a4f8b514c68b25914ed9054846b15ec3ebb9414701e"
+    },
+    {
+      "rva": "0x5db860",
+      "path": "work\\evidence\\ghidra\\functions\\5db860.c",
+      "sha256": "8848c3209e99928bffab456a197038f0869acc6048cb46f2a42de53854214225"
+    },
+    {
+      "rva": "0x5db8c0",
+      "path": "work\\evidence\\ghidra\\functions\\5db8c0.c",
+      "sha256": "19beb215a9609f03323036db1278e294f2280ba0ca0fda759d57f90f1a39bdc7"
+    },
+    {
+      "rva": "0x5db9c0",
+      "path": "work\\evidence\\ghidra\\functions\\5db9c0.c",
+      "sha256": "3c1481fdfe712d9dbda88d1fae47eef98edacf074a063fc2cf60f298241c1d37"
+    },
+    {
+      "rva": "0x5dbac0",
+      "path": "work\\evidence\\ghidra\\functions\\5dbac0.c",
+      "sha256": "a1139ff0d18cda1542d968d600085e4036ef522ce2aa333214286a26eaa97edc"
+    },
+    {
+      "rva": "0x5dbb00",
+      "path": "work\\evidence\\ghidra\\functions\\5dbb00.c",
+      "sha256": "79a17d174bd1ce6d2bfde85fb2fb949f191f2fb8d040fbe2e3266eef461e9acb"
+    },
+    {
+      "rva": "0x5dbb40",
+      "path": "work\\evidence\\ghidra\\functions\\5dbb40.c",
+      "sha256": "91786a350fbd7061c6af76d9c0b30abcf5a72138d35eaa69d579d928d65e8f62"
+    },
+    {
+      "rva": "0x5dbb80",
+      "path": "work\\evidence\\ghidra\\functions\\5dbb80.c",
+      "sha256": "0c4bcaa9eaf9e168e884768eb5b1d1009e4e8fc2b789757fb31ed41d6f415ed1"
+    },
+    {
+      "rva": "0x5dbbc0",
+      "path": "work\\evidence\\ghidra\\functions\\5dbbc0.c",
+      "sha256": "ac09864d20a0020aee4f87339e5d83b3ef5ebc60d80638c35f31dc4876d35fa3"
+    },
+    {
+      "rva": "0x5dbc00",
+      "path": "work\\evidence\\ghidra\\functions\\5dbc00.c",
+      "sha256": "55795aee5eab68d477ad0eafd015c563092a83974f5656305e60ed185e5f90b4"
+    },
+    {
+      "rva": "0x5dbcc0",
+      "path": "work\\evidence\\ghidra\\functions\\5dbcc0.c",
+      "sha256": "4467b78bbfcf720ba429436dd619daa3ad13451cfcbff72ec2ab3c15ca487bd9"
+    },
+    {
+      "rva": "0x5dbd80",
+      "path": "work\\evidence\\ghidra\\functions\\5dbd80.c",
+      "sha256": "80fd447ff43ebc8754ec486daa4bf0d6ec6c00b1143814c0ec24e7755b9fc944"
+    },
+    {
+      "rva": "0x5dbef0",
+      "path": "work\\evidence\\ghidra\\functions\\5dbef0.c",
+      "sha256": "34cdae3408cb64a50ef672dccca337e47d8bd2ba7b5bac809caacb4f76ad4f41"
+    },
+    {
+      "rva": "0x5dbfb0",
+      "path": "work\\evidence\\ghidra\\functions\\5dbfb0.c",
+      "sha256": "560789ea249bae077dcf7703b0d385c2a18dda461d724415cd3169a78f4a341e"
+    },
+    {
+      "rva": "0x5dc070",
+      "path": "work\\evidence\\ghidra\\functions\\5dc070.c",
+      "sha256": "259c9e3c0af0cbb6f3b7b96cbc1ef4baf44789ad21b78f3348a6fbc159aacacc"
+    },
+    {
+      "rva": "0x5dc110",
+      "path": "work\\evidence\\ghidra\\functions\\5dc110.c",
+      "sha256": "5efc6f5a2454081ffd23e3326df74b07eb911fbd05f141e2684c4d8d1eb24ae4"
+    },
+    {
+      "rva": "0x5dc200",
+      "path": "work\\evidence\\ghidra\\functions\\5dc200.c",
+      "sha256": "81f7ac8d741dc4cf1d7c2a318ad381666213e2e5e125b24b832a7f531817cb88"
+    },
+    {
+      "rva": "0x5dc300",
+      "path": "work\\evidence\\ghidra\\functions\\5dc300.c",
+      "sha256": "709e0dfd565ae65111cde8e506cd5dc9cdde7678ccdcb9b58a8ee86befac35a3"
+    },
+    {
+      "rva": "0x5dc340",
+      "path": "work\\evidence\\ghidra\\functions\\5dc340.c",
+      "sha256": "35fc2be47df4b68aa1b68ca1f80b64deaed309c94953976d4932f23a70286aff"
+    },
+    {
+      "rva": "0x5dc380",
+      "path": "work\\evidence\\ghidra\\functions\\5dc380.c",
+      "sha256": "388a0f1bc6f29b5b3adeaeb81438cf24bd1341ceb0fe518d3f2a8a84d6486de6"
+    },
+    {
+      "rva": "0x5dc3c0",
+      "path": "work\\evidence\\ghidra\\functions\\5dc3c0.c",
+      "sha256": "5430452010ca7b2341715c0a5a05e2be6ee876dc613cdaa620b600c15e26e86b"
+    },
+    {
+      "rva": "0x5dc400",
+      "path": "work\\evidence\\ghidra\\functions\\5dc400.c",
+      "sha256": "01f9329f2204b482a36f9f5a88d5b104b01e5dc752a11ba77d8d00d051b12a21"
+    },
+    {
+      "rva": "0x5dc440",
+      "path": "work\\evidence\\ghidra\\functions\\5dc440.c",
+      "sha256": "24f65c48c7bfb814ae91f02071665a8fd16e2d68c92b2f44543d9ba284b92ba8"
+    },
+    {
+      "rva": "0x5df8a0",
+      "path": "work\\evidence\\ghidra\\functions\\5df8a0.c",
+      "sha256": "9d2ea523a63c0d3e472c652ac2473450872d63dcf76ae00574b94d15d0e4c6a2"
+    },
+    {
+      "rva": "0x5dfa40",
+      "path": "work\\evidence\\ghidra\\functions\\5dfa40.c",
+      "sha256": "861b8ff3e9f71c07c1f1e9801dff8ed52a2c65865a0b700c38814e7b15848b03"
+    },
+    {
+      "rva": "0x5dfdc0",
+      "path": "work\\evidence\\ghidra\\functions\\5dfdc0.c",
+      "sha256": "14f31fa8fb7cfc6293f3626afd1175427a17fe3c93b01ec84d793b8979960fd8"
+    },
+    {
+      "rva": "0x5e0570",
+      "path": "work\\evidence\\ghidra\\functions\\5e0570.c",
+      "sha256": "735023f0f5f82add308ada1793fd676bd414f04e429695bb77965391ce1b3db0"
+    },
+    {
+      "rva": "0x5e0c60",
+      "path": "work\\evidence\\ghidra\\functions\\5e0c60.c",
+      "sha256": "4c11cdbc8c99a0479d11ad239e8d00a22244c07931173c2d21af39c105e6dd83"
+    },
+    {
+      "rva": "0x5e0dd0",
+      "path": "work\\evidence\\ghidra\\functions\\5e0dd0.c",
+      "sha256": "85f13c660473d3a14f76ab397d24e9f5da11886fc46ece39aceb73ca76e59791"
+    },
+    {
+      "rva": "0x5e3b10",
+      "path": "work\\evidence\\ghidra\\functions\\5e3b10.c",
+      "sha256": "7c7fcfd62c67ce9f6292276f08efc1abffbb7f8c33d64141228c62e53ac69af5"
+    },
+    {
+      "rva": "0x5e3d80",
+      "path": "work\\evidence\\ghidra\\functions\\5e3d80.c",
+      "sha256": "c53071c96b4dd539af78be3f615a73a2dd1f39ed542a6e8a8875e755f4e02590"
+    },
+    {
+      "rva": "0x5e3ff0",
+      "path": "work\\evidence\\ghidra\\functions\\5e3ff0.c",
+      "sha256": "a9c486a70982b8d84c3050089670680c4ad3b40e2f458aa45c46a8e60d08f64f"
+    },
+    {
+      "rva": "0x5e42d0",
+      "path": "work\\evidence\\ghidra\\functions\\5e42d0.c",
+      "sha256": "4fe4d8d7c8eba3e9a9167c928b78a68c11830d81e4f1fbd76f0e510d35bba82b"
+    },
+    {
+      "rva": "0x5e43c0",
+      "path": "work\\evidence\\ghidra\\functions\\5e43c0.c",
+      "sha256": "0c567db8ccf069a05b9f7d40f108e62a758beb4d2272fac587209b42712c43bd"
+    },
+    {
+      "rva": "0x5e4660",
+      "path": "work\\evidence\\ghidra\\functions\\5e4660.c",
+      "sha256": "ca95ad25eaa322c0fb85a04309aac5ae321fb0998b9bf0a388d4b368075cb70b"
+    },
+    {
+      "rva": "0x5e4670",
+      "path": "work\\evidence\\ghidra\\functions\\5e4670.c",
+      "sha256": "0f7aba050e10385b5b81e30525fac967f7deb60170ad400770ae6404154c8cf5"
+    },
+    {
+      "rva": "0x5e4780",
+      "path": "work\\evidence\\ghidra\\functions\\5e4780.c",
+      "sha256": "512cc99b49b561e3833eaaf364b20038c2d08d7d06ab0f8c5ed0a568f0184e8b"
+    },
+    {
+      "rva": "0x5e4f40",
+      "path": "work\\evidence\\ghidra\\functions\\5e4f40.c",
+      "sha256": "27380a16efddc4b8ee218279dacb04cebf71e96f559f4390a1fd4934be5aa995"
+    },
+    {
+      "rva": "0x5e5010",
+      "path": "work\\evidence\\ghidra\\functions\\5e5010.c",
+      "sha256": "fa8340ea4abf23e6842458c1e4d5e98c4718251fc76621192f1c38bf7f5dcbe0"
+    },
+    {
+      "rva": "0x5e5240",
+      "path": "work\\evidence\\ghidra\\functions\\5e5240.c",
+      "sha256": "14bdfeca8f867bfef3e46a97497dc1a82c6c7664fb584ca66f4112febb1593ab"
+    },
+    {
+      "rva": "0x5e54c0",
+      "path": "work\\evidence\\ghidra\\functions\\5e54c0.c",
+      "sha256": "fc3159c94697199815c65bc4609e552d35a96fa14576092baa3f259e48e4bb3e"
+    },
+    {
+      "rva": "0x5e54d0",
+      "path": "work\\evidence\\ghidra\\functions\\5e54d0.c",
+      "sha256": "c63506d0c608db97552501d4cae57987cfb0be520cf71b2fa1470fdd84cfcc2c"
+    },
+    {
+      "rva": "0x5e55e0",
+      "path": "work\\evidence\\ghidra\\functions\\5e55e0.c",
+      "sha256": "f5f4385b36cf65214b6931a88dbe42387fd3a459c9b62eba659f02b8abc2a494"
+    },
+    {
+      "rva": "0x5e6530",
+      "path": "work\\evidence\\ghidra\\functions\\5e6530.c",
+      "sha256": "ee2372eb347c566314b3a6cb0e95f962d034fb355cdfe65c7f791b2803805932"
+    },
+    {
+      "rva": "0x5e70c0",
+      "path": "work\\evidence\\ghidra\\functions\\5e70c0.c",
+      "sha256": "4fb262c5ef3afe1e25f3472199bd4a0702a81bf3f29570f40640620b60440aad"
+    },
+    {
+      "rva": "0x5e7580",
+      "path": "work\\evidence\\ghidra\\functions\\5e7580.c",
+      "sha256": "a661d202742345a40eb9b11e1bed55156664bf7c97642f5426fb5b4c5189dec6"
+    },
+    {
+      "rva": "0x5e7690",
+      "path": "work\\evidence\\ghidra\\functions\\5e7690.c",
+      "sha256": "6185799eb3ef755b77cc3a60bd7e43d4fcf1bc4f75bbb2d24883be5e1cd58717"
+    },
+    {
+      "rva": "0x5e7820",
+      "path": "work\\evidence\\ghidra\\functions\\5e7820.c",
+      "sha256": "546edbebc41a42107d08334cdc8a7dffd3ef4a8d332213ea6bbf4f13821cef8b"
+    },
+    {
+      "rva": "0x5e7db0",
+      "path": "work\\evidence\\ghidra\\functions\\5e7db0.c",
+      "sha256": "85184a8e82a7efc72b50475a29b289036e6e239165009705555a8e6ef2b00a22"
+    },
+    {
+      "rva": "0x5e7ed0",
+      "path": "work\\evidence\\ghidra\\functions\\5e7ed0.c",
+      "sha256": "0ab1265c0a3bb5cdbda0964907a6802099da1ddfd1167c8820d91ef9823e0c1e"
+    },
+    {
+      "rva": "0x5ea6e0",
+      "path": "work\\evidence\\ghidra\\functions\\5ea6e0.c",
+      "sha256": "af04f45ab084b633c12e8d08f4d024433e5a883a23d32c5a31c102dd89c39f8d"
+    },
+    {
+      "rva": "0x5ec380",
+      "path": "work\\evidence\\ghidra\\functions\\5ec380.c",
+      "sha256": "3686518d8c4bed4cda4ef0e7e2cc252e94f6ae71c455dc8a22065f6d3ba680ab"
+    },
+    {
+      "rva": "0x5ec4d0",
+      "path": "work\\evidence\\ghidra\\functions\\5ec4d0.c",
+      "sha256": "554d38318d99bb3922690b9100dbb2583d8b86daeb44889a7fa0554a921ba47a"
+    },
+    {
+      "rva": "0x5f0320",
+      "path": "work\\evidence\\ghidra\\functions\\5f0320.c",
+      "sha256": "c28baac13a5191ea3aee3b07612e98dd5a8fbb0b1c552b155bc24d7b770906cc"
+    },
+    {
+      "rva": "0x5f2070",
+      "path": "work\\evidence\\ghidra\\functions\\5f2070.c",
+      "sha256": "abf5dbc8bd7d94e5cc39d19965d31a6afe61055291cdd4d7c66587fb8d3cc357"
+    },
+    {
+      "rva": "0x5f3c60",
+      "path": "work\\evidence\\ghidra\\functions\\5f3c60.c",
+      "sha256": "fc33bd1c6d01b41274c9c5638aeb60271e4999c99edf3fb16832e0328ae38c32"
+    },
+    {
+      "rva": "0x5f3ee0",
+      "path": "work\\evidence\\ghidra\\functions\\5f3ee0.c",
+      "sha256": "4ab18c5b6050a15ff44ca0e6c75c0dfb55c46425ef1c42e1b4b5c59e1778afeb"
+    },
+    {
+      "rva": "0x5f4500",
+      "path": "work\\evidence\\ghidra\\functions\\5f4500.c",
+      "sha256": "7a3716fa2958b181f06556ef17d1c1fea6f04bea3f6243e73cce45c2cd095fdc"
+    },
+    {
+      "rva": "0x612380",
+      "path": "work\\evidence\\ghidra\\functions\\612380.c",
+      "sha256": "d3160cadd72704bf6d265fea10695cf29ffc69fd96ec54bd30968a6cb662fe89"
+    },
+    {
+      "rva": "0x612700",
+      "path": "work\\evidence\\ghidra\\functions\\612700.c",
+      "sha256": "28ccfe2b5a94509c651b317d4c1047b38f6fb516d43cc45acc6d8b7798d25f49"
+    },
+    {
+      "rva": "0x615000",
+      "path": "work\\evidence\\ghidra\\functions\\615000.c",
+      "sha256": "2ceaaa5c4b3f58c7e0b9ca91df8bb7e325980f69204b7c07c1e8eec2ae7d4851"
+    },
+    {
+      "rva": "0x6156b0",
+      "path": "work\\evidence\\ghidra\\functions\\6156b0.c",
+      "sha256": "5834169828c872ce0a67abb311c63666e93e2241a3d344bf084f94b974a9307c"
+    },
+    {
+      "rva": "0x6157c0",
+      "path": "work\\evidence\\ghidra\\functions\\6157c0.c",
+      "sha256": "4bb3ac4f3a11f51392b3ca0551dc15f2317cad1c6ef526444bbbe92477399c41"
+    },
+    {
+      "rva": "0x6159f0",
+      "path": "work\\evidence\\ghidra\\functions\\6159f0.c",
+      "sha256": "df043c989d92dd042f1ba775b0200791add8d20eb6ca6a813c3acea9db5f86cd"
+    },
+    {
+      "rva": "0x6399f0",
+      "path": "work\\evidence\\ghidra\\functions\\6399f0.c",
+      "sha256": "bca497feb2c9c001cbaa138f8869d83eb1a8fe8e46a9e92415272157ca07ff96"
+    },
+    {
+      "rva": "0x6a2f80",
+      "path": "work\\evidence\\ghidra\\functions\\6a2f80.c",
+      "sha256": "4f6c45d7024e00247eda8726381d4c8fc423c75ac1c08cfebac4640511f72e6c"
+    },
+    {
+      "rva": "0x6a32c0",
+      "path": "work\\evidence\\ghidra\\functions\\6a32c0.c",
+      "sha256": "c2028f80ad05c0e7a4d98f72be91dd066e059c64a0c300d9e38454937b2822aa"
+    },
+    {
+      "rva": "0x6a34d0",
+      "path": "work\\evidence\\ghidra\\functions\\6a34d0.c",
+      "sha256": "9455ab1040e6613f3c417dd857158a9c94e3e21ae24f3535edbc6b95d6f65a6c"
+    },
+    {
+      "rva": "0x6a35a0",
+      "path": "work\\evidence\\ghidra\\functions\\6a35a0.c",
+      "sha256": "49462b9c88c7150c6868280117d25568b41ba9948979b2a04a40b84324937bc7"
+    },
+    {
+      "rva": "0x6a5020",
+      "path": "work\\evidence\\ghidra\\functions\\6a5020.c",
+      "sha256": "a651d4c40ddd37f431c8a2bd0a27bd5561e1c00a2f00217a069078d361446904"
+    },
+    {
+      "rva": "0x6a59f0",
+      "path": "work\\evidence\\ghidra\\functions\\6a59f0.c",
+      "sha256": "e7d832b88d0b8af2343fda2145e543529c4a04a4ce872ddd68155cbbbf5ccd58"
+    },
+    {
+      "rva": "0x6a5d10",
+      "path": "work\\evidence\\ghidra\\functions\\6a5d10.c",
+      "sha256": "26c38f134e58794fee4f6dbe4ec1bfcda1471d4841a038b0e33b9f4c8d59e8c7"
+    },
+    {
+      "rva": "0x6e8f80",
+      "path": "work\\evidence\\ghidra\\functions\\6e8f80.c",
+      "sha256": "258cb52ca66a475cd65054c21290b5780bbe5582230f2327c8c02858c6b9f283"
+    },
+    {
+      "rva": "0x6ed260",
+      "path": "work\\evidence\\ghidra\\functions\\6ed260.c",
+      "sha256": "7075cd28e3e087e59b475e8e99bb7b6d117c42e3c3ee984c4b9e1599b7fdfa7b"
+    },
+    {
+      "rva": "0x6ed5a0",
+      "path": "work\\evidence\\ghidra\\functions\\6ed5a0.c",
+      "sha256": "e60266a29fa391e9fc4f956e7b0840a6694b853b400dfa2c9c621d99d50f5406"
+    },
+    {
+      "rva": "0x6ed8e0",
+      "path": "work\\evidence\\ghidra\\functions\\6ed8e0.c",
+      "sha256": "bdec4b82fee9ca4f9e9313be2994680c3bd41241d40f01cfdacda00c3905d55f"
+    },
+    {
+      "rva": "0x6edc20",
+      "path": "work\\evidence\\ghidra\\functions\\6edc20.c",
+      "sha256": "619287a5e635101ce1e8cbbaf43bc788fd6437bc82a6532b0853a9506efff5a9"
+    }
+  ],
+  "completeness": {
+    "registered_clientbound_opcodes": 80,
+    "reviewed_clientbound_contracts": 80,
+    "locally_reviewed_clientbound_contracts": 46,
+    "reviewed_serverbound_contracts": 57,
+    "locally_reviewed_serverbound_contracts": 38,
+    "server_source_available": false,
+    "runtime_validated": false,
+    "ready_for_1_to_1_server": false,
+    "remaining": [
+      "authoritative minigame rules, ownership and transitions absent from shipped server source",
+      "FullGame/GCloud mode downstream handoff and social persistence",
+      "APITPInteractables subtype extensions",
+      "retired server authoritative selection/ordering, recipient routing, occupancy arbitration and persistence",
+      "Mirror spawn/authority/SyncVars/commands must be joined with application state",
+      "HTTP login/session/space/avatar/inventory contracts owned by separate investigation"
+    ]
+  }
+}

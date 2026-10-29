@@ -1,0 +1,20 @@
+{
+  "format_version": 1,
+  "component": "deployment-private-baseline",
+  "source_origin": "work/remaining-implementation/deployment/integrated-review-v9/deployment/instance-supervisor",
+  "curated_scope": [
+    "instance-supervisor private service templates",
+    "state and backup templates",
+    "offline deployment utilities"
+  ],
+  "public_activation_allowed": false,
+  "listener_started": false,
+  "service_started": false,
+  "contains_credentials_or_account_state": false,
+  "limits": [
+    "Private, LAN, or operator-managed VPN use only.",
+    "Mirror/Telepathy gameplay transport must not be exposed directly to the public Internet.",
+    "The public-access and remote-transport variants remain separate experimental overlays.",
+    "Exact runtime binary and build-report hashes are deployment-time inputs."
+  ]
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "method_signature": "System.Void Assets.Scripts.NebulaPlayers.NebulaPlayerSyncVars::SetSpeed(System.Single)",
+    "stable_hash_32": 421014902,
+    "candidate_function_hash": 11638,
+    "registration_evidence": "NEB-STATIC-614850",
+    "registration_requires_authority": true,
+    "note": "RegisterCommand called with signature literal and r9b=1; functionHash candidate requires runtime or RegisterDelegate validation"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "component": "current-source-authenticated-tls-profile",
+  "source_only": true,
+  "activation_ready": false,
+  "operator_services_installed_or_started_by_curation": false,
+  "account_authentication": "per-account-preservation-credential-v1",
+  "steam_ticket_validation": false,
+  "original_steam_initialization_and_ownership_path_preserved": true,
+  "backend_default_public_access": false,
+  "synthetic_tls_transport_boundary_fixture_passed": true,
+  "synthetic_fixture_is_native_multiplayer_acceptance": false,
+  "current_auth_gift_independent_methods_passed": 75,
+  "current_backend_suite_run": 186,
+  "private_evidence_skips": 3,
+  "gift_block_policy": "Authored preservation policy rejects either-direction block without deleting friendship rows",
+  "runtime_bundle_artifact_count": 9,
+  "remaining": [
+    "Final reviewed nine-artifact remote client bundle with exact sidecar/helper pin closure",
+    "Native original-game-owned sidecar startup, DPAPI, readiness and socket-owner acceptance",
+    "Two independently authenticated native clients through TLS, including reconnect and durable restart",
+    "Portable Linux server build/package and operator certificate/service acceptance"
+  ],
+  "instructions": "README.md",
+  "release_composer_contract": "RUNTIME-BUNDLE.md"
+}

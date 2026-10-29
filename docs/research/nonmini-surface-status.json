@@ -1,0 +1,890 @@
+{
+  "format_version": 1,
+  "scope": "Static classification of concrete compiled HTTP route names against Service.ROUTES; no runtime, listener or connection.",
+  "counts": {
+    "concrete_compiled_route_union": 121,
+    "implemented_routes": 92,
+    "outside_service": 29,
+    "deferred_minigame": 26,
+    "required_nonminigame_feature_unimplemented": 0,
+    "external_commerce_disabled": 3,
+    "optional_operational_unimplemented": 0,
+    "expanded_nonmini_routes_with_local_policy": 30
+  },
+  "recovered_core_route_families": [
+    {
+      "family": "login_and_account",
+      "expected_routes": [
+        "ChannelGUIDServlet",
+        "CheckServerStatusServlet",
+        "CheckerServlet",
+        "GetCinemaFilmsServlet",
+        "GetIinitInfosNeededServlet",
+        "GetNewsServlet",
+        "InfoServlet",
+        "N2AddUser",
+        "N2UserExist",
+        "STMGetUserInfo",
+        "UserExistsServlet"
+      ],
+      "implemented_count": 11,
+      "missing": []
+    },
+    {
+      "family": "avatar_editor_and_entitlements",
+      "expected_routes": [
+        "GetCompanionsServlet",
+        "GetLastUsedPreset",
+        "GetLoadPresetByName",
+        "GetLocomotionsServlet",
+        "GetPlayerPrefsServlet",
+        "GetPresetGameServlet",
+        "GetPurchases",
+        "N2SavePreset",
+        "PlayerPrefsServlet",
+        "RemovePresetServlet",
+        "RenamePresetServlet",
+        "ResetDefaultPresetServlet",
+        "SavePlayerPref",
+        "SetPlayerPrefsServlet",
+        "ShowPresetsServlet",
+        "WardrobeOptionItemServlet"
+      ],
+      "implemented_count": 16,
+      "missing": []
+    },
+    {
+      "family": "world_allocation_and_wardrobe",
+      "expected_routes": [
+        "GetAllInWardrobe",
+        "GetPersonalSpacesServlet",
+        "GetSpaceEventServlet",
+        "InWardrobeCheckerServlet",
+        "N2AddUserOnline",
+        "N2GetUserTypeSpace",
+        "N2LoadSpace",
+        "N2SpaceLoading",
+        "N2UpdateUserOnline",
+        "PlayerLabelInfoServlet",
+        "RemoveInWardrobeServlet",
+        "Send_CheckIsInWardrobeServlet",
+        "SetUserInWardrobe",
+        "spaceExistServlet"
+      ],
+      "implemented_count": 14,
+      "missing": []
+    },
+    {
+      "family": "social_and_reporting",
+      "expected_routes": [
+        "GetSocialList",
+        "GetrefusernameServlet",
+        "N2AddBlock",
+        "N2AddSilenced",
+        "N2GetPsidglobalAndGuidByUsernamePlatform",
+        "N2GetRelationship",
+        "N2GetSocialList",
+        "N2RemoveBlock",
+        "N2RemoveFriend",
+        "N2RemoveSilenced",
+        "N2ToggleFavorite",
+        "ReportServlet",
+        "checkStateNPFriendsServlet"
+      ],
+      "implemented_count": 13,
+      "missing": []
+    },
+    {
+      "family": "housing",
+      "expected_routes": [
+        "GetHousingTypeServlet",
+        "HousingReadPresetServlet",
+        "HousingSavePresetServletParts",
+        "N2HousingReadPreset"
+      ],
+      "implemented_count": 4,
+      "missing": []
+    },
+    {
+      "family": "consumables",
+      "expected_routes": [
+        "GetConsumablePriceServlet",
+        "GetConsumableServlet"
+      ],
+      "implemented_count": 2,
+      "missing": []
+    }
+  ],
+  "recovered_core_mandatory_missing": [],
+  "interpretation": [
+    "No route in the bounded recovered login/account/avatar/allocation/social/housing/consumables core family is absent from Service.ROUTES.",
+    "This does not prove the client reaches no additional route during execution. CheckIfSpaceStillExistServlet is implemented against current allocation/fresh instance state; use of its separate MITM_Space coroutine on the selected modern path is not established.",
+    "Required non-minigame feature means the named compiled feature remains unrestored. It does not mean the route is mandatory for initial Nexus loading.",
+    "Shop and gift routes need explicit local entitlement/currency policy. Original paid balances, eligibility and server state are unavailable.",
+    "External Steam commerce stays disabled; offline grants are the preservation path. No success response should fabricate a real purchase.",
+    "Minigame routes are deferred by user direction. Their compiled existence is retained here rather than counted as core restoration."
+  ],
+  "routes": [
+    {
+      "route": "AddScoreArcheryServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "CastleNETGCloud$$Send_AddScoreArchery",
+        "rva": "0x432f70",
+        "path": "work/evidence/ghidra/functions/432f70.c",
+        "sha256": "e80b98e1010ce9a50dd7355f83e8612ed93e67bcab5fbf31071b26cb75053ef0"
+      }
+    },
+    {
+      "route": "AddScoreBoatMiniGameServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "BlueWaveHideoutNETGCloud$$Send_AddScoreBoatMiniGame",
+        "rva": "0x431ab0",
+        "path": "work/evidence/ghidra/functions/431ab0.c",
+        "sha256": "19e689db1612fd959f6f0d069831db397f78d87aa98e7cd91d31a82dc2ef3cbf"
+      }
+    },
+    {
+      "route": "AddStatisticsServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FullGameNETGCloud$$Send_AddStatistics",
+        "rva": "0x4e89e0",
+        "path": "work/evidence/ghidra/functions/4e89e0.c",
+        "sha256": "ded1c16880d39f780e72a3dfa6f55de8900c554776b86f00fe6a3af54163ffe1"
+      }
+    },
+    {
+      "route": "AddToPoolFullGameServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": null,
+        "rva": "0x4ec1c0",
+        "path": "work/evidence/ghidra/functions/4ec1c0.c",
+        "sha256": "f2af9708253ed03585d3be833a7203b764da10bcf28b89d5133d4612d3a6b3bc"
+      }
+    },
+    {
+      "route": "CheckIfSpaceStillExistServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "separate_space_liveness",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": null,
+        "rva": "0x46e360",
+        "path": "work/evidence/ghidra/functions/46e360.c",
+        "sha256": "91a0bfa302c2260b9a1c8772ffb609443652d473c8f176e76dea5c09449f1d4b"
+      }
+    },
+    {
+      "route": "CheckIsAvailableToJoinFullGameServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": null,
+        "rva": "0x4ecd80",
+        "path": "work/evidence/ghidra/functions/4ecd80.c",
+        "sha256": "1f21ee1944a2c8e8269c40848dbf7333534705a4e89f797434092ccab0aef652"
+      }
+    },
+    {
+      "route": "CheckOwnGenericReward",
+      "status": "implemented_local_preservation_policy",
+      "family": "generic_rewards_and_promotions",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace.<Send_CheckOwnGenericRewardCoroutine>d__16$$MoveNext",
+        "rva": "0x3f7540",
+        "path": "work/evidence/ghidra/functions/3f7540.c",
+        "sha256": "6ed4729a172af87256819c2438a83325c7de7caa64f7456759c63cbaa4d52ec3",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "CinemaInteractionNPServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "cinema_social_interaction",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace$$Send_CinemaInteractionNP",
+        "rva": "0x3ea1a0",
+        "path": "work/evidence/ghidra/functions/3ea1a0.c",
+        "sha256": "f8626a9dbe7035c0832faf99ac585dbaba508b762fa5531ed9ce11a2aa316143",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "CreateGameServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FullGameNETGCloud$$Send_CreateGame",
+        "rva": "0x4e8e00",
+        "path": "work/evidence/ghidra/functions/4e8e00.c",
+        "sha256": "56cb4a6bdfa34271a77a4a37d8551d9bc5df547fcc4b7e5c98cab3ecf61da0c8"
+      }
+    },
+    {
+      "route": "GenericReward",
+      "status": "implemented_local_preservation_policy",
+      "family": "generic_rewards_and_promotions",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace.<Send_GenericRewardCoroutine>d__18$$MoveNext",
+        "rva": "0x3f9530",
+        "path": "work/evidence/ghidra/functions/3f9530.c",
+        "sha256": "2a3717e91bad38158d83306e687369c9243ecb5561788833bb9d2fea8d504b82",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "GetActiveStagesServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FullGameNETGCloud$$Send_GetActiveStages",
+        "rva": "0x4e9300",
+        "path": "work/evidence/ghidra/functions/4e9300.c",
+        "sha256": "71253a46b050230938535b62f9e0259e60dd151b80880f2326c57691cc1ab75a"
+      }
+    },
+    {
+      "route": "GetBestScoreArcheryServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "CastleNETGCloud$$Get_BestScoreArchery",
+        "rva": "0x432770",
+        "path": "work/evidence/ghidra/functions/432770.c",
+        "sha256": "b21969b47da0a90004340a32c51ae72918b822a4f5a6b15bf95a8c7c7dbf84ab"
+      }
+    },
+    {
+      "route": "GetBestScoreBoatMiniGameServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "BlueWaveHideoutNETGCloud$$Get_BestScoreBoatMiniGame",
+        "rva": "0x430f80",
+        "path": "work/evidence/ghidra/functions/430f80.c",
+        "sha256": "9dfa3be73a62bf8c956a3bfc2d90dab55ead038ddb28e35d905330ec17f0c9fc"
+      }
+    },
+    {
+      "route": "GetCooldownServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FootRaceManager$$Send_InitializeGame",
+        "rva": "0x56fc30",
+        "path": "work/evidence/ghidra/functions/56fc30.c",
+        "sha256": "4902c3994a7876b4a5eefb3e4e20305b8846a30b021f51c253f112199c9a9a19"
+      }
+    },
+    {
+      "route": "GetFeaturesServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_GetFeatures",
+        "rva": "0x410f60",
+        "path": "work/evidence/ghidra/functions/410f60.c",
+        "sha256": "a64a6e78f6fe67f96e307d24fecb51589dd3dc9645628756d26f3b411113f3cb"
+      }
+    },
+    {
+      "route": "GetFullGameLeaderboardServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FullGameNETGCloud$$Send_GetLeaderboard",
+        "rva": "0x4e9d00",
+        "path": "work/evidence/ghidra/functions/4e9d00.c",
+        "sha256": "7eced3784adca7145bde4a65fcb0c4e44e2246555cd6a6b2e9421135ec4a1284"
+      }
+    },
+    {
+      "route": "GetGenderDataShopServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_GetGenderData",
+        "rva": "0x411100",
+        "path": "work/evidence/ghidra/functions/411100.c",
+        "sha256": "194c265c307814a6db9b249fde06add336d9e0b51157bd05e84864f4612a9861"
+      }
+    },
+    {
+      "route": "GetInviteFriendList",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FullGameNETGCloud$$Send_GetInviteFriendList",
+        "rva": "0x4e9650",
+        "path": "work/evidence/ghidra/functions/4e9650.c",
+        "sha256": "113899eda8691ff7d6b2bab603fb493675271b9bc4f79577def2d77a2ef03cb5"
+      }
+    },
+    {
+      "route": "GetItemAssetsDataServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_GetItemAssetsData",
+        "rva": "0x411490",
+        "path": "work/evidence/ghidra/functions/411490.c",
+        "sha256": "8f0313ba2f49bfc8f00ccf969170248f71d5f5640399d6e9be4c21db69c787b9"
+      }
+    },
+    {
+      "route": "GetLastScoreServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FullGameNETGCloud$$Send_GetLastScore",
+        "rva": "0x4e99b0",
+        "path": "work/evidence/ghidra/functions/4e99b0.c",
+        "sha256": "b3fdb9a37c672632a91a606421fc811ae6fd68deed3f6dc553041bd81b843b56"
+      }
+    },
+    {
+      "route": "GetLeaderboardArcheryServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "CastleNETGCloud$$Get_ArcheryLeaderboard",
+        "rva": "0x4325d0",
+        "path": "work/evidence/ghidra/functions/4325d0.c",
+        "sha256": "af4e2df83f39c5920865b4a2fe86184c2d1b05c2d6277b90295d72634eae4ce2"
+      }
+    },
+    {
+      "route": "GetLeaderboardBoatMiniGameServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "BlueWaveHideoutNETGCloud$$Get_BoatMiniGameLeaderboard",
+        "rva": "0x431120",
+        "path": "work/evidence/ghidra/functions/431120.c",
+        "sha256": "0649f704f5210b42b3ad16907737631d6a651e5af4e1eb208e5d6ff82e57e100"
+      }
+    },
+    {
+      "route": "GetLeaderboardServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace.<send_getLeaderboardCoroutine>d__30$$MoveNext",
+        "rva": "0x401860",
+        "path": "work/evidence/ghidra/functions/401860.c",
+        "sha256": "ca8ede882189580f5a0903e663bffe9e1f30bfc096644ea18d24750ac6606dfd",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "GetOpenGamesServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FullGameNETGCloud$$Send_GetOpenGames",
+        "rva": "0x4ea240",
+        "path": "work/evidence/ghidra/functions/4ea240.c",
+        "sha256": "52ec2a846b9ed6930cbba516ccd18999dc5c97819cece1aabfe29f33437553e4"
+      }
+    },
+    {
+      "route": "GetShopDataShopServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_GetShopData",
+        "rva": "0x411950",
+        "path": "work/evidence/ghidra/functions/411950.c",
+        "sha256": "36ebd6bc7596ca95fa73385b900497187ad8134e7f01484a03a99c9f6d4c3bd1"
+      }
+    },
+    {
+      "route": "GetShopInfoPlayerShop",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_ShopInfoPlayer",
+        "rva": "0x413cb0",
+        "path": "work/evidence/ghidra/functions/413cb0.c",
+        "sha256": "24a91e1df6b49cc74cec7f57f042f85c7a374bd58e2173a80c76849cb4c45547"
+      }
+    },
+    {
+      "route": "GetShopTypeDataShopServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_GetShopTypeData",
+        "rva": "0x411e50",
+        "path": "work/evidence/ghidra/functions/411e50.c",
+        "sha256": "baf9122e7507d9544216aa2f5c1f1fd1bbde236795ed5c3123684d6ce02cffab"
+      }
+    },
+    {
+      "route": "Get_BRAINMEMORION",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_TriggerBRAINMEMORION",
+        "rva": "0x3f5260",
+        "path": "work/evidence/ghidra/functions/3f5260.c",
+        "sha256": "62a36cd1e2c344ca16b4b4a42bb5e48798d39ae89f5f60bec93cae3ed2ce155e"
+      }
+    },
+    {
+      "route": "Get_GatherArcheryCupid",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ArcheryCupidManager$$CheckIsAvailable",
+        "rva": "0x529340",
+        "path": "work/evidence/ghidra/functions/529340.c",
+        "sha256": "e1171f5507937fab8c7c44c6c861d629746d058bfdcc7fdba8810f067181ea23"
+      }
+    },
+    {
+      "route": "Get_GatherChristmasGetSpacesCompleted",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_GatherChristmasGetSpacesCompleted",
+        "rva": "0x3f1d60",
+        "path": "work/evidence/ghidra/functions/3f1d60.c",
+        "sha256": "3b65549a6baa277343b579d410d88eecd0ee2925c0ffe1c27e694995ce8fb272"
+      }
+    },
+    {
+      "route": "Get_GatherConsume",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_GatherConsume",
+        "rva": "0x3f2e90",
+        "path": "work/evidence/ghidra/functions/3f2e90.c",
+        "sha256": "ece084e1c167e526c59c994220d03b81a5055e9007f31df1d8712133e1b713c3"
+      }
+    },
+    {
+      "route": "Get_GatherConsumeReward",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_GatherConsumeReward",
+        "rva": "0x3f2590",
+        "path": "work/evidence/ghidra/functions/3f2590.c",
+        "sha256": "4587718fc277918a99774cbdcd9d49d176989c5b06a1422b285e90a24593fdeb"
+      }
+    },
+    {
+      "route": "Get_GatherMedievalVillage",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "GatherMedievalVillage$$CheckIsAvailable",
+        "rva": "0x690700",
+        "path": "work/evidence/ghidra/functions/690700.c",
+        "sha256": "95ff38752bab0acb0fad838a3c3a2e609898d8297a4162c31ffc106d003455ea"
+      }
+    },
+    {
+      "route": "Get_GatherPhaseGame",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Get_GatherPhaseGame",
+        "rva": "0x3f0130",
+        "path": "work/evidence/ghidra/functions/3f0130.c",
+        "sha256": "c033644bde653766b8ba6312901a08c9f535aec97b30417c8f23212b06417245"
+      }
+    },
+    {
+      "route": "Get_GatherStatus",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_GatherStatus",
+        "rva": "0x3f4b30",
+        "path": "work/evidence/ghidra/functions/3f4b30.c",
+        "sha256": "674c2d442ea66845225a104514c50c00be3e834252b747ac531a37a67de8eefe"
+      }
+    },
+    {
+      "route": "Get_npGather",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_Init",
+        "rva": "0x3f4e70",
+        "path": "work/evidence/ghidra/functions/3f4e70.c",
+        "sha256": "334cb18947ea9290fb7b743bd70d32f791b588752f0c102eb3831440bbdf8798"
+      }
+    },
+    {
+      "route": "Get_npGatherChristmas",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_GatherChristmas",
+        "rva": "0x3f2190",
+        "path": "work/evidence/ghidra/functions/3f2190.c",
+        "sha256": "ca15a629e6f79ea4a7baeb426fbe522bb2c0608e04b1f0c153cfa0285513b1e1"
+      }
+    },
+    {
+      "route": "Get_npGatherProcessItem",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$ProcessItem",
+        "rva": "0x3f18d0",
+        "path": "work/evidence/ghidra/functions/3f18d0.c",
+        "sha256": "a2f933804250f8a3eb00bd359f4499ce7e466bd0fc70145465b986f0e14d0f44"
+      }
+    },
+    {
+      "route": "MemorionServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "GatherUIMemorionGame$$SendScore",
+        "rva": "0x691e30",
+        "path": "work/evidence/ghidra/functions/691e30.c",
+        "sha256": "9c9c75edc98894c0d275c17b9a987d82c0b6faef6e977ec83cfe4dff9da91e5a"
+      }
+    },
+    {
+      "route": "NPShopBundleItemsServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_NPShopBundleItems",
+        "rva": "0x412710",
+        "path": "work/evidence/ghidra/functions/412710.c",
+        "sha256": "eb905b5cc5710163d996c67acd9df6c155edad9e8df1ad1389681bc8073a7d84"
+      }
+    },
+    {
+      "route": "NPShopBuyItemServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_NPShopBuyItem",
+        "rva": "0x412a60",
+        "path": "work/evidence/ghidra/functions/412a60.c",
+        "sha256": "4068a3729aa4ed72f0c4499ebf3dd6c1c0c9b202d9e41a91a5ee12ec5917bd06"
+      }
+    },
+    {
+      "route": "NPShopGiftItemServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_NPShopGiftItem",
+        "rva": "0x412fe0",
+        "path": "work/evidence/ghidra/functions/412fe0.c",
+        "sha256": "31268ddefc1cd3931f6156c506305a4c4b3d042b020970e5cbf59125cf0f8e65"
+      }
+    },
+    {
+      "route": "NPShopIsItemPurchasedServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_NPShopIsItemPurchased",
+        "rva": "0x4134a0",
+        "path": "work/evidence/ghidra/functions/4134a0.c",
+        "sha256": "8fc95f7e643f88a6587f290bd806c072c403820802936a9f3ec16bbdd2d4b459"
+      }
+    },
+    {
+      "route": "NPShopSyncCrystalsServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "shop_catalog_and_local_transactions",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ShopNETGcloud$$Send_NPShopSyncCrystals",
+        "rva": "0x413830",
+        "path": "work/evidence/ghidra/functions/413830.c",
+        "sha256": "ef0c8349816db22bdc3f53f4a713a7fb71edf6b386e352d4a857a8ab148da33f"
+      }
+    },
+    {
+      "route": "RewardClothServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "generic_rewards_and_promotions",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace.<Send_rewardBeachTShirtCoroutine>d__14$$MoveNext",
+        "rva": "0x3ffd70",
+        "path": "work/evidence/ghidra/functions/3ffd70.c",
+        "sha256": "7ca23b2c318c68593e6f75fe990a7ea89e378218c656f646e263ae9dd4b8f3a3",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "RewardConsumeServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "generic_rewards_and_promotions",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace$$Send_RewardConsume",
+        "rva": "0x3ed990",
+        "path": "work/evidence/ghidra/functions/3ed990.c",
+        "sha256": "2ba2394ac78f9ecfdb8c70cf03dbfe107ebc8e7bfd6b48ac2b8b57f5c2aa667b",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "SKLPromoServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "generic_rewards_and_promotions",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace$$Send_SKLPromoConsume",
+        "rva": "0x3ee1d0",
+        "path": "work/evidence/ghidra/functions/3ee1d0.c",
+        "sha256": "4690667555562494607e61c45179f337f6750878fc8381301960baf698b34d11",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "SKLPromoTriggerServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "generic_rewards_and_promotions",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace$$Send_SKLPromoCheckToSetAvailable",
+        "rva": "0x3ede80",
+        "path": "work/evidence/ghidra/functions/3ede80.c",
+        "sha256": "4caae0c20695ba369d345c8d8bf20d169f3b9527adab35ef6c571f6146349448",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "STMBuyCrystals",
+      "status": "external_commerce_disabled",
+      "family": "retired_steam_commerce",
+      "evidence": {
+        "source": "modern_task_literal",
+        "caller": "Assets.Scripts.HTTPs.Tasks.HTTPSTMBuyCrystals$$.cctor",
+        "evidence_id": "NEB-STATIC-638FC0"
+      }
+    },
+    {
+      "route": "STMCompleteOrder",
+      "status": "external_commerce_disabled",
+      "family": "retired_steam_commerce",
+      "evidence": {
+        "source": "modern_task_literal",
+        "caller": "Assets.Scripts.HTTPs.Tasks.HTTPSTMCompleteOrder$$.cctor",
+        "evidence_id": "NEB-STATIC-6394F0"
+      }
+    },
+    {
+      "route": "STMCompleteSucceededOrders",
+      "status": "external_commerce_disabled",
+      "family": "retired_steam_commerce",
+      "evidence": {
+        "source": "modern_task_literal",
+        "caller": "Assets.Scripts.HTTPs.Tasks.HTTPSTMCompleteSucceededOrders$$.cctor",
+        "evidence_id": "NEB-STATIC-6396F0"
+      }
+    },
+    {
+      "route": "Send_ArcheryCupidConsume",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "ArcheryCupidManager$$SendConsumeArcheryCupidItem",
+        "rva": "0x529dc0",
+        "path": "work/evidence/ghidra/functions/529dc0.c",
+        "sha256": "f74856d7cf263894797e80bb9a09bb174f9758506f0a51a3e96b6d91852413b6"
+      }
+    },
+    {
+      "route": "Send_GatherInitInSpace",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "NETGcloudNPGather$$Send_GatherInitInSpace",
+        "rva": "0x3f4730",
+        "path": "work/evidence/ghidra/functions/3f4730.c",
+        "sha256": "c2c38f7b2202ed2f5c8ebb16d78b2ef377fca6e33b3182abd3db2e91ea07e9ac"
+      }
+    },
+    {
+      "route": "Send_GatherMedievalVillageConsume",
+      "status": "implemented_local_preservation_policy",
+      "family": "gathering_and_event_progress",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "GatherMedievalVillage$$SendConsumeMedievalVillageItem",
+        "rva": "0x691120",
+        "path": "work/evidence/ghidra/functions/691120.c",
+        "sha256": "bbd2480098152546c1b8d3e1afa9364ee316a7f2fd82f20f700dae05b6e11552"
+      }
+    },
+    {
+      "route": "SetCooldownServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "additional_concrete_routes",
+        "caller": "FootRaceManager$$Send_FinishGame",
+        "rva": "0x56f610",
+        "path": "work/evidence/ghidra/functions/56f610.c",
+        "sha256": "1f2915f6555dc337b3e73d40cf4914385384651389b1ec682a666c8a9c716a7c"
+      }
+    },
+    {
+      "route": "SetLeaderboardServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace.<send_addStatisticsLeaderBoardCoroutine>d__33$$MoveNext",
+        "rva": "0x401100",
+        "path": "work/evidence/ghidra/functions/401100.c",
+        "sha256": "748f22343d2c05d79936fc855ccc41e930febe0deb274c39163dc14dd3354be2",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "XSpacesGamesType0Servlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace$$Send_SKLMiniGameSuccess",
+        "rva": "0x3edcd0",
+        "path": "work/evidence/ghidra/functions/3edcd0.c",
+        "sha256": "c54323c53a5b51b1b9c27dfd2bd78327ef675232d4020d62fb91c492b82e8995",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "checkRewardAvailableServlet",
+      "status": "implemented_local_preservation_policy",
+      "family": "generic_rewards_and_promotions",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace.<checkRewardAvailableCoroutine>d__35$$MoveNext",
+        "rva": "0x4161b0",
+        "path": "work/evidence/ghidra/functions/4161b0.c",
+        "sha256": "d9d1e5e585c8a8f19b41a9778ebb0f31e6faeb92110e20bc96e89d6e10373512",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    },
+    {
+      "route": "checkRewardGameServlet",
+      "status": "deferred_minigame",
+      "family": "minigame_or_full_game",
+      "evidence": {
+        "source": "targeted_legacy_contract",
+        "caller": "NETGCloudSpace.<checkRewardGameCoroutine>d__39$$MoveNext",
+        "rva": "0x416a20",
+        "path": "work/evidence/ghidra/functions/416a20.c",
+        "sha256": "3c860652efe822749c92dffcf1206c67db328175fa4611143d472474d8b12051",
+        "contract_status": "native_request_and_response_contract_recovered",
+        "reachability_status": "not_exhaustively_traced"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "outputs/nebula-preservation/tools/nonmini_surface_status.py",
+      "sha256": "6898eeb30e8d531e38c165a4229a5bbc3669f9bee17b32905776e8f42ae05a4c"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/http-task-command-candidates.json",
+      "sha256": "8b04b815d6c6e987d7a9ae254386cc96b75db811b9fc1ab88047f929dc74b303"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/http-legacy-contracts.json",
+      "sha256": "a20f48f68f41887a022b114e0770d5e66deab72e057f55735f52f017b41d937f"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/network-surface-inventory.json",
+      "sha256": "eb8ab30e13321d6fa51eaef24193242289e1f27bc66fa6820e86de7efea2142d"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/network-surface-findings.json",
+      "sha256": "f72876249dcdcd37ff2ef2de5b7066e5c741ac5ef73d0b04f4b6f9220adadb64"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/service.py",
+      "sha256": "2a282906497f7c5b0916767500b0f47a348c18f3a75367395add25a7c884a96c"
+    }
+  ],
+  "inventory_limits": [
+    "Raw E8 candidates are validated only by bounded sequential decoding from nearest preceding metadata method entry; alias names and incomplete functions remain possible.",
+    "Direct E8 census does not include indirect virtual/interface/function-pointer calls, import calls, dynamically constructed URLs, native UnityPlayer.dll or Steam DLL internals, or asset/config endpoints.",
+    "Compiled SDK networking wrappers do not prove the game uses those APIs. Lack of a direct E8 application caller does not prove absence of runtime use.",
+    "Literal references prove compiled occurrence, not reachable code or original remote availability. Native pseudocode may be incomplete/incorrect and is not original C#.",
+    "Counts for HTTP task routes, legacy routes, TCP handlers and other surfaces overlap and must not be added as independent endpoints."
+  ],
+  "runtime_or_connection_tests_performed": false,
+  "all_networking_parity_proven": false
+}

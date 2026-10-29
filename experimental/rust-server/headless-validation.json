@@ -1,0 +1,129 @@
+{
+  "format_version": 1,
+  "recorded_date": "2026-10-30",
+  "scope": "Headless synthetic and authored-reference validation; original game and historical server acceptance unproven",
+  "rust_toolchain": "1.90.0",
+  "crate_source_files": 57,
+  "crate_source_sha256": "6db5f5b62f0ac5649866591f313e57fa925c5bd21fd84a80e4a6b997ad5fa1b5",
+  "crate_digest_algorithm": "SHA256 of case-sensitive lexicographically sorted crate-relative UTF-8 path, NUL, exact file bytes, NUL for Cargo.toml, Cargo.lock, src/** and tests/**",
+  "binaries": {
+    "windows_debug": {
+      "sha256": "8df20c772bdb8a99afdf261ccf2669f4c1221f18bef09107dcaa871c2e827578",
+      "bytes": 91689907
+    },
+    "linux_release": {
+      "sha256": "e8a3e8923d590e4283c2bcb8081686a91eb1e99b85b3c964168ab17c3a974a34",
+      "bytes": 7289976
+    },
+    "docker_linux_release": {
+      "sha256": "712e046a4ff7308183836cd914e5fa1edfea810578e6a81adee4ead2b9fea236",
+      "bytes": 7291816
+    }
+  },
+  "rust_contract_tests": {
+    "windows": {
+      "passed": 99,
+      "failed": 0,
+      "ignored": 0
+    },
+    "linux": {
+      "passed": 99,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "reference_comparisons": {
+    "linux_release": {
+      "passed": 649,
+      "runs": [
+        {
+          "suite": "baseline",
+          "passed": 436,
+          "summary_sha256": "e3b7d4f92260ebc67a596ad16755dbf833d6fa3c86c31de58a22a82e97188cd0"
+        },
+        {
+          "suite": "configured",
+          "passed": 76,
+          "summary_sha256": "d5765c94e9d38f0e19c6e04c3b1635306c175ec4f3ad68237507019daf504c81"
+        },
+        {
+          "suite": "admin",
+          "passed": 134,
+          "summary_sha256": "2a5be6aff987812170fb717ba805cace52b8e6a48beb3a3334425305b53f6780"
+        },
+        {
+          "suite": "unicode",
+          "passed": 3,
+          "summary_sha256": "711e435b8507d8b1441e1f47f76b825c178fdcfe20beb1c5de1c99155b77064c"
+        }
+      ]
+    },
+    "docker_linux_release": {
+      "passed": 649,
+      "runs": [
+        {
+          "suite": "baseline",
+          "passed": 436,
+          "summary_sha256": "d8a2306bcc9f8aa868a1dc8f1e67d16c9a3af16142a57df8691c0fb00d68eda9"
+        },
+        {
+          "suite": "configured",
+          "passed": 76,
+          "summary_sha256": "9a79d61b821c136bf2a4f265e9642317d45b3eacc2f31cb9527379b56bc160e1"
+        },
+        {
+          "suite": "admin",
+          "passed": 134,
+          "summary_sha256": "a4a89047fa307f37469e336d40f8eb9785e3afde2297996990d335f0f122a333"
+        },
+        {
+          "suite": "unicode",
+          "passed": 3,
+          "summary_sha256": "25c1840cec7fabb4ab845ddec9f29124024dae8286b06aa1eb5ca0879f5b5147"
+        }
+      ]
+    },
+    "windows_debug": {
+      "passed": 649,
+      "evidence": "parity/combined-verification.json",
+      "sha256": "dec97861dfa432bdd6b032b7881ad72ba9b845ef4ce55829baf1d48a3319014e"
+    }
+  },
+  "reference_source_digest": "ee84a152511488426825d36492ab27128c4cdf78cee0f6da88fc3521560e10b3",
+  "comparison_controls": {
+    "baseline_and_fixture": 22,
+    "management": 11
+  },
+  "gateway_interop": {
+    "windows": {
+      "passed": 9,
+      "report": "interop/synthetic-interop-report.json",
+      "report_sha256": "f0a297acdd31909a9cb653721192ff1da863dc1192f0d2d42bfeee6922f43a9c"
+    },
+    "docker_linux_release": {
+      "passed": 9,
+      "report": "interop/synthetic-linux-interop-report.json",
+      "report_sha256": "6d430ebbc4d4a794c4c05227eef4036dcd9a79b8d0902f89af5068952ae38bfd"
+    }
+  },
+  "container": {
+    "image_bytes": 33264619,
+    "user": "10001:10001",
+    "network": "none",
+    "root_filesystem_read_only": true,
+    "all_capabilities_dropped": true,
+    "no_new_privileges": true,
+    "health_passed": true,
+    "graceful_stop_exit_code": 0,
+    "idle_process_rss_kib": 7488,
+    "idle_cgroup_memory_mib": 3.781,
+    "footprint_scope": "One idle startup sample on the development Docker host; not a load or capacity benchmark"
+  },
+  "limits": [
+    "Original Windows client, patcher and independent remote peer acceptance pending",
+    "Historical server business rules unavailable; recovered policies are explicit reconstruction",
+    "Unrecovered animation-layer and instance-closing server emission policies remain unknown",
+    "Minigames excluded",
+    "The public TLS gateway remains the existing separate Python component"
+  ]
+}

@@ -1,0 +1,377 @@
+{
+  "format_version": 1,
+  "kind": "shared_server_network_configuration",
+  "generated_at": "2026-10-28T19:50:05.018559+00:00",
+  "scope": "One shared Linux host with explicit addressing; bilateral finite Nexus integration-validation profile. Shared local filesystem registry; no remote status discovery.",
+  "runtime": {
+    "scope": "Controlled Windows core flow plus separately recorded fresh native client against local WSL Linux; remote hosting remains unproven.",
+    "listener_started": true,
+    "game_started": true,
+    "network_connections_made": true,
+    "native_execution": true,
+    "linux_compilation_passed": true,
+    "linux_wsl_protocol_fixture_passed": true,
+    "linux_wsl_local_bind_verified": true,
+    "native_client_connected_to_linux_backend": true,
+    "external_linux_reachability_verified": false,
+    "linux_native_public_chat_round_trip": true
+  },
+  "configuration": {
+    "http": {
+      "bind_flag": "--bind",
+      "bind_default": "127.0.0.1",
+      "advertised_flag": "--advertise-ip",
+      "advertised_default": "127.0.0.1",
+      "port_flag": "--port",
+      "port_default": 8080,
+      "explicit_activation_flag": "--listen",
+      "core_test_profile_flag": "--core-test-profile"
+    },
+    "instance": {
+      "bind_flag": "--nebula-bind",
+      "bind_default": "127.0.0.1",
+      "advertised_flag": "--nebula-advertise-ip",
+      "advertised_default": "127.0.0.1",
+      "port_flag": "--nebula-port",
+      "port_default": 28000,
+      "explicit_activation_flag": "--nebula-instance",
+      "core_test_profile_flag": "--nebula-core-test-profile"
+    },
+    "address_validation": {
+      "family": "IPv4",
+      "syntax": "Canonical dotted decimal literal only",
+      "listen_wildcard": "0.0.0.0",
+      "advertised_wildcard_allowed": false,
+      "rejected_first_octets": [
+        0,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255
+      ],
+      "wildcard_exception": "Listening only: exactly0.0.0.0",
+      "dns_ipv6_urls_legacy_forms_allowed": false,
+      "private_and_public_concrete_addresses_allowed": true,
+      "address_owned_by_host_or_port_availability_probed": false
+    },
+    "port_validation": {
+      "min": 1,
+      "max": 65535,
+      "descriptor_requires_exact_json_integer": true
+    },
+    "advertised_addresses_must_match": "HTTP configured advertised IPv4 == every admitted instance descriptor ip",
+    "unique_per_instance": [
+      "instance_id",
+      "TCP listen port"
+    ],
+    "core_test_profile_default": null,
+    "core_test_profile_only_supported_value": "nexus-core-v1"
+  },
+  "allocation": {
+    "configured_exact_advertised_host_only": true,
+    "arbitrary_descriptor_redirects_allowed": false,
+    "same_host_local_files": true,
+    "registry": "instances/<instance_id>/instance-status.json",
+    "legacy_registry": "instance-status.json",
+    "optional_new_status_field": "bind",
+    "existing_status_address_field": "ip",
+    "freshness_seconds": 15,
+    "required_flags": {
+      "listening": true,
+      "protocol_complete": true
+    },
+    "game_ready": "Must be exacttrue when present. Legacy descriptors missing this field retain prior compatibility.",
+    "current_producer_flags": {
+      "game_ready": false,
+      "protocol_complete": false
+    },
+    "readiness_override_added": false,
+    "selection": "Least players then instance_id; duplicate IDs/endpoints excluded",
+    "normal_readiness_preserved": true,
+    "scoped_validation_path_added": true,
+    "core_validation": {
+      "both_component_opt_ins_required": true,
+      "readiness_scope": "nexus-core-v1",
+      "core_test_eligible": true,
+      "listener_bound": true,
+      "listening": true,
+      "psidglobal": "Nexus",
+      "board_tables": 0,
+      "darts_tables": 0,
+      "game_ready": false,
+      "protocol_complete": false,
+      "networking_parity": "unproven",
+      "all_base_freshness_host_count_duplicate_checks_apply": true,
+      "no_synthetic_session_or_allocation": true
+    }
+  },
+  "authentication": {
+    "policy": "Existing local preservation current-session/instance allocation binding",
+    "steam_ticket_verification_added": false,
+    "original_service_identity_assurance_claimed": false
+  },
+  "transport": {
+    "mirror_tag": "v66.0.9",
+    "mirror_commit": "4d0cd1054a9011ee4492f91ed4bd16c671fea470",
+    "modified_pinned_source": "Two sources listed in modifications",
+    "upstream_sha256": "ec513d43b1a2274464e17eb282fc8b6983339d5d4465026903ec90f48061dcf7",
+    "project_sha256": "b8d9c4f95695c8c9905399749e8726a8a342ee7be7aa9d78d9f4c0053ab43695",
+    "delta": [
+      "Explicit configurable IPv4 bind with loopback default",
+      "Start captures IPv4 bind and validates port before worker thread",
+      "Explicit IPv4 TcpListener replaces upstream dual-stack Create",
+      "Volatile read-only Listening set only after OS listener.Start and cleared on stop/finally",
+      "Read-only TelepathyTransport.ServerListening accessor",
+      "Framing, queues, send/receive loops and existing ServerActive semantics retained",
+      "Pre-existing project omission of upstream Server.cs UTF8 BOM retained"
+    ],
+    "wire_code_changed": false,
+    "verified_source_pairs": 245,
+    "differing_pinned_source_files": 2,
+    "limitation": "Actual local bind signal is authored code, not external reachability proof. Crashed-process descriptors can remain fresh until the15second heartbeat cutoff.",
+    "modifications": [
+      {
+        "path": "Runtime/Transports/Telepathy/Telepathy/Server.cs",
+        "upstream_sha256": "ec513d43b1a2274464e17eb282fc8b6983339d5d4465026903ec90f48061dcf7",
+        "project_sha256": "b8d9c4f95695c8c9905399749e8726a8a342ee7be7aa9d78d9f4c0053ab43695",
+        "change": "Configurable explicit IPv4 bind with loopback default and IPv4/port validation; Start captures address; Listen uses TcpListener(bindAddress,port). Added volatile read-only Listening telemetry, set only after listener.Start and cleared on stop/finally. Existing framing, queues, send/receive loops, and Active semantics retained."
+      },
+      {
+        "path": "Runtime/Transports/Telepathy/TelepathyTransport.cs",
+        "upstream_sha256": "d358b21c173162bbacbd9c3ef69185968f3072209de414e81101e03c148492a0",
+        "project_sha256": "5bb320e981e472f95d8bfed00ebf7d7102b9c31d1399db7aacf0ac1c42308baa",
+        "change": "Added read-only ServerListening accessor for Telepathy actual-bound telemetry. Existing ServerActive semantics and all wire behavior retained."
+      }
+    ]
+  },
+  "verification": {
+    "compile_for_this_revision": "Passed coordinated Windows Unity build; all14 source hashes match",
+    "canonical_compile_report": "mirror-server/build-validation.json",
+    "compile_utc": "2026-10-28T19:48:17.0979519Z",
+    "managed_assembly_sha256": "37cc28cc8d56dd48ddfba1e778d5f908df97201329fbee30f1ff28366616c4ec",
+    "canonical_compile_report_sha256": "1dd99c486c3e7203fbd3b14820d8cc6904f477747f0c7b4502a2c51b64cc0232",
+    "prior_scope": {
+      "recorded_at": "2026-10-28T20:07:54.941454+00:00",
+      "backend_unit_tests": 120,
+      "allocation_tests": 10,
+      "network_configuration_tests": 6,
+      "core_profile_tests": 6,
+      "result": "pass",
+      "focused_socket_creation_forbidden": true,
+      "command": "python -m unittest discover -s outputs/nebula-preservation/backend/tests -v",
+      "scope": "Historical parent-owned offline run; not a claim about the current working tree."
+    },
+    "latest_offline_validation_pointer": "offline-validation.json",
+    "latest_offline_validation_hash_omitted_to_avoid_cycle": true
+  },
+  "preserved_integrations": [
+    "Current notification acknowledgement import/export",
+    "Periodic account/relation/notification refresh",
+    "Existing business route dispatch",
+    "Current instance authentication and avatar/world lifecycle"
+  ],
+  "sources": [
+    {
+      "path": "backend/server.py",
+      "sha256": "174482cdd6c339798c2464abd8c50ea02caa6ca39dea729c45b1028ba30c932f"
+    },
+    {
+      "path": "backend/allocation.py",
+      "sha256": "8742004d6d56b7ecf341483649fedf2207acdbb1444601463d3c1c750255e72d"
+    },
+    {
+      "path": "backend/tests/test_allocation.py",
+      "sha256": "d6c328b6e92bbc72dccbe44c29fea91bfde1c26dff6cd234a55f8aeb7968fb2f"
+    },
+    {
+      "path": "backend/tests/test_network_config.py",
+      "sha256": "352acfac3fef0744ba09c843abe882288e08ff9df75511034c87b76152f82146"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+      "sha256": "8c70ed0b9fe8844258256115c867993ce7dd2fffba3cf246d57cd0daf53f14fe"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Server.cs",
+      "sha256": "b8d9c4f95695c8c9905399749e8726a8a342ee7be7aa9d78d9f4c0053ab43695"
+    },
+    {
+      "path": "mirror-server/provenance.json",
+      "sha256": "0b22a7d9cb41d148d60786cfa9c1317b8380af4bcbeda179b19d0ed62f5d47bd"
+    },
+    {
+      "path": "backend/tests/test_core_readiness.py",
+      "sha256": "6f063396e6cddd5085c310a60c88cba605ab4978daee3de6e836acf03792122d"
+    },
+    {
+      "path": "mirror-server/UnityProject/Assets/Mirror/Runtime/Transports/Telepathy/TelepathyTransport.cs",
+      "sha256": "5bb320e981e472f95d8bfed00ebf7d7102b9c31d1399db7aacf0ac1c42308baa"
+    },
+    {
+      "path": "backend/state.py",
+      "sha256": "4182dd824e1ea1be182d87acf1ce1ec632c4ee49adba8106e9038f61e856df52"
+    }
+  ],
+  "remaining_runtime_unknowns": [
+    "Confirm exact visual morph reapplication after a named preset load; save/list/request and saved-outfit restoration are separate proven observations.",
+    "Test a second real native client; current two-account chat uses one native client and one protocol fixture.",
+    "Validate held-key/camera controls and remote interpolation; the measured walking test uses20 separate W presses.",
+    "Validate remaining wardrobe categories/removal, social/housing UI, other spaces and runtime mixed-scene/housing IDs.",
+    "Deploy to a supplied shared Linux host and validate remote reachability/firewall/NAT separately from local WSL."
+  ],
+  "updated_at": "2026-10-28T22:05:28.516478+00:00",
+  "static_assessment_scope": {
+    "assessed_at": "2026-10-28T19:50:05.018559+00:00",
+    "meaning": "Address/profile source design and offline verification snapshot. Later controlled local execution is recorded in runtime_followup."
+  },
+  "static_revision_execution": {
+    "listener_started": false,
+    "game_started": false,
+    "network_connections_made": false,
+    "native_execution": false,
+    "linux_bind_or_reachability_verified": false,
+    "scope": "Original source-revision/offline work only, assessed at 2026-10-28T19:50:05.018559+00:00"
+  },
+  "runtime_followup": {
+    "report": "runtime-validation.json",
+    "report_sha256": "2616f7f0b09cf12d6b3d64959121a2c7fb3f9bd71318257c01e7ef316adaf5f5",
+    "report_utc": "2026-10-28T22:05:28.367063+00:00",
+    "recorded_at": "2026-10-28T22:05:28.516478+00:00",
+    "scope": "Current controlled private-client-copy checkpoint. Windows core tests, Linux compilation, an isolated WSL fixture and the separately recorded native Linux-backed flow are distinguished by their milestone flags. Remote/public reachability remains unproven. runtime-validation.json is authoritative for later progress.",
+    "game_executed": true,
+    "reconstructed_listeners_started": true,
+    "live_connections_performed": true,
+    "game_ready": false,
+    "networking_parity_proven": false,
+    "linux_compilation_passed": true,
+    "linux_wsl_protocol_fixture_passed": true,
+    "native_client_connected_to_linux_backend": true,
+    "evidence_file_count": 56,
+    "milestones": {
+      "http_bootstrap_requests_received": true,
+      "mirror_listener_bound": true,
+      "protocol_peer_login_allocation_spawn_announce": true,
+      "protocol_peer_public_chat_self_echo": true,
+      "protocol_peer_ping_pong": true,
+      "native_bootstrap_hang_fixed": true,
+      "native_login_menu_reached": true,
+      "native_world_loaded": true,
+      "native_to_protocol_peer_chat_round_trip": true,
+      "two_account_chat_proven": true,
+      "two_native_clients_chat_proven": false,
+      "native_movement_proven": true,
+      "native_held_key_walk_tested": false,
+      "native_remote_avatar_rendered": true,
+      "native_options_menu_opened": true,
+      "native_arrow_focus_navigation_proven": true,
+      "native_clothing_editor_opened": true,
+      "native_body_slider_responds": true,
+      "native_preset_saved_and_listed": true,
+      "native_named_preset_load_requested": true,
+      "native_preset_saved_and_reloaded": false,
+      "native_settings_saved_and_reopened": true,
+      "native_settings_persistence_proven": true,
+      "native_wardrobe_proven": true,
+      "native_purchase_proven": true,
+      "native_linux_world_loaded": true,
+      "native_linux_saved_jacket_restored": true,
+      "native_linux_wallet_and_owned_offer_restored": true,
+      "native_linux_public_chat_round_trip": true,
+      "reward_absence_encrypted_http_checks_passed": true,
+      "current_linux_backend_offline_checks_passed": true
+    },
+    "current_blocker": {
+      "state": "core_flows_passed_remaining_nonmini_and_shared_host_validation",
+      "symptom": "The bounded Nexus core flows pass. Remote shared-host deployment, a second real native client and remaining non-mini features are still pending.",
+      "cause": "A target Linux host/SSH alias has not been supplied. Other spaces, all social/housing UI branches, mixed-scene runtime IDs and exact visual morph reapplication require further validation; full allocation remains closed outside the explicit Nexus test profile.",
+      "observation": "Named preset save/list/load request, walking, local purchase and equip/save passed. Fresh Linux login restored the red jacket, Music0.9,475 crystals/200NP and owned-offer status; public chat passed both directions with a distinct protocol account. The private Windows client is left open in Nexus."
+    },
+    "history": [
+      {
+        "stage": "local_protocol_fixture",
+        "state": "passed_bounded_checks",
+        "observed": "HTTP/Mirror bound; fixture login/allocation/spawn/announce, public self-echo and ping/pong passed. These checks do not render a native avatar or establish two-account chat."
+      },
+      {
+        "stage": "native_bootstrap",
+        "state": "hang_fixed_and_retested",
+        "observed": "Empty non-null cinema schedule caused a main-thread loop. The authored no-films response clears it; observational trace3 records cinema/news/prefs/login-show entry and return.",
+        "evidence": "protocol/cinema-bootstrap-compatibility.json"
+      },
+      {
+        "stage": "native_login_menu",
+        "state": "visually_reached",
+        "observed": "Terra observed the unhooked private client login menu. Native world, wardrobe and stores remain unreached.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_menu_input",
+        "state": "diagnosed_fix_in_progress",
+        "observed": "Native login menu is visible, but mouse clicks and Return do not invoke its Login handler.",
+        "cause": "The shipped PS4InputModule never dispatches mouse press events; InputManager Submit is bound only to joystick1 button0. No virtual controller driver is installed."
+      },
+      {
+        "stage": "native_world",
+        "state": "loaded",
+        "observed": "The private native client loads Nexus and renders the protocol fixture as a remote avatar.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_fixture_chat",
+        "state": "two_account_round_trip_passed",
+        "observed": "One native account and one protocol-fixture account exchange public chat; two native clients remain untested.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_customization_preset",
+        "state": "save_list_load_requested",
+        "observed": "Body slider responds; PreservationTest is saved, listed and requested for load. Exact visual morph reapplication and confirmed reload remain unproven.",
+        "evidence": "runtime-validation.json"
+      },
+      {
+        "stage": "native_shop",
+        "state": "response_rejection_under_investigation",
+        "observed": "Wallet values render, but the shop reports a connection problem after HTTP 200; no purchase is claimed.",
+        "evidence": "runtime-validation.json"
+      }
+    ],
+    "offline_flags_scope": "No-game/no-listener flags in compile and historical offline test records apply only to those runs. They do not negate later controlled runtime observations.",
+    "evidence_hash_boundary": "Only runtime-validation.json is hashed here. The downstream offline aggregate is a pointer without a reciprocal hash, avoiding report-hash cycles."
+  },
+  "linux_validation": {
+    "canonical_build_report": "mirror-server/build-linux-validation.json",
+    "isolated_wsl_protocol_report": "deployment/linux-runtime-validation.json",
+    "linux_compilation_passed": true,
+    "linux_wsl_protocol_fixture_passed": true,
+    "native_client_connected_to_linux_backend": false,
+    "remote_host_deployed": false
+  }
+}

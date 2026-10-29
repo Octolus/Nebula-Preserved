@@ -1,0 +1,38 @@
+{
+  "format_version": 1,
+  "name": "housing-owner-save-callback",
+  "mutating": true,
+  "fixture_notes": [
+    "Requires a personal-space owner alone in the bound apartment.",
+    "Prepare one reviewed ground item before running; this plan does not choose or place an item.",
+    "Acceptance additionally requires backend readback, fresh-client load, and visitor denial checks."
+  ],
+  "steps": [
+    {"action": "housing.command", "argument": "open", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 10,
+        "interval_ms": 100,
+        "until": {
+          "housing.personal_space_ready": true,
+          "housing.pending": false,
+          "housing.owner_alone_guard": true
+        }
+      }
+    },
+    {"action": "housing.command", "argument": "organize", "expect_status": ["started"]},
+    {"action": "housing.command", "argument": "save", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 30,
+        "interval_ms": 200,
+        "until": {
+          "housing.pending": false,
+          "housing.fresh_native_receipt_observed": true
+        }
+      }
+    }
+  ]
+}

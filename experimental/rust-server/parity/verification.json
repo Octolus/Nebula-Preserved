@@ -1,0 +1,79 @@
+{
+  "format_version": 1,
+  "result": {
+    "PASS": 436
+  },
+  "reference_source_files": 109,
+  "http_cases": 427,
+  "typed_state_checkpoints": 7,
+  "routes_with_expected_200_case": 63,
+  "routes_with_nonframing_attempt": 91,
+  "reference_source_digest": "ee84a152511488426825d36492ab27128c4cdf78cee0f6da88fc3521560e10b3",
+  "candidate_binary": {
+    "name": "public-final-candidate.exe",
+    "sha256": "8df20c772bdb8a99afdf261ccf2669f4c1221f18bef09107dcaa871c2e827578"
+  },
+  "harness_sources": [
+    {
+      "source": "build_fixture.py",
+      "sha256": "7548b825063c0589dcb0a595b1d97610bdf2b1cbe690486d48dc129cd245a473"
+    },
+    {
+      "source": "build_manifest.py",
+      "sha256": "42614cbc57ccbd07e4c41fd99e6704521c5ab420f760df229455ed6b379338c2"
+    },
+    {
+      "source": "cases.py",
+      "sha256": "dee20238503c230ce960af35b36126336451037e67546d5591e5fdcdf04be962"
+    },
+    {
+      "source": "combine_reports.py",
+      "sha256": "d1608206643fe49a19bf842ac1fc1b26a9a21796d9fe33793b07681c1e33f6eb"
+    },
+    {
+      "source": "common.py",
+      "sha256": "8e74026f4cf9c3ebcd93c990e17231bd474b2b675bf7f642b46ab8b33f8f856d"
+    },
+    {
+      "source": "export_manifest.py",
+      "sha256": "6af4ba6dcba6858316f7d6d08bd328b84ef4fa7baa1ff70ddc7024dd92bf77ef"
+    },
+    {
+      "source": "fixture_cases.py",
+      "sha256": "5f0f801587374ffc2cceb94065b0694a24a219210bd2ddb2f48f2419f9eceb9d"
+    },
+    {
+      "source": "fixture_support.py",
+      "sha256": "c0d4ca6c12a9c6de27e7ef0f43b07d079ce08538e544de21cdaa62f12f79823a"
+    },
+    {
+      "source": "policy_inventory.py",
+      "sha256": "ad6b4b21fd765c1a1d3a3e0e0010255063d00cdf79abe96553245062866d208a"
+    },
+    {
+      "source": "reference_probe.py",
+      "sha256": "a3efbded2ec205eb56f14c9d69d9885d2ca22d4bc9d775c0be3a5478a92a679d"
+    },
+    {
+      "source": "run_parity.py",
+      "sha256": "538b36d9047cebff6d91d581358ea7aaec6e3be208cefd1a490802d7013d9d6f"
+    },
+    {
+      "source": "test_harness.py",
+      "sha256": "1b800936278122494dbca03d08193988247ac70b51f35d56df1435088d7e774b"
+    },
+    {
+      "source": "write_configured_report.py",
+      "sha256": "901401666957397c42a8abe3373e8a5bf75a625763ddbeb86082c8bbbeab377f"
+    },
+    {
+      "source": "write_report.py",
+      "sha256": "1e6260c3f7f650ed6f71a84d26f4b19c0a149b8c4901235b196187a8103345d7"
+    }
+  ],
+  "harness_matches_current_sources": true,
+  "summary_sha256": "1293c213043dc62d6cbc022d2b47c823a97b4eb6bd3bf0d1fb6348b349f73f07",
+  "manifest_sha256": "2e3c29858608ef0e2b0d86a2d8c2b1a8fca293c25fc44f3a7a42e8e47b3f52b7",
+  "one_to_one_parity": "NOT_PROVEN",
+  "original_server_parity": "NOT_PROVEN"
+}

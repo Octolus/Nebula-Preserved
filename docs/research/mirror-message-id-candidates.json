@@ -1,0 +1,98 @@
+[
+  {
+    "full_name": "NebulaMessage",
+    "stable_hash_32": 710993137,
+    "candidate_message_id": 58609,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.ReadyMessage",
+    "stable_hash_32": 1978506556,
+    "candidate_message_id": 40252,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.NotReadyMessage",
+    "stable_hash_32": 2132647935,
+    "candidate_message_id": 40959,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.AddPlayerMessage",
+    "stable_hash_32": 3112252189,
+    "candidate_message_id": 13085,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.SceneMessage",
+    "stable_hash_32": 3524294195,
+    "candidate_message_id": 30259,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.CommandMessage",
+    "stable_hash_32": 997831828,
+    "candidate_message_id": 46228,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.RpcMessage",
+    "stable_hash_32": 2285012154,
+    "candidate_message_id": 33978,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.SpawnMessage",
+    "stable_hash_32": 1843019876,
+    "candidate_message_id": 16484,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.ChangeOwnerMessage",
+    "stable_hash_32": 4246335484,
+    "candidate_message_id": 61436,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.ObjectSpawnStartedMessage",
+    "stable_hash_32": 1346038154,
+    "candidate_message_id": 59786,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.ObjectSpawnFinishedMessage",
+    "stable_hash_32": 1843693169,
+    "candidate_message_id": 34417,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.ObjectDestroyMessage",
+    "stable_hash_32": 1014158372,
+    "candidate_message_id": 54308,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.ObjectHideMessage",
+    "stable_hash_32": 3556904526,
+    "candidate_message_id": 3662,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.EntityStateMessage",
+    "stable_hash_32": 3811836945,
+    "candidate_message_id": 1041,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.NetworkPingMessage",
+    "stable_hash_32": 2992865663,
+    "candidate_message_id": 33151,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  },
+  {
+    "full_name": "Mirror.NetworkPongMessage",
+    "stable_hash_32": 1813784633,
+    "candidate_message_id": 10297,
+    "evidence_type": "derived from native stable hash loop plus matching upstream GetId source; runtime comparison pending"
+  }
+]

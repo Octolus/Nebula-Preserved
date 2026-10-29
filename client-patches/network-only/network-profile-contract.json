@@ -1,0 +1,66 @@
+{
+  "ga_sha256": "bc923d5b5f4e2ae4e8bad6f7767cc229dd1fa532cefde04bec31b57e74821d5f",
+  "bridge_sha256": "8b7f7470945f3eea25613031adeaf522dc177b8a386fb006fedc0afb4ea201e3",
+  "bridge_imports": [
+    "KERNEL32.dll",
+    "api-ms-win-crt-heap-l1-1-0.dll",
+    "api-ms-win-crt-private-l1-1-0.dll",
+    "api-ms-win-crt-runtime-l1-1-0.dll",
+    "api-ms-win-crt-stdio-l1-1-0.dll",
+    "api-ms-win-crt-string-l1-1-0.dll",
+    "bcrypt.dll"
+  ],
+  "bridge_exports": [
+    "NebulaAutomation_JoinQueueReady"
+  ],
+  "wrapper_object_sha256": "904424a938dcb575cb9d53eacb5559e80bb94b98a42a8f4ad254727faa741ef7",
+  "format": "network-only-fixed-profile-v2",
+  "native_runtime_accepted": false,
+  "stages": [
+    {
+      "name": "wardrobe-consumer",
+      "source_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+      "output_sha256": "29abe9dbf4f310ba72b4de19273da85c797e529fac6511ba40bb9f88314dc420"
+    },
+    {
+      "name": "rapid-exit-network-report",
+      "source_sha256": "29abe9dbf4f310ba72b4de19273da85c797e529fac6511ba40bb9f88314dc420",
+      "output_sha256": "ce1a74588e74499e282699e160b966439ffb4c278e8bcef791951e28a57b0dd0"
+    },
+    {
+      "name": "registry-save-snapshot",
+      "source_sha256": "ce1a74588e74499e282699e160b966439ffb4c278e8bcef791951e28a57b0dd0",
+      "output_sha256": "5314680c6f49443b96464ac01e844ae6f953fb23f3d214356c3d8f23f57c54e8"
+    },
+    {
+      "name": "network-settings-save-hydration",
+      "source_sha256": "5314680c6f49443b96464ac01e844ae6f953fb23f3d214356c3d8f23f57c54e8",
+      "output_sha256": "3d659ed05a0998b9ac7b5efb58bc3e5a8cefa84258fe101dd9e25bc8bfee0d61"
+    },
+    {
+      "name": "https70-direct-join-gate",
+      "source_sha256": "3d659ed05a0998b9ac7b5efb58bc3e5a8cefa84258fe101dd9e25bc8bfee0d61",
+      "output_sha256": "bc923d5b5f4e2ae4e8bad6f7767cc229dd1fa532cefde04bec31b57e74821d5f"
+    }
+  ],
+  "transports": {
+    "direct": {
+      "public_access_sha256": "d0a37cfd1e47e9ec706d92c8b29dd9b29a4cfc9ca5c9891b0f427ba2510a93aa",
+      "artifacts": 6,
+      "capability": "unconfigured local forwarding only"
+    },
+    "remote": {
+      "public_access_sha256": "d0a37cfd1e47e9ec706d92c8b29dd9b29a4cfc9ca5c9891b0f427ba2510a93aa",
+      "sidecar_sha256": "cfda7d033e93fe78a8150c6a11a6f3b1d66bc5e417f49ee869a0630f855c8420",
+      "artifacts": 7,
+      "capability": "configured public HTTPS through exact owned loopback sidecar; native acceptance pending"
+    }
+  },
+  "configured_direct_https_supported": false,
+  "application_get_sites": 70,
+  "excluded_engine_www_get": "0x1d9e05c",
+  "public_consumer_source_receipt_sha256": "da022a6321b1e8667de0dc4cef2574bfec7eb83a244606c10b605727519e626b",
+  "public_consumer_independent_review_sha256": "357eb68fb8b82c89d296ddaaab23f751fedf3ac56216d8537cf453a76fea0f36",
+  "parent_network_source_receipt_sha256": "e7a9ac61b214b987f8c86c88859a41353d1a5283aa681a2591c1398d10065b10",
+  "parent_network_independent_review_sha256": "c5938cb127666199c3bd194598d41372cae08412b7f4b398fd2d6ee665681368"
+}

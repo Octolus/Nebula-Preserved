@@ -1,0 +1,174 @@
+{
+  "format_version": 1,
+  "scope": "Bounded static review and authored reward-absence compatibility implementation after two native Nexus 404 responses. This report's own verification was offline; later live adapter and Linux unit checks are recorded separately in deployment/linux-postvalidation-source-delta.json.",
+  "verdict": {
+    "owned_false_is_not_absence": "Response field 3 false calls GenericOneAssetRewardTrigger.Show, sets isActive=true, activates the trigger art, and permits the local player collision to send GenericReward. It must not be used for an unconfigured or disabled reward.",
+    "owned_true_is_suppression": "Response field 3 true performs no Show call. Because Start first deactivates gArt and isActive defaults false, the trigger stays non-actionable. This is a valid recovered wire shape, but interpreting unavailable as already-owned is an explicit local suppression policy, not recovered retired-server semantics.",
+    "historical_404": "The observed 404 was an intentional fail-closed backend authorization boundary: no entitlement, claim marker, or false success was created. It left the native trigger suppressed because the only Show call is inside the parsed field-3-false branch. It was not wire-contract-clean because server.py returned plaintext rather than the encrypted four-field response expected by the consumer.",
+    "implemented_boundary": "Missing or disabled definitions now make CheckOwnGenericReward return the normal false#GUID#PS4ID#true suppression envelope. This is explicit authored local compatibility policy, not recovered retired-server behavior. GenericReward still passes through _claim/_required and returns 404 for the same key, so suppression grants nothing and records no ownership.",
+    "core_blocker": false,
+    "core_blocker_reason": "The Linux native run completed the scoped Nexus core flow despite both 404 responses. Start hides each trigger before the request, and failure never reaches Show. This is not a login, allocation, world-load, avatar, chat, or movement dependency.",
+    "remaining_feature_gap": "The two ordinary Nexus reward interactions remain intentionally unavailable but are now silently suppressed with valid framing. Enabling them still requires authored reward definitions; original eligibility and grant targets are not recoverable from this consumer."
+  },
+  "native_contract": {
+    "check_sender_rva": "0x3f7540",
+    "request": [
+      "SessionGUID",
+      "PS4ID",
+      "idasset"
+    ],
+    "minimum_response_fields": 4,
+    "response_field_3": {
+      "type": "Boolean",
+      "true": "Dispose/return without calling Show.",
+      "false": "Call GenericOneAssetRewardTrigger.Show, then dispose/return."
+    },
+    "startup_rva": "0x465a60",
+    "startup": "Set gArt inactive, then start CheckOwnGenericReward for this serialized idasset.",
+    "show_rva": "0x465a10",
+    "show": "Set isActive=true, activate the trigger GameObject, and activate gArt.",
+    "collision_rva": "0x465690",
+    "collision": "Only when isActive=true and the collider belongs to the local player, send GenericReward for the same idasset.",
+    "grant_consumer_rva": "0x3f9530",
+    "grant_response_field_3": {
+      "true": "Call ShowReward.",
+      "false": "No reward presentation."
+    },
+    "show_reward_rva": "0x465870",
+    "show_reward": "Load idasset_Thumbnail sprite, show reward UI, and start delayed hiding."
+  },
+  "nexus_triggers": [
+    {
+      "idasset": "MYOfHwFv5yhf2L8ph1X5x15ixTJ63Tq3",
+      "component_path_id": "-4914210199622857319",
+      "component_raw_sha256": "e0230ea1bf7f6558006cd6f9d84cf56929f77a9ef8946dedc964b0c3860202ba",
+      "game_object": "GenericOneAssetRewardTrigger",
+      "component_enabled": true,
+      "game_object_active": true,
+      "g_art": "Regalo",
+      "g_art_serialized_active": true,
+      "g_art_start_state": "forced inactive by Start before HTTP check"
+    },
+    {
+      "idasset": "DIB25J6p06KJcVg1raYAeRqo75I8cTgy",
+      "component_path_id": "1619769086334488248",
+      "component_raw_sha256": "7babc406ce2ebca35eac619cf10d4bed9c98f904c32ba4723fa08686ec6058cf",
+      "game_object": "GenericOneAssetRewardTrigger (1)",
+      "component_enabled": true,
+      "game_object_active": true,
+      "g_art": "Regalo",
+      "g_art_serialized_active": true,
+      "g_art_start_state": "forced inactive by Start before HTTP check"
+    }
+  ],
+  "implementation_review": {
+    "check_dispatch": "RewardService.dispatch reads the GenericReward definition. Missing or disabled definitions return false#GUID#PS4ID#true without a write; enabled definitions report only the durable claim marker.",
+    "claim_dispatch": "GenericReward uses _claim and the same _required guard; an unknown or disabled key cannot grant an entitlement or write a claim marker.",
+    "error_adapter": "backend/server.py returns ProtocolError text directly with its HTTP status; it does not encrypt an error response.",
+    "tests": {
+      "covered": "Configured lifecycle plus missing and disabled suppression: exact four-field true envelope, zero DB writes during checks, no claim or entitlement, explicit GenericReward 404 denial, and later enablement returning false then permitting one real claim.",
+      "focused_result": "10 reward tests passed offline with socket construction forbidden.",
+      "aggregate_result": "124 backend tests passed offline after the focused change."
+    }
+  },
+  "runtime_observation": {
+    "artifact": "outputs/nebula-preservation/deployment/linux-native-runtime-validation.json",
+    "check_requests": 2,
+    "status": 404,
+    "reason": "No enabled local reward definition",
+    "scoped_nexus_core_flow_passed": true,
+    "interpretation": "This is historical evidence that absence did not block that bounded run. The authored suppression implementation was verified offline only; root owns controlled HTTP reload and native observation."
+  },
+  "actionable_options": [
+    {
+      "option": "historical_fail_closed_404",
+      "when": "No administrator has selected entitlement targets or suppression policy.",
+      "effect": "Superseded by the authored suppression envelope; retained here as the observed historical boundary.",
+      "parity": "authored safety boundary, not original-server parity"
+    },
+    {
+      "option": "authored_suppression_success_implemented",
+      "when": "Administrator explicitly decides disabled rewards should be silently absent.",
+      "response": "false#<guid>#<ps4_id>#true",
+      "effect": "Valid encrypted success frame keeps the trigger hidden. GenericReward continues rejecting the key; no claim marker or grant is written.",
+      "warning": "Field3 true literally follows the client's already-owned branch; this is compatibility suppression, not a recovered no-reward status."
+    },
+    {
+      "option": "enable_actual_nexus_rewards",
+      "when": "Administrator supplies explicit validated local grant definitions for both shipped idasset keys.",
+      "effect": "Existing false-before-claim, true-on-fresh-grant, and true-owned-after-claim flow becomes usable.",
+      "warning": "Original reward items, eligibility, schedule, and account migration policy remain unknown."
+    }
+  ],
+  "sources": [
+    {
+      "path": "work/evidence/ghidra/functions/3f7540.c",
+      "rva": "0x3f7540",
+      "sha256": "6ed4729a172af87256819c2438a83325c7de7caa64f7456759c63cbaa4d52ec3"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/3f9530.c",
+      "rva": "0x3f9530",
+      "sha256": "2a3717e91bad38158d83306e687369c9243ecb5561788833bb9d2fea8d504b82"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/465a60.c",
+      "rva": "0x465a60",
+      "sha256": "11fe9f66981db6f0bc21e9e4b3c6721eaa1f6837c3908a5e6d1c4e75abfa3fd1"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/465690.c",
+      "rva": "0x465690",
+      "sha256": "baa6ab8f5080fa38c909756cd4d63e51edfce68d75b1048266dff1afda3957ca"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/465a10.c",
+      "rva": "0x465a10",
+      "sha256": "54fd14f76c1379bf22f9fe0f432b8fff41c654d0e263441ba4966f1a9c8951cd"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/465870.c",
+      "rva": "0x465870",
+      "sha256": "39e1d76beff3dd05a6cc4204d8c90987d244882bc5b736b94f8b5db15022f210"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/rewards.py",
+      "sha256": "bb9621699304c9a4b9954d2a64c16622f30d231d6b4d54a8da551221432765a2"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/server.py",
+      "sha256": "174482cdd6c339798c2464abd8c50ea02caa6ca39dea729c45b1028ba30c932f"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/tests/test_rewards.py",
+      "sha256": "7aba653d24b79b78a1fc15b30a68fe2e5f39d6b4d45d5f7d5d3232409a7628d4"
+    },
+    {
+      "path": "work/evidence/world-interaction-assets.json",
+      "sha256": "004c9f4fa343fc697f98169b6cacfe8223ffd9fa7daafb10b8d79fe764d07b57"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/http-legacy-contracts.json",
+      "sha256": "a20f48f68f41887a022b114e0770d5e66deab72e057f55735f52f017b41d937f"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/rewards-second-pass.json",
+      "sha256": "64374275eff17777d797560d3e9e4ad0424b3058b8a6cfe2f5d41c063140ff9c"
+    },
+    {
+      "path": "outputs/nebula-preservation/deployment/linux-native-runtime-validation.json",
+      "sha256": "5da4504d69d004f7fecf9a60770450edb8ef4352d3ced3119aa1c3ca812461be"
+    },
+    {
+      "path": "outputs/nebula-preservation/deployment/linux-native-runtime-evidence/http-requests.jsonl",
+      "sha256": "c670f4ee94611feb16f6d3cd49fee037974c330efa312fec38aeb08fbc767290"
+    },
+    {
+      "path": "[local-path] Realms/Nebula Realms_Data/StreamingAssets/StandaloneWindows/s/nexuslogicprefab",
+      "sha256": "7a555fddd0bf0743444f60a3eacf0533cc6ce3a546995b6bd6ffc2ed10bd5f66"
+    }
+  ],
+  "implementation_status": "authored suppression policy implemented and focused offline tests passed; no live service or client reload performed",
+  "code_changes_performed": true,
+  "runtime_or_connection_tests_performed": false
+}

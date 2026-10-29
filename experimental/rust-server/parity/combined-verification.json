@@ -1,0 +1,39 @@
+{
+  "format_version": 1,
+  "candidate_binary": {
+    "name": "public-final-candidate.exe",
+    "sha256": "8df20c772bdb8a99afdf261ccf2669f4c1221f18bef09107dcaa871c2e827578"
+  },
+  "harness_matches_current_sources": true,
+  "reference_source_digest": "ee84a152511488426825d36492ab27128c4cdf78cee0f6da88fc3521560e10b3",
+  "default_result": {
+    "PASS": 436
+  },
+  "configured_result": {
+    "PASS": 76
+  },
+  "passed_cases": 649,
+  "exact_http_cases": 481,
+  "whole_typed_state_checkpoints": 42,
+  "raw_no_change_boundaries": 20,
+  "fixture": {
+    "fixture_id": "configured-mutations-v1",
+    "sha256": "2e5750a99f4f3b9148c77cf50db897937a512a407662e60763ce5885f4d0e1e8",
+    "provenance": "SYNTHETIC_PARITY_ONLY"
+  },
+  "verification_sha256": "5e4213082d42eac31feae9fc64f7bdf6075138461d1b12efd261e76ea47a3a2c",
+  "configured_verification_sha256": "da4f17a27b73d6f60ea68155eacfe03dcb1762dacc269fad155b0472acdb00d9",
+  "one_to_one_parity": "NOT_PROVEN",
+  "original_client_acceptance": "NOT_PROVEN",
+  "resource_selection_cas": "NOT_PROVEN",
+  "new_notification_creation": "NOT_PROVEN",
+  "consumable_receipt_issue": "NOT_PROVEN",
+  "admin_result": {
+    "PASS": 137
+  },
+  "admin_verification_sha256": "51e43f164385ebc9f4e2d23d6401edcb80fd7565d1eaedef9d4113811c9270c2",
+  "admin_route_patterns_exercised": 35,
+  "admin_route_patterns_total": 36,
+  "structured_admin_cases": 121,
+  "evidence_status": "CURRENT_RECORDED_HARNESS"
+}

@@ -1,0 +1,33 @@
+services:
+  server:
+    image: {{ nebula_server_image }}
+    mem_limit: 1280m
+    logging: &logs
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  public-game:
+    image: {{ nebula_server_image }}
+    mem_limit: 96m
+    logging: *logs
+  public-https:
+    mem_limit: 48m
+    logging: *logs
+  panel:
+    image: {{ nebula_panel_image }}
+    mem_limit: 256m
+    logging: *logs
+  panel-https:
+    image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=16m,mode=1777"]
+    mem_limit: 48m
+    logging: *logs
+    ports: ["443:8445/tcp"]
+    volumes: ["./nginx-panel.conf:/etc/nginx/nginx.conf:ro"]
+    secrets: [tls_certificate, tls_private_key]
+    entrypoint: [nginx, -g, "daemon off;"]
+    restart: unless-stopped
+    depends_on: [panel]

@@ -1,0 +1,3434 @@
+{
+  "schema_version": 1,
+  "scope": "BoardGamesManager, DartsGameManager, PoolGameManager native client TCP payload contracts",
+  "provenance": "Static IL2CPP metadata plus focused Ghidra12.1.3 pseudocode; no target execution or network observations. Hashes identify source artifacts, not original C# or REA evidence IDs.",
+  "status": "Client field-consumption and emission contracts recovered; original server state parity is unproved.",
+  "source_artifacts": [
+    {
+      "path": "work/evidence/GameAssembly.dll",
+      "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac"
+    },
+    {
+      "path": "work/decompiled/script.json",
+      "sha256": "7c2d1d0fbe78783799fb78499b9150ec516d30f626f6cf4949cb0d552a17de4a"
+    },
+    {
+      "path": "work/decompiled/dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/tcp-dispatch-map.json",
+      "sha256": "e568a6da1b9cf37230a94ef0b0b847b642894bdd88d1c64c998f027bbc04fca6"
+    }
+  ],
+  "index_convention": "Zero-based fields after opcode removal; C2S indices before generic #platform-name trailer.",
+  "transport_dependency": "See tcp-reconstruction.md and tcp-contracts.json. Mirror NebulaMessage wraps AES128ECB/PKCS7 Base64 payload; C2S AES adds #StandaloneWindows or #PS4. S2C handlers do not generically strip that tail.",
+  "entrydata_dependency": "tools/avatar_entry_codec.py is the canonical shared codec reconstruction. Use its ordered-schema decode_entry_fields/encode_entry_fields API with entrydata_dtos.*.canonical_codec_schema. Floats encode from explicit lexical strings; decode null marker does not itself model initialized CLR field/reused-array skip assignment. This protocol is not JSON.",
+  "entrydata_grammar": {
+    "source_rvas": [
+      "0x6a5d10",
+      "0x6a5020",
+      "0x6a65b0",
+      "0x6a59f0"
+    ],
+    "scalar": "Enum Object.ToString names then Enum.Parse; bool True/False; numeric strings, float InvariantCulture.",
+    "array": "A prefixed decimal count token, followed by elements. Primitive/string elements are tokens; EntryData subclass elements recursively concatenate their fields without outer element wrapper.",
+    "null_array": "Prefixed nulls token causes deserializer to leave the existing field unchanged; it is not equivalent to a fresh empty array.",
+    "nested_class": "EntryData fields concatenate recursively without an outer token. Deserialization relies on initialized nested objects; null nested object serialization omits fields and is not a safe stand-alone grammar.",
+    "board_table_example_shape": "token(gameRulesName)+token(GUIDcount)+token(GUID0)+...+token(PS4IDcount)+token(PS4ID0)+...",
+    "scope_note": "Codec facts supplied by independent avatar_contracts static audit; see its source-hashed canonical deliverable for complete evidence."
+  },
+  "nested_board_snapshots": {
+    "envelope": {
+      "rva": "0x541310",
+      "format": "One rules character 0..3 followed by concrete board text; rules0 does not deserialize a body."
+    },
+    "TicTacToe": {
+      "rva": "0x550550",
+      "format": "One character per tiles[] entry in array order. Lowercase x selects player0/X object; lowercase o selects player1/O object; other characters leave tile state untouched.",
+      "effects": "Recognized x/o activates its mark and clears tile-selectability flag. No implicit clearing for unrecognized character in this method.",
+      "validation": "Text must have at least tiles.Length UTF16 characters; extra characters are ignored."
+    },
+    "Chess": {
+      "evidence_rvas": [
+        "0x52e910",
+        "0x5367a0"
+      ],
+      "format": "One character per board tile in outer dimension0, inner dimension1 order. 0 is empty; p/r/n/b/q/k = Pawn/Rook/Knight/Bishop/Queen/King. Lowercase selects White(0), uppercase selects Black(1). This case convention differs from FEN.",
+      "piece_char_map": {
+        "p": "Pawn",
+        "r": "Rook",
+        "n": "Knight",
+        "b": "Bishop",
+        "q": "Queen",
+        "k": "King"
+      },
+      "effects": "Destroy/clear both existing piece lists, recreate pieces at grid coordinates.",
+      "validation": "Only mapped lower/uppercase letters and0 are supported; other characters cause dictionary lookup failure; short text causes get_Chars bounds failure; extra text ignored.",
+      "unknown": "Grid dimensions depend on initialized board asset Bounds.Rows/Colums; constructor field defaults alone do not prove serialized asset dimensions."
+    },
+    "Draughts": {
+      "evidence_rvas": [
+        "0x5373b0",
+        "0x5383d0",
+        "0x5376a0"
+      ],
+      "format": "One character per board tile in outer dimension0, inner dimension1 order. 0 is empty; r/R=Regular, k/K=King. Lowercase selects White(1), uppercase selects Red(0).",
+      "piece_char_map": {
+        "r": "Regular",
+        "k": "King"
+      },
+      "effects": "Destroy/clear both existing piece lists, recreate pieces at grid coordinates.",
+      "validation": "Only r/R/k/K and0 supported; invalid nonzero char dictionary lookup fails; short text get_Chars fails; extra text ignored.",
+      "unknown": "Grid dimensions are initialized from serialized Bounds.Rows/Colums; no authoritative server dimensions inferred."
+    }
+  },
+  "board_move_replay": {
+    "TicTacToe": {
+      "rva": "0x550a10",
+      "effects": "Set isPlayersTurn=true; index tiles[targetX*3+targetY]; store playerIndex and activate X for0 or O for1; clear tile-selectability, show local pointer/control UI.",
+      "validation": "Origin coordinates unused. Array bounds checked for flattened index; no occupancy/turn/legal-move check in this ApplyMove body. Player values other than0/1 still get stored but activate neither mark."
+    },
+    "Chess": {
+      "rva": "0x5327b0",
+      "effects": "Copy originX/Y to initialized input.moveData, call SelectDestination(targetX,targetY), set isPlayersTurn=true, activate side1-playerIndex, update selected tile/pointer/control UI.",
+      "unknown": "SelectDestination and concrete BoardGameLogic legal-move/animation behavior are transitive gameplay algorithms beyond this network wrapper; original server adjudication remains unknown."
+    },
+    "Draughts": {
+      "rva": "0x538ff0",
+      "effects": "SelectOrigin(originX,Y), SelectDestination(targetX,Y). If multipleMove=false: isPlayersTurn=true, activate side1-playerIndex, clear activatedMoves and update pointer/control UI. If multipleMove=true, carry target coordinates into originX/Y for the next jump.",
+      "unknown": "Multiple-capture legality, promotion and termination depend on deeper local gameplay methods; no original server decision policy is established."
+    }
+  },
+  "coverage": {
+    "registered_clientbound": 34,
+    "clientbound_contracts": 34,
+    "clientbound_missing": [],
+    "serverbound_emitters": 19,
+    "enum_only_unregistered": [
+      {
+        "opcode": 38,
+        "name": "Board_msg_SyncTable"
+      },
+      {
+        "opcode": 58,
+        "name": "Pool_msg_SyncGame"
+      },
+      {
+        "opcode": 83,
+        "name": "Darts_msg_SelectMode"
+      }
+    ],
+    "pending_evidence_rvas": []
+  },
+  "unknown_original_server_semantics": [
+    "Seat ownership/authentication, GUID binding, reconnect/disconnect cleanup, timeouts and recipient visibility rules.",
+    "Exact table transition guards, simultaneous join/start arbitration, first-player selection and when request/reply versus OneWay variants are sent.",
+    "Board legal-move adjudication, turn progression, checkmate/draw rules and authoritative result/XP accounting. Client rules/input code may duplicate some rules but cannot prove the removed server's policy.",
+    "Darts score adjudication, shot validation, deterministic deflection/physics agreement, round/turn authority and result/XP accounting.",
+    "Pool rules variants, authoritative foul/win adjudication, ball-contact/physics trust, sequence/ack timing, replay recipient selection and result/XP accounting.",
+    "Initialized asset grid dimensions and authoritative legal coordinate bounds are not recovered from snapshot parsers; concrete input replay calls into deeper local gameplay methods.",
+    "Request35/85 send caller-provided strings; their EntryData move types are established on the receiving side. Full outbound gameplay construction and all concrete local rule algorithms are separate from the sender's field contract."
+  ],
+  "enums": {
+    "SpaceGameManager.TableState": {
+      "Free": 0,
+      "Full": 1,
+      "Awaiting": 2,
+      "Ready": 3,
+      "Playing": 4,
+      "Results": 5
+    },
+    "BoardGamesManager.GameState": {
+      "None": 0,
+      "P1Turn": 1,
+      "P2Turn": 2,
+      "P1Wins": 3,
+      "P2Wins": 4,
+      "Draw": 5
+    },
+    "BoardGamesManager.GameRules": {
+      "None": 0,
+      "TicTacToe": 1,
+      "Chess": 2,
+      "Draughts": 3
+    },
+    "DartsGameManager.GameState": {
+      "Inactive": 0,
+      "StartGame": 1,
+      "Instructions": 2,
+      "StartTurn": 3,
+      "Pointing": 4,
+      "Shoting": 5,
+      "ChangeTurn": 6,
+      "RivalGone": 7,
+      "GameEnd": 8,
+      "Paused": 9
+    },
+    "DartsGameManager.GameRules": {
+      "Game301": 0,
+      "Game501": 1,
+      "Game701": 2,
+      "Cricket": 3,
+      "AroundTheClock": 4
+    },
+    "PoolGameManager.GameState": {
+      "Inactive": 0,
+      "Awaiting": 1,
+      "StartGame": 2,
+      "WaitingRivalInit": 3,
+      "WaitingRivalMove": 4,
+      "SetCueRotation": 5,
+      "SetCueHitPoint": 6,
+      "BallMoveAction": 7,
+      "BallMoveWaitServer": 8,
+      "ChangePlayTurn": 9,
+      "PlayerPenalty": 10,
+      "RelocateWhite": 11,
+      "ConfirmExit": 12,
+      "GameFishined": 13
+    },
+    "ChessPiece.Type": {
+      "Pawn": 0,
+      "Rook": 1,
+      "Knight": 2,
+      "Bishop": 3,
+      "Queen": 4,
+      "King": 5
+    },
+    "ChessPiece.Color": {
+      "White": 0,
+      "Black": 1
+    },
+    "DraughtsPiece.Type": {
+      "Regular": 0,
+      "King": 1
+    },
+    "DraughtsPiece.Color": {
+      "Red": 0,
+      "White": 1
+    }
+  },
+  "entrydata_dtos": {
+    "BoardGameLogic.Move": {
+      "codec": "EntryData",
+      "fields_in_metadata_order": [
+        {
+          "type": "int",
+          "name": "originX",
+          "offset": "0x18"
+        },
+        {
+          "type": "int",
+          "name": "originY",
+          "offset": "0x1C"
+        },
+        {
+          "type": "int",
+          "name": "targetX",
+          "offset": "0x20"
+        },
+        {
+          "type": "int",
+          "name": "targetY",
+          "offset": "0x24"
+        }
+      ],
+      "metadata_block_sha256": "cc4a67044da533ac5195224fafe572b44305cf8ee8c0ed0a1991b2a4cf52a965",
+      "source": "work/decompiled/dump.cs",
+      "note": "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+      "canonical_codec_schema": [
+        {
+          "name": "originX",
+          "type": "int"
+        },
+        {
+          "name": "originY",
+          "type": "int"
+        },
+        {
+          "name": "targetX",
+          "type": "int"
+        },
+        {
+          "name": "targetY",
+          "type": "int"
+        }
+      ],
+      "codec_api": "avatar_entry_codec.decode_entry_fields(text, canonical_codec_schema) / encode_entry_fields(values, canonical_codec_schema); floating point encode values must be explicit lexical strings"
+    },
+    "BoardGamesTable.Data": {
+      "codec": "EntryData",
+      "fields_in_metadata_order": [
+        {
+          "type": "BoardGamesManager.GameRules",
+          "name": "gameRules",
+          "offset": "0x18"
+        },
+        {
+          "type": "string[]",
+          "name": "userGUIDs",
+          "offset": "0x20"
+        },
+        {
+          "type": "string[]",
+          "name": "userPS4IDs",
+          "offset": "0x28"
+        }
+      ],
+      "metadata_block_sha256": "05965e553c41ccaf16c1a3631d4a52b996009b13eb0c34044386f72272fb892e",
+      "source": "work/decompiled/dump.cs",
+      "note": "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+      "canonical_codec_schema": [
+        {
+          "name": "gameRules",
+          "type": {
+            "enum": [
+              "None",
+              "TicTacToe",
+              "Chess",
+              "Draughts"
+            ]
+          }
+        },
+        {
+          "name": "userGUIDs",
+          "type": {
+            "array": "string"
+          }
+        },
+        {
+          "name": "userPS4IDs",
+          "type": {
+            "array": "string"
+          }
+        }
+      ],
+      "codec_api": "avatar_entry_codec.decode_entry_fields(text, canonical_codec_schema) / encode_entry_fields(values, canonical_codec_schema); floating point encode values must be explicit lexical strings"
+    },
+    "DartsGameTable.TableData": {
+      "codec": "EntryData",
+      "fields_in_metadata_order": [
+        {
+          "type": "DartsGameManager.GameRules",
+          "name": "gameRules",
+          "offset": "0x18"
+        },
+        {
+          "type": "DartsGameManager.GameState",
+          "name": "gameState",
+          "offset": "0x1C"
+        },
+        {
+          "type": "int",
+          "name": "currentTurnIndex",
+          "offset": "0x20"
+        },
+        {
+          "type": "int",
+          "name": "numberOfPlayers",
+          "offset": "0x24"
+        },
+        {
+          "type": "bool",
+          "name": "isActive",
+          "offset": "0x28"
+        }
+      ],
+      "metadata_block_sha256": "ab3890ccc941c8541c6baec3eb5760d023a91ca5ae9b87beb36b56694cf99588",
+      "source": "work/decompiled/dump.cs",
+      "note": "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+      "canonical_codec_schema": [
+        {
+          "name": "gameRules",
+          "type": {
+            "enum": [
+              "Game301",
+              "Game501",
+              "Game701",
+              "Cricket",
+              "AroundTheClock"
+            ]
+          }
+        },
+        {
+          "name": "gameState",
+          "type": {
+            "enum": [
+              "Inactive",
+              "StartGame",
+              "Instructions",
+              "StartTurn",
+              "Pointing",
+              "Shoting",
+              "ChangeTurn",
+              "RivalGone",
+              "GameEnd",
+              "Paused"
+            ]
+          }
+        },
+        {
+          "name": "currentTurnIndex",
+          "type": "int"
+        },
+        {
+          "name": "numberOfPlayers",
+          "type": "int"
+        },
+        {
+          "name": "isActive",
+          "type": "bool"
+        }
+      ],
+      "codec_api": "avatar_entry_codec.decode_entry_fields(text, canonical_codec_schema) / encode_entry_fields(values, canonical_codec_schema); floating point encode values must be explicit lexical strings"
+    },
+    "DartsGameTable.Player": {
+      "codec": "EntryData",
+      "fields_in_metadata_order": [
+        {
+          "type": "string",
+          "name": "name",
+          "offset": "0x18"
+        },
+        {
+          "type": "string",
+          "name": "PS4ID",
+          "offset": "0x20"
+        },
+        {
+          "type": "string",
+          "name": "GUID",
+          "offset": "0x28"
+        },
+        {
+          "type": "int",
+          "name": "score",
+          "offset": "0x30"
+        },
+        {
+          "type": "int",
+          "name": "dartColor",
+          "offset": "0x34"
+        },
+        {
+          "type": "string",
+          "name": "color",
+          "offset": "0x38"
+        }
+      ],
+      "metadata_block_sha256": "94d374226b221f57fb1ecc78e73770aacacf75e55e771c9a9454d87257b9cba5",
+      "source": "work/decompiled/dump.cs",
+      "note": "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+      "canonical_codec_schema": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "PS4ID",
+          "type": "string"
+        },
+        {
+          "name": "GUID",
+          "type": "string"
+        },
+        {
+          "name": "score",
+          "type": "int"
+        },
+        {
+          "name": "dartColor",
+          "type": "int"
+        },
+        {
+          "name": "color",
+          "type": "string"
+        }
+      ],
+      "codec_api": "avatar_entry_codec.decode_entry_fields(text, canonical_codec_schema) / encode_entry_fields(values, canonical_codec_schema); floating point encode values must be explicit lexical strings"
+    },
+    "DartsRules.DartShotData": {
+      "codec": "EntryData",
+      "fields_in_metadata_order": [
+        {
+          "type": "float",
+          "name": "x",
+          "offset": "0x18"
+        },
+        {
+          "type": "float",
+          "name": "y",
+          "offset": "0x1C"
+        },
+        {
+          "type": "float",
+          "name": "force",
+          "offset": "0x20"
+        },
+        {
+          "type": "float",
+          "name": "deflected_x",
+          "offset": "0x24"
+        },
+        {
+          "type": "float",
+          "name": "deflected_y",
+          "offset": "0x28"
+        }
+      ],
+      "metadata_block_sha256": "57de455a055056754a7e116a4eb5425a0c8d078e4673dbf2dd242dd57a04e9e1",
+      "source": "work/decompiled/dump.cs",
+      "note": "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+      "canonical_codec_schema": [
+        {
+          "name": "x",
+          "type": "float"
+        },
+        {
+          "name": "y",
+          "type": "float"
+        },
+        {
+          "name": "force",
+          "type": "float"
+        },
+        {
+          "name": "deflected_x",
+          "type": "float"
+        },
+        {
+          "name": "deflected_y",
+          "type": "float"
+        }
+      ],
+      "codec_api": "avatar_entry_codec.decode_entry_fields(text, canonical_codec_schema) / encode_entry_fields(values, canonical_codec_schema); floating point encode values must be explicit lexical strings"
+    }
+  },
+  "contracts": [
+    {
+      "game": "board",
+      "direction": "C2S",
+      "opcode": 32,
+      "enum_name": "Board_msg_InitGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "PS4ID",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53f370"
+      ],
+      "client_effects": "Disable interaction colliders, activate local table/menu, request seat.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "C2S",
+      "opcode": 33,
+      "enum_name": "Board_msg_SelectGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int",
+          "note": "GetCurrentTableForUser(sessionGUID)"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "BoardGamesManager.GameRules/int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53fd20"
+      ],
+      "client_effects": "Request selected board rules.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "C2S",
+      "opcode": 34,
+      "enum_name": "Board_msg_StartGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5400c0"
+      ],
+      "client_effects": "Request match start.",
+      "client_validation": [],
+      "notes": [
+        "The managed totalplayers argument is not serialized by this implementation."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "C2S",
+      "opcode": 35,
+      "enum_name": "Board_msg_MakeMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int",
+          "note": "GetCurrentTableForUser(sessionGUID)"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<BoardGameLogic.Move>"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53f9e0"
+      ],
+      "client_effects": "Submit serialized move string.",
+      "client_validation": [],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "C2S",
+      "opcode": 36,
+      "enum_name": "Board_msg_LeaveGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableID",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53f730"
+      ],
+      "client_effects": "Request leave.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "C2S",
+      "opcode": 37,
+      "enum_name": "Board_msg_SyncGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        }
+      ],
+      "evidence_rvas": [
+        "0x540370",
+        "0x551d50"
+      ],
+      "client_effects": "Request board-table snapshot; a delayed coroutine invokes this sender after initialization.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 32,
+      "enum_name": "Board_msg_InitGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/int"
+        },
+        {
+          "index": 2,
+          "name": "tableData",
+          "type": "EntryData<BoardGamesTable.Data>",
+          "note": "Consumed in Free/Awaiting branches"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53d360",
+        "0x5d95b0"
+      ],
+      "client_effects": "Store tableID/tableState. Free: initialPlayer=true, reset table, decode data, mark local player, select rules and seat avatar; manager becomes Awaiting. Awaiting: initialPlayer=false, decode data, join/rival UI, seat avatar. Busy states display their branch UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Decoded GUID/PS4ID arrays are indexed as two seats by subsequent UI/seat logic; preserve both slots, using empty strings for empty seats."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "State is Int32.Parse here, unlike several Enum.Parse handlers."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 33,
+      "enum_name": "Board_msg_SelectGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "BoardGamesManager.GameRules/Enum.Parse"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53e700",
+        "0x5d97f0"
+      ],
+      "client_effects": "When manager is Awaiting(2), store gameRules and display selected-game instructions.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 34,
+      "enum_name": "Board_msg_StartGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53ea60",
+        "0x5d9830"
+      ],
+      "client_effects": "If manager Awaiting, reset/activate table, select existing tableData.gameRules, activate game camera and menus. Local initialPlayer flag selects Your turn/Control versus Rival turn/Waiting UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "No player-count or match-state field is parsed."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 35,
+      "enum_name": "Board_msg_MakeMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "newMatchState",
+          "type": "BoardGamesManager.GameState/Enum.Parse"
+        },
+        {
+          "index": 3,
+          "name": "playerIndex",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5d96d0",
+        "0x53cbe0"
+      ],
+      "client_effects": "Call CheckNewMatchState without applying a move. For local table, P1Turn/P2Turn may display Chess Check; all other parsed states go to ShowMatchResults.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "This is not the C2S35 layout and has no serialized move field."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 36,
+      "enum_name": "Board_msg_LeaveGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "departingGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53dc00",
+        "0x5d9690"
+      ],
+      "client_effects": "Clear matching GUID and PS4ID seats; local leave restores avatar controls/transform; rival leave updates table/UI and initial-player state.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 37,
+      "enum_name": "Board_msg_SyncGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": "1..N-1",
+          "name": "boardState[0..N-2]",
+          "type": "BoardTableSnapshot",
+          "note": "N=local table count; native loop stops at i<N"
+        },
+        {
+          "index": "N",
+          "name": "unreadLastBoardStateSlot",
+          "type": "opaque",
+          "note": "This slot is skipped by the observed loop"
+        },
+        {
+          "index": "N+1+2*j",
+          "name": "seat0GUID[j]",
+          "type": "string",
+          "note": "j=0..N-1"
+        },
+        {
+          "index": "N+2+2*j",
+          "name": "seat1GUID[j]",
+          "type": "string",
+          "note": "j=0..N-1"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53ecf0",
+        "0x541310",
+        "0x540f00",
+        "0x5d9870"
+      ],
+      "client_effects": "Decode board states for tables0..N-2, then consume GUID pairs from N+1 onward; resolve avatars from Memory and place them at seats.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "GUID pair loop continues to payload end; odd or excessive pairs can cause bounds failure."
+      ],
+      "notes": [
+        "Candidate full snapshot has 1+3*N fields; server's exact canonical snapshot construction remains unobserved.",
+        "Preserve the skipped slot N: silently correcting this apparent off-by-one changes the client's GUID offsets.",
+        "BoardTableSnapshot begins with one decimal rules character; rules>0 dispatches remainder to concrete board.DeserializeTable."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 39,
+      "enum_name": "Board_msg_InitGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "tableData",
+          "type": "EntryData<BoardGamesTable.Data>"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53d2e0",
+        "0x5d9570"
+      ],
+      "client_effects": "Deserialize into existing tableData; no local-seat initialization.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 40,
+      "enum_name": "Board_msg_SelectGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "BoardGamesManager.GameRules/Enum.Parse"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53e590",
+        "0x5d97b0"
+      ],
+      "client_effects": "When manager is Awaiting(2), store tableData.gameRules.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 41,
+      "enum_name": "Board_msg_StartGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53ea60",
+        "0x5d9830"
+      ],
+      "client_effects": "If manager Awaiting, reset/activate table, select existing tableData.gameRules, activate game camera and menus. Local initialPlayer flag selects Your turn/Control versus Rival turn/Waiting UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "No player-count or match-state field is parsed."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 42,
+      "enum_name": "Board_msg_LeaveGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "departingGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53dc00",
+        "0x5d9690"
+      ],
+      "client_effects": "Clear matching GUID and PS4ID seats; local leave restores avatar controls/transform; rival leave updates table/UI and initial-player state.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "board",
+      "direction": "S2C",
+      "opcode": 43,
+      "enum_name": "Board_msg_MakeMoveOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "newMatchState",
+          "type": "BoardGamesManager.GameState/Enum.Parse"
+        },
+        {
+          "index": 3,
+          "name": "playerIndex",
+          "type": "int"
+        },
+        {
+          "index": 4,
+          "name": "move",
+          "type": "EntryData<BoardGameLogic.Move>"
+        }
+      ],
+      "evidence_rvas": [
+        "0x53e430",
+        "0x53cbe0",
+        "0x5327b0",
+        "0x538ff0",
+        "0x550a10",
+        "0x5d9770"
+      ],
+      "client_effects": "Allocate/decode Move, call BoardGamesBoard.input.ApplyMove(playerIndex,move) (input virtual slot10), then CheckNewMatchState. Concrete input replay effects appear in board_move_replay below.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "ApplyMove is dispatched through board.input+0x38, not a direct BoardGameLogic.MakeMove call."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "C2S",
+      "opcode": 80,
+      "enum_name": "Darts_msg_InitGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55c5e0"
+      ],
+      "client_effects": "Request interaction/seat.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "C2S",
+      "opcode": 81,
+      "enum_name": "Darts_msg_LeaveGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55cb90"
+      ],
+      "client_effects": "Request leave.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "C2S",
+      "opcode": 82,
+      "enum_name": "Darts_msg_SelectGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableID",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "DartsGameManager.GameRules/int"
+        },
+        {
+          "index": 3,
+          "name": "numberOfPlayers",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55d240"
+      ],
+      "client_effects": "Request rules and player count.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "C2S",
+      "opcode": 84,
+      "enum_name": "Darts_msg_StartGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableID",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55d730"
+      ],
+      "client_effects": "Request start.",
+      "client_validation": [],
+      "notes": [
+        "The managed totalplayers argument is not serialized."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "C2S",
+      "opcode": 85,
+      "enum_name": "Darts_msg_MakeMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int",
+          "note": "GetCurrentTableForUser(sessionGUID); logs and returns -1 if no seat"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<DartsRules.DartShotData>"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55ce40"
+      ],
+      "client_effects": "Send caller-provided serialized move.",
+      "client_validation": [],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "C2S",
+      "opcode": 86,
+      "enum_name": "Darts_msg_SyncGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55d9f0",
+        "0x561e90"
+      ],
+      "client_effects": "Request snapshot; initialization schedules a delayed invocation.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 80,
+      "enum_name": "Darts_msg_InitGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        },
+        {
+          "index": "3..",
+          "name": "tableBlock",
+          "type": "DartsTableBlock",
+          "note": "Only Free/Awaiting branches decode"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55a1d0",
+        "0x55e1b0",
+        "0x5db860"
+      ],
+      "client_effects": "Store tableID/state; require interacting table. Free sets initialPlayer/localPlayerIndex0 and rule menu; Awaiting sets initialPlayer=false/localPlayerIndex1 and join/rival UI. Decode player/table data in these branches.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected.",
+        "Player count must fit existing players[] (constructor allocates two entries); all referenced block fields required."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 81,
+      "enum_name": "Darts_msg_LeaveGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55b1e0",
+        "0x55ee30",
+        "0x5db9c0"
+      ],
+      "client_effects": "Set manager tableState; remove manager's remembered GUID/PS4ID from selected table; restore local avatar or update rival/rules state as applicable.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "Departure identity is not in this reply; remembered manager.GUID/PS4ID is used."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 82,
+      "enum_name": "Darts_msg_SelectGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "numberOfPlayers",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "DartsGameManager.GameRules/Enum.Parse"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55bbd0",
+        "0x55e470",
+        "0x5dbb40"
+      ],
+      "client_effects": "Store base playerCount and tableData.numberOfPlayers, instantiate selected rules and display instructions.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 84,
+      "enum_name": "Darts_msg_StartGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": "1..",
+          "name": "tableBlock",
+          "type": "DartsTableBlock"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55bed0",
+        "0x55e1b0",
+        "0x55e5c0",
+        "0x5dbb80"
+      ],
+      "client_effects": "Decode TableBlock then Get_StartGame. Start uses existing rules/table state, initializes rules, positions local avatar/camera, hides other users and sets tableState=Playing(4).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Player count must fit allocated players[] and complete block."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values.",
+        "DartsGameTable.Get_StartGame has no additional payload field reads."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 85,
+      "enum_name": "Darts_msg_MakeMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<DartsRules.DartShotData>"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55b950",
+        "0x56c670",
+        "0x5dbac0"
+      ],
+      "client_effects": "If rulesScript exists, call MakePassiveMove. In rules state Pointing(4), deserialize shot, set dart local X/Y while preserving Z, raycast from dart position/forward to resolve DartboardField/target marker, request next state Shoting(5). In other states queue the raw shot string. Rival-active UI timer is adjusted separately.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "MakePassiveMove relies on initialized shot/dart/table objects and uses Unity raycast results; it is not a server score parser."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "No OK acknowledgement sentinel or server score field is checked by this manager."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 86,
+      "enum_name": "Darts_msg_SyncGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "rememberedGUID",
+          "type": "string"
+        },
+        {
+          "index": "1..",
+          "name": "tableBlocks",
+          "type": "DartsTableBlock[]",
+          "note": "Sequential local table order; no table index/count prefix"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55bff0",
+        "0x55e1b0",
+        "0x55ea00",
+        "0x5dbbc0"
+      ],
+      "client_effects": "Remember field0 GUID; deserialize each table block advancing by playerCount+2. Active nonempty tables set rules and InitRules.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "No extra trailing field: payload-end drives the next-table loop.",
+        "Each player count must fit allocated array; number of blocks must fit local tables."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 87,
+      "enum_name": "Darts_msg_InitGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableData",
+          "type": "EntryData<DartsGameTable.TableData>"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55a150",
+        "0x5db820"
+      ],
+      "client_effects": "Deserialize tableData only; this is not the full TableBlock used by Init/Start/Sync.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 88,
+      "enum_name": "Darts_msg_LeaveGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "departingGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55aa60",
+        "0x55ee30",
+        "0x5db8c0"
+      ],
+      "client_effects": "Set manager state; remove supplied departingGUID with manager's remembered PS4ID; local/rival branches restore controls or signal rival gone and award local game-related XP.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 89,
+      "enum_name": "Darts_msg_SelectGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "DartsGameManager.GameRules/Enum.Parse"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55ba60",
+        "0x5dbb00"
+      ],
+      "client_effects": "When manager Awaiting(2), set rules; field1 is not parsed as player count.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 90,
+      "enum_name": "Darts_msg_StartGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": "1..",
+          "name": "tableBlock",
+          "type": "DartsTableBlock"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55bed0",
+        "0x55e1b0",
+        "0x55e5c0",
+        "0x5dbb80"
+      ],
+      "client_effects": "Decode TableBlock then Get_StartGame. Start uses existing rules/table state, initializes rules, positions local avatar/camera, hides other users and sets tableState=Playing(4).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Player count must fit allocated players[] and complete block."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "DartsTableBlock = EntryData<TableData>, playerCount:int, EntryData<Player>[playerCount]. Fields consumed are 2+playerCount. TableData.numberOfPlayers and separate playerCount are distinct wire values.",
+        "DartsGameTable.Get_StartGame has no additional payload field reads."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "darts",
+      "direction": "S2C",
+      "opcode": 91,
+      "enum_name": "Darts_msg_MakeMoveOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "move",
+          "type": "EntryData<DartsRules.DartShotData>"
+        }
+      ],
+      "evidence_rvas": [
+        "0x55b950",
+        "0x56c670",
+        "0x5dbac0"
+      ],
+      "client_effects": "If rulesScript exists, call MakePassiveMove. In rules state Pointing(4), deserialize shot, set dart local X/Y while preserving Z, raycast from dart position/forward to resolve DartboardField/target marker, request next state Shoting(5). In other states queue the raw shot string. Rival-active UI timer is adjusted separately.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "MakePassiveMove relies on initialized shot/dart/table objects and uses Unity raycast results; it is not a server score parser."
+      ],
+      "notes": [
+        "EntryData reflection codec, not JSON. Field order/schema below is recovered from IL2CPP metadata; use the shared avatar EntryData codec reconstruction.",
+        "No OK acknowledgement sentinel or server score field is checked by this manager."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "C2S",
+      "opcode": 51,
+      "enum_name": "Pool_msg_InitGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5a98c0"
+      ],
+      "client_effects": "After one coroutine yield, activate table/menu and request initialization.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "C2S",
+      "opcode": 52,
+      "enum_name": "Pool_msg_LeaveGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5a9af0"
+      ],
+      "client_effects": "After one coroutine yield, request leave.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "C2S",
+      "opcode": 53,
+      "enum_name": "Pool_msg_SelectGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "myTableID",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "selectedRules",
+          "type": "int"
+        },
+        {
+          "index": 3,
+          "name": "numberOfPlayers",
+          "type": "int",
+          "note": "(selectedRules != 0)+1"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5a9e70"
+      ],
+      "client_effects": "Set rules locally before sending. Rules0 chooses one player; other values choose two.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "C2S",
+      "opcode": 54,
+      "enum_name": "Pool_msg_StartGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "totalplayers",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5aa3c0",
+        "0x59f180"
+      ],
+      "client_effects": "Forward after coroutine yield; record player count and busy flag.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "C2S",
+      "opcode": 55,
+      "enum_name": "Pool_msg_MakeMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "cueAngleX",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 3,
+          "name": "cueAngleY",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 4,
+          "name": "spinX",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 5,
+          "name": "spinY",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 6,
+          "name": "force",
+          "type": "float/InvariantCulture"
+        }
+      ],
+      "evidence_rvas": [
+        "0x59a850",
+        "0x59e9c0"
+      ],
+      "client_effects": "Submit cue shot parameters.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "C2S",
+      "opcode": 56,
+      "enum_name": "Pool_msg_EndsMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "blockWordCount",
+          "type": "int",
+          "note": "M=3*(N+1), counts fields starting at N"
+        },
+        {
+          "index": 3,
+          "name": "ballCount",
+          "type": "int",
+          "note": "N=rulesScript.balls.Length"
+        },
+        {
+          "index": "4+2*i",
+          "name": "ballX[i]",
+          "type": "float/InvariantCulture",
+          "note": "i=0..N-1, localPosition.x"
+        },
+        {
+          "index": "5+2*i",
+          "name": "ballZ[i]",
+          "type": "float/InvariantCulture",
+          "note": "localPosition.z, not Vector3.y"
+        },
+        {
+          "index": "4+2*N+i",
+          "name": "pocketed[i]",
+          "type": "int/0-or-1"
+        },
+        {
+          "index": "4+3*N",
+          "name": "whiteFirstTouched",
+          "type": "int"
+        },
+        {
+          "index": "5+3*N",
+          "name": "whiteLastTouched",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x59a810",
+        "0x59ddc0"
+      ],
+      "client_effects": "Report local physics result including white-ball contact identifiers.",
+      "client_validation": [],
+      "notes": [
+        "M is not present in the peer S2C payload. Full request has 6+3*N fields before platform tail."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "C2S",
+      "opcode": 57,
+      "enum_name": "Pool_msg_MoveFoul",
+      "fields": [
+        {
+          "index": 0,
+          "name": "sessionGUID",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "whiteX",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": 3,
+          "name": "whiteZ",
+          "type": "float/InvariantCulture"
+        }
+      ],
+      "evidence_rvas": [
+        "0x59a8a0",
+        "0x59ed60"
+      ],
+      "client_effects": "Report white-ball relocation using local position X/Z.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 51,
+      "enum_name": "Pool_msg_InitGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "tableState",
+          "type": "SpaceGameManager.TableState/Enum.Parse"
+        },
+        {
+          "index": 3,
+          "name": "rivalName",
+          "type": "string",
+          "note": "Only Awaiting branch"
+        },
+        {
+          "index": 4,
+          "name": "rulesID",
+          "type": "int",
+          "note": "Only Awaiting branch"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5995f0",
+        "0x5dc070"
+      ],
+      "client_effects": "Store myTableID and require table interaction. Free branch opens rule selection if local state Awaiting/Inactive; Awaiting decodes rival/rules, sets two players and join menu; Full/Playing show busy UI; Ready returns.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Enum.Parse is case-sensitive and accepts enum names or numeric text; parsing alone does not prove that undefined numeric values are rejected."
+      ],
+      "notes": [
+        "Only branches that read rivalName/rulesID require those final two fields."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 52,
+      "enum_name": "Pool_msg_LeaveGame",
+      "fields": [],
+      "evidence_rvas": [
+        "0x5457f0",
+        "0x5dc200"
+      ],
+      "client_effects": "Virtual DeactivateTable call; reply payload is ignored by this body.",
+      "client_validation": [],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 53,
+      "enum_name": "Pool_msg_SelectGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 2,
+          "name": "numberOfPlayers",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x599eb0",
+        "0x59be10",
+        "0x5dc3c0"
+      ],
+      "client_effects": "Use previously selected rules; initialize rule/ball state arrays and solo/multiplayer UI.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [
+        "Field2 is player count, not rulesID. Rules came from local selection or Init Awaiting branch."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 54,
+      "enum_name": "Pool_msg_StartGame",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "role",
+          "type": "string",
+          "note": "Literal playerOne selects index0; every other non-null string selects index1"
+        },
+        {
+          "index": 2,
+          "name": "rivalName",
+          "type": "optional string"
+        }
+      ],
+      "evidence_rvas": [
+        "0x59a180",
+        "0x59bf20",
+        "0x59c050",
+        "0x5dc400"
+      ],
+      "client_effects": "Only if table currentState Awaiting(1), set localPlayerIndex and optional rival name, then InitState(StartGame2).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Role must be non-null; only playerOne is explicitly compared."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 55,
+      "enum_name": "Pool_msg_MakeMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrAngleX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "cueAngleY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 3,
+          "name": "spinX",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 4,
+          "name": "spinY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 5,
+          "name": "force",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        }
+      ],
+      "evidence_rvas": [
+        "0x599a50",
+        "0x59bb40",
+        "0x5dc340"
+      ],
+      "client_effects": "OK: doMoveShotFromServer=false, gotMoveShotFromServer=true. Replay: store five shot floats, doMoveShot=true, gotMoveShot=true.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum6. String comparison is exact OK. Float parsing does not add range/finite checks."
+      ],
+      "notes": [
+        "Opcode55 and61 share receive parser; recipient policy is not proved by names."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 56,
+      "enum_name": "Pool_msg_EndsMove",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrBallCount",
+          "type": "literal OK | int/N"
+        },
+        {
+          "index": "2+2*i",
+          "name": "ballX[i]",
+          "type": "float/InvariantCulture",
+          "note": "Replay i=0..N-1"
+        },
+        {
+          "index": "3+2*i",
+          "name": "ballZ[i]",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": "2+2*N+i",
+          "name": "pocketed[i]",
+          "type": "int/equals1"
+        },
+        {
+          "index": "2+3*N",
+          "name": "whiteFirstTouched",
+          "type": "int"
+        },
+        {
+          "index": "3+3*N",
+          "name": "whiteLastTouched",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5999e0",
+        "0x59b8f0",
+        "0x59b540",
+        "0x5dc300"
+      ],
+      "client_effects": "OK acknowledges without replay; otherwise fill existing net position/pocket arrays and white contact IDs. Set gotMoveBall=true and doMoveBall=(not OK). Apply_MoveBalls later consumes arrays.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum4+3*N for N>=0. N must fit existing net arrays; no semantic contact-ID/range validation observed.",
+        "Pocket flag is true only for integer1; other parsed integers become false."
+      ],
+      "notes": [
+        "No GUID or M block-word count is read in this direction. Direct C2S echo is incompatible."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 57,
+      "enum_name": "Pool_msg_MoveFoul",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrWhiteX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "whiteZ",
+          "type": "float/InvariantCulture",
+          "note": "Replay only"
+        }
+      ],
+      "evidence_rvas": [
+        "0x599c20",
+        "0x59bcd0",
+        "0x5dc380"
+      ],
+      "client_effects": "OK acknowledges without replay; otherwise write white-ball net X/Z to positions[0]. Set gotMoveFoul=true and doMoveFoul=(not OK).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Replay requires initialized positions[0] and3 fields; ACK2 fields. No finite/table-position bounds check observed."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 59,
+      "enum_name": "Pool_msg_LeaveGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "unread",
+          "type": "opaque"
+        },
+        {
+          "index": 1,
+          "name": "tableIndex",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x599da0",
+        "0x5dc110"
+      ],
+      "client_effects": "RivalGone: ignore Inactive/Awaiting/finished states; otherwise show rival-gone UI for local table and reset. Wrapper clears busy flag and conditionally local XP flag.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 60,
+      "enum_name": "Pool_msg_StartGameOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "role",
+          "type": "string",
+          "note": "Literal playerOne selects index0; every other non-null string selects index1"
+        },
+        {
+          "index": 2,
+          "name": "rivalName",
+          "type": "optional string"
+        }
+      ],
+      "evidence_rvas": [
+        "0x59a180",
+        "0x59bf20",
+        "0x59c050",
+        "0x5dc400"
+      ],
+      "client_effects": "Only if table currentState Awaiting(1), set localPlayerIndex and optional rival name, then InitState(StartGame2).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Role must be non-null; only playerOne is explicitly compared."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 61,
+      "enum_name": "Pool_msg_MakeMoveOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrAngleX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "cueAngleY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 3,
+          "name": "spinX",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 4,
+          "name": "spinY",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        },
+        {
+          "index": 5,
+          "name": "force",
+          "type": "float/InvariantCulture",
+          "note": "Replay branch only"
+        }
+      ],
+      "evidence_rvas": [
+        "0x599a50",
+        "0x59bb40",
+        "0x5dc340"
+      ],
+      "client_effects": "OK: doMoveShotFromServer=false, gotMoveShotFromServer=true. Replay: store five shot floats, doMoveShot=true, gotMoveShot=true.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum6. String comparison is exact OK. Float parsing does not add range/finite checks."
+      ],
+      "notes": [
+        "Opcode55 and61 share receive parser; recipient policy is not proved by names."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 62,
+      "enum_name": "Pool_msg_EndsMoveOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrBallCount",
+          "type": "literal OK | int/N"
+        },
+        {
+          "index": "2+2*i",
+          "name": "ballX[i]",
+          "type": "float/InvariantCulture",
+          "note": "Replay i=0..N-1"
+        },
+        {
+          "index": "3+2*i",
+          "name": "ballZ[i]",
+          "type": "float/InvariantCulture"
+        },
+        {
+          "index": "2+2*N+i",
+          "name": "pocketed[i]",
+          "type": "int/equals1"
+        },
+        {
+          "index": "2+3*N",
+          "name": "whiteFirstTouched",
+          "type": "int"
+        },
+        {
+          "index": "3+3*N",
+          "name": "whiteLastTouched",
+          "type": "int"
+        }
+      ],
+      "evidence_rvas": [
+        "0x5999e0",
+        "0x59b8f0",
+        "0x59b540",
+        "0x5dc300"
+      ],
+      "client_effects": "OK acknowledges without replay; otherwise fill existing net position/pocket arrays and white contact IDs. Set gotMoveBall=true and doMoveBall=(not OK). Apply_MoveBalls later consumes arrays.",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "ACK minimum2 fields; replay minimum4+3*N for N>=0. N must fit existing net arrays; no semantic contact-ID/range validation observed.",
+        "Pocket flag is true only for integer1; other parsed integers become false."
+      ],
+      "notes": [
+        "No GUID or M block-word count is read in this direction. Direct C2S echo is incompatible."
+      ],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    },
+    {
+      "game": "pool",
+      "direction": "S2C",
+      "opcode": 63,
+      "enum_name": "Pool_msg_MoveFoulOneWay",
+      "fields": [
+        {
+          "index": 0,
+          "name": "tableIndex",
+          "type": "int"
+        },
+        {
+          "index": 1,
+          "name": "ackOrWhiteX",
+          "type": "literal OK | float/InvariantCulture"
+        },
+        {
+          "index": 2,
+          "name": "whiteZ",
+          "type": "float/InvariantCulture",
+          "note": "Replay only"
+        }
+      ],
+      "evidence_rvas": [
+        "0x599c20",
+        "0x59bcd0",
+        "0x5dc380"
+      ],
+      "client_effects": "OK acknowledges without replay; otherwise write white-ball net X/Z to positions[0]. Set gotMoveFoul=true and doMoveFoul=(not OK).",
+      "client_validation": [
+        "Table index must address an initialized local table array; out-of-range/missing fields normally throw rather than return a structured protocol error.",
+        "Replay requires initialized positions[0] and3 fields; ACK2 fields. No finite/table-position bounds check observed."
+      ],
+      "notes": [],
+      "original_server_policy": "unknown: request ownership, allowed transitions, recipient set, concurrency and adjudication cannot be proved from a client parser"
+    }
+  ],
+  "native_evidence": [
+    {
+      "rva": "0x52e910",
+      "va": "0x18052e910",
+      "metadata_names": [
+        "ChessBoard$$DeserializeTable"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/52e910.c",
+      "pseudocode_sha256": "83998a0f0808ba59f4c20672a79d8e410009ad740f969ed676080777551dc30d",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5327b0",
+      "va": "0x1805327b0",
+      "metadata_names": [
+        "ChessInputManager$$ApplyMove"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5327b0.c",
+      "pseudocode_sha256": "c514b794bfcb507d1a02c38708bf9ea46cb0a05476430514279359eb702ddac7",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5367a0",
+      "va": "0x1805367a0",
+      "metadata_names": [
+        "ChessPiece$$.cctor"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5367a0.c",
+      "pseudocode_sha256": "7aeaf1047d2ee291d2b94839e141a26bbee85b98fb8fb4b0ea7053b530120890",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5373b0",
+      "va": "0x1805373b0",
+      "metadata_names": [
+        "DraughtsBoard$$DeserializeTable"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5373b0.c",
+      "pseudocode_sha256": "feca02886772ebb5f7acc7c8a0ebb46d80bedf8b2ce3b32418107396dee9ea72",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5376a0",
+      "va": "0x1805376a0",
+      "metadata_names": [
+        "DraughtsBoard$$Initialize"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5376a0.c",
+      "pseudocode_sha256": "7c8c5b85aa3e0a50a7d44810c84e409605cee57bfdaee6d29ee49f2f4b9be84d",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5383d0",
+      "va": "0x1805383d0",
+      "metadata_names": [
+        "DraughtsBoard$$.ctor"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5383d0.c",
+      "pseudocode_sha256": "5ea8618e35c4d189e5c661b282ea1218a1e605b5c3d1c4ca7c5bb905d80033e5",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x538ff0",
+      "va": "0x180538ff0",
+      "metadata_names": [
+        "DraughtsInputManager$$ApplyMove"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/538ff0.c",
+      "pseudocode_sha256": "bb011fc2d7545fe74bbb3acff15e1d6999d99b20f7fb4520dfa168b2da71b146",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53cbe0",
+      "va": "0x18053cbe0",
+      "metadata_names": [
+        "BoardGamesManager$$CheckNewMatchState"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53cbe0.c",
+      "pseudocode_sha256": "9fb5a35069eb488fb75baa378de62933222cc341ebca0021eb444f300200f5b5",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53d2e0",
+      "va": "0x18053d2e0",
+      "metadata_names": [
+        "BoardGamesManager$$Get_InitializeGameOneWay"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53d2e0.c",
+      "pseudocode_sha256": "3de8f4e8e477fc39b8182fa2bbc4ac7c1f566646d2bd4e2661ed54375ee3c6bd",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53d360",
+      "va": "0x18053d360",
+      "metadata_names": [
+        "BoardGamesManager$$Get_InitializeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53d360.c",
+      "pseudocode_sha256": "6a59284aeb743dbfb389ebaed10dc88442996a17f6475196b1788bf75501886e",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53dc00",
+      "va": "0x18053dc00",
+      "metadata_names": [
+        "BoardGamesManager$$Get_LeaveGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53dc00.c",
+      "pseudocode_sha256": "96fa2458bda42709f893002cad6768dfcd4d758dd055a018c3d0b833869bbb9e",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53e430",
+      "va": "0x18053e430",
+      "metadata_names": [
+        "BoardGamesManager$$Get_MakeMoveOneWay"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53e430.c",
+      "pseudocode_sha256": "e3aec7bd052deed13d6c5168285214dcf331d51cd0d78d560e6b7e1774d04943",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53e590",
+      "va": "0x18053e590",
+      "metadata_names": [
+        "BoardGamesManager$$Get_SelectGameOneWay"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53e590.c",
+      "pseudocode_sha256": "9b6028257abd5c6383c39b5f4194d6b0a28910a3628a0897fc505c001cf7b7c2",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53e700",
+      "va": "0x18053e700",
+      "metadata_names": [
+        "BoardGamesManager$$Get_SelectGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53e700.c",
+      "pseudocode_sha256": "b5074095c22c7af482131ff1fc4a4c7652b19e896b7a08733526231acbdd6499",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53ea60",
+      "va": "0x18053ea60",
+      "metadata_names": [
+        "BoardGamesManager$$Get_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53ea60.c",
+      "pseudocode_sha256": "4397e2a42598c8b759dfa2ea5015a0adc6b2c817769a3f92ff200e32ccc745c7",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53ecf0",
+      "va": "0x18053ecf0",
+      "metadata_names": [
+        "BoardGamesManager$$Get_SynchronizeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53ecf0.c",
+      "pseudocode_sha256": "cbe6f8f6cd04a315207c09a7b3e8ce79e857075ac26823f86a5d0a74d2cd0dfc",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53f370",
+      "va": "0x18053f370",
+      "metadata_names": [
+        "BoardGamesManager$$Send_InitializeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53f370.c",
+      "pseudocode_sha256": "af99f1ad806f6070a79ee0df3bdd10508eea07dbab7790d875951dfd56ffb7ed",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53f730",
+      "va": "0x18053f730",
+      "metadata_names": [
+        "BoardGamesManager$$Send_LeaveGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53f730.c",
+      "pseudocode_sha256": "0396993365eb52153ac1123cbe8e7fdc2c6489ba03c1f9405abf56e2418bb6f5",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53f9e0",
+      "va": "0x18053f9e0",
+      "metadata_names": [
+        "BoardGamesManager$$Send_MakeMove"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53f9e0.c",
+      "pseudocode_sha256": "1d05da4c0cbdf768aece0e326361320abb59dd9dbbcee3c218cdf9748ca00790",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x53fd20",
+      "va": "0x18053fd20",
+      "metadata_names": [
+        "BoardGamesManager$$Send_SelectGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/53fd20.c",
+      "pseudocode_sha256": "773b99c3cf79c5972b99505e783cb27cd2db3f57ac8bff2e11479cd554264c71",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5400c0",
+      "va": "0x1805400c0",
+      "metadata_names": [
+        "BoardGamesManager$$Send_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5400c0.c",
+      "pseudocode_sha256": "3027e9fd1c69761ae3346b9c3593caf2eaf46123a894c487916791ede55b4b5d",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x540370",
+      "va": "0x180540370",
+      "metadata_names": [
+        "BoardGamesManager$$Send_SynchronizeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/540370.c",
+      "pseudocode_sha256": "1265a2a120434050ecef9fc954f3f7f2c835d3cfab2f2a657434978e9dce9b84",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x540f00",
+      "va": "0x180540f00",
+      "metadata_names": [
+        "BoardGamesTable$$DeserializeGUIDs"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/540f00.c",
+      "pseudocode_sha256": "368dabfc2971ed2e69c77968ae4d843678dab14116ddd3175f6c596e17d65ef6",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x541310",
+      "va": "0x180541310",
+      "metadata_names": [
+        "BoardGamesTable$$DeserializeTable"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/541310.c",
+      "pseudocode_sha256": "f9f920b7661b766d894d0ae13c61d0d4dd0d2672cd571684e3699179b2b82858",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5457f0",
+      "va": "0x1805457f0",
+      "metadata_names": [
+        "GatherChristmas2018$$<ShowSpaceCompleted>b__24_0",
+        "GatherChristmas2018$$<ShowNoMemorionChallenge>b__25_0",
+        "GatherChristmas2018$$<ShowFindTheMemorionChallenge>b__26_0",
+        "BoatStartOptionsMenu$$OnConfirm",
+        "PoolGameManager$$Get_LeaveGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5457f0.c",
+      "pseudocode_sha256": "16e1209141b68b0a1bdb8c2f1af420fcbb09b91716b9c9817e0c88bacbb8895c",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x550550",
+      "va": "0x180550550",
+      "metadata_names": [
+        "TicTacToeBoard$$DeserializeTable"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/550550.c",
+      "pseudocode_sha256": "30dc559648be754a0ef211e69ab1cbd2879924e827045c48cf57d14f374ba972",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x550a10",
+      "va": "0x180550a10",
+      "metadata_names": [
+        "TicTacToeInputManager$$ApplyMove"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/550a10.c",
+      "pseudocode_sha256": "07db9ba75e3f4573e13c82d824de18c52583e8efc7c5a46d083772dba50048db",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x551d50",
+      "va": "0x180551d50",
+      "metadata_names": [
+        "BoardGamesManager.<TrySyncronizeGame>d__30$$MoveNext"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/551d50.c",
+      "pseudocode_sha256": "dc184840f0db6e4803d6c852d9bc60ec4c1fcdcc9c7bacf1b2d320a9357eb208",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55a150",
+      "va": "0x18055a150",
+      "metadata_names": [
+        "DartsGameManager$$Get_InitializeGameOneWay"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55a150.c",
+      "pseudocode_sha256": "705c9eb94fbde8b9c2c124c08438c7fa3d8eb15ce835736d4ff67f34b2d14924",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55a1d0",
+      "va": "0x18055a1d0",
+      "metadata_names": [
+        "DartsGameManager$$Get_InitializeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55a1d0.c",
+      "pseudocode_sha256": "0ffdf881a13862109b74b62ec40fcd259fcefae25db3e298895523fdb93e295b",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55aa60",
+      "va": "0x18055aa60",
+      "metadata_names": [
+        "DartsGameManager$$Get_LeaveGame_OneWayMsg"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55aa60.c",
+      "pseudocode_sha256": "1a955fe7ec0e3eb0d0a9fa341c1d618fcad61dba3a702988e48fbedbdfe567fe",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55b1e0",
+      "va": "0x18055b1e0",
+      "metadata_names": [
+        "DartsGameManager$$Get_LeaveGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55b1e0.c",
+      "pseudocode_sha256": "79a5f3964e2a0b15dd73fe5430ac1ed7a76e6dab56fe606ef3a2d21558fa9ced",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55b950",
+      "va": "0x18055b950",
+      "metadata_names": [
+        "DartsGameManager$$Get_MakeMove"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55b950.c",
+      "pseudocode_sha256": "7ed8166f4cc740c1dc3cf9c9f7e022be0cd655e537d81d4cefc6f8663e2f2f8f",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55ba60",
+      "va": "0x18055ba60",
+      "metadata_names": [
+        "DartsGameManager$$Get_SelectGameOneWay"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55ba60.c",
+      "pseudocode_sha256": "754a749a99a3c957ec54a6709c77917ec1c8bb394788d476a9746227a2c58565",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55bbd0",
+      "va": "0x18055bbd0",
+      "metadata_names": [
+        "DartsGameManager$$Get_SelectGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55bbd0.c",
+      "pseudocode_sha256": "3fd75d69cfbc6bb3aa7e350f1ab7d47642e0f1204dd891be44f561d84076217c",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55bed0",
+      "va": "0x18055bed0",
+      "metadata_names": [
+        "DartsGameManager$$Get_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55bed0.c",
+      "pseudocode_sha256": "2030099cf58a14124dcfae6a25edb4766dd1ecdd031d1aa917b3d6105bb70bcb",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55bff0",
+      "va": "0x18055bff0",
+      "metadata_names": [
+        "DartsGameManager$$Get_SynchronizeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55bff0.c",
+      "pseudocode_sha256": "e62d5032ce637e21dec6db8f26969e025a678d679092bae9b0b4165e95589849",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55c5e0",
+      "va": "0x18055c5e0",
+      "metadata_names": [
+        "DartsGameManager$$Send_InitializeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55c5e0.c",
+      "pseudocode_sha256": "cb13eff06fc87d0b46ebf62226558d10ab97c568e83a1cf62738255c9de3900a",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55cb90",
+      "va": "0x18055cb90",
+      "metadata_names": [
+        "DartsGameManager$$Send_LeaveGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55cb90.c",
+      "pseudocode_sha256": "4fad4cd5fa4b16c89401e31693ac59be44c6a0690f4c0cd05e752b0c89c38f94",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55ce40",
+      "va": "0x18055ce40",
+      "metadata_names": [
+        "DartsGameManager$$Send_MakeMove"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55ce40.c",
+      "pseudocode_sha256": "720d8f6fc3beeb845506d47d935a936d0e54eb88abf079581f4be54582447fec",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55d240",
+      "va": "0x18055d240",
+      "metadata_names": [
+        "DartsGameManager$$Send_SelectGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55d240.c",
+      "pseudocode_sha256": "c66e7c48a9e4e7cacab52c347d473d4ed89f3ca02fb6943e659152bc04253bbf",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55d730",
+      "va": "0x18055d730",
+      "metadata_names": [
+        "DartsGameManager$$Send_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55d730.c",
+      "pseudocode_sha256": "d8267ea44f2b0dc3009def510e5a811752c8017862631b45ba7ba1b1781ea537",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55d9f0",
+      "va": "0x18055d9f0",
+      "metadata_names": [
+        "DartsGameManager$$Send_SynchronizeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55d9f0.c",
+      "pseudocode_sha256": "a6cc8792ab66c69faee0e3244e9041072a7fe4e5947217fe2ef9dcfdf90df2ca",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55e1b0",
+      "va": "0x18055e1b0",
+      "metadata_names": [
+        "DartsGameTable$$Deserialize"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55e1b0.c",
+      "pseudocode_sha256": "f76bede1ff0a517e0426a4bb2119c8e6064ab99963383986c8ce82f405712363",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55e470",
+      "va": "0x18055e470",
+      "metadata_names": [
+        "DartsGameTable$$Get_SelectGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55e470.c",
+      "pseudocode_sha256": "60181a22dbfe308dc3e8f99fd67d52774a197ccd1364e41f3007faab091481a2",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55e5c0",
+      "va": "0x18055e5c0",
+      "metadata_names": [
+        "DartsGameTable$$Get_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55e5c0.c",
+      "pseudocode_sha256": "22f92cacff1b71cb3c16a5d5413c6b367ebcf86ecdfb20e0c9c75485a1906110",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55ea00",
+      "va": "0x18055ea00",
+      "metadata_names": [
+        "DartsGameTable$$InitRules"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55ea00.c",
+      "pseudocode_sha256": "6b8dfb3b6f0062e0ceba86b5748aebd9b5d9c3aa4ed3c838e107b1dd173438d6",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x55ee30",
+      "va": "0x18055ee30",
+      "metadata_names": [
+        "DartsGameTable$$RemovePlayer"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/55ee30.c",
+      "pseudocode_sha256": "816b65e8aff798bcfabbe7bf9dcb0cf4b291b92846839c2a14c667e2555abaa1",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x561e90",
+      "va": "0x180561e90",
+      "metadata_names": [
+        "DartsGameManager.<TrySyncronizeGame>d__32$$MoveNext"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/561e90.c",
+      "pseudocode_sha256": "f5bbf7e5ff95e2a2bd286191f444b7922c0264f5fcadfbef601a0953c591f66c",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x56c670",
+      "va": "0x18056c670",
+      "metadata_names": [
+        "DartsRules$$MakePassiveMove"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/56c670.c",
+      "pseudocode_sha256": "08033032b9ca4359dde3aee884ccdbf2318504afa201c13c0dee07500845d48c",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5995f0",
+      "va": "0x1805995f0",
+      "metadata_names": [
+        "PoolGameManager$$Get_InitializeGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5995f0.c",
+      "pseudocode_sha256": "0b996626929ad7860334dc2185e9091cfcb74518608ee7184c0eaad08e9da754",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5999e0",
+      "va": "0x1805999e0",
+      "metadata_names": [
+        "PoolGameManager$$Get_MoveBalls"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5999e0.c",
+      "pseudocode_sha256": "4e26119412c670827ae5eb38a7b1b97c0ae39272b1b4a3f5331d4469dcec8f8d",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x599a50",
+      "va": "0x180599a50",
+      "metadata_names": [
+        "PoolGameManager$$Get_MoveCue"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/599a50.c",
+      "pseudocode_sha256": "480df9f2494a6fe23a71fad77dd6073b61e33038f828313e5ba5114099baaa9a",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x599c20",
+      "va": "0x180599c20",
+      "metadata_names": [
+        "PoolGameManager$$Get_MoveFoul"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/599c20.c",
+      "pseudocode_sha256": "c10dc6936d90719226849c050acfc79c7b558a248caa0359700451b74c5b5836",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x599da0",
+      "va": "0x180599da0",
+      "metadata_names": [
+        "PoolGameManager$$Get_RivalGone"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/599da0.c",
+      "pseudocode_sha256": "20948074b3d2163be923f58246d3321523723ecd752d344a537412533d2d7569",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x599eb0",
+      "va": "0x180599eb0",
+      "metadata_names": [
+        "PoolGameManager$$Get_SelectGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/599eb0.c",
+      "pseudocode_sha256": "660c84e5bafc6c000a1d13ec33bb10a379e7c4003beb051057e5f724e73a6200",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59a180",
+      "va": "0x18059a180",
+      "metadata_names": [
+        "PoolGameManager$$Get_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59a180.c",
+      "pseudocode_sha256": "84746296c6fe58a83b7427f9cb01ec1c9e35ded8e2b64f7fb88a4d61a22b5903",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59a810",
+      "va": "0x18059a810",
+      "metadata_names": [
+        "PoolGameManager$$Send_MoveBalls"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59a810.c",
+      "pseudocode_sha256": "6af84b5bffe41fd2bac812f4fd985d5bdf86c6614938712cdc34b36948f139f5",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59a850",
+      "va": "0x18059a850",
+      "metadata_names": [
+        "PoolGameManager$$Send_MoveCue"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59a850.c",
+      "pseudocode_sha256": "2f03d62256a2adf0d1e53d21ab715973c647af064396e1751e8ec111ba0870f3",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59a8a0",
+      "va": "0x18059a8a0",
+      "metadata_names": [
+        "PoolGameManager$$Send_MoveFoul"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59a8a0.c",
+      "pseudocode_sha256": "5aaf055c9994c0e7aef91be4128eb2f31c7d78e025c5b01cbd95e59903c5405d",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59b540",
+      "va": "0x18059b540",
+      "metadata_names": [
+        "PoolGameTable$$Apply_MoveBalls"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59b540.c",
+      "pseudocode_sha256": "df7e5176cdb7e4e0a4a380f32f88e6837ffa48f8f70a2b7db19e7dab0f625cb6",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59b8f0",
+      "va": "0x18059b8f0",
+      "metadata_names": [
+        "PoolGameTable$$Get_MoveBalls"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59b8f0.c",
+      "pseudocode_sha256": "11dd171f17f9bdcbc1f0e43766f0097e4c33544b34cdaeb54fece2b26eba70cb",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59bb40",
+      "va": "0x18059bb40",
+      "metadata_names": [
+        "PoolGameTable$$Get_MoveCue"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59bb40.c",
+      "pseudocode_sha256": "db9a4d183884d8366f2fbb9d27bb1404f91929978abc6e6a26d1926719498656",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59bcd0",
+      "va": "0x18059bcd0",
+      "metadata_names": [
+        "PoolGameTable$$Get_MoveFoul"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59bcd0.c",
+      "pseudocode_sha256": "81254d6258d8040e2469a04adabfde7f5ecf19f574c0fe475551ba0dd38819e9",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59be10",
+      "va": "0x18059be10",
+      "metadata_names": [
+        "PoolGameTable$$Get_SelectGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59be10.c",
+      "pseudocode_sha256": "2aa38d3f58966a3a19120f265ae481db00a50364044f21db6c5e4ef17a3b93dc",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59bf20",
+      "va": "0x18059bf20",
+      "metadata_names": [
+        "PoolGameTable$$Get_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59bf20.c",
+      "pseudocode_sha256": "4089af0cae3a229918219c1e4eb20113fb48f1f7abdc1c1877207b1e5a0d9035",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59c050",
+      "va": "0x18059c050",
+      "metadata_names": [
+        "PoolGameTable$$InitState"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59c050.c",
+      "pseudocode_sha256": "cfd89a5c45230212df08623d5e5ebe312378c221c21f278ed6e85eec7394ce37",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59ddc0",
+      "va": "0x18059ddc0",
+      "metadata_names": [
+        "PoolGameTable$$Send_MoveBalls"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59ddc0.c",
+      "pseudocode_sha256": "e03dcbf19f2eb07363c8ccf3b650e5034f406d053f7b85631d4e0b8e62660333",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59e9c0",
+      "va": "0x18059e9c0",
+      "metadata_names": [
+        "PoolGameTable$$Send_MoveCue"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59e9c0.c",
+      "pseudocode_sha256": "7a3a514e7a59bc67f9381e10226215efa8671f9f1db8ac9242cad2e9c6f2e9f8",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59ed60",
+      "va": "0x18059ed60",
+      "metadata_names": [
+        "PoolGameTable$$Send_MoveFoul"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59ed60.c",
+      "pseudocode_sha256": "67fbcc8fd4509b3bc9bc719bd35a6422d79252856abbd86d60cef8482165250d",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x59f180",
+      "va": "0x18059f180",
+      "metadata_names": [
+        "PoolGameTable$$Send_StartGame"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/59f180.c",
+      "pseudocode_sha256": "ca05b4a7e95c8b13d730d03823a345f594e2281d54aa2de128dc4147de06dd14",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5a98c0",
+      "va": "0x1805a98c0",
+      "metadata_names": [
+        "PoolGameManager.<Send_InitializeGameDelay>d__28$$MoveNext"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5a98c0.c",
+      "pseudocode_sha256": "58783ffafad8f90618cba93612948c69700f93cf65998287f23dbe9d3c4aec57",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5a9af0",
+      "va": "0x1805a9af0",
+      "metadata_names": [
+        "PoolGameManager.<Send_LeaveGameDelay>d__31$$MoveNext"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5a9af0.c",
+      "pseudocode_sha256": "b5cfa665a3422a1adbf3633684e106f423a7fe68f282de2c7e60277d4c7ef7f5",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5a9e70",
+      "va": "0x1805a9e70",
+      "metadata_names": [
+        "PoolGameManager.<Send_SelectGameDelay>d__35$$MoveNext"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5a9e70.c",
+      "pseudocode_sha256": "adb310be71522a31baea8f6329fd1f51ea0ef211e16227f5c2388682c3631644",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5aa3c0",
+      "va": "0x1805aa3c0",
+      "metadata_names": [
+        "PoolGameManager.<Send_StartGameDelay>d__38$$MoveNext"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5aa3c0.c",
+      "pseudocode_sha256": "59f48d6bb1bd48c2d92f2e7c06589a3c5f70ddecf15b80006e6ad034df752a03",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d9570",
+      "va": "0x1805d9570",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardInitializeGameOneWayProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d9570.c",
+      "pseudocode_sha256": "c81689028c0d19e3f1e4dcfb07eb919a446629fb942f84273ad2e34ab4b19cb7",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d95b0",
+      "va": "0x1805d95b0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardInitializeGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d95b0.c",
+      "pseudocode_sha256": "e8c71e21324a687ddf07aabedc8ab64b32b8583fdac8a3c7dde2b8723365fe97",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d9690",
+      "va": "0x1805d9690",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardLeaveGameProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardRivalLeaveOneWayProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d9690.c",
+      "pseudocode_sha256": "5ea0dbc8ac87cdc52436ec5bf7607751fe3c5d89650fc3b465aa9d5484850866",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d96d0",
+      "va": "0x1805d96d0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardMakeMoveProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d96d0.c",
+      "pseudocode_sha256": "188b4f787ca16b485f8eb22309d34bb165aff77fe7b8f140f2f175534752b41b",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d9770",
+      "va": "0x1805d9770",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardMoveOneWayProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d9770.c",
+      "pseudocode_sha256": "751db1bb8e692bf714c487e6a34f4ee67f8ff0a4adbc00ca29785aa8710f3ffc",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d97b0",
+      "va": "0x1805d97b0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardSelectGameOneWayProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d97b0.c",
+      "pseudocode_sha256": "ad28e735409ae9afb18ae99a548f06c787207ba12b81ebf555441e122fb3e168",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d97f0",
+      "va": "0x1805d97f0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardSelectGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d97f0.c",
+      "pseudocode_sha256": "67abd0e4fc28491c67d18edbeebf23c5d8c939f0ce674a517269dbdd1fb469c7",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d9830",
+      "va": "0x1805d9830",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardStartGameOneWayProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardStartGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d9830.c",
+      "pseudocode_sha256": "07f5d16c6a7642d9239d2ab5f20d690ab3dd58b9dc0c0f7549f052bdc6772e37",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5d9870",
+      "va": "0x1805d9870",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Board.GetBoardSynchronizeGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5d9870.c",
+      "pseudocode_sha256": "645649aede773fac4eae37f48ca78662876b615fa79943de18d1d43ebc4b6605",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5db820",
+      "va": "0x1805db820",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsInitializeGameOneWayMsgProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5db820.c",
+      "pseudocode_sha256": "7277907118d676d236b11a4f8b514c68b25914ed9054846b15ec3ebb9414701e",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5db860",
+      "va": "0x1805db860",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsInitializeGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5db860.c",
+      "pseudocode_sha256": "8848c3209e99928bffab456a197038f0869acc6048cb46f2a42de53854214225",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5db8c0",
+      "va": "0x1805db8c0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsLeaveGameOneWayMsgProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5db8c0.c",
+      "pseudocode_sha256": "19beb215a9609f03323036db1278e294f2280ba0ca0fda759d57f90f1a39bdc7",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5db9c0",
+      "va": "0x1805db9c0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsLeaveGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5db9c0.c",
+      "pseudocode_sha256": "3c1481fdfe712d9dbda88d1fae47eef98edacf074a063fc2cf60f298241c1d37",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dbac0",
+      "va": "0x1805dbac0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsMakeMoveOneWayMsgProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsMakeMoveProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dbac0.c",
+      "pseudocode_sha256": "a1139ff0d18cda1542d968d600085e4036ef522ce2aa333214286a26eaa97edc",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dbb00",
+      "va": "0x1805dbb00",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsSelectGameOneWayProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dbb00.c",
+      "pseudocode_sha256": "79a17d174bd1ce6d2bfde85fb2fb949f191f2fb8d040fbe2e3266eef461e9acb",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dbb40",
+      "va": "0x1805dbb40",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsSelectGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dbb40.c",
+      "pseudocode_sha256": "91786a350fbd7061c6af76d9c0b30abcf5a72138d35eaa69d579d928d65e8f62",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dbb80",
+      "va": "0x1805dbb80",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsStartGameOneWayMsgProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsStartGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dbb80.c",
+      "pseudocode_sha256": "0c4bcaa9eaf9e168e884768eb5b1d1009e4e8fc2b789757fb31ed41d6f415ed1",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dbbc0",
+      "va": "0x1805dbbc0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Darts.GetDartsSynchronizeGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dbbc0.c",
+      "pseudocode_sha256": "ac09864d20a0020aee4f87339e5d83b3ef5ebc60d80638c35f31dc4876d35fa3",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc070",
+      "va": "0x1805dc070",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolInitializeGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc070.c",
+      "pseudocode_sha256": "259c9e3c0af0cbb6f3b7b96cbc1ef4baf44789ad21b78f3348a6fbc159aacacc",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc110",
+      "va": "0x1805dc110",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolLeaveGameOneWayMsgProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc110.c",
+      "pseudocode_sha256": "5efc6f5a2454081ffd23e3326df74b07eb911fbd05f141e2684c4d8d1eb24ae4",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc200",
+      "va": "0x1805dc200",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolLeaveGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc200.c",
+      "pseudocode_sha256": "81f7ac8d741dc4cf1d7c2a318ad381666213e2e5e125b24b832a7f531817cb88",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc300",
+      "va": "0x1805dc300",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveBallsOneWayMsgProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveBallsProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc300.c",
+      "pseudocode_sha256": "709e0dfd565ae65111cde8e506cd5dc9cdde7678ccdcb9b58a8ee86befac35a3",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc340",
+      "va": "0x1805dc340",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveCueOneWayMsgProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveCueProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc340.c",
+      "pseudocode_sha256": "35fc2be47df4b68aa1b68ca1f80b64deaed309c94953976d4932f23a70286aff",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc380",
+      "va": "0x1805dc380",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveFaultOneWayMsgProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolMoveFaultProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc380.c",
+      "pseudocode_sha256": "388a0f1bc6f29b5b3adeaeb81438cf24bd1341ceb0fe518d3f2a8a84d6486de6",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc3c0",
+      "va": "0x1805dc3c0",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolSelectGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc3c0.c",
+      "pseudocode_sha256": "5430452010ca7b2341715c0a5a05e2be6ee876dc613cdaa620b600c15e26e86b",
+      "status": "decompiled"
+    },
+    {
+      "rva": "0x5dc400",
+      "va": "0x1805dc400",
+      "metadata_names": [
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolStartGameOneWayMsgProcessor$$Process",
+        "Assets.Scripts.TCPs.Processors.Pool.GetPoolStartGameProcessor$$Process"
+      ],
+      "pseudocode_path": "work/evidence/ghidra/functions/5dc400.c",
+      "pseudocode_sha256": "01f9329f2204b482a36f9f5a88d5b104b01e5dc752a11ba77d8d00d051b12a21",
+      "status": "decompiled"
+    }
+  ]
+}

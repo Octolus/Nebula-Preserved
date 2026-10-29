@@ -1,0 +1,51 @@
+{
+  "format_version": 1,
+  "name": "resource-companion-select-remove-callbacks",
+  "mutating": true,
+  "fixture_notes": [
+    "Requires the reviewed companion fixture in the preservation catalog.",
+    "The remove step is cleanup, not proof of durable select persistence."
+  ],
+  "steps": [
+    {"action": "resource.companion.prepare_select", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 15,
+        "interval_ms": 150,
+        "until": {
+          "resource_navigation.pending": false,
+          "resource_ui.companion_ready": true,
+          "resource_ui.binding_valid": true
+        }
+      }
+    },
+    {"action": "resource.companion.select", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 15,
+        "interval_ms": 150,
+        "until": {"resource_ui.pending": false}
+      }
+    },
+    {"action": "resource.companion.prepare_remove", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 15,
+        "interval_ms": 150,
+        "until": {"resource_navigation.pending": false}
+      }
+    },
+    {"action": "resource.companion.remove", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 15,
+        "interval_ms": 150,
+        "until": {"resource_ui.pending": false}
+      }
+    }
+  ]
+}

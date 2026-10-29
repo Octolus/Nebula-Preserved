@@ -1,0 +1,26 @@
+{
+  "format_version": 1,
+  "name": "economy-open-and-select-original-callbacks",
+  "mutating": false,
+  "fixture_notes": [
+    "Requires an explicitly authored preservation-catalog wardrobe fixture.",
+    "This plan deliberately does not purchase; purchase acceptance needs wallet and durable ownership evidence."
+  ],
+  "steps": [
+    {"action": "shop.open", "expect_status": ["started"]},
+    {"action": "shop.select_wardrobe_fixture", "expect_status": ["started"]},
+    {
+      "poll": {
+        "action": "query",
+        "max_seconds": 15,
+        "interval_ms": 150,
+        "until": {
+          "snapshot.store.probe_ok": true,
+          "snapshot.store.pending": false,
+          "snapshot.store.selected_fixture": true,
+          "snapshot.store.selected_offer": true
+        }
+      }
+    }
+  ]
+}

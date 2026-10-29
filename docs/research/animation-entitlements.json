@@ -1,0 +1,973 @@
+{
+  "scope": "Static, read-only shipped-client evidence. No game, server, listener, connection, or runtime target was started.",
+  "sources": {
+    "tool": {
+      "path": "outputs/nebula-preservation/tools/inspect_animation_entitlements.py",
+      "sha256": "81fe8a93635fd7af0b7f5facd63950a17351a4b86061cc3c3d9c38c66929c355"
+    },
+    "resources.assets": {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\resources.assets",
+      "sha256": "adf9fcbca4f1b6910ab2a4d6260196cdb378f19c20dc616d1fd97c3b9b06eb1b"
+    },
+    "globalgamemanagers.assets": {
+      "path": "[local-path] Realms\\Nebula Realms_Data\\globalgamemanagers.assets",
+      "sha256": "4600d3bef0d3e503bbf028c6b203bb7ca80e5f48711bfef4c523ff905ab4e299"
+    },
+    "bundle_manifests": {
+      "path": "work/evidence/assets/bundle-manifests.json",
+      "sha256": "d4673f1229a7b3f3ce0813081590990e16897c91988ad9ec16745d010aa5cdb5"
+    },
+    "dump": {
+      "path": "work/decompiled/dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    }
+  },
+  "get_purchases_parallel_fields": {
+    "animations": {
+      "ids_field": "animations",
+      "ids_offset": "0x28",
+      "names_field": "animationsName",
+      "names_offset": "0x90"
+    },
+    "dances": {
+      "ids_field": "dances",
+      "ids_offset": "0x38",
+      "names_field": "dancesName",
+      "names_offset": "0xA0"
+    },
+    "emotes": {
+      "ids_field": "emotes",
+      "ids_offset": "0x40",
+      "names_field": "emotesName",
+      "names_offset": "0xA8"
+    },
+    "gestures": {
+      "ids_field": "gestures",
+      "ids_offset": "0x48",
+      "names_field": "gesturesName",
+      "names_offset": "0xB0"
+    },
+    "poses": {
+      "ids_field": "poses",
+      "ids_offset": "0x50",
+      "names_field": "posesName",
+      "names_offset": "0xB8"
+    },
+    "profilePictures": {
+      "ids_field": "profilePictures",
+      "ids_offset": "0x60",
+      "names_field": "profilePicturesName",
+      "names_offset": "0xC8"
+    },
+    "bundles": {
+      "ids_field": "bundles",
+      "ids_offset": "0x70",
+      "names_field": "bundlesName",
+      "names_offset": "0xD8"
+    },
+    "bundlesHousing": {
+      "ids_field": "bundlesHousing",
+      "ids_offset": "0x78",
+      "names_field": "bundlesHousingName",
+      "names_offset": "0xE0"
+    }
+  },
+  "authored_menu_components": [
+    {
+      "path_id": 17354,
+      "raw_sha256": "4d579e899977be89fa436148e48d9316330de2d8410d9854925fcad5cea4d8c6",
+      "entry_header": "Entry Gesture Female",
+      "entry_names": [
+        "WAVE",
+        "KISS",
+        "APPLAUSE",
+        "BANG",
+        "CONTEMPT",
+        "INSECURE",
+        "LAUGH",
+        "NO",
+        "NO IDEA",
+        "OK",
+        "TURN",
+        "WRONG",
+        "YAWN",
+        "CURTSEY",
+        "FEAR",
+        "SCARE",
+        "MEDIEVAL",
+        "KISS CUPID",
+        "SURPRISE"
+      ],
+      "entry_anims": [
+        "WAVE",
+        "KISS",
+        "APPLAUSE",
+        "BANG",
+        "CONTEMPT",
+        "INSECURE",
+        "LAUGH",
+        "NO",
+        "NOIDEA",
+        "OK",
+        "TURN",
+        "WRONG",
+        "YAWN",
+        "CURTSEY",
+        "FEAR",
+        "SCARE",
+        "MEDIEVAL",
+        "KISSCUPID",
+        "SURPRISE"
+      ],
+      "entries": [
+        {
+          "display_name": "WAVE",
+          "animation_trigger": "WAVE"
+        },
+        {
+          "display_name": "KISS",
+          "animation_trigger": "KISS"
+        },
+        {
+          "display_name": "APPLAUSE",
+          "animation_trigger": "APPLAUSE"
+        },
+        {
+          "display_name": "BANG",
+          "animation_trigger": "BANG"
+        },
+        {
+          "display_name": "CONTEMPT",
+          "animation_trigger": "CONTEMPT"
+        },
+        {
+          "display_name": "INSECURE",
+          "animation_trigger": "INSECURE"
+        },
+        {
+          "display_name": "LAUGH",
+          "animation_trigger": "LAUGH"
+        },
+        {
+          "display_name": "NO",
+          "animation_trigger": "NO"
+        },
+        {
+          "display_name": "NO IDEA",
+          "animation_trigger": "NOIDEA"
+        },
+        {
+          "display_name": "OK",
+          "animation_trigger": "OK"
+        },
+        {
+          "display_name": "TURN",
+          "animation_trigger": "TURN"
+        },
+        {
+          "display_name": "WRONG",
+          "animation_trigger": "WRONG"
+        },
+        {
+          "display_name": "YAWN",
+          "animation_trigger": "YAWN"
+        },
+        {
+          "display_name": "CURTSEY",
+          "animation_trigger": "CURTSEY"
+        },
+        {
+          "display_name": "FEAR",
+          "animation_trigger": "FEAR"
+        },
+        {
+          "display_name": "SCARE",
+          "animation_trigger": "SCARE"
+        },
+        {
+          "display_name": "MEDIEVAL",
+          "animation_trigger": "MEDIEVAL"
+        },
+        {
+          "display_name": "KISS CUPID",
+          "animation_trigger": "KISSCUPID"
+        },
+        {
+          "display_name": "SURPRISE",
+          "animation_trigger": "SURPRISE"
+        }
+      ],
+      "gender_filter_clip_refs": {
+        "male": [],
+        "female": []
+      }
+    },
+    {
+      "path_id": 17925,
+      "raw_sha256": "32f728198c44817b277c08c6776645fa68fd95247805a5f7e2e4971d1e1fd22e",
+      "entry_header": "Entry Seat Male",
+      "entry_names": [
+        "RELAX",
+        "ONE KNEE",
+        "SQUATTING"
+      ],
+      "entry_anims": [
+        "RELAX",
+        "ONEKNEE",
+        "SQUATTING"
+      ],
+      "entries": [
+        {
+          "display_name": "RELAX",
+          "animation_trigger": "RELAX"
+        },
+        {
+          "display_name": "ONE KNEE",
+          "animation_trigger": "ONEKNEE"
+        },
+        {
+          "display_name": "SQUATTING",
+          "animation_trigger": "SQUATTING"
+        }
+      ],
+      "gender_filter_clip_refs": {
+        "male": [],
+        "female": []
+      }
+    },
+    {
+      "path_id": 17927,
+      "raw_sha256": "7ea8f437df62b5b22516bef8e4e4165d35ad788f8693983c75839bceaef7234a",
+      "entry_header": "Entry Seat Female",
+      "entry_names": [
+        "RELAX",
+        "SIDE"
+      ],
+      "entry_anims": [
+        "RELAX",
+        "SIDE"
+      ],
+      "entries": [
+        {
+          "display_name": "RELAX",
+          "animation_trigger": "RELAX"
+        },
+        {
+          "display_name": "SIDE",
+          "animation_trigger": "SIDE"
+        }
+      ],
+      "gender_filter_clip_refs": {
+        "male": [],
+        "female": []
+      }
+    },
+    {
+      "path_id": 18177,
+      "raw_sha256": "5ed11e574cb43ee931a48778472c33de9a9805b6d3d37e00598923eb660d817f",
+      "entry_header": "Entry Poses Female",
+      "entry_names": [
+        "ATTENTION",
+        "CASUAL",
+        "HERO",
+        "KARATE",
+        "KAWAII",
+        "MODEL 1",
+        "MODEL 2",
+        "SALUTE",
+        "ANIME",
+        "YOGA",
+        "CATWALK",
+        "XHARMS",
+        "MODEL 3",
+        "FREEZING COLD",
+        "HEART",
+        "LOVE"
+      ],
+      "entry_anims": [
+        "ATTENTION",
+        "CASUAL",
+        "HERO",
+        "KARATE",
+        "KAWAII",
+        "MODEL1",
+        "MODEL2",
+        "SALUTE",
+        "ANIME",
+        "YOGA",
+        "CATWALK",
+        "XHARMS",
+        "MODEL3",
+        "FREEZINGCOLD",
+        "HEART",
+        "LOVE"
+      ],
+      "entries": [
+        {
+          "display_name": "ATTENTION",
+          "animation_trigger": "ATTENTION"
+        },
+        {
+          "display_name": "CASUAL",
+          "animation_trigger": "CASUAL"
+        },
+        {
+          "display_name": "HERO",
+          "animation_trigger": "HERO"
+        },
+        {
+          "display_name": "KARATE",
+          "animation_trigger": "KARATE"
+        },
+        {
+          "display_name": "KAWAII",
+          "animation_trigger": "KAWAII"
+        },
+        {
+          "display_name": "MODEL 1",
+          "animation_trigger": "MODEL1"
+        },
+        {
+          "display_name": "MODEL 2",
+          "animation_trigger": "MODEL2"
+        },
+        {
+          "display_name": "SALUTE",
+          "animation_trigger": "SALUTE"
+        },
+        {
+          "display_name": "ANIME",
+          "animation_trigger": "ANIME"
+        },
+        {
+          "display_name": "YOGA",
+          "animation_trigger": "YOGA"
+        },
+        {
+          "display_name": "CATWALK",
+          "animation_trigger": "CATWALK"
+        },
+        {
+          "display_name": "XHARMS",
+          "animation_trigger": "XHARMS"
+        },
+        {
+          "display_name": "MODEL 3",
+          "animation_trigger": "MODEL3"
+        },
+        {
+          "display_name": "FREEZING COLD",
+          "animation_trigger": "FREEZINGCOLD"
+        },
+        {
+          "display_name": "HEART",
+          "animation_trigger": "HEART"
+        },
+        {
+          "display_name": "LOVE",
+          "animation_trigger": "LOVE"
+        }
+      ],
+      "gender_filter_clip_refs": {
+        "male": [],
+        "female": []
+      }
+    },
+    {
+      "path_id": 18266,
+      "raw_sha256": "865e7d69c7cedb9b9143ec4726854b722e9a6f51483e51ae605ebbb0ce88cb88",
+      "entry_header": "Entry Gesture Male",
+      "entry_names": [
+        "WAVE",
+        "KISS",
+        "APPLAUSE",
+        "BANG",
+        "CONTEMPT",
+        "INSECURE",
+        "LAUGH",
+        "MARK",
+        "NO",
+        "NO IDEA",
+        "OK",
+        "TURN",
+        "WRONG",
+        "YAWN",
+        "CURTSEY",
+        "FEAR",
+        "SCARE",
+        "MEDIEVAL",
+        "KISS CUPID",
+        "SURPRISE"
+      ],
+      "entry_anims": [
+        "WAVE",
+        "KISS",
+        "APPLAUSE",
+        "BANG",
+        "CONTEMPT",
+        "INSECURE",
+        "LAUGH",
+        "MARK",
+        "NO",
+        "NOIDEA",
+        "OK",
+        "TURN",
+        "WRONG",
+        "YAWN",
+        "CURTSEY",
+        "FEAR",
+        "SCARE",
+        "MEDIEVAL",
+        "KISSCUPID",
+        "SURPRISE"
+      ],
+      "entries": [
+        {
+          "display_name": "WAVE",
+          "animation_trigger": "WAVE"
+        },
+        {
+          "display_name": "KISS",
+          "animation_trigger": "KISS"
+        },
+        {
+          "display_name": "APPLAUSE",
+          "animation_trigger": "APPLAUSE"
+        },
+        {
+          "display_name": "BANG",
+          "animation_trigger": "BANG"
+        },
+        {
+          "display_name": "CONTEMPT",
+          "animation_trigger": "CONTEMPT"
+        },
+        {
+          "display_name": "INSECURE",
+          "animation_trigger": "INSECURE"
+        },
+        {
+          "display_name": "LAUGH",
+          "animation_trigger": "LAUGH"
+        },
+        {
+          "display_name": "MARK",
+          "animation_trigger": "MARK"
+        },
+        {
+          "display_name": "NO",
+          "animation_trigger": "NO"
+        },
+        {
+          "display_name": "NO IDEA",
+          "animation_trigger": "NOIDEA"
+        },
+        {
+          "display_name": "OK",
+          "animation_trigger": "OK"
+        },
+        {
+          "display_name": "TURN",
+          "animation_trigger": "TURN"
+        },
+        {
+          "display_name": "WRONG",
+          "animation_trigger": "WRONG"
+        },
+        {
+          "display_name": "YAWN",
+          "animation_trigger": "YAWN"
+        },
+        {
+          "display_name": "CURTSEY",
+          "animation_trigger": "CURTSEY"
+        },
+        {
+          "display_name": "FEAR",
+          "animation_trigger": "FEAR"
+        },
+        {
+          "display_name": "SCARE",
+          "animation_trigger": "SCARE"
+        },
+        {
+          "display_name": "MEDIEVAL",
+          "animation_trigger": "MEDIEVAL"
+        },
+        {
+          "display_name": "KISS CUPID",
+          "animation_trigger": "KISSCUPID"
+        },
+        {
+          "display_name": "SURPRISE",
+          "animation_trigger": "SURPRISE"
+        }
+      ],
+      "gender_filter_clip_refs": {
+        "male": [],
+        "female": []
+      }
+    },
+    {
+      "path_id": 18520,
+      "raw_sha256": "8ef0dda75a511039dc07ae182b4be4e5ebc85201efc2a47db7fe6b0ac1c1475f",
+      "entry_header": "Entry Poses Male",
+      "entry_names": [
+        "ATTENTION",
+        "BODY BUILDING",
+        "COOL",
+        "HERO",
+        "KARATE",
+        "RELAXED",
+        "SALUTE",
+        "CASUAL",
+        "ANIME",
+        "SUPERHERO",
+        "XHARMS",
+        "FREEZING COLD",
+        "HEART",
+        "LOVE"
+      ],
+      "entry_anims": [
+        "ATTENTION",
+        "BODYBUILDING",
+        "COOL",
+        "HERO",
+        "KARATE",
+        "RELAXED",
+        "SALUTE",
+        "CASUAL",
+        "ANIME",
+        "SUPERHERO",
+        "XHARMS",
+        "FREEZINGCOLD",
+        "HEART",
+        "LOVE"
+      ],
+      "entries": [
+        {
+          "display_name": "ATTENTION",
+          "animation_trigger": "ATTENTION"
+        },
+        {
+          "display_name": "BODY BUILDING",
+          "animation_trigger": "BODYBUILDING"
+        },
+        {
+          "display_name": "COOL",
+          "animation_trigger": "COOL"
+        },
+        {
+          "display_name": "HERO",
+          "animation_trigger": "HERO"
+        },
+        {
+          "display_name": "KARATE",
+          "animation_trigger": "KARATE"
+        },
+        {
+          "display_name": "RELAXED",
+          "animation_trigger": "RELAXED"
+        },
+        {
+          "display_name": "SALUTE",
+          "animation_trigger": "SALUTE"
+        },
+        {
+          "display_name": "CASUAL",
+          "animation_trigger": "CASUAL"
+        },
+        {
+          "display_name": "ANIME",
+          "animation_trigger": "ANIME"
+        },
+        {
+          "display_name": "SUPERHERO",
+          "animation_trigger": "SUPERHERO"
+        },
+        {
+          "display_name": "XHARMS",
+          "animation_trigger": "XHARMS"
+        },
+        {
+          "display_name": "FREEZING COLD",
+          "animation_trigger": "FREEZINGCOLD"
+        },
+        {
+          "display_name": "HEART",
+          "animation_trigger": "HEART"
+        },
+        {
+          "display_name": "LOVE",
+          "animation_trigger": "LOVE"
+        }
+      ],
+      "gender_filter_clip_refs": {
+        "male": [],
+        "female": []
+      }
+    },
+    {
+      "path_id": 18876,
+      "raw_sha256": "afe7940d9f29987f8c1e06b6c3e04930cf212d99cd3ab8a6aa0eeb1758f273a8",
+      "entry_header": "Entry Dance",
+      "entry_names": [
+        "SALOON",
+        "MEGAHOP",
+        "TUT",
+        "YMCA DANCE",
+        "CHICKEN DANCE",
+        "SNAKE DANCE",
+        "HIPS",
+        "BELLY DANCE",
+        "HIP HOP",
+        "BODY POP",
+        "ROBOT",
+        "CASUAL2",
+        "ZOMBIE DANCE",
+        "MEDIEVAL",
+        "ELECTRO SWING",
+        "CASUAL",
+        "ROCK",
+        "CRAZY TECHNO",
+        "HEAVY METAL",
+        "SALSA",
+        "SKA",
+        "BREAK DANCE"
+      ],
+      "entry_anims": [
+        "SALOON",
+        "MEGAHOP",
+        "TUT",
+        "YMCADANCE",
+        "CHICKENDANCE",
+        "SNAKEDANCE",
+        "HIPS",
+        "BELLYDANCE",
+        "HIPHOP",
+        "BODYPOP",
+        "ROBOT",
+        "CASUAL2",
+        "THRILLER",
+        "MEDIEVAL",
+        "ELECTROSWING",
+        "CASUAL",
+        "ROCK",
+        "CRAZYTECHNO",
+        "HEAVYMETAL",
+        "SALSA",
+        "SKA",
+        "BREAKDANCE"
+      ],
+      "entries": [
+        {
+          "display_name": "SALOON",
+          "animation_trigger": "SALOON"
+        },
+        {
+          "display_name": "MEGAHOP",
+          "animation_trigger": "MEGAHOP"
+        },
+        {
+          "display_name": "TUT",
+          "animation_trigger": "TUT"
+        },
+        {
+          "display_name": "YMCA DANCE",
+          "animation_trigger": "YMCADANCE"
+        },
+        {
+          "display_name": "CHICKEN DANCE",
+          "animation_trigger": "CHICKENDANCE"
+        },
+        {
+          "display_name": "SNAKE DANCE",
+          "animation_trigger": "SNAKEDANCE"
+        },
+        {
+          "display_name": "HIPS",
+          "animation_trigger": "HIPS"
+        },
+        {
+          "display_name": "BELLY DANCE",
+          "animation_trigger": "BELLYDANCE"
+        },
+        {
+          "display_name": "HIP HOP",
+          "animation_trigger": "HIPHOP"
+        },
+        {
+          "display_name": "BODY POP",
+          "animation_trigger": "BODYPOP"
+        },
+        {
+          "display_name": "ROBOT",
+          "animation_trigger": "ROBOT"
+        },
+        {
+          "display_name": "CASUAL2",
+          "animation_trigger": "CASUAL2"
+        },
+        {
+          "display_name": "ZOMBIE DANCE",
+          "animation_trigger": "THRILLER"
+        },
+        {
+          "display_name": "MEDIEVAL",
+          "animation_trigger": "MEDIEVAL"
+        },
+        {
+          "display_name": "ELECTRO SWING",
+          "animation_trigger": "ELECTROSWING"
+        },
+        {
+          "display_name": "CASUAL",
+          "animation_trigger": "CASUAL"
+        },
+        {
+          "display_name": "ROCK",
+          "animation_trigger": "ROCK"
+        },
+        {
+          "display_name": "CRAZY TECHNO",
+          "animation_trigger": "CRAZYTECHNO"
+        },
+        {
+          "display_name": "HEAVY METAL",
+          "animation_trigger": "HEAVYMETAL"
+        },
+        {
+          "display_name": "SALSA",
+          "animation_trigger": "SALSA"
+        },
+        {
+          "display_name": "SKA",
+          "animation_trigger": "SKA"
+        },
+        {
+          "display_name": "BREAK DANCE",
+          "animation_trigger": "BREAKDANCE"
+        }
+      ],
+      "gender_filter_clip_refs": {
+        "male": [
+          {
+            "file_id": 0,
+            "path_id": 2657,
+            "clip_name": "BODYPOP"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2672,
+            "clip_name": "BREAKDANCE"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2432,
+            "clip_name": "CASUAL"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2651,
+            "clip_name": "CASUAL2"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2573,
+            "clip_name": "CHICKENDANCE"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2688,
+            "clip_name": "CRAZYTECHNO"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2678,
+            "clip_name": "ELECTROSWING"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2622,
+            "clip_name": "HEAVYMETAL"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2706,
+            "clip_name": "HIPHOP"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2646,
+            "clip_name": "MEDIEVAL"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2618,
+            "clip_name": "MEGAHOP"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2607,
+            "clip_name": "ROBOT"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2610,
+            "clip_name": "ROCK"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2667,
+            "clip_name": "SALOON"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2510,
+            "clip_name": "SALSA"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2435,
+            "clip_name": "SKA"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2598,
+            "clip_name": "THRILLER"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2576,
+            "clip_name": "TUT"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2471,
+            "clip_name": "YMCADANCE"
+          }
+        ],
+        "female": [
+          {
+            "file_id": 0,
+            "path_id": 2631,
+            "clip_name": "BELLYDANCE"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2606,
+            "clip_name": "BODYPOP"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2590,
+            "clip_name": "BREAKDANCE"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2572,
+            "clip_name": "CASUAL"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2685,
+            "clip_name": "CASUAL2"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2528,
+            "clip_name": "CHICKENDANCE"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2619,
+            "clip_name": "CRAZYTECHNO"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2481,
+            "clip_name": "ELECTROSWING"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2496,
+            "clip_name": "HEAVYMETAL"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2550,
+            "clip_name": "HIPHOP"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2630,
+            "clip_name": "HIPS"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2437,
+            "clip_name": "MEDIEVAL"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2450,
+            "clip_name": "ROBOT"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2564,
+            "clip_name": "ROCK"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2436,
+            "clip_name": "SALOON"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2554,
+            "clip_name": "SALSA"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2674,
+            "clip_name": "SKA"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2661,
+            "clip_name": "SNAKEDANCE"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2565,
+            "clip_name": "THRILLER"
+          },
+          {
+            "file_id": 0,
+            "path_id": 2453,
+            "clip_name": "YMCADANCE"
+          }
+        ]
+      }
+    }
+  ],
+  "manifest_category_asset_paths": [],
+  "classification": {
+    "dances": "real response group and shipped authored menu; no shipped server-entitlement ID/name catalog recovered",
+    "gestures": "real response group and shipped authored menu; no shipped server-entitlement ID/name catalog recovered",
+    "poses": "real response group and shipped authored menu; no shipped server-entitlement ID/name catalog recovered",
+    "animations": "real response group; consumer/catalog identity unresolved in bounded evidence",
+    "emotes": "real response group; no distinct shipped MenuWheelEmotes class or catalog recovered",
+    "profilePictures": "real response group; no local asset/category catalog recovered",
+    "bundles": "real response group; bundle SKU/content mapping is opaque server catalog data",
+    "bundlesHousing": "real response group; bundle SKU/content mapping is opaque server catalog data"
+  },
+  "ownership_boundary": "MenuWheelInflate entryNames/entryAnims are authored built-ins. They are display-name/animation-trigger pairs, not account ownership evidence and must not be auto-granted as purchases.",
+  "implementation_decision": "Do not create a grant catalog from filenames or authored menu arrays. Keep paired lists initialized and empty until an original server catalog/capture identifies exact entitlement ID and display-name pairs.",
+  "unknowns": [
+    "Original account ownership, commercial labels, SKU IDs, prices, bundle contents, and entitlement policy.",
+    "Whether legacy non-menu consumers use animations, emotes, or profilePictures in this build.",
+    "Runtime interoperability was not tested under the static-only freeze."
+  ]
+}

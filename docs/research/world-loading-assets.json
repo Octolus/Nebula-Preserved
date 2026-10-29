@@ -1,0 +1,775 @@
+{
+  "scope": "Static local file existence/hashes and text-manifest dependency closure; no Unity player, server or connections. Serialized component parsing errors preserved. Manifest source paths normalize build-machine prefixes only; engine resolution not simulated.",
+  "manifest_inventory_sha256": "d4673f1229a7b3f3ce0813081590990e16897c91988ad9ec16745d010aa5cdb5",
+  "roots": [
+    "screenloader",
+    "pooler",
+    "nav",
+    "skinmaterials",
+    "gamemusic",
+    "s/preinitiload",
+    "s/initload",
+    "s/login",
+    "s/nebulaplayer",
+    "s/nexus",
+    "s/nexuslogicprefab"
+  ],
+  "bundles": [
+    {
+      "bundle": "screenloader",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\screenloader",
+      "exists": true,
+      "size": 30304,
+      "sha256": "509acddeace91b8d277c694d6e919829791d72dfd8a8693907f6b0df9dc197c9",
+      "manifest": {
+        "bundle": "screenloader",
+        "bundle_size": 30304,
+        "manifest_sha256": "449b25e0a7dd9c4ad81fd8863faae57fee40a980e3bcbe7f71222c8089e93781",
+        "crc": "2820922672",
+        "assets": [
+          "Assets/prefabs/ScreenLoader.prefab"
+        ],
+        "dependencies": []
+      },
+      "normalized_dependencies": []
+    },
+    {
+      "bundle": "pooler",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\pooler",
+      "exists": true,
+      "size": 11334693,
+      "sha256": "fcde809b548d2482c9b0048d404b3d2d5b123517b513223499666cb4ce18284f",
+      "manifest": {
+        "bundle": "pooler",
+        "bundle_size": 11334693,
+        "manifest_sha256": "7fb6c5dc7f70335de91590f3625a23dd00a9659ad9e62f883ea411e7909c3ae6",
+        "crc": "3261426652",
+        "assets": [
+          "Assets/ART/outResources/Prefabs/Pooler.prefab"
+        ],
+        "dependencies": [
+          "[local-path]"
+        ]
+      },
+      "normalized_dependencies": [
+        "skinmaterials"
+      ]
+    },
+    {
+      "bundle": "nav",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\nav",
+      "exists": true,
+      "size": 4201260,
+      "sha256": "d11de846aedb880722532a71bd4a2d4ef834880aeb7eb40422ba6a96c8401581",
+      "manifest": {
+        "bundle": "nav",
+        "bundle_size": 4201260,
+        "manifest_sha256": "2d998435d22edefd21ec37bb87560e94c95d8c7c10367553bbc3289e569e6c72",
+        "crc": "2842942667",
+        "assets": [
+          "Assets/nav/nav/nav_cinema.png",
+          "Assets/nav/nav/nav_bluewavehideout.png",
+          "Assets/nav/nav/nav_forgottenstation.png",
+          "Assets/nav/nav/nav_skl.png",
+          "Assets/nav/nav/nav_home.png",
+          "Assets/nav/nav/nav_ghosttown.png",
+          "Assets/nav/nav/nav_serenegarden.png",
+          "Assets/nav/nav/nav_cliffapartment.png",
+          "Assets/nav/nav/nav_waterfall.png",
+          "Assets/nav/nav/nav_westvalleyapartmentopenhouse.png",
+          "Assets/nav/nav/nav_campsilverlake.png",
+          "Assets/nav/nav/nav_bowling.png",
+          "Assets/nav/nav/nav_woodlandclearing.png",
+          "Assets/nav/nav/nav_westvalleyapartment.png",
+          "Assets/nav/nav/nav_tokyoapartment.png",
+          "Assets/nav/nav/nav_deadquarters.png",
+          "Assets/nav/nav/nav_dome.png",
+          "Assets/nav/nav/nav_lakeapartment.png",
+          "Assets/nav/nav/nav_tokyoapartmentopenhouse.png",
+          "Assets/nav/nav/nav_whisperinghillsmansion.png",
+          "Assets/nav/nav/nav_medievalvillage.png",
+          "Assets/nav/nav/nav_hollyridgeestate.png",
+          "Assets/nav/nav/nav_nebuhouseopenhouse.png",
+          "Assets/nav/nav/nav_lechalet.png",
+          "Assets/nav/nav/nav_greeksummerhouse.png",
+          "Assets/nav/nav/nav_thecrypt.png",
+          "Assets/nav/nav/nav_cube.png",
+          "Assets/nav/nav/nav_gingerbreadhouse.png",
+          "Assets/nav/nav/nav_mountainhideout.png",
+          "Assets/nav/nav/nav_zerodistrictden.png",
+          "Assets/nav/nav/nav_egregore.png",
+          "Assets/nav/nav/nav_greenhouse.png",
+          "Assets/nav/nav/nav_CutteridgeEstate.png",
+          "Assets/nav/nav/nav_dressingroom.png",
+          "Assets/nav/nav/nav_beach.png",
+          "Assets/nav/nav/nav_nexus.png",
+          "Assets/nav/nav/nav_leafpark.png",
+          "Assets/nav/nav/nav_nebuhouse.png",
+          "Assets/nav/nav/nav_thenebulianopenhouse.png",
+          "Assets/nav/nav/nav_zerodistrict.png",
+          "Assets/nav/nav/nav_themoonlightroom.png",
+          "Assets/nav/nav/nav_flyingdevice.png",
+          "Assets/nav/nav/nav_wintersnowglobe.png",
+          "Assets/nav/nav/nav_thenebulian.png",
+          "Assets/nav/nav/nav_steampunk.png",
+          "Assets/nav/nav/nav_stonelakecastle.png",
+          "Assets/nav/nav/nav_sorcererseyrie.png",
+          "Assets/nav/nav/nav_starcrawlers.png",
+          "Assets/nav/nav/nav_windmillfarmhouse.png"
+        ],
+        "dependencies": []
+      },
+      "normalized_dependencies": []
+    },
+    {
+      "bundle": "skinmaterials",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\skinmaterials",
+      "exists": true,
+      "size": 19309194,
+      "sha256": "6ad582dd7ef8ae5b6fe1f62a1ba9354e6334fda1ce85651f6ff6e1b34531dc91",
+      "manifest": {
+        "bundle": "skinmaterials",
+        "bundle_size": 19309194,
+        "manifest_sha256": "7fffcc9b048ad3a2b2d5e9b2c0dad22f80224e6e8312946c3508ce3fca898149",
+        "crc": "3288481040",
+        "assets": [
+          "Assets/ART/outResources/SkinMaterials/Shaders/StandardSymple.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Mascaras/Lips.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line23.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line24.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Normal/Body_Ave_Aged_N.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line1.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/EyeCornea.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_3.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_8.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line27.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_14.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_4_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line11.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_28.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_5_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line22.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_11.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_14.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_21.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_12_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_14_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_1.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Specs/F_Gloss.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Specs/F_Scatter.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_18.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_6.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/skin_lookup_diffspec.png",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_3_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_3.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_25.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_5.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_4.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_8.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Eyes/Eye_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_1.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_6_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_5.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_2.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Mouth/M_Mouth.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_12.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_6_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Male/map/ColorGradient.jpg",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_7.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line4.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line21.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line26.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_8_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_5_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_11.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_6.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Normal/F_N_Aged.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_16.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line17.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_10.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_13.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/skin_lookup_translucency.png",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_3_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_6.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Eyes/Eyeleashes.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_11_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_9.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_4.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line12.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_10.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_27.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line16.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line15.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_3.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Eyes/Eye_Mask.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_10.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyes/F_Eye_Reflex.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line25.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Specs/Speculars.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_3_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_2_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_5.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/FireFlame.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_5.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Normal/Body_Atl_Aged_N.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/Emissor.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_4_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_6_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_22.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_11.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Specs/F_Specular.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_15.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_9.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_7.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/Beard.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_5.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line10.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_11.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_15.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_4_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/Materials/Eye.mat",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_1_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_16.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line14.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_4_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_4.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line20.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line19.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_12.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/Materials/Female_Eyelashes.mat",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_16_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Normal/Empty_N.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_3.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_20.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_17.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_5_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/SkinMaleBodyPS4.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_12.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_9_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_7_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/StandardDoubleSide.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_10_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_2.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyes/F_Eyes_Reflex.DDS",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_24.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_6.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line18.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/StandardSpecularAO.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_23.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_14_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_7_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/NCrystalNormal.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Normal/Body_Atl_N.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line2.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_10.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/Emi_animated.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_2.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_8_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_7.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyes/F_Eye.TGA",
+          "Assets/ART/outResources/SkinMaterials/Shaders/SkinFemaleFacePS4.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/Materials/MaleFace.mat",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line3.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_13.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Specs/Body_Gloss.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_2.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_1_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Specs/Body_Depth.TGA",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_5_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Eyes/Eye_C_Reflex.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyes/F_Eyelashes.TGA",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_10_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_6_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/Materials/FemaleFace.mat",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_9_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_26.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_4.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_10_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_10_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_2_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_2_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_11_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Eyes_Reflex.DDS",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_6.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_1.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Mascaras/Blush.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/SkinMaleFacePS4.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_12_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Normal/F_N_Atl_Aged.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/Materials/Female_Eye.mat",
+          "Assets/ART/outResources/SkinMaterials/Shaders/DitherAlpha.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line6.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/Materials/MaleBody.mat",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_7.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_8.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/HairTransparent.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_14.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line8.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/StandardTransparent.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_15_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Normal/F_Normal.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Eyes/Eye_C.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line7.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_1.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Normal/BodyNeutral_N.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_1.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Mouth/M_Mouth_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_9_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_13_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_9.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_9_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Specs/F_speculars.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_7_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_10.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/DitherFunctions/Dither Functions.cginc",
+          "Assets/ART/outResources/SkinMaterials/Male/Materials/Eyelashes.mat",
+          "Assets/ART/outResources/SkinMaterials/Male/Materials/M_Cornea.mat",
+          "Assets/ART/outResources/SkinMaterials/Male/Materials/Eyereflex.mat",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Eyes/Eye_Re.TGA",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_3_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_8.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line28.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/FireFlameRGBA.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_3.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_11_n.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_9.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_1_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_2_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/Mouth.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line5.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/Crystal.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_19.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/StandardSpecularDoubleSide.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Shadow/Shadow_13.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_7.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/SkinFemaleBodyPS4.shader",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_1_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_4.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/Materials/F_Cornea.mat",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Body_Color/F_Color.TGA",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_2.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line13.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/NCrystal.shader",
+          "Assets/ART/outResources/SkinMaterials/Shaders/Hair.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_12.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/EmissorRave.shader",
+          "Assets/ART/outResources/SkinMaterials/Shaders/Eye.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_8_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/EyeLashes.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Beard/Beard_12_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Normal/F_Normal_Atl.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Specs/Body_Spec.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_13_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eye_Line/Eye_Line9.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_8.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/Materials/Mouth.mat",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyes/F_Eye_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Shaders/StandardSpecular.shader",
+          "Assets/ART/outResources/SkinMaterials/Shaders/EmissorTransparent.shader",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Chest/Chest_9.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Color/Body_C.TGA",
+          "Assets/ART/outResources/SkinMaterials/Female/Materials/FemaleBody.mat",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Normal/Body_Ave_N.tga",
+          "Assets/ART/outResources/SkinMaterials/Female/map/Eyesbrow/F_Eyebrow_8_n.tga",
+          "Assets/ART/outResources/SkinMaterials/Male/map/Body_Hair/Eyesbrow/Eyebrow_7_n.TGA"
+        ],
+        "dependencies": []
+      },
+      "normalized_dependencies": []
+    },
+    {
+      "bundle": "gamemusic",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\gamemusic",
+      "exists": true,
+      "size": 50599895,
+      "sha256": "fe557f3817ca952612695f1f6511954ace43476e4b80312e073be6710f6fcde6",
+      "manifest": {
+        "bundle": "gamemusic",
+        "bundle_size": 50599895,
+        "manifest_sha256": "71375744a5c2f962d8b5919e6a90a2339d415106b07f284c196c73fd118ce846",
+        "crc": "2313929852",
+        "assets": [
+          "Assets/prefabs/GameMusic.prefab"
+        ],
+        "dependencies": []
+      },
+      "normalized_dependencies": []
+    },
+    {
+      "bundle": "s/preinitiload",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\preinitiload",
+      "exists": true,
+      "size": 15058,
+      "sha256": "13444c8446508a2ff8689db4c8f9aa5cc2468e0a2662864cf5fe3707f2f4610c",
+      "manifest": {
+        "bundle": "s/preinitiload",
+        "bundle_size": 15058,
+        "manifest_sha256": "0f84625c8504ecfac53094b0b9dec23276fa04637fdbe81b57c0387dcf381148",
+        "crc": "198807912",
+        "assets": [
+          "Assets/Scenes/InitLOAD/PreInitiLOAD.unity"
+        ],
+        "dependencies": []
+      },
+      "normalized_dependencies": []
+    },
+    {
+      "bundle": "s/initload",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\initload",
+      "exists": true,
+      "size": 53838,
+      "sha256": "0f6538d9a2a71596eb29602fc0147d47760d8676f5e3852a0da3830a7219de6d",
+      "manifest": {
+        "bundle": "s/initload",
+        "bundle_size": 53838,
+        "manifest_sha256": "f08ba67efdf435639152c1a3dfe5768fb927815dcfec7e0df7dc9c22465d7648",
+        "crc": "283347783",
+        "assets": [
+          "Assets/Scenes/InitLOAD/InitLOAD.unity"
+        ],
+        "dependencies": []
+      },
+      "normalized_dependencies": []
+    },
+    {
+      "bundle": "s/login",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\login",
+      "exists": true,
+      "size": 765617,
+      "sha256": "f959991aed7dcdeaf25559bfca2077766eeb96457026e1d98a0672aca53b4db5",
+      "manifest": {
+        "bundle": "s/login",
+        "bundle_size": 765617,
+        "manifest_sha256": "e6a4e3d262a814885a173c9aec834a1460f2aa5a4728c0be348bc0d86e711045",
+        "crc": "1451548273",
+        "assets": [
+          "Assets/Scenes/Login/Login.unity"
+        ],
+        "dependencies": []
+      },
+      "normalized_dependencies": []
+    },
+    {
+      "bundle": "s/nebulaplayer",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\nebulaplayer",
+      "exists": true,
+      "size": 9408495,
+      "sha256": "68845c9c1f16c17a57fc5b122dd0a71f5881c54eb4d8dbb2534a292522802099",
+      "manifest": {
+        "bundle": "s/nebulaplayer",
+        "bundle_size": 9408495,
+        "manifest_sha256": "5d62baddf87ce2619cdebec0cd5d1796924b275bd186da8e5a7dfe541f726004",
+        "crc": "3398816726",
+        "assets": [
+          "Assets/Resources/NebulaPlayer.prefab"
+        ],
+        "dependencies": [
+          "[local-path]"
+        ]
+      },
+      "normalized_dependencies": [
+        "skinmaterials"
+      ]
+    },
+    {
+      "bundle": "s/nexus",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\nexus",
+      "exists": true,
+      "size": 118649742,
+      "sha256": "95df4352e39d5a14e504911b36205aa58cb09ba20efa9883b431098d68eb6480",
+      "manifest": {
+        "bundle": "s/nexus",
+        "bundle_size": 118649742,
+        "manifest_sha256": "30432e8ac3499c68fba04008b1e64b114589ea53d59576f329ae0a34ceaab2f2",
+        "crc": "3825136752",
+        "assets": [
+          "Assets/Scenes/Spaces/Nexus.unity"
+        ],
+        "dependencies": [
+          "[local-path]"
+        ]
+      },
+      "normalized_dependencies": [
+        "skinmaterials"
+      ]
+    },
+    {
+      "bundle": "s/nexuslogicprefab",
+      "path": "[local-path] Realms\\Nebula Realms_Data\\StreamingAssets\\StandaloneWindows\\s\\nexuslogicprefab",
+      "exists": true,
+      "size": 182923011,
+      "sha256": "7a555fddd0bf0743444f60a3eacf0533cc6ce3a546995b6bd6ffc2ed10bd5f66",
+      "manifest": {
+        "bundle": "s/nexuslogicprefab",
+        "bundle_size": 182923011,
+        "manifest_sha256": "c6d0ae54f6882b3c56a406fb6b053313fce6a28b7b7e4ff82cd1928a50575791",
+        "crc": "1123563960",
+        "assets": [
+          "Assets/prefabs/LogicPREFAB/NexusLogicPREFAB.prefab"
+        ],
+        "dependencies": [
+          "[local-path]",
+          "[local-path]"
+        ]
+      },
+      "normalized_dependencies": [
+        "nav",
+        "skinmaterials"
+      ]
+    }
+  ],
+  "missing": [],
+  "optional_space_event": {
+    "bundle": "s/nexusspaceevent",
+    "exists": false
+  },
+  "nexus_loader_components": [
+    {
+      "asset_file": "BuildPlayer-Nexus",
+      "path_id": 5638,
+      "class_name": "SpacePREFAB",
+      "raw_sha256": "ff5b5ff1143c79403315e372f7a42df831b576a99db0a0af044a0a85feee81e8",
+      "game_object_name": "SpacePrefab",
+      "game_object_active_self": true,
+      "fields": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 1090
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 960
+        },
+        "m_Name": "",
+        "cam": {
+          "m_FileID": 0,
+          "m_PathID": 2987
+        },
+        "ScreenLoader": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        }
+      }
+    }
+  ],
+  "nexus_mono_parse_errors": [],
+  "built_in_boot_scene": {
+    "path": "[local-path] Realms\\Nebula Realms_Data\\level0",
+    "sha256": "95e80ae6c2658c6da0c9269e9e6a54ecf8d6b43c4cd28e091957521235fe1e0c",
+    "components": [
+      {
+        "asset_file": "level0",
+        "path_id": 42,
+        "class_name": "VersionGame",
+        "game_object_name": "VersionGame",
+        "game_object_active_self": true,
+        "raw_size": 44,
+        "raw_sha256": "79d93be0be0481e056c28f2779bc3f497462a3a00751595c00bdc7ad1da426b6"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 43,
+        "class_name": "NebulaAssetBundleManager",
+        "game_object_name": "NebulaAssetbundleManager",
+        "game_object_active_self": true,
+        "raw_size": 32,
+        "raw_sha256": "ce8820d1e00b5a6a4da0a74f03ac2cfe4a8bbe65b32c4c2b616d27df7c8eb05d",
+        "fields": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 3
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": 2459
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 44,
+        "class_name": "Scenes",
+        "game_object_name": "Scenes",
+        "game_object_active_self": true,
+        "raw_size": 32,
+        "raw_sha256": "72de7ede6ef21f5cacb6a66b9f8b5b84f525f3141dde8d29aa00682c70b6ab77",
+        "fields": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 4
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": 911
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 45,
+        "class_name": "Booter",
+        "game_object_name": "Booter",
+        "game_object_active_self": true,
+        "raw_size": 56,
+        "raw_sha256": "2f4d365cd7e1bbccad6734fec2171cb4ed746bf382f583c85c72f72ce4a3c0f7"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 46,
+        "class_name": "ScreenLoader",
+        "game_object_name": "ScreenLoader",
+        "game_object_active_self": true,
+        "raw_size": 1236,
+        "raw_sha256": "9f9b9f988a20e9c899a521bcbeb5a575614148eabadd93cad95e95f70fb18c66"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 47,
+        "class_name": "SpinCircle",
+        "game_object_name": "Spin",
+        "game_object_active_self": true,
+        "raw_size": 84,
+        "raw_sha256": "25fa775cf80a3a05b32bfcc2e4f807d7930ee67b6bbb59870004dc34fc911cc2"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 48,
+        "class_name": "Image",
+        "game_object_name": "LoadingCircle",
+        "game_object_active_self": false,
+        "raw_size": 136,
+        "raw_sha256": "f1ff7614253fcc2787f2dea9be2dc72e6bca0747e4d352641a8a8433ece2550f"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 49,
+        "class_name": "Image",
+        "game_object_name": "Logo",
+        "game_object_active_self": true,
+        "raw_size": 136,
+        "raw_sha256": "85cfc300bb20345207cf4501eacc08d66b77717231146921288d3159cb0b4972"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 50,
+        "class_name": "Text",
+        "game_object_name": "txtSpinCircle",
+        "game_object_active_self": false,
+        "raw_size": 148,
+        "raw_sha256": "79ebbab6c14e24ce65cc47d415d2f5c1197c59937f30f7f0bb289a25cd6e6c96"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 51,
+        "class_name": "Text",
+        "game_object_name": "num",
+        "game_object_active_self": true,
+        "raw_size": 152,
+        "raw_sha256": "24c3d19f7fb3b8fa4953e375afc9e6cf79f6023e0e8689df8c0bcb1901074fd7"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 52,
+        "class_name": "Text",
+        "game_object_name": "symbol",
+        "game_object_active_self": true,
+        "raw_size": 152,
+        "raw_sha256": "3270554386bee25f3285490dbf08ab643c5f32bf17bd4a6e33e7832e9c98e77d"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 53,
+        "class_name": "ContentSizeFitter",
+        "game_object_name": "txtSpinCircle",
+        "game_object_active_self": false,
+        "raw_size": 40,
+        "raw_sha256": "2cdc7cdcf92328c71ebe4b874bb485752c1bc6ff9298a5313a8562f974a75874"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 54,
+        "class_name": "CanvasScaler",
+        "game_object_name": "ScreenLoader",
+        "game_object_active_self": true,
+        "raw_size": 80,
+        "raw_sha256": "f9da298108d91b4027e22cf55232a57767de2996279af3f061c4bac6a85b0c49"
+      },
+      {
+        "asset_file": "level0",
+        "path_id": 55,
+        "class_name": "Image",
+        "game_object_name": "Image Primary",
+        "game_object_active_self": true,
+        "raw_size": 136,
+        "raw_sha256": "017ff86b4e411992516fa1dd45575c50957c8d15560ac4b92845959909d08f4f"
+      }
+    ],
+    "parse_errors": [
+      {
+        "path_id": 42,
+        "error": "ValueError",
+        "detail": "Expected to read 44 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 45,
+        "error": "ValueError",
+        "detail": "Expected to read 56 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 46,
+        "error": "ValueError",
+        "detail": "Expected to read 1236 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 47,
+        "error": "ValueError",
+        "detail": "Expected to read 84 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 48,
+        "error": "ValueError",
+        "detail": "Expected to read 136 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 49,
+        "error": "ValueError",
+        "detail": "Expected to read 136 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 50,
+        "error": "ValueError",
+        "detail": "Expected to read 148 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 51,
+        "error": "ValueError",
+        "detail": "Expected to read 152 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 52,
+        "error": "ValueError",
+        "detail": "Expected to read 152 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 53,
+        "error": "ValueError",
+        "detail": "Expected to read 40 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 54,
+        "error": "ValueError",
+        "detail": "Expected to read 80 bytes, but only read 32 bytes"
+      },
+      {
+        "path_id": 55,
+        "error": "ValueError",
+        "detail": "Expected to read 136 bytes, but only read 32 bytes"
+      }
+    ]
+  }
+}

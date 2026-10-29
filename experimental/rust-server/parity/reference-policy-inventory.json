@@ -1,0 +1,509 @@
+{
+  "format_version": 1,
+  "reference_source_digest": "ee84a152511488426825d36492ab27128c4cdf78cee0f6da88fc3521560e10b3",
+  "policy_origin": "AUTHORED_PRESERVATION_NOT_ORIGINAL_SERVER",
+  "policies": [
+    {
+      "id": "authority:http-platform",
+      "area": "authority",
+      "policy": "Client requests append exact PS4 or StandaloneWindows platform-name trailer before AES encryption; outer fields preserve empty entries.",
+      "source_evidence": [
+        {
+          "source": "backend/wire.py",
+          "sha256": "53aa05c27f6ae64adeb5ff2e9b9ad57c4d92c82a7701887c38129c8a7e62302f"
+        },
+        {
+          "source": "backend/server.py",
+          "sha256": "b38b5cbe12a10659109d7846ebac4cd07580b378172ab397fb84545c9a814d7b"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "authority:http-error",
+      "area": "authority",
+      "policy": "Invalid method/query/cipher returns raw HTTP400; reconstructed protocol errors return their status with encrypted literal ERROR.",
+      "source_evidence": [
+        {
+          "source": "backend/server.py",
+          "sha256": "b38b5cbe12a10659109d7846ebac4cd07580b378172ab397fb84545c9a814d7b"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "authority:session-binding",
+      "area": "authority",
+      "policy": "Session GUID is first32 lowercase hex of SHA256(ASCII replacement-encoded account#64-hex-request-hash); session ownership and optional account binding are checked.",
+      "source_evidence": [
+        {
+          "source": "backend/wire.py",
+          "sha256": "53aa05c27f6ae64adeb5ff2e9b9ad57c4d92c82a7701887c38129c8a7e62302f"
+        },
+        {
+          "source": "backend/state.py",
+          "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "authority:current-writer",
+      "area": "authority",
+      "policy": "Historical sessions may read selected state, while guarded writes, purchases, allocation and consumable issue require the current account session.",
+      "source_evidence": [
+        {
+          "source": "backend/service.py",
+          "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+        },
+        {
+          "source": "backend/state.py",
+          "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+        },
+        {
+          "source": "backend/shop.py",
+          "sha256": "f5fbcdb6532c8b07f0c7896e2df39735aa6e7ef5728f605f997055cce0c9ac76"
+        },
+        {
+          "source": "backend/consumables.py",
+          "sha256": "9669ce3733cc00af4718d3c4fe0c6a368ee8358dd8b1ce5180a4b9a9daf8ed2f"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "authority:public-actor",
+      "area": "authority",
+      "policy": "Public mode authenticates an operator-provisioned per-account credential and enforces actor scope; this is not Valve ownership-ticket verification.",
+      "source_evidence": [
+        {
+          "source": "backend/public_access.py",
+          "sha256": "87b7c78f15cf6d985c2cb6178712fd74065c67a3618b43f07bee44c01ecb73b5"
+        },
+        {
+          "source": "backend/server.py",
+          "sha256": "b38b5cbe12a10659109d7846ebac4cd07580b378172ab397fb84545c9a814d7b"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "authority:mirror-connection",
+      "area": "authority",
+      "policy": "Transport connection is marked Mirror-authenticated to admit ready/add-player; add-player carries no account identity and application identity binding remains separate.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+          "sha256": "64c1df30fd011df321279845903d454397c091f572625c50bd0dd5248213b4ba"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "authority:mirror-command",
+      "area": "authority",
+      "policy": "Commands require ready/authenticated/spawned connection, current bound account, matching netId and permitted component/hash; wardrobe actors are denied. Finite speed/transform payloads and exact lengths are checked.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+          "sha256": "64c1df30fd011df321279845903d454397c091f572625c50bd0dd5248213b4ba"
+        },
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaMirrorCommands.cs",
+          "sha256": "552cff5dd5da57e723f980209828bffa54a3f3407f16e060e60e0d563a369e3f"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "authority:mirror-speed",
+      "area": "authority",
+      "policy": "Speed assignment and replication are preservation replacement policy; the shipped native UserCode body is a return stub.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+          "sha256": "64c1df30fd011df321279845903d454397c091f572625c50bd0dd5248213b4ba"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:no-implicit-readiness",
+      "area": "world",
+      "policy": "HTTP allocation needs a fresh admitted instance descriptor; incomplete, stale, missing or profile-incompatible instances must not be advertised.",
+      "source_evidence": [
+        {
+          "source": "backend/allocation.py",
+          "sha256": "ef97aa8eb987a172e29d2c7ea4d4b276842b20a4e31b0d799ec58d0c58f8bb12"
+        },
+        {
+          "source": "backend/instance_lifecycle.py",
+          "sha256": "304cbea9454e61500d48d1f71c949438782d802fe64cb2829fc1161554961abd"
+        },
+        {
+          "source": "backend/service.py",
+          "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:world-dispatch",
+      "area": "world",
+      "policy": "World policy handles31,44-47,93,94;45,47,93 are explicitly denied C2S as clientbound-only. Native enum existence alone does not authorize an opcode.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaWorldState.cs",
+          "sha256": "32cbc6072b781d038941a8bbeceda374f6e4c9616956573278f5ec84f28cb75d"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:boats",
+      "area": "world",
+      "policy": "Boats are permitted only by exact scene token inventory; a different active boat needs an exit first, duplicates do not clone, and release token must match. S2C false exit is not invented because the client ignores it.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaWorldState.cs",
+          "sha256": "32cbc6072b781d038941a8bbeceda374f6e4c9616956573278f5ec84f28cb75d"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:generic-ids",
+      "area": "world",
+      "policy": "Trusted generic IDs are incremental runtime IDs, not serialized Unity pathIds; unknown/mixed unresolved scenes fail closed unless a reviewed semantic mapping exists.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaWorldState.cs",
+          "sha256": "32cbc6072b781d038941a8bbeceda374f6e4c9616956573278f5ec84f28cb75d"
+        },
+        {
+          "source": "protocol/interaction-mapping-bridge.json",
+          "sha256": "13d0c5d075240178ba66456a75f0599d2c9579182848de62f4153040ab4dca7c"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:semantic-registry",
+      "area": "world",
+      "policy": "Authored control97 binds complete semantic-key registries for static and furniture namespaces. Ready acknowledgement is required before interactions; deferred minigame and separate-protocol keys remain denied.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInteractionRegistry.cs",
+          "sha256": "21556e1a70f3270e98e7a5bfbb9a22178917cc4ef82a22bf0921a93c6f0dd54a"
+        },
+        {
+          "source": "protocol/interaction-mapping-bridge.json",
+          "sha256": "13d0c5d075240178ba66456a75f0599d2c9579182848de62f4153040ab4dca7c"
+        },
+        {
+          "source": "protocol/static-interaction-manifest.json",
+          "sha256": "82a72e7b84a6db4f06f8fd64451b3edb49256d24517da7f7dfe3918607d3a4c2"
+        },
+        {
+          "source": "protocol/housing-interaction-manifest.json",
+          "sha256": "d5423d7672330a89fa44e20da72f636eb0204301b45859fdee7bdc12ee898ca1"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:generic-history",
+      "area": "world",
+      "policy": "Generic bool transitions use the trusted scene inventory; duplicates do not reapply. Hollyridge ordered transition history is bounded to4096; other scenes use reviewed state replay policy.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaWorldState.cs",
+          "sha256": "32cbc6072b781d038941a8bbeceda374f6e4c9616956573278f5ec84f28cb75d"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:consumables",
+      "area": "world",
+      "policy": "Coffee/Oktoberfest require table0 and an authoritative durable one-use receipt bound to account, GUID and kind. The scene separately checks actor allocation and scene inventory; the receipt has no instance-id field. Client count observations cannot mint a prop or currency.",
+      "source_evidence": [
+        {
+          "source": "backend/consumables.py",
+          "sha256": "9669ce3733cc00af4718d3c4fe0c6a368ee8358dd8b1ce5180a4b9a9daf8ed2f"
+        },
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+          "sha256": "64c1df30fd011df321279845903d454397c091f572625c50bd0dd5248213b4ba"
+        },
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaWorldState.cs",
+          "sha256": "32cbc6072b781d038941a8bbeceda374f6e4c9616956573278f5ec84f28cb75d"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "world:peer-delivery",
+      "area": "world",
+      "policy": "World broadcasts target announced peers in the same instance; visibility/loaded-remote checks apply where a source peer exists. Semantic clients are excluded from legacy numeric generic delivery.",
+      "source_evidence": [
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+          "sha256": "64c1df30fd011df321279845903d454397c091f572625c50bd0dd5248213b4ba"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:no-default-space",
+      "area": "housing",
+      "policy": "Fresh accounts receive no implicit apartments. Personal spaces need explicit owner/logical-space/scene bindings and current allocation.",
+      "source_evidence": [
+        {
+          "source": "backend/housing.py",
+          "sha256": "1a0c1308cc367d4e2b9038c4212c5b4409815f3121828e325a8b216d19099488"
+        },
+        {
+          "source": "backend/service.py",
+          "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:read-owner",
+      "area": "housing",
+      "policy": "The current allocated owner may read during scene setup before presence; a visitor read needs the current owner present in the same instance.",
+      "source_evidence": [
+        {
+          "source": "backend/service.py",
+          "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:write-owner",
+      "area": "housing",
+      "policy": "Housing writes require current owner session and exact allocated instance/scene; visitors and historical sessions are denied.",
+      "source_evidence": [
+        {
+          "source": "backend/housing.py",
+          "sha256": "1a0c1308cc367d4e2b9038c4212c5b4409815f3121828e325a8b216d19099488"
+        },
+        {
+          "source": "backend/housing_atomic.py",
+          "sha256": "39ccea368edcfbde5906aa5adf86ae6c2696c6cbb1cb25a88884c762baba1fd0"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:layout-validation",
+      "area": "housing",
+      "policy": "Canonical entitled items must occupy their recovered placement class, finite matching transform arrays and valid unique wall/ceiling slots. Total client placement cost is at most200; zero serialized size registers as one.",
+      "source_evidence": [
+        {
+          "source": "backend/housing.py",
+          "sha256": "1a0c1308cc367d4e2b9038c4212c5b4409815f3121828e325a8b216d19099488"
+        },
+        {
+          "source": "protocol/housing-placement-contracts.json",
+          "sha256": "dbab3074a04fa4a0bd7f7fab26b82b9710b1f7c80a956342ab96417f5be3992e"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:original-parts",
+      "area": "housing",
+      "policy": "The original two sparse requests use part0 ground indices0-99 and part1 index100 onward; the other half is literal null padding with zero transforms. atablename must be null while saving.",
+      "source_evidence": [
+        {
+          "source": "backend/housing.py",
+          "sha256": "1a0c1308cc367d4e2b9038c4212c5b4409815f3121828e325a8b216d19099488"
+        },
+        {
+          "source": "backend/housing_atomic.py",
+          "sha256": "39ccea368edcfbde5906aa5adf86ae6c2696c6cbb1cb25a88884c762baba1fd0"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:atomic-save",
+      "area": "housing",
+      "policy": "Only a complete consistent pair promotes the whole durable layout. Part1 HTTP acknowledgement can wait for part0 without a held SQLite transaction; incomplete staging never replaces the committed half.",
+      "source_evidence": [
+        {
+          "source": "backend/housing_atomic.py",
+          "sha256": "39ccea368edcfbde5906aa5adf86ae6c2696c6cbb1cb25a88884c762baba1fd0"
+        },
+        {
+          "source": "backend/server.py",
+          "sha256": "b38b5cbe12a10659109d7846ebac4cd07580b378172ab397fb84545c9a814d7b"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:save-limits",
+      "area": "housing",
+      "policy": "Local coordination uses30s save timeout,0.75s acknowledgement window and300s receipt lifetime. Contradictory duplicates quarantine a lane, while identical duplicates are idempotent. These timings are replacement policy.",
+      "source_evidence": [
+        {
+          "source": "backend/housing_atomic.py",
+          "sha256": "39ccea368edcfbde5906aa5adf86ae6c2696c6cbb1cb25a88884c762baba1fd0"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "housing:recheck-commit",
+      "area": "housing",
+      "policy": "Current owner/session/allocation and entitlements are rechecked before promotion; staging, committed layout and receipt participate in one atomic group.",
+      "source_evidence": [
+        {
+          "source": "backend/housing_atomic.py",
+          "sha256": "39ccea368edcfbde5906aa5adf86ae6c2696c6cbb1cb25a88884c762baba1fd0"
+        },
+        {
+          "source": "backend/state.py",
+          "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "resources:catalog",
+      "area": "resources",
+      "policy": "Catalog identity is case-sensitive and kind-specific. Ambiguous/conflicting mappings are denied rather than guessed from a thumbnail or similar ID.",
+      "source_evidence": [
+        {
+          "source": "backend/resources.py",
+          "sha256": "a22fcdf348c8fe03f6ca9a05312212a10c5420df90410f676d2ba56eb7d7e80c"
+        },
+        {
+          "source": "protocol/resource-entitlements.json",
+          "sha256": "d6048c34549592d8b282ebd56379627f394d7a136ab8eb7dddada76626132059"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "resources:empty-default",
+      "area": "resources",
+      "policy": "Fresh profiles have no companion/locomotion grants; the exact empty collection response is true#GUID with no fabricated item or trailing separator.",
+      "source_evidence": [
+        {
+          "source": "backend/resources.py",
+          "sha256": "a22fcdf348c8fe03f6ca9a05312212a10c5420df90410f676d2ba56eb7d7e80c"
+        },
+        {
+          "source": "backend/service.py",
+          "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "resources:grants",
+      "area": "resources",
+      "policy": "Entitlements are account-bound; regrant is idempotent, preserves grant time and can explicitly update the local display label. Purchase arrays and parallel name arrays remain aligned.",
+      "source_evidence": [
+        {
+          "source": "backend/resources.py",
+          "sha256": "a22fcdf348c8fe03f6ca9a05312212a10c5420df90410f676d2ba56eb7d7e80c"
+        },
+        {
+          "source": "backend/state.py",
+          "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "resources:selection-authority",
+      "area": "resources",
+      "policy": "Scene selection requests use bounded same-host IPC. The backend owns SQLite and validates current session/account/instance/item before committing a selection.",
+      "source_evidence": [
+        {
+          "source": "backend/resource_selection.py",
+          "sha256": "b5655fa066d1d2421c509e6996ba1ec9572061817767a3fd56b9b8870af6b6db"
+        },
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaResourceSelections.cs",
+          "sha256": "23c98fccdafae5d017baf5f36dca0b13d482355b84f7b4e18f303bd8065feaa3"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "resources:commit-before-broadcast",
+      "area": "resources",
+      "policy": "The scene broadcasts a changed companion/locomotion only after the matching committed acknowledgement and account snapshot; recognizing a packet does not grant the resource.",
+      "source_evidence": [
+        {
+          "source": "backend/resource_selection.py",
+          "sha256": "b5655fa066d1d2421c509e6996ba1ec9572061817767a3fd56b9b8870af6b6db"
+        },
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceServer.cs",
+          "sha256": "64c1df30fd011df321279845903d454397c091f572625c50bd0dd5248213b4ba"
+        },
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaResourceSelections.cs",
+          "sha256": "23c98fccdafae5d017baf5f36dca0b13d482355b84f7b4e18f303bd8065feaa3"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    },
+    {
+      "id": "resources:restoration",
+      "area": "resources",
+      "policy": "Durable selection restoration, stale acknowledgement rejection, revocation and peer reconciliation require separate authority/state tests and original-client acceptance.",
+      "source_evidence": [
+        {
+          "source": "backend/resource_selection.py",
+          "sha256": "b5655fa066d1d2421c509e6996ba1ec9572061817767a3fd56b9b8870af6b6db"
+        },
+        {
+          "source": "mirror-server/UnityProject/Assets/Preservation/NebulaInstanceAccounts.cs",
+          "sha256": "9603940bb2820e225dca5c8b794cf5fb3918347b86809831956d72e00d98f43f"
+        }
+      ],
+      "original_server_semantics": "NOT_PROVEN",
+      "parity_status": "NOT_PROVEN"
+    }
+  ]
+}

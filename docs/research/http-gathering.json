@@ -1,0 +1,414 @@
+{
+  "schema": "nebula-preservation.http-gathering.v2",
+  "source_artifact": {
+    "name": "GameAssembly.dll",
+    "sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac"
+  },
+  "delimiter": "#",
+  "type_enum_observed_in_client": {
+    "0": "Halloween",
+    "1": "Christmas",
+    "2": "Easter",
+    "3": "Halloween2018",
+    "4": "Christmas2018",
+    "5": "Halloween2019",
+    "6": "Christmas2019",
+    "7": "Halloween2020",
+    "8": "Christmas2020"
+  },
+  "route_inventory": {
+    "observed_contracts": 11,
+    "implemented_routes": 10,
+    "deferred_minigame_routes": [
+      "Get_GatherChristmasGetSpacesCompleted"
+    ]
+  },
+  "routes": [
+    {
+      "command": "Get_npGather",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "name_game",
+        "max_available_items"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "state",
+        "cooldown_or_current",
+        "total_if_active"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f4e70",
+          "path": "work/evidence/ghidra/functions/3f4e70.c",
+          "sha256": "334cb18947ea9290fb7b743bd70d32f791b588752f0c102eb3831440bbdf8798"
+        },
+        "callback": {
+          "rva": "0x3f0fe0",
+          "path": "work/evidence/ghidra/functions/3f0fe0.c",
+          "sha256": "82592c2010b98ac2ebd7818eec3028ab026e6c235beaf61dda9c606b70fe4cb4"
+        }
+      }
+    },
+    {
+      "command": "Get_npGatherProcessItem",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "name_game",
+        "total",
+        "type"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "popup_or_name",
+        "current",
+        "total",
+        "np_reward_amount"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f18d0",
+          "path": "work/evidence/ghidra/functions/3f18d0.c",
+          "sha256": "a2f933804250f8a3eb00bd359f4499ce7e466bd0fc70145465b986f0e14d0f44"
+        },
+        "callback": {
+          "rva": "0x3f14f0",
+          "path": "work/evidence/ghidra/functions/3f14f0.c",
+          "sha256": "21442093e3b9e5385fde81bc287c1851a9403ce790278446e626e53923571470"
+        }
+      }
+    },
+    {
+      "command": "Get_GatherStatus",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "type"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "available",
+        "type",
+        "amount"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f4b30",
+          "path": "work/evidence/ghidra/functions/3f4b30.c",
+          "sha256": "674c2d442ea66845225a104514c50c00be3e834252b747ac531a37a67de8eefe"
+        },
+        "callback": {
+          "rva": "0x3f0470",
+          "path": "work/evidence/ghidra/functions/3f0470.c",
+          "sha256": "48708c1be17531dedccb754636e99e84254c15b20e4cd36af8f341b5c94ce184"
+        }
+      }
+    },
+    {
+      "command": "Send_GatherInitInSpace",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "current_space_psid",
+        "type"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "type",
+        "current_gather",
+        "rewards_earned",
+        "cooldown_seconds",
+        "nexus_complete",
+        "leaf_park_complete",
+        "dome_complete",
+        "cube_complete",
+        "beach_complete"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f4730",
+          "path": "work/evidence/ghidra/functions/3f4730.c",
+          "sha256": "c2c38f7b2202ed2f5c8ebb16d78b2ef377fca6e33b3182abd3db2e91ea07e9ac"
+        },
+        "callback": {
+          "rva": "0x3f3cb0",
+          "path": "work/evidence/ghidra/functions/3f3cb0.c",
+          "sha256": "afc4d0e817f76cc76dbf8f8edfa781a8c506520cc0167ba87dc62b54ae626b98"
+        }
+      }
+    },
+    {
+      "command": "Get_GatherPhaseGame",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "type"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "type",
+        "cooldown_seconds",
+        "current_gather",
+        "rewards_earned",
+        "nexus_complete",
+        "leaf_park_complete",
+        "dome_complete",
+        "cube_complete",
+        "beach_complete"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f0130",
+          "path": "work/evidence/ghidra/functions/3f0130.c",
+          "sha256": "c033644bde653766b8ba6312901a08c9f535aec97b30417c8f23212b06417245"
+        },
+        "callback": {
+          "rva": "0x3efa10",
+          "path": "work/evidence/ghidra/functions/3efa10.c",
+          "sha256": "48f4fee840175bbd6ea7fa6c3ec8164330ae75c41c9227bd6be297150ac7b9d6"
+        }
+      }
+    },
+    {
+      "command": "Get_GatherConsume",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "type",
+        "type_dependent_value"
+      ],
+      "request_variant": {
+        "types_1_2_3_5_7": "four fields; final field is component Int32 counter",
+        "type_4": "four fields; final field is ManagerInstance.psidglobal (Nexus, LeafPark, Dome, Cube, or Beach for the five-space challenge)",
+        "types_6_8": "three fields; type is final field"
+      },
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "type",
+        "current_gather",
+        "rewards_earned"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f2e90",
+          "path": "work/evidence/ghidra/functions/3f2e90.c",
+          "sha256": "ece084e1c167e526c59c994220d03b81a5055e9007f31df1d8712133e1b713c3"
+        },
+        "callback": {
+          "rva": "0x3ef680",
+          "path": "work/evidence/ghidra/functions/3ef680.c",
+          "sha256": "eec9ae851533d7644b9d706422d9d3dda5c9062c32c6b70f1da8c0f6c0e75494"
+        }
+      }
+    },
+    {
+      "command": "Get_GatherConsumeReward",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "type",
+        "type_dependent_value"
+      ],
+      "request_variant": {
+        "types_1_2_3_5_7": "four fields; final field is component Int32 counter",
+        "types_4_6_8": "three fields; type is final field"
+      },
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "type",
+        "current_gather",
+        "rewards_earned"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f2590",
+          "path": "work/evidence/ghidra/functions/3f2590.c",
+          "sha256": "4587718fc277918a99774cbdcd9d49d176989c5b06a1422b285e90a24593fdeb"
+        },
+        "callback": {
+          "rva": "0x3ef240",
+          "path": "work/evidence/ghidra/functions/3ef240.c",
+          "sha256": "0e766c092dcbefa9bdea56a6da20a5573c84e298efca862d9097f79f08b8bd8c"
+        }
+      }
+    },
+    {
+      "command": "Get_npGatherChristmas",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "current_space_psid",
+        "client_state"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "state",
+        "start_allowed",
+        "phase_code",
+        "cooldown_seconds",
+        "current_gather"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f2190",
+          "path": "work/evidence/ghidra/functions/3f2190.c",
+          "sha256": "ca15a629e6f79ea4a7baeb426fbe522bb2c0608e04b1f0c153cfa0285513b1e1"
+        },
+        "callback": {
+          "rva": "0x3f0a50",
+          "path": "work/evidence/ghidra/functions/3f0a50.c",
+          "sha256": "bd55729f1044615ec429286c5b36b0890a80038bb26a97537050d12849bd9e34"
+        }
+      }
+    },
+    {
+      "command": "Get_GatherChristmasGetSpacesCompleted",
+      "implementation_status": "deferred_minigame_score_oracle",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "level",
+        "datetime_ticks"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "memorion_score",
+        "level_index"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x3f1d60",
+          "path": "work/evidence/ghidra/functions/3f1d60.c",
+          "sha256": "3b65549a6baa277343b579d410d88eecd0ee2925c0ffe1c27e694995ce8fb272"
+        },
+        "callback": {
+          "rva": "0x3ef0c0",
+          "path": "work/evidence/ghidra/functions/3ef0c0.c",
+          "sha256": "a0e9e3110ee9790ae10b8b4f28952490c4841d8e06efa70a44d502f43e50c886"
+        }
+      }
+    },
+    {
+      "command": "Get_GatherMedievalVillage",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "datetime_ticks"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "available_bool",
+        "cooldown_seconds_double",
+        "amount_int32"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x690700",
+          "path": "work/evidence/ghidra/functions/690700.c",
+          "sha256": "95ff38752bab0acb0fad838a3c3a2e609898d8297a4162c31ffc106d003455ea"
+        },
+        "callback": {
+          "rva": "0x690c60",
+          "path": "work/evidence/ghidra/functions/690c60.c",
+          "sha256": "7d34ceabe266c50815ec81f52fa55f28ec6a4cd465ee3558d76c031b27cfea0b"
+        }
+      }
+    },
+    {
+      "command": "Send_GatherMedievalVillageConsume",
+      "implementation_status": "restored_local_preservation",
+      "request_fields": [
+        "guid",
+        "ps4_id",
+        "datetime_ticks"
+      ],
+      "request_variant": null,
+      "response_fields_consumed": [
+        "success",
+        "guid",
+        "ps4_id",
+        "result_code_int32",
+        "cooldown_seconds_double",
+        "popup_string"
+      ],
+      "evidence": {
+        "sender": {
+          "rva": "0x691120",
+          "path": "work/evidence/ghidra/functions/691120.c",
+          "sha256": "bbd2480098152546c1b8d3e1afa9364ee316a7f2fd82f20f700dae05b6e11552"
+        },
+        "callback": {
+          "rva": "0x690b10",
+          "path": "work/evidence/ghidra/functions/690b10.c",
+          "sha256": "344c948bd3d6530b9867503381c3c2fc7b1999b460ed6c80f5d29b62470a5d2f"
+        }
+      }
+    }
+  ],
+  "preservation_policy": {
+    "classification": "new local policy, not recovered original service data",
+    "fail_closed": [
+      "unconfigured event",
+      "inactive event mutation",
+      "unknown reward",
+      "client/local counter mismatch"
+    ],
+    "durable": [
+      "configuration",
+      "per-account current gather and rewards earned",
+      "Christmas2018 unique scene flags",
+      "reward claim marker",
+      "medieval progress"
+    ],
+    "idempotency": "Store.atomic BEGIN IMMEDIATE groups the progress recheck, entitlement grant and claim marker; an injected post-grant failure rolls all writes back, including after reopening SQLite"
+  },
+  "unknowns": [
+    "Original event schedules and reward definitions were not present in the reviewed client artifacts.",
+    "The retired server's Memorion score-validation rules were not present in the reviewed client artifacts; Get_GatherChristmasGetSpacesCompleted therefore fails explicitly as deferred gameplay.",
+    "No claim is made that locally configured event content reproduces retired production data."
+  ],
+  "excluded": [
+    "archery gameplay",
+    "Memorion gameplay",
+    "other mini-game mechanics"
+  ]
+}

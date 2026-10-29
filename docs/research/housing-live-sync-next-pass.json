@@ -1,0 +1,53 @@
+{
+  "format_version": 1,
+  "scope": "Static native review of furnishing concurrency, join/disconnect behavior, and live layout synchronization",
+  "conclusion": "No recovered live furniture-layout synchronization path exists. HTTP is the durable layout authority; the native one-user check gates an attempt to enter edit mode but is not a continuous occupancy lock.",
+  "owner_editor_then_visitor_arrives": {
+    "PlayerJoinedProcessor_0x5e4660": "Builds the remote PlayerInfo/avatar in Memory and starts label/avatar loading. It does not call HousingManager, DeactivateUIMode, SaveAssetsAtServer, LoadAssetsFromServer, or the one-user popup.",
+    "OnAvatarLoaded_0x5e42d0": "Enables the remote avatar and requests locomotion, companion, position and animation state. It performs no housing call.",
+    "DeactivateUIMode_0x6c3bc0": "Disables housing UI/input when explicitly invoked, but neither player-join body invokes it.",
+    "Deactivate_0x6c3cd0": "Disables housing UI/input/camera when explicitly invoked, but neither player-join body invokes it.",
+    "effect": "A visitor arrival does not interrupt an owner who was already editing."
+  },
+  "visitor_edit_attempt": {
+    "HousingManager_Initialize_0x6c4080": "At invocation time, requires the local player to be inside the authored collider and the remote-player dictionary count to be zero. A positive remote count starts ShowOnlyOneUserPopUpDelay instead of initializing edit UI.",
+    "popup_MoveNext_0x6cb280": "Only activates the popup, waits, then hides it. It does not deactivate an editor, save, reload, kick, or send TCP.",
+    "effect": "A visitor with the owner present cannot start editing. The point-in-time check does not stop an already active owner editor when a visitor arrives."
+  },
+  "layout_visibility": {
+    "initial_load": "HousingManager.LoadAssetsFromServer 0x6c4520 sends N2HousingReadPreset; the visitor constructs the durable HTTP snapshot received during its own scene load.",
+    "save": "HousingManager.SaveAssetsAtServer 0x6c4dc0 serializes the local scene and sends the two HTTP save parts. HousingFurnishing.SaveAtServer also re-registers placed GenericInteractable children locally, changing the local generic-ID epoch.",
+    "tcp_enum": "The complete recovered TypeTCP enum 0..96 contains no furniture layout/add/remove/transform command. Genericinteractable type94 carries interaction state, not furniture placement/layout serialization.",
+    "already_connected_visitor": "No recovered producer tells an already connected visitor to reload the layout after the owner's HTTP save. Do not claim live furnishing refresh or matching regenerated generic IDs."
+  },
+  "disconnect": {
+    "owner": "OnRemoteDisconnected 0x5e0c60 compares the disconnected GUID with HTTP read-preset field4 guidOwner and begins the kick decision unless the owner is in wardrobe.",
+    "other_visitor": "The ordinary remote is removed from Memory; no recovered housing reload or edit-mode transition is established.",
+    "one_user_popup": "The popup is an edit-attempt response. It is not a join notification and no recovered path uses it to terminate an editor on arrival."
+  },
+  "safe_preservation_boundary": [
+    "Furnish while alone for deterministic behavior.",
+    "A visitor joining during editing may see the last durable snapshot rather than unsaved or newly saved local changes.",
+    "After a save, require visitor scene reload/re-entry before claiming the updated layout is visible.",
+    "Do not authorize dynamic furniture GenericInteractable IDs across peers without an explicit shared mapping epoch.",
+    "Do not invent an editor-occupancy TCP signal or live furniture push; neither is present in the recovered client wire surface."
+  ],
+  "phase63_sha256": {
+    "0x5e42d0 PlayerJoinedProcessor.OnAvatarLoaded": "4fe4d8d7c8eba3e9a9167c928b78a68c11830d81e4f1fbd76f0e510d35bba82b",
+    "0x6c3bc0 HousingManager.DeactivateUIMode": "ea2fd232f9a69dd25357123edf213f1a42ad7b2ad6839d38f2ea1c0bbde8d091",
+    "0x6c3cd0 HousingManager.Deactivate": "158d6e611caf56b7e4dd2f656ecfda8906ad825a721c1bc07aeacd7b6581f6ef",
+    "0x6cb280 ShowOnlyOneUserPopUpDelay.MoveNext": "378d7cbaa8e029aeef95993f7995a2465104c907c1d4f595dbd2640fb8f70fa9"
+  },
+  "primary_sources": [
+    "work/evidence/ghidra/functions/5e4660.c",
+    "work/evidence/ghidra/functions/5e42d0.c",
+    "work/evidence/ghidra/functions/6c4080.c",
+    "work/evidence/ghidra/functions/6c4520.c",
+    "work/evidence/ghidra/functions/6c4dc0.c",
+    "work/evidence/ghidra/functions/6c3bc0.c",
+    "work/evidence/ghidra/functions/6c3cd0.c",
+    "work/evidence/ghidra/functions/6cb280.c",
+    "work/decompiled/dump.cs",
+    "outputs/nebula-preservation/protocol/tcp-world-interactions.json"
+  ]
+}

@@ -1,0 +1,10 @@
+all:
+  children:
+    nebula:
+      hosts:
+        preservation:
+          ansible_host: 192.0.2.10
+          ansible_user: root
+          # Dedicated authorized_keys entries may use `restrict` (no PTY).
+          ansible_ssh_use_tty: false
+          ansible_ssh_private_key_file: /absolute/private/path/deploy-key

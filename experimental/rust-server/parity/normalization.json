@@ -1,0 +1,76 @@
+{
+  "format_version": 1,
+  "http": [],
+  "durable_state": [
+    {
+      "table": "profiles",
+      "column": "created_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "sessions",
+      "column": "created_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "entitlements",
+      "column": "granted_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "presets",
+      "column": "updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/state.py",
+        "sha256": "322d2f88a83a630f88f374847ea6f8dd7fb9740950b9f07ff1bf7a6480e47985"
+      }
+    },
+    {
+      "table": "profile_state",
+      "column": "wardrobe_updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/service.py",
+        "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+      }
+    },
+    {
+      "table": "positions",
+      "column": "updated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/service.py",
+        "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+      }
+    },
+    {
+      "table": "allocations",
+      "column": "allocated_at",
+      "rule": "finite-positive-clock-to-sentinel-preserve-zero-null-and-numeric-type",
+      "reason": "Reference writes wall-clock time; independently started probes have different clocks",
+      "source": {
+        "source": "backend/service.py",
+        "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5"
+      }
+    }
+  ]
+}

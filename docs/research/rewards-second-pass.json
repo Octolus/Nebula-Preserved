@@ -1,0 +1,517 @@
+{
+  "format_version": 1,
+  "scope": "static second-pass source-vs-native audit; no runtime or connection evidence",
+  "implementation_sha256": "0d7c2710205456c0b405117bb2811eb2596a1b10effa61bf0ecd3e5a5c45700d",
+  "wire_summary": {
+    "reviewed_routes": 9,
+    "matching_shapes": 9,
+    "shape_mismatches": 0
+  },
+  "closed_enums": {
+    "Utils.RewardType": [
+      "Halloween",
+      "ArcheryBow",
+      "ArcheryCarcaj",
+      "Chess",
+      "CastleSword",
+      "PatricksDay2018",
+      "Cube",
+      "CampSilverLake0",
+      "CampSilverLake1",
+      "CampSilverLake2",
+      "CampSilverLake3",
+      "GhostWolf"
+    ],
+    "CinemaBoxOfficeTrigger.TypeCinemaBoxOffice": {
+      "0": "Ticket",
+      "1": "PopCorn"
+    }
+  },
+  "findings": [
+    {
+      "id": "RSP-001",
+      "severity": "high",
+      "route": "RewardClothServlet",
+      "status": "resolved",
+      "native_fact": "Send_rewardBeachTShirt writes request reward=0 unconditionally; callback UI success is additionally gated on request reward==0.",
+      "implementation_fact": "configuration and stored-definition readback now require canonical trigger0 and a wardrobe target.",
+      "required_change": "implemented"
+    },
+    {
+      "id": "RSP-002",
+      "severity": "medium",
+      "route": "checkRewardAvailableServlet",
+      "status": "resolved",
+      "native_fact": "request uses Utils.RewardType.ToString over a closed 12-name enum.",
+      "implementation_fact": "configuration and dispatch now whitelist the exact 12 enum names; enabling each remains administrator policy.",
+      "required_change": "implemented"
+    },
+    {
+      "id": "RSP-003",
+      "severity": "high",
+      "route": "SKLPromoServlet",
+      "status": "resolved",
+      "native_fact": "response[3] is Int32.Parse; SetSprites indexes aSprites[2*id] and aSprites[2*id+1], throwing when either index is outside the serialized array.",
+      "implementation_fact": "UnityPy extraction recovered promo IDs0..5 and six 12-entry arrays; configuration/readback validate both promo ID and sprite-pair index0..5 against that catalog.",
+      "required_change": "implemented with protocol/skl-promo-catalog.json"
+    },
+    {
+      "id": "RSP-004",
+      "severity": "medium",
+      "route": "CinemaInteractionNPServlet",
+      "status": "authored_policy_not_native_parity",
+      "native_fact": "success Ticket sets an in-memory ticket flag and popup; success PopCorn sets a flag, instantiates a ConsumablePopCorn and initializes it with 10 uses. CinemaSpaceTrigger.Interact itself loads the cinema without checking the ticket flag.",
+      "implementation_fact": "both are represented as durable generic cinema capabilities and every configured/repeated claim returns success; no price, charge, 10-use prop state or admission rule is modeled.",
+      "required_change": "Keep no-commerce behavior explicitly local; document the distinct client effects and do not claim recovered ticket/admission/popcorn persistence semantics."
+    },
+    {
+      "id": "RSP-005",
+      "severity": "high",
+      "route": "CheckIfSpaceStillExistServlet",
+      "status": "resolved",
+      "native_fact": "true#true loads SpaceParams.scene locally; false/error calls LoadSpace for that scene. Request field3 is SpaceParams.id_instance.",
+      "implementation_fact": "the allocation query and ready descriptor now match both instance_id and psidglobal.",
+      "required_change": "implemented; freshness/protocol completeness remains stricter local policy"
+    },
+    {
+      "id": "RSP-006",
+      "severity": "medium",
+      "route": "CinemaInteractionNPServlet and numeric reward routes",
+      "status": "resolved",
+      "native_fact": "Int32.ToString emits canonical decimal text; the cinema client can emit only `0` or `1`.",
+      "implementation_fact": "integer() now requires value == str(parsed_int), so aliases such as `-0` and `00` fail closed.",
+      "required_change": "implemented"
+    },
+    {
+      "id": "RSP-007",
+      "severity": "medium",
+      "route": "CheckOwnGenericReward / GenericReward",
+      "status": "semantic_risk_original_predicate_unknown",
+      "native_fact": "the check Boolean controls Show and the claim Boolean controls ShowReward; method/field labels describe ownership and grant, but no retired-server predicate was recovered.",
+      "implementation_fact": "ownership is only the local route claim marker. An entitlement acquired through another local source reports false; a first route claim can report newly granted true even when the idasset entitlement already existed.",
+      "required_change": "Either document claim-history semantics explicitly or correlate the configured target with actual entitlement ownership before choosing fields3; do not label this recovered parity."
+    },
+    {
+      "id": "RSP-008",
+      "severity": "medium",
+      "route": "all nine routes",
+      "status": "resolved_local_hardening",
+      "native_fact": "the encrypted request trailer carries a supported platform name; retired-server enforcement is unknown.",
+      "implementation_fact": "dispatch now requires request.platform to equal the profile's stored platform after GUID/account validation.",
+      "required_change": "implemented as explicit local hardening; retired-server behavior remains unknown"
+    }
+  ],
+  "route_reviews": [
+    {
+      "route": "CheckOwnGenericReward",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "idasset"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 3,
+          "name": "already_owned",
+          "type": "bool",
+          "rule": "false shows GenericOneAssetRewardTrigger.Show; true does nothing"
+        }
+      ],
+      "minimum_success_fields": 4,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "GenericReward",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "idasset"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 3,
+          "name": "reward_granted",
+          "type": "bool",
+          "rule": "true calls GenericOneAssetRewardTrigger.ShowReward; false does nothing"
+        }
+      ],
+      "minimum_success_fields": 4,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "RewardClothServlet",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "reward numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 1,
+          "name": "unused",
+          "type": "string"
+        },
+        {
+          "index": 2,
+          "name": "reward_granted",
+          "type": "bool",
+          "rule": "true with request reward==0 displays Beach reward added; otherwise finishes"
+        }
+      ],
+      "minimum_success_fields": 3,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "RewardConsumeServlet",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "idasset"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        }
+      ],
+      "minimum_success_fields": 3,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "SKLPromoServlet",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "id numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "sprite_id",
+          "type": "int",
+          "rule": "Int32.Parse then SKLPromoTrigger.SetSprites"
+        }
+      ],
+      "minimum_success_fields": 4,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "SKLPromoTriggerServlet",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "id numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "already_available_or_consumed",
+          "type": "bool",
+          "rule": "false calls SKLPromoTrigger.Show; true disables SKLPromoTrigger.gBall GameObject"
+        }
+      ],
+      "minimum_success_fields": 4,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "checkRewardAvailableServlet",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "Utils.RewardType enum NAME"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "available",
+          "type": "bool",
+          "rule": "true starts prepareRewardPanel(request rewardType); false finishes"
+        }
+      ],
+      "minimum_success_fields": 3,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "CinemaInteractionNPServlet",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "typeCinemaInteraction numeric"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "name": "success_literal",
+          "type": "string",
+          "rule": "exact true"
+        },
+        {
+          "index": 1,
+          "name": "SessionGUID",
+          "type": "string",
+          "rule": "must match local session"
+        },
+        {
+          "index": 2,
+          "name": "PS4ID",
+          "type": "string",
+          "rule": "must match local ID"
+        },
+        {
+          "index": 3,
+          "name": "success",
+          "type": "Boolean.Parse"
+        }
+      ],
+      "minimum_success_fields": 4,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown"
+    },
+    {
+      "route": "CheckIfSpaceStillExistServlet",
+      "request_fields": [
+        "SessionGUID",
+        "PS4ID",
+        "SpaceParams.id_instance"
+      ],
+      "response_fields": [
+        {
+          "index": 0,
+          "type": "string",
+          "rule": "exact true enables bool parse"
+        },
+        {
+          "index": 1,
+          "type": "Boolean.Parse",
+          "rule": "true loads current scene locally; false calls LoadSpace"
+        }
+      ],
+      "minimum_success_fields": 2,
+      "wire_shape_verdict": "matches_current_dispatch",
+      "original_server_policy": "unknown; current allocation/fresh-ready rule is compatible local policy"
+    }
+  ],
+  "call_context_limitations": [
+    "Static analysis did not observe execution or establish which scene instances are shipped/active.",
+    "Bounded disassembly proves Start0x4663E0 tail-jumps loadScene0x4665F0 and callback0x4663F0 starts the liveness coroutine after a successful unload; this is static reachability, not runtime observation.",
+    "Shipped SKL trigger IDs and sprite-array bounds are recovered from static Unity type trees; actual runtime scene activation was not observed."
+  ],
+  "original_policy_unknowns": [
+    "reward eligibility, schedules, cooldowns and historical claims",
+    "asset-to-entitlement mappings and repeat-claim behavior",
+    "cinema prices, currency deductions, ticket lifetime and admission policy",
+    "original SKL eligibility and server rule selecting the returned sprite-pair index"
+  ],
+  "implementation_assumption_checks": {
+    "cloth trigger is exactly native0": true,
+    "cloth target is wardrobe": true,
+    "reward availability uses closed enum": true,
+    "SKL uses shipped promo catalog": true,
+    "numeric parser requires canonical Int32 text": true,
+    "cinema is bounded to enum 0..1": true,
+    "liveness matches instance and world": true,
+    "session platform is locally enforced": true
+  },
+  "sources": [
+    {
+      "path": "outputs/nebula-preservation/tools/rewards_second_pass.py",
+      "sha256": "f30ffcb4de6396adb88e76eca52a4a29ff42edd4d23c0bd988bbe6607bce4ae2"
+    },
+    {
+      "path": "outputs/nebula-preservation/tools/extract_skl_promo_assets.py",
+      "sha256": "124fad3bac6aac053c66ef01799db356822ecfcb460315e953ee2593dd8d563f"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/rewards.py",
+      "sha256": "0d7c2710205456c0b405117bb2811eb2596a1b10effa61bf0ecd3e5a5c45700d"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/skl-promo-catalog.json",
+      "sha256": "bca3fc08dfdb4e6f5072d3b8ac13e4d0b84580917c115b2fc139e77f43522bc5"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/http-legacy-contracts.json",
+      "sha256": "a20f48f68f41887a022b114e0770d5e66deab72e057f55735f52f017b41d937f"
+    },
+    {
+      "path": "work/decompiled/dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/3ee650.c",
+      "sha256": "82fb9c16b3ae79bca4390370b8779005da450f24f578b2529f3261c9926e8055"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/3ffd70.c",
+      "sha256": "7ca23b2c318c68593e6f75fe990a7ea89e378218c656f646e263ae9dd4b8f3a3"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4161b0.c",
+      "sha256": "d9d1e5e585c8a8f19b41a9778ebb0f31e6faeb92110e20bc96e89d6e10373512"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5bee40.c",
+      "sha256": "b46e14863d87d0db2651d00f40c0b992165c41703635c3a463a45d562f2a64d6"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5bef90.c",
+      "sha256": "021d9160c4926aa8062d08c3ac6d5974f894de47d99c9156fb5bcf4f66bc553c"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5bed10.c",
+      "sha256": "71dfcc46387b87d3160c79537673572d89907f88b2a6287ebb3559f44b74b85f"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/44e200.c",
+      "sha256": "bdd2815262cdd446d45a956d700a611800fb8bf6294f2e33719603a779f538a0"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/44e370.c",
+      "sha256": "87928059ad9aec6769345e8c6f7027199aef483705f679691299131730d88699"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/44e5f0.c",
+      "sha256": "e4417efb5f34d9c07b8f1d8acb8a460fa9bf2a370c81cb46934f6cfdc7da8123"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/44e7a0.c",
+      "sha256": "84110af6a0fb7b2619aafbb4668c2679a7d5e5c185274726d1c399cbdb78d8bd"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/44e800.c",
+      "sha256": "1d7d985ed6b442b219f6395d2866ef03837789281d058bab23955277165f9c54"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/414e40.c",
+      "sha256": "2a1fa89b646a2651915ef9a675666f9c2bd74b1b234a48bef99d2b84567b361f"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/46e360.c",
+      "sha256": "91a0bfa302c2260b9a1c8772ffb609443652d473c8f176e76dea5c09449f1d4b"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/466380.c",
+      "sha256": "3635f0176745f4050cf91371fc84ff569ff7f356c887f36be34ce3cdcbd33bce"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4663f0.c",
+      "sha256": "bdbc21f0dacf4789905c30d9a7189ddbca184fb0c665b4aef43586b07a860696"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4663e0.c",
+      "sha256": "3be9161e15b43fcf83cf0385e57ea6558f70c23f450203b8a317a777c9950ece"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4665f0.c",
+      "sha256": "e94adc6dec9b0b0498c18fc97475b8f23d1dc3a0d458c7f243319de283bf3a06"
+    },
+    {
+      "path": "work/evidence/mitm-space-callcontext-native.json",
+      "sha256": "1ed4e48182837f74326cb2cbba333ba00c46cfb05ea163841d28c18731f0394c"
+    }
+  ]
+}

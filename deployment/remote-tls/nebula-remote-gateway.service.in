@@ -1,0 +1,28 @@
+[Unit]
+Description=Nebula preservation authenticated TLS game gateway
+After=network-online.target nebula-managed-http.service nebula-instance-supervisor.service
+Wants=network-online.target
+Requires=nebula-managed-http.service nebula-instance-supervisor.service
+
+[Service]
+Type=simple
+User=nebula
+Group=nebula
+WorkingDirectory=/opt/nebula-preservation/backend
+EnvironmentFile=/etc/nebula-preservation/remote-gateway.env
+ExecStart=/opt/nebula-preservation/.venv/bin/python /opt/nebula-preservation/backend/remote_gateway.py --listen --bind 0.0.0.0 --port ${NEBULA_GATEWAY_PORT} --state-dir ${NEBULA_STATE_DIR} --certificate ${NEBULA_TLS_CERTIFICATE} --private-key ${NEBULA_TLS_PRIVATE_KEY} --first-scene-port 28000 --last-scene-port 28031
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadOnlyPaths=/var/lib/nebula-preservation /etc/nebula-preservation
+RestrictAddressFamilies=AF_INET AF_UNIX
+SystemCallFilter=@system-service
+
+[Install]
+WantedBy=multi-user.target

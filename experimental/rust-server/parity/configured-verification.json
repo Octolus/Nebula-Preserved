@@ -1,0 +1,86 @@
+{
+  "format_version": 1,
+  "fixture": {
+    "fixture_id": "configured-mutations-v1",
+    "sha256": "2e5750a99f4f3b9148c77cf50db897937a512a407662e60763ce5885f4d0e1e8",
+    "provenance": "SYNTHETIC_PARITY_ONLY"
+  },
+  "candidate_binary": {
+    "name": "public-final-candidate.exe",
+    "sha256": "8df20c772bdb8a99afdf261ccf2669f4c1221f18bef09107dcaa871c2e827578"
+  },
+  "harness_sources": [
+    {
+      "source": "build_fixture.py",
+      "sha256": "7548b825063c0589dcb0a595b1d97610bdf2b1cbe690486d48dc129cd245a473"
+    },
+    {
+      "source": "build_manifest.py",
+      "sha256": "42614cbc57ccbd07e4c41fd99e6704521c5ab420f760df229455ed6b379338c2"
+    },
+    {
+      "source": "cases.py",
+      "sha256": "dee20238503c230ce960af35b36126336451037e67546d5591e5fdcdf04be962"
+    },
+    {
+      "source": "combine_reports.py",
+      "sha256": "d1608206643fe49a19bf842ac1fc1b26a9a21796d9fe33793b07681c1e33f6eb"
+    },
+    {
+      "source": "common.py",
+      "sha256": "8e74026f4cf9c3ebcd93c990e17231bd474b2b675bf7f642b46ab8b33f8f856d"
+    },
+    {
+      "source": "export_manifest.py",
+      "sha256": "6af4ba6dcba6858316f7d6d08bd328b84ef4fa7baa1ff70ddc7024dd92bf77ef"
+    },
+    {
+      "source": "fixture_cases.py",
+      "sha256": "5f0f801587374ffc2cceb94065b0694a24a219210bd2ddb2f48f2419f9eceb9d"
+    },
+    {
+      "source": "fixture_support.py",
+      "sha256": "c0d4ca6c12a9c6de27e7ef0f43b07d079ce08538e544de21cdaa62f12f79823a"
+    },
+    {
+      "source": "policy_inventory.py",
+      "sha256": "ad6b4b21fd765c1a1d3a3e0e0010255063d00cdf79abe96553245062866d208a"
+    },
+    {
+      "source": "reference_probe.py",
+      "sha256": "a3efbded2ec205eb56f14c9d69d9885d2ca22d4bc9d775c0be3a5478a92a679d"
+    },
+    {
+      "source": "run_parity.py",
+      "sha256": "538b36d9047cebff6d91d581358ea7aaec6e3be208cefd1a490802d7013d9d6f"
+    },
+    {
+      "source": "test_harness.py",
+      "sha256": "1b800936278122494dbca03d08193988247ac70b51f35d56df1435088d7e774b"
+    },
+    {
+      "source": "write_configured_report.py",
+      "sha256": "901401666957397c42a8abe3373e8a5bf75a625763ddbeb86082c8bbbeab377f"
+    },
+    {
+      "source": "write_report.py",
+      "sha256": "1e6260c3f7f650ed6f71a84d26f4b19c0a149b8c4901235b196187a8103345d7"
+    }
+  ],
+  "harness_matches_current_sources": true,
+  "reference_source_digest": "ee84a152511488426825d36492ab27128c4cdf78cee0f6da88fc3521560e10b3",
+  "result": {
+    "PASS": 76
+  },
+  "case_counts": {
+    "snapshot": 23,
+    "http": 51,
+    "process_restart": 2
+  },
+  "raw_no_change_assertions": 14,
+  "summary_sha256": "f7cd6809fbbfaa0d51ec95bb541b86c92c7b4d274786104f8a20b9249a138de2",
+  "configured_corpus_sha256": "9de7dbb804f508d88686f309203ce9570d1b0887df72410250626a7d6b076718",
+  "one_to_one_parity": "NOT_PROVEN",
+  "resource_selection_cas": "NOT_PROVEN",
+  "consumable_receipt_issue": "NOT_PROVEN"
+}

@@ -1,0 +1,376 @@
+{
+  "format_version": 1,
+  "fixture_id": "configured-mutations-v1",
+  "provenance": "SYNTHETIC_PARITY_ONLY",
+  "accounts": [
+    {
+      "account_id": "fixture-parity-a",
+      "username": "Fixture A",
+      "platform": "StandaloneWindows",
+      "request_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    {
+      "account_id": "fixture-parity-b",
+      "username": "Fixture B",
+      "platform": "StandaloneWindows",
+      "request_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "tables": {
+    "shop_wallets": [
+      {
+        "ps4_id": "fixture-parity-a",
+        "crystals": 150,
+        "np": 40,
+        "level": 2
+      },
+      {
+        "ps4_id": "fixture-parity-b",
+        "crystals": 3,
+        "np": 1,
+        "level": 0
+      }
+    ],
+    "shop_catalogs": [
+      {
+        "shop_id": "fixture-shop",
+        "type_shop": 0,
+        "name": "Synthetic Fixture Shop",
+        "description": "Synthetic parity only",
+        "url": "",
+        "active": 1
+      }
+    ],
+    "shop_offers": [
+      {
+        "offer_id": "fixture-pet-buy",
+        "kind": "companions",
+        "item_id": "A0IQgRXmw2UMG8T5UGrVE022o7Id25GU",
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "companions",
+        "gender_id": 0,
+        "name": "Synthetic fixture-pet-buy",
+        "image_path": "COMPANIONS/A0IQgRXmw2UMG8T5UGrVE022o7Id25GU/A0IQgRXmw2UMG8T5UGrVE022o7Id25GUThumbnail.png",
+        "crystals": 20,
+        "np": 7,
+        "featured": 1,
+        "active": 1,
+        "created_at": 1700000000.0
+      },
+      {
+        "offer_id": "fixture-pet-gift",
+        "kind": "companions",
+        "item_id": "A12086m7MxCG7imcV81F7WHyf81U2080",
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "companions",
+        "gender_id": 0,
+        "name": "Synthetic fixture-pet-gift",
+        "image_path": "COMPANIONS/A12086m7MxCG7imcV81F7WHyf81U2080/A12086m7MxCG7imcV81F7WHyf81U2080Thumbnail.png",
+        "crystals": 15,
+        "np": 5,
+        "featured": 1,
+        "active": 1,
+        "created_at": 1700000000.0
+      },
+      {
+        "offer_id": "fixture-bundle-pet",
+        "kind": "companions",
+        "item_id": "A7o4tjS0I7btGJC3J2W5Ro6SDhQ66dH7",
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "companions",
+        "gender_id": 0,
+        "name": "Synthetic fixture-bundle-pet",
+        "image_path": "COMPANIONS/A7o4tjS0I7btGJC3J2W5Ro6SDhQ66dH7/A7o4tjS0I7btGJC3J2W5Ro6SDhQ66dH7Thumbnail.png",
+        "crystals": 12,
+        "np": 4,
+        "featured": 1,
+        "active": 1,
+        "created_at": 1700000000.0
+      },
+      {
+        "offer_id": "fixture-bundle-locomotion",
+        "kind": "locomotions",
+        "item_id": "AJ7C1vNaTXDE2G5xRD5Uq4Tqv22a775K",
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "locomotions",
+        "gender_id": 0,
+        "name": "Synthetic fixture-bundle-locomotion",
+        "image_path": "Wardrobe_EAB/LOCOMOTIONS/AJ7C1vNaTXDE2G5xRD5Uq4Tqv22a775K/AJ7C1vNaTXDE2G5xRD5Uq4Tqv22a775KThumbnail.png",
+        "crystals": 9,
+        "np": 3,
+        "featured": 1,
+        "active": 1,
+        "created_at": 1700000000.0
+      },
+      {
+        "offer_id": "fixture-rollback-invalid",
+        "kind": "locomotions",
+        "item_id": "synthetic-invalid-resource",
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "locomotions",
+        "gender_id": 0,
+        "name": "Synthetic invalid catalog fixture",
+        "image_path": "Wardrobe_EAB/LOCOMOTIONS/AQeKMFYM0XY032R12q6RECJddp0EUf5f/AQeKMFYM0XY032R12q6RECJddp0EUf5fThumbnail.png",
+        "crystals": 2,
+        "np": 1,
+        "featured": 0,
+        "active": 1,
+        "created_at": 1700000000.0
+      },
+      {
+        "offer_id": "fixture-rollback-first",
+        "kind": "locomotions",
+        "item_id": "AQeKMFYM0XY032R12q6RECJddp0EUf5f",
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "locomotions",
+        "gender_id": 0,
+        "name": "Synthetic fixture-rollback-first",
+        "image_path": "Wardrobe_EAB/LOCOMOTIONS/AQeKMFYM0XY032R12q6RECJddp0EUf5f/AQeKMFYM0XY032R12q6RECJddp0EUf5fThumbnail.png",
+        "crystals": 2,
+        "np": 1,
+        "featured": 1,
+        "active": 1,
+        "created_at": 1700000000.0
+      },
+      {
+        "offer_id": "fixture-bundle-buy",
+        "kind": "bundle",
+        "item_id": null,
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "bundle",
+        "gender_id": 0,
+        "name": "Synthetic fixture-bundle-buy",
+        "image_path": "COMPANIONS/A7o4tjS0I7btGJC3J2W5Ro6SDhQ66dH7/A7o4tjS0I7btGJC3J2W5Ro6SDhQ66dH7Thumbnail.png",
+        "crystals": 25,
+        "np": 6,
+        "featured": 0,
+        "active": 1,
+        "created_at": 1700000000.0
+      },
+      {
+        "offer_id": "fixture-bundle-rollback",
+        "kind": "bundle",
+        "item_id": null,
+        "gender": null,
+        "category": null,
+        "shop_id": "fixture-shop",
+        "type_id": "bundle",
+        "gender_id": 0,
+        "name": "Synthetic fixture-bundle-rollback",
+        "image_path": "COMPANIONS/A7o4tjS0I7btGJC3J2W5Ro6SDhQ66dH7/A7o4tjS0I7btGJC3J2W5Ro6SDhQ66dH7Thumbnail.png",
+        "crystals": 10,
+        "np": 6,
+        "featured": 0,
+        "active": 1,
+        "created_at": 1700000000.0
+      }
+    ],
+    "shop_bundle_items": [
+      {
+        "bundle_offer_id": "fixture-bundle-buy",
+        "child_offer_id": "fixture-bundle-locomotion",
+        "ordinal": 1
+      },
+      {
+        "bundle_offer_id": "fixture-bundle-buy",
+        "child_offer_id": "fixture-bundle-pet",
+        "ordinal": 0
+      },
+      {
+        "bundle_offer_id": "fixture-bundle-rollback",
+        "child_offer_id": "fixture-rollback-first",
+        "ordinal": 0
+      },
+      {
+        "bundle_offer_id": "fixture-bundle-rollback",
+        "child_offer_id": "fixture-rollback-invalid",
+        "ordinal": 1
+      }
+    ],
+    "relations": [
+      {
+        "ps4_id": "fixture-parity-a",
+        "target": "Fixture B",
+        "target_platform": "StandaloneWindows",
+        "kind": "friend"
+      },
+      {
+        "ps4_id": "fixture-parity-b",
+        "target": "Fixture A",
+        "target_platform": "StandaloneWindows",
+        "kind": "friend"
+      }
+    ],
+    "local_reward_definitions": [
+      {
+        "route": "GenericReward",
+        "trigger_key": "fixture-generic",
+        "enabled": 1,
+        "grant_kind": "companions",
+        "item_id": "AA5wME7djMVdc87eKIg8oldbpgv8271T",
+        "gender": null,
+        "category": null,
+        "display_name": "Synthetic reward pet",
+        "sprite_id": null,
+        "units": 1,
+        "uses": null,
+        "configured_at": 1700000000.0
+      },
+      {
+        "route": "RewardConsumeServlet",
+        "trigger_key": "fixture-coffee",
+        "enabled": 1,
+        "grant_kind": "coffee",
+        "item_id": "coffee",
+        "gender": null,
+        "category": null,
+        "display_name": null,
+        "sprite_id": null,
+        "units": 2,
+        "uses": 3,
+        "configured_at": 1700000000.0
+      },
+      {
+        "route": "RewardConsumeServlet",
+        "trigger_key": "fixture-locomotion",
+        "enabled": 1,
+        "grant_kind": "locomotions",
+        "item_id": "AWshVO3OMkFi6KRIWi4Y2GuRuR0x8ads",
+        "gender": null,
+        "category": null,
+        "display_name": "Synthetic reward locomotion",
+        "sprite_id": null,
+        "units": 1,
+        "uses": null,
+        "configured_at": 1700000000.0
+      },
+      {
+        "route": "CinemaInteractionNPServlet",
+        "trigger_key": "0",
+        "enabled": 1,
+        "grant_kind": "cinema",
+        "item_id": "0",
+        "gender": null,
+        "category": null,
+        "display_name": null,
+        "sprite_id": null,
+        "units": 1,
+        "uses": null,
+        "configured_at": 1700000000.0
+      }
+    ],
+    "housing_spaces": [
+      {
+        "instance_id": "fixture-apartment",
+        "logical_space_key": "Home",
+        "psidglobal": "Home",
+        "owner_ps4_id": "fixture-parity-a",
+        "created_at": 1700000000.0
+      }
+    ],
+    "housing_entitlements": [
+      {
+        "ps4_id": "fixture-parity-a",
+        "item_id": "A044fFy8Xtm2U2J1DuRolDt63P431gI8",
+        "display_name": "Synthetic housing fixture",
+        "granted_at": 1700000000.0
+      }
+    ],
+    "allocations": [
+      {
+        "guid": "000149e2fb97bfd25d5a04ded21b7014",
+        "instance_id": "fixture-apartment",
+        "psidglobal": "Home",
+        "ip": "127.0.0.1",
+        "port": 29051,
+        "allocated_at": 1700000000.0
+      },
+      {
+        "guid": "d66e80aa156c638746900ed7ea53584e",
+        "instance_id": "fixture-apartment",
+        "psidglobal": "Home",
+        "ip": "127.0.0.1",
+        "port": 29051,
+        "allocated_at": 1700000000.0
+      }
+    ],
+    "housing_save_stages": [
+      {
+        "instance_id": "fixture-apartment",
+        "guid": "d66e80aa156c638746900ed7ea53584e",
+        "owner_ps4_id": "fixture-parity-a",
+        "batch_id": "ffffffffffffffffffffffffffffffff",
+        "shared_json": "{\"psidglobal\":\"Home\",\"aidassetWall\":[],\"aidassetWallSlot\":[],\"aidassetCeiling\":[],\"aidassetCeilingSlot\":[],\"ground_count\":101}",
+        "part0_json": "{\"psidglobal\":\"Home\",\"aidasset\":[\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"A044fFy8Xtm2U2J1DuRolDt63P431gI8\",\"null\"],\"aidasset_tx\":[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0],\"aidasset_ty\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],\"aidasset_tz\":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],\"aidasset_r\":[90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,90.0,0.0],\"aidassetWall\":[],\"aidassetWallSlot\":[],\"aidassetCeiling\":[],\"aidassetCeilingSlot\":[],\"atablename\":null}",
+        "part1_json": null,
+        "state": "open",
+        "started_at": 1700000000.0,
+        "deadline": 4102444800.0
+      }
+    ],
+    "notification_outbox": [
+      {
+        "event_id": "00000000000000000000000000000002",
+        "target_ps4_id": "fixture-parity-a",
+        "source_username": "Fixture A",
+        "source_platform": 1,
+        "notification_type": 4,
+        "arguments": "",
+        "ticks": 638355968000000000,
+        "dedupe_key": "reward:GenericReward:fixture-generic",
+        "created_at": 1700000000.0,
+        "accepted_at": null
+      },
+      {
+        "event_id": "00000000000000000000000000000003",
+        "target_ps4_id": "fixture-parity-a",
+        "source_username": "Fixture A",
+        "source_platform": 1,
+        "notification_type": 4,
+        "arguments": "",
+        "ticks": 638355968000000000,
+        "dedupe_key": "reward:RewardConsumeServlet:fixture-coffee",
+        "created_at": 1700000000.0,
+        "accepted_at": null
+      },
+      {
+        "event_id": "00000000000000000000000000000004",
+        "target_ps4_id": "fixture-parity-a",
+        "source_username": "Fixture A",
+        "source_platform": 1,
+        "notification_type": 4,
+        "arguments": "",
+        "ticks": 638355968000000000,
+        "dedupe_key": "reward:RewardConsumeServlet:fixture-locomotion",
+        "created_at": 1700000000.0,
+        "accepted_at": null
+      },
+      {
+        "event_id": "00000000000000000000000000000001",
+        "target_ps4_id": "fixture-parity-b",
+        "source_username": "Fixture A",
+        "source_platform": 1,
+        "notification_type": 3,
+        "arguments": "Synthetic fixture-pet-gift",
+        "ticks": 638355968000000000,
+        "dedupe_key": "shop-gift:fixture-parity-a:fixture-parity-b:fixture-pet-gift",
+        "created_at": 1700000000.0,
+        "accepted_at": null
+      }
+    ]
+  }
+}

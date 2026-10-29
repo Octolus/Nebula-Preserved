@@ -1,0 +1,227 @@
+{
+  "crypto": [
+    {
+      "plaintext": "",
+      "ciphertext": "QrnGrub9EXAqpBYR/qr3Gw=="
+    },
+    {
+      "plaintext": "a",
+      "ciphertext": "SFKxvKgDPL+wHT94D3dvng=="
+    },
+    {
+      "plaintext": "0123456789abcdef",
+      "ciphertext": "+hSsc05Y8auDLtmuNu1YX0K5xq7m/RFwKqQWEf6q9xs="
+    },
+    {
+      "plaintext": "é🚀#PS4",
+      "ciphertext": "xA3U8qGQKyswg3y9N9/mKw=="
+    },
+    {
+      "plaintext": "guid#account#text#with#hashes#PS4",
+      "ciphertext": "Edgg85iISFkt5vyn7/Tx2V+fsEiz9+t0f19ekfkqd9+Yno6B+Q2gbxcOxkbvgLce"
+    }
+  ],
+  "strings": [
+    {
+      "value": null,
+      "hex": "0000"
+    },
+    {
+      "value": "",
+      "hex": "0100"
+    },
+    {
+      "value": "a",
+      "hex": "020061"
+    },
+    {
+      "value": "é🚀#",
+      "hex": "0800c3a9f09f9a8023"
+    },
+    {
+      "value": "\u0000\t\r\n",
+      "hex": "050000090d0a"
+    }
+  ],
+  "varuint": [
+    {
+      "value": "0",
+      "hex": "00"
+    },
+    {
+      "value": "1",
+      "hex": "01"
+    },
+    {
+      "value": "239",
+      "hex": "ef"
+    },
+    {
+      "value": "240",
+      "hex": "f0"
+    },
+    {
+      "value": "241",
+      "hex": "f101"
+    },
+    {
+      "value": "255",
+      "hex": "f10f"
+    },
+    {
+      "value": "256",
+      "hex": "f110"
+    },
+    {
+      "value": "2287",
+      "hex": "f8ff"
+    },
+    {
+      "value": "2288",
+      "hex": "f90000"
+    },
+    {
+      "value": "67823",
+      "hex": "f9ffff"
+    },
+    {
+      "value": "67824",
+      "hex": "faf00801"
+    },
+    {
+      "value": "16777215",
+      "hex": "faffffff"
+    },
+    {
+      "value": "16777216",
+      "hex": "fb00000001"
+    },
+    {
+      "value": "4294967295",
+      "hex": "fbffffffff"
+    },
+    {
+      "value": "4294967296",
+      "hex": "fc0000000001"
+    },
+    {
+      "value": "1099511627775",
+      "hex": "fcffffffffff"
+    },
+    {
+      "value": "1099511627776",
+      "hex": "fd000000000001"
+    },
+    {
+      "value": "281474976710655",
+      "hex": "fdffffffffffff"
+    },
+    {
+      "value": "281474976710656",
+      "hex": "fe00000000000001"
+    },
+    {
+      "value": "72057594037927935",
+      "hex": "feffffffffffffff"
+    },
+    {
+      "value": "72057594037927936",
+      "hex": "ff0000000000000001"
+    },
+    {
+      "value": "18446744073709551615",
+      "hex": "ffffffffffffffffff"
+    }
+  ],
+  "varint": [
+    {
+      "value": "-9223372036854775808",
+      "hex": "ffffffffffffffffff"
+    },
+    {
+      "value": "-123456789",
+      "hex": "fb299ab70e"
+    },
+    {
+      "value": "-121",
+      "hex": "f101"
+    },
+    {
+      "value": "-1",
+      "hex": "01"
+    },
+    {
+      "value": "0",
+      "hex": "00"
+    },
+    {
+      "value": "1",
+      "hex": "02"
+    },
+    {
+      "value": "120",
+      "hex": "f0"
+    },
+    {
+      "value": "121",
+      "hex": "f102"
+    },
+    {
+      "value": "9223372036854775807",
+      "hex": "fffeffffffffffffff"
+    }
+  ],
+  "primitives": "abf93412d4feefcdab89eb32a4f8efcdab89674523010000000000000080000000800000807f0000000000e05ec0010000d8",
+  "nullable": "000185ffffff0001000101010000a03f00000133221100554477668899aabbccddeeff",
+  "guid": "33221100554477668899aabbccddeeff",
+  "bytes": "0000000001000000040000000080ff",
+  "hashes": {
+    "Mirror.ReadyMessage": 1978506556,
+    "Mirror.AddPlayerMessage": -1182715107,
+    "Mirror.CommandMessage": 997831828,
+    "Mirror.RpcMessage": -2009955142,
+    "Mirror.SpawnMessage": 1843019876,
+    "Mirror.EntityStateMessage": -483130351,
+    "é🚀": 2682133,
+    "System.Void Assets.Scripts.NebulaPlayers.NebulaPlayerSyncVars::SetSpeed(System.Single)": 421014902,
+    "System.Void Mirror.NetworkTransformBase::CmdClientToServerSync(System.Nullable`1<UnityEngine.Vector3>,System.Nullable`1<UnityEngine.Quaternion>,System.Nullable`1<UnityEngine.Vector3>)": -1415757549
+  },
+  "batches": [
+    "000000000000f83f01020304050607",
+    "0000000000000c4008",
+    "00000000000012400000000000000000000000000000000000000000"
+  ],
+  "spawn_initial": "001c0000000000803f000000c0000060400000000000000000000000000000803f010400000000009040",
+  "speed_delta": "010c000000010000000000000000009040",
+  "telepathy_header": "00123456",
+  "nullable_nonzero": 123,
+  "ascii_astral": "3f3f",
+  "noncanonical_base64": "",
+  "malformed": {
+    "string_invalid_utf8": true,
+    "string_truncated": true,
+    "string_limit": true,
+    "nullable_truncated": true,
+    "bytes_size_overflow": true,
+    "bytes_truncated": true,
+    "bool_nonzero": true,
+    "batch_short_accepted": false,
+    "batch_timestamp_only_accepted": true,
+    "batch_timestamp_only_has_message": false
+  },
+  "source_sha256": {
+    "Assets/Mirror/Runtime/NetworkReader.cs": "2e07c61f89fe7a7e3e7868e46171a3f20348edcd09cf121b92c8f5a8fde90405",
+    "Assets/Mirror/Runtime/NetworkWriter.cs": "7e76dc137d40cf7d04dc2e89c4096e8286d4fb2ef9f848b0d82e3b1a2e8e001d",
+    "Assets/Mirror/Runtime/NetworkReaderExtensions.cs": "e9671bf7daa66ead9077b4b38ba83d21377de48ff581065b01f1c9a4eb72dfc1",
+    "Assets/Mirror/Runtime/NetworkWriterExtensions.cs": "4dbf55c98e613afe50814bc2e15aa902959e75d37c51ed2550c55d22b28c4293",
+    "Assets/Mirror/Runtime/Compression.cs": "c2ac77a114fdf5acb62bdbffdabd7e705c2c1d8bbe89f528404d96f7ceb47ca2",
+    "Assets/Mirror/Runtime/Extensions.cs": "cc103bb011b0282f96dc8f7727d0d97e7ecd3adbac7d231c475ca18f6112ef7b",
+    "Assets/Mirror/Runtime/Batching/Batcher.cs": "9b36403083abd6f3de749dad2b86e9281d8308dd9523a5debf1115a3ef081594",
+    "Assets/Mirror/Runtime/Batching/Unbatcher.cs": "2f3ba58b17cecccf5a81567b80e467c6b4dbeec9f2a497eb54f1e7d2c49ea238",
+    "Assets/Mirror/Runtime/MessagePacking.cs": "fbfa8278e1453e976f397f36b060d71e820ea6badecb624c64d7f9064a429bd1",
+    "Assets/Mirror/Runtime/Transports/Telepathy/Telepathy/Utils.cs": "0518d70079d1afe216cf378dbc12c6411d8ff7b1441575e8c8101ae425317dbd",
+    "Assets/Preservation/NebulaApplicationCrypto.cs": "b5926d0caac85ccd6e80db60183acaee6712e4babca0352ada56abbd253df882",
+    "Assets/Preservation/NebulaSpawnState.cs": "3b70f692f6afe1363b9cde7a615b25c5003fa3920d509ea03081ffb2f983a4f8",
+    "Assets/Preservation/NebulaMirrorCommands.cs": "552cff5dd5da57e723f980209828bffa54a3f3407f16e060e60e0d563a369e3f"
+  }
+}

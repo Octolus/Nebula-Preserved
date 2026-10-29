@@ -1,0 +1,10 @@
+{
+  "format_version": 1,
+  "fixtures": [
+    {
+      "fixture_id": "configured-mutations-v1",
+      "file": "configured-mutations-v1.json",
+      "sha256": "2e5750a99f4f3b9148c77cf50db897937a512a407662e60763ce5885f4d0e1e8"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "name": "settings-original-toggle-and-restore",
+  "mutating": true,
+  "fixture_notes": [
+    "Use exactly one client because the original settings path uses shared player preferences.",
+    "Capture the baseline value first and verify a fresh process hydrates the restored value afterward."
+  ],
+  "steps": [
+    {"action": "settings.open", "expect_status": ["started"]},
+    {
+      "action": "query",
+      "expect_status": ["ok"],
+      "require": {
+        "settings_acceptance.single_client_claimed": true,
+        "settings_acceptance.notification.ready": true
+      }
+    },
+    {"action": "settings.toggle_notification", "expect_status": ["started"]},
+    {"action": "settings.toggle_notification", "expect_status": ["started"]},
+    {
+      "action": "query",
+      "expect_status": ["ok"],
+      "require": {
+        "settings_acceptance.notification.ready": true
+      }
+    }
+  ]
+}

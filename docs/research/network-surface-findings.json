@@ -1,0 +1,1417 @@
+{
+  "format_version": 1,
+  "scope": "Independent static network-surface coverage audit; this is an inventory and gap map, not a claim of complete reverse engineering.",
+  "all_networking_parity_proven": false,
+  "runtime_or_connection_tests_performed": false,
+  "sources": [
+    {
+      "path": "outputs/nebula-preservation/protocol/network-surface-inventory.json",
+      "sha256": "eb8ab30e13321d6fa51eaef24193242289e1f27bc66fa6820e86de7efea2142d"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/http-task-command-candidates.json",
+      "sha256": "8b04b815d6c6e987d7a9ae254386cc96b75db811b9fc1ab88047f929dc74b303"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/http-legacy-contracts.json",
+      "sha256": "a20f48f68f41887a022b114e0770d5e66deab72e057f55735f52f017b41d937f"
+    }
+  ],
+  "coverage": {
+    "modern_task_route_names": 40,
+    "targeted_legacy_route_names": 45,
+    "known_route_union": 73,
+    "additional_concrete_route_names": 48,
+    "minimum_combined_compiled_route_names": 121,
+    "implemented_backend_route_count": null,
+    "application_unity_http_caller_bodies": 69,
+    "application_www_caller_bodies": 3,
+    "application_dns_caller_bodies": 2,
+    "application_video_url_caller_bodies": 1,
+    "application_generic_http_sender_callers": 92,
+    "route_literal_candidates_in_inventory": 120,
+    "endpoint_literal_candidates_in_inventory": 71,
+    "missing_application_caller_bodies": 1,
+    "note": "Route names overlap across code paths; counts are compiled client surface, not active endpoints, working features, implemented backend route count or server parity."
+  },
+  "surfaces": [
+    {
+      "name": "Modern HTTP task queue",
+      "known_scope": "40 native route identifiers; envelope/task response contracts are separate files.",
+      "contract": "http-task-command-candidates.json",
+      "status": "existing bounded audit; HTTP task count is not all HTTP"
+    },
+    {
+      "name": "Login/Editor/Space direct HTTP",
+      "known_scope": "45 route names in targeted legacy audit; overlaps modern tasks.",
+      "contract": "http-legacy-contracts.json",
+      "status": "existing bounded audit"
+    },
+    {
+      "name": "Additional generic cloud HTTP",
+      "known_scope": "Housing, shop/purchase/gift/crystals, full-game lobby/statistics/invites, gathering/events, archery/boat scoring, XP and maintenance clients. Native bodies encrypt request strings, URI-escape them, build GET ?data= URLs and consume AES response envelopes.",
+      "evidence": [
+        {
+          "rva": "0x3bb330",
+          "path": "work/evidence/ghidra/functions/3bb330.c",
+          "sha256": "de4a2bb53af3b12e078a1ac8c9cce67025fab035240fc2a69f18bd2987701482",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x3f5fa0",
+          "path": "work/evidence/ghidra/functions/3f5fa0.c",
+          "sha256": "403c468359dff40d9ed54fe00a0fb3677458902a0b9c906d6ebdc6052b7f6413",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x414760",
+          "path": "work/evidence/ghidra/functions/414760.c",
+          "sha256": "9fb9c7d33a27fc21f205fb0988e7ef8209e8ccde5ee6dff27f5e17407db10faa",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x447530",
+          "path": "work/evidence/ghidra/functions/447530.c",
+          "sha256": "e6eaab259129335850a8cf742a3208f2175dffc10388dee94012334d4e8669dd",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x447a80",
+          "path": "work/evidence/ghidra/functions/447a80.c",
+          "sha256": "692f3ac8aff1e7a929fdff2523cd20e6cb26152914de1539071b620ac575c751",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x448270",
+          "path": "work/evidence/ghidra/functions/448270.c",
+          "sha256": "e6ac85c5fb974814a5cc16161cadc8775c76223b016cbfe2f7c0831737147ca7",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x4edf40",
+          "path": "work/evidence/ghidra/functions/4edf40.c",
+          "sha256": "a52f2fea66d33c69f63f721c21c321cb32810a4483455d7e7d36853148869201",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x53ad70",
+          "path": "work/evidence/ghidra/functions/53ad70.c",
+          "sha256": "a8896f0e542198ef640011a28c7521b330f025b9b009a93efc1a565caec58a7b",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x577120",
+          "path": "work/evidence/ghidra/functions/577120.c",
+          "sha256": "d9eaac1a9f8a0cc380d666b706ffb8cd77f69718ee938f9e39c3df087b3a3c60",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x5a9100",
+          "path": "work/evidence/ghidra/functions/5a9100.c",
+          "sha256": "cc1753d96845fb795a845b50c355006f14e47047e1493b3c038694deec62528f",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x6a0380",
+          "path": "work/evidence/ghidra/functions/6a0380.c",
+          "sha256": "ac7244e122ef602f013651634a4273f391739192e05296eeb15b306111ebe4d8",
+          "status": "decompiled"
+        }
+      ],
+      "status": "transport bodies and concrete listed route arguments observed; per-route DTOs/field order/state effects remain separate unreviewed contracts"
+    },
+    {
+      "name": "Dedicated full-game/space-liveness HTTP",
+      "known_scope": "AddToPoolFullGameServlet, CheckIsAvailableToJoinFullGameServlet and CheckIfSpaceStillExistServlet use dedicated coroutines rather than the generic HTTP sender.",
+      "evidence": [
+        {
+          "rva": "0x4ec1c0",
+          "path": "work/evidence/ghidra/functions/4ec1c0.c",
+          "sha256": "f2af9708253ed03585d3be833a7203b764da10bcf28b89d5133d4612d3a6b3bc",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x4ecd80",
+          "path": "work/evidence/ghidra/functions/4ecd80.c",
+          "sha256": "1f21ee1944a2c8e8269c40848dbf7333534705a4e89f797434092ccab0aef652",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x46e360",
+          "path": "work/evidence/ghidra/functions/46e360.c",
+          "sha256": "91a0bfa302c2260b9a1c8772ffb609443652d473c8f176e76dea5c09449f1d4b",
+          "status": "decompiled"
+        }
+      ],
+      "status": "concrete HTTP routes observed; pool/join/liveness rules and all payload fields not reconstructed by this audit"
+    },
+    {
+      "name": "Shop image URL fetches",
+      "known_scope": "UIShopItemEntry.loadImage and wwwLoadImage construct Unity WWW from caller-provided URL; loadImage consumes downloaded texture.",
+      "evidence": [
+        {
+          "rva": "0x4b2c40",
+          "path": "work/evidence/ghidra/functions/4b2c40.c",
+          "sha256": "fdd91e1b91489ca1783a48688a06199b55cb24b4e5d2b681da8dc7ad9a0b3a0d",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x4b31b0",
+          "path": "work/evidence/ghidra/functions/4b31b0.c",
+          "sha256": "4e4a93906f28c2486174a92883d243bd115843642df6557d99b58a77938cc625",
+          "status": "decompiled"
+        }
+      ],
+      "status": "dynamic fetch surface observed; URL origins, schemes, catalog links and cache policy not fully traced"
+    },
+    {
+      "name": "Asset bundle URL/cache fetches",
+      "known_scope": "AssetBundleManager.LoadAssetBundleInternal concatenates static BaseDownloadingURL with assetBundleName; manifest uses new WWW, regular bundle uses WWW.LoadFromCacheOrDownload with manifest hash and CRC0. Existing/in-flight bundles are deduplicated.",
+      "evidence": [
+        {
+          "rva": "0x647b50",
+          "path": "work/evidence/ghidra/functions/647b50.c",
+          "sha256": "711d7f48f27efe8a686eb89b594009604426ca917081cd5e0cd7a0ad06a6a112",
+          "status": "decompiled"
+        }
+      ],
+      "status": "compiled fetch surface observed; actual configured URLs, local-vs-remote schemes and scene/bundle reachability are unproved"
+    },
+    {
+      "name": "Cinema movie path",
+      "known_scope": "StreamingVideo.LaunchFilm concatenates Application.streamingAssetsPath + \"/\" + Platform.ToString() + \"/f/\" + filmName + \".mp4\", assigns the result to one VideoPlayer and copies that URL to a second. Two verified direct set_url calls occur at RVAs0x55fd92/0x55fe34. The three path literals resolve at0x24e58e8,0x24e7c78,0x24e54a8.",
+      "evidence": [
+        {
+          "rva": "0x55fa80",
+          "path": "work/evidence/ghidra/functions/55fa80.c",
+          "sha256": "dec4d81ac96841e2690842e58c5b8fafee7c0f606c0cbf0d76bfdfdbef468393",
+          "status": "decompiled"
+        }
+      ],
+      "status": "native local StreamingAssets movie path established for this body; VideoPlayer API use here does not establish a remote movie service"
+    },
+    {
+      "name": "Loadbalancer configuration and dynamic space hosts",
+      "known_scope": "loadbalancerConn getters return production104.196.60.146, development104.196.161.5 and port28000. PS4Info.Init assigns production getter result to field+0xf0. Space/host destinations may also arrive dynamically in backend responses.",
+      "evidence": [
+        {
+          "rva": "0x12499a0",
+          "path": "work/evidence/ghidra/functions/12499a0.c",
+          "sha256": "85e6fbb872883b522b1ce64635045b1a68007de155a9e22cc8696f565d0940c2",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x12499d0",
+          "path": "work/evidence/ghidra/functions/12499d0.c",
+          "sha256": "40fb64f40d2c64bf29b18df520c4e30302104a4aa7bbf5495a181a219e923438",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x1249a00",
+          "path": "work/evidence/ghidra/functions/1249a00.c",
+          "sha256": "e761f6264bd68f8805be66a3daa8bf17440fc53e90b67276281706532dc62d1b",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x42aa90",
+          "path": "work/evidence/ghidra/functions/42aa90.c",
+          "sha256": "1f301c1865652cbe5678df67f8c93c8740fd640c9135ac34e27691f3c376aa26",
+          "status": "decompiled"
+        }
+      ],
+      "status": "constants and one native assignment observed; not proof of every active socket destination or restored loadbalancer policy"
+    },
+    {
+      "name": "Local network-info DNS",
+      "known_scope": "PCNetInfoGetter.GetInternalIpAddress checks network availability, calls DNS.GetHostName and DNS.GetHostEntry for that local hostname, then selects an address. Process also has verified raw direct DNS calls, but its current Ghidra body removes blocks as possible PIC construction.",
+      "evidence": [
+        {
+          "rva": "0x5e17e0",
+          "path": "work/evidence/ghidra/functions/5e17e0.c",
+          "sha256": "958ea9b511a57449fd8a41485dc7539bd89de6f9a05eefec48879b8d5260df64",
+          "status": "decompiled"
+        },
+        {
+          "rva": "0x5e1970",
+          "path": "work/evidence/ghidra/functions/5e1970.c",
+          "sha256": "5c7077526c52f218b9870b393509f18074e828a171e2566f9a2ada94887cbc4e",
+          "status": "decompiled"
+        }
+      ],
+      "status": "local-host address discovery observed; do not treat these calls as evidence of another cloud endpoint"
+    },
+    {
+      "name": "Mirror TCP/game replication and transport libraries",
+      "known_scope": "80 registered application TCP opcode handlers are covered by existing TCP/minigame audits; Mirror spawn/authority/SyncVar/command state and transport calls are additional layers. Telepathy/KCP/SimpleWeb code is compiled.",
+      "contracts": [
+        "tcp-dispatch-map.json",
+        "tcp-contracts.json",
+        "minigame-contracts.json",
+        "mirror-transport-schemas.json"
+      ],
+      "status": "application opcode field recovery does not establish whole Mirror stream or server state parity"
+    },
+    {
+      "name": "Steam networking/auth SDK wrappers",
+      "known_scope": "85 Steam networking wrapper RVAs and6 selected ticket/auth wrapper RVAs found in metadata. This bounded E8 scan found no direct application calls to those selected wrappers.",
+      "status": "SDK presence established; runtime use, inlined/PInvoke/indirect paths and Steam DLL internals remain outside this census"
+    }
+  ],
+  "additional_concrete_routes": [
+    {
+      "route": "AddScoreArcheryServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "AddScoreArcheryServlet",
+          "literal_address": "0x24ff540",
+          "sender_rva": "0x432e90",
+          "sender_name": "CastleNETGCloud$$OnSend",
+          "caller_rva": "0x432f70",
+          "caller_names": [
+            "CastleNETGCloud$$Send_AddScoreArchery"
+          ],
+          "path": "work/evidence/ghidra/functions/432f70.c",
+          "sha256": "e80b98e1010ce9a50dd7355f83e8612ed93e67bcab5fbf31071b26cb75053ef0"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "AddScoreBoatMiniGameServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "AddScoreBoatMiniGameServlet",
+          "literal_address": "0x24ff5c8",
+          "sender_rva": "0x4319d0",
+          "sender_name": "BlueWaveHideoutNETGCloud$$OnSend",
+          "caller_rva": "0x431ab0",
+          "caller_names": [
+            "BlueWaveHideoutNETGCloud$$Send_AddScoreBoatMiniGame"
+          ],
+          "path": "work/evidence/ghidra/functions/431ab0.c",
+          "sha256": "19e689db1612fd959f6f0d069831db397f78d87aa98e7cd91d31a82dc2ef3cbf"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "AddStatisticsServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "AddStatisticsServlet",
+          "literal_address": "0x24ff650",
+          "sender_rva": "0x4e8900",
+          "sender_name": "FullGameNETGCloud$$OnSend",
+          "caller_rva": "0x4e89e0",
+          "caller_names": [
+            "FullGameNETGCloud$$Send_AddStatistics"
+          ],
+          "path": "work/evidence/ghidra/functions/4e89e0.c",
+          "sha256": "ded1c16880d39f780e72a3dfa6f55de8900c554776b86f00fe6a3af54163ffe1"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "AddToPoolFullGameServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal route template consumed by AES/URI-escaped UnityWebRequest.Get coroutine",
+          "rva": "0x4ec1c0",
+          "path": "work/evidence/ghidra/functions/4ec1c0.c",
+          "sha256": "f2af9708253ed03585d3be833a7203b764da10bcf28b89d5133d4612d3a6b3bc",
+          "status": "decompiled"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "CheckIfSpaceStillExistServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal route template consumed by AES/URI-escaped UnityWebRequest.Get coroutine",
+          "rva": "0x46e360",
+          "path": "work/evidence/ghidra/functions/46e360.c",
+          "sha256": "91a0bfa302c2260b9a1c8772ffb609443652d473c8f176e76dea5c09449f1d4b",
+          "status": "decompiled"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "CheckIsAvailableToJoinFullGameServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal route template consumed by AES/URI-escaped UnityWebRequest.Get coroutine",
+          "rva": "0x4ecd80",
+          "path": "work/evidence/ghidra/functions/4ecd80.c",
+          "sha256": "1f21ee1944a2c8e8269c40848dbf7333534705a4e89f797434092ccab0aef652",
+          "status": "decompiled"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "CreateGameServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "CreateGameServlet",
+          "literal_address": "0x25261a0",
+          "sender_rva": "0x4e8900",
+          "sender_name": "FullGameNETGCloud$$OnSend",
+          "caller_rva": "0x4e8e00",
+          "caller_names": [
+            "FullGameNETGCloud$$Send_CreateGame"
+          ],
+          "path": "work/evidence/ghidra/functions/4e8e00.c",
+          "sha256": "56cb4a6bdfa34271a77a4a37d8551d9bc5df547fcc4b7e5c98cab3ecf61da0c8"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetActiveStagesServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetActiveStagesServlet",
+          "literal_address": "0x24edfd8",
+          "sender_rva": "0x4e8900",
+          "sender_name": "FullGameNETGCloud$$OnSend",
+          "caller_rva": "0x4e9300",
+          "caller_names": [
+            "FullGameNETGCloud$$Send_GetActiveStages"
+          ],
+          "path": "work/evidence/ghidra/functions/4e9300.c",
+          "sha256": "71253a46b050230938535b62f9e0259e60dd151b80880f2326c57691cc1ab75a"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetBestScoreArcheryServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetBestScoreArcheryServlet",
+          "literal_address": "0x24ee1f8",
+          "sender_rva": "0x432e90",
+          "sender_name": "CastleNETGCloud$$OnSend",
+          "caller_rva": "0x432770",
+          "caller_names": [
+            "CastleNETGCloud$$Get_BestScoreArchery"
+          ],
+          "path": "work/evidence/ghidra/functions/432770.c",
+          "sha256": "b21969b47da0a90004340a32c51ae72918b822a4f5a6b15bf95a8c7c7dbf84ab"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetBestScoreBoatMiniGameServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetBestScoreBoatMiniGameServlet",
+          "literal_address": "0x24ee280",
+          "sender_rva": "0x4319d0",
+          "sender_name": "BlueWaveHideoutNETGCloud$$OnSend",
+          "caller_rva": "0x430f80",
+          "caller_names": [
+            "BlueWaveHideoutNETGCloud$$Get_BestScoreBoatMiniGame"
+          ],
+          "path": "work/evidence/ghidra/functions/430f80.c",
+          "sha256": "9dfa3be73a62bf8c956a3bfc2d90dab55ead038ddb28e35d905330ec17f0c9fc"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetCooldownServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetCooldownServlet",
+          "literal_address": "0x24ee7d0",
+          "sender_rva": "0x56f530",
+          "sender_name": "FootRaceManager$$OnSend",
+          "caller_rva": "0x56fc30",
+          "caller_names": [
+            "FootRaceManager$$Send_InitializeGame"
+          ],
+          "path": "work/evidence/ghidra/functions/56fc30.c",
+          "sha256": "4902c3994a7876b4a5eefb3e4e20305b8846a30b021f51c253f112199c9a9a19"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetFeaturesServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetFeaturesServlet",
+          "literal_address": "0x24eec10",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x410f60",
+          "caller_names": [
+            "ShopNETGcloud$$Send_GetFeatures"
+          ],
+          "path": "work/evidence/ghidra/functions/410f60.c",
+          "sha256": "a64a6e78f6fe67f96e307d24fecb51589dd3dc9645628756d26f3b411113f3cb"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetFullGameLeaderboardServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetFullGameLeaderboardServlet",
+          "literal_address": "0x24eec98",
+          "sender_rva": "0x4e8900",
+          "sender_name": "FullGameNETGCloud$$OnSend",
+          "caller_rva": "0x4e9d00",
+          "caller_names": [
+            "FullGameNETGCloud$$Send_GetLeaderboard"
+          ],
+          "path": "work/evidence/ghidra/functions/4e9d00.c",
+          "sha256": "7eced3784adca7145bde4a65fcb0c4e44e2246555cd6a6b2e9421135ec4a1284"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetGenderDataShopServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetGenderDataShopServlet",
+          "literal_address": "0x24eed20",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x411100",
+          "caller_names": [
+            "ShopNETGcloud$$Send_GetGenderData"
+          ],
+          "path": "work/evidence/ghidra/functions/411100.c",
+          "sha256": "194c265c307814a6db9b249fde06add336d9e0b51157bd05e84864f4612a9861"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetHousingTypeServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetHousingTypeServlet",
+          "literal_address": "0x24eeeb8",
+          "sender_rva": "0x3a6250",
+          "sender_name": "HousingNETGcloud$$OnSend",
+          "caller_rva": "0x3a6330",
+          "caller_names": [
+            "HousingNETGcloud$$Send_GetHousingType"
+          ],
+          "path": "work/evidence/ghidra/functions/3a6330.c",
+          "sha256": "ba84de110c33e8f490ad92b8b07a2d52f9b8dc82d477e43f1784926087211c85"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetInviteFriendList",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetInviteFriendList",
+          "literal_address": "0x24ef050",
+          "sender_rva": "0x4e8900",
+          "sender_name": "FullGameNETGCloud$$OnSend",
+          "caller_rva": "0x4e9650",
+          "caller_names": [
+            "FullGameNETGCloud$$Send_GetInviteFriendList"
+          ],
+          "path": "work/evidence/ghidra/functions/4e9650.c",
+          "sha256": "113899eda8691ff7d6b2bab603fb493675271b9bc4f79577def2d77a2ef03cb5"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetItemAssetsDataServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetItemAssetsDataServlet",
+          "literal_address": "0x24ef0d8",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x411490",
+          "caller_names": [
+            "ShopNETGcloud$$Send_GetItemAssetsData"
+          ],
+          "path": "work/evidence/ghidra/functions/411490.c",
+          "sha256": "8f0313ba2f49bfc8f00ccf969170248f71d5f5640399d6e9be4c21db69c787b9"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetLastScoreServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetLastScoreServlet",
+          "literal_address": "0x24ef160",
+          "sender_rva": "0x4e8900",
+          "sender_name": "FullGameNETGCloud$$OnSend",
+          "caller_rva": "0x4e99b0",
+          "caller_names": [
+            "FullGameNETGCloud$$Send_GetLastScore"
+          ],
+          "path": "work/evidence/ghidra/functions/4e99b0.c",
+          "sha256": "b3fdb9a37c672632a91a606421fc811ae6fd68deed3f6dc553041bd81b843b56"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetLeaderboardArcheryServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetLeaderboardArcheryServlet",
+          "literal_address": "0x24ef270",
+          "sender_rva": "0x432e90",
+          "sender_name": "CastleNETGCloud$$OnSend",
+          "caller_rva": "0x4325d0",
+          "caller_names": [
+            "CastleNETGCloud$$Get_ArcheryLeaderboard"
+          ],
+          "path": "work/evidence/ghidra/functions/4325d0.c",
+          "sha256": "af4e2df83f39c5920865b4a2fe86184c2d1b05c2d6277b90295d72634eae4ce2"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetLeaderboardBoatMiniGameServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetLeaderboardBoatMiniGameServlet",
+          "literal_address": "0x24ef2f8",
+          "sender_rva": "0x4319d0",
+          "sender_name": "BlueWaveHideoutNETGCloud$$OnSend",
+          "caller_rva": "0x431120",
+          "caller_names": [
+            "BlueWaveHideoutNETGCloud$$Get_BoatMiniGameLeaderboard"
+          ],
+          "path": "work/evidence/ghidra/functions/431120.c",
+          "sha256": "0649f704f5210b42b3ad16907737631d6a651e5af4e1eb208e5d6ff82e57e100"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetOpenGamesServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetOpenGamesServlet",
+          "literal_address": "0x24ef490",
+          "sender_rva": "0x4e8900",
+          "sender_name": "FullGameNETGCloud$$OnSend",
+          "caller_rva": "0x4ea240",
+          "caller_names": [
+            "FullGameNETGCloud$$Send_GetOpenGames"
+          ],
+          "path": "work/evidence/ghidra/functions/4ea240.c",
+          "sha256": "52ec2a846b9ed6930cbba516ccd18999dc5c97819cece1aabfe29f33437553e4"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetShopDataShopServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetShopDataShopServlet",
+          "literal_address": "0x24efaf0",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x411950",
+          "caller_names": [
+            "ShopNETGcloud$$Send_GetShopData"
+          ],
+          "path": "work/evidence/ghidra/functions/411950.c",
+          "sha256": "36ebd6bc7596ca95fa73385b900497187ad8134e7f01484a03a99c9f6d4c3bd1"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetShopInfoPlayerShop",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetShopInfoPlayerShop",
+          "literal_address": "0x24efb78",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x413cb0",
+          "caller_names": [
+            "ShopNETGcloud$$Send_ShopInfoPlayer"
+          ],
+          "path": "work/evidence/ghidra/functions/413cb0.c",
+          "sha256": "24a91e1df6b49cc74cec7f57f042f85c7a374bd58e2173a80c76849cb4c45547"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "GetShopTypeDataShopServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "GetShopTypeDataShopServlet",
+          "literal_address": "0x24efbf8",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x411e50",
+          "caller_names": [
+            "ShopNETGcloud$$Send_GetShopTypeData"
+          ],
+          "path": "work/evidence/ghidra/functions/411e50.c",
+          "sha256": "baf9122e7507d9544216aa2f5c1f1fd1bbde236795ed5c3123684d6ce02cffab"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_BRAINMEMORION",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_BRAINMEMORION",
+          "literal_address": "0x24f00c0",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f5260",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_TriggerBRAINMEMORION"
+          ],
+          "path": "work/evidence/ghidra/functions/3f5260.c",
+          "sha256": "62a36cd1e2c344ca16b4b4a42bb5e48798d39ae89f5f60bec93cae3ed2ce155e"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_GatherArcheryCupid",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_GatherArcheryCupid",
+          "literal_address": "0x24f01d0",
+          "sender_rva": "0x529ca0",
+          "sender_name": "ArcheryCupidManager$$OnSend",
+          "caller_rva": "0x529340",
+          "caller_names": [
+            "ArcheryCupidManager$$CheckIsAvailable"
+          ],
+          "path": "work/evidence/ghidra/functions/529340.c",
+          "sha256": "e1171f5507937fab8c7c44c6c861d629746d058bfdcc7fdba8810f067181ea23"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_GatherChristmasGetSpacesCompleted",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_GatherChristmasGetSpacesCompleted",
+          "literal_address": "0x24f0258",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f1d60",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_GatherChristmasGetSpacesCompleted"
+          ],
+          "path": "work/evidence/ghidra/functions/3f1d60.c",
+          "sha256": "3b65549a6baa277343b579d410d88eecd0ee2925c0ffe1c27e694995ce8fb272"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_GatherConsume",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_GatherConsume",
+          "literal_address": "0x24f02e0",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f2e90",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_GatherConsume"
+          ],
+          "path": "work/evidence/ghidra/functions/3f2e90.c",
+          "sha256": "ece084e1c167e526c59c994220d03b81a5055e9007f31df1d8712133e1b713c3"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_GatherConsumeReward",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_GatherConsumeReward",
+          "literal_address": "0x24f0368",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f2590",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_GatherConsumeReward"
+          ],
+          "path": "work/evidence/ghidra/functions/3f2590.c",
+          "sha256": "4587718fc277918a99774cbdcd9d49d176989c5b06a1422b285e90a24593fdeb"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_GatherMedievalVillage",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_GatherMedievalVillage",
+          "literal_address": "0x24f03f0",
+          "sender_rva": "0x690f40",
+          "sender_name": "GatherMedievalVillage$$OnSend",
+          "caller_rva": "0x690700",
+          "caller_names": [
+            "GatherMedievalVillage$$CheckIsAvailable"
+          ],
+          "path": "work/evidence/ghidra/functions/690700.c",
+          "sha256": "95ff38752bab0acb0fad838a3c3a2e609898d8297a4162c31ffc106d003455ea"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_GatherPhaseGame",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_GatherPhaseGame",
+          "literal_address": "0x24f0478",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f0130",
+          "caller_names": [
+            "NETGcloudNPGather$$Get_GatherPhaseGame"
+          ],
+          "path": "work/evidence/ghidra/functions/3f0130.c",
+          "sha256": "c033644bde653766b8ba6312901a08c9f535aec97b30417c8f23212b06417245"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_GatherStatus",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_GatherStatus",
+          "literal_address": "0x24f0500",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f4b30",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_GatherStatus"
+          ],
+          "path": "work/evidence/ghidra/functions/3f4b30.c",
+          "sha256": "674c2d442ea66845225a104514c50c00be3e834252b747ac531a37a67de8eefe"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_npGather",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_npGather",
+          "literal_address": "0x24f0b60",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f4e70",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_Init"
+          ],
+          "path": "work/evidence/ghidra/functions/3f4e70.c",
+          "sha256": "334cb18947ea9290fb7b743bd70d32f791b588752f0c102eb3831440bbdf8798"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_npGatherChristmas",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_npGatherChristmas",
+          "literal_address": "0x24f0be8",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f2190",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_GatherChristmas"
+          ],
+          "path": "work/evidence/ghidra/functions/3f2190.c",
+          "sha256": "ca15a629e6f79ea4a7baeb426fbe522bb2c0608e04b1f0c153cfa0285513b1e1"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Get_npGatherProcessItem",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Get_npGatherProcessItem",
+          "literal_address": "0x24f0c70",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f18d0",
+          "caller_names": [
+            "NETGcloudNPGather$$ProcessItem"
+          ],
+          "path": "work/evidence/ghidra/functions/3f18d0.c",
+          "sha256": "a2f933804250f8a3eb00bd359f4499ce7e466bd0fc70145465b986f0e14d0f44"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "HousingReadPresetServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "HousingReadPresetServlet",
+          "literal_address": "0x24f7018",
+          "sender_rva": "0x3a6250",
+          "sender_name": "HousingNETGcloud$$OnSend",
+          "caller_rva": "0x3a66c0",
+          "caller_names": [
+            "HousingNETGcloud$$Send_LoadPreset"
+          ],
+          "path": "work/evidence/ghidra/functions/3a66c0.c",
+          "sha256": "10f0e1e949bf222570c28d7f50ad386a9ad60cdb65e06a94d9526c65526ef9ae"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "HousingSavePresetServletParts",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "HousingSavePresetServletParts",
+          "literal_address": "0x24f70a0",
+          "sender_rva": "0x3a6250",
+          "sender_name": "HousingNETGcloud$$OnSend",
+          "caller_rva": "0x3a6a20",
+          "caller_names": [
+            "HousingNETGcloud$$Send_SavePreset"
+          ],
+          "path": "work/evidence/ghidra/functions/3a6a20.c",
+          "sha256": "ab89a2377675424f397a8dd54438776deb9dea16e02a5611d691fcf17944a2dd"
+        },
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "HousingSavePresetServletParts",
+          "literal_address": "0x24f70a0",
+          "sender_rva": "0x3a6250",
+          "sender_name": "HousingNETGcloud$$OnSend",
+          "caller_rva": "0x3a6a20",
+          "caller_names": [
+            "HousingNETGcloud$$Send_SavePreset"
+          ],
+          "path": "work/evidence/ghidra/functions/3a6a20.c",
+          "sha256": "ab89a2377675424f397a8dd54438776deb9dea16e02a5611d691fcf17944a2dd"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "MemorionServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "MemorionServlet",
+          "literal_address": "0x2518500",
+          "sender_rva": "0x5abf60",
+          "sender_name": "UIMemorionGame$$OnSend",
+          "caller_rva": "0x691e30",
+          "caller_names": [
+            "GatherUIMemorionGame$$SendScore"
+          ],
+          "path": "work/evidence/ghidra/functions/691e30.c",
+          "sha256": "9c9c75edc98894c0d275c17b9a987d82c0b6faef6e977ec83cfe4dff9da91e5a"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "NPShopBundleItemsServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "NPShopBundleItemsServlet",
+          "literal_address": "0x251e0c8",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x412710",
+          "caller_names": [
+            "ShopNETGcloud$$Send_NPShopBundleItems"
+          ],
+          "path": "work/evidence/ghidra/functions/412710.c",
+          "sha256": "eb905b5cc5710163d996c67acd9df6c155edad9e8df1ad1389681bc8073a7d84"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "NPShopBuyItemServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "NPShopBuyItemServlet",
+          "literal_address": "0x251e150",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x412a60",
+          "caller_names": [
+            "ShopNETGcloud$$Send_NPShopBuyItem"
+          ],
+          "path": "work/evidence/ghidra/functions/412a60.c",
+          "sha256": "4068a3729aa4ed72f0c4499ebf3dd6c1c0c9b202d9e41a91a5ee12ec5917bd06"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "NPShopGiftItemServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "NPShopGiftItemServlet",
+          "literal_address": "0x251e1d0",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x412fe0",
+          "caller_names": [
+            "ShopNETGcloud$$Send_NPShopGiftItem"
+          ],
+          "path": "work/evidence/ghidra/functions/412fe0.c",
+          "sha256": "31268ddefc1cd3931f6156c506305a4c4b3d042b020970e5cbf59125cf0f8e65"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "NPShopIsItemPurchasedServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "NPShopIsItemPurchasedServlet",
+          "literal_address": "0x251e258",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x4134a0",
+          "caller_names": [
+            "ShopNETGcloud$$Send_NPShopIsItemPurchased"
+          ],
+          "path": "work/evidence/ghidra/functions/4134a0.c",
+          "sha256": "8fc95f7e643f88a6587f290bd806c072c403820802936a9f3ec16bbdd2d4b459"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "NPShopSyncCrystalsServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "NPShopSyncCrystalsServlet",
+          "literal_address": "0x251e2d8",
+          "sender_rva": "0x410e80",
+          "sender_name": "ShopNETGcloud$$OnSend",
+          "caller_rva": "0x413830",
+          "caller_names": [
+            "ShopNETGcloud$$Send_NPShopSyncCrystals"
+          ],
+          "path": "work/evidence/ghidra/functions/413830.c",
+          "sha256": "ef0c8349816db22bdc3f53f4a713a7fb71edf6b386e352d4a857a8ab148da33f"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Send_ArcheryCupidConsume",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Send_ArcheryCupidConsume",
+          "literal_address": "0x24eaf38",
+          "sender_rva": "0x529ca0",
+          "sender_name": "ArcheryCupidManager$$OnSend",
+          "caller_rva": "0x529dc0",
+          "caller_names": [
+            "ArcheryCupidManager$$SendConsumeArcheryCupidItem"
+          ],
+          "path": "work/evidence/ghidra/functions/529dc0.c",
+          "sha256": "f74856d7cf263894797e80bb9a09bb174f9758506f0a51a3e96b6d91852413b6"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Send_GatherInitInSpace",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Send_GatherInitInSpace",
+          "literal_address": "0x24eb048",
+          "sender_rva": "0x3f17f0",
+          "sender_name": "NETGcloudNPGather$$OnSend",
+          "caller_rva": "0x3f4730",
+          "caller_names": [
+            "NETGcloudNPGather$$Send_GatherInitInSpace"
+          ],
+          "path": "work/evidence/ghidra/functions/3f4730.c",
+          "sha256": "c2c38f7b2202ed2f5c8ebb16d78b2ef377fca6e33b3182abd3db2e91ea07e9ac"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "Send_GatherMedievalVillageConsume",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "Send_GatherMedievalVillageConsume",
+          "literal_address": "0x24eb0d0",
+          "sender_rva": "0x690f40",
+          "sender_name": "GatherMedievalVillage$$OnSend",
+          "caller_rva": "0x691120",
+          "caller_names": [
+            "GatherMedievalVillage$$SendConsumeMedievalVillageItem"
+          ],
+          "path": "work/evidence/ghidra/functions/691120.c",
+          "sha256": "bbd2480098152546c1b8d3e1afa9364ee316a7f2fd82f20f700dae05b6e11552"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "SetCooldownServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "SetCooldownServlet",
+          "literal_address": "0x24ecc70",
+          "sender_rva": "0x56f530",
+          "sender_name": "FootRaceManager$$OnSend",
+          "caller_rva": "0x56f610",
+          "caller_names": [
+            "FootRaceManager$$Send_FinishGame"
+          ],
+          "path": "work/evidence/ghidra/functions/56f610.c",
+          "sha256": "1f2915f6555dc337b3e73d40cf4914385384651389b1ec682a666c8a9c716a7c"
+        },
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "SetCooldownServlet",
+          "literal_address": "0x24ecc70",
+          "sender_rva": "0x56f530",
+          "sender_name": "FootRaceManager$$OnSend",
+          "caller_rva": "0x570460",
+          "caller_names": [
+            "FootRaceManager$$Update"
+          ],
+          "path": "work/evidence/ghidra/functions/570460.c",
+          "sha256": "def545ee48f986c036bd897d8ecc3a2b373d6ac4bbcee92423e585a0caef4d4c"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    },
+    {
+      "route": "checkerToServerDownMaintenanceServlet",
+      "evidence": [
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "checkerToServerDownMaintenanceServlet",
+          "literal_address": "0x24ffe50",
+          "sender_rva": "0x3e9880",
+          "sender_name": "NETGCloudSpace$$OnSend",
+          "caller_rva": "0x422650",
+          "caller_names": [
+            "PS4Info$$SendCheckerToServerDownMaintenance"
+          ],
+          "path": "work/evidence/ghidra/functions/422650.c",
+          "sha256": "0b4d4ffb092b2790d4e79fd97bd7a213ae1304d7a516649aaf938809c5e02a02"
+        },
+        {
+          "evidence_kind": "literal passed as route argument to a confirmed generic HTTP sender",
+          "route": "checkerToServerDownMaintenanceServlet",
+          "literal_address": "0x24ffe50",
+          "sender_rva": "0x3e9880",
+          "sender_name": "NETGCloudSpace$$OnSend",
+          "caller_rva": "0x42a840",
+          "caller_names": [
+            "PS4Info.<CheckerToServerDownMaintanance>d__86$$MoveNext"
+          ],
+          "path": "work/evidence/ghidra/functions/42a840.c",
+          "sha256": "657318938e5f2e24352482a36f32e76ffb4b48c946c6a5053c7044863fb4ac09"
+        }
+      ],
+      "payload_state_contract_status": "unreviewed in this surface audit"
+    }
+  ],
+  "additional_route_families": {
+    "HousingNETGcloud": {
+      "classes": [
+        "HousingNETGcloud"
+      ],
+      "routes": [
+        "GetHousingTypeServlet",
+        "HousingReadPresetServlet",
+        "HousingSavePresetServletParts"
+      ],
+      "sources": [
+        "0x3a6330",
+        "0x3a66c0",
+        "0x3a6a20"
+      ]
+    },
+    "NETGcloudNPGather": {
+      "classes": [
+        "NETGcloudNPGather"
+      ],
+      "routes": [
+        "Get_BRAINMEMORION",
+        "Get_GatherChristmasGetSpacesCompleted",
+        "Get_GatherConsume",
+        "Get_GatherConsumeReward",
+        "Get_GatherPhaseGame",
+        "Get_GatherStatus",
+        "Get_npGather",
+        "Get_npGatherChristmas",
+        "Get_npGatherProcessItem",
+        "Send_GatherInitInSpace"
+      ],
+      "sources": [
+        "0x3f0130",
+        "0x3f18d0",
+        "0x3f1d60",
+        "0x3f2190",
+        "0x3f2590",
+        "0x3f2e90",
+        "0x3f4730",
+        "0x3f4b30",
+        "0x3f4e70",
+        "0x3f5260"
+      ]
+    },
+    "ShopNETGcloud": {
+      "classes": [
+        "ShopNETGcloud"
+      ],
+      "routes": [
+        "GetFeaturesServlet",
+        "GetGenderDataShopServlet",
+        "GetItemAssetsDataServlet",
+        "GetShopDataShopServlet",
+        "GetShopInfoPlayerShop",
+        "GetShopTypeDataShopServlet",
+        "NPShopBundleItemsServlet",
+        "NPShopBuyItemServlet",
+        "NPShopGiftItemServlet",
+        "NPShopIsItemPurchasedServlet",
+        "NPShopSyncCrystalsServlet"
+      ],
+      "sources": [
+        "0x410f60",
+        "0x411100",
+        "0x411490",
+        "0x411950",
+        "0x411e50",
+        "0x412710",
+        "0x412a60",
+        "0x412fe0",
+        "0x4134a0",
+        "0x413830",
+        "0x413cb0"
+      ]
+    },
+    "PS4Info": {
+      "classes": [
+        "PS4Info"
+      ],
+      "routes": [
+        "checkerToServerDownMaintenanceServlet"
+      ],
+      "sources": [
+        "0x422650",
+        "0x42a840"
+      ]
+    },
+    "BlueWaveHideoutNETGCloud": {
+      "classes": [
+        "BlueWaveHideoutNETGCloud"
+      ],
+      "routes": [
+        "AddScoreBoatMiniGameServlet",
+        "GetBestScoreBoatMiniGameServlet",
+        "GetLeaderboardBoatMiniGameServlet"
+      ],
+      "sources": [
+        "0x430f80",
+        "0x431120",
+        "0x431ab0"
+      ]
+    },
+    "CastleNETGCloud": {
+      "classes": [
+        "CastleNETGCloud"
+      ],
+      "routes": [
+        "AddScoreArcheryServlet",
+        "GetBestScoreArcheryServlet",
+        "GetLeaderboardArcheryServlet"
+      ],
+      "sources": [
+        "0x4325d0",
+        "0x432770",
+        "0x432f70"
+      ]
+    },
+    "FullGameNETGCloud": {
+      "classes": [
+        "FullGameNETGCloud"
+      ],
+      "routes": [
+        "AddStatisticsServlet",
+        "CreateGameServlet",
+        "GetActiveStagesServlet",
+        "GetFullGameLeaderboardServlet",
+        "GetInviteFriendList",
+        "GetLastScoreServlet",
+        "GetOpenGamesServlet"
+      ],
+      "sources": [
+        "0x4e89e0",
+        "0x4e8e00",
+        "0x4e9300",
+        "0x4e9650",
+        "0x4e99b0",
+        "0x4e9d00",
+        "0x4ea240"
+      ]
+    },
+    "ArcheryCupidManager": {
+      "classes": [
+        "ArcheryCupidManager"
+      ],
+      "routes": [
+        "Get_GatherArcheryCupid",
+        "Send_ArcheryCupidConsume"
+      ],
+      "sources": [
+        "0x529340",
+        "0x529dc0"
+      ]
+    },
+    "FootRaceManager": {
+      "classes": [
+        "FootRaceManager"
+      ],
+      "routes": [
+        "GetCooldownServlet",
+        "SetCooldownServlet"
+      ],
+      "sources": [
+        "0x56f610",
+        "0x56fc30",
+        "0x570460"
+      ]
+    },
+    "GatherMedievalVillage": {
+      "classes": [
+        "GatherMedievalVillage"
+      ],
+      "routes": [
+        "Get_GatherMedievalVillage",
+        "Send_GatherMedievalVillageConsume"
+      ],
+      "sources": [
+        "0x690700",
+        "0x691120"
+      ]
+    },
+    "GatherUIMemorionGame": {
+      "classes": [
+        "GatherUIMemorionGame"
+      ],
+      "routes": [
+        "MemorionServlet"
+      ],
+      "sources": [
+        "0x691e30"
+      ]
+    }
+  },
+  "missing_application_caller_pseudocode": [
+    {
+      "rva": "0x3b0040",
+      "names": [
+        "NETGcloudAEditor.<OnGet_LoadPresetCoroutine>d__11$$MoveNext"
+      ]
+    }
+  ],
+  "other_path_candidates": [
+    {
+      "route": "SavePresetServlet",
+      "reason": "Path-template literal appears in editor save bodies alongside N2SavePreset and possible-PIC warnings. This audit does not promote literal occurrence to an additional active route without control/data-flow confirmation."
+    }
+  ],
+  "unreviewed_paths": [
+    "Additional routes listed here require their own request/response field, EntryData/JSON, success/error and side-effect contracts; observed generic AES framing does not supply their application semantics.",
+    "Any bodies in missing_application_caller_pseudocode require native reads; compiled direct callsites already establish those API paths but not their complete payload or URL construction. The legacy avatar coroutine0x3b0040 reached a bounded30-second Ghidra decompile timeout; do not treat its missing pseudocode as absence of HTTP behavior.",
+    "Asset bundle base URL setters, caller-provided image URLs, serialized asset/config URLs, dynamically returned server/space addresses and cinema/media URLs are not exhaustively traced.",
+    "The raw direct-call census omits indirect virtual/interface/function-pointer calls, import calls and native UnityPlayer/Steam library internals. A zero direct call count cannot prove an API is unused.",
+    "Several Ghidra constructor/Process bodies remove blocks after possible-PIC warnings. Endpoint literals referenced there do not prove URL branch selection; raw instruction review is needed before adopting constructor control flow.",
+    "Original authentication/ownership binding, persistence, recipient policies, pricing/purchases, event progression, minigame adjudication and authoritative Mirror state are not recoverable merely by counting client handlers."
+  ],
+  "limitations": [
+    "Raw E8 candidates are validated only by bounded sequential decoding from nearest preceding metadata method entry; alias names and incomplete functions remain possible.",
+    "Direct E8 census does not include indirect virtual/interface/function-pointer calls, import calls, dynamically constructed URLs, native UnityPlayer.dll or Steam DLL internals, or asset/config endpoints.",
+    "Compiled SDK networking wrappers do not prove the game uses those APIs. Lack of a direct E8 application caller does not prove absence of runtime use.",
+    "Literal references prove compiled occurrence, not reachable code or original remote availability. Native pseudocode may be incomplete/incorrect and is not original C#.",
+    "Counts for HTTP task routes, legacy routes, TCP handlers and other surfaces overlap and must not be added as independent endpoints."
+  ]
+}

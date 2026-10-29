@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Nebula preservation runtime manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "app_id",
+    "build_id",
+    "status",
+    "review",
+    "artifacts"
+  ],
+  "properties": {
+    "format": {
+      "const": "nebula-patch-v1"
+    },
+    "app_id": {
+      "const": "919290"
+    },
+    "build_id": {
+      "const": "11018722"
+    },
+    "status": {
+      "enum": [
+        "provisional",
+        "frozen"
+      ]
+    },
+    "review": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "operation",
+          "accepted_existing"
+        ],
+        "properties": {
+          "path": {
+            "enum": [
+              "GameAssembly.dll",
+              "Nebula Realms_Data/il2cpp_data/Metadata/global-metadata.dat",
+              "Nebula Realms_Data/globalgamemanagers",
+              "Nebula Realms_Data/StreamingAssets/StandaloneWindows/s/charactereditor",
+              "NebulaRegistryBridge.dll",
+              "NebulaAutomation.dll",
+              "NebulaPublicAccess.dll",
+              "NebulaRemoteTransport.exe",
+              "steam_appid.txt",
+              "NebulaNetworkBridge.dll"
+            ]
+          },
+          "operation": {
+            "enum": [
+              "delta",
+              "unityfs_delta",
+              "metadata",
+              "owned_file"
+            ]
+          },
+          "original_sha256": {
+            "$ref": "#/$defs/nullableHash"
+          },
+          "accepted_existing": {
+            "type": "array",
+            "maxItems": 64,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/hash"
+            }
+          },
+          "payload": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-zA-Z0-9_./-]+$"
+          },
+          "payload_sha256": {
+            "$ref": "#/$defs/nullableHash"
+          },
+          "payload_size": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 268435456
+          },
+          "source_view_sha256": {
+            "$ref": "#/$defs/nullableHash"
+          },
+          "output_sha256": {
+            "$ref": "#/$defs/nullableHash"
+          }
+        }
+      }
+    },
+    "profile": {
+      "const": "network-only"
+    }
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "nullableHash": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/hash"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "profile"
+        ],
+        "properties": {
+          "profile": {
+            "const": "network-only"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "artifacts": {
+            "minItems": 6,
+            "maxItems": 7,
+            "items": {
+              "properties": {
+                "path": {
+                  "enum": [
+                    "GameAssembly.dll",
+                    "Nebula Realms_Data/il2cpp_data/Metadata/global-metadata.dat",
+                    "NebulaNetworkBridge.dll",
+                    "NebulaRegistryBridge.dll",
+                    "NebulaPublicAccess.dll",
+                    "steam_appid.txt",
+                    "NebulaRemoteTransport.exe"
+                  ]
+                }
+              }
+            },
+            "allOf": [
+              {
+                "contains": {
+                  "properties": {
+                    "path": {
+                      "const": "GameAssembly.dll"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "path": {
+                      "const": "Nebula Realms_Data/il2cpp_data/Metadata/global-metadata.dat"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "path": {
+                      "const": "NebulaNetworkBridge.dll"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "path": {
+                      "const": "NebulaRegistryBridge.dll"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "path": {
+                      "const": "NebulaPublicAccess.dll"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "path": {
+                      "const": "steam_appid.txt"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "artifacts": {
+            "minItems": 8,
+            "maxItems": 9,
+            "items": {
+              "properties": {
+                "path": {
+                  "not": {
+                    "const": "NebulaNetworkBridge.dll"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

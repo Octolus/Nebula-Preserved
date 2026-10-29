@@ -1,0 +1,147 @@
+{
+  "format_version": 1,
+  "utc": "2026-10-28T23:29:03.5568562Z",
+  "kind": "native_settings_ui_static_compatibility_audit",
+  "scope": {
+    "client_or_service_modified": false,
+    "process_attached": false,
+    "ui_operated": false,
+    "listeners_started": false
+  },
+  "normal_play_blocked": false,
+  "runtime_proven": {
+    "Music": {
+      "saved_value": 0.9,
+      "windows_panel_reopen": true,
+      "fresh_linux_backed_login_restore": true
+    }
+  },
+  "static_control_groups": {
+    "sliders": [
+      {
+        "key": 8,
+        "name": "MasterVolume",
+        "serialized_default": 0.5,
+        "save_path": true
+      },
+      {
+        "key": 9,
+        "name": "Music",
+        "serialized_default": 0.5,
+        "save_path": true
+      },
+      {
+        "key": 10,
+        "name": "Fx",
+        "serialized_default": 0.5,
+        "save_path": true
+      },
+      {
+        "key": 11,
+        "name": "Ambient",
+        "serialized_default": 0.5,
+        "save_path": true
+      },
+      {
+        "key": 14,
+        "name": "ChatFontSize",
+        "serialized_default": 9.0,
+        "save_path": true
+      },
+      {
+        "key": 18,
+        "name": "velocityCam",
+        "serialized_default": 1.5,
+        "save_path": true
+      }
+    ],
+    "toggle_keys": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12,
+      13,
+      19,
+      21
+    ],
+    "show_pets_serialized_key": 19,
+    "show_pets_expected_enum_key": 20
+  },
+  "gaps": [
+    {
+      "id": "notification-login-ui-does-not-save",
+      "severity": "optional-control-persistence",
+      "basis": "PlayerPrefsToggleClient case 19 and PlayerPrefsManager.set_notificationLoginFriend update local state without constructing HTTPSavePlayerPref"
+    },
+    {
+      "id": "show-pets-serialized-as-notification",
+      "severity": "optional-control-miswire",
+      "basis": "original resources.assets ShowPets component carries enum 19; native toggle dispatch has no enum-20 branch"
+    },
+    {
+      "id": "platform-only-not-hydrated",
+      "severity": "optional-control-reload",
+      "basis": "enum 21 saves, but replacement GetPlayerPrefs filters it and recovered native DTO hydration has no PlatformOnly field case"
+    }
+  ],
+  "followup_controls": [
+    "camera invert and velocity: immediate effect, keys 12/18, panel reopen, fresh login",
+    "chat font and profanity: immediate effect, keys 14/13, fresh login",
+    "DisplayOthersName with a second avatar: immediate effect, key 2, fresh login",
+    "separate request capture and fresh-login checks for notification, ShowPets, and PlatformOnly"
+  ],
+  "limitations": [
+    "Only Music has native runtime coverage.",
+    "Original retired-server default values were not recovered; replacement defaults are authored local policy.",
+    "Ghidra files are native pseudocode, not original C# source."
+  ],
+  "evidence": [
+    {
+      "path": "work/evidence/assets/resource-behaviours.json",
+      "sha256": "4f82726208edaf73902dc638cbb784d9afa8802e9f59e5068c85e2433033ff2e"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4abc20.c",
+      "sha256": "644431f6bf57d17a4b7f9b2bf143ed3c899e23e0ebce26dd2d3a00062bc79964"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/4ac070.c",
+      "sha256": "60dbf829bbb5dbf457f22a11c3617cf4d32ce7ad1a194495274dccdc0950bda7"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/429a60.c",
+      "sha256": "f1aff749574a992479de2cc4ca3af731855f912a3fba0d6462dbc21e008514d9"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/429ad0.c",
+      "sha256": "f785b8720d04ff62815ae2156ee9e6b4b41ec8a914a472423bf5b790096de89a"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/service.py",
+      "sha256": "39c91aef0b155f6efd8d1484d4f46c0e9b8f8b1c715ef59b3778203167aff8e4"
+    },
+    {
+      "path": "outputs/nebula-preservation/backend/state.py",
+      "sha256": "ec86aa7e948d9af1db7860f46a7d3fdaf0ad5c391655828c803ca66e995c9a4a"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/windows-native-core-flows.json",
+      "sha256": "2d1b43296505f0c4d622957463760f0de734c1549c3a66f5b19cf598879f84dd"
+    },
+    {
+      "path": "outputs/nebula-preservation/runtime-screenshots/settings-music.png",
+      "sha256": "ac3f65443b01237a08d1de1c637660698961778d08598bde45f9eedbd667ee1f"
+    },
+    {
+      "path": "outputs/nebula-preservation/deployment/linux-native-runtime-validation.json",
+      "sha256": "5da4504d69d004f7fecf9a60770450edb8ef4352d3ced3119aa1c3ca812461be"
+    },
+    {
+      "path": "outputs/nebula-preservation/runtime-screenshots/linux-settings-wallet.png",
+      "sha256": "808282d93e2682f83c9333aff53b24b1fce2c70a35327da5b849f8b1adb6dcb0"
+    }
+  ]
+}

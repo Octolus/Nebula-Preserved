@@ -1,0 +1,824 @@
+{
+  "format_version": 1,
+  "historical_research_only": true,
+  "current_status": "../PROGRESS.md",
+  "included": [
+    {
+      "name": "animation-entitlements.json",
+      "sha256": "06a1f83e76a45288bfb8ae8b952fad355d467b98b40127f33c3ab41c32283bb2",
+      "bytes": 24819
+    },
+    {
+      "name": "animation-entitlements.md",
+      "sha256": "228534255a99cd7e37ba1a8d46c690d7581863780fb45963d1665b4c09dd1fe4",
+      "bytes": 6135
+    },
+    {
+      "name": "avatar-contracts.md",
+      "sha256": "0d51b4c135b922961e719b37e14bf29aa5469c93b5968acbc6fb346aef97a845",
+      "bytes": 11759
+    },
+    {
+      "name": "avatar-female-save-compensation.md",
+      "sha256": "f6f20a834a1af6734392bd37fcc4f7aa4490a38e000f5e58fc772b14f8247d3a",
+      "bytes": 6193
+    },
+    {
+      "name": "avatar-persistence-audit.json",
+      "sha256": "97751ec13f93096f0ab1372e66f0903d3509c026b1f0c321f6bc05660bc141bb",
+      "bytes": 11972
+    },
+    {
+      "name": "avatar-persistence-audit.md",
+      "sha256": "10c0527b4dabc12f1ba7f30763652a522eb9a498e6606357315d8e742519b48c",
+      "bytes": 9360
+    },
+    {
+      "name": "bootstrap-response-contracts.md",
+      "sha256": "939576947c071cd3f1afa766a588873aa51a907321bff498bceca53157184a26",
+      "bytes": 15921
+    },
+    {
+      "name": "cinema-bootstrap-compatibility.json",
+      "sha256": "afcf4699acf416cdcd5fb7e60204021b4218c2ad3daef3fe980f94c6b38b627f",
+      "bytes": 6750
+    },
+    {
+      "name": "cinema-bootstrap-compatibility.md",
+      "sha256": "8432ec78a07104941a3d8e9182ea921c57a689113a852e2f419ca396e15ef74b",
+      "bytes": 4764
+    },
+    {
+      "name": "core-runtime-peer.md",
+      "sha256": "df24ed349cbad5c5c766aef3d6440c26eeaaa7b5335895decee9db1873eaf0f3",
+      "bytes": 11559
+    },
+    {
+      "name": "core-test-readiness.md",
+      "sha256": "42f2dd6af68f2743c55212d8f43c10d9a093cdb9130cc30ae38f49ebc44fde70",
+      "bytes": 12676
+    },
+    {
+      "name": "gathering-branches.json",
+      "sha256": "5923482165bc52e9ec567e050846a24c7cff6d712547f1415deaaa27c79a095a",
+      "bytes": 7038
+    },
+    {
+      "name": "gathering-branches.md",
+      "sha256": "55fd11722606a2f03991f2ae1485d4d758e331d9da25de3f0f1aaf612029a63b",
+      "bytes": 4164
+    },
+    {
+      "name": "housing-apartment-next-pass.json",
+      "sha256": "14135d3bcb3b3f4063bd968617e5a8e0cdcaf587e5bb3d492603b7e9151672dd",
+      "bytes": 7221
+    },
+    {
+      "name": "housing-apartment-next-pass.md",
+      "sha256": "dcc55e6635e03ffbf1814f25dd1d827f88a0395961f7373220d91a2a6db1ba97",
+      "bytes": 4620
+    },
+    {
+      "name": "housing-live-sync-next-pass.json",
+      "sha256": "c2d2f42adb2a242dc5b85950573f4309777f34b672373f0c36aeeb431f573317",
+      "bytes": 4783
+    },
+    {
+      "name": "housing-live-sync-next-pass.md",
+      "sha256": "69e5fa217cabc057476c0f07b81abd966d852a46fe9728e4b14bfaac66d793d9",
+      "bytes": 3151
+    },
+    {
+      "name": "http-consumables.json",
+      "sha256": "8a95ba1016733e7e872269d652d2a803a750bd7e438788bb378741038a6fa5a3",
+      "bytes": 4609
+    },
+    {
+      "name": "http-consumables.md",
+      "sha256": "c873bf95dc25c9863d15a2988afd2502ed1fd4f0b6bfe6e7b8828a3e7d54dcb5",
+      "bytes": 4429
+    },
+    {
+      "name": "http-gathering.json",
+      "sha256": "5475f424413a915167171df978d7b20628fbae1a26c7f397fce21128b425373b",
+      "bytes": 12642
+    },
+    {
+      "name": "http-gathering.md",
+      "sha256": "e020d5845eb9bedd0ac9506346f58f3c91ef67fd15bc00b106de9b091e7c4ee2",
+      "bytes": 4965
+    },
+    {
+      "name": "http-legacy-contracts.json",
+      "sha256": "96cabe334b1308c1d3c18b3d89589234509bcb74d267063435749ebe9dfdaebb",
+      "bytes": 182599
+    },
+    {
+      "name": "http-legacy-contracts.md",
+      "sha256": "5f371cb15512d802e877053cfe8fd0cdb54980338cb81af1b8dbd9e8bdd34a14",
+      "bytes": 14171
+    },
+    {
+      "name": "http-maintenance.json",
+      "sha256": "2c32cd47d9af98ee285e6202aa9808791793827328e1b791ba50ce4f31ac4ddd",
+      "bytes": 1656
+    },
+    {
+      "name": "http-nonminigame-gap-audit.md",
+      "sha256": "5f7f941aa0c11e1a02f8f52f8b08eb1b2a04c45888cbe2eacc1ce111c5bd8d2c",
+      "bytes": 8088
+    },
+    {
+      "name": "http-rewards.json",
+      "sha256": "d3d07fc4e6e8d58da0d7bdccc77bb722b9a5f53e899cd256f4744fc4e13c717c",
+      "bytes": 7920
+    },
+    {
+      "name": "http-rewards.md",
+      "sha256": "821fb941c4265f031f4ff205d0b0292031b40140f5038780dcf93eb315a63310",
+      "bytes": 5746
+    },
+    {
+      "name": "http-shop.json",
+      "sha256": "fe09293679d36aeef4b531f85e9d95bf18e2950b2b1bfc00b586b1f8b7b195a0",
+      "bytes": 7815
+    },
+    {
+      "name": "http-shop.md",
+      "sha256": "a6ee1b7a94c72939e86f47cfee4c9476e8af9b4a32b535a0e23e58c06460ff0a",
+      "bytes": 5680
+    },
+    {
+      "name": "http-social-contracts.json",
+      "sha256": "964e7037bc23b505d3a5473b2ba4f2d7623d526df1e2723679abe4173dce275b",
+      "bytes": 17170
+    },
+    {
+      "name": "http-social-contracts.md",
+      "sha256": "0efb27e1b4b545d20aa40f7e2537d7cf512bccadfbec89c9718090beced7bfb8",
+      "bytes": 6358
+    },
+    {
+      "name": "http-task-command-candidates.json",
+      "sha256": "55938015a6271e1191a3854710069599008c95aa6be38de306de1c58cd56fe8d",
+      "bytes": 21954
+    },
+    {
+      "name": "interaction-client-hook.json",
+      "sha256": "4067853ffbf5eb6b1054ef4d16ba7eb423962e502710c02f339c0ed95988d690",
+      "bytes": 8763
+    },
+    {
+      "name": "interaction-client-hook.md",
+      "sha256": "6b24b5e8960b2f66339a77429d990203f3f59827409d4ed027ca4d1d463c35d3",
+      "bytes": 6970
+    },
+    {
+      "name": "interaction-mapping-bridge.md",
+      "sha256": "e7e89e1241636ff4068953bc89d7af88a4e82186fc58656f36cc34f525c5683c",
+      "bytes": 5078
+    },
+    {
+      "name": "interaction-registry-wire.json",
+      "sha256": "b4a9de8e06e2b54c37e9e8b33fa214bf5420b6697d9eb4da956126c99d4a297f",
+      "bytes": 5755
+    },
+    {
+      "name": "interaction-registry-wire.md",
+      "sha256": "c3360ea1c47cf18e2e500f16ee044d1649a9265d2f40a52324e22428fff685b3",
+      "bytes": 5688
+    },
+    {
+      "name": "keyboard-buttons-compatibility.json",
+      "sha256": "f836130fdfe286aef91628e3b131815f2b87e11d61151b6b63a350a24915c62a",
+      "bytes": 8285
+    },
+    {
+      "name": "keyboard-buttons-compatibility.md",
+      "sha256": "7c30863a7c821e5343825fb866c3fd309f27f098652cdfd30fabe280afc40666",
+      "bytes": 6950
+    },
+    {
+      "name": "keyboard-focus-compatibility.json",
+      "sha256": "97a25509dc98e9f33c30fa67abab3263a3dd2af0498df6f1ad9406c1fd0e4f7f",
+      "bytes": 5165
+    },
+    {
+      "name": "keyboard-focus-compatibility.md",
+      "sha256": "124a550b75a94a589814dcd16ce2afab07341e340abe81d1719dd636ab245746",
+      "bytes": 4637
+    },
+    {
+      "name": "keyboard-housing-compatibility.json",
+      "sha256": "101d6f66990d0c249db9640ec3ca5acd90d3f4166acb74fac395d4632dd2b840",
+      "bytes": 10918
+    },
+    {
+      "name": "keyboard-housing-compatibility.md",
+      "sha256": "48c934d1511b1e625b4595ee19d0f91632e862b79345ec61f3e0005be650f2e0",
+      "bytes": 5543
+    },
+    {
+      "name": "keyboard-input-compatibility.json",
+      "sha256": "e7b1ebfb015808535c3222fc7eb307b66107fff5918c2f30206b76a138e298e3",
+      "bytes": 13259
+    },
+    {
+      "name": "keyboard-input-compatibility.md",
+      "sha256": "0405534c4eb4d471c86aff6cc87520916f1a7165d46ba0d159c22a7e90e08103",
+      "bytes": 8600
+    },
+    {
+      "name": "loadbalancer-schemas.json",
+      "sha256": "0dc8fc7c255342d2c3a836254097876993ad423db2ceb0bf7a3a68329852fbff",
+      "bytes": 1212
+    },
+    {
+      "name": "loader-bootstrap.json",
+      "sha256": "88f22c95f617859177d0a770106b41ea60b5b5711a32bde41e53258b362607e2",
+      "bytes": 10549
+    },
+    {
+      "name": "loader-bootstrap.md",
+      "sha256": "63997a49df80ed513e666e98d1ccb060962481c6baf405af1d461e7a0acb660a",
+      "bytes": 6154
+    },
+    {
+      "name": "local-shop-seeding.json",
+      "sha256": "f82de9f69ccff28a985bb23e84c63c806bf43afb48cf81bd72471714040ef84b",
+      "bytes": 8395
+    },
+    {
+      "name": "local-shop-seeding.md",
+      "sha256": "bd56f95eadab3b04ac0d208f2392fa9f405946b6ffdbeb6834b8b0b15ef91a58",
+      "bytes": 4884
+    },
+    {
+      "name": "managed-instance-lifecycle.md",
+      "sha256": "fb3bd70b2d8654a3fcc98fd9d3cba2391d892b8a80be6653a97d6239e92053b9",
+      "bytes": 5395
+    },
+    {
+      "name": "manager-message-constants.json",
+      "sha256": "c976cb22672a6f0702fc185082c1b5bd0021071d704af4a5002ee78c2b7c8df2",
+      "bytes": 31552
+    },
+    {
+      "name": "minigame-contracts.json",
+      "sha256": "8cbaa3421a67b686cbdc2d38b2d3a3eb14886386e3192e473a6895055c8ff194",
+      "bytes": 122952
+    },
+    {
+      "name": "minigame-contracts.md",
+      "sha256": "8c5986ab691c810b398bdbf187af7b5ee563989d3abd74e301b3da600ee82ed9",
+      "bytes": 12150
+    },
+    {
+      "name": "minigame-scene.json",
+      "sha256": "22434be75f5af316161ec2754c6ed93c9c7fd0e9b99e256e3adeefbe2c2a505f",
+      "bytes": 39306
+    },
+    {
+      "name": "mirror-command-contracts.json",
+      "sha256": "0ba468e454b2fcf54e8e079ae91628ba59387ec4d93215b320a02fad59c707f6",
+      "bytes": 10881
+    },
+    {
+      "name": "mirror-command-contracts.md",
+      "sha256": "94097ee35b463a54424d10a1f38c156661b8aa565d28c7289303e839cf4741b8",
+      "bytes": 3109
+    },
+    {
+      "name": "mirror-message-id-candidates.json",
+      "sha256": "35af8bd7b0a94d287dc9faf6fc04e26e84f5013832e6879692d195af74b73a27",
+      "bytes": 4034
+    },
+    {
+      "name": "mirror-player-state.json",
+      "sha256": "d2a8bbebf98ae5357b0a43ceac04bd305bcf520c1c02aeb9728f78043ebc3556",
+      "bytes": 58328
+    },
+    {
+      "name": "mirror-reuse-findings.md",
+      "sha256": "235ab9f6c8fc649d8bd90d66ce641fbaa23ec722b37785e4730315f190af3d8c",
+      "bytes": 6630
+    },
+    {
+      "name": "mixed-world-registries.json",
+      "sha256": "ce44c6fe5f3dc0e3c8932de2d84961431f0883b77da6d0800758b277535cff23",
+      "bytes": 501475
+    },
+    {
+      "name": "mixed-world-registries.md",
+      "sha256": "eb22bafedaf6af54d31130fc6668d2ad845dddceb3abfd0dbee42e451c238bdd",
+      "bytes": 9157
+    },
+    {
+      "name": "native-settings-ui-compatibility.json",
+      "sha256": "d4048237d4af717627234a5626732149a2d760a2ac113d75892714dbb3607940",
+      "bytes": 4849
+    },
+    {
+      "name": "native-settings-ui-compatibility.md",
+      "sha256": "47ee7f73b347e4936e780068cfec04ce54309dc3ee3f0c183baeb7b9370503d0",
+      "bytes": 1384
+    },
+    {
+      "name": "network-string-candidates.json",
+      "sha256": "b7064d664037b9edd031f6d7013086a6d6b9f79ffa9ee819350b01dc309ad859",
+      "bytes": 13407
+    },
+    {
+      "name": "network-surface-findings.json",
+      "sha256": "f72876249dcdcd37ff2ef2de5b7066e5c741ac5ef73d0b04f4b6f9220adadb64",
+      "bytes": 56745
+    },
+    {
+      "name": "network-surface-findings.md",
+      "sha256": "552631f59d7a685dbb29d492fedf39ba55f28f6c9c2fd5e5dad8ded4868034c2",
+      "bytes": 8721
+    },
+    {
+      "name": "nonmini-surface-status.json",
+      "sha256": "05a56b6ec94eb151320e867b7b8594fad8104634445591557fbeb6c8b2ec83b6",
+      "bytes": 35408
+    },
+    {
+      "name": "nonmini-surface-status.md",
+      "sha256": "5d6728631c1b66a3ec237e4e5b396ff6b150dfb64fd708faf11e2f3b59a2b65d",
+      "bytes": 6834
+    },
+    {
+      "name": "notification-contracts.md",
+      "sha256": "305d484d57b4fec19bedf6d789ccc18be5e8e198ffd75f90cc33fb1b309f5fc3",
+      "bytes": 14383
+    },
+    {
+      "name": "notification-text-compatibility.json",
+      "sha256": "37ab1fa9b61698161f76f848c068bf0177177cd8b205bd284e3f09f3ce49ed26",
+      "bytes": 4355
+    },
+    {
+      "name": "notification-text-compatibility.md",
+      "sha256": "f8ab3127937e06a5f29260d6b2da6df94d11c3e05375cf01a98e656e40bb3228",
+      "bytes": 3887
+    },
+    {
+      "name": "notification-text-review.json",
+      "sha256": "8faa03083deab5e93a132e9d7247a847ac1f22f73047ea92cf7ad80a25d759a7",
+      "bytes": 14783
+    },
+    {
+      "name": "notification-text-review.md",
+      "sha256": "c8314abfb328359d7184d00c7fe1ac380415dd4eb0cc62cc4f3d7bd395f6b5df",
+      "bytes": 6092
+    },
+    {
+      "name": "preset-input-compatibility.json",
+      "sha256": "f44bcd231ec67c6d41dffc07f57c3b1225b2485e8e7fde8bb686336611621f4b",
+      "bytes": 12849
+    },
+    {
+      "name": "preset-input-compatibility.md",
+      "sha256": "a4c5f63d05e33f5056bde84c0681a772d44eca93ad4acf011fa71fa64ec0bcda",
+      "bytes": 6954
+    },
+    {
+      "name": "rapid-boat-compatibility.json",
+      "sha256": "d0cfca1fd6f6bccb7894efe7adcd66fbf89ec92dc295e9cd73b233ee41acb2f6",
+      "bytes": 10242
+    },
+    {
+      "name": "rapid-boat-compatibility.md",
+      "sha256": "023a06d2a4a3421a8580a1e470e8b3bb4e8ee89927776d624eed54811957fd66",
+      "bytes": 2456
+    },
+    {
+      "name": "resource-entitlements.md",
+      "sha256": "fc2d9e3cca2fbf37e525aeae4e4b94a36e950ba8cb650d8ac231a1aa4853df91",
+      "bytes": 5693
+    },
+    {
+      "name": "reward-absence-next-pass.json",
+      "sha256": "f052514710df8cf2e75a0e8ce6a43c00886423e9757388b07dcceb0db6b46392",
+      "bytes": 10277
+    },
+    {
+      "name": "reward-absence-next-pass.md",
+      "sha256": "4e363617f7774255c95b5adb696c1f8a5a6b1e1d5f2e41592bdcecf439f08353",
+      "bytes": 5275
+    },
+    {
+      "name": "rewards-second-pass.json",
+      "sha256": "64374275eff17777d797560d3e9e4ad0424b3058b8a6cfe2f5d41c063140ff9c",
+      "bytes": 18142
+    },
+    {
+      "name": "rewards-second-pass.md",
+      "sha256": "799cfb1dc75ea58773ee3b04d9064959272fc0d578ba0c1c0639e3fb3d7802e3",
+      "bytes": 5096
+    },
+    {
+      "name": "rpc-hash-candidates.json",
+      "sha256": "66649e6778ec545b43c2397596776982dfbe01c6e390795b25228f419542b2ca",
+      "bytes": 444
+    },
+    {
+      "name": "shared-endpoint-patch.json",
+      "sha256": "d4d1f6eab46ab5fb60e8eb7f060b8b4d3ef34f3fc26fd8a9c2eb58f2bbda2f27",
+      "bytes": 2680
+    },
+    {
+      "name": "shared-endpoint-patch.md",
+      "sha256": "a1a7fba486385a07f3584aa62124686e3099aa766b8c6910264d8b834e911e5d",
+      "bytes": 3207
+    },
+    {
+      "name": "shared-server-networking.json",
+      "sha256": "576c7c65b21ecaf7dc7b25948a095f57fca55a80e94520c3aa2bc26596d73a77",
+      "bytes": 17930
+    },
+    {
+      "name": "shared-server-networking.md",
+      "sha256": "43e0b8f8a19152702e1ce577ea2892681803bc6802e7f26bea803d12aba0bfe7",
+      "bytes": 12220
+    },
+    {
+      "name": "shop-second-pass.json",
+      "sha256": "76652158b2bd0a88ba70600b2cf03250982fb98794d1b29b45c6c82f7d01ff0b",
+      "bytes": 8333
+    },
+    {
+      "name": "shop-second-pass.md",
+      "sha256": "51fc97785ebec4c29f25d08dc2644fa8888a96c3a53f6aa1083b27934c2e65a9",
+      "bytes": 7319
+    },
+    {
+      "name": "social-housing-restoration.json",
+      "sha256": "daccb0d43e3e026b76345c40fff7fc9ede8cae27e45b1392c2bfdcf8b95953a4",
+      "bytes": 12518
+    },
+    {
+      "name": "social-housing-restoration.md",
+      "sha256": "ea5d388727e3a12d9913b3902299e3e6da2b8a9f6a3bb95503b54ae527214699",
+      "bytes": 10222
+    },
+    {
+      "name": "tcp-bowling-entry-schema.json",
+      "sha256": "5c1435551382f7b0a1d11acdd982675d1f8ef2ab8601c97ce8c1b677299779c4",
+      "bytes": 852
+    },
+    {
+      "name": "tcp-bowling.md",
+      "sha256": "cf5715e10540a9263ec71fa0d678608bc26030f0205d2f9d505d341bef0474a4",
+      "bytes": 8878
+    },
+    {
+      "name": "tcp-callers.json",
+      "sha256": "3b48361677cf7536e97617520e5b3375f8f7d4c72dbde0c30fe6eb76a9c525f6",
+      "bytes": 24137
+    },
+    {
+      "name": "tcp-contracts.json",
+      "sha256": "88d63ae13b96609d779ab70a3ef66474e33589f3c96a69ad7ef7e3470ff49e95",
+      "bytes": 199330
+    },
+    {
+      "name": "tcp-contracts.md",
+      "sha256": "ae69698933bcc30661af87229ce6a75d8e311e4c5f4876c678c674c7ff5afc81",
+      "bytes": 39235
+    },
+    {
+      "name": "tcp-dispatch-map.json",
+      "sha256": "8612668068de2a687c4f86a5bb9dd3d993ebaaad5a458ee3c0a2ba926458ee70",
+      "bytes": 28297
+    },
+    {
+      "name": "tcp-reconstruction.md",
+      "sha256": "8b6fd10fa055b410669f90e668e8fdc8704ee042cd4a47f43dabb1b8f9ce3004",
+      "bytes": 15620
+    },
+    {
+      "name": "tcp-social-consumables.md",
+      "sha256": "4742270454c06df857bdb69f6184b93d08dd5147e2968115ebc2af618a4f2a0e",
+      "bytes": 5451
+    },
+    {
+      "name": "tcp-wardrobe-patch.json",
+      "sha256": "e1c133770b2651da58351ef06451efad473a9f6032b131cea024794bfcabf21c",
+      "bytes": 11633
+    },
+    {
+      "name": "tcp-world-interactions.json",
+      "sha256": "cefff9c01e325e9a3eb163d81d883692a46324c5aba65640053a2badf736ee1f",
+      "bytes": 781079
+    },
+    {
+      "name": "tcp-world-interactions.md",
+      "sha256": "39376001c08f006c7a4b88663a8cd6932187c7facb7287edf4635bbae7522df3",
+      "bytes": 20391
+    },
+    {
+      "name": "tcp-world-spawn-assets.json",
+      "sha256": "0f5fc3e588787d79f924e9e90d67237033395a20d7484b5f811eb7079b8dd13b",
+      "bytes": 27467
+    },
+    {
+      "name": "tcp-world-spawn.json",
+      "sha256": "4794f9b80e29204329645b21677d637d1cd374c77809b8c3b316c56e631fa34a",
+      "bytes": 17289
+    },
+    {
+      "name": "tcp-world-spawn.md",
+      "sha256": "c0c9179ed82139742209ba4978830f83e10f6618b45e0a52fa54ec941bbe5c47",
+      "bytes": 6167
+    },
+    {
+      "name": "type-tcp-opcodes.json",
+      "sha256": "994db90d78aec14fec5c78f573b20df39c592b00bb61d03220a8bdd62bc70472",
+      "bytes": 6227
+    },
+    {
+      "name": "wardrobe-removal-sentinels.md",
+      "sha256": "08cfd65b91204f244e6edb7a4f34f5a9a03d29fa30cda983c553ee86978188d4",
+      "bytes": 3430
+    },
+    {
+      "name": "world-loading-assets.json",
+      "sha256": "1364e93899631e9864cb4f2b3ef45dc0033e900b5854cf5d3843cbcac31fda67",
+      "bytes": 39208
+    },
+    {
+      "name": "world-loading-pipeline.json",
+      "sha256": "402139729e9adc566dee6b63ce5e9ee99ed5d1fbc80e4fb7cf65b7b35ae783c3",
+      "bytes": 11247
+    },
+    {
+      "name": "world-loading-pipeline.md",
+      "sha256": "d4f121e4dbbbb02647f816d455a5a290b8e0f40ec9e3fcb7ee73a6aeb05e9e5f",
+      "bytes": 11300
+    },
+    {
+      "name": "world-registry-next-pass.json",
+      "sha256": "5f1f67db2588e082c19a55f7ac2e30a9f9cdf9803e3dd7d6d78277ab1c4eba86",
+      "bytes": 14146
+    },
+    {
+      "name": "world-registry-next-pass.md",
+      "sha256": "d350922b906fdcde9934f49527f60c364002d2316e89297d0736d54bc23653a1",
+      "bytes": 6480
+    }
+  ],
+  "omitted": [
+    {
+      "name": "app-network-schemas.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-asset-catalog.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "avatar-declarations.md",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-default-catalog.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "avatar-female-save-compensation.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "avatar-female-save-validation.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-inventory-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-metadata-manifest.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-metadata-schemas.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "avatar-morph-channels.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-native-evidence.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-neutral-female.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "avatar-neutral-male.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "avatar-neutral-seed-evidence.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-prefab-baselines.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-save-contract.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-static-validation.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "avatar-unresolved-prefabs.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "bootstrap-response-contracts.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "bounded-native-protocol-evidence.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "core-test-readiness.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "housing-interaction-manifest.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "housing-placement-contracts.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "http-nonminigame-gap-audit.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "http-task-schemas.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "instrumented-exception-failure.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "instrumented-exception-failure.md",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "interaction-mapping-bridge.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "keyboard-housing-controller-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "keyboard-housing-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "keyboard-housing-offline-validation.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "manager-message-schemas.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "manifest.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "mirror-transport-schemas.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "network-method-addresses.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "network-surface-inventory.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "notification-contracts.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "README.md",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "resource-entitlements.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "selected-declarations.cs",
+      "reason": "Extracted game declarations/code excluded"
+    },
+    {
+      "name": "shop-identity-diagnostic.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "shop-identity-diagnostic.md",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "skl-promo-catalog.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "static-interaction-manifest.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "tcp-bowling-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-core-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-ghidra-request.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-handlers-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-notification-consumable-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-wardrobe-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-world-loader-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-world-prefab-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-world-spawn-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "tcp-world-spawn-xrefs.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "wardrobe-removal-sentinels.json",
+      "reason": "Runtime manifest already preserved in ../../protocol/; no duplicate"
+    },
+    {
+      "name": "windows-native-core-flows.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "windows-native-core-flows.md",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "world-loading-methods.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "world-loading-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "world-loading-preinit-native.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    },
+    {
+      "name": "world-loading-xrefs.json",
+      "reason": "Raw extracted declarations, native listings, local validation/evidence, or redundant inventory excluded"
+    }
+  ],
+  "privacy": {
+    "sanitized_string_count": 95,
+    "removed_code_or_sensitive_fields": 197,
+    "private_runtime_receipts_or_captures_copied": false,
+    "game_binaries_or_decompiled_listings_copied": false
+  }
+}

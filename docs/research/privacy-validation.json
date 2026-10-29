@@ -1,0 +1,13 @@
+{
+  "format_version": 1,
+  "included_documents": 113,
+  "omitted_source_documents": 61,
+  "total_source_documents_accounted": 174,
+  "json_parse": "pass",
+  "known_private_identity_absolute_path_test_address_steamid_cipher_scan": "pass",
+  "markdown_links": "pass",
+  "pending_link_target": null,
+  "raw_game_binaries_and_decompiled_listing_files": "none copied",
+  "curation_manifest_sha256": "a11fd91b5e0fd19d22d38829aad8e05b2b9d9f0616da79b0483f7b924ef99bbf",
+  "scope": "docs/research only; no game, server, runtime, input or other project files modified"
+}

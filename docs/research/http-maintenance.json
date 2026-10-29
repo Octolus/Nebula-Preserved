@@ -1,0 +1,47 @@
+{
+  "format_version": 1,
+  "route": "checkerToServerDownMaintenanceServlet",
+  "request": [
+    "SessionGUID",
+    "PS4ID"
+  ],
+  "shared_request_trailer": "platform enum name appended by AES.Encrypt",
+  "response": [
+    "true",
+    "SessionGUID",
+    "PS4ID",
+    "remainingTime Int32"
+  ],
+  "native_consumer": "4233b0 checks response field1 against own GUID, parses field3 and calls ServerDownMaintenance.Show.",
+  "zero_behavior": "4ddac0 returns immediately for remainingTime0; already-seen nonzero values also return.",
+  "local_policy": "Session-owned response reports0: no scheduled local maintenance announcement.",
+  "runtime_tested": false,
+  "original_operations_policy_known": false,
+  "evidence": [
+    {
+      "rva": "0x422650",
+      "path": "work/evidence/ghidra/functions/422650.c",
+      "sha256": "0b4d4ffb092b2790d4e79fd97bd7a213ae1304d7a516649aaf938809c5e02a02"
+    },
+    {
+      "rva": "0x42a840",
+      "path": "work/evidence/ghidra/functions/42a840.c",
+      "sha256": "657318938e5f2e24352482a36f32e76ffb4b48c946c6a5053c7044863fb4ac09"
+    },
+    {
+      "rva": "0x4233b0",
+      "path": "work/evidence/ghidra/functions/4233b0.c",
+      "sha256": "437ff08962b1548a23a340fb3a3d4bd97d323d237e5fa93e38078fe2b33865c6"
+    },
+    {
+      "rva": "0x4ddac0",
+      "path": "work/evidence/ghidra/functions/4ddac0.c",
+      "sha256": "e97922755c61250a45b37b99d42b69ec4672015528fcc84080d94c9d59db2cf7"
+    },
+    {
+      "rva": "0x4ddd50",
+      "path": "work/evidence/ghidra/functions/4ddd50.c",
+      "sha256": "eb4ae8cd9c7ba4dc481a515f402eb804c0be47e836d5f8856924dc16dfefd4bb"
+    }
+  ]
+}

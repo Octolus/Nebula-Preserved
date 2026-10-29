@@ -1,0 +1,293 @@
+{
+  "format_version": 1,
+  "scope": "Static next-pass audit of the three mixed GenericInteractable registries and dynamic housing re-registration. No game, UI, server, listener, or live connection was used.",
+  "target": {
+    "unity": "2021.3.9f1",
+    "game_assembly_sha256": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
+    "unity_player_sha256": "ef5b55252d1457877fbe134e36daf8d33c77be8937cffe75f924d18ef163b695"
+  },
+  "new_ordering_fact": {
+    "initial_registry": "OnConnected 0x5ea6e0 consumes FindObjectsOfType<GenericInteractable>(false) in returned-array index order with no client-side reorder. Unity 2021.3 documents FindObjectsOfType as sorting by runtime InstanceID. Numeric wire IDs therefore follow ascending runtime InstanceID, not serialized path ID, hierarchy order, or this report's row order.",
+    "housing_ground_registry": "SaveAtServer 0x6bdb40 consumes FindObjectsOfType<HousingAssetGround>(false), hence active ground assets in runtime InstanceID order. For each ground, 0x865a20 calls GetComponentsInChildren<T>(false); Unity 2021.3 documents a root-first depth-first child search. Each returned GenericInteractable is initialized in array order.",
+    "documentation": [
+      "http[local-path]",
+      "http[local-path]"
+    ],
+    "boundary": "The shipped static assets do not contain the runtime InstanceIDs assigned to instantiated components. Sorting semantics narrows the missing fact but does not produce numeric bindings. If multiple matching components occupy one GameObject, their component-slot order also requires observation or an explicit stable client sort."
+  },
+  "mixed_scenes": [
+    {
+      "scene": "CampSilverLake",
+      "bundle": "s/campsilverlakelogicprefab",
+      "bundle_sha256": "c0b01fca923fbf51c46f0bebed71a7e78df60c819c5dfc4aaf9329cc81c373e2",
+      "complete_active_array_length": 9,
+      "ordinary_count": 8,
+      "deferred_count": 1,
+      "deferred_members": [
+        "JG_CampSilverLake_Killer_Launcher/KillerGameLauncher"
+      ],
+      "ordinary": [
+        {
+          "class": "JG_ChaletFireplaceInteractable",
+          "object": "FireplaceControl",
+          "component_path_id": "-6645242229727984002",
+          "raw_sha256": "0a9f26cf77239c6ebf201811169f9e403484ba3ee54f8c4b78ac0c901cd7124d",
+          "show_text": "Light Fire",
+          "hide_text": "Turn Off",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_CampSilverLake_WeatherInteractable",
+          "object": "WeatherInteractable",
+          "component_path_id": "-6218022939141632132",
+          "raw_sha256": "3e945e210b0249b216da3ba983acadd766ea5f13bd865c731acc62413011aa92",
+          "show_text": "Rain",
+          "hide_text": "Clear",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_CampSilverLake_Door",
+          "object": "Door",
+          "component_path_id": "-3373250967629728049",
+          "raw_sha256": "314c72e578dd1a14aa185b65f3ee30e1a640b59b0b1a18671031538e9894092e",
+          "show_text": "Open",
+          "hide_text": "Close",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_CampSilverLake_Door",
+          "object": "Door_Bunkhouse_C",
+          "component_path_id": "-954467687283808199",
+          "raw_sha256": "28c6453fdc5914ff48fd7be71f64b19c08ee6dcee79e1fe1da3a5d8890057de0",
+          "show_text": "Open",
+          "hide_text": "Close",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_CampSilverLake_Door",
+          "object": "Door_Bunkhouse_D",
+          "component_path_id": "-558418029276450779",
+          "raw_sha256": "96bf42ff119ededa9719ed8b68b6078e74755684ca294a2ffb6597c189753521",
+          "show_text": "Open",
+          "hide_text": "Close",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_CampSilverLake_Door",
+          "object": "Door_Bunkhouse_A",
+          "component_path_id": "60058857031766015",
+          "raw_sha256": "a1dee3261d6fee855c86086899ff2bc9101bbfc56441f295c708af9079bfc68c",
+          "show_text": "Open",
+          "hide_text": "Close",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_CampSilverLake_TimeInteractable",
+          "object": "TimeControl",
+          "component_path_id": "1925558629401797336",
+          "raw_sha256": "a7a42202761e335ee22ca4ee37db4c40b96648d580d99c8b9d4ece29f703ca52",
+          "show_text": "Night",
+          "hide_text": "Day",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_CampSilverLake_Door",
+          "object": "Door_Bunkhouse_B",
+          "component_path_id": "3567107327567097474",
+          "raw_sha256": "d2d2c4c5d45a1e121f7436a2f35ad09fdcc0128b72999d361add2515ae6e64f2",
+          "show_text": "Open",
+          "hide_text": "Close",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        }
+      ]
+    },
+    {
+      "scene": "CutteridgeEstate",
+      "bundle": "s/cutteridgeestatelogicprefab",
+      "bundle_sha256": "70e6fed70bb06219c6d961faf2306ce16b4396a50b74e31b7d9579feb729a4f2",
+      "complete_active_array_length": 3,
+      "ordinary_count": 2,
+      "deferred_count": 1,
+      "deferred_members": [
+        "JG_Ghost_Minigame/Interactive_GhostMinigame"
+      ],
+      "inactive_deferred_note": "Seven JG_Ghost_Candle children are inactive and excluded by includeInactive=false.",
+      "ordinary": [
+        {
+          "class": "JG_WeatherInteractable",
+          "object": "Interactive_Weather",
+          "component_path_id": "-5786673133409027289",
+          "raw_sha256": "51bd1fa2a0f6280d9fac7c34875c597ebba68d8f12cc6fe0ffce041960f05e07",
+          "show_text": "Rain",
+          "hide_text": "Clear",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        },
+        {
+          "class": "JG_DoorInteractable",
+          "object": "Interactive_FrontDoor",
+          "component_path_id": "7064128812764725915",
+          "raw_sha256": "3350072fb42a87a9ec839eb7c7615ac3ccb2af0e13d9b2fec95ff0ebc298650a",
+          "show_text": "Open",
+          "hide_text": "Close",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        }
+      ]
+    },
+    {
+      "scene": "SorcerersEyrie",
+      "bundle": "s/sorcererseyrielogicprefab",
+      "bundle_sha256": "2449b9fe4a4684c352523d6d58e32c8424dbac05681ce9b8528c014b08bd5311",
+      "complete_active_array_length": 12,
+      "ordinary_count": 1,
+      "deferred_count": 11,
+      "deferred_members": [
+        "8 x JG_SorcerersEyrie_Ingredient",
+        "2 x JG_SorcerersEyrie_RecipeControl",
+        "JG_SorcerersEyrie_PotionControl/Potion_Brewing"
+      ],
+      "ordinary": [
+        {
+          "class": "JG_SorcerersEyrie_TimeInteractable",
+          "object": "TimeControl",
+          "component_path_id": "7078224909408019429",
+          "raw_sha256": "d16264f2dc3ef7fb679904c92b624584e3ac9d9d155892b10926d9dd0573ae5d",
+          "show_text": "Day",
+          "hide_text": "Night",
+          "initial_active": false,
+          "extension_count": 0,
+          "wire_id": null
+        }
+      ]
+    }
+  ],
+  "native_assignment": {
+    "initial_scan": "0x5ea6e0 calls 0x8951e0 -> 0x1b8b0f0 with includeInactive=false, iterates index 0 upward, and calls 0x451060.",
+    "counter": "NebulaInteractor constructor 0x5df620 initializes the adjacent counters to -1. 0x451060/0x5deab0 preincrement nextGenericInteractableId at +0x3c and invoke the virtual ID setter, so the first assigned ID is 0.",
+    "no_reset": "0x5decf0 does not reset the generic counter; 0x5df300 removes null occupables only.",
+    "mixed_scene_consequence": "A valid ordinary allowlist needs the complete 9-, 3-, or 12-member InstanceID-sorted sequence because deferred objects consume IDs. An ordinary-only sequence is insufficient."
+  },
+  "dynamic_housing": {
+    "save_epoch": "Every HousingFurnishing.SaveAtServer invocation at 0x6bdb40 performs another registration pass. Existing children are not skipped.",
+    "order": [
+      "Active HousingAssetGround components in ascending runtime InstanceID order.",
+      "For each ground: active NebulaOccupable descendants in root-first depth-first traversal order, then active GenericInteractable descendants in root-first depth-first traversal order.",
+      "Each GenericInteractable.Initialize unconditionally advances the global counter and overwrites that component's prior ID."
+    ],
+    "excluded": "The later HousingAssetFloor scan updates furnishing state but does not initialize GenericInteractable children. SaveAtServer does not dynamically scan wall or ceiling assets for generic children.",
+    "not_authoritative": "The maintained groundAssets placement list is not registration order; SaveAtServer performs a global FindObjectsOfType<HousingAssetGround> scan. Housing item ID and table name are not unique per placed copy.",
+    "history_required": [
+      "runtime InstanceID of every active ground at every save",
+      "active child hierarchy and component slot order per ground",
+      "every prior SaveAtServer invocation",
+      "activation, destruction, replacement, and duplicate-placement history",
+      "counter value since NebulaInteractor construction"
+    ]
+  },
+  "smallest_missing_fact": {
+    "mixed_scenes": "The complete runtime InstanceID-to-component binding for each active 9-, 3-, and 12-member array at the initial registration epoch.",
+    "housing": "The InstanceID-sorted ground array and active depth-first child result at every save epoch, together with the current counter. Static assets alone cannot reconstruct this session history.",
+    "capture_option": "Capture immediately after 0x8951e0 and before the 0x5ea6e0 loop; record array index, runtime InstanceID, scene, class, object name, and stable component fingerprint. For housing, capture each 0x6bdb40 ground and child array plus an epoch number.",
+    "deterministic_patch_option": "As an explicit preservation policy, patch all compatible clients to sort initial components by stable scene hierarchy path plus component slot; iterate housing by persisted placement index and children by prefab hierarchy path plus component slot. Treat layout replacement/save as a new mapping epoch and reject stale IDs.",
+    "server_only_limit": "Without capture or a shared deterministic client patch, a server-only static numeric allowlist cannot safely separate ordinary and deferred mixed-scene IDs or reproduce dynamic housing IDs."
+  },
+  "sources": [
+    {
+      "path": "outputs/nebula-preservation/protocol/mixed-world-registries.json",
+      "sha256": "ce44c6fe5f3dc0e3c8932de2d84961431f0883b77da6d0800758b277535cff23"
+    },
+    {
+      "path": "work/evidence/world-interaction-assets.json",
+      "sha256": "004c9f4fa343fc697f98169b6cacfe8223ffd9fa7daafb10b8d79fe764d07b57"
+    },
+    {
+      "path": "work/decompiled/dump.cs",
+      "sha256": "5ab0df0e69d61febfa6be629041992ea453c8cf95e4e194e3e542e9b29da4850"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5ea6e0.c",
+      "rva": "0x5ea6e0",
+      "sha256": "af04f45ab084b633c12e8d08f4d024433e5a883a23d32c5a31c102dd89c39f8d"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/8951e0.c",
+      "rva": "0x8951e0",
+      "sha256": "884e89f93ee7e80dfddce9545c451b8f21433ed0d39bc8b94933e03ddc84789e"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/1b8b0f0.c",
+      "rva": "0x1b8b0f0",
+      "sha256": "8d3ce44281e55ffcaad63051e31303e70d3c68706d4a9011c8f18f44957138aa"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/451060.c",
+      "rva": "0x451060",
+      "sha256": "3268e0c35e1955f80d8739f89c13f3da61d2921c52c270aac6bc844739bcf812"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5deab0.c",
+      "rva": "0x5deab0",
+      "sha256": "04c27c9e82ce10c163269bd4c75c09999622627ce717db509207fe52b283dcc0"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5df620.c",
+      "rva": "0x5df620",
+      "sha256": "9937b923ae8e4cee6a00cde3895f7d830fe372d4cbdba587b15645e83cb0147f"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5decf0.c",
+      "rva": "0x5decf0",
+      "sha256": "820b13ecd97a292fd41f65e133a67c0c4258280695feb1ae5a6918c912f36068"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/5df300.c",
+      "rva": "0x5df300",
+      "sha256": "4d6cde980c5639b265c95f06bda71e26c1b3a7079ff7f80e3590ef5e57458bc0"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/6bdb40.c",
+      "rva": "0x6bdb40",
+      "sha256": "b8c05e9e24205deb77fb3b8112b62783786226645eba7aa310651284b7942349"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/865a20.c",
+      "rva": "0x865a20",
+      "sha256": "eaf021ad42acb1d7e1f3aa63a8bc36fca4f8f83293bc30d886fd3415088637f3"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/6bd5b0.c",
+      "rva": "0x6bd5b0",
+      "sha256": "2b266f0c7541692ccd3eaaf3b05e80a76468f24f5394195a33e54d6321b93501"
+    },
+    {
+      "path": "work/evidence/ghidra/functions/6bc650.c",
+      "rva": "0x6bc650",
+      "sha256": "61268929694d6221af3d42d099ae5330998e8c26b58b14aa165f2aaf2b590c77"
+    },
+    {
+      "path": "outputs/nebula-preservation/protocol/housing-placement-contracts.json",
+      "sha256": "58948e93a1cfb4e952d007d7289bcaf58b2431d7804f1532725225fa0cdacc4e"
+    }
+  ],
+  "runtime_or_connection_tests_performed": false,
+  "numeric_bindings_ready": false
+}

@@ -1,0 +1,189 @@
+name: Linux container images
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: containers-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  quality:
+    uses: ./.github/workflows/quality.yml
+
+  runtime:
+    name: Build matching Linux Unity runtime
+    needs: quality
+    # Fork PRs run quality checks only. Unity credentials never reach PR code.
+    if: >-
+      (github.event_name == 'push' &&
+       (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))) ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    outputs:
+      report_sha256: ${{ steps.collect.outputs.report_sha256 }}
+      server_sha256: ${{ steps.collect.outputs.server_sha256 }}
+      managed_sha256: ${{ steps.collect.outputs.managed_sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Check release tag and configured Unity credentials
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF" == refs/tags/* && ! "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo '::error::Container releases require a vMAJOR.MINOR.PATCH tag.'
+            exit 1
+          fi
+          if [[ -z "$UNITY_EMAIL" || -z "$UNITY_PASSWORD" || ( -z "$UNITY_LICENSE" && -z "$UNITY_SERIAL" ) ]]; then
+            echo '::error::Configure Unity CI licensing secrets first; see docs/RELEASES.md. No server runtime or image was published.'
+            exit 1
+          fi
+      - name: Capture exact sources before compiling
+        id: prepare
+        run: python scripts/ci_linux_runtime.py prepare
+      - name: Record hosted runner file ownership
+        id: identity
+        run: echo "owner=$(id -u):$(id -g)" >> "$GITHUB_OUTPUT"
+      - name: Compile reconstructed Linux dedicated server
+        uses: game-ci/unity-builder@eb1b9fba120c6e62c9fb7a7a81d6c107ce004c45 # v6
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          cliVersion: v0.1.72
+          customImage: unityci/editor:ubuntu-6000.6.3f1-linux-il2cpp-3@sha256:7e8095f959f4f0926d33c02f936c8201fca70cf49021654748c5307d21f579db
+          unityVersion: 6000.6.3f1
+          projectPath: mirror-server/UnityProject
+          targetPlatform: StandaloneLinux64
+          buildMethod: PreservationCIBuild.BuildLinuxServer
+          customParameters: -standaloneBuildSubtarget Server
+          versioning: None
+          chownFilesTo: ${{ steps.identity.outputs.owner }}
+      - name: Verify compiled runtime and complete artifact inventory
+        id: collect
+        env:
+          PREPARATION_SHA256: ${{ steps.prepare.outputs.preparation_sha256 }}
+        run: python scripts/ci_linux_runtime.py collect --preparation-sha256 "$PREPARATION_SHA256"
+      - name: Keep only generated runtime payload, never activation files or logs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: linux-runtime
+          path: deployment/docker/private-linux/
+          if-no-files-found: error
+          retention-days: 7
+
+  images:
+    name: Test and publish exact Linux images
+    needs: [quality, runtime]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    outputs:
+      server_digest: ${{ steps.publish.outputs.server_digest }}
+      panel_digest: ${{ steps.publish.outputs.panel_digest }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: linux-runtime
+          path: deployment/docker/private-linux/
+      - name: Restore executable permission after artifact transfer
+        run: chmod 0555 deployment/docker/private-linux/build/NebulaServer.x86_64
+      - name: Build local server and panel once
+        env:
+          REPORT_SHA256: ${{ needs.runtime.outputs.report_sha256 }}
+          SERVER_SHA256: ${{ needs.runtime.outputs.server_sha256 }}
+          MANAGED_SHA256: ${{ needs.runtime.outputs.managed_sha256 }}
+        run: |
+          set -euo pipefail
+          source_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          docker build --platform linux/amd64 \
+            --file deployment/docker/Dockerfile --tag nebula-ci-server:checked \
+            --label "org.opencontainers.image.source=$source_url" \
+            --label "org.opencontainers.image.revision=$GITHUB_SHA" \
+            --label "io.github.nebula-preserved.build-report-sha256=$REPORT_SHA256" \
+            --label "io.github.nebula-preserved.server-sha256=$SERVER_SHA256" \
+            --label "io.github.nebula-preserved.managed-sha256=$MANAGED_SHA256" .
+          docker build --platform linux/amd64 \
+            --file admin-panel/Dockerfile --tag nebula-ci-panel:checked \
+            --label "org.opencontainers.image.source=$source_url" \
+            --label "org.opencontainers.image.revision=$GITHUB_SHA" admin-panel
+      - name: Exercise owned disposable Compose stack and persistence
+        run: python scripts/ci_container_smoke.py --server-image nebula-ci-server:checked --panel-image nebula-ci-panel:checked --runtime-env deployment/docker/private-linux/runtime.env
+      - name: Publish the tested images without rebuilding
+        id: publish
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          prefix="ghcr.io/${GITHUB_REPOSITORY,,}"
+          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
+          for component in server panel; do
+            local_image="nebula-ci-$component:checked"
+            remote="$prefix-$component"
+            immutable_tag="sha-$GITHUB_SHA"
+            docker tag "$local_image" "$remote:$immutable_tag"
+            docker push "$remote:$immutable_tag"
+            digest="$(docker image inspect "$remote:$immutable_tag" --format '{{index .RepoDigests 0}}')"
+            test "${digest%@*}" = "$remote"
+            printf '%s_digest=%s\n' "$component" "${digest##*@}" >> "$GITHUB_OUTPUT"
+            printf '%s_image=%s\n' "$component" "$remote" >> "$GITHUB_OUTPUT"
+          done
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            release_tag="${GITHUB_REF_NAME#v}"
+          else
+            release_tag=latest
+          fi
+          # Both immutable commit images already exist before mutable aliases move.
+          for component in server panel; do
+            docker tag "nebula-ci-$component:checked" "$prefix-$component:$release_tag"
+            docker push "$prefix-$component:$release_tag"
+          done
+          {
+            echo '### Published Linux images'
+            echo
+            echo "- Server: \`$prefix-server:sha-$GITHUB_SHA\`"
+            echo "- Panel: \`$prefix-panel:sha-$GITHUB_SHA\`"
+            echo '- Both images were smoke-tested before this push; deployments should retain their resolved digests.'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Attest server build provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-name: ${{ steps.publish.outputs.server_image }}
+          subject-digest: ${{ steps.publish.outputs.server_digest }}
+          push-to-registry: true
+      - name: Attest panel build provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-name: ${{ steps.publish.outputs.panel_image }}
+          subject-digest: ${{ steps.publish.outputs.panel_digest }}
+          push-to-registry: true

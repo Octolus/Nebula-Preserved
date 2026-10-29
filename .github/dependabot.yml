@@ -1,0 +1,42 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: /admin-panel
+    schedule:
+      interval: weekly
+  - package-ecosystem: cargo
+    directories:
+      - /patcher
+      - /experimental/remote-transport/client
+      - /experimental/rust-server
+    schedule:
+      interval: weekly
+  - package-ecosystem: pip
+    directories:
+      - /scripts
+      - /backend
+      - /client-patches
+      - /deployment/docker
+      - /experimental/optional-input
+      - /experimental/rust-server/interop
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directories:
+      - /admin-panel
+      - /deployment/docker
+      - /experimental/rust-server
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker-compose
+    directory: /deployment/docker
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker-compose
+    directory: /experimental/rust-server
+    schedule:
+      interval: weekly
