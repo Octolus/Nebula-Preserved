@@ -1,25 +1,12 @@
 import type { APIRoute } from 'astro';
 import { management, ManagementError } from '../../../lib/management';
 import { validCsrf, readJson } from '../../../lib/security';
-import { allowedManagementPath } from '../../../lib/manage-policy';
+import { allowedManagementPath, managementQuery } from '../../../lib/manage-policy';
 export const ALL: APIRoute = async ({ request, params, locals, url }) => {
   try {
     const path = params.path || '';
     if (!allowedManagementPath(request.method, path)) return new Response(null, { status: 404 });
-    const query = new URLSearchParams();
-    for (const key of [
-      'limit',
-      'cursor',
-      'q',
-      'account_id',
-      'actor',
-      'operation',
-      'kind',
-      'category',
-    ]) {
-      const value = url.searchParams.get(key);
-      if (value !== null) query.set(key, value.slice(0, 256));
-    }
+    const query = managementQuery(path, url.searchParams);
     let body: unknown;
     if (request.method === 'POST') {
       if (!validCsrf(request, locals.session))

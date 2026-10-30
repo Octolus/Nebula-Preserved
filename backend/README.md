@@ -25,6 +25,29 @@ The backend owns SQLite and publishes same-host JSON snapshots for scene process
 
 First login creates neutral avatars and their initial wardrobe. Fresh accounts do not automatically own apartments, and a fresh database does not contain a complete store catalog. The explicit `admin.py`, `housing_admin.py`, `resource_admin.py`, `shop_admin.py` and other admin modules operate only when invoked. Read their `--help` before using them. `tools/seed_local_shops.py` defaults to a plan; applying its small authored catalog requires an explicit state directory. Its prices are local preservation policy, not recovered publisher prices.
 
+Docker now opts into `NEBULA_CATALOG_POLICY=preservation-catalog-v1`. Before
+opening listeners, the backend atomically fills offers for all 7,688 validated
+ordinary items: 6,210 wardrobe items, 219 companions, 108 locomotions and 1,151
+furniture items. Twenty wardrobe removal controls are excluded. Two items have
+no recovered own thumbnail and use the labeled generic shipped shop icon.
+Four rare wardrobe categories use compatible store grouping while retaining
+their exact entitlement category and resource path. Existing offers, prices,
+disabled items, purchases, ownership and balances remain unchanged. Repeated
+startup is idempotent. Set the Docker policy to `none` to opt out; direct Python
+starts default to `none`, with an explicit `--catalog-policy` option.
+
+The four Preservation stores and their prices are authored replacement policy,
+not recovered historical commercial data. The original brand-to-item assignments,
+names, descriptions, prices and bundle/space SKUs remain unknown. The dashboard
+separately exposes the recovered resource metadata and 1,205 shop artwork keys;
+artwork keys do not establish 1,205 stores or grantable items. See
+[catalog recovery](../protocol/catalog-recovery-provenance.json).
+
+For an offline plan, run `python tools/seed_full_catalog.py`. To import into an
+existing initialized database, add `--apply --state-dir /private/state` after a
+consistent backup. The import uses the same writer transaction as other Store
+mutations and never creates player ownership or starter credits.
+
 For an explicit operator-created account, replace the uppercase placeholders with the account identifier used by that player's client and the intended display name; no real account is supplied here:
 
 ```sh

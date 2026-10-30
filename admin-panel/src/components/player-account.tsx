@@ -127,7 +127,7 @@ function CatalogGrant({
               columns={
                 kind === 'offer'
                   ? ['name', 'offer_id', 'kind', 'crystals', 'np']
-                  : ['item_id', 'gender', 'category']
+                  : ['name', 'item_id', 'gender', 'category_label']
               }
               action={(row) => (
                 <Button

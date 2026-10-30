@@ -47,6 +47,10 @@ def plan(env, root=Path('/opt/nebula'), runtime=Path('/opt/nebula-runtime'), sta
     backend = [sys.executable, str(root/'backend/server.py'), '--listen', '--bind', '127.0.0.1',
                '--advertise-ip', advertise, '--port', '8080', '--managed-instances',
                '--core-test-profile', 'nonmini-semantic-v1', '--state-dir', str(state)]
+    catalog_policy = env.get('NEBULA_CATALOG_POLICY', 'preservation-catalog-v1')
+    if catalog_policy not in {'none', 'preservation-catalog-v1'}:
+        raise ValueError('Unknown preservation catalog policy')
+    backend.extend(('--catalog-policy', catalog_policy))
     if mode == 'public': backend.append('--public-access')
     supervisor = [sys.executable, str(root/'tools/instance_supervisor.py'), '--run', '--state-dir', str(state),
                   '--binary', str(runtime/'build/NebulaServer.x86_64'), '--build-report', str(runtime/'build-linux-validation.json'),

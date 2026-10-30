@@ -12,6 +12,13 @@ the panel uses its committed npm lockfile. Rebuild and retest when updating them
 
 ## Pull published images from GHCR
 
+The default `NEBULA_CATALOG_POLICY=preservation-catalog-v1` atomically fills
+missing offers for all 7,688 ordinary validated items before opening listeners.
+Existing offers, prices and player data are retained; repeated startup is
+idempotent. Set the policy to `none` to disable future automatic filling without
+deleting existing offers. These are explicitly labeled preservation stores and
+prices; historical store membership is unknown. See [catalog operations](../../docs/CATALOG.md).
+
 This path uses published server and panel images without a local Unity or image
 build. Registry publication and the publisher's Unity licensing setup are release
 prerequisites; these instructions do not claim that an image has already been

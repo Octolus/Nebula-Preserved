@@ -78,6 +78,22 @@ export const labels: Record<string, string> = {
   current_offer_crystals: 'Current crystal price',
   current_offer_np: 'Current points price',
   historical_price_known: 'Original price retained',
+  category_label: 'Category',
+  category_id: 'Category ID',
+  collection: 'Collection',
+  resource_path: 'Game resource path',
+  thumbnail_path: 'Game thumbnail reference',
+  asset_path: 'Shipped asset path',
+  manifest_sha256: 'Manifest SHA-256',
+  availability: 'Store availability',
+  display_name_source: 'Display name source',
+  bundle_size: 'Bundle size (bytes)',
+  dependencies: 'Bundle dependencies',
+  category_evidence: 'Category evidence',
+  store_category: 'In-game store category',
+  store_category_source: 'Store category source',
+  thumbnail_source: 'Thumbnail source',
+  own_thumbnail_known: 'Own thumbnail identified',
 };
 export const fieldLabel = (key: string) => labels[key] || key.replaceAll('_', ' ');
 export function playerReference(key: string, row: Row): string | null {

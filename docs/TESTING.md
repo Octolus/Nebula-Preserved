@@ -73,19 +73,19 @@ results are retained for seven days, including on test failure. `test-results/`
 is ignored by Git. Unit reports can contain local paths; keep them out of source
 exports and check before sharing them.
 
-The current suite discovers 423 Python tests: 325 backend, 60 tooling, 23 Linux
+The current suite discovers 434 Python tests: 336 backend, 60 tooling, 23 Linux
 builder, six bundle and nine offline harness checks. Three backend tests require
-private evidence and are skipped explicitly. The panel adds 33 unit tests and
+private evidence and are skipped explicitly. The panel adds 38 unit tests and
 the Rust patcher adds 46 on Windows (42 on Linux). An earlier local Linux run of
 all five Python suites completed in approximately 25 seconds using shared memory;
 timings depend on the machine and temporary storage. These counts describe unit
 coverage, not complete native
 multiplayer acceptance.
 
-## Current additional checks â€” 2026-10-30
+## Current additional checks — 2026-10-30
 
-These results are separate from the 423-test Python unit baseline and its three
-allowlisted skips; the latest Windows baseline run passed in approximately 127
+These results are separate from the 434-test Python unit baseline and its three
+allowlisted skips; the latest Windows baseline run passed in approximately 61
 seconds. Counts describe different test boundaries and must not be
 combined into a native-game pass.
 
@@ -102,6 +102,20 @@ after the slash-alias duplicate fix. Discovery and unit tests do not complete
 visual/keyboard, original-client or independent-player acceptance.
 The current patcher's actual `check-server` subprocess passed against the API
 on port 8444 using default system trust; this is not an account-login result.
+
+## Catalog coverage
+
+The expanded [catalog](CATALOG.md) has 11 focused backend checks, included in
+the 336 backend count above. They also passed inside a nonroot, network-disabled,
+read-only Linux container. They cover all 7,688 shop item responses, encrypted
+wire budgets, generated-offer purchases, duplicate suppression, reopen
+persistence, rollback, import locking, inactive operator choices and metadata.
+The largest encrypted category response measured 375,232 bytes, below the
+8 MiB transport limit. Real disposable backend plus SSR browser checks passed
+at 390px and 1280px, including proxy filters and source metadata. The deployed
+dashboard also passed both widths using normal trusted HTTPS. Two login
+browser regressions cover pre-hydration submission and the hydrated JSON flow.
+These checks do not load or equip every item in the original client.
 
 ## Experimental Rust server
 
@@ -228,7 +242,7 @@ operators should still treat them as sensitive because they can contain account
 hashes, instance identifiers, and local state.
 
 The example plans are parameter-free contract examples, not universal scripts.
-Read each plan's `fixture_notes` and adapt the fixtureâ€”not the safety checksâ€”to
+Read each plan's `fixture_notes` and adapt the fixture—not the safety checks—to
 the reviewed catalog and scene under test.
 
 ## Evidence required by feature

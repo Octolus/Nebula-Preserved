@@ -4,6 +4,11 @@ The server deployment target is Linux x86_64 using [Docker Compose](../deploymen
 
 ## Deployment
 
+Docker automatically fills the [complete validated item catalog](CATALOG.md)
+using preservation stores and prices while retaining existing offers and player
+state. The dashboard separates game assets, store offers and recovered shop
+artwork; original commercial metadata remains explicitly unknown.
+
 Follow the [Docker quickstart](../deployment/docker/README.md#pull-published-images-from-ghcr) for published images, Docker-only operator-secret bootstrap, private/public profiles and persistent state volume. Image availability depends on a reviewed publisher build. `configure-image.sh` pulls an explicit image pair and creates new digest-pinned `runtime.env` metadata from its verified matching revision and build labels. The containers include their Python/Node/runtime dependencies; do not install Unity on the hosting machine merely to run already-built images.
 
 For local image builds, supply the complete validated Linux runtime described below. The same report, ELF and managed-assembly hashes remain mandatory in either path. Treat `runtime.env` as Compose data, not a shell script; use the documented ordered `--env-file` arguments.

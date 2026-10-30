@@ -14,7 +14,7 @@ import { Badge } from './ui/badge';
 import { RecordList } from './record-list';
 import { ChangeForm, Details, empty, type List } from './management-widgets';
 import { PlayerAccount } from './player-account';
-import { FormSelect } from './form-select';
+import { CatalogWorkspace } from './catalog-workspace';
 import { Alert, AlertDescription } from './ui/alert';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import { panelRoute, playerHref, type Row, type PlayerTab } from '../lib/panel';
@@ -37,8 +37,7 @@ export default function ControlPanel({
     [query, setQuery] = useState(''),
     [search, setSearch] = useState(''),
     [cursor, setCursor] = useState(''),
-    [history, setHistory] = useState<string[]>([]),
-    [catalogKind, setCatalogKind] = useState('offer');
+    [history, setHistory] = useState<string[]>([]);
   const [selected, setSelected] = useState(''),
     [playerTab, setPlayerTab] = useState<PlayerTab>('summary'),
     [detail, setDetail] = useState<Row | null>(null),
@@ -105,12 +104,11 @@ export default function ControlPanel({
             setStats(s);
             setCaps(c);
           }
-        } else if (view !== 'moderation' && !selected) {
+        } else if (view !== 'moderation' && view !== 'catalog' && !selected) {
           const p = new URLSearchParams({
             limit: '25',
             ...(cursor ? { cursor } : {}),
             q: search,
-            ...(view === 'catalog' ? { kind: catalogKind } : {}),
           });
           const result = await api(view + '?' + p);
           if (current) setList(result);
@@ -128,7 +126,7 @@ export default function ControlPanel({
     return () => {
       current = false;
     };
-  }, [view, cursor, search, revision, catalogKind, api, selected]);
+  }, [view, cursor, search, revision, api, selected]);
   useEffect(() => {
     if (!selected) {
       setDetail(null);
@@ -268,6 +266,8 @@ export default function ControlPanel({
               </>
             ) : view === 'moderation' ? (
               <ModerationWorkspace actor={actor} api={api} revision={revision} />
+            ) : view === 'catalog' ? (
+              <CatalogWorkspace api={api} revision={revision} />
             ) : selected ? (
               detail?.account_id === selected ? (
                 <PlayerAccount
@@ -303,13 +303,13 @@ export default function ControlPanel({
                         ? 'Audited panel credit adjustments. Store purchases are listed on each player account.'
                         : view === 'operators'
                           ? 'Panel permissions are separate from game privileges.'
-                          : view === 'users' || view === 'catalog'
+                          : view === 'users'
                             ? 'Search records or open a player account.'
                             : 'Browse recorded management activity.'}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {(view === 'users' || view === 'catalog') && (
+                    {view === 'users' && (
                       <form
                         className="flex flex-wrap gap-2"
                         onSubmit={(e) => {
@@ -331,30 +331,6 @@ export default function ControlPanel({
                             className="min-h-11"
                           />
                         </div>
-                        {view === 'catalog' && (
-                          <>
-                            <Label htmlFor="catalog-kind" className="sr-only">
-                              Catalog type
-                            </Label>
-                            <FormSelect
-                              id="catalog-kind"
-                              className="sm:min-w-40"
-                              value={catalogKind}
-                              options={[
-                                'offer',
-                                'wardrobe',
-                                'companions',
-                                'locomotions',
-                                'housing',
-                              ]}
-                              onValueChange={(value) => {
-                                setCatalogKind(value);
-                                setCursor('');
-                                setHistory([]);
-                              }}
-                            />
-                          </>
-                        )}
                         <Button variant="outline" className="min-h-11" disabled={busy}>
                           Search
                         </Button>

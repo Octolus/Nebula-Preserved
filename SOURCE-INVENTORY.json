@@ -1,7 +1,7 @@
 {
-  "bytes_excluding_inventory": 29413375,
+  "bytes_excluding_inventory": 30132968,
   "excluded": "Original game installation, compiled client/runtime outputs, Unity Linux build, databases, logs, credentials, keys, generated build products and private evidence are excluded. Four pre-existing vendored Cecil dependency DLLs remain at their reviewed original hashes.",
-  "file_count_excluding_inventory": 1687,
+  "file_count_excluding_inventory": 1698,
   "files": {
     ".editorconfig": {
       "sha256": "93287d2202fa7d6d6ce0d539f7189bbf775bd3df5de67be71830c2f55b7d7b82",
@@ -68,8 +68,8 @@
       "size": 1086
     },
     "README.md": {
-      "sha256": "9537ab77dbb5f7c7eebe3343b68d1dbd64ec75282fae8566b7689e658c7da23f",
-      "size": 8292
+      "sha256": "1308af81ee4290d3713f4e93f6eaed20d45009dc3f3b3252ba5b3f4c1f96ed86",
+      "size": 8293
     },
     "SECURITY.md": {
       "sha256": "07f4658e09885c3b44e4ad861bfb450614528017b2d8441397034539659c19c3",
@@ -123,6 +123,10 @@
       "sha256": "f3923515ed6d73e08e6730f5e0e5df7a128275b9bb967b59f50c6120ba644b22",
       "size": 454
     },
+    "admin-panel/e2e/login.spec.ts": {
+      "sha256": "2b27a833dbb1019e5eed5794700704d3178e77c2ef68de23fe9e50be1cfe105d",
+      "size": 2623
+    },
     "admin-panel/e2e/panel.spec.ts": {
       "sha256": "f3a7abaec6fd550811fbcf024dc1f475dd902557b852940a23cf963867818f9c",
       "size": 21385
@@ -151,17 +155,21 @@
       "sha256": "b2ad48c96c43ac26be688da10b421d960ffc28e615c78de5234e34e898ef8eef",
       "size": 2959
     },
+    "admin-panel/src/components/catalog-workspace.tsx": {
+      "sha256": "0349ae1c727397ca42e08b2bc82c17da24280a4bd8087e9be5045ba2195e37d2",
+      "size": 17981
+    },
     "admin-panel/src/components/control-panel.tsx": {
-      "sha256": "942b9c998f8bd96cee97761ce621afbafe816845e594ee698ef79deb40d79489",
-      "size": 19483
+      "sha256": "6645923f34a8ef35321b400272c05cf8e37a1b7a2ad940719bdd6cda0f15a8df",
+      "size": 18388
     },
     "admin-panel/src/components/form-select.tsx": {
       "sha256": "fdb51d4912e56fb2ee535ee3eb5867fedcd5e675c1d5e8250419a4f9aa8f71e0",
       "size": 1367
     },
     "admin-panel/src/components/login-form.tsx": {
-      "sha256": "702879d47aac74135c426570842f11b8d1cf5bc561e6b97530ef68f436d4b7a4",
-      "size": 2919
+      "sha256": "24a4db635222017b22fe8a3171813569d3b3ad52d07bf0ea60b449136cb851f8",
+      "size": 3091
     },
     "admin-panel/src/components/management-widgets.tsx": {
       "sha256": "d705a473818344063496e17d60f8beec58b078c1ae4d33289c57d891f7bbb73d",
@@ -180,8 +188,8 @@
       "size": 11828
     },
     "admin-panel/src/components/player-account.tsx": {
-      "sha256": "c62c04007b136923f98d0381b680c967b21a7595fd69000ddbcfc22bc62ea713",
-      "size": 14799
+      "sha256": "23a959020034fc307e2e872ac703b81b657f122c6090910a64218cfb27c2635b",
+      "size": 14813
     },
     "admin-panel/src/components/record-list.tsx": {
       "sha256": "682c6c299c31586952bd1f8c96c05f53eb6424a7ef63ebf025c4ec6e35a69945",
@@ -271,9 +279,13 @@
       "sha256": "58b2cc5fa259358e9192125abf072c832144193d87f3d66a90b13089a0196cef",
       "size": 576
     },
+    "admin-panel/src/lib/catalog.ts": {
+      "sha256": "dc86cc5d42778037ed1f721df0a01c635bd6953ce5b7cd3d5578a2ae0e0617ef",
+      "size": 2953
+    },
     "admin-panel/src/lib/manage-policy.ts": {
-      "sha256": "6bc2c420df797d2bb087a41d409fd6ac8d792728ec3da162eb0a2079fb036a6c",
-      "size": 719
+      "sha256": "e10c7849eec16fde912802bed63cd45d2256a2189270e9e81280114485188388",
+      "size": 1151
     },
     "admin-panel/src/lib/management.ts": {
       "sha256": "bbd03a434c8266b52f5b597b47490c31e73ca0b3876e65ef9006cad4a5c94196",
@@ -284,8 +296,8 @@
       "size": 4011
     },
     "admin-panel/src/lib/panel.ts": {
-      "sha256": "801d25b4269163f6a1f2c7efad540f02f8051152479d17898283c3f2a14f2a83",
-      "size": 3547
+      "sha256": "6bcfb01eedc76c3a4634bfc519e16bbcb9d35dcf86059eb7a31a6e19a2ad0f56",
+      "size": 4183
     },
     "admin-panel/src/lib/security.ts": {
       "sha256": "b0a8ce6588f4cbc35e7c36c5dffc3c8b8f0d499214ca63ad1721f10c72032805",
@@ -304,8 +316,8 @@
       "size": 344
     },
     "admin-panel/src/pages/api/manage/[...path].ts": {
-      "sha256": "012d4ed010d22a6959f09fabb47e622ba00de39ba2366eb96a4708735981259d",
-      "size": 2003
+      "sha256": "f8d5c07402d31d8fa1cae4b057c39a7fa6a3198aae783c1b7941d21a7f506c31",
+      "size": 1761
     },
     "admin-panel/src/pages/health.ts": {
       "sha256": "4720c9cdb6e2e0c9b972c0934987268b5871e142bba73704ae9a6fab46fba64d",
@@ -322,6 +334,10 @@
     "admin-panel/src/styles/global.css": {
       "sha256": "c94e2d572f79795ba8289fbe91c6c308ed5ef22880d14126c72ce9eae08ff107",
       "size": 3744
+    },
+    "admin-panel/tests/catalog.test.ts": {
+      "sha256": "18ab825401b4daa3a88af00576f2ce1669ee9a6684b8194ee5c3f18338e0136c",
+      "size": 4121
     },
     "admin-panel/tests/moderation-edges.test.ts": {
       "sha256": "f09d2bd12f7d853126cc3e9854033d4483b32576d7a56871290d0cd190996594",
@@ -344,8 +360,8 @@
       "size": 269
     },
     "backend/README.md": {
-      "sha256": "566987cc79f7ff54ce64aeb390825af115b7683cdb0753a0ff918fef44330a64",
-      "size": 4742
+      "sha256": "603d5f9476cd2aaf8def545feb7b736341f76a674142e984ae4fe4793d71ccf1",
+      "size": 6295
     },
     "backend/SOURCE-INVENTORY.json": {
       "sha256": "c5d88e0a25214294bd0c62cffc9dd3f890eb56b6032f670580ba4a1d670e4d2d",
@@ -366,6 +382,10 @@
     "backend/avatar_native_save.py": {
       "sha256": "633a50aa4a67886d9a9317cee2e812865e22dc5fa9ab8cfb90999a3cff24cf48",
       "size": 1160
+    },
+    "backend/catalog_inventory.py": {
+      "sha256": "e8e7be8555abb156cd1c93b8f074863d5646ea86b3c4ae51de4a065eb473bb1a",
+      "size": 10924
     },
     "backend/consumable_admin.py": {
       "sha256": "c93f1e9a6b39665534d2b37c0614b5a7940a348640a3fe2f4067359cca200113",
@@ -404,8 +424,8 @@
       "size": 13140
     },
     "backend/management.py": {
-      "sha256": "95d91a0e6986073e3d83f77c9e8beae523bcd9a671d0547c28913e1445dc4375",
-      "size": 40111
+      "sha256": "4f5705553067f38cca1162515e1ae1d39b88fa6d6e6b71d00459dc088af1df32",
+      "size": 41679
     },
     "backend/moderation.py": {
       "sha256": "d04da047a53e1d00e2d1ee730b58e6ba0d4a753c08d95809ed40bc58ca787a48",
@@ -452,16 +472,16 @@
       "size": 2819
     },
     "backend/server.py": {
-      "sha256": "b38b5cbe12a10659109d7846ebac4cd07580b378172ab397fb84545c9a814d7b",
-      "size": 10762
+      "sha256": "1b33c8f8a01b7fbd0aef3ae2508f2465df2a19ff0045ebc5ad79f4e8a9a79fa4",
+      "size": 11501
     },
     "backend/service.py": {
       "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5",
       "size": 52244
     },
     "backend/shop.py": {
-      "sha256": "f5fbcdb6532c8b07f0c7896e2df39735aa6e7ef5728f605f997055cce0c9ac76",
-      "size": 30302
+      "sha256": "7a3acd02571fac2903c8fcfbc7cce56f88bd6de48755ac8363ac864a063fdcb0",
+      "size": 30889
     },
     "backend/shop_admin.py": {
       "sha256": "dcaf348750e693b75b78cd34ef0dc73efcba22f4a1cd4d0f3ee1511e363e11c8",
@@ -506,6 +526,10 @@
     "backend/tests/test_core_readiness.py": {
       "sha256": "a870b05b95463da0d8dc6fa8ad0ad78906855ebbcd3e209857b83dc23b6bac9f",
       "size": 6717
+    },
+    "backend/tests/test_full_catalog.py": {
+      "sha256": "ce1292e436aa101a03a561aeb4bbd3218b62ad1ed7faca83864bde5b431e39e9",
+      "size": 14857
     },
     "backend/tests/test_gathering.py": {
       "sha256": "20464f7085bc4bb0d8bf3982547fe5508702358924c8225c3447f4743bc01cef",
@@ -1299,6 +1323,10 @@
       "sha256": "f154578ce65fe066fe93d8ddfee2e12c3cb931a5203b79b06e17de5a23c6dbad",
       "size": 6039
     },
+    "deployment/bootstrap/catalog-validation.json": {
+      "sha256": "426e542532a4296280f483acf79a828e9c4a2c8db92c6f5bd29ee1552a74a587",
+      "size": 5115
+    },
     "deployment/bootstrap/deploy.py": {
       "sha256": "93b93c9fd96fa2bcff1168b6e51b9cdc200ecb6542c8936c3354b3ff70f2fac1",
       "size": 20780
@@ -1308,8 +1336,8 @@
       "size": 2773
     },
     "deployment/docker/.env.example": {
-      "sha256": "42a587eaeb51309a698eb26e3d734a3dc79c907415a93bb38bab1d33302f895c",
-      "size": 1456
+      "sha256": "d6853f54ff56dd96a8db6483d533efa2c10be51db72d096a9e36ae9e39925f41",
+      "size": 1664
     },
     "deployment/docker/.gitignore": {
       "sha256": "6ab426db338671ae983d9c8d456e5b9c60ee5b2918f48ba03bb736535580d252",
@@ -1324,8 +1352,8 @@
       "size": 1054
     },
     "deployment/docker/README.md": {
-      "sha256": "f6203bfcaa2a8ae9011f2df0706eca728976c466c0bc318d17d2b31e1d53ba9d",
-      "size": 27137
+      "sha256": "abaae0a01224d09fcc9728982b3e5e789d09fde76262004010faec5659e1e176",
+      "size": 27626
     },
     "deployment/docker/compose.ghcr.yaml": {
       "sha256": "5ce35c83d249406ed7b54efe0f51e103c5f3bc05b3f4d3f66ee7c068e21839a4",
@@ -1336,16 +1364,16 @@
       "size": 298
     },
     "deployment/docker/compose.yaml": {
-      "sha256": "4969a1242d6373bfcc61a26420e91fe1eca62f8a4dbcb18a63a3add44357ef99",
-      "size": 5681
+      "sha256": "e2976280aac580845d044dc929f822e05a54a95b7cff3c91ce6d9058dcfb0060",
+      "size": 5760
     },
     "deployment/docker/configure-image.sh": {
       "sha256": "1e1f0a75df8f8842293c498cc098e3912a526cbcf1daa188afadb503a5cbfc42",
       "size": 4269
     },
     "deployment/docker/entrypoint.py": {
-      "sha256": "3bd798c63f4b472a38430fc9676e34d430c09cb220ce8dde8fd17af8952226cb",
-      "size": 12089
+      "sha256": "6b200a91ce3eb22757aa644430dd55a059be0328fc14809238e077e5fa1f6908",
+      "size": 12361
     },
     "deployment/docker/healthcheck.py": {
       "sha256": "4434358fa02a88b93794697692a0a8e09583b2feb94b0bb0e64884ca7201afd6",
@@ -1439,6 +1467,10 @@
       "sha256": "e838ea0e176bce1a774699287a065474e6bd6ccfb9571e6e2c20c307c76cf54e",
       "size": 3481
     },
+    "docs/CATALOG.md": {
+      "sha256": "356badb68c7367130dd1e447bcda4526df3ca8906b878e2d6bab6978e64f13f6",
+      "size": 3831
+    },
     "docs/CONTROLS.md": {
       "sha256": "e002a6103331596f34ec9ed59ca0a8d90d4ef28491fbf81da163db58b75cc00f",
       "size": 1439
@@ -1472,8 +1504,8 @@
       "size": 1946
     },
     "docs/PROGRESS.md": {
-      "sha256": "38d1a45f8b52fe7a4684b79e16b7c484fdeda052d4254c1f7aee3289fbbdb5be",
-      "size": 11633
+      "sha256": "1e1d393f91f84b577aeabded43a08e7219399e9b6820bfece718880f445ee13e",
+      "size": 13097
     },
     "docs/PUBLISHING.md": {
       "sha256": "439cdcbb5ad15eaad33e94ef664ad22ab305cf1c691d085ca4526f9de4bd9710",
@@ -1484,16 +1516,16 @@
       "size": 6510
     },
     "docs/SETUP.md": {
-      "sha256": "6a78b1a411e00669d5b60861cd87c924e03c78e26d03913db1100661a3e3a48e",
-      "size": 5768
+      "sha256": "16d56e2c3e5784ac121f5316ef0e3286b1421963833eb4255c89da8dc64bdd01",
+      "size": 6073
     },
     "docs/SOURCE-LAYOUT.md": {
       "sha256": "f2c1655b3f065adede4b290205d33458ac4040531935370cca568085c1510956",
       "size": 4218
     },
     "docs/TESTING.md": {
-      "sha256": "5880800b0749e6c5e99eb31dde215a47284a259802d738837ccccede7eafda44",
-      "size": 16206
+      "sha256": "3b2c7ed555b8b1fd1538ec9fbfbb6b75f667fbdf0b58c0d4153540c3724b0d71",
+      "size": 17066
     },
     "docs/images/admin-panel.png": {
       "sha256": "bce9f0b96a157712952e47def10e38571623b8eb20d59339bbd29f314b818471",
@@ -1530,6 +1562,10 @@
     "docs/research/bootstrap-response-contracts.md": {
       "sha256": "939576947c071cd3f1afa766a588873aa51a907321bff498bceca53157184a26",
       "size": 15921
+    },
+    "docs/research/catalog-recovery-current.md": {
+      "sha256": "323a9436f61fff3026837a74cd47ba2935c4517edf401d61aacea0f493492698",
+      "size": 5901
     },
     "docs/research/cinema-bootstrap-compatibility.json": {
       "sha256": "afcf4699acf416cdcd5fb7e60204021b4218c2ad3daef3fe980f94c6b38b627f",
@@ -6279,6 +6315,10 @@
       "sha256": "4cb914d399691606648ac4d4c17ac6b5c6edf7110ea77399581db2d166bf7a7f",
       "size": 404260
     },
+    "protocol/catalog-recovery-provenance.json": {
+      "sha256": "61a23e0377d0f2c84a9b4d14ede36d921de2f4f258fa666510d3393653748b84",
+      "size": 641471
+    },
     "protocol/core-test-readiness.json": {
       "sha256": "1617e853339e8aaabc1054c3c17f546f89d8edc24c7f738d83224fbb83fcc6be",
       "size": 28887
@@ -6742,6 +6782,10 @@
     "tools/research/world_loading_xrefs.py": {
       "sha256": "adfdbd8211fbf356c2098cf9d078858839a67b4c60ed333f607f1e4317ff819c",
       "size": 2839
+    },
+    "tools/seed_full_catalog.py": {
+      "sha256": "abcc026a12dee000497f3205e10cac170e05b74a33a3847c4552a466427875f9",
+      "size": 1774
     },
     "tools/seed_local_shops.py": {
       "sha256": "aea055270cd0dbec2126187391d3aa759f709c61e194118b31358941020983bd",

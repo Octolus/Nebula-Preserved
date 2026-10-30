@@ -9,7 +9,28 @@ protocol, socket, persistence and cross-language tests. It remains experimental:
 original-client acceptance and complete historical-server parity are unproven.
 The existing deployment remains the default while that acceptance is pending.
 
-## Current checkpoint â€” 2026-10-30
+## Current checkpoint — 2026-10-30
+
+The [expanded catalog](CATALOG.md) is deployed: all 7,688 ordinary validated
+items have active offers. Existing 15 offers and four stores remain unchanged;
+the deployed total is 7,689 offers across eight stores, including the earlier
+bundle. The source identity digest matches deployed coverage exactly. Only
+`shop_catalogs` and `shop_offers` changed among 48 durable table fingerprints;
+the other 46 tables and authority/TLS files were retained. New deployment
+completed with 40 successful tasks, six changed and no failures; the final
+login-hardening release passed 40 tasks with five changed and no failures.
+
+The dashboard defaults to all items and exposes complete available source
+metadata, store offers, filters, provenance and 1,205 read-only shop artwork
+references. Original commercial names, prices and historical brand membership
+remain unrecovered; the new stores/prices are explicit preservation policy.
+Eleven focused catalog tests passed on Windows and restricted Linux, and
+disposable and deployed backend/SSR browser checks passed at 390px and 1280px.
+The deployed checks used normal trusted HTTPS and read-only catalog operations.
+The login form now blocks submission before hydration and uses POST fallback;
+two focused browser regressions passed. The owner password/session key were
+rotated as part of the login hardening; player authorization was retained.
+This does not establish native loading/equipping of every asset.
 
 The [one-command Ubuntu installer](../deployment/bootstrap/README.md) installs
 Docker/Compose and Ansible as needed from a reviewed release, configures boot
@@ -19,7 +40,7 @@ uses system trust without manual CA import. A prepared lawful runtime release,
 an owned public IPv4 address and reachable ports are required; this source
 checkout contains no Unity runtime, game assets or container images.
 
-The current deployment completed with 41 successful tasks, 11 changed and no
+The earlier TLS deployment completed with 41 successful tasks, 11 changed and no
 failures. Fourteen external default-system-trust checks passed: API/dashboard
 access retained owner/player credentials; ports 443, 8444 and 8443 passed
 certificate SAN/chain checks; ALPN passed; and 35 internal ports remained closed.
@@ -82,7 +103,7 @@ Original game rendering or cosmetic defects remain outside the networking restor
 
 The moderation update adds authenticated moderator actions; the earlier read-only
 moderator browser result above describes an older permission set. The current
-backend regression suite discovers 325 tests with three expected private-evidence
+backend regression suite discovers 336 tests with three expected private-evidence
 skips. Moderation rules and operator setup are documented in
 [moderation operations](MODERATION-OPERATIONS.md). Connected protocol and browser
 acceptance are tracked separately from these offline checks. A fresh disposable
@@ -94,8 +115,8 @@ browser workflows passed against that same disposable stack. These are protocol
 and browser results, not shipped Windows-client presentation or full multiplayer
 acceptance.
 
-The offline unit runner discovers 423 Python tests with three allowlisted skips;
-the current Windows run passed in approximately 127 seconds. It also covers
+The offline unit runner discovers 434 Python tests with three allowlisted skips;
+the current Windows run passed in approximately 61 seconds. It also covers
 33 dashboard tests and 46 Windows/42 Linux Rust patcher tests. Coverage
 includes permission matrices, transaction rollback,
 malformed wire inputs, resource-selection recovery and concurrent retries.

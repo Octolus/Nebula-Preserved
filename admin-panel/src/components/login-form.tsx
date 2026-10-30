@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -6,7 +6,9 @@ import { Label } from './ui/label';
 import { Alert, AlertDescription } from './ui/alert';
 export function LoginForm() {
   const [busy, setBusy] = useState(false),
+    [ready, setReady] = useState(false),
     [error, setError] = useState('');
+  useEffect(() => setReady(true), []);
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -16,10 +18,12 @@ export function LoginForm() {
       </CardHeader>
       <CardContent>
         <form
+          method="post"
+          action="/api/login"
           className="grid gap-3"
           onSubmit={async (event) => {
             event.preventDefault();
-            if (busy) return;
+            if (!ready || busy) return;
             const data = new FormData(event.currentTarget);
             setBusy(true);
             setError('');
@@ -47,7 +51,7 @@ export function LoginForm() {
               autoComplete="username"
               required
               maxLength={128}
-              disabled={busy}
+              disabled={!ready || busy}
               className="min-h-11"
             />
           </div>
@@ -60,16 +64,16 @@ export function LoginForm() {
               autoComplete="current-password"
               required
               maxLength={1024}
-              disabled={busy}
+              disabled={!ready || busy}
               className="min-h-11"
             />
           </div>
           {error && (
             <Alert variant="destructive">
-              <AlertDescription role="alert">{error}</AlertDescription>
+              <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Button type="submit" disabled={busy} className="min-h-11">
+          <Button type="submit" disabled={!ready || busy} className="min-h-11">
             {busy ? 'Signing in…' : 'Sign in'}
           </Button>
         </form>

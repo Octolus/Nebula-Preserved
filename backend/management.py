@@ -315,27 +315,49 @@ class Management:
         raise ManagementError(404, "not_found", "Management route not found")
 
     def catalog(self, query):
-        kind = query.get("kind", "wardrobe");search = query.get("q", "")
+        from catalog_inventory import CatalogInventory, KINDS, NOTE
+        kind = query.get("kind", "wardrobe"); search = query.get("q", "")
+        require(kind in (*KINDS, "offer", "all", "shop_artwork"), "Unsupported grant kind")
         require(isinstance(search, str) and len(search) <= 128, "Invalid item search")
-        if kind == "wardrobe":
-            controls = {r["item_id"] for r in self.service.wardrobe_removal_sentinels.values()}
-            values = [{"kind": kind, "item_id": x["item_id"], "gender": x["gender"], "category": x["category"]}
-                      for x in self.service.catalog.items.values() if x["item_id"] not in controls]
-        elif kind in ("companions", "locomotions"):
-            values = [{"kind": kind, "item_id": x["item_id"], "gender": None, "category": None}
-                      for x in self.service.resources.catalog.list(kind)]
-        elif kind == "housing":
-            values = [{"kind": kind, "item_id": key, "gender": None, "category": row.get("table")}
-                      for key, row in self.service.housing.catalog.items()]
-        elif kind == "offer":
-            return self.page_sql("SELECT offer_id,kind,item_id,gender,category,name,crystals,np,active FROM shop_offers WHERE instr(lower(name),lower(?))>0 OR instr(lower(offer_id),lower(?))>0 ORDER BY offer_id", (search, search), query)
+        for key in ("gender", "category", "store_id"):
+            require(isinstance(query.get(key, ""), str) and len(query.get(key, "")) <= 128,
+                    "Invalid catalog filter")
+        if not hasattr(self, "_catalog_inventory"):
+            self._catalog_inventory = CatalogInventory(self.service)
+        assets, offers, stores, counts, summary = self._catalog_inventory.snapshot()
+        by_item = {(r["kind"], r["item_id"], r.get("gender") or "",
+                    (r.get("category") or "") if r["kind"] == "wardrobe" else ""): r for r in assets}
+        if kind == "offer":
+            values = []
+            for offer in offers:
+                key = (offer["kind"], offer["item_id"], offer.get("gender") or "",
+                       (offer.get("category") or "") if offer["kind"] == "wardrobe" else "")
+                asset = by_item.get(key, {})
+                values.append({**asset, **offer, "offers": [offer],
+                               "thumbnail_path": offer["image_path"],
+                               "historical_price_known": False})
+        elif kind == "shop_artwork":
+            values = self._catalog_inventory.artwork
         else:
-            raise ManagementError(400, "invalid_request", "Unsupported grant kind")
-        values = [x for x in values if search.lower() in x["item_id"].lower()]
-        values.sort(key=lambda x: (x["item_id"], x.get("gender") or "", x.get("category") or ""))
+            values = [r for r in assets if kind == "all" or r["kind"] == kind]
+        categories = sorted({(r["category"], r["category_label"]) for r in values if r.get("category")})
+        genders = sorted({r["gender"] for r in values if r.get("gender")})
+        def matches(row):
+            if query.get("gender") and row.get("gender") != query["gender"]: return False
+            if query.get("category") and row.get("category") != query["category"]: return False
+            if query.get("store_id") and not any(o["shop_id"] == query["store_id"] for o in row.get("offers", [])): return False
+            searchable = [row.get(k) or "" for k in ("item_id", "offer_id", "name", "readable_name", "resource_path", "category", "category_label", "bundle", "asset_path")]
+            searchable.extend(o["shop_name"] for o in row.get("offers", []))
+            return search.casefold() in " ".join(searchable).casefold()
+        values = [r for r in values if matches(r)]
+        values.sort(key=lambda r: (r.get("offer_id") or "", r.get("kind") or "", r.get("item_id") or "", r.get("gender") or "", r.get("category") or ""))
         limit, offset = self.pagination(query)
         return {"items": values[offset:offset + limit], "total": len(values), "limit": limit,
-                "next_cursor": str(offset + limit) if offset + limit < len(values) else None}
+                "next_cursor": str(offset + limit) if offset + limit < len(values) else None,
+                "counts": counts, "coverage": summary, "metadata_note": NOTE,
+                "field_availability": self._catalog_inventory.field_availability,
+                "filters": {"genders": genders, "categories": [{"value": k, "label": v} for k, v in categories],
+                            "stores": [{"id": r["shop_id"], "name": r["name"], "type_shop": r["type_shop"]} for r in stores.values()]}}
 
     def _audit(self, request_id, actor_id, actor_role, operation, target, reason, before, after):
         cursor = self.db.execute("""INSERT INTO management_audit

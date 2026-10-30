@@ -25,6 +25,7 @@ services:
       NEBULA_MANAGED_SHA256: ${NEBULA_MANAGED_SHA256:?Set the reviewed Assembly-CSharp hash}
       NEBULA_MAX_PROCESSES: ${NEBULA_MAX_PROCESSES:-16}
       NEBULA_IDLE_TTL: ${NEBULA_IDLE_TTL:-60}
+      NEBULA_CATALOG_POLICY: ${NEBULA_CATALOG_POLICY:-preservation-catalog-v1}
       NEBULA_ADMIN_BIND: 0.0.0.0
       NEBULA_ADMIN_PORT: "8090"
       NEBULA_ADMIN_TOKEN_FILE: /run/secrets/admin_token

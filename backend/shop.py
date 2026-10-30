@@ -42,6 +42,10 @@ KINDS = ("wardrobe", "companions", "locomotions", "housing", "bundle")
 TYPE_SHOPS = range(4)
 TYPE_LIST_GENDERS = (0, 1)
 DIRECT_ITEM_GENDERS = (2, 3, 5, 6)
+# These shipped assets have no recovered item thumbnail. The generic Shops/shop
+# sprite is loaded by the original EntryBase thumbnail consumer. This fallback
+# changes presentation only; it does not supply a name or historical store.
+GENERIC_THUMBNAIL_ITEMS = frozenset(("O08f1sQQOR6VVuRpIXAdCria00L0r33b", "sL0D2k3asbB756Yb2qJ0LchSiLsKw5Cf"))
 
 
 def _text(value, label, allow_empty=False):
@@ -283,6 +287,8 @@ class Shop:
     @staticmethod
     def _checked_thumbnail(path):
         path = _text(path, "offer image path")
+        if path == "Shops/shop.png":
+            return path
         if (not path.endswith(".png") or "/" not in path
                 or not any(marker in path for marker in
                            ("MALE/", "FEMALE/", "COMPANIONS/", "Housing/", "LOCOMOTIONS/"))):
@@ -294,8 +300,10 @@ class Shop:
             suffix = "/" + item_id + "Thumbnail.png"
             paths = [e[2] for e in asset.get("category_evidence", [])
                      if len(e) == 3 and e[2].endswith(suffix)]
-            prefix = "Assets/ResourcesART/Wardrobe_EAB/"
-            paths = [p[len(prefix):] for p in paths if p.startswith(prefix)]
+            prefixes = ("Assets/ResourcesART/Wardrobe_EAB/", "Assets/ART/ResourcesART/Wardrobe_EAB/")
+            paths = [p[len(prefix):] for p in paths for prefix in prefixes if p.startswith(prefix)]
+            if not paths and item_id in GENERIC_THUMBNAIL_ITEMS:
+                return "Shops/shop.png"
             if len(set(paths)) != 1:
                 raise ProtocolError("Shipped wardrobe thumbnail is ambiguous", 501)
             return self._checked_thumbnail(paths[0])

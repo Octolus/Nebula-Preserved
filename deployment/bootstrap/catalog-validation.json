@@ -1,0 +1,116 @@
+{
+  "format": "nebula-catalog-validation-v1",
+  "date": "2026-10-30",
+  "scope": "Default Python backend catalog, production Astro dashboard, Linux Docker deployment. Native all-item equip and exact historical commercial behavior remain unproven.",
+  "items": {
+    "wardrobe": 6210,
+    "companions": 219,
+    "locomotions": 108,
+    "housing": 1151,
+    "ordinary_total": 7688,
+    "excluded_removal_controls": 20,
+    "shop_artwork_references": 1205
+  },
+  "commercial_policy": {
+    "historical_item_to_brand_membership_recovered": false,
+    "historical_names_and_prices_recovered": false,
+    "new_store_policy": "preservation-catalog-v1",
+    "replacement_stores_explicitly_labeled": true
+  },
+  "tests": {
+    "python": {
+      "discovered": 434,
+      "passed": 431,
+      "expected_private_evidence_skips": 3,
+      "failures": 0,
+      "wall_seconds": 61.134
+    },
+    "catalog_focused": {
+      "windows_passed": 11,
+      "restricted_linux_passed": 11,
+      "all_item_http_navigation": 7688,
+      "generated_offer_purchase_cases": 10,
+      "largest_encrypted_category_bytes": 375232,
+      "transport_limit_bytes": 8388608
+    },
+    "panel": {
+      "unit_passed": 38,
+      "astro_diagnostics": 0,
+      "production_build_passed": true,
+      "login_security_browser_passed": 2,
+      "disposable_backend_ssr_widths": [
+        390,
+        1280
+      ],
+      "public_readonly_widths": [
+        390,
+        1280
+      ],
+      "javascript_errors": 0,
+      "horizontal_overflow": false,
+      "owned_test_processes_stopped": true
+    }
+  },
+  "deployment": {
+    "release_manifest_sha256": "49b66e23438d6ba2fca7874d2ea511d9b5b42264d26abf22b69706fbd4292490",
+    "image_ids": {
+      "nebula-preserved-server:catalog-20261030": [
+        "sha256:0084c4f08418b342ab651d87564de7c88612c497de97b94b95cc5c315f3a0afd",
+        "sha256:8f6329b16564a304e6ff410f118408dde0f682ea31548509eafb204755fdad02"
+      ],
+      "nebula-preserved-panel:catalog-20261030-login-v2": [
+        "sha256:2a791dfe5ae7847081763aa1da4895b50cece3680394b71165d4389a007fe551",
+        "sha256:ea4466f19045080b93e059f723d9719aeced1da8e1ae38b38790a644045ec91f"
+      ],
+      "nginx:1.28-alpine": [
+        "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+        "sha256:dc73b49f5124cf2ee538dfbdfbd121f0b4ccdcb20fea30f3a81bd477c02e2bb5"
+      ]
+    },
+    "state": {
+      "passed": true,
+      "active_validated_items": 7688,
+      "complete_identity_digest_matches_source": true,
+      "offers": 7689,
+      "stores": 8,
+      "existing_offers_preserved": 15,
+      "existing_stores_preserved": 4,
+      "durable_tables_compared": 48,
+      "changed_tables": [
+        "shop_catalogs",
+        "shop_offers"
+      ],
+      "player_and_other_durable_tables_unchanged": 46,
+      "player_authority_and_tls_preserved": true,
+      "only_expected_panel_credentials_rotated": true
+    },
+    "external_tls_api_dashboard_security_checks_passed": 14,
+    "internal_ports_verified_closed": 35,
+    "panel_password_and_session_key_rotated": true,
+    "player_authority_and_tls_preserved": true,
+    "native_game_started": false,
+    "final_install": {
+      "successful_tasks": 40,
+      "changed_tasks": 5,
+      "failed_tasks": 0
+    }
+  },
+  "source_sha256": {
+    "backend/catalog_inventory.py": "e8e7be8555abb156cd1c93b8f074863d5646ea86b3c4ae51de4a065eb473bb1a",
+    "backend/management.py": "4f5705553067f38cca1162515e1ae1d39b88fa6d6e6b71d00459dc088af1df32",
+    "backend/shop.py": "7a3acd02571fac2903c8fcfbc7cce56f88bd6de48755ac8363ac864a063fdcb0",
+    "backend/server.py": "1b33c8f8a01b7fbd0aef3ae2508f2465df2a19ff0045ebc5ad79f4e8a9a79fa4",
+    "backend/tests/test_full_catalog.py": "ce1292e436aa101a03a561aeb4bbd3218b62ad1ed7faca83864bde5b431e39e9",
+    "tools/seed_full_catalog.py": "abcc026a12dee000497f3205e10cac170e05b74a33a3847c4552a466427875f9",
+    "protocol/catalog-recovery-provenance.json": "61a23e0377d0f2c84a9b4d14ede36d921de2f4f258fa666510d3393653748b84",
+    "deployment/docker/entrypoint.py": "6b200a91ce3eb22757aa644430dd55a059be0328fc14809238e077e5fa1f6908",
+    "deployment/docker/compose.yaml": "e2976280aac580845d044dc929f822e05a54a95b7cff3c91ce6d9058dcfb0060",
+    "admin-panel/src/components/catalog-workspace.tsx": "0349ae1c727397ca42e08b2bc82c17da24280a4bd8087e9be5045ba2195e37d2",
+    "admin-panel/src/components/login-form.tsx": "24a4db635222017b22fe8a3171813569d3b3ad52d07bf0ea60b449136cb851f8",
+    "admin-panel/src/lib/catalog.ts": "dc86cc5d42778037ed1f721df0a01c635bd6953ce5b7cd3d5578a2ae0e0617ef",
+    "admin-panel/src/lib/manage-policy.ts": "e10c7849eec16fde912802bed63cd45d2256a2189270e9e81280114485188388",
+    "admin-panel/src/pages/api/manage/[...path].ts": "f8d5c07402d31d8fa1cae4b057c39a7fa6a3198aae783c1b7941d21a7f506c31",
+    "admin-panel/tests/catalog.test.ts": "18ab825401b4daa3a88af00576f2ce1669ee9a6684b8194ee5c3f18338e0136c",
+    "admin-panel/e2e/login.spec.ts": "2b27a833dbb1019e5eed5794700704d3178e77c2ef68de23fe9e50be1cfe105d"
+  }
+}

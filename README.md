@@ -6,14 +6,15 @@ A community preservation project for the Windows Steam client: accounts,
 characters, items, social features and persistent worlds, hosted on Linux.
 The separate operator dashboard uses Astro, React and shadcn/ui.
 
-**[Quickstart â†’](deployment/bootstrap/README.md)** Â·
-[Administration](admin-panel/README.md) Â·
-[Ubuntu automation](deployment/ansible/README.md) Â·
-[Windows launcher](docs/LAUNCHER.md) Â·
-[Moderation](docs/MODERATION-OPERATIONS.md) Â·
-[Client patching](client-patches/network-only/README.md) Â·
-[Project status](docs/PROGRESS.md) Â·
-[Rust server candidate](experimental/rust-server/README.md) Â·
+**[Quickstart →](deployment/bootstrap/README.md)** ·
+[Administration](admin-panel/README.md) ·
+[Ubuntu automation](deployment/ansible/README.md) ·
+[Windows launcher](docs/LAUNCHER.md) ·
+[Moderation](docs/MODERATION-OPERATIONS.md) ·
+[Item catalog](docs/CATALOG.md) ·
+[Client patching](client-patches/network-only/README.md) ·
+[Project status](docs/PROGRESS.md) ·
+[Rust server candidate](experimental/rust-server/README.md) ·
 [Contributing](CONTRIBUTING.md)
 
 > **Development snapshot.** This is not a completed multiplayer release.
@@ -117,10 +118,10 @@ configuration and secrets. Keep the named state volume across either path.
 
 | Component | Stack | Source |
 |---|---|---|
-| Account, inventory, shop, social and persistence services | Python Â· aiohttp Â· SQLite | [backend](backend/) |
-| Reconstructed scene servers | C# Â· Unity Â· Mirror v66.0.9 / Telepathy | [mirror-server](mirror-server/) |
-| Operator dashboard | Astro SSR Â· React Â· shadcn/ui | [admin-panel](admin-panel/) |
-| Hosting and ingress | Linux Â· Docker Compose | [deployment/docker](deployment/docker/) |
+| Account, inventory, shop, social and persistence services | Python · aiohttp · SQLite | [backend](backend/) |
+| Reconstructed scene servers | C# · Unity · Mirror v66.0.9 / Telepathy | [mirror-server](mirror-server/) |
+| Operator dashboard | Astro SSR · React · shadcn/ui | [admin-panel](admin-panel/) |
+| Hosting and ingress | Linux · Docker Compose | [deployment/docker](deployment/docker/) |
 | Steam discovery, patching and restore | Rust | [patcher](patcher/) |
 | Networking compatibility | Native/managed patch recipes | [client-patches](client-patches/) |
 | Recovered contracts | Manifests and protocol research | [protocol](protocol/) |

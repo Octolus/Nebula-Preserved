@@ -26,7 +26,9 @@ ROOT = Path(__file__).resolve().parents[1]
 class Backend:
     def __init__(self, state_dir, *, bind="127.0.0.1", advertise_ip="127.0.0.1", port=8080,
                  core_test_profile=None, managed_instances=False, local_test_identities=False,
-                 public_access=False):
+                 public_access=False, catalog_policy="none"):
+        if catalog_policy not in ("none", "preservation-catalog-v1"):
+            raise ValueError("Unsupported catalog policy")
         if type(local_test_identities) is not bool:
             raise TypeError("local_test_identities must be a Boolean")
         self.bind_address = ipv4_address(bind, wildcard=True)
@@ -56,6 +58,14 @@ class Backend:
         self.service = Service(self.store, Catalog(ROOT / "protocol"),
                                core_test_profile=self.core_test_profile,
                                managed_instances=self.managed_instances)
+        self.catalog_import = None
+        if catalog_policy != "none":
+            from catalog_inventory import seed_full_catalog
+            try:
+                self.catalog_import = seed_full_catalog(self.service)
+            except BaseException:
+                self.store.close()
+                raise
         self.resource_selections = SelectionAuthority(self.store, self.service.resources)
         self.store.resource_selection_authority = self.resource_selections
         self.service.instances.advertised_ip = self.advertised_ip
@@ -161,6 +171,8 @@ def parse_args(argv=None):
     p.add_argument("--public-access", action="store_true",
                    help="Require per-account credentials; bind loopback behind TLS")
     p.add_argument("--state-dir", type=Path, default=Path("work/server-state"))
+    p.add_argument("--catalog-policy", choices=["none", "preservation-catalog-v1"], default="none",
+                   help="Explicitly populate all validated items using preservation stores/prices; preserves existing offers and player state")
     p.add_argument("--listen", action="store_true", help="Explicitly enable future runtime validation")
     a = p.parse_args(argv)
     try:
@@ -189,7 +201,7 @@ def main():
     backend = Backend(a.state_dir, bind=a.bind, advertise_ip=a.advertise_ip, port=a.port,
                       core_test_profile=a.core_test_profile, managed_instances=a.managed_instances,
                       local_test_identities=a.local_test_identities,
-                      public_access=a.public_access)
+                      public_access=a.public_access, catalog_policy=a.catalog_policy)
     app = web.Application(client_max_size=1024 * 1024)
     app.router.add_route("*", "/{path:.*}", backend.handle)
     app.on_startup.append(backend.start_maintenance)
