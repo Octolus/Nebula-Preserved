@@ -503,11 +503,22 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
                 note = "Ready. Keep Steam signed in and click Set up and start.".into();
             }
             if damaged_profile { note = "Saved connection needs attention. Open certificate settings and check the saved connection before importing again.".into(); }
+            if let Some(game) = folder.as_ref() {
+                stage(handle, "Checking for an interrupted game session...");
+                match crate::session::prepare(game)? {
+                    crate::session::Prepare::Restored => note = "Original game files restored. Ready for a new session.".into(),
+                    crate::session::Prepare::Running => note = "The game is running. Original files will be restored after it exits.".into(),
+                    crate::session::Prepare::Pristine => {}
+                }
+            }
             Ok(Outcome::Startup { folder, server, system_trust, connected, note })
         }),
         BROWSE => if let Some(path) = pick(window, GAME)? {
             worker(window, Job::Select, move |handle| { stage(handle, "Verifying the selected Steam installation…");
-                Ok(Outcome::Selected(crate::discovery::select_executable(&path)?)) });
+                let folder = crate::discovery::select_executable(&path)?;
+                stage(handle, "Checking original files and interrupted sessions...");
+                crate::session::prepare(&folder)?;
+                Ok(Outcome::Selected(folder)) });
         },
         PICK_ACCOUNT | PICK_CA => if let Some(path) = pick(window, if id == PICK_ACCOUNT {ACCOUNT} else {CA})? {
             set(window, if id == PICK_ACCOUNT {ACCOUNT} else {CA}, path.to_str().context("Selected path must be Unicode")?);
@@ -569,10 +580,9 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
                     stage(handle, "Checking Steam and setting up your secure player connection…");
                     crate::enrollment::ensure_account(&server)?;
                 } else { stage(handle, "Checking the server and secure connection…"); crate::launcher::probe(&server)?; }
-                stage(handle, "Verifying backups and applying the patch…");
-                crate::transaction::patch(&folder,&bundle,&manifest,&pin,&server,"127.0.0.1",None,false,true)?;
-                stage(handle, "Checking installed files and starting the game…");
-                Ok(Outcome::Launched(crate::transaction::launch_verified(&folder,&manifest,&pin,&server,provisional)?))
+                stage(handle, "Preparing a protected game session...");
+                let _ = bundle; // The supervisor independently loads the same compiled, pinned bundle.
+                Ok(Outcome::Launched(crate::session::launch_supervised(&folder,&manifest,&pin,&server,provisional)?))
             });
         }
         _ => {}
@@ -632,7 +642,7 @@ unsafe fn finish(window: HWND, job: Job, result: std::result::Result<Outcome, St
                 state(window).flow.verified_origin =
                     crate::launcher::fixed_tester_server().ok().flatten();
             }
-            note(window, "Game started. Continue signing in inside Nebula Realms.", &format!("Started verified process {pid}. A process start does not prove login, world loading or multiplayer."));
+            note(window, "Game started. Originals will restore automatically after the game exits.", &format!("Started verified process {pid}. You may close this launcher; its background helper waits for the game and restores the verified originals. A process start does not prove login, world loading or multiplayer."));
         }
         Err(error) => {
             if matches!(job, Job::Check | Job::Import | Job::Reset) {

@@ -178,6 +178,78 @@ class AccessAuthority:
             VALUES(?,?,?,NULL,NULL,?,NULL)""", (ps4_id, salt, verifier, time.time()))
         return SCHEME + " " + _b64_account(ps4_id) + "." + token
 
+    def configure_claim_trust(self, enabled: bool) -> None:
+        """Backend-owned policy shared with independent native gateway readers."""
+        if type(enabled) is not bool:
+            raise TypeError("Claim trust policy must be Boolean")
+        exists = self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='public_access_claim_policy'").fetchone()
+        if not enabled and exists is None:
+            return
+        self.db.executescript("""
+            CREATE TABLE IF NOT EXISTS public_access_claim_policy (
+                singleton INTEGER PRIMARY KEY CHECK(singleton=1),
+                enabled INTEGER NOT NULL CHECK(enabled IN (0,1))
+            );
+            CREATE TABLE IF NOT EXISTS public_access_claimed_devices (
+                ps4_id TEXT NOT NULL REFERENCES profiles(ps4_id) ON DELETE CASCADE,
+                key_hash TEXT NOT NULL CHECK(length(key_hash)=64),
+                salt BLOB NOT NULL CHECK(length(salt)=16),
+                verifier BLOB NOT NULL CHECK(length(verifier)=32),
+                created_at REAL NOT NULL, revoked_at REAL,
+                PRIMARY KEY(ps4_id,key_hash)
+            );
+        """)
+        with self.db:
+            self.db.execute("INSERT INTO public_access_claim_policy VALUES(1,?) ON CONFLICT(singleton) DO UPDATE SET enabled=excluded.enabled", (int(enabled),))
+
+    def claim_trust_enabled(self) -> bool:
+        exists = self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='public_access_claim_policy'").fetchone()
+        if exists is None:
+            return False
+        row = self.db.execute("SELECT enabled FROM public_access_claim_policy WHERE singleton=1").fetchone()
+        return row is not None and row[0] == 1
+
+    def add_claimed_device(self, ps4_id: str, token: str) -> str:
+        """Add one trust-policy device without touching the primary credential."""
+        if not getattr(self.db, "atomic_depth", 0) or not self.claim_trust_enabled():
+            raise RuntimeError("Claimed device requires enabled trust policy and atomic group")
+        if not STEAM_ID64.fullmatch(ps4_id) or not TOKEN.fullmatch(token):
+            raise ValueError("Invalid claimed preservation account")
+        digest = hashlib.sha256(token.encode("ascii")).hexdigest()
+        row = self.db.execute("SELECT revoked_at FROM public_access_claimed_devices WHERE ps4_id=? AND key_hash=?", (ps4_id, digest)).fetchone()
+        if row is None:
+            if self.db.execute("SELECT count(*) FROM public_access_claimed_devices WHERE ps4_id=?", (ps4_id,)).fetchone()[0] >= 64:
+                raise ValueError("Claimed device capacity reached")
+            salt = secrets.token_bytes(16)
+            self.db.execute("INSERT INTO public_access_claimed_devices VALUES(?,?,?,?,?,NULL)",
+                            (ps4_id, digest, salt, _derive(token, salt), time.time()))
+        elif row["revoked_at"] is not None:
+            # Trusting the claimed ID deliberately permits a fresh claim even
+            # after a device revocation. Account bans are checked by enrollment.
+            self.db.execute("UPDATE public_access_claimed_devices SET revoked_at=NULL WHERE ps4_id=? AND key_hash=?", (ps4_id, digest))
+        return SCHEME + " " + _b64_account(ps4_id) + "." + token
+
+    def claimed_device_key(self, ps4_id: str, authorization: str) -> str | None:
+        """Lookup only; the caller authenticates before trusting this marker."""
+        if not self.claim_trust_enabled():
+            return None
+        token = authorization.rsplit(".", 1)[-1]
+        digest = hashlib.sha256(token.encode("ascii")).hexdigest()
+        row = self.db.execute("SELECT 1 FROM public_access_claimed_devices WHERE ps4_id=? AND key_hash=? AND revoked_at IS NULL", (ps4_id, digest)).fetchone()
+        return digest if row is not None else None
+
+    def credential_fingerprint(self, ps4_id: str, claimed_device: str | None = None) -> str:
+        """Revalidate the exact credential used by a gateway connection."""
+        if claimed_device is None:
+            row = self.db.execute("SELECT salt,verifier FROM public_access_credentials WHERE ps4_id=? AND revoked_at IS NULL", (ps4_id,)).fetchone()
+        else:
+            if not re.fullmatch(r"[0-9a-f]{64}", claimed_device) or not self.claim_trust_enabled():
+                raise AccessDenied("Claimed device access is disabled")
+            row = self.db.execute("SELECT salt,verifier FROM public_access_claimed_devices WHERE ps4_id=? AND key_hash=? AND revoked_at IS NULL", (ps4_id, claimed_device)).fetchone()
+        if row is None:
+            raise AccessDenied("Credential is no longer active")
+        return hashlib.sha256(bytes(row["salt"]) + bytes(row["verifier"])).hexdigest()
+
     def authenticate(self, authorization: str | None) -> str:
         prefix = SCHEME + " "
         if not isinstance(authorization, str) or not authorization.startswith(prefix):
@@ -187,6 +259,20 @@ class AccessAuthority:
             raise AccessDenied("Invalid account credential")
         encoded_account, token = payload.split(".", 1)
         account = _decode_account(encoded_account)
+        if not TOKEN.fullmatch(token):
+            raise AccessDenied("Invalid account credential")
+        if self.claim_trust_enabled():
+            alias = self.db.execute("""SELECT salt,verifier FROM public_access_claimed_devices
+                WHERE ps4_id=? AND key_hash=? AND revoked_at IS NULL""",
+                (account, hashlib.sha256(token.encode("ascii")).hexdigest())).fetchone()
+            if alias is not None:
+                if not hmac.compare_digest(_derive(token, bytes(alias["salt"])), bytes(alias["verifier"])):
+                    raise AccessDenied("Invalid account credential")
+                sanction = self.db.execute("SELECT ban_enabled,ban_expires_at FROM moderation_accounts WHERE ps4_id=?", (account,)).fetchone()
+                if sanction is not None and sanction["ban_enabled"] == 1 and (
+                        sanction["ban_expires_at"] is None or time.time() < sanction["ban_expires_at"]):
+                    raise AccessDenied("Account is banned")
+                return account
         row = self.db.execute("""SELECT salt,verifier FROM public_access_credentials
             WHERE ps4_id=? AND revoked_at IS NULL""", (account,)).fetchone()
         if row is None:

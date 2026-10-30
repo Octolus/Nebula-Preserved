@@ -103,36 +103,21 @@ fn vdf(input: &str) -> Result<BTreeMap<String, Value>> {
     parse(&tokens, &mut 0, 0, false)
 }
 
-/// Cross-check Steam's active DWORD account against its parsed login-user table.
-/// MostRecent and stored account names are deliberately not identity authority.
-pub(crate) fn steam_account_from_loginusers(active: u32, input: &str) -> Result<String> {
+/// Steam's local active account is a preservation identity claim, not Valve proof.
+/// A missing loginusers.vdf must not turn it into an account-recovery requirement.
+pub(crate) fn steam_account_from_active(active: u32) -> Result<String> {
     ensure!(active != 0, "Start Steam and sign in, then try Start again");
-    let id = (76_561_197_960_265_728u64 + u64::from(active)).to_string();
-    let root = vdf(input)?;
-    let users = root
-        .get("users")
-        .context("Steam login table unavailable")?
-        .map()?;
-    users
-        .get(&id)
-        .context("Steam active account does not match its login table; sign in to Steam again")?
-        .map()?;
-    Ok(id)
+    Ok((76_561_197_960_265_728u64 + u64::from(active)).to_string())
 }
 #[cfg(windows)]
 pub(crate) fn active_steam_account() -> Result<String> {
     use winreg::{enums::HKEY_CURRENT_USER, RegKey};
-    let steam = RegKey::predef(HKEY_CURRENT_USER)
-        .open_subkey("Software\\Valve\\Steam")
-        .context("Start Steam and sign in before starting the game")?;
-    let active: u32 = steam
-        .open_subkey("ActiveProcess")?
+    let active: u32 = RegKey::predef(HKEY_CURRENT_USER)
+        .open_subkey("Software\\Valve\\Steam\\ActiveProcess")
+        .context("Start Steam and sign in before starting the game")?
         .get_value("ActiveUser")
         .context("Start Steam and sign in before starting the game")?;
-    let root: String = steam.get_value("SteamPath")?;
-    let path = manifest::safe(Path::new(&root), "config/loginusers.vdf")?;
-    let bytes = manifest::read_bounded(&path, 4 * 1024 * 1024)?;
-    steam_account_from_loginusers(active, std::str::from_utf8(&bytes)?)
+    steam_account_from_active(active)
 }
 
 #[derive(Serialize, Debug)]
@@ -660,19 +645,16 @@ mod tests {
 mod active_account_tests {
     use super::*;
     #[test]
-    fn active_account_requires_exact_login_table_membership_not_most_recent() {
+    fn active_account_is_a_nonzero_local_claim_without_login_table_dependency() {
         let base = 76_561_197_960_265_728u64;
-        let table = format!(
-            "\"users\" {{ \"{}\" {{ \"MostRecent\" \"0\" }} \"{}\" {{ \"MostRecent\" \"1\" }} }}",
-            base + 42,
-            base + 99
-        );
         assert_eq!(
-            steam_account_from_loginusers(42, &table).unwrap(),
+            steam_account_from_active(42).unwrap(),
             (base + 42).to_string()
         );
-        assert!(steam_account_from_loginusers(0, &table).is_err());
-        assert!(steam_account_from_loginusers(43, &table).is_err());
-        assert!(steam_account_from_loginusers(42, "\"users\" { ").is_err());
+        assert_eq!(
+            steam_account_from_active(u32::MAX).unwrap(),
+            (base + u64::from(u32::MAX)).to_string()
+        );
+        assert!(steam_account_from_active(0).is_err());
     }
 }

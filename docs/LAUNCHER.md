@@ -7,6 +7,27 @@ Double-click the release executable, or run `nebula-preservation-patcher.exe gui
 3. **Start the game.** The next-step message explains any missing requirement. Start becomes available after the game and connection checks pass and the launcher has a reviewed bundle pin. It checks the exact executable, Steam build, patch profile, receipt history, backups, helper outputs and metadata again before patching and opening the game. Named progress stages show the work in the background.
 
 Returning players have their saved server restored and checked automatically.
+
+The Windows launcher uses temporary game sessions. Before a session it recovers
+an interrupted patch/restore and restores the previous patch history, then applies
+the currently pinned bundle. A separate hidden helper owns the game process and
+restores the backed-up originals after the game exits. Closing the launcher window
+does not stop that helper or the game. Files are never restored underneath a
+running game. If Windows shuts down or both processes are forcibly killed, the
+next launcher start recovers the installation before another patch is applied.
+
+Backups are kept under `.nebula-preservation/backups` inside the game directory.
+The original `Nebula Realms.exe` is checked, not patched. Existing files that are
+changed are copied and hash-verified before replacement; new helper files are
+removed during restoration. Backups remain after restoration. Do not delete this
+folder. Recovery refuses unexpected modifications, broken backup chains and
+unsupported Steam updates instead of overwriting newer or unrecognized files.
+An interrupted restoration can be resumed. Manual recovery remains available:
+close the game and run `nebula-preservation-patcher.exe recover` when an unfinished
+transaction is reported, or `nebula-preservation-patcher.exe restore` to undo an
+installed patch. `restore` undoes one recorded generation; the launcher's automatic
+preparation walks the complete verified history.
+
 Discovery identifies the actual game directory: slash, case and dot aliases from
 Steam's registry/library entries count as one installation. Separate real copies
 still require a choice. Missing directories and linked/reparse paths are rejected.
@@ -103,8 +124,8 @@ release or evidence of native gameplay acceptance. Generic CI builds retain
 normal release gates and contain no deployment address or player credential.
 
 The tester flow is **find the installed game, then Start**. Steam must be running
-and signed in. Start cross-checks Steam's active Windows account against its
-parsed login-user table, automatically creates a new preservation account when
+and signed in. Start reads Steam's active local Windows account and
+automatically creates a new preservation account when
 the operator enabled `/preservation/enroll`, protects the unique credential with
 Windows CurrentUser DPAPI, applies verified networking patches, and starts the
 game. Stored `MostRecent` accounts are never substituted for the active Steam
@@ -113,11 +134,15 @@ Local Steam identity discovery is not Valve ticket or ownership verification;
 Steam's original ownership/game initialization remains in place.
 
 A retry key is encrypted and durably saved before enrollment. A lost response
-can retry the same account without rotating its credential. Existing accounts
-with a different key require operator recovery. The launcher never replaces an
-existing account, accepts an invalid TLS certificate, or embeds a shared player
-secret. Switching Steam accounts on the same Windows user is refused when a
-saved credential belongs to the earlier account.
+can retry the same account without rotating its credential. In the default
+strict enrollment policy, an existing account with a different key requires
+operator recovery. An operator may explicitly enable the `trust_claimed_id`
+policy to admit another device to the same claimed Steam ID; the server issues
+that device its own credential and retains older credentials and player data.
+A local Steam ID is a claim that can be spoofed, not ownership verification.
+The launcher never replaces an existing profile, accepts an invalid TLS
+certificate, or embeds a shared player secret. Switching Steam accounts on the
+same Windows user is refused when a saved credential belongs to the earlier account.
 
 Explicit private build inputs (outside the repository):
 
@@ -134,9 +159,16 @@ private-CA embedding is refused in this mode. Remove these build variables when
 building ordinary release artifacts. `setup-player` is a hidden headless tester
 command for checking automatic setup without starting the game.
 
-The default Windows unit suite has 55 passing tests and one explicitly ignored
-live enrollment fixture. That opt-in fixture requires an authorized unused
+The default Windows unit suite has 56 passing tests and two explicitly ignored
+live enrollment fixtures. The original opt-in fixture requires an authorized unused
 synthetic account, a new isolated `LOCALAPPDATA` directory on the operator's
 chosen drive, and private report/server/account environment values. It performs
 two enrollment requests to test a lost-response retry, DPAPI persistence and
 profile reopen, without opening the game or modifying Steam registry state.
+
+The claimed-ID live fixture uses two isolated Windows profile directories for
+the same authorized synthetic identity, performs one new-account request and
+one second-device request with another protected key, and checks both local
+profiles remain unchanged on reopen. Operator-side authenticated protocol
+checks separately establish that both credentials remain accepted. Neither
+fixture opens the game or uses a real player's account.

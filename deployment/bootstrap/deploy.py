@@ -311,7 +311,9 @@ def verify(release):
     return manifest
 
 
-def install(release, address, tls_mode, public_enrollment=False):
+def install(release, address, tls_mode, public_enrollment=False, trust_steam_id=False):
+    require(not trust_steam_id or public_enrollment,
+            'Trusting claimed Steam IDs requires --public-enrollment')
     address = str(ipaddress.IPv4Address(address))
     require(tls_mode in ('public_acme', 'private_ca'), 'Unknown TLS mode')
     if tls_mode == 'public_acme':
@@ -352,6 +354,7 @@ def install(release, address, tls_mode, public_enrollment=False):
                   'nebula_expected_image_ids': manifest['image_ids'],
                   'nebula_max_processes': 2, 'nebula_tls_mode': tls_mode,
                   'nebula_public_enrollment': bool(public_enrollment),
+                  'nebula_trust_steam_id': bool(trust_steam_id),
                   'nebula_verify_reboot': False}
         if 'catalog-previews.tar' in manifest['files']:
             values.update(nebula_catalog_preview_archive=str(release / 'catalog-previews.tar'),
@@ -392,6 +395,8 @@ def main():
     install_parser.add_argument('--tls-mode', choices=('public_acme', 'private_ca'), default='public_acme')
     install_parser.add_argument('--public-enrollment', action='store_true',
                                 help='Opt in to automatic preservation registration; does not verify Steam ownership')
+    install_parser.add_argument('--trust-steam-id', action='store_true',
+                                help='Allow anyone claiming a Steam ID to access the matching player account')
     args = parser.parse_args()
     try:
         if args.command == 'prepare':
@@ -400,7 +405,8 @@ def main():
         elif args.command == 'verify':
             result = {'release_verified': bool(verify(args.release))}
         else:
-            result = install(args.release, args.public_ip, args.tls_mode, args.public_enrollment)
+            result = install(args.release, args.public_ip, args.tls_mode, args.public_enrollment,
+                             args.trust_steam_id)
         print(json.dumps(result))
     except (ValueError, OSError, tarfile.TarError, subprocess.CalledProcessError) as exc:
         parser.exit(1, f'Deployment stopped: {exc}\n')

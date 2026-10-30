@@ -11,6 +11,23 @@ The existing deployment remains the default while that acceptance is pending.
 
 ## Current checkpoint — 2026-10-30
 
+The V4 Windows tester restores verified originals after its owned game exits,
+even when the launcher window closes. Next-start preparation recovers an
+interrupted patch/restore and unwinds earlier versions before applying the
+current bundle. Unknown Steam changes or damaged backups stop automatic writes.
+All 66 Windows tests passed, including normal/forced fixture process exits and
+interrupted restoration; no original game was launched. See the
+[recovery validation record](../patcher/recovery-validation.json).
+
+The deployed server now intentionally trusts a supplied Steam ID. Another
+device can register into the same existing character/inventory without the
+old login secret. Additional device credentials do not replace primary
+credentials or reset player data. HTTP and the native TLS gateway read the
+same persisted policy; account bans still apply. This permits impersonation
+by ID as an explicit operator choice. Generic deployments keep the strict
+policy unless `--trust-steam-id` is enabled with public registration.
+See the [sanitized policy validation record](../deployment/bootstrap/trusted-id-validation.json).
+
 The current [Windows tester launcher](LAUNCHER.md) uses a fixed server and a
 find-game → Start flow. Steam identity detection, first-time preservation
 registration and per-user protected credential storage are automatic. Its

@@ -73,10 +73,10 @@ results are retained for seven days, including on test failure. `test-results/`
 is ignored by Git. Unit reports can contain local paths; keep them out of source
 exports and check before sharing them.
 
-The current suite discovers 445 Python tests: 347 backend, 60 tooling, 23 Linux
+The current suite discovers 452 Python tests: 354 backend, 60 tooling, 23 Linux
 builder, six bundle and nine offline harness checks. Three backend tests require
 private evidence and are skipped explicitly. The panel adds 44 unit tests and
-the Rust patcher adds 55 on Windows. The separate, explicitly gated live
+the Rust patcher adds 66 on Windows. The separate, explicitly gated live
 registration fixture also passed against the deployed server. An earlier local Linux run of
 all five Python suites completed in approximately 25 seconds using shared memory;
 timings depend on the machine and temporary storage. These counts describe unit
@@ -85,8 +85,8 @@ multiplayer acceptance.
 
 ## Current additional checks — 2026-10-30
 
-These results are separate from the 445-test Python unit baseline and its three
-allowlisted skips; the latest Windows baseline run passed in approximately 67
+These results are separate from the 452-test Python unit baseline and its three
+allowlisted skips; the latest Windows baseline run passed in approximately 74
 seconds. Counts describe different test boundaries and must not be
 combined into a native-game pass.
 
@@ -107,7 +107,7 @@ on port 8444 using default system trust; this is not an account-login result.
 ## Catalog coverage
 
 The expanded [catalog](CATALOG.md) has 12 focused backend checks, included in
-the 347 backend count above. They also passed inside a nonroot, network-disabled,
+the 354 backend count above. They also passed inside a nonroot, network-disabled,
 read-only Linux container. They cover all 7,688 shop item responses, encrypted
 wire budgets, generated-offer purchases, duplicate suppression, reopen
 persistence, rollback, import locking, inactive operator choices and metadata.
@@ -119,6 +119,11 @@ browser regressions cover pre-hydration submission and the hydrated JSON flow.
 These checks do not load or equip every item in the original client.
 
 ## Automatic registration and photo delivery
+
+Seven additional claimed-ID tests pass on Windows and restricted Linux. They
+cover multiple devices, retained primary credentials and avatar state, shared
+policy restart/disable, account bans, cross-account binding and actual native
+gateway admission/revalidation.
 
 The opt-in registration suite has ten passing tests on Windows and restricted
 Linux. An actual isolated Nginx/TLS fixture checks first registration, protected

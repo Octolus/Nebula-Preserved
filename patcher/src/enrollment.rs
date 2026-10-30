@@ -102,14 +102,17 @@ fn response(raw: &[u8], pending: &Pending) -> Result<Zeroizing<Vec<u8>>> {
         length <= 1024 && raw.len() == split + 4 + length && json,
         "Invalid enrollment body framing"
     );
+    let body: serde_json::Value = serde_json::from_slice(&raw[split + 4..])?;
+    let error_code = body["error"].as_str().unwrap_or("");
     match status {
         200 | 201 => {}
-        409 => anyhow::bail!("This Steam account already has a preservation account. Its credential was retained; ask the server owner for account recovery."),
+        409 if error_code=="account_banned" => anyhow::bail!("This player is banned from the server. Contact its moderators; no saved account was replaced."),
+        409 => anyhow::bail!("This server has not enabled access to an existing player from this device. Your retry key is saved safely; try Start again after the server owner enables it."),
+        429 if error_code=="registration_capacity_reached" => anyhow::bail!("The server's player registration limit has been reached. Ask its owner to increase the limit; your retry key is saved safely."),
         429 => anyhow::bail!("Account setup is busy. Wait a few minutes and try Start again; your retry key is saved safely."),
         404 => anyhow::bail!("Automatic account setup is not enabled on this server yet. Try again after the server update."),
         _ => anyhow::bail!("The server refused account setup (HTTP {status}). Try Start again; your retry key is saved safely."),
     }
-    let body: serde_json::Value = serde_json::from_slice(&raw[split + 4..])?;
     ensure!(
         body["steam_id"].as_str() == Some(pending.steam_id.as_str())
             && body["steam_identity_verified"].as_bool() == Some(false)
@@ -484,6 +487,110 @@ mod tests {
                     .starts_with("nebula-enrollment-fixture-")
         );
         std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn server_error_codes_distinguish_bans_capacity_and_strict_existing_accounts() {
+        let p = fixture();
+        let banned = response(
+            &wire(409, &serde_json::json!({"error":"account_banned"})),
+            &p,
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(banned.contains("banned") && !banned.contains("recovery"));
+        let capacity = response(
+            &wire(
+                429,
+                &serde_json::json!({"error":"registration_capacity_reached"}),
+            ),
+            &p,
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(capacity.contains("registration limit"));
+        let existing = response(
+            &wire(409, &serde_json::json!({"error":"account_unavailable"})),
+            &p,
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(existing.contains("existing player") && !existing.contains("banned"));
+    }
+    #[cfg(windows)]
+    #[test]
+    #[ignore = "requires an authorized disposable claimed-ID policy account and two isolated profiles"]
+    fn authorized_live_claimed_id_fixture() {
+        use sha2::{Digest, Sha256};
+        assert_eq!(
+            std::env::var("NEBULA_ENROLLMENT_FIXTURE_POLICY").unwrap(),
+            "trust_claimed_id"
+        );
+        let server = std::env::var("NEBULA_ENROLLMENT_FIXTURE_SERVER").unwrap();
+        let id = std::env::var("NEBULA_ENROLLMENT_FIXTURE_STEAM_ID").unwrap();
+        let report =
+            std::path::PathBuf::from(std::env::var_os("NEBULA_ENROLLMENT_FIXTURE_REPORT").unwrap());
+        let base = std::path::PathBuf::from(std::env::var_os("LOCALAPPDATA").unwrap());
+        let resume =
+            std::env::var("NEBULA_ENROLLMENT_FIXTURE_RESUME").as_deref() == Ok("authorized");
+        assert!(base.is_dir() && (resume || base.read_dir().unwrap().next().is_none()));
+        assert!(base
+            .file_name()
+            .unwrap()
+            .to_string_lossy()
+            .starts_with("nebula-enrollment-live-fixture-"));
+        assert_eq!(
+            crate::launcher::fixed_tester_server().unwrap().as_deref(),
+            Some(server.as_str())
+        );
+        crate::launcher::preflight(&server, None).unwrap();
+        let mut credentials = Vec::new();
+        let mut hashes = Vec::new();
+        for name in ["device-a", "device-b"] {
+            let device = base.join(name);
+            std::fs::create_dir_all(&device).unwrap();
+            let root = device.join("NebulaPreservation");
+            std::fs::create_dir_all(&root).unwrap();
+            crate::credentials::restrict(&root).unwrap();
+            std::env::set_var("LOCALAPPDATA", &device);
+            let auth = if resume && root.join("public-access.conf").exists() {
+                saved_authorization(&root).unwrap()
+            } else {
+                let p = pending(&root, &server, &id).unwrap();
+                let auth = request(&p).unwrap();
+                crate::credentials::configure_authorization(&server, &auth, true).unwrap();
+                crate::remote::configure_system(&server).unwrap();
+                auth
+            };
+            ensure_account_for_identity(&server, &id).unwrap();
+            assert!(!root.join("enrollment-pending.dpapi").exists());
+            assert_eq!(
+                saved_authorization(&root).unwrap().as_slice(),
+                auth.as_slice()
+            );
+            hashes.push(format!(
+                "{:x}",
+                Sha256::digest(std::fs::read(root.join("account-token.dpapi")).unwrap())
+            ));
+            credentials.push(auth);
+        }
+        assert_ne!(credentials[0].as_slice(), credentials[1].as_slice());
+        for (index, name) in ["device-a", "device-b"].into_iter().enumerate() {
+            let device = base.join(name);
+            std::env::set_var("LOCALAPPDATA", &device);
+            ensure_account_for_identity(&server, &id).unwrap();
+            assert_eq!(
+                hashes[index],
+                format!(
+                    "{:x}",
+                    Sha256::digest(
+                        std::fs::read(device.join("NebulaPreservation/account-token.dpapi"))
+                            .unwrap()
+                    )
+                )
+            );
+        }
+        std::fs::write(report,serde_json::to_vec_pretty(&serde_json::json!({"passed":true,"enrollment_posts":2,"same_claimed_steam_id":true,"independent_client_keys":true,"both_dpapi_roundtrips":true,"both_profile_reopens_unchanged":true,"pending_removed_after_success":true,"remote_credential_acceptance":"separate operator protocol check required","game_launched":false,"credential_logged":false})).unwrap()).unwrap();
+        std::env::set_var("LOCALAPPDATA", base);
     }
     #[cfg(windows)]
     #[test]

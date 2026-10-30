@@ -12,6 +12,8 @@ mod launcher;
 mod launcher_ui;
 mod manifest;
 mod remote;
+#[cfg(any(windows, test))]
+mod session;
 #[cfg(windows)]
 mod system_roots;
 mod transaction;
@@ -35,6 +37,19 @@ enum Command {
     /// Open the Windows launcher. Release pins are compiled into the executable.
     Gui {
         /// Developer native acceptance only; never a release default.
+        #[arg(long)]
+        allow_provisional: bool,
+    },
+    /// Internal detached game-session owner; never changes Steam licensing.
+    #[cfg(windows)]
+    #[command(hide = true)]
+    SuperviseSession {
+        #[arg(long)]
+        game: PathBuf,
+        #[arg(long)]
+        server: String,
+        #[arg(long)]
+        nonce: String,
         #[arg(long)]
         allow_provisional: bool,
     },
@@ -117,7 +132,12 @@ enum Command {
 }
 fn main() {
     #[cfg(windows)]
-    if std::env::args_os().len() > 1 && std::env::args().nth(1).as_deref() != Some("gui") {
+    if std::env::args_os().len() > 1
+        && !matches!(
+            std::env::args().nth(1).as_deref(),
+            Some("gui" | "supervise-session")
+        )
+    {
         unsafe {
             windows_sys::Win32::System::Console::AttachConsole(u32::MAX);
         }
@@ -150,6 +170,13 @@ fn run() -> Result<()> {
     });
     match command {
         Command::Gui { allow_provisional } => launcher::gui(allow_provisional)?,
+        #[cfg(windows)]
+        Command::SuperviseSession {
+            game,
+            server,
+            nonce,
+            allow_provisional,
+        } => session::supervise(&game, &server, &nonce, allow_provisional)?,
         Command::SetupPlayer => {
             #[cfg(windows)]
             {

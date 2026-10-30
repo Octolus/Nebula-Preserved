@@ -141,23 +141,40 @@ class Authority:
             db.row_factory = sqlite3.Row
             db.execute("PRAGMA query_only=ON")
             db.execute("BEGIN")
+            access = AccessAuthority(db)
             if expected is None:
                 with self.password_work:
-                    account = AccessAuthority(db).authenticate(authorization)
+                    account = access.authenticate(authorization)
+                claimed_device = access.claimed_device_key(account, authorization)
             else:
                 account = expected["account"]
-            credential = db.execute("SELECT salt,verifier FROM public_access_credentials WHERE ps4_id=? AND revoked_at IS NULL", (account,)).fetchone()
-            if credential is None:
-                raise Denied("credential")
-            fingerprint = hashlib.sha256(bytes(credential["salt"]) + bytes(credential["verifier"])).hexdigest()
+                claimed_device = expected.get("claimed_device")
+            try:
+                fingerprint = access.credential_fingerprint(account, claimed_device)
+            except AccessDenied:
+                raise Denied("credential") from None
             row = db.execute("""SELECT s.guid,a.instance_id,a.psidglobal,a.ip
                 FROM sessions s JOIN allocations a USING(guid)
                 WHERE s.ps4_id=? AND s.guid=(SELECT guid FROM sessions WHERE ps4_id=?
                     ORDER BY created_at DESC,guid DESC LIMIT 1)""", (account, account)).fetchone()
             if row is None or row["ip"] != "127.0.0.1":
                 raise Denied("allocation")
+            # Read the backend's committed sanction authority in the same
+            # SQLite snapshot as credentials and allocation. No gateway writer
+            # or dependency on a later scene snapshot publication is involved.
+            tables = {r[0] for r in db.execute("SELECT name FROM sqlite_schema WHERE type='table' AND name IN ('moderation_accounts','moderation_revoked_sessions')")}
+            if tables != {"moderation_accounts", "moderation_revoked_sessions"}:
+                raise Denied("moderation_unavailable")
+            sanction = db.execute("SELECT ban_enabled,ban_expires_at FROM moderation_accounts WHERE ps4_id=?", (account,)).fetchone()
+            if sanction is not None and sanction["ban_enabled"] == 1 and (
+                    sanction["ban_expires_at"] is None or time.time() < sanction["ban_expires_at"]):
+                raise Denied("banned")
+            if db.execute("SELECT 1 FROM moderation_revoked_sessions WHERE guid=?", (row["guid"],)).fetchone():
+                raise Denied("revoked_session")
             value = {"account": account, "guid": row["guid"], "instance": row["instance_id"],
                      "scene": row["psidglobal"], "credential": fingerprint}
+            if claimed_device is not None:
+                value["claimed_device"] = claimed_device
             if expected is not None and expected != value:
                 raise Denied("changed")
         # Share the complete canonical readiness scan across connections rather

@@ -56,6 +56,10 @@ def plan(env, root=Path('/opt/nebula'), runtime=Path('/opt/nebula-runtime'), sta
     if enrollment not in {'0', '1'} or (enrollment == '1' and mode != 'public'):
         raise ValueError('Public enrollment must be 0 or opt-in 1 in public mode')
     if enrollment == '1': backend.append('--public-enrollment')
+    trust_id = env.get('NEBULA_TRUST_STEAM_ID', '0')
+    if trust_id not in {'0', '1'} or (trust_id == '1' and enrollment != '1'):
+        raise ValueError('Trust Steam ID policy must be 0 or opt-in 1 with public enrollment')
+    if trust_id == '1': backend.append('--trust-steam-id')
     supervisor = [sys.executable, str(root/'tools/instance_supervisor.py'), '--run', '--state-dir', str(state),
                   '--binary', str(runtime/'build/NebulaServer.x86_64'), '--build-report', str(runtime/'build-linux-validation.json'),
                   '--build-report-sha256', pins[0], '--binary-sha256', pins[1], '--managed-assembly-sha256', pins[2],

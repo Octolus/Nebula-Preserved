@@ -13,7 +13,7 @@ use std::{
     path::Path,
     time::{SystemTime, UNIX_EPOCH},
 };
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
 struct Entry {
     path: String,
@@ -21,7 +21,7 @@ struct Entry {
     after: String,
     backup: Option<String>,
 }
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
 struct Receipt {
     format: String,
@@ -73,7 +73,7 @@ fn replace(from: &Path, to: &Path) -> Result<()> {
     fs::rename(from, to)?;
     Ok(())
 }
-fn json_write<T: Serialize>(path: &Path, value: &T) -> Result<()> {
+pub(crate) fn json_write<T: Serialize>(path: &Path, value: &T) -> Result<()> {
     let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
     let tmp = path.with_extension(format!("json.pending.{}-{nonce}", std::process::id()));
     new_file(&tmp, &serde_json::to_vec_pretty(value)?)?;
@@ -691,13 +691,13 @@ mod launch_output_tests {
 }
 /// Launch gate binds installed bytes to the reviewed manifest, not just a mutable receipt.
 #[cfg(windows)]
-pub fn launch_verified(
+pub fn launch_child_verified(
     game: &Path,
     m: &Manifest,
     pin: &str,
     server: &str,
     allow_provisional: bool,
-) -> Result<u32> {
+) -> Result<std::process::Child> {
     let _lock = lock(game)?;
     check_exe(game)?;
     ensure!(
@@ -755,7 +755,7 @@ pub fn launch_verified(
         child.try_wait()?.is_none(),
         "Game exited during startup; inspect the game log and Steam session"
     );
-    Ok(child.id())
+    Ok(child)
 }
 pub fn recover(game: &Path) -> Result<()> {
     let _lock = lock(game)?;
@@ -821,13 +821,127 @@ fn finish_restore(game: &Path, root: &Path, j: &Journal) -> Result<()> {
     }
     Ok(())
 }
-pub fn restore(game: &Path) -> Result<()> {
+/// Recover an interrupted transaction and restore every previous patch generation.
+/// The executable and every historical source are checked before ordinary restores.
+pub fn prepare_originals(game: &Path) -> Result<bool> {
     let _lock = lock(game)?;
     check_exe(game)?;
     let root = state(game)?;
     let jp = manifest::safe(&root, "journal.json")?;
+    let mut changed = false;
+    let pins = manifest::ORIGINALS
+        .iter()
+        .map(|(p, h)| (p.to_string(), h.to_string()))
+        .collect();
+    if jp.exists() {
+        let j: Journal = read_json(&jp)?;
+        ensure!(j.format == "nebula-journal-v1", "Unsupported journal");
+        ensure!(
+            (j.mode == "patch" && j.old_receipt == j.receipt.previous)
+                || (j.mode == "restore" && j.old_receipt.is_none()),
+            "Journal history does not match"
+        );
+        preflight_restore_history(game, &root, &j.receipt, &pins, true)?;
+        match j.mode.as_str() {
+            "patch" => rollback(game, &root, &j)?,
+            "restore" => finish_restore(game, &root, &j)?,
+            _ => bail!("Unsupported journal mode"),
+        }
+        fs::remove_file(&jp)?;
+        changed = true;
+    }
+    Ok(restore_all_inner(game, &root, &pins)? || changed)
+}
+// Validate the whole chain before any automatic write, including partially
+// applied top transactions. Receipts cannot invent a supported original hash.
+fn preflight_restore_history(
+    game: &Path,
+    root: &Path,
+    active: &Receipt,
+    original_pins: &BTreeMap<String, String>,
+    partial: bool,
+) -> Result<BTreeMap<String, Option<String>>> {
+    let mut terminal: BTreeMap<String, Option<String>> = BTreeMap::new();
+    let mut seen = BTreeSet::new();
+    let mut current = Some(active);
+    let mut first = true;
+    for _ in 0..64 {
+        let Some(receipt) = current else { break };
+        validate_receipt(receipt)?;
+        ensure!(
+            seen.insert(receipt.transaction.clone()),
+            "Duplicate receipt transaction"
+        );
+        for entry in &receipt.entries {
+            if let Some(before) = terminal.get(&entry.path) {
+                ensure!(
+                    before.as_ref() == Some(&entry.after),
+                    "Receipt history discontinuity: {}",
+                    entry.path
+                );
+            } else {
+                let actual = hash_at(&manifest::safe(game, &entry.path)?)?;
+                ensure!(
+                    actual.as_ref() == Some(&entry.after)
+                        || (partial && first && actual == entry.before),
+                    "Game file changed outside the launcher; refusing automatic restore: {}",
+                    entry.path
+                );
+            }
+            if let Some(before) = &entry.before {
+                ensure!(
+                    hash_at(&manifest::safe(root, entry.backup.as_ref().unwrap())?)?.as_ref()
+                        == Some(before),
+                    "Historical backup is missing or damaged: {}",
+                    entry.path
+                );
+            }
+            terminal.insert(entry.path.clone(), entry.before.clone());
+        }
+        current = receipt.previous.as_deref();
+        first = false;
+    }
+    ensure!(current.is_none(), "Receipt history exceeds 64 transactions");
+    for (path, before) in &terminal {
+        if let Some(pin) = original_pins.get(path) {
+            ensure!(
+                before.as_ref() == Some(pin),
+                "Historical backup is not the supported original: {path}"
+            );
+        }
+    }
+    Ok(terminal)
+}
+fn restore_all_inner(
+    game: &Path,
+    root: &Path,
+    original_pins: &BTreeMap<String, String>,
+) -> Result<bool> {
+    let rp = manifest::safe(root, "receipt.json")?;
+    if !rp.exists() {
+        return Ok(false);
+    }
+    let active: Receipt = read_json(&rp)?;
+    let terminal = preflight_restore_history(game, root, &active, original_pins, false)?;
+    for _ in 0..64 {
+        if !rp.exists() {
+            break;
+        }
+        restore_current_inner(game, root)?;
+    }
+    ensure!(!rp.exists(), "Receipt history exceeds restore limit");
+    for (path, before) in terminal {
+        ensure!(
+            hash_at(&manifest::safe(game, &path)?)? == before,
+            "Final original verification failed: {path}"
+        );
+    }
+    Ok(true)
+}
+fn restore_current_inner(game: &Path, root: &Path) -> Result<()> {
+    let jp = manifest::safe(root, "journal.json")?;
     ensure!(!jp.exists(), "Unfinished transaction: run recover");
-    let receipt: Receipt = read_json(&manifest::safe(&root, "receipt.json")?)?;
+    let receipt: Receipt = read_json(&manifest::safe(root, "receipt.json")?)?;
     validate_receipt(&receipt)?;
     for e in &receipt.entries {
         ensure!(
@@ -836,7 +950,7 @@ pub fn restore(game: &Path) -> Result<()> {
         );
         if let Some(h) = &e.before {
             ensure!(
-                hash_at(&manifest::safe(&root, e.backup.as_ref().unwrap())?)?.as_deref() == Some(h),
+                hash_at(&manifest::safe(root, e.backup.as_ref().unwrap())?)?.as_deref() == Some(h),
                 "Backup mismatch"
             );
         }
@@ -848,8 +962,14 @@ pub fn restore(game: &Path) -> Result<()> {
         old_receipt: None,
     };
     json_write(&jp, &j)?;
-    finish_restore(game, &root, &j)?;
+    finish_restore(game, root, &j)?;
     fs::remove_file(jp)?;
+    Ok(())
+}
+pub fn restore(game: &Path) -> Result<()> {
+    let _lock = lock(game)?;
+    check_exe(game)?;
+    restore_current_inner(game, &state(game)?)?;
     println!("Restored previous verified state. Backups retained.");
     Ok(())
 }
@@ -1060,6 +1180,118 @@ mod backup_tests {
                 .starts_with("nebula-backup-fixture-"));
             fs::remove_dir_all(&self.game).unwrap();
         }
+    }
+    fn fixture_pins() -> BTreeMap<String, String> {
+        BTreeMap::from([("GameAssembly.dll".into(), manifest::hash(b"pristine"))])
+    }
+    fn save_history(h: &History) {
+        json_write(&h.root.join("receipt.json"), &h.receipt).unwrap();
+    }
+    #[test]
+    fn automatic_restore_unwinds_every_generation_and_is_idempotent() {
+        let mut h = History::new();
+        h.install("2", b"two");
+        h.install("3", b"three");
+        save_history(&h);
+        assert!(restore_all_inner(&h.game, &h.root, &fixture_pins()).unwrap());
+        assert_eq!(
+            fs::read(h.game.join("GameAssembly.dll")).unwrap(),
+            b"pristine"
+        );
+        assert!(!h.root.join("receipt.json").exists());
+        assert!(!restore_all_inner(&h.game, &h.root, &fixture_pins()).unwrap());
+        assert!(h.root.join("backups/1/GameAssembly.dll").exists());
+    }
+    #[test]
+    fn automatic_restore_checks_oldest_backup_before_modifying_latest_files() {
+        let mut h = History::new();
+        h.install("2", b"two");
+        save_history(&h);
+        fs::write(h.root.join("backups/1/GameAssembly.dll"), b"corrupt").unwrap();
+        assert!(restore_all_inner(&h.game, &h.root, &fixture_pins()).is_err());
+        assert_eq!(fs::read(h.game.join("GameAssembly.dll")).unwrap(), b"two");
+        assert!(!h.root.join("journal.json").exists());
+    }
+    #[test]
+    fn automatic_restore_refuses_steam_changes_and_fabricated_originals() {
+        let h = History::new();
+        save_history(&h);
+        fs::write(h.game.join("GameAssembly.dll"), b"new Steam version").unwrap();
+        assert!(restore_all_inner(&h.game, &h.root, &fixture_pins()).is_err());
+        assert_eq!(
+            fs::read(h.game.join("GameAssembly.dll")).unwrap(),
+            b"new Steam version"
+        );
+        fs::write(h.game.join("GameAssembly.dll"), b"profile-one").unwrap();
+        let pins = BTreeMap::from([(
+            "GameAssembly.dll".into(),
+            manifest::hash(b"real supported original"),
+        )]);
+        assert!(restore_all_inner(&h.game, &h.root, &pins).is_err());
+        assert_eq!(
+            fs::read(h.game.join("GameAssembly.dll")).unwrap(),
+            b"profile-one"
+        );
+    }
+    #[test]
+    fn interrupted_restore_preflights_history_and_resumes_to_pristine() {
+        let mut h = History::new();
+        h.install("2", b"two");
+        save_history(&h);
+        let j = Journal {
+            format: "nebula-journal-v1".into(),
+            mode: "restore".into(),
+            receipt: h.receipt.clone(),
+            old_receipt: None,
+        };
+        json_write(&h.root.join("journal.json"), &j).unwrap();
+        // Power loss after the target replacement but before receipt replacement.
+        fs::write(h.game.join("GameAssembly.dll"), b"profile-one").unwrap();
+        preflight_restore_history(&h.game, &h.root, &j.receipt, &fixture_pins(), true).unwrap();
+        finish_restore(&h.game, &h.root, &j).unwrap();
+        fs::remove_file(h.root.join("journal.json")).unwrap();
+        restore_all_inner(&h.game, &h.root, &fixture_pins()).unwrap();
+        assert_eq!(
+            fs::read(h.game.join("GameAssembly.dll")).unwrap(),
+            b"pristine"
+        );
+    }
+    #[test]
+    fn interrupted_patch_preflights_then_rolls_back_all_generations() {
+        let mut h = History::new();
+        h.install("2", b"two");
+        save_history(&h);
+        let j = Journal {
+            format: "nebula-journal-v1".into(),
+            mode: "patch".into(),
+            receipt: h.receipt.clone(),
+            old_receipt: h.receipt.previous.clone(),
+        };
+        preflight_restore_history(&h.game, &h.root, &j.receipt, &fixture_pins(), true).unwrap();
+        rollback(&h.game, &h.root, &j).unwrap();
+        restore_all_inner(&h.game, &h.root, &fixture_pins()).unwrap();
+        assert_eq!(
+            fs::read(h.game.join("GameAssembly.dll")).unwrap(),
+            b"pristine"
+        );
+    }
+    #[test]
+    fn auto_restore_removes_added_helpers_and_keeps_existing_files() {
+        let mut h = History::new();
+        h.receipt.entries.push(Entry {
+            path: "NebulaRemoteTransport.exe".into(),
+            before: None,
+            after: manifest::hash(b"transport"),
+            backup: None,
+        });
+        fs::write(h.game.join("NebulaRemoteTransport.exe"), b"transport").unwrap();
+        save_history(&h);
+        restore_all_inner(&h.game, &h.root, &fixture_pins()).unwrap();
+        assert!(!h.game.join("NebulaRemoteTransport.exe").exists());
+        assert_eq!(
+            fs::read(h.game.join("GameAssembly.dll")).unwrap(),
+            b"pristine"
+        );
     }
     #[test]
     fn backup_history_follows_three_generations_and_one_step_restores() {

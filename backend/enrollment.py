@@ -2,7 +2,8 @@
 
 Steam IDs are supplied by the launcher and are not proof of Valve ownership.
 Never enable this policy when verified Steam identity is a requirement. Existing
-profiles, credentials and banned accounts cannot be claimed or reset here.
+credentials are never reset. The optional claimed-ID policy lets additional
+devices access an existing profile; account bans apply under either policy.
 """
 import hashlib
 import hmac
@@ -23,9 +24,15 @@ class EnrollmentError(Exception):
 
 
 class Enrollment:
-    def __init__(self, store, authority, *, clock=time.time, per_ip=8, global_hourly=100, maximum=1000):
+    def __init__(self, store, authority, *, clock=time.time, per_ip=None, global_hourly=None, maximum=1000,
+                 trust_steam_id=False):
         self.store, self.db, self.authority, self.clock = store, store.db, authority, clock
-        self.per_ip, self.global_hourly, self.maximum = per_ip, global_hourly, maximum
+        if type(trust_steam_id) is not bool:
+            raise TypeError("Trust Steam ID policy must be Boolean")
+        self.trust_steam_id = trust_steam_id
+        self.per_ip = (120 if trust_steam_id else 8) if per_ip is None else per_ip
+        self.global_hourly = (1200 if trust_steam_id else 100) if global_hourly is None else global_hourly
+        self.maximum = maximum
         operator = self.db.execute("SELECT verifier FROM public_access_operator WHERE singleton=1").fetchone()
         if operator is None:
             raise RuntimeError("Initialize account operator authority before enabling enrollment")
@@ -42,6 +49,7 @@ class Enrollment:
             );
         """)
         self.db.commit()
+        self.authority.configure_claim_trust(trust_steam_id)
 
     def rate_limit(self, peer):
         try:
@@ -76,10 +84,24 @@ class Enrollment:
             try:
                 self.store.moderation.ensure_allowed(account)
             except ProtocolError:
-                raise EnrollmentError(409, "account_unavailable") from None
+                raise EnrollmentError(409, "account_banned" if self.trust_steam_id else "account_unavailable") from None
             profile = self.db.execute("SELECT 1 FROM profiles WHERE ps4_id=?", (account,)).fetchone()
             credential = self.db.execute("SELECT 1 FROM public_access_credentials WHERE ps4_id=?", (account,)).fetchone()
             existing = self.db.execute("SELECT 1 FROM preservation_enrollments WHERE ps4_id=?", (account,)).fetchone()
+            if self.trust_steam_id:
+                created = profile is None
+                if created:
+                    if self.db.execute("SELECT count(*) FROM preservation_enrollments").fetchone()[0] >= self.maximum:
+                        raise EnrollmentError(429, "registration_capacity_reached")
+                    self.store.account(account)
+                    self.db.execute("INSERT INTO preservation_enrollments VALUES(?,?,?)",
+                                    (account, "preservation-unverified-steam-claim", self.clock()))
+                try:
+                    authorization = self.authority.add_claimed_device(account, key)
+                except ValueError:
+                    raise EnrollmentError(429, "registration_capacity_reached") from None
+                return {"steam_id": account, "authorization": authorization, "created": created,
+                        "steam_identity_verified": False}
             if profile is not None or credential is not None or existing is not None:
                 if profile is None or credential is None or existing is None:
                     raise EnrollmentError(409, "account_unavailable")

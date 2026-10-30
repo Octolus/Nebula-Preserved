@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class Backend:
     def __init__(self, state_dir, *, bind="127.0.0.1", advertise_ip="127.0.0.1", port=8080,
                  core_test_profile=None, managed_instances=False, local_test_identities=False,
-                 public_access=False, catalog_policy="none", public_enrollment=False):
+                 public_access=False, catalog_policy="none", public_enrollment=False, trust_steam_id=False):
         if catalog_policy not in ("none", "preservation-catalog-v1"):
             raise ValueError("Unsupported catalog policy")
         if type(local_test_identities) is not bool:
@@ -42,6 +42,8 @@ class Backend:
         self.public_access = public_access
         if type(public_enrollment) is not bool or (public_enrollment and not public_access):
             raise ValueError("Public enrollment requires explicit public access")
+        if type(trust_steam_id) is not bool or (trust_steam_id and not public_enrollment):
+            raise ValueError("Trust Steam ID policy requires public enrollment")
         if self.public_access and self.local_test_identities:
             raise ValueError("Public access and local test identities are mutually exclusive")
         if self.public_access and self.bind_address != "127.0.0.1":
@@ -60,7 +62,9 @@ class Backend:
         self.enrollment = None
         if public_enrollment:
             from enrollment import Enrollment
-            self.enrollment = Enrollment(self.store, self.access)
+            self.enrollment = Enrollment(self.store, self.access, trust_steam_id=trust_steam_id)
+        elif self.access is not None:
+            self.access.configure_claim_trust(False)
         self.service = Service(self.store, Catalog(ROOT / "protocol"),
                                core_test_profile=self.core_test_profile,
                                managed_instances=self.managed_instances)
@@ -205,6 +209,8 @@ def parse_args(argv=None):
                    help="Require per-account credentials; bind loopback behind TLS")
     p.add_argument("--public-enrollment", action="store_true",
                    help="Opt into unverified first-claim preservation registration; never resets existing accounts")
+    p.add_argument("--trust-steam-id", action="store_true",
+                   help="Trust asserted Steam IDs and allow new devices to access existing preservation profiles")
     p.add_argument("--state-dir", type=Path, default=Path("work/server-state"))
     p.add_argument("--catalog-policy", choices=["none", "preservation-catalog-v1"], default="none",
                    help="Explicitly populate all validated items using preservation stores/prices; preserves existing offers and player state")
@@ -225,6 +231,8 @@ def parse_args(argv=None):
         p.error("--public-access cannot be combined with --local-test-identities")
     if a.public_enrollment and not a.public_access:
         p.error("--public-enrollment requires --public-access")
+    if a.trust_steam_id and not a.public_enrollment:
+        p.error("--trust-steam-id requires --public-enrollment")
     if a.public_access and a.bind != "127.0.0.1":
         p.error("--public-access requires --bind 127.0.0.1 behind TLS")
     return a
@@ -239,7 +247,7 @@ def main():
                       core_test_profile=a.core_test_profile, managed_instances=a.managed_instances,
                       local_test_identities=a.local_test_identities,
                       public_access=a.public_access, catalog_policy=a.catalog_policy,
-                      public_enrollment=a.public_enrollment)
+                      public_enrollment=a.public_enrollment, trust_steam_id=a.trust_steam_id)
     app = web.Application(client_max_size=1024 * 1024)
     app.router.add_route("*", "/{path:.*}", backend.handle)
     app.on_startup.append(backend.start_maintenance)

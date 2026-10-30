@@ -1,0 +1,45 @@
+{
+  "format": "nebula-launcher-recovery-validation-v1",
+  "date": "2026-10-30",
+  "scope": "Windows fixture recovery and owned test subprocess lifetime, release build and live read-only TLS probe. Original game was not launched; native gameplay acceptance remains pending.",
+  "release": {
+    "tester_version": 4,
+    "exe_sha256": "0da82cbd9404d85f57e7cd95fd5872a4cc13e2b31d400ecb0694a35afcddebde",
+    "exe_bytes": 11032744,
+    "private_paths_absent": true,
+    "live_system_tls_probe_passed": true
+  },
+  "tests": {
+    "windows_passed": 66,
+    "failed": 0,
+    "ignored_default": 3,
+    "ignored_explanation": "Two explicitly gated live enrollment fixtures and one internal subprocess fixture; the parent test executes the subprocess fixture separately.",
+    "fixture_game_normal_exit": true,
+    "fixture_game_forced_exit": true,
+    "fixture_processes_reaped": true,
+    "full_history_restore_and_idempotence": true,
+    "interrupted_patch_and_restore_resume": true,
+    "corrupt_oldest_backup_refused_before_mutation": true,
+    "changed_game_and_counterfeit_original_refused": true,
+    "added_helpers_removed_originals_preserved": true,
+    "exclusive_lifetime_lock_and_stale_status": true
+  },
+  "behavior": {
+    "original_executable_modified": false,
+    "launcher_window_may_close_during_game": true,
+    "restore_after_game_exit": true,
+    "retry_interrupted_recovery_on_next_start": true,
+    "restore_old_patch_before_current_patch": true,
+    "restore_while_game_running": false,
+    "backup_files_retained": true,
+    "changed_steam_installation_overwritten": false
+  },
+  "source_pins": {
+    "patcher/src/session.rs": "23f578c4f83cdddcf447bc898d01c17cd6722adf746d53a439f13cfcf2096f1d",
+    "patcher/src/transaction.rs": "e70199a3cdd0ca81373d1d554fc6e659f99473f3a82e9a5b3815ebc5b33e15c3",
+    "patcher/src/main.rs": "cf7999c4c1c0651f854c76934e955317942f5404438dcdb14b7732d21bd31dab",
+    "patcher/src/gui.rs": "4ebea05ee2ff369461e543a5540f70b09865378055a8cf088bad82c8f22a6101",
+    "patcher/src/manifest.rs": "98521e87266edcea7ba8fdd9fe97dee4a236880c37e3ab14dcc42ee5476950c9",
+    "patcher/Cargo.lock": "0fbb57651920cd2e5e8908bd483b2eeef2087786b7abe556dbec1036e5441291"
+  }
+}

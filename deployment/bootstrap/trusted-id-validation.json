@@ -1,0 +1,74 @@
+{
+  "format": "nebula-trusted-steam-id-validation-v1",
+  "date": "2026-10-30",
+  "scope": "Explicit operator policy accepts unverified and spoofable supplied Steam IDs. Device registration and encrypted protocol verified; original-game acceptance remains pending.",
+  "policy": {
+    "generic_default": false,
+    "deployed_enabled": true,
+    "primary_credentials_preserved": true,
+    "bans_enforced": true,
+    "dashboard_authority_unchanged": true
+  },
+  "release_manifest_sha256": "13a92169ea3ddac6527f01f1558a3cf2ce564f038b33194ad72c1f8bfb82d1dd",
+  "image_ids": {
+    "nebula-preserved-server:trusted-id-20261030-v2": [
+      "sha256:8de0508b83f79d23d44cf911fc3d0a0625a8f6bbb4ea4fbb495141f46abf6f50",
+      "sha256:904c6ebc309af4a5fb4d658bc66d731b3b577752e9b7bcecb7d0de332f70afbe"
+    ],
+    "nebula-preserved-panel:previews-enrollment-20261030": [
+      "sha256:03360826f250838a5341b0c6bea8cf2c7a36df53bd41020b98434d5da1fe56c8",
+      "sha256:41c2842149cc56ee9bde0c2667a2c77bd005dabaedc567c062e980d6edd2dc88"
+    ],
+    "nginx:1.28-alpine": [
+      "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+      "sha256:dc73b49f5124cf2ee538dfbdfbd121f0b4ccdcb20fea30f3a81bd477c02e2bb5"
+    ]
+  },
+  "checks": {
+    "python_tests_discovered": 452,
+    "python_tests_passed": 449,
+    "expected_private_evidence_skips": 3,
+    "trusted_policy_windows_tests": 7,
+    "trusted_policy_linux_tests": 7,
+    "rust_windows_unit_tests_passed": 56,
+    "two_distinct_launcher_devices_same_account_statuses": [
+      201,
+      200
+    ],
+    "both_device_encrypted_protocol_statuses": [
+      200,
+      200
+    ],
+    "system_tls_verified": true,
+    "external_deployment_checks_passed": 14,
+    "ansible_ok": 47,
+    "ansible_changed": 6,
+    "ansible_failed": 0,
+    "game_or_gui_launched": false
+  },
+  "retention": {
+    "synthetic_fixture_removed": true,
+    "foreign_keys_valid": true,
+    "private_authority_and_tls_retained": true,
+    "inventory_and_customization_retained": true,
+    "profile_metadata_changed": true,
+    "changed_existing_tables": [
+      "preservation_enrollment_limits",
+      "profiles"
+    ],
+    "durable_tables_compared": 50
+  },
+  "launcher_at_policy_acceptance_sha256": "89b5a32509018c1a5386cc553397bc9f23f038c13245d34a08264e952ab18f2a",
+  "source_pins": {
+    "backend/public_access.py": "91514cfb727f44cde67e9c8219502010df74b379d002b499e99366a835ea8509",
+    "backend/enrollment.py": "614f7668e376255fd9e0cb7fa404af75cf21181326d257aa7a26f3a4f622db92",
+    "backend/server.py": "7a06a140e61439cc5a8c73478d36d55c9d8deaf13bd355cb53537c57cb25e9cd",
+    "backend/remote_gateway.py": "3492945cffca648e110ee36c4f6bf701ca35f19ed8d4a36c8ab5d64ee38e2f6b",
+    "deployment/docker/entrypoint.py": "315bf9ecdf83e71d1453b078706eb85e1273cba5d900effbbe42bef405e20ebc",
+    "deployment/docker/compose.yaml": "277be2e42735a67101af6746fae5e5435c9d3c8db1d8b14ceb306ae7e78f4be6",
+    "deployment/docker/nginx-public.conf": "0238c5a2347a6d2314494184ba8d51158b9848810d3d694b42b278cb1b756fdf",
+    "deployment/ansible/templates/runtime.env.j2": "3faf4b4b25a1ea92feb64bba9010c3b9cda96046e88b546b964a0b61bd44ee7b",
+    "deployment/bootstrap/deploy.py": "6d84493de1d8b777577d0be1e0946ef8ce948b293f3cb25de4ccd32c4bab980c",
+    "backend/tests/test_trusted_enrollment.py": "3de3a2a8f099564aa44bd689d8704922198e3417f0acefffb76dbcd87b09d675"
+  }
+}

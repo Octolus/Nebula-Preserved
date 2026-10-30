@@ -1,7 +1,7 @@
 {
-  "bytes_excluding_inventory": 30279540,
+  "bytes_excluding_inventory": 30344640,
   "excluded": "Original game installation, compiled client/runtime outputs, Unity Linux build, databases, logs, credentials, keys, generated build products and private evidence are excluded. Four pre-existing vendored Cecil dependency DLLs remain at their reviewed original hashes.",
-  "file_count_excluding_inventory": 1712,
+  "file_count_excluding_inventory": 1716,
   "files": {
     ".editorconfig": {
       "sha256": "93287d2202fa7d6d6ce0d539f7189bbf775bd3df5de67be71830c2f55b7d7b82",
@@ -412,8 +412,8 @@
       "size": 13484
     },
     "backend/enrollment.py": {
-      "sha256": "a54e1a13d31c4b0bef9e00c6c15ae5b5bc6211dab9c2a9215b91073f132e71e5",
-      "size": 5727
+      "sha256": "614f7668e376255fd9e0cb7fa404af75cf21181326d257aa7a26f3a4f622db92",
+      "size": 7179
     },
     "backend/gathering.py": {
       "sha256": "b02088bce5537399f023b9373698214a6e2e08b184eefda8693207e0e60020cc",
@@ -456,16 +456,16 @@
       "size": 8604
     },
     "backend/public_access.py": {
-      "sha256": "384b864013d0d0e5d903edc171d3acd289b70baa8d2da0e991bc29157d7c2778",
-      "size": 11290
+      "sha256": "91514cfb727f44cde67e9c8219502010df74b379d002b499e99366a835ea8509",
+      "size": 17135
     },
     "backend/public_access_admin.py": {
       "sha256": "5cfbfd409eaf2c875ee2f1b1ec00a85b0da6764b8721c400678cb6055358b660",
       "size": 3803
     },
     "backend/remote_gateway.py": {
-      "sha256": "647ef273b1934ba5f7a176095c9d34e51bcbfaa99cd8310c97deeaef42e91b6a",
-      "size": 15904
+      "sha256": "3492945cffca648e110ee36c4f6bf701ca35f19ed8d4a36c8ab5d64ee38e2f6b",
+      "size": 16025
     },
     "backend/requirements.txt": {
       "sha256": "9f0a37bb7bf77736dee0b1b1ead2a7a4c0fa70f4e1808d636114208468ae5237",
@@ -492,8 +492,8 @@
       "size": 2819
     },
     "backend/server.py": {
-      "sha256": "97e1e9a6e6fe251fde7af2ca08c355dee98e6aca194cc2bf583b3047c66035c1",
-      "size": 13740
+      "sha256": "7a06a140e61439cc5a8c73478d36d55c9d8deaf13bd355cb53537c57cb25e9cd",
+      "size": 14382
     },
     "backend/service.py": {
       "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5",
@@ -654,6 +654,10 @@
     "backend/tests/test_state_refresh.py": {
       "sha256": "2dff81fec648338c20c1482728c44494fcbacbc2bf2f6d2a07f9e7ddb85a622d",
       "size": 3162
+    },
+    "backend/tests/test_trusted_enrollment.py": {
+      "sha256": "3de3a2a8f099564aa44bd689d8704922198e3417f0acefffb76dbcd87b09d675",
+      "size": 9953
     },
     "backend/tests/test_wardrobe_removal.py": {
       "sha256": "0e8f8dc38321428f1ef7480bfa3e2bfd1b626e53c4c2f934e2148c5683b0da0b",
@@ -1328,8 +1332,8 @@
       "size": 514
     },
     "deployment/ansible/templates/runtime.env.j2": {
-      "sha256": "5aaa31bcd8327b9a333bda1778532fc9fa980fcf00bb53787c0114ba25ed02c8",
-      "size": 534
+      "sha256": "3faf4b4b25a1ea92feb64bba9010c3b9cda96046e88b546b964a0b61bd44ee7b",
+      "size": 620
     },
     "deployment/ansible/tests/test_bootstrap_release.py": {
       "sha256": "19f227df462b74dbc67b0a9ca7dc56ddebd90257d77f476682e3e1e5aa0d61f0",
@@ -1352,28 +1356,32 @@
       "size": 680
     },
     "deployment/bootstrap/README.md": {
-      "sha256": "86de235aea4d61387b285ef3ce0e360e869cc51fcd8979b48242f9b6b943cc98",
-      "size": 6819
+      "sha256": "55e0b4904c7f87fd5abed524112e029096f9bb9369ea36307025c3b574ec3e4a",
+      "size": 7155
     },
     "deployment/bootstrap/catalog-validation.json": {
       "sha256": "426e542532a4296280f483acf79a828e9c4a2c8db92c6f5bd29ee1552a74a587",
       "size": 5115
     },
     "deployment/bootstrap/deploy.py": {
-      "sha256": "86b8936d74c725a55c35e0adada0a478d1aadaabd0c443deba509675ef72be68",
-      "size": 22723
+      "sha256": "6d84493de1d8b777577d0be1e0946ef8ce948b293f3cb25de4ccd32c4bab980c",
+      "size": 23168
     },
     "deployment/bootstrap/previews-enrollment-validation.json": {
       "sha256": "ae333ffc8fcb74c71f7ef5de2effec2b01dbdfe432f1147b11cbdb65cfec3786",
       "size": 6775
+    },
+    "deployment/bootstrap/trusted-id-validation.json": {
+      "sha256": "3664a3cb082be3ec8ad7623dc6d5e9265651f849b82a48bd316279cb8601592f",
+      "size": 3371
     },
     "deployment/bootstrap/validation.json": {
       "sha256": "f3ac82d81f39234dfb56526bf22d1b8c224de5eb9a07c164024c5e4b9ce7babf",
       "size": 2773
     },
     "deployment/docker/.env.example": {
-      "sha256": "7fa713f535857221496f68125df4a882c684bedf731e8ff0516b7f441bf2b3de",
-      "size": 1766
+      "sha256": "61606297785682349db932b9676f19605e520f1629116cde1f04ea8e61410313",
+      "size": 1868
     },
     "deployment/docker/.gitignore": {
       "sha256": "6ab426db338671ae983d9c8d456e5b9c60ee5b2918f48ba03bb736535580d252",
@@ -1400,16 +1408,16 @@
       "size": 298
     },
     "deployment/docker/compose.yaml": {
-      "sha256": "b6d6fe9ec7a9a95f2112f1b096980a695430aad7a9786771a8035d97f3eb5b00",
-      "size": 5992
+      "sha256": "277be2e42735a67101af6746fae5e5435c9d3c8db1d8b14ceb306ae7e78f4be6",
+      "size": 6049
     },
     "deployment/docker/configure-image.sh": {
       "sha256": "1e1f0a75df8f8842293c498cc098e3912a526cbcf1daa188afadb503a5cbfc42",
       "size": 4269
     },
     "deployment/docker/entrypoint.py": {
-      "sha256": "02833df9f4a0700f5f3c355e4be086361182a3be9128ae2125ae5eb0b7ae4ce4",
-      "size": 12651
+      "sha256": "315bf9ecdf83e71d1453b078706eb85e1273cba5d900effbbe42bef405e20ebc",
+      "size": 12940
     },
     "deployment/docker/healthcheck.py": {
       "sha256": "4434358fa02a88b93794697692a0a8e09583b2feb94b0bb0e64884ca7201afd6",
@@ -1420,8 +1428,8 @@
       "size": 730
     },
     "deployment/docker/nginx-public.conf": {
-      "sha256": "a945216505dcc8e7b8a7b054a5055fb8fc39febf21c1dfe429218966645b92e1",
-      "size": 1768
+      "sha256": "0238c5a2347a6d2314494184ba8d51158b9848810d3d694b42b278cb1b756fdf",
+      "size": 1769
     },
     "deployment/docker/requirements.lock.txt": {
       "sha256": "ca43352354e4eb9533677ec86752df922e787ac67a8e5dacd87664d231c2c274",
@@ -1516,12 +1524,12 @@
       "size": 1439
     },
     "docs/ENROLLMENT.md": {
-      "sha256": "6cb201596b18a2087b7c1d4121b71af68eeda8aaa42ffa335676e52db404066c",
-      "size": 3521
+      "sha256": "35a6284f53d39bc9c3f5a6ccca19b74f785a5e2d0e1c98432f63a2987b8c6327",
+      "size": 5073
     },
     "docs/LAUNCHER.md": {
-      "sha256": "47351778c7988b7ecaa4b5ad6bc82495f88013bda3185165a01cd4d59d437800",
-      "size": 11904
+      "sha256": "a9445f58d2ad68c0a0a42f63c7084fee6804a35fdba74772281fca9d0275216e",
+      "size": 14067
     },
     "docs/LICENSING.md": {
       "sha256": "06001ca90eb0ae4c1067e635e669dd5179b4a85a5160d0b4752d8a7f96ed8048",
@@ -1548,8 +1556,8 @@
       "size": 1946
     },
     "docs/PROGRESS.md": {
-      "sha256": "868e092d7814e33bc166e89ac25ef20f6f3682a918579167a019d41b370deaec",
-      "size": 14671
+      "sha256": "75c4452701f637059345f8f34e0d6df2ef29c8eb9f82a111bc190726ac1249d5",
+      "size": 15819
     },
     "docs/PUBLISHING.md": {
       "sha256": "439cdcbb5ad15eaad33e94ef664ad22ab305cf1c691d085ca4526f9de4bd9710",
@@ -1568,8 +1576,8 @@
       "size": 4218
     },
     "docs/TESTING.md": {
-      "sha256": "db39328c682dc3e685e16fbe95f9e9ba603b95b0adb3be407da1cc8d31b5d738",
-      "size": 18221
+      "sha256": "977a656e780339ea1d8770d2d3a9e09843d9414d9125b98ae1423febf17d36ab",
+      "size": 18492
     },
     "docs/images/admin-panel.png": {
       "sha256": "bce9f0b96a157712952e47def10e38571623b8eb20d59339bbd29f314b818471",
@@ -2244,8 +2252,8 @@
       "size": 2246
     },
     "experimental/remote-transport/server/remote_gateway.py": {
-      "sha256": "59f9e1a7a37024912be4950b936bc628fbc1642d6fa43cf8ab8f09c70e4c14f5",
-      "size": 14860
+      "sha256": "3492945cffca648e110ee36c4f6bf701ca35f19ed8d4a36c8ab5d64ee38e2f6b",
+      "size": 16025
     },
     "experimental/resource-selection-persistence-v2/README.md": {
       "sha256": "347688114948fee0388bd0044f0c00e0884118a56e95d98a31473614aad90175",
@@ -6215,6 +6223,10 @@
       "sha256": "3d72464fc92de86a13840f411289df506bfb0259c01ab68812122705f8a1faa5",
       "size": 6397
     },
+    "patcher/recovery-validation.json": {
+      "sha256": "df5657bedddf3b40a58b755ddeb93708f53c735283772fb4e3a30f575fc12f23",
+      "size": 2200
+    },
     "patcher/release-input.network-only.template.json": {
       "sha256": "75e4f9d47ec720b2843ce33c79d10ebe05045801734943e20f59f17f18d17177",
       "size": 1490
@@ -6232,8 +6244,8 @@
       "size": 3147
     },
     "patcher/src/discovery.rs": {
-      "sha256": "e06d7c6bc0f4372153c7b5d136c9f09753674a65c5888f016c8d64a3b303bf2c",
-      "size": 24448
+      "sha256": "cdec146aab63950df4277bc32a393cbb9f0b7e187b6a5db661273189b97d55db",
+      "size": 23653
     },
     "patcher/src/embedded.rs": {
       "sha256": "a09919e3cdb4829cbcd9f9f8b2261336dd1099000f5f63d42897ba8127b224ad",
@@ -6244,12 +6256,12 @@
       "size": 10532
     },
     "patcher/src/enrollment.rs": {
-      "sha256": "8d4a2ec0ef73374f98007ad836b1cb77cde1be0c1ede607071a81e9bd4dcef1b",
-      "size": 23138
+      "sha256": "13030cb2dc691c5c277c61b95ca66eba592734d8e6c0aaf78d9f001828734700",
+      "size": 28334
     },
     "patcher/src/gui.rs": {
-      "sha256": "7ba2ee92a778608b8d723677897a97220ce01c9eefba52f49a5a4bf7db6a71ee",
-      "size": 40499
+      "sha256": "4ebea05ee2ff369461e543a5540f70b09865378055a8cf088bad82c8f22a6101",
+      "size": 41243
     },
     "patcher/src/launcher.rs": {
       "sha256": "f21e414c3e173e83f692878d1fae223bac89ecb54d7ef3f95822bbb157fac3f8",
@@ -6260,8 +6272,8 @@
       "size": 12826
     },
     "patcher/src/main.rs": {
-      "sha256": "92d6ba0d51b2eab35a00e16c022e2dc917e357d6e92e194ef26ad2a495f18f26",
-      "size": 9642
+      "sha256": "cf7999c4c1c0651f854c76934e955317942f5404438dcdb14b7732d21bd31dab",
+      "size": 10326
     },
     "patcher/src/manifest.rs": {
       "sha256": "98521e87266edcea7ba8fdd9fe97dee4a236880c37e3ab14dcc42ee5476950c9",
@@ -6271,13 +6283,17 @@
       "sha256": "34696eec9ef6ce47a61621192e621863948a8ade18f8e9c944f1ec1182d9c162",
       "size": 20285
     },
+    "patcher/src/session.rs": {
+      "sha256": "23f578c4f83cdddcf447bc898d01c17cd6722adf746d53a439f13cfcf2096f1d",
+      "size": 18915
+    },
     "patcher/src/system_roots.rs": {
       "sha256": "6db43cb4ce88653dff648a107034ce9c5f4eeb20516218288b4ebdae9180fcd0",
       "size": 4794
     },
     "patcher/src/transaction.rs": {
-      "sha256": "8be5af4f33340f9462748d7afce47138193f6732ea15787b1d3fc667e7678957",
-      "size": 43757
+      "sha256": "e70199a3cdd0ca81373d1d554fc6e659f99473f3a82e9a5b3815ebc5b33e15c3",
+      "size": 52914
     },
     "patcher/src/unityfs.rs": {
       "sha256": "c37e5edb43599cfa1736188e6011fd9be8d97febae4f4d6291a89484f6dd7561",

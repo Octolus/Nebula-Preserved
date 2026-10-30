@@ -24,7 +24,13 @@ python3 /private/nebula-release/deployment/bootstrap/deploy.py install \
   --release /private/nebula-release --public-ip YOUR_SERVER_IPV4
 ```
 
-For automatic first-time player registration, add `--public-enrollment`. This
+For automatic first-time player registration, add `--public-enrollment`. To
+let a different device enter an existing player account using only its claimed
+Steam ID, also add `--trust-steam-id`. This intentionally permits impersonation
+by anyone supplying that ID; primary credentials and player data are retained.
+
+For first-claim registration without that trust policy, use only
+`--public-enrollment`. This
 is an explicit first-claim preservation policy, not verification of Steam
 ownership. Existing accounts cannot be replaced by registration. The launcher
 keeps each player's login private; see [the enrollment contract](../../docs/ENROLLMENT.md).
