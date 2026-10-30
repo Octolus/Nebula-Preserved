@@ -4,6 +4,7 @@ mod delta;
 mod discovery;
 mod embedded;
 mod endpoint;
+mod enrollment;
 #[cfg(windows)]
 mod gui;
 mod launcher;
@@ -60,6 +61,9 @@ enum Command {
         #[arg(long)]
         server: String,
     },
+    /// Complete fixed tester player setup without starting the game.
+    #[command(hide = true)]
+    SetupPlayer,
     ResetRemoteConfig,
     /// Remove only the provisioner's fixed config and DPAPI token, for interrupted setup/reprovisioning.
     ResetPublicConfig,
@@ -146,6 +150,18 @@ fn run() -> Result<()> {
     });
     match command {
         Command::Gui { allow_provisional } => launcher::gui(allow_provisional)?,
+        Command::SetupPlayer => {
+            #[cfg(windows)]
+            {
+                let server = launcher::fixed_tester_server()?.context(
+                    "Automatic setup is available only in an explicit fixed-server tester build",
+                )?;
+                enrollment::ensure_account(&server)?;
+                println!("Player connection is ready. No game was started.");
+            }
+            #[cfg(not(windows))]
+            bail!("Automatic player setup requires Windows");
+        }
         Command::ConfigureRemote {
             server,
             ca_file,

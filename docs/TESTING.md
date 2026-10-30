@@ -73,10 +73,11 @@ results are retained for seven days, including on test failure. `test-results/`
 is ignored by Git. Unit reports can contain local paths; keep them out of source
 exports and check before sharing them.
 
-The current suite discovers 434 Python tests: 336 backend, 60 tooling, 23 Linux
+The current suite discovers 445 Python tests: 347 backend, 60 tooling, 23 Linux
 builder, six bundle and nine offline harness checks. Three backend tests require
-private evidence and are skipped explicitly. The panel adds 38 unit tests and
-the Rust patcher adds 46 on Windows (42 on Linux). An earlier local Linux run of
+private evidence and are skipped explicitly. The panel adds 44 unit tests and
+the Rust patcher adds 55 on Windows. The separate, explicitly gated live
+registration fixture also passed against the deployed server. An earlier local Linux run of
 all five Python suites completed in approximately 25 seconds using shared memory;
 timings depend on the machine and temporary storage. These counts describe unit
 coverage, not complete native
@@ -84,8 +85,8 @@ multiplayer acceptance.
 
 ## Current additional checks — 2026-10-30
 
-These results are separate from the 434-test Python unit baseline and its three
-allowlisted skips; the latest Windows baseline run passed in approximately 61
+These results are separate from the 445-test Python unit baseline and its three
+allowlisted skips; the latest Windows baseline run passed in approximately 67
 seconds. Counts describe different test boundaries and must not be
 combined into a native-game pass.
 
@@ -93,7 +94,7 @@ combined into a native-game pass.
 |---|---|---|
 | Backend process E2E | 24 checks passed on Windows and restricted Linux | Real encrypted game HTTP, management actions and controlled process restart; explicit trusted scene/presence and friendship fixtures. [Run the harness](../scripts/NONMINI-E2E.md) with a new private artifact directory. No Mirror/native client is exercised. |
 | C# social publication | 17 contracts passed | Compiles the actual authored social state and relationship planner with a test-only Unity JSON substitute. [Run the .NET harness](../mirror-server/tests/social-contracts/README.md); no Unity runtime or listener. |
-| Deployment automation | 38 tests passed on Linux | [Offline deployment tests](../deployment/ansible/README.md#fast-offline-tests) cover setup and certificate policy without installing services or reaching a server. |
+| Deployment automation | 44 tests passed on Linux | [Offline deployment tests](../deployment/ansible/README.md#fast-offline-tests) cover setup and certificate policy without installing services or reaching a server. |
 | Client TLS transport | 13 Windows / 11 Linux tests passed | [Headless transport and trust checks](../experimental/remote-transport/client/tls-validation.json); final original-client/UI acceptance remains pending. |
 | C++ public-access profile and consumer | 23 profile / ten consumer checks passed | [Compile the real parser/consumer](../client-patches/network-only/public-access/README.md) with disposable fixtures; these checks do not launch the game. |
 
@@ -105,8 +106,8 @@ on port 8444 using default system trust; this is not an account-login result.
 
 ## Catalog coverage
 
-The expanded [catalog](CATALOG.md) has 11 focused backend checks, included in
-the 336 backend count above. They also passed inside a nonroot, network-disabled,
+The expanded [catalog](CATALOG.md) has 12 focused backend checks, included in
+the 347 backend count above. They also passed inside a nonroot, network-disabled,
 read-only Linux container. They cover all 7,688 shop item responses, encrypted
 wire budgets, generated-offer purchases, duplicate suppression, reopen
 persistence, rollback, import locking, inactive operator choices and metadata.
@@ -116,6 +117,23 @@ at 390px and 1280px, including proxy filters and source metadata. The deployed
 dashboard also passed both widths using normal trusted HTTPS. Two login
 browser regressions cover pre-hydration submission and the hydrated JSON flow.
 These checks do not load or equip every item in the original client.
+
+## Automatic registration and photo delivery
+
+The opt-in registration suite has ten passing tests on Windows and restricted
+Linux. An actual isolated Nginx/TLS fixture checks first registration, protected
+retry, conflicts, rate limits and unchanged authentication on other routes.
+The final Windows tester's actual Rust TLS/DPAPI live acceptance passed a new
+registration and matching-key retry; reopening the saved profile required no
+further registration. Wrong keys and existing-account claims returned 409.
+The owned synthetic account was removed, retaining all 48 prior table hashes.
+
+All 50 deployment tests passed on Linux. The 8,892-file private photo pack was
+validated, installed atomically, repeated without changes and repaired after a
+corruption control. Actual recovered photo browser checks passed at 390px and
+1280px, including all item kinds, artwork, prices, details and authenticated
+WebP delivery. Twenty-five concurrent images returned 200, followed immediately
+by valid catalog JSON. These checks do not launch the original game.
 
 ## Experimental Rust server
 

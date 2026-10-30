@@ -44,7 +44,9 @@ The standalone backend defaults to `none`; pass
 
 ## Dashboard
 
-**Item catalog** opens on **All game items**. The collection selector separates
+**Item catalog** opens on **All game items** with responsive photo cards. Each
+card shows a readable category/gender label, current currency price options and
+store availability; a compact list is also available. The collection selector separates
 assets from store offers and recovered shop artwork. Search and filter by
 collection, gender, category or configured store. Inspect an item for available
 bundle, resource, thumbnail and placement metadata, current offers/prices,
@@ -53,7 +55,9 @@ the catalog to that store.
 
 The 1,205 recovered shop artwork keys form a separate read-only collection.
 A logo/resource name does not establish historical store membership. Original
-artwork pixels are not distributed by this catalog interface.
+artwork pixels are recovered into a separate private pack and served only to
+signed-in operators; they are excluded from public source and ordinary images.
+See [preview extraction and installation](CATALOG_PREVIEWS.md).
 
 Two valid wardrobe items lack their own recovered thumbnail and use a verified
 generic shipped icon. Four rare category spellings are grouped under selectable

@@ -77,6 +77,19 @@ pub(crate) fn restrict(path: &Path) -> Result<()> {
     Ok(())
 }
 pub fn configure(server: &str, authorization_file: &Path) -> Result<()> {
+    crate::manifest::reject_link(authorization_file)?;
+    let bytes = zeroize::Zeroizing::new(
+        crate::manifest::read_bounded(authorization_file, 85)
+            .context("Read administrator-issued credential file")?,
+    );
+    configure_authorization(server, &bytes, false)
+}
+/// Enrollment passes unique credential bytes directly, never through a plaintext file.
+pub(crate) fn configure_authorization(
+    server: &str,
+    authorization: &[u8],
+    resume: bool,
+) -> Result<()> {
     crate::discovery::stopped()?;
     crate::endpoint::validate(server, "127.0.0.1")?;
     ensure!(
@@ -91,12 +104,7 @@ pub fn configure(server: &str, authorization_file: &Path) -> Result<()> {
                 CryptProtectData, CRYPTPROTECT_UI_FORBIDDEN, CRYPT_INTEGER_BLOB,
             },
         };
-        use zeroize::Zeroizing;
-        crate::manifest::reject_link(authorization_file)?;
-        let bytes = Zeroizing::new(
-            crate::manifest::read_bounded(authorization_file, 85)
-                .context("Read administrator-issued credential file")?,
-        );
+        let bytes = authorization;
         let b64 = |b: &u8| b.is_ascii_alphanumeric() || *b == b'-' || *b == b'_';
         ensure!(
             bytes.len() == 85
@@ -117,9 +125,24 @@ pub fn configure(server: &str, authorization_file: &Path) -> Result<()> {
         crate::manifest::reject_link(&folder)?;
         restrict(&folder)?;
         let config = crate::manifest::safe(&folder, "public-access.conf")?;
+        if config.exists() && resume {
+            crate::endpoint::check_public_config(server)?;
+            ensure!(
+                crate::enrollment::saved_authorization(&folder)?.as_slice() == authorization,
+                "Saved account differs; existing credentials retained"
+            );
+            return Ok(());
+        }
         ensure!(!config.exists(),"Public config already exists; retain it and explicitly move aside before provisioning a new account");
         let token = crate::manifest::safe(&folder, "account-token.dpapi")?;
-        ensure!(!token.exists(),"Protected token already exists; run reset-public-config explicitly to remove only known protected configuration before reprovisioning");
+        let reuse = resume && token.exists();
+        if reuse {
+            ensure!(
+                crate::enrollment::saved_authorization(&folder)?.as_slice() == authorization,
+                "Interrupted saved credential differs; existing files retained"
+            );
+        }
+        ensure!(reuse || !token.exists(),"Protected token already exists; run reset-public-config explicitly to remove only known protected configuration before reprovisioning");
         let name = token.to_str().context("Private token path is not UTF-8")?;
         ensure!(
             !name.contains(['\r', '\n', '\0']),
@@ -159,8 +182,10 @@ pub fn configure(server: &str, authorization_file: &Path) -> Result<()> {
         unsafe {
             LocalFree(output.pbData.cast());
         }
-        crate::transaction::new_file(&token, &protected)?;
-        restrict(&token)?;
+        if !reuse {
+            crate::transaction::new_file(&token, &protected)?;
+            restrict(&token)?;
+        }
         crate::transaction::new_file(&config, config_bytes.as_bytes())?;
         restrict(&config)?;
         crate::endpoint::check_public_config(server)?;

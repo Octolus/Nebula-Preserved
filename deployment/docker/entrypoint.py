@@ -52,6 +52,10 @@ def plan(env, root=Path('/opt/nebula'), runtime=Path('/opt/nebula-runtime'), sta
         raise ValueError('Unknown preservation catalog policy')
     backend.extend(('--catalog-policy', catalog_policy))
     if mode == 'public': backend.append('--public-access')
+    enrollment = env.get('NEBULA_PUBLIC_ENROLLMENT', '0')
+    if enrollment not in {'0', '1'} or (enrollment == '1' and mode != 'public'):
+        raise ValueError('Public enrollment must be 0 or opt-in 1 in public mode')
+    if enrollment == '1': backend.append('--public-enrollment')
     supervisor = [sys.executable, str(root/'tools/instance_supervisor.py'), '--run', '--state-dir', str(state),
                   '--binary', str(runtime/'build/NebulaServer.x86_64'), '--build-report', str(runtime/'build-linux-validation.json'),
                   '--build-report-sha256', pins[0], '--binary-sha256', pins[1], '--managed-assembly-sha256', pins[2],

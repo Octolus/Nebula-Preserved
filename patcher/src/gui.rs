@@ -154,6 +154,24 @@ unsafe fn fonts(window: HWND) {
         }
     }
 }
+fn view(s: &State, width: i32) -> Layout {
+    if crate::launcher::tester_build() {
+        tester_layout(
+            width,
+            s.details,
+            s.flow.game_ready,
+            s.flow.verified_origin.is_some(),
+        )
+    } else {
+        layout(width, s.advanced, s.details)
+    }
+}
+unsafe fn selected_server(window: HWND) -> Result<String> {
+    crate::launcher::selected_origin(
+        crate::launcher::fixed_tester_server()?.as_deref(),
+        &get(window, SERVER),
+    )
+}
 fn all_controls() -> Vec<i32> {
     (SERVER..=DETAILS)
         .chain(BROWSE..=SYSTEM_TRUST)
@@ -166,7 +184,7 @@ unsafe fn reflow(window: HWND) {
     let s = state(window);
     let width = client.right * 96 / s.dpi as i32;
     let height = client.bottom * 96 / s.dpi as i32;
-    let view = layout(width, s.advanced, s.details);
+    let view = view(s, width);
     s.scroll = scroll_position(s.scroll, 0, view.height, height);
     let dpi = s.dpi;
     let scroll = s.scroll;
@@ -211,7 +229,7 @@ unsafe fn reveal_focus(window: HWND) {
     GetClientRect(window, &mut client);
     let s = state(window);
     let height = client.bottom * 96 / s.dpi as i32;
-    let view = layout(client.right * 96 / s.dpi as i32, s.advanced, s.details);
+    let view = view(s, client.right * 96 / s.dpi as i32);
     if let Some((_, r)) = view.controls.iter().find(|(key, _)| *key == id) {
         let before = s.scroll;
         if r.1 < s.scroll {
@@ -228,7 +246,7 @@ unsafe fn scroll_to_details(window: HWND) {
     let mut client: RECT = std::mem::zeroed();
     GetClientRect(window, &mut client);
     let s = state(window);
-    let view = layout(client.right * 96 / s.dpi as i32, s.advanced, s.details);
+    let view = view(s, client.right * 96 / s.dpi as i32);
     s.scroll = scroll_position(0, i32::MAX, view.height, client.bottom * 96 / s.dpi as i32);
 }
 unsafe fn refresh(window: HWND) {
@@ -236,13 +254,21 @@ unsafe fn refresh(window: HWND) {
     // End state borrows before synchronous control messages can reenter.
     let (busy, can_start, game_ready, connected, advanced, details) = (
         s.flow.busy,
-        s.flow.can_start(),
+        if crate::launcher::tester_build() {
+            s.flow.can_start_tester()
+        } else {
+            s.flow.can_start()
+        },
         s.flow.game_ready,
         s.flow.verified_origin.is_some(),
         s.advanced,
         s.details,
     );
-    let (title, help) = s.flow.next();
+    let (title, help) = if crate::launcher::tester_build() && !busy && game_ready && !connected {
+        ("Ready to set up and play", "Keep Steam running and signed in. Start automatically sets up your secure player connection, checks the game, and launches it.")
+    } else {
+        s.flow.next()
+    };
     for id in [
         SERVER,
         GAME,
@@ -284,7 +310,11 @@ unsafe fn refresh(window: HWND) {
         if busy {
             "Please wait…"
         } else {
-            "&Start the game"
+            if crate::launcher::tester_build() && !connected {
+                "&Set up and start"
+            } else {
+                "&Start the game"
+            }
         },
     );
     set(
@@ -349,6 +379,29 @@ unsafe fn refresh(window: HWND) {
             "Server IPv4 or HTTPS address, supplied by your server owner."
         },
     );
+    if crate::launcher::tester_build() {
+        set(
+            window,
+            SERVER_TITLE,
+            if connected {
+                "2   Community server ready"
+            } else {
+                "2   Community test server"
+            },
+        );
+        set(
+            window,
+            SERVER_HELP,
+            if connected {
+                "Your player connection is saved. Start checks the server and game again."
+            } else {
+                "The server and HTTPS trust are preset. Start sets up your player connection automatically using the signed-in Steam account."
+            },
+        );
+        set(window, IMPORT, "Save player &account");
+        set(window, RESET, "Forget saved &account");
+        set(window, NEXT_HELP, help);
+    }
 }
 unsafe fn note(window: HWND, activity: &str, details: &str) {
     set(window, ACTIVITY, activity);
@@ -433,9 +486,11 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
             let (saved, damaged_profile) = match crate::remote::saved_connection() {
                 Ok(saved) => (saved,false), Err(_) => (None,true),
             };
-            let system_trust = saved.as_ref().map(|(_, system)| *system);
-            let server = saved.map(|(server, _)| server);
-            let connected = server.as_deref().is_some_and(|server| {
+            let fixed = crate::launcher::fixed_tester_server()?;
+            let matching = fixed.as_ref().is_none_or(|fixed| saved.as_ref().is_some_and(|(server,system)| server == fixed && *system));
+            let system_trust = if fixed.is_some() { Some(true) } else { saved.as_ref().map(|(_, system)| *system) };
+            let server = fixed.clone().or_else(|| saved.map(|(server, _)| server));
+            let connected = matching && server.as_deref().is_some_and(|server| {
                 stage(handle, "Checking the saved connection and server…");
                 crate::launcher::probe(server).is_ok()
             });
@@ -443,6 +498,9 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
                 note = if connected {"Game found. Your saved connection is ready.".into()}
                     else if server.is_some() {"Saved connection found, but the server could not be reached. Check the address and try Check server.".into()}
                     else {"Game found. Enter the server address and choose your account file.".into()};
+            }
+            if fixed.is_some() && !connected {
+                note = "Ready. Keep Steam signed in and click Set up and start.".into();
             }
             if damaged_profile { note = "Saved connection needs attention. Open certificate settings and check the saved connection before importing again.".into(); }
             Ok(Outcome::Startup { folder, server, system_trust, connected, note })
@@ -455,15 +513,15 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
             set(window, if id == PICK_ACCOUNT {ACCOUNT} else {CA}, path.to_str().context("Selected path must be Unicode")?);
         },
         CHECK => {
-            let server = crate::launcher::origin(&get(window, SERVER))?;
+            let server = selected_server(window)?;
             worker(window, Job::Check, move |handle| { stage(handle, "Checking the saved certificate and server…");
                 crate::launcher::probe(&server)?; Ok(Outcome::Connected(server)) });
         }
         IMPORT => {
-            let server = crate::launcher::origin(&get(window, SERVER))?;
+            let server = selected_server(window)?;
             let account = PathBuf::from(get(window, ACCOUNT)); let ca = PathBuf::from(get(window, CA));
             let pin = get(window, PIN).trim().to_ascii_lowercase();
-            let system_trust = SendMessageW(GetDlgItem(window, SYSTEM_TRUST), BM_GETCHECK, 0, 0) == BST_CHECKED as isize;
+            let system_trust = crate::launcher::tester_build() || SendMessageW(GetDlgItem(window, SYSTEM_TRUST), BM_GETCHECK, 0, 0) == BST_CHECKED as isize;
             if system_trust && crate::endpoint::check_public_config(&server).is_ok() {
                 if MessageBoxW(window, wide("Use Windows certificate trust for this saved account? The launcher will verify the same server using Windows trusted roots, then replace only its TLS settings. Your account and protected token are retained. Invalid or mismatched certificates are refused.").as_ptr(), wide("Use automatic TLS for this account?").as_ptr(), MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) == IDYES {
                     worker(window, Job::Import, move |handle| {
@@ -498,16 +556,19 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
             }
         }
         START => {
-            ensure!(state(window).flow.can_start(), "Complete the game and connection steps first");
+            ensure!(if crate::launcher::tester_build() {state(window).flow.can_start_tester()} else {state(window).flow.can_start()}, "Find a supported game and wait for the current check to finish");
             let provisional = state(window).allow_provisional;
-            let server = crate::launcher::origin(&get(window, SERVER))?; let game = get(window, GAME);
+            let server = selected_server(window)?; let game = get(window, GAME);
             worker(window, Job::Start, move |handle| {
                 stage(handle, "Checking the reviewed patch bundle…"); let (bundle, manifest, pin) = crate::launcher::bundle(provisional)?;
                 crate::discovery::stopped()?;
                 stage(handle, "Verifying the game installation…");
                 let folder = crate::discovery::select(Some(PathBuf::from(game)))?;
                 crate::discovery::select_executable(&folder.join("Nebula Realms.exe"))?;
-                stage(handle, "Checking the server and secure connection…"); crate::launcher::probe(&server)?;
+                if crate::launcher::tester_build() {
+                    stage(handle, "Checking Steam and setting up your secure player connection…");
+                    crate::enrollment::ensure_account(&server)?;
+                } else { stage(handle, "Checking the server and secure connection…"); crate::launcher::probe(&server)?; }
                 stage(handle, "Verifying backups and applying the patch…");
                 crate::transaction::patch(&folder,&bundle,&manifest,&pin,&server,"127.0.0.1",None,false,true)?;
                 stage(handle, "Checking installed files and starting the game…");
@@ -567,6 +628,10 @@ unsafe fn finish(window: HWND, job: Job, result: std::result::Result<Outcome, St
             note(window, "Saved connection forgotten. Choose your account file to set up again.", "Only fixed local account/trust configuration was removed. Your server account and patch backups were retained.");
         }
         Ok(Outcome::Launched(pid)) => {
+            if crate::launcher::tester_build() {
+                state(window).flow.verified_origin =
+                    crate::launcher::fixed_tester_server().ok().flatten();
+            }
             note(window, "Game started. Continue signing in inside Nebula Realms.", &format!("Started verified process {pid}. A process start does not prove login, world loading or multiplayer."));
         }
         Err(error) => {
@@ -599,16 +664,9 @@ unsafe fn paint(window: HWND) {
     let mut client: RECT = std::mem::zeroed();
     GetClientRect(window, &mut client);
     let s = state(window);
-    let (background, paper, dpi, advanced, details, scroll) = (
-        s.background,
-        s.paper,
-        s.dpi,
-        s.advanced,
-        s.details,
-        s.scroll,
-    );
+    let (background, paper, dpi, scroll) = (s.background, s.paper, s.dpi, s.scroll);
     FillRect(dc, &client, background);
-    let view = layout(client.right * 96 / dpi as i32, advanced, details);
+    let view = view(s, client.right * 96 / dpi as i32);
     let pen = CreatePen(PS_SOLID, 1, 0x00e6dfd8);
     let old_pen = SelectObject(dc, pen);
     let old_brush = SelectObject(dc, paper);
@@ -814,7 +872,11 @@ pub fn run(allow_provisional: bool) -> Result<()> {
             0,
             class.as_ptr(),
             wide(if allow_provisional {
-                "Nebula Preserved — Developer launcher"
+                if crate::launcher::tester_build() {
+                    "Nebula Preserved — Test launcher"
+                } else {
+                    "Nebula Preserved — Developer launcher"
+                }
             } else {
                 "Nebula Preserved"
             })
@@ -856,7 +918,11 @@ pub fn run(allow_provisional: bool) -> Result<()> {
             (
                 NOTICE,
                 if allow_provisional {
-                    "Development mode · Provisional game acceptance only"
+                    if crate::launcher::tester_build() {
+                        "TEST BUILD · Provisional networking patch, original-game acceptance pending"
+                    } else {
+                        "Development mode · Provisional game acceptance only"
+                    }
                 } else if available {
                     "Community preservation project · Original game UI and controls"
                 } else {
@@ -894,8 +960,9 @@ pub fn run(allow_provisional: bool) -> Result<()> {
             (GAME, String::new(), true),
             (
                 SERVER,
-                option_env!("NEBULA_DEFAULT_SERVER").unwrap_or("").into(),
-                false,
+                crate::launcher::fixed_tester_server()?
+                    .unwrap_or_else(|| option_env!("NEBULA_DEFAULT_SERVER").unwrap_or("").into()),
+                crate::launcher::tester_build(),
             ),
             (ACCOUNT, String::new(), true),
             (CA, String::new(), true),
@@ -957,6 +1024,7 @@ pub fn run(allow_provisional: bool) -> Result<()> {
             "BUTTON",
             WS_TABSTOP | BS_AUTOCHECKBOX as u32,
         )?;
+        crate::launcher::fixed_tester_server()?; // Reject invalid private build configuration before setup.
         let ca = crate::embedded::ca()?.unwrap_or(
             std::env::current_exe()?
                 .parent()
@@ -968,7 +1036,9 @@ pub fn run(allow_provisional: bool) -> Result<()> {
         }
         // Publicly trusted servers need no certificate picker. An operator can
         // deliberately ship a pinned private CA as a prepared release preset.
-        let supplied_private_ca = ca.is_file() && crate::manifest::sha(&get(window, PIN)).is_ok();
+        let supplied_private_ca = !crate::launcher::tester_build()
+            && ca.is_file()
+            && crate::manifest::sha(&get(window, PIN)).is_ok();
         SendMessageW(
             GetDlgItem(window, SYSTEM_TRUST),
             BM_SETCHECK,

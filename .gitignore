@@ -33,6 +33,8 @@ operator-key.bin
 /deployment/docker/private-linux/
 /deployment/docker/state/
 /deployment/docker/backups/
+/deployment/docker/catalog-previews/
+/catalog-previews/
 /experimental/resource-selection-persistence-v2/generated/
 **/Logs/
 *.log

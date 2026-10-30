@@ -70,12 +70,31 @@ fn main() {
     }
     for name in [
         "NEBULA_DEFAULT_SERVER",
+        "NEBULA_TESTER_BUILD",
+        "NEBULA_TESTER_SERVER",
         "NEBULA_BUNDLE_SHA256",
         "NEBULA_CA_SHA256",
         "NEBULA_EMBED_BUNDLE",
         "NEBULA_EMBED_CA",
     ] {
         println!("cargo:rerun-if-env-changed={name}");
+    }
+    let tester = env::var("NEBULA_TESTER_BUILD").as_deref() == Ok("1");
+    if tester {
+        let server =
+            env::var("NEBULA_TESTER_SERVER").expect("Tester build requires a fixed HTTPS server");
+        assert!(
+            server.starts_with("https://") && !server.chars().any(char::is_whitespace),
+            "Tester server must be HTTPS"
+        );
+        assert!(
+            env::var_os("NEBULA_EMBED_BUNDLE").is_some(),
+            "Tester build requires its reviewed embedded bundle"
+        );
+        assert!(
+            env::var_os("NEBULA_EMBED_CA").is_none(),
+            "Fixed tester build uses system trust only"
+        );
     }
     let mut generated = String::from("pub const BUNDLE: &[(&str, &[u8])] = &[\n");
     if let Some(path) = env::var_os("NEBULA_EMBED_BUNDLE") {
@@ -91,9 +110,9 @@ fn main() {
         );
         let manifest: serde_json::Value =
             serde_json::from_slice(&bytes).expect("Invalid embedded manifest");
-        assert_eq!(
-            manifest["status"], "frozen",
-            "Never embed a provisional bundle"
+        assert!(
+            manifest["status"] == "frozen" || (tester && manifest["status"] == "provisional"),
+            "Provisional embedding requires an explicit fixed-server tester build"
         );
         assert_eq!(manifest["profile"], "network-only");
         let artifacts = manifest["artifacts"].as_array().expect("Missing artifacts");

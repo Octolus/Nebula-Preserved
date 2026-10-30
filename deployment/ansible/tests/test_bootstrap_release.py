@@ -148,6 +148,32 @@ class ReleaseTests(unittest.TestCase):
             self.prepare()
         self.assertEqual('unchanged', marker.read_text())
 
+    def test_optional_private_pack_is_pinned_verified_and_not_required(self):
+        # Empty packs are useful for consciously clearing a previously installed pack.
+        pack = self.root / 'private-pack.tar'
+        data = b'{"format_version":1,"entries":[]}'
+        with tarfile.open(pack, 'w') as stream:
+            member = tarfile.TarInfo('index.json')
+            member.size = len(data)
+            stream.addfile(member, io.BytesIO(data))
+        DEPLOY.prepare(self.release, self.archive, self.report, *self.images[:2], catalog_preview_pack=pack)
+        manifest = DEPLOY.verify(self.release)
+        self.assertEqual(DEPLOY.sha256(pack), manifest['files']['catalog-previews.tar']['sha256'])
+        copied = self.release / 'catalog-previews.tar'
+        copied.write_bytes(b'invalid replacement')
+        with self.assertRaisesRegex(ValueError, 'hash/size mismatch'):
+            DEPLOY.verify(self.release)
+
+    def test_invalid_optional_pack_is_rejected_before_output_creation(self):
+        pack = self.root / 'private-pack.tar'
+        with tarfile.open(pack, 'w') as stream:
+            member = tarfile.TarInfo('../escape')
+            member.size = 1
+            stream.addfile(member, io.BytesIO(b'x'))
+        with self.assertRaisesRegex(ValueError, 'Unsafe preview'):
+            DEPLOY.prepare(self.release, self.archive, self.report, *self.images[:2], catalog_preview_pack=pack)
+        self.assertFalse(self.release.exists())
+
     def test_bad_build_report_fails_before_output_creation(self):
         self.report.write_text('{"exit_code":1}')
         with self.assertRaises(ValueError):

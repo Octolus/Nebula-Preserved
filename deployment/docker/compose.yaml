@@ -26,6 +26,7 @@ services:
       NEBULA_MAX_PROCESSES: ${NEBULA_MAX_PROCESSES:-16}
       NEBULA_IDLE_TTL: ${NEBULA_IDLE_TTL:-60}
       NEBULA_CATALOG_POLICY: ${NEBULA_CATALOG_POLICY:-preservation-catalog-v1}
+      NEBULA_PUBLIC_ENROLLMENT: ${NEBULA_PUBLIC_ENROLLMENT:-0}
       NEBULA_ADMIN_BIND: 0.0.0.0
       NEBULA_ADMIN_PORT: "8090"
       NEBULA_ADMIN_TOKEN_FILE: /run/secrets/admin_token
@@ -93,6 +94,9 @@ services:
       NEBULA_ADMIN_OPERATORS_FILE: /run/secrets/admin_operators.json
       NEBULA_PANEL_SESSION_KEY_FILE: /run/secrets/panel_session_key
       NEBULA_PANEL_ORIGIN: ${NEBULA_PANEL_ORIGIN:-http://localhost:4321}
+      NEBULA_CATALOG_PREVIEW_DIR: /opt/nebula/catalog-previews
+    volumes:
+      - ${NEBULA_CATALOG_PREVIEW_SOURCE:-./catalog-previews}:/opt/nebula/catalog-previews:ro
     secrets:
       - admin_token
       - source: admin_operators

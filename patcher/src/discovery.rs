@@ -102,6 +102,39 @@ fn vdf(input: &str) -> Result<BTreeMap<String, Value>> {
     }
     parse(&tokens, &mut 0, 0, false)
 }
+
+/// Cross-check Steam's active DWORD account against its parsed login-user table.
+/// MostRecent and stored account names are deliberately not identity authority.
+pub(crate) fn steam_account_from_loginusers(active: u32, input: &str) -> Result<String> {
+    ensure!(active != 0, "Start Steam and sign in, then try Start again");
+    let id = (76_561_197_960_265_728u64 + u64::from(active)).to_string();
+    let root = vdf(input)?;
+    let users = root
+        .get("users")
+        .context("Steam login table unavailable")?
+        .map()?;
+    users
+        .get(&id)
+        .context("Steam active account does not match its login table; sign in to Steam again")?
+        .map()?;
+    Ok(id)
+}
+#[cfg(windows)]
+pub(crate) fn active_steam_account() -> Result<String> {
+    use winreg::{enums::HKEY_CURRENT_USER, RegKey};
+    let steam = RegKey::predef(HKEY_CURRENT_USER)
+        .open_subkey("Software\\Valve\\Steam")
+        .context("Start Steam and sign in before starting the game")?;
+    let active: u32 = steam
+        .open_subkey("ActiveProcess")?
+        .get_value("ActiveUser")
+        .context("Start Steam and sign in before starting the game")?;
+    let root: String = steam.get_value("SteamPath")?;
+    let path = manifest::safe(Path::new(&root), "config/loginusers.vdf")?;
+    let bytes = manifest::read_bounded(&path, 4 * 1024 * 1024)?;
+    steam_account_from_loginusers(active, std::str::from_utf8(&bytes)?)
+}
+
 #[derive(Serialize, Debug)]
 pub struct Install {
     pub game: PathBuf,
@@ -620,5 +653,26 @@ mod tests {
         assert!(vdf("x 1 x 2").is_err());
         assert!(vdf("x { a b").is_err());
         assert!(vdf("x \"unclosed").is_err());
+    }
+}
+
+#[cfg(test)]
+mod active_account_tests {
+    use super::*;
+    #[test]
+    fn active_account_requires_exact_login_table_membership_not_most_recent() {
+        let base = 76_561_197_960_265_728u64;
+        let table = format!(
+            "\"users\" {{ \"{}\" {{ \"MostRecent\" \"0\" }} \"{}\" {{ \"MostRecent\" \"1\" }} }}",
+            base + 42,
+            base + 99
+        );
+        assert_eq!(
+            steam_account_from_loginusers(42, &table).unwrap(),
+            (base + 42).to_string()
+        );
+        assert!(steam_account_from_loginusers(0, &table).is_err());
+        assert!(steam_account_from_loginusers(43, &table).is_err());
+        assert!(steam_account_from_loginusers(42, "\"users\" { ").is_err());
     }
 }

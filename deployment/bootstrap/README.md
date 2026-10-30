@@ -24,6 +24,11 @@ python3 /private/nebula-release/deployment/bootstrap/deploy.py install \
   --release /private/nebula-release --public-ip YOUR_SERVER_IPV4
 ```
 
+For automatic first-time player registration, add `--public-enrollment`. This
+is an explicit first-claim preservation policy, not verification of Steam
+ownership. Existing accounts cannot be replaced by registration. The launcher
+keeps each player's login private; see [the enrollment contract](../../docs/ENROLLMENT.md).
+
 No host Ansible installation is required; the installer installs it if absent.
 All release files, image configuration identities and runtime pins are checked
 before package or service changes. Installation uses the fixed application root
@@ -114,3 +119,11 @@ metadata. Do not replace a working certificate with an untrusted certificate or
 turn off hostname verification as a troubleshooting shortcut.
 
 The automation is covered by the [Ansible offline test suite](../ansible/README.md#fast-offline-tests).
+
+## Optional item photos
+
+When preparing a release, add `--catalog-preview-pack /private/catalog-previews.tar`
+to include an operator-extracted pack. The installer validates its complete
+index and image hashes, activates it atomically, and mounts it read-only in the
+panel. Omission preserves an existing pack. No artwork is added to public source
+or the ordinary container image. See [extraction instructions](../../docs/CATALOG_PREVIEWS.md).

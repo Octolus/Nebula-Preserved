@@ -1,6 +1,6 @@
 # Windows preservation patcher
 
-The Windows GUI and portable release build are documented in [LAUNCHER.md](../docs/LAUNCHER.md). Normal launching requires a frozen native-accepted remote bundle. Explicit `gui --allow-provisional` is available only for developer native acceptance and visibly marks its window as development. CLI patch/restore commands never launch the game.
+The Windows GUI and portable release build are documented in [LAUNCHER.md](../docs/LAUNCHER.md). Normal release launching requires a frozen native-accepted remote bundle. The explicit private fixed-server TEST BUILD supports provisional community acceptance with automatic player enrollment, retaining every patch/profile/TLS check; see the tester section in LAUNCHER.md. Explicit `gui --allow-provisional` is available only for developer native acceptance and visibly marks its window as development. CLI patch/restore commands never launch the game.
 
 The GUI guides players through finding the game, saving their server connection
 and starting. Saved connections are checked automatically; certificate settings

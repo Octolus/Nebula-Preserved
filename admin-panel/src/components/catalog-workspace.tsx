@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IconPackage } from '@tabler/icons-react';
+import { IconPackage, IconLayoutGrid, IconList } from '@tabler/icons-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -29,6 +29,11 @@ import {
   catalogPrice,
   catalogQuery,
   provenanceLabel,
+  catalogCategoryLabel,
+  catalogGenderLabel,
+  catalogPreviewUrl,
+  catalogLiveOffers,
+  catalogPriceSummary,
 } from '../lib/catalog';
 
 type CatalogPage = {
@@ -45,6 +50,47 @@ type CatalogPage = {
 };
 const empty: CatalogPage = { items: [], total: 0, next_cursor: null };
 const any = '__any__';
+
+function CatalogPreview({ row, large = false }: { row: Row; large?: boolean }) {
+  const url = catalogPreviewUrl(row);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => setFailed(false), [url]);
+  return (
+    <div
+      className={
+        'relative flex aspect-square items-center justify-center overflow-hidden rounded-md bg-muted/40 ' +
+        (large ? 'mx-auto w-full max-w-sm' : 'w-full')
+      }
+    >
+      {url && !failed ? (
+        <>
+          <img
+            src={url}
+            alt={catalogItemName(row)}
+            loading="lazy"
+            decoding="async"
+            width={320}
+            height={320}
+            className="size-full object-contain p-3"
+            onError={() => setFailed(true)}
+          />
+          {row.own_thumbnail_known === false && (
+            <span className="absolute inset-x-1 bottom-1 rounded bg-background/90 px-2 py-1 text-center text-xs text-muted-foreground">
+              Shared category icon
+            </span>
+          )}
+        </>
+      ) : (
+        <div className="flex flex-col items-center gap-2 p-4 text-center text-muted-foreground">
+          <IconPackage className="size-9" aria-hidden="true" />
+          <span className="text-xs">
+            {failed ? 'Preview could not load' : 'Preview not recovered'}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string) => void }) {
   const offers = catalogOffers(row);
@@ -75,8 +121,8 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
       ['item_id', row.item_id],
       ['offer_id', row.offer_id],
       ['kind', catalogKindLabel(row.kind)],
-      ['gender', row.gender],
-      ['category', row.category_label || row.category],
+      ['gender', catalogGenderLabel(row.gender)],
+      ['category', catalogCategoryLabel(row)],
       ['category_id', row.category],
       ['bundle', row.bundle],
       ['asset_path', row.asset_path],
@@ -86,6 +132,13 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
       ['manifest_sha256', row.manifest_sha256],
       ['placement_cost', row.placement_cost],
       ['placement_behaviour', row.placement_behaviour],
+      [
+        'display_name_source',
+        row.display_name_source ||
+          (catalogItemName(row) !== row.name
+            ? 'Derived from recovered category, character and item ID'
+            : provenance.display_name),
+      ],
     ].filter(([, value]) => value !== undefined && value !== null && value !== ''),
   );
   return (
@@ -117,13 +170,12 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
               {catalogAvailability(row)}
             </Badge>
           </div>
-          <div className="flex gap-3 rounded-md border bg-muted/30 p-3 text-sm text-muted-foreground">
-            <IconPackage className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
-            <p>
-              Item artwork remains in the player's game installation. Asset and thumbnail references
-              below identify the shipped files; no preview image is published here.
-            </p>
-          </div>
+          <CatalogPreview row={row} large />
+          <p className="text-xs text-muted-foreground">
+            {catalogPreviewUrl(row)
+              ? 'Recovered game preview. Names derived from category and item ID are descriptive labels; original commercial names may be unknown.'
+              : 'No matching preview is available. Resource references remain available in the recovered metadata below.'}
+          </p>
           {row.unavailable_reason ? (
             <Alert>
               <AlertDescription>{String(row.unavailable_reason)}</AlertDescription>
@@ -252,6 +304,7 @@ export function CatalogWorkspace({
   const [page, setPage] = useState<CatalogPage>(empty),
     [busy, setBusy] = useState(true),
     [error, setError] = useState('');
+  const [view, setView] = useState<'cards' | 'list'>('cards');
   function firstPage() {
     setCursor('');
     setHistory([]);
@@ -275,13 +328,24 @@ export function CatalogWorkspace({
     };
   }, [api, revision, kind, search, gender, category, store, cursor]);
   const filters = page.filters || {};
-  const rows = page.items.map((row) => ({
+  const rows: Row[] = page.items.map((row) => ({
     ...row,
     display_name: catalogItemName(row),
     collection: catalogKindLabel(row.kind),
-    category_label: row.category_label || row.category || '—',
+    category_label: catalogCategoryLabel(row),
+    character: catalogGenderLabel(row.gender),
+    current_price: catalogPriceSummary(row),
     availability: catalogAvailability(row),
   }));
+  function selectStore(id: string) {
+    setKind('offer');
+    setStore(id);
+    setGender('');
+    setCategory('');
+    setQuery('');
+    setSearch('');
+    firstPage();
+  }
   return (
     <Card>
       <CardHeader>
@@ -351,7 +415,7 @@ export function CatalogWorkspace({
                 { value: any, label: 'All characters' },
                 ...(filters.genders || []).map((value) => ({
                   value,
-                  label: value === 'MALE' ? 'Male' : value === 'FEMALE' ? 'Female' : value,
+                  label: catalogGenderLabel(value),
                 })),
               ]}
               onValueChange={(value) => {
@@ -365,7 +429,16 @@ export function CatalogWorkspace({
             <FormSelect
               id="catalog-category"
               value={category || any}
-              options={[{ value: any, label: 'All categories' }, ...(filters.categories || [])]}
+              options={[
+                { value: any, label: 'All categories' },
+                ...(filters.categories || []).map((entry) => ({
+                  value: entry.value,
+                  label: catalogCategoryLabel({
+                    category_label: entry.label,
+                    category: entry.value,
+                  }),
+                })),
+              ]}
               onValueChange={(value) => {
                 setCategory(value === any ? '' : value);
                 firstPage();
@@ -411,6 +484,34 @@ export function CatalogWorkspace({
         {page.metadata_note && (
           <p className="text-xs text-muted-foreground">{page.metadata_note}</p>
         )}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-xs text-muted-foreground">
+            Current server prices ·{' '}
+            {kind === 'shop_artwork'
+              ? 'Artwork references cannot be purchased'
+              : 'Select an item for stores, currencies and recovered details'}
+          </p>
+          <div className="flex gap-1" aria-label="Catalog view">
+            <Button
+              variant={view === 'cards' ? 'secondary' : 'ghost'}
+              className="min-h-11"
+              aria-pressed={view === 'cards'}
+              onClick={() => setView('cards')}
+            >
+              <IconLayoutGrid className="size-4" aria-hidden="true" />
+              Cards
+            </Button>
+            <Button
+              variant={view === 'list' ? 'secondary' : 'ghost'}
+              className="min-h-11"
+              aria-pressed={view === 'list'}
+              onClick={() => setView('list')}
+            >
+              <IconList className="size-4" aria-hidden="true" />
+              Compact list
+            </Button>
+          </div>
+        </div>
         {error ? (
           <Alert variant="destructive" role="alert">
             <AlertDescription>{error}</AlertDescription>
@@ -419,31 +520,74 @@ export function CatalogWorkspace({
           <p role="status" className="py-4 text-sm text-muted-foreground">
             Loading catalog…
           </p>
+        ) : view === 'cards' ? (
+          rows.length ? (
+            <div
+              className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              aria-label="Catalog item cards"
+            >
+              {rows.map((row) => {
+                const offers = catalogLiveOffers(row);
+                const stores = [
+                  ...new Set(offers.map((offer) => String(offer.shop_name || 'Store'))),
+                ];
+                return (
+                  <Card
+                    key={String(row.offer_id || row.item_id)}
+                    className="min-w-0 gap-3 overflow-hidden py-0 shadow-none"
+                  >
+                    <div className="p-2 pb-0">
+                      <CatalogPreview row={row} />
+                    </div>
+                    <CardContent className="flex flex-1 flex-col gap-2 px-3 pb-3">
+                      <div>
+                        <p className="break-words text-sm font-medium leading-snug">
+                          {catalogItemName(row)}
+                        </p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {catalogGenderLabel(row.gender)} · {catalogCategoryLabel(row)}
+                        </p>
+                      </div>
+                      <Badge
+                        className="max-w-full whitespace-normal text-left"
+                        variant={catalogAvailability(row) === 'In store' ? 'secondary' : 'outline'}
+                      >
+                        {catalogAvailability(row)}
+                      </Badge>
+                      {kind !== 'shop_artwork' && (
+                        <div className="space-y-1 text-xs">
+                          <p className="font-medium">{catalogPriceSummary(row)}</p>
+                          <p className="break-words text-muted-foreground">
+                            {stores[0] || 'No active store offer'}
+                            {stores.length > 1 ? ` +${stores.length - 1} more` : ''}
+                          </p>
+                        </div>
+                      )}
+                      <div className="mt-auto pt-1 [&>button]:w-full">
+                        <CatalogItem row={row} selectStore={selectStore} />
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="py-6 text-sm text-muted-foreground">
+              No items match these filters. Try clearing a filter or searching an exact item ID.
+            </p>
+          )
         ) : (
           <RecordList
             items={rows}
             columns={
               kind === 'offer'
-                ? ['display_name', 'shop_name', 'collection', 'crystals', 'np', 'availability']
+                ? ['display_name', 'shop_name', 'current_price', 'availability']
                 : kind === 'shop_artwork'
                   ? ['display_name', 'resource_path', 'availability']
-                  : ['display_name', 'collection', 'gender', 'category_label', 'availability']
+                  : ['display_name', 'character', 'category_label', 'current_price', 'availability']
             }
             emptyText="No items match these filters. Try clearing a filter or searching an exact item ID."
-            action={(row) => (
-              <CatalogItem
-                row={row}
-                selectStore={(id) => {
-                  setKind('offer');
-                  setStore(id);
-                  setGender('');
-                  setCategory('');
-                  setQuery('');
-                  setSearch('');
-                  firstPage();
-                }}
-              />
-            )}
+            action={(row) => <CatalogItem row={row} selectStore={selectStore} />}
           />
         )}
         <div className="flex items-center justify-between gap-2">

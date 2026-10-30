@@ -1,7 +1,8 @@
 """Per-account public-access credentials for the preservation backend.
 
-This module does not validate Steam ownership tickets.  A credential may only
-be issued only for an operator-provisioned SteamID64 profile. Optional
+This module does not validate Steam ownership tickets. Operator-issued
+credentials require a provisioned SteamID64 profile; opt-in first registration
+is a separate unverified preservation policy in enrollment.py. Optional
 provenance is not Valve verification. The HTTP adapter must place the
 authenticated account in ``actor_scope`` before dispatching a game request;
 Store.account/session/bind_session then enforce that actor binding.
@@ -159,6 +160,23 @@ class AccessAuthority:
                 "UPDATE public_access_credentials SET revoked_at=? WHERE ps4_id=? AND revoked_at IS NULL",
                 (time.time(), ps4_id))
         return cursor.rowcount == 1
+
+    def issue_new(self, ps4_id: str, token: str) -> str:
+        """Register a client-generated secret once, inside the caller's group.
+
+        Unlike the operator rotation method, this cannot replace any existing
+        credential. The enrollment adapter owns first-profile authorization.
+        """
+        if not STEAM_ID64.fullmatch(ps4_id) or not TOKEN.fullmatch(token):
+            raise ValueError("Invalid new preservation account")
+        if not getattr(self.db, "atomic_depth", 0):
+            raise RuntimeError("New-account access requires an atomic group")
+        salt = secrets.token_bytes(16)
+        verifier = _derive(token, salt)
+        self.db.execute("""INSERT INTO public_access_credentials
+            (ps4_id,salt,verifier,provenance_kind,provenance_evidence_sha256,created_at,revoked_at)
+            VALUES(?,?,?,NULL,NULL,?,NULL)""", (ps4_id, salt, verifier, time.time()))
+        return SCHEME + " " + _b64_account(ps4_id) + "." + token
 
     def authenticate(self, authorization: str | None) -> str:
         prefix = SCHEME + " "

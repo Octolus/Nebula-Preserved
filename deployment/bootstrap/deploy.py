@@ -7,6 +7,7 @@ It never embeds player credentials or treats server health as gameplay proof.
 import argparse
 import hashlib
 import ipaddress
+import importlib.util
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -231,13 +232,24 @@ def runtime_pins(report_path):
     return pins
 
 
-def prepare(output, archive, report, server_image, panel_image):
+def preview_validator(root):
+    path = regular(Path(root) / 'deployment/ansible/files/install-catalog-previews.py')
+    spec = importlib.util.spec_from_file_location('catalog_preview_installer', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def prepare(output, archive, report, server_image, panel_image, catalog_preview_pack=None):
     output, archive, report = Path(output).absolute(), regular(archive), regular(report)
     require(not output.exists() and not output.is_symlink(), 'Release output must be a new directory')
     for parent in output.parents:
         require(not parent.is_symlink(), 'Linked release output parent refused')
     pins = runtime_pins(report)
     ids = image_ids(archive, [server_image, panel_image, NGINX])
+    if catalog_preview_pack is not None:
+        catalog_preview_pack = regular(catalog_preview_pack)
+        preview_validator(ROOT).validate(catalog_preview_pack, sha256(catalog_preview_pack))
     files = list(PAYLOAD)
     for path in sorted((ROOT / 'deployment/ansible').rglob('*')):
         if path.is_file() and '__pycache__' not in path.parts and path.suffix not in ('.pyc', '.pyo'):
@@ -252,6 +264,9 @@ def prepare(output, archive, report, server_image, panel_image):
     shutil.copyfile(archive, output / 'images.tar')
     shutil.copyfile(report, output / 'runtime-report.json')
     files += ['images.tar', 'runtime-report.json']
+    if catalog_preview_pack is not None:
+        shutil.copyfile(catalog_preview_pack, output / 'catalog-previews.tar')
+        files.append('catalog-previews.tar')
     manifest = {'format': 'nebula-linux-release-v1',
                 'images': {'server': server_image, 'panel': panel_image}, 'image_ids': ids,
                 'runtime_pins': pins,
@@ -279,6 +294,9 @@ def verify(release):
                 'Release file hash/size mismatch')
     required = set(PAYLOAD) | {'deployment/ansible/site.yaml', 'images.tar', 'runtime-report.json'}
     require(required <= files.keys(), 'Release inventory misses required installer inputs')
+    require(all(name in required or name == 'catalog-previews.tar'
+                or name.startswith('deployment/ansible/') for name in files),
+            'Release contains an unsupported member')
     actual = {path.relative_to(release).as_posix() for path in release.rglob('*') if path.is_file()}
     require(actual == set(files) | {'release.json'}, 'Release contains unexpected files')
     require(isinstance(manifest['images'], dict) and set(manifest['images']) == {'server', 'panel'}
@@ -287,10 +305,13 @@ def verify(release):
     require(runtime_pins(release / 'runtime-report.json') == manifest['runtime_pins'], 'Runtime pins differ')
     expected = image_ids(release / 'images.tar', [*manifest['images'].values(), NGINX])
     require(expected == manifest['image_ids'], 'Image identities differ')
+    if 'catalog-previews.tar' in files:
+        preview_validator(release).validate(release / 'catalog-previews.tar',
+                                            files['catalog-previews.tar']['sha256'])
     return manifest
 
 
-def install(release, address, tls_mode):
+def install(release, address, tls_mode, public_enrollment=False):
     address = str(ipaddress.IPv4Address(address))
     require(tls_mode in ('public_acme', 'private_ca'), 'Unknown TLS mode')
     if tls_mode == 'public_acme':
@@ -330,7 +351,11 @@ def install(release, address, tls_mode):
                   'nebula_panel_image': manifest['images']['panel'],
                   'nebula_expected_image_ids': manifest['image_ids'],
                   'nebula_max_processes': 2, 'nebula_tls_mode': tls_mode,
+                  'nebula_public_enrollment': bool(public_enrollment),
                   'nebula_verify_reboot': False}
+        if 'catalog-previews.tar' in manifest['files']:
+            values.update(nebula_catalog_preview_archive=str(release / 'catalog-previews.tar'),
+                          nebula_catalog_preview_archive_sha256=manifest['files']['catalog-previews.tar']['sha256'])
         for name, value in [('inventory.json', inventory), ('vars.json', values)]:
             path = state / name
             require(not path.is_symlink(), 'Linked installer settings refused')
@@ -357,20 +382,25 @@ def main():
     prepare_parser.add_argument('--runtime-report', type=Path, required=True)
     prepare_parser.add_argument('--server-image', required=True)
     prepare_parser.add_argument('--panel-image', required=True)
+    prepare_parser.add_argument('--catalog-preview-pack', type=Path,
+                                help='Optional private, validated flat preview tar (never needed for game play)')
     check_parser = modes.add_parser('verify', help='Read-only check of every release input')
     check_parser.add_argument('--release', type=Path, default=ROOT)
     install_parser = modes.add_parser('install', help='Autonomously install on this Ubuntu host')
     install_parser.add_argument('--release', type=Path, default=ROOT)
     install_parser.add_argument('--public-ip', required=True)
     install_parser.add_argument('--tls-mode', choices=('public_acme', 'private_ca'), default='public_acme')
+    install_parser.add_argument('--public-enrollment', action='store_true',
+                                help='Opt in to automatic preservation registration; does not verify Steam ownership')
     args = parser.parse_args()
     try:
         if args.command == 'prepare':
-            result = prepare(args.output, args.archive, args.runtime_report, args.server_image, args.panel_image)
+            result = prepare(args.output, args.archive, args.runtime_report, args.server_image, args.panel_image,
+                             args.catalog_preview_pack)
         elif args.command == 'verify':
             result = {'release_verified': bool(verify(args.release))}
         else:
-            result = install(args.release, args.public_ip, args.tls_mode)
+            result = install(args.release, args.public_ip, args.tls_mode, args.public_enrollment)
         print(json.dumps(result))
     except (ValueError, OSError, tarfile.TarError, subprocess.CalledProcessError) as exc:
         parser.exit(1, f'Deployment stopped: {exc}\n')

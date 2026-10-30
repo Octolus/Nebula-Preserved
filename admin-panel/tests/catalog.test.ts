@@ -9,6 +9,10 @@ import {
   catalogPrice,
   catalogQuery,
   provenanceLabel,
+  catalogCategoryLabel,
+  catalogGenderLabel,
+  catalogPreviewUrl,
+  catalogPriceSummary,
 } from '../src/lib/catalog.ts';
 
 test('catalog separates all assets from store offers and encodes exact filter values', () => {
@@ -66,13 +70,78 @@ test('catalog preserves zero prices and distinguishes unknown historical metadat
 
 test('catalog details use available labels and ignore malformed offer-list entries', () => {
   assert.equal(catalogItemName({ item_id: 'Exact-ID', name: 'Local label' }), 'Local label');
-  assert.equal(catalogItemName({ item_id: 'Exact-ID' }), 'Exact-ID');
+  assert.equal(catalogItemName({ item_id: 'Exact-ID' }), 'Game item · Exact-ID');
   assert.deepEqual(catalogOffers({ offers: [null, false, 'bad', [], { offer_id: 'real' }] }), [
     { offer_id: 'real' },
   ]);
   assert.deepEqual(catalogOffers({ offer_id: 'offer', crystals: 25 }), [
     { offer_id: 'offer', crystals: 25 },
   ]);
+});
+
+test('catalog human labels replace generated asset names without inventing commercial names', () => {
+  assert.equal(
+    catalogItemName({
+      item_id: 'abcdefghijklmnop',
+      kind: 'wardrobe',
+      gender: 'FEMALE',
+      category_label: 'Hat',
+      name: 'Preserved Clothing abcdefghijklmnop',
+    }),
+    'Female Hat · abcdefgh',
+  );
+  assert.equal(
+    catalogItemName({
+      item_id: 'asset-id',
+      display_name: 'Recovered Cotton Hat',
+      name: 'Preserved item',
+    }),
+    'Recovered Cotton Hat',
+  );
+  assert.equal(catalogCategoryLabel({ category: 'CLOTH_HEAD_HAT' }), 'Hat');
+  assert.equal(
+    catalogCategoryLabel({ category: 'CLOTH_BODY_HANDITEML', category_label: 'Handiteml' }),
+    'Left-hand item',
+  );
+  assert.equal(
+    catalogCategoryLabel({ category: 'CLOTH_BODY_WRISTBANDR' }),
+    'Right wrist accessory',
+  );
+  assert.equal(catalogCategoryLabel({ category: 'CLOTH_BODY_TORSO_LEGS' }), 'Full outfit');
+  assert.equal(
+    catalogCategoryLabel({ kind: 'companions', category_label: 'Companions' }),
+    'Companion',
+  );
+  assert.equal(catalogGenderLabel('UNISEX'), 'Unisex');
+});
+
+test('catalog previews only accept opaque authenticated same-origin image routes', () => {
+  assert.equal(
+    catalogPreviewUrl({ preview_url: '/api/catalog-preview/' + 'a'.repeat(64) }),
+    '/api/catalog-preview/' + 'a'.repeat(64),
+  );
+  for (const preview_url of [
+    'https://external.invalid/photo.png',
+    '//external.invalid/photo',
+    '/api/catalog-preview/../secret',
+    '/api/catalog-preview/key?token=secret',
+    'C:/private/image.png',
+  ])
+    assert.equal(catalogPreviewUrl({ preview_url }), null);
+});
+
+test('catalog summary only shows actual active store offers and preserves currency alternatives', () => {
+  const offers = [
+    { active: true, store_active: true, crystals: 25, np: 10 },
+    { active: false, store_active: true, crystals: 1, np: 0 },
+    { active: true, store_active: false, crystals: 2, np: 0 },
+  ];
+  assert.equal(catalogPriceSummary({ offers }), '25 crystals / 10 Nebula Points');
+  assert.equal(catalogPriceSummary({ offers: offers.slice(1) }), 'Not currently for sale');
+  assert.equal(
+    catalogPriceSummary({ offers: [offers[0], { ...offers[0], crystals: 50 }] }),
+    '25 crystals / 10 Nebula Points · 2 price options',
+  );
 });
 
 test('SSR proxy forwards catalog filters only on the catalog route and keeps its query allowlist', () => {

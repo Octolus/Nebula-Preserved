@@ -20,10 +20,29 @@ pub fn origin(input: &str) -> Result<String> {
     );
     Ok(server)
 }
+/// Explicitly selected private tester artifacts keep provisional status visible.
+/// Generic and normal release builds never opt in through their defaults.
+#[cfg(any(windows, test))]
+pub fn tester_build() -> bool {
+    option_env!("NEBULA_TESTER_BUILD") == Some("1")
+}
+#[cfg(any(windows, test))]
+pub fn fixed_tester_server() -> Result<Option<String>> {
+    if !tester_build() {
+        return Ok(None);
+    }
+    Ok(Some(origin(
+        option_env!("NEBULA_TESTER_SERVER").unwrap_or(""),
+    )?))
+}
+#[cfg(any(windows, test))]
+pub fn selected_origin(fixed: Option<&str>, entered: &str) -> Result<String> {
+    origin(fixed.unwrap_or(entered))
+}
 pub fn gui(allow_provisional: bool) -> Result<()> {
     #[cfg(windows)]
     {
-        crate::gui::run(allow_provisional)
+        crate::gui::run(allow_provisional || tester_build())
     }
     #[cfg(not(windows))]
     {
@@ -148,7 +167,7 @@ fn probe_with_roots(server: &str, roots: rustls::RootCertStore) -> Result<()> {
     Ok(())
 }
 #[cfg(windows)]
-fn client_config(roots: rustls::RootCertStore) -> Result<rustls::ClientConfig> {
+pub(crate) fn client_config(roots: rustls::RootCertStore) -> Result<rustls::ClientConfig> {
     ensure!(!roots.is_empty(), "No trusted TLS roots available");
     Ok(
         rustls::ClientConfig::builder_with_provider(std::sync::Arc::new(
@@ -222,6 +241,20 @@ mod tests {
         assert!(!release_status_allowed("provisional", false));
         assert!(release_status_allowed("provisional", true));
         assert!(!release_status_allowed("unknown", true));
+    }
+    #[test]
+    fn fixed_tester_origin_cannot_be_repointed_by_saved_or_entered_values() {
+        let fixed = "https://play.example.org:8444";
+        assert_eq!(
+            selected_origin(Some(fixed), "https://other.example.org:8444").unwrap(),
+            fixed
+        );
+        assert_eq!(
+            selected_origin(Some(fixed), "http://invalid").unwrap(),
+            fixed
+        );
+        assert!(selected_origin(Some("http://invalid"), fixed).is_err());
+        assert_eq!(selected_origin(None, fixed).unwrap(), fixed);
     }
     #[test]
     fn bare_address_uses_public_tls_port() {

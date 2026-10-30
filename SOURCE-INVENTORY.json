@@ -1,7 +1,7 @@
 {
-  "bytes_excluding_inventory": 30132968,
+  "bytes_excluding_inventory": 30279540,
   "excluded": "Original game installation, compiled client/runtime outputs, Unity Linux build, databases, logs, credentials, keys, generated build products and private evidence are excluded. Four pre-existing vendored Cecil dependency DLLs remain at their reviewed original hashes.",
-  "file_count_excluding_inventory": 1698,
+  "file_count_excluding_inventory": 1712,
   "files": {
     ".editorconfig": {
       "sha256": "93287d2202fa7d6d6ce0d539f7189bbf775bd3df5de67be71830c2f55b7d7b82",
@@ -56,8 +56,8 @@
       "size": 5686
     },
     ".gitignore": {
-      "sha256": "d35c0c8d295309eec0d8ce5fc9a4ca0f4c3c7251928369ebad072d4175e09f01",
-      "size": 2094
+      "sha256": "e475e5984c0e223e05f9db44861d11804c9e86fbe96693a5bd1f6b1fec04c71c",
+      "size": 2150
     },
     "CONTRIBUTING.md": {
       "sha256": "5d08c3ece42cadb558f2b0be983564b02a53214e19191fa45826bae3123974c6",
@@ -123,6 +123,10 @@
       "sha256": "f3923515ed6d73e08e6730f5e0e5df7a128275b9bb967b59f50c6120ba644b22",
       "size": 454
     },
+    "admin-panel/e2e/catalog-photos.spec.ts": {
+      "sha256": "0a1e4a7b89fea2469ea2d5bf35303b0ae0385520e5859364d4b350bf06711cc6",
+      "size": 3866
+    },
     "admin-panel/e2e/login.spec.ts": {
       "sha256": "2b27a833dbb1019e5eed5794700704d3178e77c2ef68de23fe9e50be1cfe105d",
       "size": 2623
@@ -156,8 +160,8 @@
       "size": 2959
     },
     "admin-panel/src/components/catalog-workspace.tsx": {
-      "sha256": "0349ae1c727397ca42e08b2bc82c17da24280a4bd8087e9be5045ba2195e37d2",
-      "size": 17981
+      "sha256": "7c6e731a3d17d9df9d0243015d7c4e3bdab0d2b07a4b6af16e2807a8be78509d",
+      "size": 23726
     },
     "admin-panel/src/components/control-panel.tsx": {
       "sha256": "6645923f34a8ef35321b400272c05cf8e37a1b7a2ad940719bdd6cda0f15a8df",
@@ -279,9 +283,13 @@
       "sha256": "58b2cc5fa259358e9192125abf072c832144193d87f3d66a90b13089a0196cef",
       "size": 576
     },
+    "admin-panel/src/lib/catalog-preview.ts": {
+      "sha256": "444ab5d8c27aa8e233bb52774dc0cfc855a76010ad22e484b890741f0c2a2f42",
+      "size": 1783
+    },
     "admin-panel/src/lib/catalog.ts": {
-      "sha256": "dc86cc5d42778037ed1f721df0a01c635bd6953ce5b7cd3d5578a2ae0e0617ef",
-      "size": 2953
+      "sha256": "e42fafcc4a1eeaffb002715c828f413924118ebf9e61833a994aa7ceff61960e",
+      "size": 6469
     },
     "admin-panel/src/lib/manage-policy.ts": {
       "sha256": "e10c7849eec16fde912802bed63cd45d2256a2189270e9e81280114485188388",
@@ -306,6 +314,10 @@
     "admin-panel/src/middleware.ts": {
       "sha256": "4fa11d69ba80c45ec702c722ecae0952ea24abc8c75722b3a71f016a25a431cf",
       "size": 2098
+    },
+    "admin-panel/src/pages/api/catalog-preview/[key].ts": {
+      "sha256": "57480ff036d6444ed7c47d2626e4d72461ee38fae2bd8ffa9dde9577e2e656cf",
+      "size": 928
     },
     "admin-panel/src/pages/api/login.ts": {
       "sha256": "7c1fdb6a1cd6bd5e91e3f200eab8d539f57a639e228a08e39de89d1bee4a0913",
@@ -335,9 +347,13 @@
       "sha256": "c94e2d572f79795ba8289fbe91c6c308ed5ef22880d14126c72ce9eae08ff107",
       "size": 3744
     },
+    "admin-panel/tests/catalog-preview.test.ts": {
+      "sha256": "41d248236e25a20900d9e6e73f1a3a773e2ba3eb17f447568ecf9cb9d5e02b29",
+      "size": 2916
+    },
     "admin-panel/tests/catalog.test.ts": {
-      "sha256": "18ab825401b4daa3a88af00576f2ce1669ee9a6684b8194ee5c3f18338e0136c",
-      "size": 4121
+      "sha256": "05737ce29668e519115ebb38f39bf85029d4b2eb23bff2b84bd7b83ea6eb091c",
+      "size": 6534
     },
     "admin-panel/tests/moderation-edges.test.ts": {
       "sha256": "f09d2bd12f7d853126cc3e9854033d4483b32576d7a56871290d0cd190996594",
@@ -384,8 +400,8 @@
       "size": 1160
     },
     "backend/catalog_inventory.py": {
-      "sha256": "e8e7be8555abb156cd1c93b8f074863d5646ea86b3c4ae51de4a065eb473bb1a",
-      "size": 10924
+      "sha256": "3aa97247f582a524f99c256326264871987f78c078e955dae51480bca3293499",
+      "size": 11757
     },
     "backend/consumable_admin.py": {
       "sha256": "c93f1e9a6b39665534d2b37c0614b5a7940a348640a3fe2f4067359cca200113",
@@ -394,6 +410,10 @@
     "backend/consumables.py": {
       "sha256": "9669ce3733cc00af4718d3c4fe0c6a368ee8358dd8b1ce5180a4b9a9daf8ed2f",
       "size": 13484
+    },
+    "backend/enrollment.py": {
+      "sha256": "a54e1a13d31c4b0bef9e00c6c15ae5b5bc6211dab9c2a9215b91073f132e71e5",
+      "size": 5727
     },
     "backend/gathering.py": {
       "sha256": "b02088bce5537399f023b9373698214a6e2e08b184eefda8693207e0e60020cc",
@@ -436,8 +456,8 @@
       "size": 8604
     },
     "backend/public_access.py": {
-      "sha256": "87b7c78f15cf6d985c2cb6178712fd74065c67a3618b43f07bee44c01ecb73b5",
-      "size": 10229
+      "sha256": "384b864013d0d0e5d903edc171d3acd289b70baa8d2da0e991bc29157d7c2778",
+      "size": 11290
     },
     "backend/public_access_admin.py": {
       "sha256": "5cfbfd409eaf2c875ee2f1b1ec00a85b0da6764b8721c400678cb6055358b660",
@@ -472,8 +492,8 @@
       "size": 2819
     },
     "backend/server.py": {
-      "sha256": "1b33c8f8a01b7fbd0aef3ae2508f2465df2a19ff0045ebc5ad79f4e8a9a79fa4",
-      "size": 11501
+      "sha256": "97e1e9a6e6fe251fde7af2ca08c355dee98e6aca194cc2bf583b3047c66035c1",
+      "size": 13740
     },
     "backend/service.py": {
       "sha256": "200781499ffc35f07ffe2b548ed195564f628210c71d4580a6ec6375a0ae26a5",
@@ -527,9 +547,13 @@
       "sha256": "a870b05b95463da0d8dc6fa8ad0ad78906855ebbcd3e209857b83dc23b6bac9f",
       "size": 6717
     },
+    "backend/tests/test_enrollment.py": {
+      "sha256": "8f71e2640751b5ef2bee2375c31490a03683a8060dd05d98145bba4cabc43d7e",
+      "size": 11667
+    },
     "backend/tests/test_full_catalog.py": {
-      "sha256": "ce1292e436aa101a03a561aeb4bbd3218b62ad1ed7faca83864bde5b431e39e9",
-      "size": 14857
+      "sha256": "6bd1a57da0dc18ce6c1f27d38a812381295dca5573cd0f7ab59b3228238ee571",
+      "size": 16422
     },
     "backend/tests/test_gathering.py": {
       "sha256": "20464f7085bc4bb0d8bf3982547fe5508702358924c8225c3447f4743bc01cef",
@@ -1251,6 +1275,10 @@
       "sha256": "2198694d3eebcb6d439c2f6872ee62fedd5d71cefabdf9fc9f6f3dc224568a39",
       "size": 1021
     },
+    "deployment/ansible/files/install-catalog-previews.py": {
+      "sha256": "c7701559cade1ac3b434bf8c543a146d25b6a738b1fbfbcab94dbf47cb059b8e",
+      "size": 10904
+    },
     "deployment/ansible/files/manage-public-tls.py": {
       "sha256": "33159a1a01967842733c8d3dfb092f62a934a3d70c3ada871aac6bb2c3c935f6",
       "size": 9408
@@ -1280,16 +1308,16 @@
       "size": 573
     },
     "deployment/ansible/files/nginx-panel.conf": {
-      "sha256": "d7b6e127d4bbbe26b24743862aaeb465ffbb746ece3f68e10c8dee3e0ab56b01",
-      "size": 1068
+      "sha256": "6105d2d317c1bf2662cc69ba50a6918298c5ce4a958a4d1049557929da5bde31",
+      "size": 1698
     },
     "deployment/ansible/inventory.example.yaml": {
       "sha256": "6b717072617909aec69be17ed66a0d42b8dee1179f129d782864e911338320ae",
       "size": 314
     },
     "deployment/ansible/site.yaml": {
-      "sha256": "dc094e81c10543ffe1c274f5034f9cf42f7ece4cf7495a4c7106aab6d1873d3c",
-      "size": 12483
+      "sha256": "3a2c1a39eaaed4dd4a608eab01ea8f042a60b226cc525f0396ed1bc58d71ac3f",
+      "size": 14609
     },
     "deployment/ansible/templates/compose.host.yaml.j2": {
       "sha256": "aa774230c8e9df2660ddd2fa9ec8fcd19b2e92158f5d4e217e36ba4fcfe1af39",
@@ -1300,12 +1328,16 @@
       "size": 514
     },
     "deployment/ansible/templates/runtime.env.j2": {
-      "sha256": "6343d0e1d7efbe574ece82ec697fdc8fb1b6783eff4b56c6c7a3861762847ee8",
-      "size": 442
+      "sha256": "5aaa31bcd8327b9a333bda1778532fc9fa980fcf00bb53787c0114ba25ed02c8",
+      "size": 534
     },
     "deployment/ansible/tests/test_bootstrap_release.py": {
-      "sha256": "fd2a3df86a00bedf4512eb4cbdcadb22e38b92af019ef7545bd14bb7ae6e87fc",
-      "size": 11461
+      "sha256": "19f227df462b74dbc67b0a9ca7dc56ddebd90257d77f476682e3e1e5aa0d61f0",
+      "size": 12916
+    },
+    "deployment/ansible/tests/test_catalog_previews.py": {
+      "sha256": "538f8def08e7abe032b675862afffde956e111eb2785b5b896fbd2f9a70be37b",
+      "size": 7832
     },
     "deployment/ansible/tests/test_deployment.py": {
       "sha256": "62058f2bbde4fdf553f203ac472f064f3c24a6b9233713527f36c0d84946214b",
@@ -1320,24 +1352,28 @@
       "size": 680
     },
     "deployment/bootstrap/README.md": {
-      "sha256": "f154578ce65fe066fe93d8ddfee2e12c3cb931a5203b79b06e17de5a23c6dbad",
-      "size": 6039
+      "sha256": "86de235aea4d61387b285ef3ce0e360e869cc51fcd8979b48242f9b6b943cc98",
+      "size": 6819
     },
     "deployment/bootstrap/catalog-validation.json": {
       "sha256": "426e542532a4296280f483acf79a828e9c4a2c8db92c6f5bd29ee1552a74a587",
       "size": 5115
     },
     "deployment/bootstrap/deploy.py": {
-      "sha256": "93b93c9fd96fa2bcff1168b6e51b9cdc200ecb6542c8936c3354b3ff70f2fac1",
-      "size": 20780
+      "sha256": "86b8936d74c725a55c35e0adada0a478d1aadaabd0c443deba509675ef72be68",
+      "size": 22723
+    },
+    "deployment/bootstrap/previews-enrollment-validation.json": {
+      "sha256": "ae333ffc8fcb74c71f7ef5de2effec2b01dbdfe432f1147b11cbdb65cfec3786",
+      "size": 6775
     },
     "deployment/bootstrap/validation.json": {
       "sha256": "f3ac82d81f39234dfb56526bf22d1b8c224de5eb9a07c164024c5e4b9ce7babf",
       "size": 2773
     },
     "deployment/docker/.env.example": {
-      "sha256": "d6853f54ff56dd96a8db6483d533efa2c10be51db72d096a9e36ae9e39925f41",
-      "size": 1664
+      "sha256": "7fa713f535857221496f68125df4a882c684bedf731e8ff0516b7f441bf2b3de",
+      "size": 1766
     },
     "deployment/docker/.gitignore": {
       "sha256": "6ab426db338671ae983d9c8d456e5b9c60ee5b2918f48ba03bb736535580d252",
@@ -1364,16 +1400,16 @@
       "size": 298
     },
     "deployment/docker/compose.yaml": {
-      "sha256": "e2976280aac580845d044dc929f822e05a54a95b7cff3c91ce6d9058dcfb0060",
-      "size": 5760
+      "sha256": "b6d6fe9ec7a9a95f2112f1b096980a695430aad7a9786771a8035d97f3eb5b00",
+      "size": 5992
     },
     "deployment/docker/configure-image.sh": {
       "sha256": "1e1f0a75df8f8842293c498cc098e3912a526cbcf1daa188afadb503a5cbfc42",
       "size": 4269
     },
     "deployment/docker/entrypoint.py": {
-      "sha256": "6b200a91ce3eb22757aa644430dd55a059be0328fc14809238e077e5fa1f6908",
-      "size": 12361
+      "sha256": "02833df9f4a0700f5f3c355e4be086361182a3be9128ae2125ae5eb0b7ae4ce4",
+      "size": 12651
     },
     "deployment/docker/healthcheck.py": {
       "sha256": "4434358fa02a88b93794697692a0a8e09583b2feb94b0bb0e64884ca7201afd6",
@@ -1384,8 +1420,8 @@
       "size": 730
     },
     "deployment/docker/nginx-public.conf": {
-      "sha256": "a1bd11ae9ca168affe78e195631d6923bc8bf96f2c104f2edc1e85840cff380e",
-      "size": 1150
+      "sha256": "a945216505dcc8e7b8a7b054a5055fb8fc39febf21c1dfe429218966645b92e1",
+      "size": 1768
     },
     "deployment/docker/requirements.lock.txt": {
       "sha256": "ca43352354e4eb9533677ec86752df922e787ac67a8e5dacd87664d231c2c274",
@@ -1468,16 +1504,24 @@
       "size": 3481
     },
     "docs/CATALOG.md": {
-      "sha256": "356badb68c7367130dd1e447bcda4526df3ca8906b878e2d6bab6978e64f13f6",
-      "size": 3831
+      "sha256": "dabff9f4a566a83ad9337948e7e3f6a91f355c65342a6fe71cc725bf14e526e9",
+      "size": 4160
+    },
+    "docs/CATALOG_PREVIEWS.md": {
+      "sha256": "cee1c14c1e796dddf2a66dafdd9dbf4f136ef3650b6f0c609c15ec0fae12cdd2",
+      "size": 3488
     },
     "docs/CONTROLS.md": {
       "sha256": "e002a6103331596f34ec9ed59ca0a8d90d4ef28491fbf81da163db58b75cc00f",
       "size": 1439
     },
+    "docs/ENROLLMENT.md": {
+      "sha256": "6cb201596b18a2087b7c1d4121b71af68eeda8aaa42ffa335676e52db404066c",
+      "size": 3521
+    },
     "docs/LAUNCHER.md": {
-      "sha256": "85bfa90cee8a08a491147f7ac2b1f4047e3315e4226c13a88506d11d6e4eb316",
-      "size": 9192
+      "sha256": "47351778c7988b7ecaa4b5ad6bc82495f88013bda3185165a01cd4d59d437800",
+      "size": 11904
     },
     "docs/LICENSING.md": {
       "sha256": "06001ca90eb0ae4c1067e635e669dd5179b4a85a5160d0b4752d8a7f96ed8048",
@@ -1504,8 +1548,8 @@
       "size": 1946
     },
     "docs/PROGRESS.md": {
-      "sha256": "1e1d393f91f84b577aeabded43a08e7219399e9b6820bfece718880f445ee13e",
-      "size": 13097
+      "sha256": "868e092d7814e33bc166e89ac25ef20f6f3682a918579167a019d41b370deaec",
+      "size": 14671
     },
     "docs/PUBLISHING.md": {
       "sha256": "439cdcbb5ad15eaad33e94ef664ad22ab305cf1c691d085ca4526f9de4bd9710",
@@ -1524,8 +1568,8 @@
       "size": 4218
     },
     "docs/TESTING.md": {
-      "sha256": "3b2c7ed555b8b1fd1538ec9fbfbb6b75f667fbdf0b58c0d4153540c3724b0d71",
-      "size": 17066
+      "sha256": "db39328c682dc3e685e16fbe95f9e9ba603b95b0adb3be407da1cc8d31b5d738",
+      "size": 18221
     },
     "docs/images/admin-panel.png": {
       "sha256": "bce9f0b96a157712952e47def10e38571623b8eb20d59339bbd29f314b818471",
@@ -6152,12 +6196,12 @@
       "size": 951
     },
     "patcher/README.md": {
-      "sha256": "19834dcde0ee1f023facc6b0022fd0f79a487411cd7e1e6113feff014fd4c1b2",
-      "size": 8967
+      "sha256": "5ddbd90038aba57cd5cdab0269a66d5cbe81afb882b30d0c323b0c14d5209570",
+      "size": 9176
     },
     "patcher/build.rs": {
-      "sha256": "6e4a40ae59d46d5e8d73caf74c017b15bf1157f07af41b3fd1bac6540fcb1ac7",
-      "size": 6457
+      "sha256": "f4f5b78bcf37db3c39b42de31cb9117a440d4b088d5c3e950c6187307c1d80d1",
+      "size": 7267
     },
     "patcher/launcher-ui-validation.json": {
       "sha256": "d4a5efc597059fe8186a56e00872e2c7432db196e2d61c4b3988e1e17dfc80aa",
@@ -6180,16 +6224,16 @@
       "size": 3727
     },
     "patcher/src/credentials.rs": {
-      "sha256": "0e49f384ba50e23a7eaab4d6aaa45c73ed8aef4062f04d38f3a858096de8ba5c",
-      "size": 6933
+      "sha256": "06f5082204194992d886eba2396473c23e9e58faf33387d668fbff04a8c3f174",
+      "size": 7853
     },
     "patcher/src/delta.rs": {
       "sha256": "b11afdd6cce88077c050f89a169a8819f7770b2ff6680e13b18575b06bea9cd9",
       "size": 3147
     },
     "patcher/src/discovery.rs": {
-      "sha256": "999cd157c9d21bf971d3b3c4fb358e3445e7468181dea96a376814c81a5a0073",
-      "size": 22284
+      "sha256": "e06d7c6bc0f4372153c7b5d136c9f09753674a65c5888f016c8d64a3b303bf2c",
+      "size": 24448
     },
     "patcher/src/embedded.rs": {
       "sha256": "a09919e3cdb4829cbcd9f9f8b2261336dd1099000f5f63d42897ba8127b224ad",
@@ -6199,21 +6243,25 @@
       "sha256": "feaed817f57cc92660b0ad3ef7a67173b64dcd3c1afc8f55ad533a8dcc3e62ed",
       "size": 10532
     },
+    "patcher/src/enrollment.rs": {
+      "sha256": "8d4a2ec0ef73374f98007ad836b1cb77cde1be0c1ede607071a81e9bd4dcef1b",
+      "size": 23138
+    },
     "patcher/src/gui.rs": {
-      "sha256": "6d507da7fb44f24c38c8e553bdf1f18e9306c9219fb8a74e7e4f093583e1a489",
-      "size": 37314
+      "sha256": "7ba2ee92a778608b8d723677897a97220ce01c9eefba52f49a5a4bf7db6a71ee",
+      "size": 40499
     },
     "patcher/src/launcher.rs": {
-      "sha256": "7eb86045fda8250dbc8db06fbd6ea274a785c797d8f5a51cb82b2fa49b21b055",
-      "size": 9861
+      "sha256": "f21e414c3e173e83f692878d1fae223bac89ecb54d7ef3f95822bbb157fac3f8",
+      "size": 11076
     },
     "patcher/src/launcher_ui.rs": {
-      "sha256": "306e0db8701d469078af1e11f41e77cfdc1b5440a55d36dbe7659f69c9861528",
-      "size": 8260
+      "sha256": "727543a5b8dc08fee9e79f14e5fafee50ea5376661353d496b47ea551e0ec8ee",
+      "size": 12826
     },
     "patcher/src/main.rs": {
-      "sha256": "34aa52bcca8f3c8a8f1a6bb71171141ba9e671f3a8701f4b52cfecd9a84fede0",
-      "size": 8995
+      "sha256": "92d6ba0d51b2eab35a00e16c022e2dc917e357d6e92e194ef26ad2a495f18f26",
+      "size": 9642
     },
     "patcher/src/manifest.rs": {
       "sha256": "98521e87266edcea7ba8fdd9fe97dee4a236880c37e3ab14dcc42ee5476950c9",
@@ -6479,6 +6527,10 @@
       "sha256": "b14d6c6d23eda7bf35bb3ea8e43708516b3f8cd1b5dac4f0b5dab52ff1929510",
       "size": 31992
     },
+    "tools/extract_catalog_previews.py": {
+      "sha256": "1a4a4832cb92a5fea4b3e9496ffa9fd7092a4339fc449fadeefbd1bf4ab1cba1",
+      "size": 18769
+    },
     "tools/instance_supervisor.py": {
       "sha256": "9388446a498d5971fee50b5a889c1565793d2ed89c5022485ded2924340a2780",
       "size": 45270
@@ -6498,6 +6550,10 @@
     "tools/repair_native_female_presets.py": {
       "sha256": "f66a3bdce02c2c872d2a14e7cfa369cd8e46676bd67e0b5548619e4e02fe494d",
       "size": 7062
+    },
+    "tools/requirements-catalog-previews.txt": {
+      "sha256": "2fa7847d7f1ecb14131d3db69404b59b3d5949f31a2523cbe6cb3db03a1be12e",
+      "size": 76
     },
     "tools/research/INVENTORY.json": {
       "sha256": "094236d220bd6b777b75844999256db65647674a664200a13273ac93100aa83a",

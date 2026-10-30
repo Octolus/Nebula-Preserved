@@ -45,6 +45,20 @@ def offer_id(row):
     return POLICY + "-" + digest[:32]
 
 
+def preview_fields(resource_path):
+    """Opaque lookup key only; never reads a file or establishes availability.
+
+    Item paths retain their .png suffix. Shop artwork uses its extensionless
+    ResourceManager key. The private extractor follows this exact normalization;
+    the server resolves only an allowlisted image index, not this resource path.
+    """
+    if not isinstance(resource_path, str) or not resource_path:
+        return {"preview_key": None, "preview_url": None}
+    normalized = resource_path.replace("\\", "/").lower()
+    key = hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+    return {"preview_key": key, "preview_url": "/api/catalog-preview/" + key}
+
+
 class CatalogInventory:
     def __init__(self, service):
         self.service = service
@@ -52,6 +66,7 @@ class CatalogInventory:
         evidence = service.catalog.protocol_dir / "catalog-recovery-provenance.json"
         recovered = json.loads(evidence.read_text(encoding="utf-8")) if evidence.exists() else {}
         self.artwork = [{**row, "kind": "shop_artwork", "item_id": row["resource_key"],
+                         **preview_fields(row["resource_key"]),
                          "resource_path": row["resource_key"], "asset_path": None,
                          "thumbnail_path": None, "offers": [], "grantable": False,
                          "shop_ready": False, "unavailable_reason": "Artwork identity does not establish a store or item entitlement",
@@ -93,6 +108,7 @@ class CatalogInventory:
                 except ProtocolError as exc:
                     row["thumbnail_path"] = None
                     row["shop_ready"], row["unavailable_reason"] = False, str(exc)
+                row.update(preview_fields(row["thumbnail_path"]))
                 self.items.append(row)
         self.items.sort(key=identity)
         if len({identity(row) for row in self.items}) != len(self.items):

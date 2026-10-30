@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class Backend:
     def __init__(self, state_dir, *, bind="127.0.0.1", advertise_ip="127.0.0.1", port=8080,
                  core_test_profile=None, managed_instances=False, local_test_identities=False,
-                 public_access=False, catalog_policy="none"):
+                 public_access=False, catalog_policy="none", public_enrollment=False):
         if catalog_policy not in ("none", "preservation-catalog-v1"):
             raise ValueError("Unsupported catalog policy")
         if type(local_test_identities) is not bool:
@@ -40,6 +40,8 @@ class Backend:
         if type(public_access) is not bool:
             raise TypeError("public_access must be a Boolean")
         self.public_access = public_access
+        if type(public_enrollment) is not bool or (public_enrollment and not public_access):
+            raise ValueError("Public enrollment requires explicit public access")
         if self.public_access and self.local_test_identities:
             raise ValueError("Public access and local test identities are mutually exclusive")
         if self.public_access and self.bind_address != "127.0.0.1":
@@ -55,6 +57,10 @@ class Backend:
         self.store = Store(state_dir / "preservation.sqlite3",
                            local_test_identities=self.local_test_identities)
         self.access = AccessAuthority(self.store.db) if self.public_access else None
+        self.enrollment = None
+        if public_enrollment:
+            from enrollment import Enrollment
+            self.enrollment = Enrollment(self.store, self.access)
         self.service = Service(self.store, Catalog(ROOT / "protocol"),
                                core_test_profile=self.core_test_profile,
                                managed_instances=self.managed_instances)
@@ -108,6 +114,8 @@ class Backend:
 
     async def handle(self, request):
         command = request.path.lstrip("/")
+        if command == "preservation/enroll":
+            return await self.handle_enrollment(request)
         if command == "preservation/health":
             return web.json_response({"service": "nebula-preservation",
                                       "reconstructed_http_handlers": sorted(self.service.ROUTES),
@@ -144,6 +152,31 @@ class Backend:
                     response_bytes=len(response.encode("utf-8")))
         return web.Response(text=encrypt(response), content_type="text/plain")
 
+    async def handle_enrollment(self, request):
+        from enrollment import EnrollmentError, MAX_BODY, decode_body
+        headers = {"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"}
+        if self.enrollment is None:
+            return web.json_response({"error": "registration_disabled"}, status=404, headers=headers)
+        if request.method != "POST":
+            return web.json_response({"error": "method_not_allowed"}, status=405, headers=headers)
+        peer = request.headers.get("X-Nebula-Enrollment-IP")
+        try:
+            # Only the exact TLS proxy location sets this trusted header. The
+            # backend's public-access constructor enforces a loopback listener.
+            if request.query or request.content_type != "application/json":
+                self.enrollment.register(None, peer)
+            raw = await request.content.read(MAX_BODY + 1)
+            try:
+                body = decode_body(raw)
+            except (ValueError, UnicodeError):
+                body = None
+            result = self.enrollment.register(body, peer)
+            return web.json_response(result, status=201 if result["created"] else 200, headers=headers)
+        except EnrollmentError as exc:
+            if exc.status == 429:
+                headers["Retry-After"] = "3600"
+            return web.json_response({"error": exc.code}, status=exc.status, headers=headers)
+
     async def close(self, _app):
         await stop_management(self)
         if self.maintenance_task is not None:
@@ -170,6 +203,8 @@ def parse_args(argv=None):
                    help="Admit only the two fixed preservation test identities on concrete private endpoints")
     p.add_argument("--public-access", action="store_true",
                    help="Require per-account credentials; bind loopback behind TLS")
+    p.add_argument("--public-enrollment", action="store_true",
+                   help="Opt into unverified first-claim preservation registration; never resets existing accounts")
     p.add_argument("--state-dir", type=Path, default=Path("work/server-state"))
     p.add_argument("--catalog-policy", choices=["none", "preservation-catalog-v1"], default="none",
                    help="Explicitly populate all validated items using preservation stores/prices; preserves existing offers and player state")
@@ -188,6 +223,8 @@ def parse_args(argv=None):
         p.error("--local-test-identities requires concrete loopback or RFC1918 bind and advertise addresses")
     if a.public_access and a.local_test_identities:
         p.error("--public-access cannot be combined with --local-test-identities")
+    if a.public_enrollment and not a.public_access:
+        p.error("--public-enrollment requires --public-access")
     if a.public_access and a.bind != "127.0.0.1":
         p.error("--public-access requires --bind 127.0.0.1 behind TLS")
     return a
@@ -201,7 +238,8 @@ def main():
     backend = Backend(a.state_dir, bind=a.bind, advertise_ip=a.advertise_ip, port=a.port,
                       core_test_profile=a.core_test_profile, managed_instances=a.managed_instances,
                       local_test_identities=a.local_test_identities,
-                      public_access=a.public_access, catalog_policy=a.catalog_policy)
+                      public_access=a.public_access, catalog_policy=a.catalog_policy,
+                      public_enrollment=a.public_enrollment)
     app = web.Application(client_max_size=1024 * 1024)
     app.router.add_route("*", "/{path:.*}", backend.handle)
     app.on_startup.append(backend.start_maintenance)

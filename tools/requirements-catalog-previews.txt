@@ -1,0 +1,4 @@
+-r ../backend/requirements.txt
+UnityPy==1.25.4
+Pillow==12.0.0
+PyYAML==6.0.2

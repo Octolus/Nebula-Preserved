@@ -1,6 +1,7 @@
 """Complete manifest-backed catalog coverage, transactions and native DTOs."""
 import json
 import importlib.util
+import hashlib
 import sqlite3
 from pathlib import Path
 import sys
@@ -11,7 +12,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / "backend"), str(ROOT / "tools")]
 from avatar_entry_codec import decode_entry_fields
-from catalog_inventory import CatalogInventory, POLICY, STORE_TYPE_ALIASES, identity, offer_id, seed_full_catalog
+from catalog_inventory import CatalogInventory, POLICY, STORE_TYPE_ALIASES, identity, offer_id, preview_fields, seed_full_catalog
 from management import Management, ManagementError
 from seed_local_shops import seed
 from service import Service
@@ -45,6 +46,9 @@ class FullCatalog(unittest.TestCase):
         self.assertIn(unicode_row["item_id"], unicode_row["thumbnail_path"])
         self.assertIn("filename", unicode_row["asset_metadata"])
         self.assertIn("manifest_asset_text", unicode_row["asset_metadata"])
+        expected_key = hashlib.sha256(unicode_row["thumbnail_path"].replace("\\", "/").lower().encode("utf-8")).hexdigest()
+        self.assertEqual(unicode_row["preview_key"], expected_key)
+        self.assertEqual(unicode_row["preview_url"], "/api/catalog-preview/" + expected_key)
         self.assertEqual(unicode_row["provenance"]["historical_store"], "unknown")
         self.assertIsNone(unicode_row["original_name"])
         rare = [r for r in rows if r["category"] in STORE_TYPE_ALIASES]
@@ -235,7 +239,24 @@ class FullCatalog(unittest.TestCase):
         self.assertFalse(response["items"][0]["grantable"])
         self.assertFalse(response["items"][0]["historical_store_membership_known"])
         self.assertEqual(response["items"][0]["offers"], [])
+        resource_key = response["items"][0]["resource_key"]
+        self.assertEqual(response["items"][0]["preview_key"], hashlib.sha256(resource_key.replace("\\", "/").lower().encode("utf-8")).hexdigest())
         self.assertEqual(self.store.db.execute("SELECT count(*) FROM shop_catalogs").fetchone()[0], 0)
+
+    def test_preview_keys_are_opaque_deterministic_and_preserve_resource_identity(self):
+        path = "MALE/CLOTH_HEAD_HAT/ExactÑID/ExactÑIDThumbnail.png"
+        fields = preview_fields(path)
+        self.assertEqual(fields, preview_fields(path.lower().replace("/", "\\")))
+        self.assertRegex(fields["preview_url"], r"^/api/catalog-preview/[0-9a-f]{64}$")
+        self.assertNotEqual(fields, preview_fields(path + " "))
+        self.assertNotEqual(preview_fields("Shops/shop"), preview_fields("Shops/shop.png"))
+        self.assertEqual(preview_fields(None), {"preview_key": None, "preview_url": None})
+        rows = CatalogInventory(self.service).items
+        fallback = [r for r in rows if not r["own_thumbnail_known"]]
+        self.assertEqual(len(fallback), 2)
+        self.assertTrue(all(r["thumbnail_source"] == "generic_shipped_shop_icon" for r in fallback))
+        self.assertEqual(fallback[0]["preview_key"], fallback[1]["preview_key"])
+        self.assertTrue(all(r["preview_key"] and r["preview_url"] for r in rows))
 
 
 if __name__ == "__main__":

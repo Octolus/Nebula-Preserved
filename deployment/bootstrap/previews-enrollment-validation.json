@@ -1,0 +1,124 @@
+{
+  "format": "nebula-previews-enrollment-validation-v1",
+  "date": "2026-10-30",
+  "scope": "Decoded catalog previews, fixed-server Windows tester with automatic registration, authenticated Astro photos and opt-in Linux deployment. Original-game and independent-player acceptance remain pending.",
+  "previews": {
+    "item_rows": 7688,
+    "own_item_photos": 7686,
+    "explicit_generic_fallback_rows": 2,
+    "shop_artwork_resources": 1205,
+    "distinct_webp_files": 8892,
+    "image_bytes": 64139424,
+    "maximum_dimension": 256,
+    "portable_rerun_exact_output_matches": true,
+    "pack_sha256": "cef8734ff504442db65d299f3f8861ca58f385852769163a1becfbc4e8983117",
+    "index_sha256": "1d2c9b30e53fd9ef958a32f90d8797bd318002d8b7327431bb45b8ab1d2f5307",
+    "original_pixels_in_public_source": false
+  },
+  "windows_tester": {
+    "exe_sha256": "3f15c6954fa67d74e7e5f3c3a54ec2840fe5e8c57579fea3cde7a24501bace15",
+    "unit_tests_passed": 55,
+    "live_registration_fixture_passed": true,
+    "live_https_posts": 2,
+    "new_registration_status": 201,
+    "lost_response_retry_status": 200,
+    "protected_pending_reopen": true,
+    "dpapi_account_roundtrip": true,
+    "saved_profile_reopen_unchanged": true,
+    "normal_system_tls": true,
+    "fixed_server_private_build": true,
+    "shared_credential_embedded": false,
+    "test_build_provisional_profile": true,
+    "game_launched": false
+  },
+  "enrollment": {
+    "default_enabled": false,
+    "deployed_explicitly_enabled": true,
+    "valve_ownership_verified": false,
+    "policy": "new-profile unverified Steam identity claim, unique protected credential; existing accounts require their secret",
+    "windows_tests_passed": 10,
+    "restricted_linux_tests_passed": 10,
+    "isolated_real_nginx_tls_contract_passed": true,
+    "deployed_wrong_key_and_existing_account_refused": true,
+    "owned_synthetic_account_removed": true
+  },
+  "checks": {
+    "python_discovered": 445,
+    "python_expected_private_evidence_skips": 3,
+    "python_failures": 0,
+    "python_wall_seconds": 67.077,
+    "panel_unit_passed": 44,
+    "production_astro_check_and_build_passed": true,
+    "deployment_linux_tests_passed": 50,
+    "disposable_actual_photos_viewport_widths": [
+      390,
+      1280
+    ],
+    "public_actual_photos_viewport_widths": [
+      390,
+      1280
+    ],
+    "external_tls_security_checks_passed": 14,
+    "internal_ports_closed": 35,
+    "concurrent_public_photos_passed": 25,
+    "catalog_json_after_photo_burst_passed": true,
+    "public_javascript_errors": 0,
+    "public_horizontal_overflow": false
+  },
+  "deployment": {
+    "release_manifest_sha256": "a4001885efa0f690bf13bc2f2f2d7275a37d80144e8b22ad510e7df7f7c6ea2a",
+    "successful_tasks": 47,
+    "changed_tasks": 10,
+    "failed_tasks": 0,
+    "all_48_existing_durable_table_hashes_retained": true,
+    "authority_and_tls_retained": true,
+    "added_tables": [
+      "preservation_enrollments",
+      "preservation_enrollment_limits"
+    ],
+    "preview_proxy_budget_updated_with_graceful_reload": true,
+    "image_ids": {
+      "nebula-preserved-server:previews-enrollment-20261030": [
+        "sha256:23d1e98021d8634729dd81073321a9fa3354dc318c970002829f471412a49eb7",
+        "sha256:4daadf4cb7b2620f1b266574d8b7d7c1672bed3415787918374ee88f419d2bf4"
+      ],
+      "nebula-preserved-panel:previews-enrollment-20261030": [
+        "sha256:03360826f250838a5341b0c6bea8cf2c7a36df53bd41020b98434d5da1fe56c8",
+        "sha256:41c2842149cc56ee9bde0c2667a2c77bd005dabaedc567c062e980d6edd2dc88"
+      ],
+      "nginx:1.28-alpine": [
+        "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+        "sha256:dc73b49f5124cf2ee538dfbdfbd121f0b4ccdcb20fea30f3a81bd477c02e2bb5"
+      ]
+    }
+  },
+  "source_sha256": {
+    "backend/catalog_inventory.py": "3aa97247f582a524f99c256326264871987f78c078e955dae51480bca3293499",
+    "backend/enrollment.py": "a54e1a13d31c4b0bef9e00c6c15ae5b5bc6211dab9c2a9215b91073f132e71e5",
+    "backend/public_access.py": "384b864013d0d0e5d903edc171d3acd289b70baa8d2da0e991bc29157d7c2778",
+    "backend/server.py": "97e1e9a6e6fe251fde7af2ca08c355dee98e6aca194cc2bf583b3047c66035c1",
+    "backend/tests/test_enrollment.py": "8f71e2640751b5ef2bee2375c31490a03683a8060dd05d98145bba4cabc43d7e",
+    "deployment/docker/entrypoint.py": "02833df9f4a0700f5f3c355e4be086361182a3be9128ae2125ae5eb0b7ae4ce4",
+    "deployment/docker/compose.yaml": "b6d6fe9ec7a9a95f2112f1b096980a695430aad7a9786771a8035d97f3eb5b00",
+    "deployment/docker/nginx-public.conf": "a945216505dcc8e7b8a7b054a5055fb8fc39febf21c1dfe429218966645b92e1",
+    "deployment/ansible/site.yaml": "3a2c1a39eaaed4dd4a608eab01ea8f042a60b226cc525f0396ed1bc58d71ac3f",
+    "deployment/ansible/files/nginx-panel.conf": "6105d2d317c1bf2662cc69ba50a6918298c5ce4a958a4d1049557929da5bde31",
+    "deployment/ansible/files/install-catalog-previews.py": "c7701559cade1ac3b434bf8c543a146d25b6a738b1fbfbcab94dbf47cb059b8e",
+    "deployment/ansible/templates/runtime.env.j2": "5aaa31bcd8327b9a333bda1778532fc9fa980fcf00bb53787c0114ba25ed02c8",
+    "deployment/bootstrap/deploy.py": "86b8936d74c725a55c35e0adada0a478d1aadaabd0c443deba509675ef72be68",
+    "admin-panel/src/lib/catalog-preview.ts": "444ab5d8c27aa8e233bb52774dc0cfc855a76010ad22e484b890741f0c2a2f42",
+    "admin-panel/src/pages/api/catalog-preview/[key].ts": "57480ff036d6444ed7c47d2626e4d72461ee38fae2bd8ffa9dde9577e2e656cf",
+    "admin-panel/src/lib/catalog.ts": "e42fafcc4a1eeaffb002715c828f413924118ebf9e61833a994aa7ceff61960e",
+    "admin-panel/src/components/catalog-workspace.tsx": "7c6e731a3d17d9df9d0243015d7c4e3bdab0d2b07a4b6af16e2807a8be78509d",
+    "tools/extract_catalog_previews.py": "1a4a4832cb92a5fea4b3e9496ffa9fd7092a4339fc449fadeefbd1bf4ab1cba1",
+    "tools/requirements-catalog-previews.txt": "2fa7847d7f1ecb14131d3db69404b59b3d5949f31a2523cbe6cb3db03a1be12e",
+    "patcher/build.rs": "f4f5b78bcf37db3c39b42de31cb9117a440d4b088d5c3e950c6187307c1d80d1",
+    "patcher/src/main.rs": "92d6ba0d51b2eab35a00e16c022e2dc917e357d6e92e194ef26ad2a495f18f26",
+    "patcher/src/gui.rs": "7ba2ee92a778608b8d723677897a97220ce01c9eefba52f49a5a4bf7db6a71ee",
+    "patcher/src/launcher.rs": "f21e414c3e173e83f692878d1fae223bac89ecb54d7ef3f95822bbb157fac3f8",
+    "patcher/src/launcher_ui.rs": "727543a5b8dc08fee9e79f14e5fafee50ea5376661353d496b47ea551e0ec8ee",
+    "patcher/src/discovery.rs": "e06d7c6bc0f4372153c7b5d136c9f09753674a65c5888f016c8d64a3b303bf2c",
+    "patcher/src/credentials.rs": "06f5082204194992d886eba2396473c23e9e58faf33387d668fbff04a8c3f174",
+    "patcher/src/enrollment.rs": "8d4a2ec0ef73374f98007ad836b1cb77cde1be0c1ede607071a81e9bd4dcef1b"
+  }
+}

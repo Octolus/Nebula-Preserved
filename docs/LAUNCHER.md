@@ -57,7 +57,7 @@ Close the game before patching, restoring, changing accounts or changing servers
 
 ## Build a portable release
 
-The normal GUI requires a **frozen seven-artifact remote network-only bundle** whose native acceptance is complete. A development executable without a compiled bundle pin can open the UI, discover games and provision a connection, but cannot start a game. Developers can explicitly run `gui --allow-provisional` for authorized native acceptance; the window identifies itself as **DEVELOPMENT provisional acceptance**. This flag changes only the provisional status gate, retains all byte/profile/TLS checks, is never enabled by defaults or embedded configuration, and must never be presented as release acceptance. The developer CLI retains its explicit provisional acceptance workflow.
+The normal GUI requires a **frozen seven-artifact remote network-only bundle** whose native acceptance is complete. A development executable without a compiled bundle pin can open the UI, discover games and provision a connection, but cannot start a game. Developers can explicitly run `gui --allow-provisional` for authorized native acceptance; the window identifies itself as **DEVELOPMENT provisional acceptance**. This flag changes only the provisional status gate, retains all byte/profile/TLS checks, and must never be presented as release acceptance. Generic and ordinary release builds never enable it by default. The explicit private tester build below is a separate provisional distribution mode. The developer CLI retains its explicit provisional acceptance workflow.
 
 Build on Windows with private inputs outside the repository:
 
@@ -94,3 +94,49 @@ execution and absence of input-capture imports. These headless checks do not
 replace a visual and keyboard/screen-reader pass on an unlocked Windows desktop.
 The [recorded checks](../patcher/launcher-ui-validation.json) pin the tested source
 and local preview binary; that preview contains no reviewed game bundle.
+
+## Fixed-server community tester build
+
+Operators can explicitly build a compact **TEST BUILD** with a compiled HTTPS
+server and the reviewed provisional network-only bundle. It is not a frozen
+release or evidence of native gameplay acceptance. Generic CI builds retain
+normal release gates and contain no deployment address or player credential.
+
+The tester flow is **find the installed game, then Start**. Steam must be running
+and signed in. Start cross-checks Steam's active Windows account against its
+parsed login-user table, automatically creates a new preservation account when
+the operator enabled `/preservation/enroll`, protects the unique credential with
+Windows CurrentUser DPAPI, applies verified networking patches, and starts the
+game. Stored `MostRecent` accounts are never substituted for the active Steam
+login. No server address, certificate, account file or Steam ID entry is needed.
+Local Steam identity discovery is not Valve ticket or ownership verification;
+Steam's original ownership/game initialization remains in place.
+
+A retry key is encrypted and durably saved before enrollment. A lost response
+can retry the same account without rotating its credential. Existing accounts
+with a different key require operator recovery. The launcher never replaces an
+existing account, accepts an invalid TLS certificate, or embeds a shared player
+secret. Switching Steam accounts on the same Windows user is refused when a
+saved credential belongs to the earlier account.
+
+Explicit private build inputs (outside the repository):
+
+```powershell
+$env:NEBULA_TESTER_BUILD = '1'
+$env:NEBULA_TESTER_SERVER = 'https://play.example.org:8444'
+$env:NEBULA_BUNDLE_SHA256 = 'REVIEWED_PROVISIONAL_MANIFEST_SHA256'
+$env:NEBULA_EMBED_BUNDLE = 'PRIVATE_REVIEWED_BUNDLE_DIRECTORY'
+cargo build --locked --release --manifest-path patcher/Cargo.toml
+```
+
+The build requires its pinned embedded bundle and system certificate trust;
+private-CA embedding is refused in this mode. Remove these build variables when
+building ordinary release artifacts. `setup-player` is a hidden headless tester
+command for checking automatic setup without starting the game.
+
+The default Windows unit suite has 55 passing tests and one explicitly ignored
+live enrollment fixture. That opt-in fixture requires an authorized unused
+synthetic account, a new isolated `LOCALAPPDATA` directory on the operator's
+chosen drive, and private report/server/account environment values. It performs
+two enrollment requests to test a lost-response retry, DPAPI persistence and
+profile reopen, without opening the game or modifying Steam registry state.

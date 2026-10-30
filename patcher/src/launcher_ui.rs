@@ -43,6 +43,9 @@ impl Flow {
     pub fn can_start(&self) -> bool {
         !self.busy && self.game_ready && self.verified_origin.is_some() && self.bundle_available
     }
+    pub fn can_start_tester(&self) -> bool {
+        !self.busy && self.game_ready && self.bundle_available
+    }
     pub fn next(&self) -> (&'static str, &'static str) {
         if self.busy {
             ("Working…", "Please let the current check or patch finish.")
@@ -132,6 +135,49 @@ pub fn layout(width: i32, advanced: bool, details: bool) -> Layout {
         height: bottom + if details { 398 } else { 260 },
     }
 }
+/// Fixed-server tester layout exposes account setup only when it is needed.
+/// The address, certificate and fingerprint controls are never part of this view.
+pub fn tester_layout(width: i32, details: bool, game_ready: bool, _connected: bool) -> Layout {
+    let width = width.max(540);
+    let inner = width - 88;
+    let bottom = 388;
+    let mut controls = vec![
+        (TITLE, Rect(28, 22, width - 56, 36)),
+        (SUBTITLE, Rect(28, 62, width - 56, 24)),
+        (NOTICE, Rect(28, 96, width - 56, 34)),
+        (GAME_TITLE, Rect(44, 154, inner, 26)),
+        (GAME_HELP, Rect(44, 184, inner, 22)),
+        (
+            GAME,
+            Rect(44, 212, if game_ready { inner } else { inner - 218 }, 34),
+        ),
+        (SERVER_TITLE, Rect(44, 286, inner, 26)),
+        (SERVER_HELP, Rect(44, 316, inner, 36)),
+        (NEXT, Rect(28, bottom + 28, width - 56, 28)),
+        (NEXT_HELP, Rect(28, bottom + 68, width - 56, 52)),
+        (START, Rect(width - 234, bottom + 132, 206, 44)),
+        (ACTIVITY, Rect(28, bottom + 188, width - 56, 42)),
+        (PROGRESS, Rect(28, bottom + 240, width - 56, 5)),
+        (TOGGLE_DETAILS, Rect(28, bottom + 246, 192, 30)),
+    ];
+    if !game_ready {
+        controls.extend([
+            (SCAN, Rect(width - 252, 212, 94, 34)),
+            (BROWSE, Rect(width - 148, 212, 104, 34)),
+        ]);
+    }
+    if details {
+        controls.push((DETAILS, Rect(28, bottom + 290, width - 56, 126)));
+    }
+    Layout {
+        controls,
+        cards: [
+            Rect(28, 140, width - 56, 122),
+            Rect(28, 272, width - 56, bottom - 272),
+        ],
+        height: bottom + if details { 444 } else { 300 },
+    }
+}
 pub fn scroll_position(current: i32, delta: i32, content: i32, viewport: i32) -> i32 {
     current
         .saturating_add(delta)
@@ -151,6 +197,18 @@ mod tests {
                 busy: bits & 8 != 0,
             };
             assert_eq!(flow.can_start(), bits == 7);
+        }
+    }
+    #[test]
+    fn tester_start_checks_game_bundle_and_job_but_enrolls_connection_internally() {
+        for bits in 0..16 {
+            let flow = Flow {
+                game_ready: bits & 1 != 0,
+                verified_origin: (bits & 2 != 0).then(|| "saved".into()),
+                bundle_available: bits & 4 != 0,
+                busy: bits & 8 != 0,
+            };
+            assert_eq!(flow.can_start_tester(), bits & 13 == 5);
         }
     }
     #[test]
@@ -197,6 +255,57 @@ mod tests {
                                     || y.1 + y.3 <= x.1,
                                 "controls overlap: {a}/{b}"
                             );
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #[test]
+    fn tester_layout_hides_connection_options_and_shows_only_needed_setup() {
+        for width in [540, 620, 780, 1280] {
+            for game_ready in [false, true] {
+                for connected in [false, true] {
+                    for details in [false, true] {
+                        let view = tester_layout(width, details, game_ready, connected);
+                        let ids: std::collections::BTreeSet<_> =
+                            view.controls.iter().map(|(id, _)| *id).collect();
+                        assert_eq!(ids.len(), view.controls.len());
+                        for hidden in [
+                            SERVER,
+                            CA,
+                            PIN,
+                            SYSTEM_TRUST,
+                            ADVANCED,
+                            CERT_LABEL,
+                            PIN_LABEL,
+                            PICK_CA,
+                            CHECK,
+                        ] {
+                            assert!(!ids.contains(&hidden));
+                        }
+                        assert_eq!(ids.contains(&BROWSE), !game_ready);
+                        assert!(!ids.contains(&PICK_ACCOUNT));
+                        for hidden in [ACCOUNT, ACCOUNT_LABEL, IMPORT, RESET] {
+                            assert!(!ids.contains(&hidden));
+                        }
+                        for (i, (_, a)) in view.controls.iter().enumerate() {
+                            assert!(
+                                a.0 >= 0
+                                    && a.1 >= 0
+                                    && a.2 > 0
+                                    && a.3 > 0
+                                    && a.0 + a.2 <= width
+                                    && a.1 + a.3 <= view.height
+                            );
+                            for (_, b) in &view.controls[i + 1..] {
+                                assert!(
+                                    a.0 + a.2 <= b.0
+                                        || b.0 + b.2 <= a.0
+                                        || a.1 + a.3 <= b.1
+                                        || b.1 + b.3 <= a.1
+                                );
+                            }
                         }
                     }
                 }

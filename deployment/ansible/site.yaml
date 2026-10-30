@@ -102,6 +102,50 @@
         mode: "{{ '0644' if item == 'nginx-public.conf' else '0600' }}"
       loop: [compose.yaml, compose.public.yaml, nginx-public.conf]
       register: base_files
+    - name: Preserve or create optional catalog preview directory
+      ansible.builtin.file:
+        path: '{{ nebula_root }}/catalog-previews'
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+    - name: Install optional private catalog preview pack
+      when: nebula_catalog_preview_archive is defined
+      block:
+        - name: Validate preview archive pin
+          ansible.builtin.assert:
+            that:
+              - nebula_catalog_preview_archive_sha256 is defined
+              - nebula_catalog_preview_archive_sha256 is match('^[0-9a-f]{64}$')
+        - name: Inspect local private preview archive
+          ansible.builtin.stat:
+            path: '{{ nebula_catalog_preview_archive }}'
+            checksum_algorithm: sha256
+            follow: false
+          delegate_to: localhost
+          become: false
+          register: preview_archive
+        - name: Admit exact regular preview archive
+          ansible.builtin.assert:
+            that:
+              - preview_archive.stat.isreg | default(false)
+              - not (preview_archive.stat.islnk | default(false))
+              - preview_archive.stat.checksum | default('') == nebula_catalog_preview_archive_sha256
+        - name: Install preview pack validator
+          ansible.builtin.copy:
+            src: files/install-catalog-previews.py
+            dest: '{{ nebula_root }}/install-catalog-previews.py'
+            mode: '0700'
+        - name: Upload private preview archive
+          ansible.builtin.copy:
+            src: '{{ nebula_catalog_preview_archive }}'
+            dest: '{{ nebula_root }}/catalog-previews.tar'
+            mode: '0600'
+        - name: Validate and atomically activate preview pack
+          ansible.builtin.command:
+            argv: [python3, '{{ nebula_root }}/install-catalog-previews.py', --archive, '{{ nebula_root }}/catalog-previews.tar', --sha256, '{{ nebula_catalog_preview_archive_sha256 }}', --root, '{{ nebula_root }}']
+          register: preview_pack
+          changed_when: (preview_pack.stdout | from_json).changed
     - name: Install panel proxy
       ansible.builtin.copy:
         src: files/nginx-panel.conf
@@ -239,7 +283,7 @@
         name: nebula-preserved
         daemon_reload: true
         enabled: true
-        state: "{{ 'restarted' if image_upload.changed or base_files.changed or panel_proxy.changed or settings.changed or units.changed or (public_tls.changed | default(false)) else 'started' }}"
+        state: "{{ 'restarted' if image_upload.changed or base_files.changed or panel_proxy.changed or settings.changed or units.changed or (public_tls.changed | default(false)) or (preview_pack.changed | default(false)) else 'started' }}"
     - name: Enable daily backups
       ansible.builtin.systemd_service: {name: nebula-preserved-backup.timer, enabled: true, state: started}
     - name: Enable hourly short-lived certificate renewal

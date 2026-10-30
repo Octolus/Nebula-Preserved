@@ -11,6 +11,30 @@ The existing deployment remains the default while that acceptance is pending.
 
 ## Current checkpoint — 2026-10-30
 
+The current [Windows tester launcher](LAUNCHER.md) uses a fixed server and a
+find-game → Start flow. Steam identity detection, first-time preservation
+registration and per-user protected credential storage are automatic. Its
+actual Rust HTTPS/DPAPI acceptance passed new registration, lost-response retry
+and saved-profile reuse. Existing credentials cannot be replaced by claiming
+an ID. This opt-in registration is a preservation identity policy and does not
+verify Valve ownership; see [enrollment](ENROLLMENT.md).
+
+The [visual catalog](CATALOG_PREVIEWS.md) now has 7,686 recovered item photos,
+two explicitly labeled generic fallbacks and 1,205 artwork references. The
+separate private pack contains 8,892 WebPs; source and ordinary container
+images contain no game pixels. Cards show readable labels, current prices and
+store availability, with a compact list option. Mobile and desktop checks
+exercise actual decoded photos and authenticated delivery.
+
+The latest Linux release installed with 47 successful tasks, ten changed and
+no failures. All 48 pre-existing durable table fingerprints and authority/TLS
+files were retained, including after removal of the owned registration test
+account. Two additive tables support enrollment audit and limits. The private
+live test used the actual Rust TLS/DPAPI code; original-game launch and
+independent-player acceptance remain separate.
+The sanitized [preview and enrollment record](../deployment/bootstrap/previews-enrollment-validation.json)
+pins the final source, images and tester executable.
+
 The [expanded catalog](CATALOG.md) is deployed: all 7,688 ordinary validated
 items have active offers. Existing 15 offers and four stores remain unchanged;
 the deployed total is 7,689 offers across eight stores, including the earlier
