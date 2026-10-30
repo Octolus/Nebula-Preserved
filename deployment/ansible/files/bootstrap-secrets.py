@@ -9,8 +9,10 @@ import subprocess
 import sys
 
 
-def bootstrap(root, address):
+def bootstrap(root, address, tls_mode='private_ca'):
     ip = str(ipaddress.IPv4Address(address))
+    if tls_mode not in ('private_ca', 'public_acme'):
+        raise ValueError('Unknown TLS mode')
     private, secret = root / 'operator', root / 'secrets'
     os.umask(0o077)
     private.mkdir(exist_ok=True, mode=0o700)
@@ -54,6 +56,14 @@ def bootstrap(root, address):
             stream.write(secrets.token_bytes(48))
     os.chown(account_key, 1000, 1000)
     os.chmod(account_key, 0o600)
+    if tls_mode == 'public_acme':
+        # Public certificates are issued/renewed separately. Preserve any older
+        # private CA and every account/operator authority during migration.
+        for path in secret.iterdir():
+            os.chown(path, 0, 1000)
+            os.chmod(path, 0o440)
+        print('Stable owner/account secrets verified; public TLS issuance is separate')
+        return
     ca, key = private / 'ca.pem', private / 'ca-key.pem'
     cert, server_key = secret / 'fullchain.pem', secret / 'server-key.pem'
     if not ca.exists():
@@ -91,4 +101,4 @@ def bootstrap(root, address):
 
 
 if __name__ == '__main__':
-    bootstrap(Path('/opt/nebula-preserved'), sys.argv[1])
+    bootstrap(Path('/opt/nebula-preserved'), sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else 'private_ca')

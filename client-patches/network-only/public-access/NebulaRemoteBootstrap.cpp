@@ -172,12 +172,10 @@ bool parse_profile(const std::wstring &public_origin) {
     std::string text(bytes.begin(), bytes.end());
     if (text.find('\r') != std::string::npos || text.find('\0') != std::string::npos) return false;
 
-    std::array<std::string, 7> keys{{"format", "server_url", "gateway_port", "api_port",
-                                     "first_scene_port", "last_scene_port", "ca_file"}};
-    std::array<std::string, 7> values{};
-    std::array<bool, 7> seen{};
-    std::string ca_hash;
-    bool saw_ca_hash = false;
+    std::array<std::string, 9> keys{{"format", "server_url", "gateway_port", "api_port",
+        "first_scene_port", "last_scene_port", "ca_file", "ca_sha256", "trust"}};
+    std::array<std::string, 9> values{};
+    std::array<bool, 9> seen{};
     std::size_t offset = 0;
     while (offset <= text.size()) {
         std::size_t end = text.find('\n', offset);
@@ -194,22 +192,23 @@ bool parse_profile(const std::wstring &public_origin) {
                 break;
             }
         }
-        if (!matched && line.rfind("ca_sha256=", 0) == 0) {
-            if (saw_ca_hash) return false;
-            saw_ca_hash = true;
-            ca_hash = line.substr(10);
-            matched = true;
-        }
-        if (!matched && !line.empty()) return false;
+        if (!matched && (!line.empty() || end != text.size())) return false;
         if (end == text.size()) break;
         offset = end + 1;
     }
-    for (bool value : seen) if (!value) return false;
-    if (!saw_ca_hash || values[0] != "nebula-remote-transport-v1" ||
-        !valid_port(values[2]) || values[3] != "38080" || values[4] != "28000" ||
+    for (std::size_t i = 0; i < 6; ++i) if (!seen[i]) return false;
+    if (!valid_port(values[2]) || values[3] != "38080" || values[4] != "28000" ||
         values[5] != "28031") return false;
     std::wstring configured_origin, ca_path;
-    if (!utf8_to_wide(values[1], configured_origin) || configured_origin != public_origin ||
+    if (!utf8_to_wide(values[1], configured_origin) || configured_origin != public_origin)
+        return false;
+    if (values[0] == "nebula-remote-transport-v2") {
+        // System trust is verified by the hash-pinned sidecar for both transports.
+        // Reject mixed profiles rather than silently falling back to a private CA.
+        return seen[8] && values[8] == "system" && values[2] == "8443" &&
+            !seen[6] && !seen[7];
+    }
+    if (values[0] != "nebula-remote-transport-v1" || !seen[6] || !seen[7] || seen[8] ||
         !utf8_to_wide(values[6], ca_path)) return false;
     wchar_t full[32768]{};
     DWORD full_count = GetFullPathNameW(ca_path.c_str(), static_cast<DWORD>(std::size(full)),
@@ -217,7 +216,7 @@ bool parse_profile(const std::wstring &public_origin) {
     if (!full_count || full_count >= std::size(full) || ca_path != full ||
         !direct_child(ca_path, directory)) return false;
     std::vector<std::uint8_t> ca;
-    return read_file(ca_path.c_str(), ca, 1024u * 1024u) && hash_matches(ca, ca_hash.c_str());
+    return read_file(ca_path.c_str(), ca, 1024u * 1024u) && hash_matches(ca, values[7].c_str());
 }
 
 std::wstring ready_event_name() {

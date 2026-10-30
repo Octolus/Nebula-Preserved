@@ -67,6 +67,33 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+  social-contracts:
+    name: Scene social publication contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: '1'
+    steps:
+      - name: Keep compiler caches outside source
+        run: |
+          echo "DOTNET_CLI_HOME=$RUNNER_TEMP/social-dotnet-home" >> "$GITHUB_ENV"
+          echo "NUGET_PACKAGES=$RUNNER_TEMP/social-nuget" >> "$GITHUB_ENV"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          dotnet-version: '8.0.x'
+      - name: Compile actual scene social source without external packages
+        run: >-
+          dotnet build mirror-server/tests/social-contracts/SocialContracts.csproj
+          --configuration Release
+          -p:BaseIntermediateOutputPath="$RUNNER_TEMP/social-obj/"
+          -p:BaseOutputPath="$RUNNER_TEMP/social-bin/"
+      - name: Check durable authority and exact publication-expiry boundaries
+        run: dotnet "$RUNNER_TEMP/social-bin/Release/net8.0/SocialContracts.dll" "$RUNNER_TEMP"
+
   panel:
     name: Panel tests, types and production build
     runs-on: ubuntu-24.04

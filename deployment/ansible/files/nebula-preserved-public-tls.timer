@@ -1,0 +1,10 @@
+[Unit]
+Description=Check short-lived Nebula public certificate hourly
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=1h
+RandomizedDelaySec=5min
+Persistent=true
+Unit=nebula-preserved-public-tls.service
+[Install]
+WantedBy=timers.target

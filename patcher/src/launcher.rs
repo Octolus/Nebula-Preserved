@@ -64,6 +64,31 @@ pub fn bundle(
 /// establishes TLS/backend reachability, not account authentication or gameplay.
 #[cfg(windows)]
 pub fn probe(server: &str) -> Result<()> {
+    match crate::remote::trust(server)? {
+        crate::remote::Trust::System => preflight(server, None),
+        crate::remote::Trust::PinnedCa(ca) => preflight(server, Some(&ca)),
+    }
+}
+/// Check the selected trust policy before writing a new player profile.
+/// None means Windows ROOT trust, never acceptance of an invalid certificate.
+#[cfg(windows)]
+pub fn preflight(server: &str, ca: Option<&[u8]>) -> Result<()> {
+    crate::endpoint::validate(server, "127.0.0.1")?;
+    ensure!(
+        server.starts_with("https://"),
+        "TLS requires an HTTPS origin"
+    );
+    let roots = if let Some(ca) = ca {
+        let mut roots = rustls::RootCertStore::empty();
+        roots.add(rustls::pki_types::CertificateDer::from(ca.to_vec()))?;
+        roots
+    } else {
+        crate::system_roots::load()?
+    };
+    probe_with_roots(server, roots)
+}
+#[cfg(windows)]
+fn probe_with_roots(server: &str, roots: rustls::RootCertStore) -> Result<()> {
     use anyhow::Context;
     use std::{
         io::{Read, Write},
@@ -71,18 +96,10 @@ pub fn probe(server: &str) -> Result<()> {
         sync::Arc,
         time::{Duration, Instant},
     };
-    crate::remote::check(server)?;
     let url = url::Url::parse(server)?;
     let host = url.host_str().context("Missing server host")?;
     let port = url.port_or_known_default().context("Missing server port")?;
-    let ca = crate::remote::ca_bytes(server)?;
-    let mut roots = rustls::RootCertStore::empty();
-    roots.add(rustls::pki_types::CertificateDer::from(ca))?;
-    let provider = Arc::new(rustls::crypto::ring::default_provider());
-    let config = rustls::ClientConfig::builder_with_provider(provider)
-        .with_safe_default_protocol_versions()?
-        .with_root_certificates(roots)
-        .with_no_client_auth();
+    let config = client_config(roots)?;
     let name = rustls::pki_types::ServerName::try_from(host.to_owned())?;
     let mut connection = rustls::ClientConnection::new(Arc::new(config), name)?;
     let deadline = Instant::now() + Duration::from_secs(12);
@@ -129,6 +146,72 @@ pub fn probe(server: &str) -> Result<()> {
         "Server did not answer with the expected preservation protocol"
     );
     Ok(())
+}
+#[cfg(windows)]
+fn client_config(roots: rustls::RootCertStore) -> Result<rustls::ClientConfig> {
+    ensure!(!roots.is_empty(), "No trusted TLS roots available");
+    Ok(
+        rustls::ClientConfig::builder_with_provider(std::sync::Arc::new(
+            rustls::crypto::ring::default_provider(),
+        ))
+        .with_safe_default_protocol_versions()?
+        .with_root_certificates(roots)
+        .with_no_client_auth(),
+    )
+}
+#[cfg(all(test, windows))]
+mod tls_tests {
+    use super::*;
+    use rustls::{
+        client::danger::ServerCertVerifier,
+        client::WebPkiServerVerifier,
+        pki_types::{CertificateDer, ServerName, UnixTime},
+    };
+    use std::{sync::Arc, time::Duration};
+    const CA: &[u8] = include_bytes!("../tests/fixtures/ca.der");
+    const OTHER_CA: &[u8] = include_bytes!("../tests/fixtures/other-ca.der");
+    const SERVER: &[u8] = include_bytes!("../tests/fixtures/server.der");
+    const DNS_ONLY: &[u8] = include_bytes!("../tests/fixtures/dns-only.der");
+    const VALID: u64 = 1_798_761_600;
+    fn roots(ca: &[u8]) -> rustls::RootCertStore {
+        let mut roots = rustls::RootCertStore::empty();
+        roots.add(CertificateDer::from(ca.to_vec())).unwrap();
+        roots
+    }
+    fn verify(ca: &[u8], cert: &[u8], name: &str, seconds: u64) -> Result<()> {
+        // The same unmodified webpki verifier selected by with_root_certificates.
+        let verifier = WebPkiServerVerifier::builder_with_provider(
+            Arc::new(roots(ca)),
+            Arc::new(rustls::crypto::ring::default_provider()),
+        )
+        .build()?;
+        verifier.verify_server_cert(
+            &CertificateDer::from(cert),
+            &[],
+            &ServerName::try_from(name.to_owned())?,
+            &[],
+            UnixTime::since_unix_epoch(Duration::from_secs(seconds)),
+        )?;
+        Ok(())
+    }
+    #[test]
+    fn trusted_chain_verifies_exact_dns_and_ip_subjects() {
+        verify(CA, SERVER, "play.example.org", VALID).unwrap();
+        verify(CA, SERVER, "203.0.113.10", VALID).unwrap();
+        assert!(verify(CA, SERVER, "other.example.org", VALID).is_err());
+        assert!(verify(CA, DNS_ONLY, "203.0.113.10", VALID).is_err());
+    }
+    #[test]
+    fn invalid_chain_dates_and_signatures_never_downgrade_trust() {
+        assert!(verify(OTHER_CA, SERVER, "play.example.org", VALID).is_err());
+        assert!(verify(CA, SERVER, "play.example.org", 1_577_836_800).is_err());
+        assert!(verify(CA, SERVER, "play.example.org", 2_208_988_800).is_err());
+        let mut corrupted = SERVER.to_vec();
+        *corrupted.last_mut().unwrap() ^= 1;
+        assert!(verify(CA, &corrupted, "play.example.org", VALID).is_err());
+        assert!(client_config(rustls::RootCertStore::empty()).is_err());
+        client_config(roots(CA)).unwrap();
+    }
 }
 #[cfg(test)]
 mod tests {

@@ -6,6 +6,16 @@ stack and daily SQLite backups. Run Ansible from Linux or WSL. It does not build
 Unity on the server or publish images. Keep operator inventories, SSH keys,
 credentials, certificates and account state outside this repository.
 
+For the normal single-command root-local installation, use the
+[prepared-release installer](../bootstrap/README.md). It derives the artifact
+pins, generates private deployment settings and installs Ansible automatically.
+The workflow below remains available for operators deploying over SSH.
+
+The default `nebula_tls_mode: public_acme` issues a publicly trusted short-lived
+IPv4 certificate, with staging validation, a restricted HTTP responder on TCP80
+and hourly renewal. Players need no operator CA on that path. Select
+`private_ca` explicitly for private/test deployments that distribute their own CA.
+
 Deployment health checks prove service startup, certificate verification and
 anonymous API rejection. They do **not** prove native game login, multiplayer,
 customization or apartment behavior. Native Windows-client acceptance remains a
@@ -53,10 +63,12 @@ names identify one reviewed version. The three runtime pins are:
 | `nebula_server_sha256` | Report field `executable_sha256` |
 | `nebula_managed_sha256` | Report field `managed_assembly_sha256` |
 
-Set `nebula_public_ip` to the host's public IPv4 address. The first installation
-issues a leaf certificate with that IP in its SAN. Changing the address later
-fails certificate verification until you deliberately reissue the leaf under the
-same operator CA. Do not disable verification to work around an address mismatch.
+Set `nebula_public_ip` to the host's public IPv4 address. The public path requires
+TCP80 reachable from the internet and automatically issues a certificate for
+that IP. The installer accepts Let's Encrypt terms and registers without a
+contact email. Private-CA mode instead issues a leaf under a stable operator CA;
+changing its IP requires deliberate reissuance. Never disable verification to
+work around an address mismatch.
 
 ## Deploy and verify
 
@@ -92,6 +104,7 @@ The only public application mappings are:
 
 | Port | Purpose |
 | --- | --- |
+| TCP 80 | Restricted ACME HTTP challenge responder (public ACME mode) |
 | TCP 443 | Dashboard HTTPS |
 | TCP 8444 | Authenticated game API HTTPS |
 | TCP 8443 | Authenticated TLS game gateway |
@@ -137,7 +150,7 @@ example file, chat transcript or shared launcher. The dashboard URL is
 `https://<server-ip>/login`. The owner role is local administration policy; it
 does not automatically grant a game account moderator privileges.
 
-The operator CA is stable across reruns. Export the **public**
+In explicit private-CA mode, the operator CA is stable across reruns. Export the **public**
 `operator/operator-ca.der` for the launcher and verify its SHA-256 through your
 trusted distribution channel. A browser also needs to trust the matching public
 CA certificate to use the dashboard without certificate errors. Trust only the
@@ -147,6 +160,15 @@ bootstrap refuses a certificate with less than 30 days remaining. Renew it under
 the existing CA before that point, retaining the required IP SAN and
 `serverAuth` purpose. Replacing the CA requires an explicit launcher trust update.
 
+Public-ACME mode uses normal system trust and hourly renewal of six-day IP
+certificates. Its account/certificate tree is root-only below `acme/config`.
+Successful renewal validates chain, IP, key and expiry, then recreates only the
+three TLS sidecars so their read-only bind mounts receive the new files. This
+can briefly reconnect active TLS players; backend/world processes stay running.
+The older private CA/account credentials remain intact when migrating to this
+mode. The private-CA 30-day expiry threshold above does not apply to the public
+short-lived certificate; public installation requires at least one day left.
+
 Game accounts require distinct operator-issued credentials bound to each
 player's Steam identity. The dashboard owner password is not a player credential.
 Use the existing [public-access administration workflow](../../backend/public_access_admin.py)
@@ -154,7 +176,7 @@ to initialize an operator key, provision an account and issue its credential.
 Keep the operator key mode 0600, outside containers unless mounted for that
 specific administrative command. Follow the state tool's consistency rules;
 do not edit the live SQLite database manually. Give each player only their own
-credential and the public CA, and revoke/reissue individual credentials when
+credential (plus the public CA only in private-CA mode), and revoke/reissue individual credentials when
 needed. The Windows patcher encrypts imported account credentials with that
 Windows user's DPAPI; do not copy another user's DPAPI token file.
 

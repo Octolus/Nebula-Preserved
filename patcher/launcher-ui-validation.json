@@ -1,15 +1,15 @@
 {
   "format_version": 1,
   "recorded_date": "2026-10-30",
-  "scope": "Headless launcher policy/layout/preflight and binary inspection only",
+  "scope": "Headless launcher policy/layout/TLS/preflight, physical Steam discovery and binary inspection only",
   "rust": "1.90.0",
   "windows_toolchain": "x86_64-pc-windows-gnu",
-  "windows_tests": 37,
-  "linux_tests": 36,
+  "windows_tests": 46,
+  "linux_tests": 42,
   "failed": 0,
   "skipped": 0,
-  "preview_sha256": "11da9f3c97ef2bc0fa80d635693077e62ceb246d55d85bbde61f47c878fb2420",
-  "preview_bytes": 4951040,
+  "preview_sha256": "4fc2848d0f4185c2f0602b3b6e29c52eea07850869db34904224b6ea1513bec0",
+  "preview_bytes": 4987392,
   "preview_has_reviewed_game_bundle": false,
   "windows_manifest": {
     "themed_native_controls": true,
@@ -23,11 +23,18 @@
     "patcher/Cargo.lock": "0fbb57651920cd2e5e8908bd483b2eeef2087786b7abe556dbec1036e5441291",
     "patcher/build.rs": "6e4a40ae59d46d5e8d73caf74c017b15bf1157f07af41b3fd1bac6540fcb1ac7",
     "patcher/launcher.manifest": "2651221be54f676a3d85cfaee628c69876ff736554b8f1051ecbf97f0b71364b",
-    "patcher/src/gui.rs": "1d39042ce127ceff1c8323d3607a7929679885fd8a78a909b5b7bfc7e834833a",
-    "patcher/src/launcher_ui.rs": "acc718a6b401206812f317491992854b8a21ef32d5a4fd727c03f3756fb6c410",
-    "patcher/src/remote.rs": "89b034810515f5a25c2533438820cb0fc2b8797971eb1e4317a18e17cc4d67d4",
-    "patcher/src/main.rs": "b78691daf2d115075c1b06702f64d6a5d6ab1ada8e3087091948b0a2e778eade"
+    "patcher/src/gui.rs": "6d507da7fb44f24c38c8e553bdf1f18e9306c9219fb8a74e7e4f093583e1a489",
+    "patcher/src/launcher_ui.rs": "306e0db8701d469078af1e11f41e77cfdc1b5440a55d36dbe7659f69c9861528",
+    "patcher/src/remote.rs": "34696eec9ef6ce47a61621192e621863948a8ade18f8e9c944f1ec1182d9c162",
+    "patcher/src/main.rs": "34aa52bcca8f3c8a8f1a6bb71171141ba9e671f3a8701f4b52cfecd9a84fede0",
+    "patcher/src/launcher.rs": "7eb86045fda8250dbc8db06fbd6ea274a785c797d8f5a51cb82b2fa49b21b055",
+    "patcher/src/system_roots.rs": "6db43cb4ce88653dff648a107034ce9c5f4eeb20516218288b4ebdae9180fcd0",
+    "patcher/src/discovery.rs": "999cd157c9d21bf971d3b3c4fb358e3445e7468181dea96a376814c81a5a0073"
   },
-  "native_visual_acceptance": "NOT_RUN_DESKTOP_LOCKED",
-  "native_game_acceptance": "NOT_PROVEN"
+  "native_visual_acceptance": "PENDING_FINAL_ACCEPTANCE",
+  "native_game_acceptance": "NOT_PROVEN",
+  "live_checks": [
+    "One physical supported Steam installation found with zero warnings; slash aliases deduplicated",
+    "System-trusted deployed TLS identity and preservation backend response verified by check-server; no account login or gameplay inferred"
+  ]
 }

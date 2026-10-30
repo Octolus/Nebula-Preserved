@@ -1,0 +1,61 @@
+name: Backend HTTP and restart acceptance
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - backend/**
+      - protocol/**
+      - tools/avatar_entry_codec.py
+      - scripts/nonmini_backend_e2e.py
+      - scripts/NONMINI-E2E.md
+      - deployment/docker/requirements.lock.txt
+      - .github/workflows/backend-e2e.yml
+  push:
+    branches: [main]
+    paths:
+      - backend/**
+      - protocol/**
+      - tools/avatar_entry_codec.py
+      - scripts/nonmini_backend_e2e.py
+      - scripts/NONMINI-E2E.md
+      - deployment/docker/requirements.lock.txt
+      - .github/workflows/backend-e2e.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-e2e-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  acceptance:
+    name: Disposable process and HTTP acceptance (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned backend dependencies
+        run: python -m pip install -r deployment/docker/requirements.lock.txt
+      - name: Exercise real HTTP, concurrent purchase and process restart
+        run: |
+          set -euo pipefail
+          python -B scripts/nonmini_backend_e2e.py \
+            --artifacts "$RUNNER_TEMP/nebula-backend-e2e-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      # Do not upload the directory: it contains the disposable database, logs
+      # and generated management credential. Only the printed summary is public.

@@ -11,6 +11,7 @@
           - ansible_facts.distribution == 'Ubuntu'
           - ansible_facts.distribution_version is version('26.04', '>=')
           - ansible_facts.architecture == 'x86_64'
+          - nebula_root == '/opt/nebula-preserved'
           - nebula_public_ip is match('^[0-9.]+$')
           - nebula_image_archive_sha256 is match('^[0-9a-f]{64}$')
           - nebula_build_report_sha256 is match('^[0-9a-f]{64}$')
@@ -19,6 +20,7 @@
           - (nebula_max_processes | default(2) | int) in range(1, 33)
           - nebula_server_image is match('^[a-zA-Z0-9./:_@-]+$')
           - nebula_panel_image is match('^[a-zA-Z0-9./:_@-]+$')
+          - (nebula_tls_mode | default('public_acme')) in ['public_acme', 'private_ca']
     - name: Install repository prerequisites
       ansible.builtin.apt:
         name: [ca-certificates, curl, openssl, python3]
@@ -83,9 +85,16 @@
       register: image_upload
     - name: Load reviewed images
       ansible.builtin.command: docker load --input {{ nebula_root }}/images.tar
-      when: image_upload.changed
+      changed_when: image_upload.changed
       async: 600
       poll: 5
+    - name: Inspect exact loaded image identities
+      ansible.builtin.command:
+        argv: [docker, image, inspect, --format, '{{ "{{.Id}}" }}', '{{ item.key }}']
+      loop: '{{ nebula_expected_image_ids | default({}) | dict2items }}'
+      register: loaded_image
+      changed_when: false
+      failed_when: loaded_image.stdout not in item.value
     - name: Install base compose and public-only exposure
       ansible.builtin.copy:
         src: '../docker/{{ item }}'
@@ -111,11 +120,67 @@
         src: files/bootstrap-secrets.py
         dest: '{{ nebula_root }}/bootstrap-secrets.py'
         mode: '0700'
-    - name: Create stable TLS identity and random owner credentials if absent
+    - name: Create stable account authority and random owner credentials if absent
       ansible.builtin.command:
-        argv: [python3, '{{ nebula_root }}/bootstrap-secrets.py', '{{ nebula_public_ip }}']
+        argv: [python3, '{{ nebula_root }}/bootstrap-secrets.py', '{{ nebula_public_ip }}', '{{ nebula_tls_mode | default("public_acme") }}']
       changed_when: false
       no_log: true
+    - name: Configure autonomous public IP certificates
+      when: (nebula_tls_mode | default('public_acme')) == 'public_acme'
+      block:
+        - name: Create private ACME storage and public challenge directories
+          ansible.builtin.file:
+            path: '{{ nebula_root }}/{{ item.path }}'
+            state: directory
+            mode: '{{ item.mode }}'
+          loop:
+            - {path: acme, mode: '0700'}
+            - {path: acme/config, mode: '0700'}
+            - {path: acme/webroot, mode: '0755'}
+            - {path: acme/webroot/.well-known, mode: '0755'}
+            - {path: acme/webroot/.well-known/acme-challenge, mode: '0755'}
+        - name: Install isolated challenge server and certificate manager
+          ansible.builtin.copy:
+            src: files/{{ item }}
+            dest: '{{ nebula_root }}/{{ item }}'
+            mode: '0644'
+          loop: [nginx-acme.conf, acme-http.compose.yaml, manage-public-tls.py]
+          register: acme_files
+        - name: Install public TLS boot service and renewal timer
+          ansible.builtin.copy:
+            src: files/{{ item }}
+            dest: /etc/systemd/system/{{ item }}
+            mode: '0644'
+          loop: [nebula-preserved-acme-http.service, nebula-preserved-public-tls.timer]
+        - name: Install address-bound renewal service
+          ansible.builtin.template:
+            src: templates/nebula-preserved-public-tls.service.j2
+            dest: /etc/systemd/system/nebula-preserved-public-tls.service
+            mode: '0644'
+        - name: Start challenge-only HTTP responder before certificate issuance
+          ansible.builtin.systemd_service:
+            name: nebula-preserved-acme-http
+            daemon_reload: true
+            enabled: true
+            state: "{{ 'restarted' if acme_files.changed else 'started' }}"
+        - name: Inspect existing public certificate lineage
+          ansible.builtin.stat:
+            path: '{{ nebula_root }}/acme/config/live/nebula-public/cert.pem'
+          register: public_lineage
+        - name: Verify HTTP challenge with staging before the first public issuance
+          ansible.builtin.command:
+            argv: [python3, '{{ nebula_root }}/manage-public-tls.py', preflight, --address, '{{ nebula_public_ip }}']
+          when: not public_lineage.stat.exists
+          changed_when: false
+          async: 300
+          poll: 5
+        - name: Issue or retain a publicly trusted short-lived IP certificate
+          ansible.builtin.command:
+            argv: [python3, '{{ nebula_root }}/manage-public-tls.py', issue, --address, '{{ nebula_public_ip }}', --defer-runtime-refresh]
+          register: public_tls
+          changed_when: '"\"runtime_files_changed\": true" in public_tls.stdout'
+          async: 300
+          poll: 5
     - name: Validate compose before touching service
       ansible.builtin.command:
         argv: [docker, compose, --env-file, runtime.env, -f, compose.yaml, -f, compose.public.yaml, -f, compose.host.yaml, config, --quiet]
@@ -174,9 +239,12 @@
         name: nebula-preserved
         daemon_reload: true
         enabled: true
-        state: "{{ 'restarted' if image_upload.changed or base_files.changed or panel_proxy.changed or settings.changed or units.changed else 'started' }}"
+        state: "{{ 'restarted' if image_upload.changed or base_files.changed or panel_proxy.changed or settings.changed or units.changed or (public_tls.changed | default(false)) else 'started' }}"
     - name: Enable daily backups
       ansible.builtin.systemd_service: {name: nebula-preserved-backup.timer, enabled: true, state: started}
+    - name: Enable hourly short-lived certificate renewal
+      ansible.builtin.systemd_service: {name: nebula-preserved-public-tls.timer, enabled: true, state: started}
+      when: (nebula_tls_mode | default('public_acme')) == 'public_acme'
     - name: Verify first consistent backup
       ansible.builtin.systemd_service: {name: nebula-preserved-backup.service, state: started}
     - name: Optionally verify actual reboot recovery
@@ -191,7 +259,7 @@
       delay: 5
     - name: Verify trusted API rejects anonymous access
       ansible.builtin.command:
-        argv: [curl, --silent, --show-error, --cacert, '{{ nebula_root }}/operator/ca.pem', --output, /dev/null, --write-out, '%{http_code}', 'https://{{ nebula_public_ip }}:8444/']
+        argv: '{{ ["curl", "--silent", "--show-error"] + (["--cacert", nebula_root + "/operator/ca.pem"] if (nebula_tls_mode | default("public_acme")) == "private_ca" else []) + ["--output", "/dev/null", "--write-out", "%{http_code}", "https://" + nebula_public_ip + ":8444/"] }}'
       register: api_health
       changed_when: false
       until: api_health.stdout == '401'
@@ -200,7 +268,7 @@
       failed_when: api_health.stdout != '401'
     - name: Verify trusted dashboard HTTPS
       ansible.builtin.command:
-        argv: [curl, --silent, --show-error, --cacert, '{{ nebula_root }}/operator/ca.pem', --output, /dev/null, --write-out, '%{http_code}', 'https://{{ nebula_public_ip }}/login']
+        argv: '{{ ["curl", "--silent", "--show-error"] + (["--cacert", nebula_root + "/operator/ca.pem"] if (nebula_tls_mode | default("public_acme")) == "private_ca" else []) + ["--output", "/dev/null", "--write-out", "%{http_code}", "https://" + nebula_public_ip + "/login"] }}'
       register: panel_health
       changed_when: false
       failed_when: panel_health.stdout != '200'

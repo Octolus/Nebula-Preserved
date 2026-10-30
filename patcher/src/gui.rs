@@ -33,6 +33,7 @@ enum Outcome {
     Startup {
         folder: Option<PathBuf>,
         server: Option<String>,
+        system_trust: Option<bool>,
         connected: bool,
         note: String,
     },
@@ -155,7 +156,7 @@ unsafe fn fonts(window: HWND) {
 }
 fn all_controls() -> Vec<i32> {
     (SERVER..=DETAILS)
-        .chain(BROWSE..=TOGGLE_DETAILS)
+        .chain(BROWSE..=SYSTEM_TRUST)
         .chain(TITLE..=PROGRESS)
         .collect()
 }
@@ -256,11 +257,25 @@ unsafe fn refresh(window: HWND) {
         PICK_CA,
         CHECK,
         ADVANCED,
+        SYSTEM_TRUST,
     ] {
         EnableWindow(GetDlgItem(window, id), i32::from(!busy));
     }
     EnableWindow(GetDlgItem(window, START), i32::from(can_start));
-    EnableWindow(GetDlgItem(window, IMPORT), i32::from(!busy && !connected));
+    EnableWindow(GetDlgItem(window, SYSTEM_TRUST), i32::from(!busy));
+    let private_ca =
+        SendMessageW(GetDlgItem(window, SYSTEM_TRUST), BM_GETCHECK, 0, 0) != BST_CHECKED as isize;
+    // Explicit trust migration remains available for an already saved account.
+    EnableWindow(
+        GetDlgItem(window, IMPORT),
+        i32::from(!busy && (!connected || !private_ca)),
+    );
+    for id in [CA, PIN, PICK_CA] {
+        EnableWindow(
+            GetDlgItem(window, id),
+            i32::from(!busy && !connected && private_ca),
+        );
+    }
     set(window, NEXT, title);
     set(window, NEXT_HELP, help);
     set(
@@ -284,7 +299,9 @@ unsafe fn refresh(window: HWND) {
     set(
         window,
         SERVER_TITLE,
-        if connected {
+        if connected && !private_ca {
+            "Use automatic TLS"
+        } else if connected {
             "2   Connection checked"
         } else {
             "2   Connect to your server"
@@ -402,6 +419,7 @@ unsafe fn pick(window: HWND, kind: i32) -> Result<Option<PathBuf>> {
 }
 unsafe fn action(window: HWND, id: i32) -> Result<()> {
     match id {
+        SYSTEM_TRUST => refresh(window),
         ADVANCED => { state(window).advanced = !state(window).advanced; refresh(window); reflow(window); }
         TOGGLE_DETAILS => { state(window).details = !state(window).details; refresh(window); reflow(window); }
         SCAN => worker(window, Job::Scan, move |handle| {
@@ -412,9 +430,11 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
             let mut note = match supported.len() { 0 => "Game not found. Choose Nebula Realms.exe to locate it.".into(),
                 1 => "Game found. Checking your saved connection…".into(),
                 _ => "Several copies found. Choose the Nebula Realms.exe you want to use.".into() };
-            let (server, damaged_profile) = match crate::remote::saved_server() {
-                Ok(server) => (server,false), Err(_) => (None,true),
+            let (saved, damaged_profile) = match crate::remote::saved_connection() {
+                Ok(saved) => (saved,false), Err(_) => (None,true),
             };
+            let system_trust = saved.as_ref().map(|(_, system)| *system);
+            let server = saved.map(|(server, _)| server);
             let connected = server.as_deref().is_some_and(|server| {
                 stage(handle, "Checking the saved connection and server…");
                 crate::launcher::probe(server).is_ok()
@@ -425,7 +445,7 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
                     else {"Game found. Enter the server address and choose your account file.".into()};
             }
             if damaged_profile { note = "Saved connection needs attention. Open certificate settings and check the saved connection before importing again.".into(); }
-            Ok(Outcome::Startup { folder, server, connected, note })
+            Ok(Outcome::Startup { folder, server, system_trust, connected, note })
         }),
         BROWSE => if let Some(path) = pick(window, GAME)? {
             worker(window, Job::Select, move |handle| { stage(handle, "Verifying the selected Steam installation…");
@@ -443,21 +463,36 @@ unsafe fn action(window: HWND, id: i32) -> Result<()> {
             let server = crate::launcher::origin(&get(window, SERVER))?;
             let account = PathBuf::from(get(window, ACCOUNT)); let ca = PathBuf::from(get(window, CA));
             let pin = get(window, PIN).trim().to_ascii_lowercase();
-            ensure!(!account.as_os_str().is_empty(), "Choose your own account credential file using Choose file");
-            if ca.as_os_str().is_empty() || crate::manifest::sha(&pin).is_err() {
+            let system_trust = SendMessageW(GetDlgItem(window, SYSTEM_TRUST), BM_GETCHECK, 0, 0) == BST_CHECKED as isize;
+            if system_trust && crate::endpoint::check_public_config(&server).is_ok() {
+                if MessageBoxW(window, wide("Use Windows certificate trust for this saved account? The launcher will verify the same server using Windows trusted roots, then replace only its TLS settings. Your account and protected token are retained. Invalid or mismatched certificates are refused.").as_ptr(), wide("Use automatic TLS for this account?").as_ptr(), MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) == IDYES {
+                    worker(window, Job::Import, move |handle| {
+                        stage(handle, "Verifying automatic TLS for your saved account…");
+                        crate::remote::migrate_system(&server)?;
+                        Ok(Outcome::Connected(server))
+                    });
+                }
+                return Ok(());
+            }
+            ensure!(!account.as_os_str().is_empty(), "Choose your own account credential file using Choose file. For a saved account at the same server, use Windows certificate trust and Save connection to keep your existing account.");
+            if !system_trust && (ca.as_os_str().is_empty() || crate::manifest::sha(&pin).is_err()) {
                 state(window).advanced = true; reflow(window); refresh(window);
                 anyhow::bail!("Open Certificate settings and supply the server certificate and its trusted 64-character SHA256 fingerprint");
             }
             worker(window, Job::Import, move |handle| {
-                stage(handle, "Checking the certificate fingerprint…"); crate::remote::validate_ca_file(&ca, &pin)?;
+                let private_ca = if system_trust { None } else {
+                    stage(handle, "Checking the certificate fingerprint…"); Some(crate::remote::validate_ca_file(&ca, &pin)?)
+                };
+                stage(handle, "Verifying the server before saving your connection…"); crate::launcher::preflight(&server, private_ca.as_deref())?;
                 stage(handle, "Protecting your account connection for this Windows user…"); crate::credentials::configure(&server, &account)?;
-                crate::remote::configure(&server, &ca, &pin)?;
+                if system_trust { crate::remote::configure_system(&server)?; }
+                else { crate::remote::configure(&server, &ca, &pin)?; }
                 stage(handle, "Verifying TLS and the server response…"); crate::launcher::probe(&server)?;
                 Ok(Outcome::Connected(server))
             });
         }
         RESET => {
-            if MessageBoxW(window, wide("Forget the saved connection on this PC? Your server account, items, game files and patch backups are kept. You will need your account file and the server certificate to connect again.").as_ptr(),
+            if MessageBoxW(window, wide("Forget the saved connection on this PC? Your server account, items, game files and patch backups are kept. You will need your account file to connect again. A private-CA server also needs its certificate settings.").as_ptr(),
                 wide("Forget saved connection?").as_ptr(), MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON2) == IDYES {
                 worker(window, Job::Reset, |_| { crate::remote::reset()?; crate::credentials::reset()?; Ok(Outcome::Reset) });
             }
@@ -489,9 +524,18 @@ unsafe fn finish(window: HWND, job: Job, result: std::result::Result<Outcome, St
         Ok(Outcome::Startup {
             folder,
             server,
+            system_trust,
             connected,
             note: text,
         }) => {
+            if let Some(system) = system_trust {
+                SendMessageW(
+                    GetDlgItem(window, SYSTEM_TRUST),
+                    BM_SETCHECK,
+                    if system { BST_CHECKED } else { BST_UNCHECKED } as usize,
+                    0,
+                );
+            }
             if let Some(path) = folder {
                 set(window, GAME, &path.to_string_lossy());
                 state(window).flow.game_ready = true;
@@ -835,7 +879,10 @@ pub fn run(allow_provisional: bool) -> Result<()> {
             ),
             (CERT_LABEL, "Server certificate (.der)"),
             (PIN_LABEL, "Certificate fingerprint (SHA256)"),
-            (CERT_HELP, "Confirm the fingerprint with the server owner."),
+            (
+                CERT_HELP,
+                "Private CA only: verify its fingerprint with the owner.",
+            ),
             (NEXT, "Find your game"),
             (NEXT_HELP, ""),
             (ACTIVITY, "Searching Steam libraries…"),
@@ -903,6 +950,13 @@ pub fn run(allow_provisional: bool) -> Result<()> {
                 | WS_VSCROLL,
         )?;
         label(window, PROGRESS, "", "msctls_progress32", PBS_MARQUEE)?;
+        label(
+            window,
+            SYSTEM_TRUST,
+            "Use &Windows certificate trust (recommended)",
+            "BUTTON",
+            WS_TABSTOP | BS_AUTOCHECKBOX as u32,
+        )?;
         let ca = crate::embedded::ca()?.unwrap_or(
             std::env::current_exe()?
                 .parent()
@@ -912,8 +966,19 @@ pub fn run(allow_provisional: bool) -> Result<()> {
         if ca.is_file() {
             set(window, CA, ca.to_str().unwrap_or(""));
         }
-        // Missing trust material is visible during first setup; prepared releases stay compact.
-        owned.advanced = !ca.is_file() || crate::manifest::sha(&get(window, PIN)).is_err();
+        // Publicly trusted servers need no certificate picker. An operator can
+        // deliberately ship a pinned private CA as a prepared release preset.
+        let supplied_private_ca = ca.is_file() && crate::manifest::sha(&get(window, PIN)).is_ok();
+        SendMessageW(
+            GetDlgItem(window, SYSTEM_TRUST),
+            BM_SETCHECK,
+            if supplied_private_ca {
+                BST_UNCHECKED
+            } else {
+                BST_CHECKED
+            } as usize,
+            0,
+        );
         fonts(window);
         refresh(window);
         reflow(window);

@@ -8,7 +8,20 @@ and technical details expand when needed. Missing requirements and failures
 explain the next action. It uses scalable, themed native Windows controls and
 background progress without capturing the pointer.
 
+Publicly trusted HTTPS certificates use Windows certificate trust automatically;
+players do not choose a certificate file. Pinned private CAs remain an explicit
+advanced option. `check-server --server https://play.example.org:8444` is a
+read-only TLS/backend check. `migrate-system-trust --server ...` explicitly
+upgrades a matching saved account's TLS profile while retaining its DPAPI token.
+Certificate identity, dates and chain signatures are always verified.
+
 Rust source for Steam app **919290**, build **11018722**. Windows x64 is the supported patching platform. Steam discovery uses registry and VDF library/app manifests; `--game` selects an explicit installation. Original executable, licensing and ownership initialization are preserved.
+
+Discovery deduplicates by existing directory identity, including Windows volume
+and 128-bit file ID. Mixed slash/case/dot spellings cannot create false multiple
+copies, while different real directories remain distinct. Canonicalization does
+not bypass symlink/reparse checks, and stale manifests without a game directory
+are reported as warnings rather than usable installations.
 
 ```powershell
 cargo build --locked --release
@@ -29,7 +42,7 @@ nebula-preservation-patcher.exe recover --game "LOCAL_GAME_FOLDER"
 
 Review the dry run and repeat without `--dry-run` only for the intended local installation. For a receipt-managed installation, use the same command to change the server or install a different reviewed bundle/profile; verified transaction backups supply the originals automatically. Keep `.nebula-preservation` and its backups intact. Each `restore` returns one captured previous state, including its prior receipt.
 
-The explicit `network-only` manifest profile installs exactly six artifacts: GameAssembly, metadata, `NebulaNetworkBridge.dll`, `NebulaRegistryBridge.dll`, `NebulaPublicAccess.dll` and `steam_appid.txt`. Its remote form adds `NebulaRemoteTransport.exe` and requires `--remote-transport` together with the configured HTTPS account/CA profile. The remote mode is derived from the seventh artifact; no separate runtime transport field is accepted. Existing manifests without a profile retain their eight/nine-artifact behavior.
+The explicit `network-only` manifest profile installs exactly six artifacts: GameAssembly, metadata, `NebulaNetworkBridge.dll`, `NebulaRegistryBridge.dll`, `NebulaPublicAccess.dll` and `steam_appid.txt`. Its remote form adds `NebulaRemoteTransport.exe` and requires `--remote-transport` together with the configured HTTPS account/trust profile. System trust uses the exact seven-field `nebula-remote-transport-v2` profile with `trust=system`; pinned private CAs retain the exact eight-field v1 profile. Mixed fields, unknown trust values and implicit trust downgrades are refused. The remote mode is derived from the seventh artifact; no separate runtime transport field is accepted. Existing manifests without a profile retain their eight/nine-artifact behavior.
 
 Networking-only installation requires the original `globalgamemanagers` input data and `charactereditor` asset, with no `NebulaAutomation.dll` present. Before crossing between the old optional profile and networking-only, run `restore` repeatedly until there is no active receipt, then inspect the installation. Restore a remote networking-only profile before switching to its six-artifact direct form. An edited or incomplete installation may require Steam's file verification after preserving transaction backups; the patcher refuses to delete unknown files or silently retain optional patches. Direct networking-only may add the remote transport, and normal endpoint updates within a profile still reuse verified backups.
 

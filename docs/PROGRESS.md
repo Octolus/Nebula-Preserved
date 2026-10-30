@@ -9,15 +9,53 @@ protocol, socket, persistence and cross-language tests. It remains experimental:
 original-client acceptance and complete historical-server parity are unproven.
 The existing deployment remains the default while that acceptance is pending.
 
-The Ubuntu 26 Ansible deployment now configures Docker, authenticated TLS
-ingress, a persistent state volume, boot services and verified daily backups.
-An operator-owned deployment passed actual reboot recovery, retained its account,
-wallet and credential, and passed certificate-verified API/dashboard checks.
-Its private address, credentials and evidence are excluded from this repository.
-The Windows launcher now has server selection, Steam discovery, an executable
-picker and a verified Start action. Thirty-seven Rust unit tests and 44 disposable CLI
-acceptance commands passed. The final original-client GUI test remains blocked
-by Windows desktop access; the release bundle remains provisional.
+## Current checkpoint â€” 2026-10-30
+
+The [one-command Ubuntu installer](../deployment/bootstrap/README.md) installs
+Docker/Compose and Ansible as needed from a reviewed release, configures boot
+persistence and daily verified backups, and obtains Let's Encrypt public-IP
+certificates through HTTP-01 with hourly renewal. The default public launcher
+uses system trust without manual CA import. A prepared lawful runtime release,
+an owned public IPv4 address and reachable ports are required; this source
+checkout contains no Unity runtime, game assets or container images.
+
+The current deployment completed with 41 successful tasks, 11 changed and no
+failures. Fourteen external default-system-trust checks passed: API/dashboard
+access retained owner/player credentials; ports 443, 8444 and 8443 passed
+certificate SAN/chain checks; ALPN passed; and 35 internal ports remained closed.
+The renewal service completed successfully with `runtime_files_changed=false`
+and `tls_sidecars_refreshed=false`, leaving active connections undisturbed.
+A repeat installation passed with 40 successful tasks, one changed and no
+failures. Actual reboot recovery retained authority/TLS files and all 48 durable
+table fingerprints; all boot services returned automatically. The sanitized
+[deployment record](../deployment/bootstrap/validation.json) pins its source.
+Private addresses, credentials and raw evidence are excluded from this repository.
+
+The patcher passed 46 Windows and 42 Linux tests. Actual Steam discovery found
+one supported installation with no warnings after fixing a slash-alias duplicate.
+Its current `check-server` subprocess also verified the actual API on port 8444
+using default system trust; this check does not establish account login.
+Final original-client UI, networking-profile and independent-player acceptance
+remain pending; background checks do not complete those gates.
+The latest private background observer stopped before login when original Unity
+cursor confinement affected the active desktop despite isolated-desktop checks.
+Its owned processes were terminated and cursor confinement returned to normal.
+Original-input client tests must wait until the computer is available for them.
+
+Additional current checks passed separately: 24 backend HTTP/admin/restart checks
+on Windows and restricted Linux using explicit trusted scene/friend fixtures;
+17 contracts compiling the actual authored C# social state; 38 Linux deployment
+tests; and client TLS suites with 13 Windows/11 Linux tests plus 23 C++ profile
+and ten consumer checks. The backend fixture does not exercise Mirror or a native
+client. The Rust candidate passed 103 tests on both Windows and Linux, including
+four new mailbox edge cases. Its older 649 reference comparisons, 33 rejection
+controls and nine gateway checks remain bound to the earlier 99-test binaries;
+see [candidate validation](../experimental/rust-server/VALIDATION.md).
+
+## Native and earlier runtime evidence
+
+The observations below describe their tested builds and configurations. Repeat
+the remaining flows through the final distribution before release acceptance.
 
 | Area | Observed or implemented | Still required |
 |---|---|---|
@@ -31,12 +69,12 @@ by Windows desktop access; the release bundle remains provisional.
 | Resources | Durable selections/current-session guards integrated; 13 authority tests passed; complete Linux/Weaver build from a fresh copy of the public server source passed | Native selection/rejection reconciliation, fresh-session restoration and peer proof |
 | Settings | Original friend-login notification toggle persisted; a second fresh process loaded the changed value and restored baseline; a third loaded baseline; unrelated durable state preserved | Other settings and final-distribution acceptance; original platform-only UI defect excluded |
 | Input | Default networking profile retains shipped input; optional keyboard/mouse research remains separate | Optional input experiments are outside the required networking completion scope |
-| Portable patcher | Guided game/connection/start flow, scalable native controls, saved connections and recovery guidance; 37 Windows Rust tests, six builder tests and 44 CLI fixture commands cover policy, layout, endpoint/profile updates, idempotence, tamper refusal and restore | Unlocked-desktop visual/keyboard checks, final runtime-accepted bundle and independent tester install |
+| Portable patcher | Guided game/connection/start flow, scalable native controls, saved connections and recovery guidance; 46 Windows/42 Linux tests; Steam discovery found one supported installation with no warnings | Final visual/keyboard and original-client acceptance, runtime-accepted bundle and independent tester install |
 | Linux / remote | Linux Docker backend/panel and Unity demand-start passed; fresh Linux/Weaver build and isolated state restart passed; public TLS client source repairs passed independent review; native acceptance remains incomplete | Original Windows client/sidecar/DPAPI acceptance and independent remote peer connectivity |
 | Moderation | Account bans, current-session kicks, global chat restrictions, report review, staff labels, operator/player links, maintenance notices and login news implemented; disposable Linux protocol, restart and four dashboard browser cases pass | Original Windows-client moderation presentation remains unverified; no proven arbitrary live broadcast |
 | Minigames | Existing protocol, rules and asset research preserved | Deferred until the non-minigame networking and persistence requirements are verified |
 
-The current server target is Linux Docker. The separate Astro/shadcn panel has passed synthetic real-backend browser checks for login, credits, catalog grants, audit, idempotent retries, CSRF, read-only moderation and revocation. These are management-interface checks, not a claim of original-client public connectivity. Atomic apartment-save and management-state restart tests pass against isolated databases. The final composed backend passed 233 tests with three expected private-evidence skips; an isolated process-restart fixture retained all 39 non-internal table snapshots, including its runtime tables. Docker restart preserved 36 durable projected table fingerprints, excluding runtime allocations, sessions and transient presence. Linux Docker started the backend, panel and a real Unity world on demand. The production panel image passed two synthetic browser workflows covering moderator access/revocation, credits, catalog grants, audit, replay protection and CSRF. A real backend SIGKILL recovered in about 2.4 seconds within the same container, retaining all 36 durable fingerprints. An unexpected supervisor SIGKILL parked the service unhealthy without a second authority; full-stack stop removed its remaining owned Unity process. The public Docker profile passed credential-denial, cross-account, certificate/hostname and owned-scene TLS forwarding checks. Those wire probes do not prove native opcode1 application acceptance or native multiplayer. Native apartment/resource and shared-host acceptance remain separate gates.
+Earlier Linux Docker validation exercised the separate Astro/shadcn panel with synthetic real-backend browser checks for login, credits, catalog grants, audit, idempotent retries, CSRF, read-only moderation and revocation. These are management-interface checks, not a claim of original-client public connectivity. Atomic apartment-save and management-state restart tests passed against isolated databases. That composed backend passed 233 tests with three expected private-evidence skips; an isolated process-restart fixture retained all 39 non-internal table snapshots, including its runtime tables. Docker restart preserved 36 durable projected table fingerprints, excluding runtime allocations, sessions and transient presence. Linux Docker started the backend, panel and a real Unity world on demand. The panel image passed two synthetic browser workflows covering moderator access/revocation, credits, catalog grants, audit, replay protection and CSRF. A real backend SIGKILL recovered in about 2.4 seconds within the same container, retaining all 36 durable fingerprints. An unexpected supervisor SIGKILL parked the service unhealthy without a second authority; full-stack stop removed its remaining owned Unity process. The public Docker profile passed credential-denial, cross-account, certificate/hostname and owned-scene TLS forwarding checks. Those wire probes do not prove native opcode1 application acceptance or native multiplayer. Native apartment/resource and shared-host acceptance remain separate gates.
 
 The networking-only client profile replaces the earlier keyboard-enabled default. It leaves original input, cursor and rendering untouched and uses exact six/seven-artifact patch contracts. Original optional input experiments are outside network completion. The public adapter source repairs the stripped Unity API dependency by using its owned authenticated local TLS proxy, and all 70 application HTTP request sites are covered. Source replay, ABI checks and the matching six/seven-artifact plans passed independent review. Original-client TLS acceptance remains pending; source and protocol tests do not establish that result. The package remains `production_ready=false`.
 
@@ -56,8 +94,10 @@ browser workflows passed against that same disposable stack. These are protocol
 and browser results, not shipped Windows-client presentation or full multiplayer
 acceptance.
 
-The offline unit runner now covers 423 Python tests, 33 dashboard tests and
-37 Rust patcher tests, including permission matrices, transaction rollback,
+The offline unit runner discovers 423 Python tests with three allowlisted skips;
+the current Windows run passed in approximately 127 seconds. It also covers
+33 dashboard tests and 46 Windows/42 Linux Rust patcher tests. Coverage
+includes permission matrices, transaction rollback,
 malformed wire inputs, resource-selection recovery and concurrent retries.
 See [testing](TESTING.md) for the single-command runner and measured timings.
 These checks do not replace the native acceptance gates above.

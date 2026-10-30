@@ -237,16 +237,116 @@ fn discover_roots(roots: &[PathBuf]) -> Result<(Vec<Install>, Vec<String>)> {
             continue;
         }
         match app(&sa) {
-            Ok(install) => {
-                let key = install.game.to_string_lossy().to_lowercase();
-                if seen.insert(key) {
-                    found.push(install);
+            Ok(mut install) => match install_identity(&install.game) {
+                Ok((key, display)) => {
+                    if seen.insert(key) {
+                        install.game = display;
+                        found.push(install);
+                    }
                 }
-            }
+                Err(error) => warnings.push(format!("{}: {error:#}", install.game.display())),
+            },
             Err(error) => warnings.push(format!("{}: {error:#}", sa.display())),
         }
     }
     Ok((found, warnings))
+}
+#[cfg(windows)]
+type InstallIdentity = (u64, [u8; 16]);
+#[cfg(unix)]
+type InstallIdentity = (u64, u64);
+#[cfg(not(any(windows, unix)))]
+type InstallIdentity = PathBuf;
+
+/// Identify the existing directory rather than the spelling used by Steam's
+/// registry/VDF/common-path entries. Never resolve a linked ancestor first.
+fn install_identity(game: &Path) -> Result<(InstallIdentity, PathBuf)> {
+    let absolute = if game.is_absolute() {
+        game.to_path_buf()
+    } else {
+        std::env::current_dir()?.join(game)
+    };
+    for ancestor in absolute.ancestors() {
+        manifest::reject_link(ancestor)?;
+    }
+    let canonical = std::fs::canonicalize(&absolute)?;
+    manifest::reject_link(&canonical)?;
+    ensure!(
+        canonical.is_dir(),
+        "Game installation folder is not a directory"
+    );
+    #[cfg(windows)]
+    {
+        use std::os::windows::ffi::{OsStrExt, OsStringExt};
+        use windows_sys::Win32::{Foundation::*, Storage::FileSystem::*};
+        struct Handle(HANDLE);
+        impl Drop for Handle {
+            fn drop(&mut self) {
+                unsafe {
+                    CloseHandle(self.0);
+                }
+            }
+        }
+        let path: Vec<u16> = canonical.as_os_str().encode_wide().chain(Some(0)).collect();
+        let handle = Handle(unsafe {
+            CreateFileW(
+                path.as_ptr(),
+                FILE_READ_ATTRIBUTES,
+                FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                std::ptr::null(),
+                OPEN_EXISTING,
+                FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
+                std::ptr::null_mut(),
+            )
+        });
+        ensure!(
+            handle.0 != INVALID_HANDLE_VALUE,
+            "Cannot identify Steam installation folder"
+        );
+        let mut info: BY_HANDLE_FILE_INFORMATION = unsafe { std::mem::zeroed() };
+        ensure!(
+            unsafe { GetFileInformationByHandle(handle.0, &mut info) } != 0,
+            "Cannot read Steam installation folder identity"
+        );
+        ensure!(
+            info.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT == 0
+                && info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY != 0,
+            "Linked or nondirectory game installation rejected"
+        );
+        let mut identity: FILE_ID_INFO = unsafe { std::mem::zeroed() };
+        ensure!(
+            unsafe {
+                GetFileInformationByHandleEx(
+                    handle.0,
+                    FileIdInfo,
+                    (&mut identity as *mut FILE_ID_INFO).cast(),
+                    std::mem::size_of::<FILE_ID_INFO>() as u32,
+                )
+            } != 0,
+            "Cannot read stable Steam installation folder identity"
+        );
+        let key = (identity.VolumeSerialNumber, identity.FileId.Identifier);
+        // Keep display paths conventional without lossy Unicode conversion.
+        let mut display: Vec<u16> = canonical.as_os_str().encode_wide().collect();
+        if display.starts_with(&[92, 92, 63, 92, 85, 78, 67, 92]) {
+            display.splice(..8, [92, 92]);
+        } else if display.starts_with(&[92, 92, 63, 92])
+            && display.len() >= 7
+            && display[5] == b':' as u16
+            && display[6] == 92
+        {
+            display.drain(..4);
+        }
+        Ok((key, PathBuf::from(std::ffi::OsString::from_wide(&display))))
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::MetadataExt;
+        let metadata = std::fs::metadata(&canonical)?;
+        Ok(((metadata.dev(), metadata.ino()), canonical))
+    }
+    #[cfg(not(any(windows, unix)))]
+    Ok((canonical.clone(), canonical))
 }
 /// File-picker admission: no arbitrary executable or unsupported Steam build.
 pub fn select_executable(path: &Path) -> Result<PathBuf> {
@@ -377,7 +477,7 @@ mod tests {
         ));
         let good = root.join("good");
         let bad = root.join("bad");
-        std::fs::create_dir_all(good.join("steamapps")).unwrap();
+        std::fs::create_dir_all(good.join("steamapps/common/Nebula Realms")).unwrap();
         std::fs::create_dir_all(bad.join("steamapps")).unwrap();
         std::fs::write(
             good.join("steamapps/appmanifest_919290.acf"),
@@ -394,7 +494,114 @@ mod tests {
         assert_eq!(found.len(), 1);
         assert!(found[0].supported);
         assert_eq!(warnings.len(), 2);
-        std::fs::remove_dir_all(root).unwrap();
+        let canonical = root.canonicalize().unwrap();
+        assert!(canonical.starts_with(std::env::temp_dir().canonicalize().unwrap()));
+        std::fs::remove_dir_all(canonical).unwrap();
+    }
+    #[test]
+    fn discovery_merges_filesystem_aliases_but_retains_distinct_installations() {
+        let root = std::env::temp_dir().join(format!(
+            "nebula-discovery-aliases-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        let first = root.join("first");
+        let second = root.join("second");
+        for library in [&first, &second] {
+            std::fs::create_dir_all(library.join("steamapps/common/Nebula Realms")).unwrap();
+            std::fs::write(
+                library.join("steamapps/appmanifest_919290.acf"),
+                "AppState { appid 919290 buildid 11018722 installdir \"Nebula Realms\" }",
+            )
+            .unwrap();
+        }
+        let aliases = vec![
+            first.clone(),
+            first.join("."),
+            first.join("../first"),
+            second.clone(),
+        ];
+        #[cfg(windows)]
+        let aliases = {
+            let mut aliases = aliases;
+            aliases.push(PathBuf::from(first.to_str().unwrap().replace('\\', "/")));
+            aliases.push(PathBuf::from(first.to_str().unwrap().to_uppercase()));
+            aliases
+        };
+        let (found, warnings) = discover_roots(&aliases).unwrap();
+        assert!(warnings.is_empty(), "{warnings:?}");
+        assert_eq!(found.len(), 2);
+        assert_eq!(
+            install_identity(&found[0].game).unwrap().0,
+            install_identity(&first.join("steamapps/common/Nebula Realms"))
+                .unwrap()
+                .0
+        );
+        assert_eq!(
+            install_identity(&found[1].game).unwrap().0,
+            install_identity(&second.join("steamapps/common/Nebula Realms"))
+                .unwrap()
+                .0
+        );
+        #[cfg(windows)]
+        assert!(!found[0]
+            .game
+            .as_os_str()
+            .to_string_lossy()
+            .starts_with("\\\\?\\"));
+        // Delete only the fully resolved, uniquely created fixture below TEMP.
+        let canonical = root.canonicalize().unwrap();
+        assert!(canonical.starts_with(std::env::temp_dir().canonicalize().unwrap()));
+        std::fs::remove_dir_all(canonical).unwrap();
+    }
+    #[test]
+    fn stale_manifest_without_a_game_directory_is_not_an_installation() {
+        let root = std::env::temp_dir().join(format!(
+            "nebula-discovery-stale-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        std::fs::create_dir_all(root.join("steamapps")).unwrap();
+        let acf = root.join("steamapps/appmanifest_919290.acf");
+        std::fs::write(
+            &acf,
+            "AppState { appid 919290 buildid 11018722 installdir \"Nebula Realms\" }",
+        )
+        .unwrap();
+        let (found, warnings) = discover_roots(&[root.clone()]).unwrap();
+        assert!(found.is_empty());
+        assert_eq!(warnings.len(), 1);
+        std::fs::remove_file(acf).unwrap();
+        std::fs::remove_dir(root.join("steamapps")).unwrap();
+        std::fs::remove_dir(root).unwrap();
+    }
+    #[cfg(unix)]
+    #[test]
+    fn linked_library_ancestor_is_not_followed_for_identity_deduplication() {
+        let root = std::env::temp_dir().join(format!(
+            "nebula-discovery-link-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        let real = root.join("real");
+        std::fs::create_dir_all(real.join("steamapps/common/Nebula Realms")).unwrap();
+        let alias = root.join("alias");
+        std::os::unix::fs::symlink(&real, &alias).unwrap();
+        assert!(install_identity(&alias.join("steamapps/common/Nebula Realms")).is_err());
+        assert!(install_identity(&real.join("steamapps/common/Nebula Realms")).is_ok());
+        std::fs::remove_file(alias).unwrap();
+        let canonical = root.canonicalize().unwrap();
+        assert!(canonical.starts_with(std::env::temp_dir().canonicalize().unwrap()));
+        std::fs::remove_dir_all(canonical).unwrap();
     }
     #[test]
     fn picker_rejects_arbitrary_executable_before_selection() {

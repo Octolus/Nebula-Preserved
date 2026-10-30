@@ -1,5 +1,8 @@
 # Keep your filled-in copy outside the repository.
 nebula_public_ip: 192.0.2.10
+# Default public_acme issues/renews a publicly trusted IP certificate using TCP80.
+# Use private_ca only for explicit private/test deployments; players need its CA.
+nebula_tls_mode: public_acme
 nebula_image_archive: /absolute/private/path/images.tar
 nebula_image_archive_sha256: REPLACE_WITH_SHA256
 nebula_server_image: nebula-preserved-server:host-reviewed

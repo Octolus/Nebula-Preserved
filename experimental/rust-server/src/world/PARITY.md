@@ -51,6 +51,11 @@ client. It does not establish equivalence to the unavailable commercial server.
 | 97 | Preservation semantic registry extension: bounded ordered base64url chunks, trusted descriptors, namespace collision checks, owner-save rebind, visitor reload on epoch change |
 | Any other integer | Audit unsupported opcode and reject; no passthrough |
 
+`InviteToJoin` notification 6 is intentionally accepted through the recovered
+HTTP username/platform lookup and `LoadSpace` flow, not an invented opcode 26
+type-6 acknowledgment. The existing client evidence is recorded in
+[`notification-contracts.md`](../../../../docs/research/notification-contracts.md).
+
 ## Mirror message/command inventory
 
 Incoming messages: Ready, AddPlayer, NetworkPing, Command and global
@@ -93,3 +98,34 @@ The engine returns bounded actions (8,192 entries and 8 MiB per operation), uses
 a bounded metadata audit queue, and publishes presence/avatars/poses only through
 the host's explicit listener state. Transport owns the actual bound listener and
 status heartbeat; the engine does not claim a listening socket on its own.
+
+## Cross-instance social mailbox correction
+
+The post-snapshot regression pass corrected a Rust-port defect: chat admission
+already accepted up to 4,096 UTF-16 code units, but mailbox delivery counted
+UTF-8 bytes and reused an 8 KiB small-request reader. Valid Chinese, emoji and
+JSON-escaped messages could therefore echo locally while silently disappearing
+for a player in another instance. The relay now uses the preserved C# mailbox's
+32 KiB envelope cap and the same UTF-16 text limit on admission and consumption.
+
+Social files are staged, flushed and published through an atomic no-replace
+hard link in the same directory. A receiver claims the completed message before
+reading it, validates its event filename, identities, kind, timing and payload,
+and consumes it at most once. The mailbox applies the same 512-message pending
+backpressure as the existing C# implementation. This requires a filesystem that
+supports same-volume hard links (the supported NTFS and Linux Docker state
+volumes do); failure does not fall back to publishing partial JSON.
+
+Four focused unit tests cover malformed/oversized envelopes, UTF-16 boundaries,
+immutable publication with concurrent readers, single consumption and full
+mailbox refusal. The world-engine cross-instance test additionally sends Chinese,
+emoji and escaped-control messages at the native text limit through encrypted
+Mirror messages and verifies exactly one remote delivery. These are synthetic
+contract and concurrency checks, not native game acceptance or historical-server
+policy recovery. The earlier validation records remain evidence for the exact
+source and binaries pinned in those records.
+
+Recorded 2026-10-30: the complete Rust test suite passed **103 tests on Windows
+GNU and 103 on Linux**, with no failures or skips, using Rust 1.90.0. The Linux
+run used a network-disabled, read-only-root Docker container with writable
+dedicated build/fixture/temp mounts; no desktop or native game was exercised.

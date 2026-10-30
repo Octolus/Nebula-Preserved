@@ -1,0 +1,61 @@
+{
+  "format_version": 1,
+  "recorded_date": "2026-10-30",
+  "scope": "Candidate Windows transport profile and certificate validation; no native gameplay acceptance",
+  "rust": "1.90.0",
+  "target": "x86_64-pc-windows-gnu",
+  "windows_rust_tests": 13,
+  "actual_cpp_profile_checks": 23,
+  "actual_cpp_request_consumer_checks": 10,
+  "historical_consumer_exact_regression_rejected": true,
+  "normal_tls_negative_controls": [
+    "wrong_dns_name",
+    "wrong_ip",
+    "missing_ip_san",
+    "expired",
+    "not_yet_valid",
+    "unrelated_trust_root",
+    "damaged_certificate_signature",
+    "empty_root_store",
+    "mixed_or_unknown_trust_profile"
+  ],
+  "windows_root_store_modified": false,
+  "private_build_paths_absent": true,
+  "candidate_binaries": {
+    "sidecar": {
+      "sha256": "e5baacfc3f9ad884610bf0c32c71d9e533f8df05d69264b4aedb97041c18bde5",
+      "bytes": 2961920
+    },
+    "wrapper": {
+      "sha256": "909284bf0e351ed037ea3acc22cd06ff57d2a17c3bfb83cd02df48b4e066948f",
+      "bytes": 226816,
+      "exports": [
+        "NebulaPublicAccess_AbiVersion",
+        "NebulaPublicAccess_Get"
+      ]
+    }
+  },
+  "source_hashes": {
+    "experimental/remote-transport/client/src/lib.rs": "9784e73d2f71603273d38ec94473ff8afb6ec942afd579648ea00a55e274b939",
+    "experimental/remote-transport/client/src/main.rs": "9b76206f5062790ef775fefa787fc55f63ea393fcc5eaefa3b08f041c6bccc71",
+    "experimental/remote-transport/client/src/profile.rs": "bebbb803c42289866d72bb5026613b1335aafce0eaa392a3d997309e1909d54e",
+    "experimental/remote-transport/client/src/system_roots.rs": "6db43cb4ce88653dff648a107034ce9c5f4eeb20516218288b4ebdae9180fcd0",
+    "experimental/remote-transport/client/src/tls.rs": "95170102720af6aa17acd6b55958b4e156de74d2f31ebdb339cb0fd7ebad087e",
+    "experimental/remote-transport/client/Cargo.toml": "aceb331cc4d4e1fd57bf02ee268908dacea72dbb148c3c70c2622ce7fcdb0264",
+    "experimental/remote-transport/client/Cargo.lock": "fd35df676549266ec5b87fee58046410cd191b32a32a6d938564670454d87bde",
+    "experimental/remote-transport/client/tests/fixtures/ca.der": "db23340b2e5ac5c1c286ae4aac3d5b16e73e4042518c5fa0cb1360c1d8989a5c",
+    "experimental/remote-transport/client/tests/fixtures/dns-only.der": "f9b107e924974804a973d52e5a7e0e4fd44601d162219a318bceba6c5c940a8b",
+    "experimental/remote-transport/client/tests/fixtures/other-ca.der": "c6583695cd77d2af628c7c786780c8ab12789a250e222a1162611c305a3b1cc9",
+    "experimental/remote-transport/client/tests/fixtures/server.der": "32cdf1a6a0b06b93c3c051eba9ddd72f05b1004aa4ed146df230592ce2f76944",
+    "client-patches/network-only/public-access/NebulaRemoteBootstrap.cpp": "552d57c1b3b89ae1bd23c1000e73715cbacf2aa53821a040e2d24aac4a67fc6d",
+    "client-patches/network-only/public-access/NebulaPublicAccess.cpp": "3251b02c09cb297537a827db461e7ed05f204a4f575231091946db1181047e2c",
+    "client-patches/network-only/public-access/CMakeLists.txt": "dfc6abb1b206c749a97120fd32f659b9e161247264d7cc4213f4e536167823a6",
+    "client-patches/network-only/public-access/test_remote_profile.cpp": "b34c540335296d6a52fcbfc15f2acee22fb4e8424bfe4f5c7b5e2f09a968721c",
+    "client-patches/network-only/public-access/run_profile_checks.py": "7afdf5a7d8b9c0416c18ba44688889a4279a4272b3eb063ef89cdec789a28e8a",
+    "client-patches/network-only/source-lock.json": "b657ab12a863baacb0ac4380532250a0ee5cd1e379f85ef7ada78312ccc43898",
+    "client-patches/network-only/build_network_client.py": "4527eec7b38592143e5ab8092361052b8b4e15d30d1d8675f2f61b927a7255f8"
+  },
+  "native_client_acceptance": "NOT_PROVEN",
+  "release_bundle_status": "PROVISIONAL",
+  "linux_library_tests": 11
+}

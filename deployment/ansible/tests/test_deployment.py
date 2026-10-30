@@ -36,12 +36,12 @@ class SecretBootstrapTests(unittest.TestCase):
         cls.reference.cleanup()
 
     @staticmethod
-    def invoke(root, address='192.0.2.10'):
+    def invoke(root, address='192.0.2.10', tls_mode='private_ca'):
         # Tests do not need root and must never chown a developer's files.
         original_umask = os.umask(0o077)
         try:
             with patch.object(BOOTSTRAP.os, 'chown'), contextlib.redirect_stdout(io.StringIO()):
-                BOOTSTRAP.bootstrap(root, address)
+                BOOTSTRAP.bootstrap(root, address, tls_mode)
         finally:
             os.umask(original_umask)
 
@@ -61,6 +61,22 @@ class SecretBootstrapTests(unittest.TestCase):
         before = self.hashes()
         self.invoke(self.root)
         self.assertEqual(before, self.hashes())
+
+    def test_migration_to_public_tls_retains_ca_account_and_operator_authorities(self):
+        before = self.hashes()
+        self.invoke(self.root, tls_mode='public_acme')
+        self.assertEqual(before, self.hashes())
+
+    def test_fresh_public_mode_creates_no_private_ca_or_self_signed_certificate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with patch.object(BOOTSTRAP.subprocess, 'run') as run:
+                self.invoke(root, tls_mode='public_acme')
+                run.assert_not_called()
+            self.assertTrue((root / 'operator/account-operator.key').is_file())
+            self.assertTrue((root / 'operator/panel-login.txt').is_file())
+            self.assertFalse((root / 'operator/ca-key.pem').exists())
+            self.assertFalse((root / 'secrets/fullchain.pem').exists())
 
     def test_generated_login_matches_panel_scrypt_format(self):
         login = (self.root / 'operator/panel-login.txt').read_text()

@@ -1,0 +1,20 @@
+name: nebula-preserved-acme
+services:
+  challenge:
+    image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=16m,mode=1777"]
+    mem_limit: 32m
+    pids_limit: 32
+    ports: ["80:8080/tcp"]
+    volumes:
+      - ./nginx-acme.conf:/etc/nginx/nginx.conf:ro
+      - ./acme/webroot:/var/www/acme:ro
+    entrypoint: [nginx, -g, "daemon off;"]
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options: {max-size: "2m", max-file: "2"}

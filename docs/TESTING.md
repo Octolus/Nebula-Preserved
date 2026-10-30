@@ -76,18 +76,43 @@ exports and check before sharing them.
 The current suite discovers 423 Python tests: 325 backend, 60 tooling, 23 Linux
 builder, six bundle and nine offline harness checks. Three backend tests require
 private evidence and are skipped explicitly. The panel adds 33 unit tests and
-the Rust patcher adds 37 on Windows (36 on Linux). A local Linux run of all five Python suites completed
-in approximately 25 seconds using shared memory; timings depend on the machine
-and temporary storage. These counts describe unit coverage, not complete native
+the Rust patcher adds 46 on Windows (42 on Linux). An earlier local Linux run of
+all five Python suites completed in approximately 25 seconds using shared memory;
+timings depend on the machine and temporary storage. These counts describe unit
+coverage, not complete native
 multiplayer acceptance.
+
+## Current additional checks â€” 2026-10-30
+
+These results are separate from the 423-test Python unit baseline and its three
+allowlisted skips; the latest Windows baseline run passed in approximately 127
+seconds. Counts describe different test boundaries and must not be
+combined into a native-game pass.
+
+| Layer | Observed result | Boundary and reproduction |
+|---|---|---|
+| Backend process E2E | 24 checks passed on Windows and restricted Linux | Real encrypted game HTTP, management actions and controlled process restart; explicit trusted scene/presence and friendship fixtures. [Run the harness](../scripts/NONMINI-E2E.md) with a new private artifact directory. No Mirror/native client is exercised. |
+| C# social publication | 17 contracts passed | Compiles the actual authored social state and relationship planner with a test-only Unity JSON substitute. [Run the .NET harness](../mirror-server/tests/social-contracts/README.md); no Unity runtime or listener. |
+| Deployment automation | 38 tests passed on Linux | [Offline deployment tests](../deployment/ansible/README.md#fast-offline-tests) cover setup and certificate policy without installing services or reaching a server. |
+| Client TLS transport | 13 Windows / 11 Linux tests passed | [Headless transport and trust checks](../experimental/remote-transport/client/tls-validation.json); final original-client/UI acceptance remains pending. |
+| C++ public-access profile and consumer | 23 profile / ten consumer checks passed | [Compile the real parser/consumer](../client-patches/network-only/public-access/README.md) with disposable fixtures; these checks do not launch the game. |
+
+Actual Steam discovery also found one supported installation with no warnings
+after the slash-alias duplicate fix. Discovery and unit tests do not complete
+visual/keyboard, original-client or independent-player acceptance.
+The current patcher's actual `check-server` subprocess passed against the API
+on port 8444 using default system trust; this is not an account-login result.
 
 ## Experimental Rust server
 
 The separate [Rust candidate](../experimental/rust-server/README.md) has its own
-locked Windows/Linux contract and real-socket suite. Its
+locked Windows/Linux contract and real-socket suite, currently 103 passing tests
+on each platform, including four new mailbox edge cases. Its
 [recorded validation](../experimental/rust-server/VALIDATION.md) separates those
-results from the 649 authored-reference comparisons and the synthetic TLS gateway
-checks. The candidate workflow runs all three layers on Windows and Linux, then
+results from the earlier 99-test binaries' 649 authored-reference comparisons,
+33 rejection controls and nine synthetic TLS gateway checks. Those recorded
+results do not validate a newer binary automatically. The candidate workflow
+runs all three layers on Windows and Linux, then
 builds and checks the restricted Linux container. None starts the original game
 or uses the desktop. Keep native acceptance as a separate gate.
 
@@ -96,6 +121,20 @@ or uses the desktop. Keep native acceptance as a separate gate.
 The [panel instructions](../admin-panel/README.md) cover type checking, security tests and browser tests. Browser tests require an explicitly supplied, newly created synthetic backend fixture and private credential files. They mutate its credits, ownership and operator access. Never point them at player data. A passing browser workflow proves the panel-to-backend path, not native client compatibility.
 
 For Docker, check container health, demand-start a reviewed world through the original protocol, and verify persistence after recreating containers while retaining the state volume and secrets. Keep the management port internal. Do not use a volume deletion as a restart test. Public ingress requires separate authentication/TLS boundary tests and native client acceptance; no HTTP test or successful image build can substitute for those.
+
+The current [prepared-release installer](../deployment/bootstrap/README.md)
+completed with 41 successful tasks, 11 changed and no failures. Fourteen external
+checks passed with default system certificate trust: API/dashboard access with
+retained credentials, SAN/chain checks on ports 443/8444/8443, ALPN and 35 closed
+internal ports. The renewal service completed successfully with no runtime-file
+change or TLS sidecar refresh, leaving active connections undisturbed.
+A repeat installation passed with 40 successful tasks, one changed and no
+failures. An actual reboot restored boot services, retained authority/TLS files
+and preserved all 48 durable table fingerprints. The sanitized
+[deployment record](../deployment/bootstrap/validation.json) pins its source.
+The default public installer configures Let's Encrypt public-IP HTTP-01 and
+hourly renewal; players need no manual CA import. A prepared lawful runtime
+release, owned public address and reachable ports remain prerequisites.
 
 The default client payload is networking-only and contains no test IPC bridge. The optional native acceptance source below is a separate private test profile. It must not be bundled into the default player patch.
 
@@ -126,6 +165,15 @@ The portable harness intentionally does not automate those ownership checks.
 The historical acceptance launchers depended on private build receipts, fixed
 test identities, and machine-specific process metadata and are therefore not
 published here as turnkey tools.
+
+A bounded 2026-10-30 observer found that original Unity cursor confinement can
+affect the active desktop even when the client runs on a never-switched desktop
+that receives no input. Its watchdog stopped the owned process before login;
+cursor confinement returned to normal and no game or helper survived. That run
+does not establish public login or world acceptance. Do not run the original-input
+client as a background test while someone uses the computer. Server, protocol and
+offline checks can continue without launching it. Keep any separately reviewed
+test-only cursor changes outside the player networking bundle.
 
 `run_plan.py` refuses a plan containing a known mutating action unless the plan
 declares `"mutating": true` and the operator supplies `--allow-mutation`.
@@ -180,7 +228,7 @@ operators should still treat them as sensitive because they can contain account
 hashes, instance identifiers, and local state.
 
 The example plans are parameter-free contract examples, not universal scripts.
-Read each plan's `fixture_notes` and adapt the fixture—not the safety checks—to
+Read each plan's `fixture_notes` and adapt the fixtureâ€”not the safety checksâ€”to
 the reviewed catalog and scene under test.
 
 ## Evidence required by feature

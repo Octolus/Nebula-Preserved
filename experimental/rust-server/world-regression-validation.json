@@ -1,0 +1,24 @@
+{
+  "format_version": 1,
+  "recorded_date": "2026-10-30",
+  "scope": "Current Unicode mailbox and atomic publication regression checkpoint only; does not refresh earlier binary, reference-comparison or gateway records",
+  "tests": {
+    "windows": {
+      "passed": 103,
+      "failed": 0,
+      "ignored": 0
+    },
+    "linux": {
+      "passed": 103,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "source_sha256": {
+    "experimental/rust-server/src/world/social.rs": "0c76106f7b09cd61082ec3a65f890f3b32891bc054c3f3b03964daf1c54cecf1",
+    "experimental/rust-server/tests/world_engine.rs": "57494993ae868d7ac8a61df88522d769b6a31e8d5ab0da7a8edc5335573527d8"
+  },
+  "earlier_649_reference_comparisons_repeated": false,
+  "earlier_9_gateway_checks_repeated": false,
+  "native_client_acceptance": "NOT_PROVEN"
+}

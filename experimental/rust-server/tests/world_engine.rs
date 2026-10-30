@@ -640,6 +640,20 @@ fn cross_instance_mailbox_delivers_invite_and_private_chat_with_live_authority()
     );
     let out = right.tick().unwrap();
     assert!(texts(&out).contains(&(2, format!("13#{A}#World Alpha#1#Across worlds#1"))));
+    // The original protocol measures the 4096 limit in UTF-16 units. Relay JSON
+    // can be much larger in UTF-8 or after escaping; it must not silently drop.
+    for payload in ["汉".repeat(4096), "😀".repeat(2048), "\u{1}".repeat(4096)] {
+        let out = send(&mut left, 1, &format!("13#{A}#World Beta#1#{payload}#1"));
+        assert!(texts(&out).contains(&(1, format!("13#{A}#World Beta#1#{payload}#1"))));
+        let out = right.tick().unwrap();
+        assert!(texts(&out).contains(&(2, format!("13#{A}#World Alpha#1#{payload}#1"))));
+        assert!(texts(&right.tick().unwrap()).is_empty());
+    }
+    let too_long = "😀".repeat(2049);
+    assert!(left
+        .receive(1, &app(&format!("13#{A}#World Beta#1#{too_long}#1")))
+        .is_err());
+    assert!(texts(&right.tick().unwrap()).is_empty());
 }
 
 #[test]

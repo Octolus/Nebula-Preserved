@@ -1,0 +1,65 @@
+{
+  "format_version": 1,
+  "recorded_date": "2026-10-30",
+  "scope": "Operator-owned Ubuntu Linux Docker deployment and external transport boundaries; no original-client or multiplayer acceptance inferred",
+  "installer": {
+    "successful_tasks": 41,
+    "changed": 11,
+    "failed": 0,
+    "public_tls": "public_acme",
+    "release_inventory_verified": true
+  },
+  "external_checks": [
+    "system_trusted_api_anonymous_denied_401",
+    "existing_player_credential_and_encrypted_protocol_preserved",
+    "invalid_player_credential_denied_403",
+    "public_chain_exact_ip_verified_port_443",
+    "public_chain_exact_ip_verified_port_8444",
+    "public_chain_exact_ip_verified_port_8443",
+    "game_gateway_alpn_verified",
+    "game_gateway_invalid_credential_not_admitted",
+    "dashboard_login_public_tls_200",
+    "existing_owner_login_preserved",
+    "dashboard_secure_httponly_session_cookie",
+    "dashboard_authenticated_user_lookup",
+    "http_port_exposes_only_acme_challenge",
+    "all_35_internal_http_management_raw_world_ports_closed"
+  ],
+  "external_checks_passed": 14,
+  "renewal_service": {
+    "result": "success",
+    "runtime_files_changed": false,
+    "tls_sidecars_refreshed": false
+  },
+  "repeat_install": {
+    "successful_tasks": 40,
+    "changed": 1,
+    "failed": 0,
+    "public_tls": "public_acme",
+    "passed": true
+  },
+  "current_release_reboot": {
+    "actual_reboot_observed": true,
+    "boot_services_active": true,
+    "private_authority_and_tls_retained": true,
+    "durable_tables_compared": 48,
+    "changed_durable_tables": [],
+    "passed": true
+  },
+  "native_multiplayer": "NOT_PROVEN",
+  "source_sha256": {
+    "deployment/bootstrap/deploy.py": "93b93c9fd96fa2bcff1168b6e51b9cdc200ecb6542c8936c3354b3ff70f2fac1",
+    "deployment/ansible/site.yaml": "dc094e81c10543ffe1c274f5034f9cf42f7ece4cf7495a4c7106aab6d1873d3c",
+    "deployment/ansible/files/manage-public-tls.py": "33159a1a01967842733c8d3dfb092f62a934a3d70c3ada871aac6bb2c3c935f6",
+    "deployment/ansible/files/bootstrap-secrets.py": "cd35360b81a7415e21df481be8a2a051a704e6ddac305f789b7ab49b958ea002",
+    "deployment/ansible/files/nebula-preserved-public-tls.timer": "ecbe9cc6b6ee1a889eba6ce4a78f00cc151de2bc1e02e991b4cbe1b34e9abd89",
+    "deployment/ansible/templates/nebula-preserved-public-tls.service.j2": "53c3e159ae4eb9937469a56eaa450ae354f91c358e4e737a6c8d015e1a3fc08d"
+  },
+  "privacy": "Host identity, addresses, player records, credentials, keys and raw operator logs are excluded",
+  "native_background_observer": {
+    "result": "ABORTED_BEFORE_LOGIN_CURSOR_CONFINEMENT",
+    "owned_processes_remaining": 0,
+    "cursor_confinement_restored": true,
+    "native_acceptance": "NOT_PROVEN"
+  }
+}

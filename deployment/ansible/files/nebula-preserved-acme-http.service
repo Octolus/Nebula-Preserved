@@ -1,0 +1,15 @@
+[Unit]
+Description=Nebula public certificate HTTP challenge responder
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/nebula-preserved
+ExecStart=/usr/bin/docker compose -f acme-http.compose.yaml up -d --no-build --wait
+ExecStop=/usr/bin/docker compose -f acme-http.compose.yaml stop --timeout 15
+TimeoutStartSec=120
+TimeoutStopSec=30
+[Install]
+WantedBy=multi-user.target

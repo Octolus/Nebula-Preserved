@@ -47,18 +47,23 @@ namespace NebulaPreservation
         [Serializable] private sealed class ChatGrant
         { public int format_version = 1; public string a, b; public double expires_at; }
         private sealed class FriendshipOverlay
-        { public Actor A, B; public bool Friends; }
+        { public Actor A, B; public bool Friends; public double Expires; }
         private sealed class RelationOverlay
         { public string Key; public bool Enabled; public double Expires; }
 
         private readonly string directory;
+        private readonly Func<double> clock;
         private readonly HashSet<string> relations = new HashSet<string>(StringComparer.Ordinal);
         private readonly Dictionary<string, FriendshipOverlay> overlays = new Dictionary<string, FriendshipOverlay>(StringComparer.Ordinal);
         private readonly Dictionary<string, RelationOverlay> relationOverlays = new Dictionary<string, RelationOverlay>(StringComparer.Ordinal);
         private long snapshotStamp = -1, snapshotLength = -1;
         private const double RelationOverlaySeconds = 15;
 
-        public NebulaSocialState(string stateDirectory) { directory = stateDirectory; }
+        public NebulaSocialState(string stateDirectory, Func<double> clock = null)
+        {
+            directory = stateDirectory;
+            this.clock = clock ?? (() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() / 1000.0);
+        }
         private static string RelationKey(Actor a, Actor b, string kind) =>
             a.AccountId + "\0" + b.Username + "\0" + b.Platform + "\0" + kind;
         private static string Pair(string a, string b) => String.CompareOrdinal(a, b) < 0 ? a + "\0" + b : b + "\0" + a;
@@ -70,7 +75,7 @@ namespace NebulaPreservation
         private string PendingPath(Actor source, Actor target, int type) => Path.Combine(directory, "social-requests",
             Digest(source.Guid + "\0" + target.Guid + "\0" + type) + ".json");
         private string GrantPath(Actor a, Actor b) => Path.Combine(directory, "social-chat-grants", Digest(Pair(a.Guid, b.Guid)) + ".json");
-        private static double Now() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() / 1000.0;
+        private double Now() => clock();
         private static T Read<T>(string path) where T : class
         {
             if (!File.Exists(path) || new FileInfo(path).Length > 8192) return null;
@@ -98,11 +103,13 @@ namespace NebulaPreservation
             if (!info.Exists)
             {
                 relations.Clear(); snapshotStamp = -1; snapshotLength = -1;
+                RetireFriendshipOverlays();
                 RetireRelationOverlays();
                 return;
             }
             if (info.LastWriteTimeUtc.Ticks == snapshotStamp && info.Length == snapshotLength)
             {
+                RetireFriendshipOverlays();
                 RetireRelationOverlays();
                 return;
             }
@@ -125,14 +132,21 @@ namespace NebulaPreservation
                 }
             relations.Clear(); relations.UnionWith(replacement);
             snapshotStamp = info.LastWriteTimeUtc.Ticks; snapshotLength = info.Length;
+            RetireFriendshipOverlays();
+            RetireRelationOverlays();
+        }
+
+        private void RetireFriendshipOverlays()
+        {
+            double now = Now();
             foreach (var item in overlays.ToArray())
             {
                 FriendshipOverlay state = item.Value;
                 bool forward = relations.Contains(RelationKey(state.A, state.B, "friend"));
                 bool reverse = relations.Contains(RelationKey(state.B, state.A, "friend"));
-                if (state.Friends ? forward && reverse : !forward && !reverse) overlays.Remove(item.Key);
+                if (state.Expires <= now || (state.Friends ? forward && reverse : !forward && !reverse))
+                    overlays.Remove(item.Key);
             }
-            RetireRelationOverlays();
         }
 
         private void RetireRelationOverlays()
@@ -155,7 +169,12 @@ namespace NebulaPreservation
         }
         private bool Friends(Actor a, Actor b)
         {
-            if (overlays.TryGetValue(Pair(a.AccountId, b.AccountId), out FriendshipOverlay state)) return state.Friends;
+            string key = Pair(a.AccountId, b.AccountId);
+            if (overlays.TryGetValue(key, out FriendshipOverlay state))
+            {
+                if (state.Expires > Now()) return state.Friends;
+                overlays.Remove(key);
+            }
             return Has(a, b, "friend");
         }
 
@@ -247,9 +266,11 @@ namespace NebulaPreservation
         }
 
         // Called only after an authenticated same-host accepted relay event.
-        // HTTP remains the persistence authority; this closes its publication gap.
+        // HTTP remains the persistence authority. Never grant indefinite chat
+        // authority when its durable event is rejected or lost.
         public void ObserveFriendship(Actor a, Actor b, bool friends = true) =>
-            overlays[Pair(a.AccountId, b.AccountId)] = new FriendshipOverlay {A = a, B = b, Friends = friends};
+            overlays[Pair(a.AccountId, b.AccountId)] = new FriendshipOverlay {
+                A = a, B = b, Friends = friends, Expires = Now() + RelationOverlaySeconds};
 
         // Called only for the authenticated actor's native22..25 callback after
         // the corresponding HTTP mutation succeeded, or its same-host relay.
@@ -276,7 +297,7 @@ namespace NebulaPreservation
             var entry = new FriendEvent {
                 event_id = eventId, operation = friends ? "accept_friendship" : "remove_friendship",
                 actor_ps4_id = actor.AccountId, other_ps4_id = other.AccountId,
-                created_at = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() / 1000.0
+                created_at = Now()
             };
             string outbox = Path.Combine(directory, "friend-events");
             Directory.CreateDirectory(outbox);
@@ -287,7 +308,7 @@ namespace NebulaPreservation
                 File.Move(temporary, path);
             }
             finally { if (File.Exists(temporary)) File.Delete(temporary); }
-            overlays[Pair(actor.AccountId, other.AccountId)] = new FriendshipOverlay { A = actor, B = other, Friends = friends };
+            ObserveFriendship(actor, other, friends);
         }
 
         public void Decline(Actor actor, Actor requester, int declineType)

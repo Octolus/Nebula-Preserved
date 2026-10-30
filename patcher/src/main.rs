@@ -11,6 +11,8 @@ mod launcher;
 mod launcher_ui;
 mod manifest;
 mod remote;
+#[cfg(windows)]
+mod system_roots;
 mod transaction;
 mod unityfs;
 
@@ -35,14 +37,28 @@ enum Command {
         #[arg(long)]
         allow_provisional: bool,
     },
-    /// Opt in to loopback proxying over a verified operator-owned TLS root.
+    /// Configure verified TLS. Windows certificate trust is the default.
     ConfigureRemote {
         #[arg(long)]
         server: String,
+        #[arg(long, requires = "ca_sha256")]
+        ca_file: Option<PathBuf>,
+        #[arg(long, requires = "ca_file")]
+        ca_sha256: Option<String>,
+    },
+    /// Read-only TLS/backend check; no account, game launch or profile write.
+    CheckServer {
         #[arg(long)]
-        ca_file: PathBuf,
+        server: String,
+        #[arg(long, requires = "ca_sha256")]
+        ca_file: Option<PathBuf>,
+        #[arg(long, requires = "ca_file")]
+        ca_sha256: Option<String>,
+    },
+    /// Explicitly upgrade this origin's saved account to Windows TLS trust.
+    MigrateSystemTrust {
         #[arg(long)]
-        ca_sha256: String,
+        server: String,
     },
     ResetRemoteConfig,
     /// Remove only the provisioner's fixed config and DPAPI token, for interrupted setup/reprovisioning.
@@ -134,8 +150,37 @@ fn run() -> Result<()> {
             server,
             ca_file,
             ca_sha256,
-        } => remote::configure(&server, &ca_file, &ca_sha256)?,
+        } => match (ca_file, ca_sha256) {
+            (None, None) => remote::configure_system(&server)?,
+            (Some(ca), Some(pin)) => remote::configure(&server, &ca, &pin)?,
+            _ => bail!(
+                "Supply both CA file and fingerprint, or neither for Windows certificate trust"
+            ),
+        },
+        Command::CheckServer {
+            server,
+            ca_file,
+            ca_sha256,
+        } => {
+            #[cfg(windows)]
+            {
+                let server = launcher::origin(&server)?;
+                let ca = match (ca_file, ca_sha256) {
+                    (None, None) => None,
+                    (Some(ca), Some(pin)) => Some(remote::validate_ca_file(&ca, &pin)?),
+                    _ => bail!("Supply both CA file and fingerprint, or neither for Windows certificate trust"),
+                };
+                launcher::preflight(&server, ca.as_deref())?;
+                println!("Verified TLS identity and preservation backend response. Account login and gameplay are not tested.");
+            }
+            #[cfg(not(windows))]
+            {
+                let _ = (server, ca_file, ca_sha256);
+                bail!("Windows certificate trust and player TLS checks require Windows");
+            }
+        }
         Command::ResetRemoteConfig => remote::reset()?,
+        Command::MigrateSystemTrust { server } => remote::migrate_system(&server)?,
         Command::ResetPublicConfig => credentials::reset()?,
         Command::ConfigurePublic {
             server,
@@ -189,4 +234,47 @@ fn run() -> Result<()> {
         }
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod cli_tests {
+    use super::*;
+    #[test]
+    fn tls_commands_default_to_system_trust_and_require_complete_private_pins() {
+        for command in ["configure-remote", "check-server"] {
+            assert!(Cli::try_parse_from([
+                "patcher",
+                command,
+                "--server",
+                "https://play.example.org:8444"
+            ])
+            .is_ok());
+            assert!(Cli::try_parse_from([
+                "patcher",
+                command,
+                "--server",
+                "https://play.example.org:8444",
+                "--ca-file",
+                "public.der"
+            ])
+            .is_err());
+            assert!(Cli::try_parse_from([
+                "patcher",
+                command,
+                "--server",
+                "https://play.example.org:8444",
+                "--ca-sha256",
+                "00"
+            ])
+            .is_err());
+            assert!(Cli::try_parse_from([
+                "patcher",
+                command,
+                "--server",
+                "https://play.example.org:8444",
+                "--insecure"
+            ])
+            .is_err());
+        }
+    }
 }

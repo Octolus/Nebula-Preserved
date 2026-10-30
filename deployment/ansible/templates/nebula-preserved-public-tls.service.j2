@@ -1,0 +1,15 @@
+[Unit]
+Description=Renew and install trusted Nebula public IP certificate
+Requires=docker.service nebula-preserved-acme-http.service
+After=docker.service nebula-preserved-acme-http.service network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/nebula-preserved/manage-public-tls.py renew --address {{ nebula_public_ip }}
+TimeoutStartSec=300
+UMask=0077
+PrivateTmp=true
+ProtectHome=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/nebula-preserved

@@ -15,6 +15,7 @@ pub const PICK_CA: i32 = 207;
 pub const CHECK: i32 = 208;
 pub const ADVANCED: i32 = 209;
 pub const TOGGLE_DETAILS: i32 = 210;
+pub const SYSTEM_TRUST: i32 = 211;
 pub const TITLE: i32 = 301;
 pub const SUBTITLE: i32 = 302;
 pub const NOTICE: i32 = 303;
@@ -80,7 +81,7 @@ pub fn layout(width: i32, advanced: bool, details: bool) -> Layout {
     let width = width.max(540);
     let right = width - 44;
     let inner = width - 88;
-    let extra = if advanced { 182 } else { 0 };
+    let extra = if advanced { 226 } else { 0 };
     let bottom = 480 + extra;
     let mut controls = vec![
         (TITLE, Rect(28, 22, width - 56, 36)),
@@ -109,13 +110,14 @@ pub fn layout(width: i32, advanced: bool, details: bool) -> Layout {
     ];
     if advanced {
         controls.extend([
-            (CERT_LABEL, Rect(44, 478, inner, 22)),
-            (CA, Rect(44, 506, inner - 122, 34)),
-            (PICK_CA, Rect(right - 112, 506, 112, 34)),
-            (PIN_LABEL, Rect(44, 552, inner, 22)),
-            (PIN, Rect(44, 580, inner, 34)),
-            (CERT_HELP, Rect(44, 624, inner - 182, 30)),
-            (RESET, Rect(right - 172, 624, 172, 30)),
+            (SYSTEM_TRUST, Rect(44, 478, inner, 30)),
+            (CERT_LABEL, Rect(44, 522, inner, 22)),
+            (CA, Rect(44, 550, inner - 122, 34)),
+            (PICK_CA, Rect(right - 112, 550, 112, 34)),
+            (PIN_LABEL, Rect(44, 596, inner, 22)),
+            (PIN, Rect(44, 624, inner, 34)),
+            (CERT_HELP, Rect(44, 668, inner - 182, 30)),
+            (RESET, Rect(right - 172, 668, 172, 30)),
         ]);
     }
     if details {

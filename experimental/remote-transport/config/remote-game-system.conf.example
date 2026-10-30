@@ -1,0 +1,7 @@
+format=nebula-remote-transport-v2
+server_url=https://play.example.org:8444
+gateway_port=8443
+api_port=38080
+first_scene_port=28000
+last_scene_port=28031
+trust=system

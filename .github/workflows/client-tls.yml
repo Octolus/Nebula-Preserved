@@ -1,0 +1,144 @@
+name: Windows client TLS contracts
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - experimental/remote-transport/client/**
+      - client-patches/network-only/public-access/**
+      - client-patches/network-only/source-lock.json
+      - client-patches/network-only/build_network_client.py
+      - client-patches/public-access/NebulaPublicAccess.cpp
+      - .github/workflows/client-tls.yml
+  push:
+    branches: [main]
+    paths:
+      - experimental/remote-transport/client/**
+      - client-patches/network-only/public-access/**
+      - client-patches/network-only/source-lock.json
+      - client-patches/network-only/build_network_client.py
+      - client-patches/public-access/NebulaPublicAccess.cpp
+      - .github/workflows/client-tls.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: client-tls-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  RUST_TOOLCHAIN: '1.90.0'
+  CARGO_TERM_COLOR: always
+  PYTHONDONTWRITEBYTECODE: '1'
+  RUSTUP_AUTO_INSTALL: '0'
+  RUSTUP_SKIP_UPDATE_CHECK: '1'
+
+jobs:
+  linux:
+    name: Linux profile and certificate contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Isolate toolchains, dependencies and temporary outputs
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/client-tls-tmp"
+          printf 'CARGO_HOME=%s/client-tls-cargo\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'RUSTUP_HOME=%s/client-tls-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'CARGO_TARGET_DIR=%s/client-tls-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'TMPDIR=%s/client-tls-tmp\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned Rust toolchain
+        run: |
+          set -euo pipefail
+          rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal --component rustfmt --target x86_64-unknown-linux-gnu
+          rustup run "$RUST_TOOLCHAIN" rustc --version
+      - name: Check formatting
+        run: cargo "+$RUST_TOOLCHAIN" fmt --manifest-path experimental/remote-transport/client/Cargo.toml --all -- --check
+      - name: Fetch the exact locked dependencies
+        run: cargo "+$RUST_TOOLCHAIN" fetch --locked --manifest-path experimental/remote-transport/client/Cargo.toml --target x86_64-unknown-linux-gnu
+      - name: Test profile versions and normal certificate rejection rules
+        run: cargo "+$RUST_TOOLCHAIN" test --locked --offline --lib --manifest-path experimental/remote-transport/client/Cargo.toml --target x86_64-unknown-linux-gnu
+
+  windows:
+    name: Windows system trust, owned-client build and native profile gate
+    runs-on: windows-2025
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Isolate toolchains, dependencies and temporary outputs
+        run: |
+          $temporary = Join-Path $env:RUNNER_TEMP 'client-tls-tmp'
+          New-Item -ItemType Directory -Path $temporary -Force | Out-Null
+          "CARGO_HOME=$env:RUNNER_TEMP/client-tls-cargo" >> $env:GITHUB_ENV
+          "RUSTUP_HOME=$env:RUNNER_TEMP/client-tls-rustup" >> $env:GITHUB_ENV
+          "CARGO_TARGET_DIR=$env:RUNNER_TEMP/client-tls-target" >> $env:GITHUB_ENV
+          "TMP=$temporary" >> $env:GITHUB_ENV
+          "TEMP=$temporary" >> $env:GITHUB_ENV
+          $flags = @("--remap-path-prefix=$env:GITHUB_WORKSPACE=/source", "--remap-path-prefix=$env:RUNNER_TEMP=/build")
+          "CARGO_ENCODED_RUSTFLAGS=$($flags -join [char]31)" >> $env:GITHUB_ENV
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install verified MSYS2 action and MinGW compiler
+        id: msys2
+        uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e # Official v2 commit, verified 2026-10-30
+        with:
+          msystem: UCRT64
+          location: ${{ runner.temp }}/client-tls-msys2
+          update: true
+          install: mingw-w64-ucrt-x86_64-gcc
+          cache: false
+      - name: Verify and select the installed native compiler
+        run: |
+          $bin = Join-Path '${{ steps.msys2.outputs.msys2-location }}' 'ucrt64/bin'
+          $compiler = Join-Path $bin 'g++.exe'
+          $linker = Join-Path $bin 'gcc.exe'
+          $archiver = Join-Path $bin 'ar.exe'
+          foreach ($tool in @($compiler, $linker, $archiver)) {
+            if (-not (Test-Path -LiteralPath $tool -PathType Leaf)) { throw 'Expected MinGW tool is missing' }
+          }
+          $bin >> $env:GITHUB_PATH
+          "CLIENT_TLS_CXX=$compiler" >> $env:GITHUB_ENV
+          "CC_x86_64_pc_windows_gnu=$linker" >> $env:GITHUB_ENV
+          "AR_x86_64_pc_windows_gnu=$archiver" >> $env:GITHUB_ENV
+          "CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=$linker" >> $env:GITHUB_ENV
+          & $compiler --version
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Install the pinned Windows GNU Rust toolchain
+        run: |
+          rustup toolchain install "$env:RUST_TOOLCHAIN-x86_64-pc-windows-gnu" --profile minimal --component rustfmt --target x86_64-pc-windows-gnu
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          rustup run "$env:RUST_TOOLCHAIN-x86_64-pc-windows-gnu" rustc --version
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Fetch the exact locked Windows dependencies
+        run: |
+          cargo "+$env:RUST_TOOLCHAIN-x86_64-pc-windows-gnu" fetch --locked --manifest-path experimental/remote-transport/client/Cargo.toml --target x86_64-pc-windows-gnu
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Test Windows system roots and certificate contracts
+        run: |
+          cargo "+$env:RUST_TOOLCHAIN-x86_64-pc-windows-gnu" test --locked --offline --lib --manifest-path experimental/remote-transport/client/Cargo.toml --target x86_64-pc-windows-gnu
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build the game-owned Windows release without launching it
+        run: |
+          cargo "+$env:RUST_TOOLCHAIN-x86_64-pc-windows-gnu" build --release --locked --offline --manifest-path experimental/remote-transport/client/Cargo.toml --target x86_64-pc-windows-gnu
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Test the actual native bootstrap profile gate
+        run: |
+          python -B client-patches/network-only/public-access/run_profile_checks.py --cxx "$env:CLIENT_TLS_CXX" --output "$env:RUNNER_TEMP/client-tls-profile-checks"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Test the actual request consumer and historical rejection control
+        run: |
+          python -B client-patches/network-only/public-access/run_checks.py --cxx "$env:CLIENT_TLS_CXX" --old-source client-patches/public-access/NebulaPublicAccess.cpp --output "$env:RUNNER_TEMP/client-tls-consumer-checks"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

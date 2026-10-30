@@ -1,5 +1,21 @@
 # Recorded headless validation
 
+## Current checkpoint — 2026-10-30
+
+The current candidate passed **103 tests on Windows and 103 on Linux**, including
+four new mailbox edge cases. These contract and socket tests remain headless;
+original-client/UI and independent-player acceptance are pending.
+The separate [world regression record](world-regression-validation.json) records
+these counts and pins the two changed source files; it does not refresh the
+earlier binary, comparison or gateway records.
+
+The differential, gateway and container records below belong to the **earlier
+99-test binaries**, pinned by source and binary hashes. Their 649 comparisons,
+33 rejection controls, nine gateway checks and footprint measurements must not
+be transferred to the current candidate without rerunning those layers.
+
+## Recorded 99-test binaries
+
 Recorded 2026-10-30 using Rust 1.90.0. The machine-readable
 [validation record](headless-validation.json) pins the crate source digest and
 each tested binary. This is evidence for the reconstructed preservation backend;
@@ -12,10 +28,10 @@ unproven.
 | Rust contracts and real sockets, Linux | 99 passed, no failures or skips |
 | Authored Python reference versus Windows executable | 649 matched cases |
 | Authored Python reference versus Linux release executable | 649 matched cases |
-| Authored Python reference versus binary extracted from the final Docker image | 649 matched cases |
+| Authored Python reference versus binary extracted from the recorded Docker image | 649 matched cases |
 | Comparator rejection controls | 22 baseline/fixture and 11 management controls passed |
 | Existing TLS gateway with Windows executable | Nine checks passed |
-| Existing TLS gateway with final Docker executable | Nine checks passed |
+| Existing TLS gateway with recorded Docker executable | Nine checks passed |
 | Restricted Linux image | Nonroot startup, health check and graceful exit passed |
 
 The 649 cases comprise 436 baseline, 76 configured mutation, 134 management and
@@ -45,7 +61,7 @@ were deleted. No desktop, game client or original game assets were used.
 
 ## Container footprint
 
-The built Linux image is **33,264,619 bytes** including the binary, protocol
+The recorded Linux image is **33,264,619 bytes** including the binary, protocol
 metadata, Debian runtime and license notices. One idle startup sample measured
 **7,488 KiB process RSS**. This is not a load test or a multiplayer capacity claim,
 and does not include the separate TLS gateway or dashboard.

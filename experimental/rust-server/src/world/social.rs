@@ -125,26 +125,52 @@ struct Grant {
     expires_at: f64,
 }
 fn read_small<T: serde::de::DeserializeOwned>(p: &std::path::Path) -> Option<T> {
-    let m = fs::metadata(p).ok()?;
-    if m.len() > 8192 || m.len() == 0 {
+    read_bounded(p, 8192)
+}
+fn read_bounded<T: serde::de::DeserializeOwned>(p: &std::path::Path, max: u64) -> Option<T> {
+    use std::io::Read;
+    let f = fs::File::open(p).ok()?;
+    let m = f.metadata().ok()?;
+    if m.len() > max || m.len() == 0 {
         return None;
     }
-    serde_json::from_slice(&fs::read(p).ok()?).ok()
+    let mut bytes = Vec::with_capacity(m.len() as usize);
+    f.take(max + 1).read_to_end(&mut bytes).ok()?;
+    if bytes.len() > max as usize {
+        return None;
+    }
+    serde_json::from_slice(&bytes).ok()
 }
 fn write_new<T: serde::Serialize>(p: &std::path::Path, v: &T) -> Result<()> {
     use std::io::Write;
-    fs::create_dir_all(
-        p.parent()
-            .ok_or_else(|| Error::bad("invalid_social_path"))?,
-    )?;
+    let folder = p
+        .parent()
+        .ok_or_else(|| Error::bad("invalid_social_path"))?;
+    fs::create_dir_all(folder)?;
+    let bytes = serde_json::to_vec(v)?;
+    let temporary = folder.join(format!(".{}.tmp", uuid::Uuid::new_v4().simple()));
     let mut f = fs::OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(p)
-        .map_err(|_| Error::bad("notification_already_pending"))?;
-    f.write_all(&serde_json::to_vec(v)?)?;
-    f.sync_all()?;
-    Ok(())
+        .open(&temporary)?;
+    let result = (|| {
+        f.write_all(&bytes)?;
+        f.sync_all()?;
+        drop(f);
+        // Same-volume hard-link publication is atomic and refuses to replace an
+        // existing immutable message on both Linux and Windows. Readers never
+        // observe the partially written staging file (its suffix is not .json).
+        fs::hard_link(&temporary, p).map_err(|error| {
+            if error.kind() == std::io::ErrorKind::AlreadyExists {
+                Error::bad("notification_already_pending")
+            } else {
+                error.into()
+            }
+        })?;
+        Ok(())
+    })();
+    let _ = fs::remove_file(temporary);
+    result
 }
 pub(super) fn can_private(s: &State, a: &Account, b: &Account) -> Result<bool> {
     if !can_receive(s, a, b)? || !can_receive(s, b, a)? {
@@ -342,6 +368,42 @@ pub(super) struct Relay {
     pub created_at: f64,
     pub expires_at: f64,
 }
+fn valid_relay(v: &Relay, now: f64) -> bool {
+    let guid = |s: &str| {
+        s.len() == 32
+            && s.bytes()
+                .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+    };
+    let token = |s: &str, max: usize| {
+        !s.is_empty() && s.encode_utf16().count() <= max && !s.contains(['#', '\0'])
+    };
+    v.format_version == 1
+        && guid(&v.event_id)
+        && guid(&v.source_guid)
+        && guid(&v.target_guid)
+        && v.source_guid != v.target_guid
+        && super::safe_instance(&v.source_instance)
+        && super::safe_instance(&v.target_instance)
+        && token(&v.source_account, 128)
+        && token(&v.target_account, 128)
+        && v.source_account != v.target_account
+        && now.is_finite()
+        && now >= 0.0
+        && v.created_at.is_finite()
+        && v.expires_at.is_finite()
+        && v.created_at <= now + 5.0
+        && v.expires_at > now
+        && v.expires_at > v.created_at
+        && v.expires_at - v.created_at <= 30.0
+        && match v.kind.as_str() {
+            "chat" => v.value == 1 && token(&v.text, 4096),
+            "request" => matches!(v.value, 0 | 1 | 6) && v.text.is_empty(),
+            "accepted" => matches!(v.value, 0 | 1) && v.text.is_empty(),
+            "typing" | "stop_typing" => v.value == 0 && v.text.is_empty(),
+            "refresh" => (21..=25).contains(&v.value) && v.text.is_empty(),
+            _ => false,
+        }
+}
 pub(super) fn enqueue(
     s: &State,
     source: &Account,
@@ -352,29 +414,36 @@ pub(super) fn enqueue(
     text: &str,
 ) -> Result<()> {
     let event = uuid::Uuid::new_v4().simple().to_string();
-    let p = s
-        .state_dir
-        .join("social-relay")
-        .join(&target.instance)
-        .join(format!("{event}.json"));
-    write_new(
-        &p,
-        &Relay {
-            format_version: 1,
-            event_id: event,
-            kind: kind.into(),
-            source_guid: source.guid.clone(),
-            target_guid: target.guid.clone(),
-            source_account: source.id.clone(),
-            target_account: target.id.clone(),
-            source_instance: instance.into(),
-            target_instance: target.instance.clone(),
-            value,
-            text: text.into(),
-            created_at: s.now(),
-            expires_at: s.now() + 15.0,
-        },
-    )
+    let folder = s.state_dir.join("social-relay").join(&target.instance);
+    let entry = Relay {
+        format_version: 1,
+        event_id: event,
+        kind: kind.into(),
+        source_guid: source.guid.clone(),
+        target_guid: target.guid.clone(),
+        source_account: source.id.clone(),
+        target_account: target.id.clone(),
+        source_instance: instance.into(),
+        target_instance: target.instance.clone(),
+        value,
+        text: text.into(),
+        created_at: s.now(),
+        expires_at: s.now() + 15.0,
+    };
+    if !valid_relay(&entry, s.now()) || source.instance != instance {
+        return Err(Error::bad("social_relay_invalid_envelope"));
+    }
+    if folder.is_dir()
+        && fs::read_dir(&folder)?
+            .flatten()
+            .filter(|e| e.path().extension().and_then(|x| x.to_str()) == Some("json"))
+            .take(512)
+            .count()
+            >= 512
+    {
+        return Err(Error::bad("social_relay_capacity"));
+    }
+    write_new(&folder.join(format!("{}.json", entry.event_id)), &entry)
 }
 pub(super) fn drain(s: &State, instance: &str) -> Result<Vec<Relay>> {
     let dir = s.state_dir.join("social-relay").join(instance);
@@ -390,18 +459,17 @@ pub(super) fn drain(s: &State, instance: &str) -> Result<Vec<Relay>> {
     }
     let mut out = Vec::new();
     for (_, p) in entries.into_iter().take(128) {
-        let data: Option<Relay> = read_small(&p);
-        let claim = p.with_extension("processing");
+        let claim = p.with_extension(format!("processing.{}", uuid::Uuid::new_v4().simple()));
         if fs::rename(&p, &claim).is_err() {
             continue;
         }
+        // JSON may use six bytes per UTF-16 code unit. Use the same bounded
+        // envelope size as the preserved C# mailbox, not the small-request cap.
+        let data: Option<Relay> = read_bounded(&claim, 32768);
         if let Some(v) = data {
-            if v.format_version == 1
+            if valid_relay(&v, s.now())
                 && v.target_instance == instance
-                && v.created_at <= s.now() + 5.0
-                && v.expires_at > s.now()
-                && v.expires_at - v.created_at <= 15.0
-                && v.text.len() <= 4096
+                && p.file_stem().and_then(|name| name.to_str()) == Some(&v.event_id)
             {
                 out.push(v);
             }
@@ -451,4 +519,220 @@ pub(super) fn accept_gift(
     )?;
     tx.commit()?;
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::{
+        atomic::{AtomicBool, Ordering},
+        Arc,
+    };
+
+    const NOW: f64 = 1_800_000_000.0;
+
+    fn envelope() -> Relay {
+        Relay {
+            format_version: 1,
+            event_id: uuid::Uuid::new_v4().simple().to_string(),
+            kind: "chat".into(),
+            source_guid: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".into(),
+            target_guid: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".into(),
+            source_account: "source-account".into(),
+            target_account: "target-account".into(),
+            source_instance: "source-instance".into(),
+            target_instance: "target-instance".into(),
+            value: 1,
+            text: "汉".repeat(4096),
+            created_at: NOW,
+            expires_at: NOW + 15.0,
+        }
+    }
+
+    fn state() -> (tempfile::TempDir, State) {
+        let dir = tempfile::tempdir().unwrap();
+        let protocol = std::env::var_os("NEBULA_REFERENCE_PROTOCOL_DIR")
+            .map(PathBuf::from)
+            .unwrap_or_else(|| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../protocol"));
+        let mut state = State::open(dir.path(), &protocol).unwrap();
+        state.fixed_time = Some(NOW);
+        (dir, state)
+    }
+
+    #[test]
+    fn relay_text_limit_matches_utf16_and_rejects_invalid_envelopes() {
+        let original = envelope();
+        assert!(valid_relay(&original, NOW));
+        for text in ["😀".repeat(2048), "\u{1}".repeat(4096)] {
+            let mut next = original.clone();
+            next.text = text;
+            assert!(valid_relay(&next, NOW));
+        }
+        for text in [
+            "😀".repeat(2049),
+            "x".repeat(4097),
+            "bad#field".into(),
+            "bad\0field".into(),
+            String::new(),
+        ] {
+            let mut next = original.clone();
+            next.text = text;
+            assert!(!valid_relay(&next, NOW));
+        }
+        let mut invalid = vec![];
+        let mut next = original.clone();
+        next.event_id = "../outside".into();
+        invalid.push(next);
+        let mut next = original.clone();
+        next.source_guid = next.target_guid.clone();
+        invalid.push(next);
+        let mut next = original.clone();
+        next.target_instance = "../outside".into();
+        invalid.push(next);
+        let mut next = original.clone();
+        next.kind = "request".into();
+        invalid.push(next);
+        let mut next = original.clone();
+        next.value = 0;
+        invalid.push(next);
+        let mut next = original.clone();
+        next.expires_at = NOW;
+        invalid.push(next);
+        let mut next = original.clone();
+        next.expires_at = NOW + 31.0;
+        invalid.push(next);
+        let mut next = original.clone();
+        next.created_at = f64::NAN;
+        invalid.push(next);
+        for next in invalid {
+            assert!(!valid_relay(&next, NOW));
+        }
+    }
+
+    #[test]
+    fn concurrent_readers_only_observe_complete_immutable_publications() {
+        let dir = tempfile::tempdir().unwrap();
+        let reader_dir = dir.path().to_owned();
+        let finished = Arc::new(AtomicBool::new(false));
+        let done = finished.clone();
+        let reader = std::thread::spawn(move || {
+            let mut seen = std::collections::BTreeSet::new();
+            loop {
+                let final_pass = done.load(Ordering::Acquire);
+                for file in fs::read_dir(&reader_dir).unwrap().flatten() {
+                    let path = file.path();
+                    if path.extension().and_then(|s| s.to_str()) == Some("json") {
+                        let value: serde_json::Value =
+                            read_bounded(&path, 32768).expect("published JSON was incomplete");
+                        assert_eq!(value["text"].as_str().unwrap().len(), 16384);
+                        seen.insert(path);
+                    }
+                }
+                if final_pass {
+                    break;
+                }
+                std::thread::yield_now();
+            }
+            seen.len()
+        });
+        for i in 0..64 {
+            let path = dir.path().join(format!("{i:032x}.json"));
+            write_new(&path, &serde_json::json!({"text":"x".repeat(16384)})).unwrap();
+            assert!(write_new(&path, &serde_json::json!({"text":"replacement"})).is_err());
+        }
+        finished.store(true, Ordering::Release);
+        assert_eq!(reader.join().unwrap(), 64);
+        assert_eq!(fs::read_dir(dir.path()).unwrap().count(), 64);
+    }
+
+    #[test]
+    fn drain_claims_unicode_payloads_once_and_discards_bad_or_misnamed_files() {
+        let (_dir, state) = state();
+        let folder = state.state_dir.join("social-relay/target-instance");
+        fs::create_dir_all(&folder).unwrap();
+        let good = envelope();
+        write_new(&folder.join(format!("{}.json", good.event_id)), &good).unwrap();
+        let mut bad = envelope();
+        bad.value = 0;
+        write_new(&folder.join(format!("{}.json", bad.event_id)), &bad).unwrap();
+        let wrong_name = envelope();
+        write_new(&folder.join("wrong-name.json"), &wrong_name).unwrap();
+        fs::write(folder.join("oversized.json"), vec![b' '; 32769]).unwrap();
+        fs::write(folder.join("partial.json"), b"{\"text\":").unwrap();
+        let values = drain(&state, "target-instance").unwrap();
+        assert_eq!(values.len(), 1);
+        assert_eq!(values[0].event_id, good.event_id);
+        assert_eq!(values[0].text, good.text);
+        assert!(drain(&state, "target-instance").unwrap().is_empty());
+        assert_eq!(fs::read_dir(&folder).unwrap().count(), 0);
+    }
+
+    #[test]
+    fn a_full_mailbox_rejects_new_messages_before_creating_more_state() {
+        let (_dir, state) = state();
+        let folder = state.state_dir.join("social-relay/target-instance");
+        fs::create_dir_all(&folder).unwrap();
+        for i in 0..512 {
+            fs::write(folder.join(format!("{i:032x}.json")), b"{}").unwrap();
+        }
+        let account = |guid: &str, id: &str, instance: &str| Account {
+            guid: guid.into(),
+            id: id.into(),
+            username: id.into(),
+            platform: "StandaloneWindows".into(),
+            instance: instance.into(),
+            selected_companion: String::new(),
+            selected_locomotion: String::new(),
+            companion_revision: 0,
+            locomotion_revision: 0,
+            wardrobe_active: false,
+            wardrobe_instance: String::new(),
+            wardrobe_updated: 0.0,
+            position: super::super::Vector3::default(),
+            position_updated: 0.0,
+            muted: false,
+        };
+        let source = account(
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "source",
+            "source-instance",
+        );
+        let target = account(
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "target",
+            "target-instance",
+        );
+        assert_eq!(
+            enqueue(
+                &state,
+                &source,
+                &target,
+                "source-instance",
+                "chat",
+                1,
+                "hello"
+            )
+            .unwrap_err()
+            .message,
+            "social_relay_capacity"
+        );
+        assert_eq!(fs::read_dir(&folder).unwrap().count(), 512);
+        let mut unsafe_target = target;
+        unsafe_target.instance = "../outside".into();
+        assert_eq!(
+            enqueue(
+                &state,
+                &source,
+                &unsafe_target,
+                "source-instance",
+                "chat",
+                1,
+                "hello"
+            )
+            .unwrap_err()
+            .message,
+            "social_relay_invalid_envelope"
+        );
+        assert!(!state.state_dir.join("outside").exists());
+    }
 }

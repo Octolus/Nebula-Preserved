@@ -15,7 +15,7 @@ import subprocess
 import pefile
 
 HERE = Path(__file__).resolve().parent
-LOCK = "3ef766cca2acd749d3ec071f5000e699992e1b9d9f0299bb23e312ca991d6c2e"
+LOCK = "b657ab12a863baacb0ac4380532250a0ee5cd1e379f85ef7ada78312ccc43898"
 ORIGINALS = {
     "GameAssembly.dll": "c4dd5db599e5e5ce4adf25f09ffe70ad10e0928adf6a2e862176d537026b44ac",
     "Nebula Realms_Data/il2cpp_data/Metadata/global-metadata.dat": "c59807c2950c1051202ae7d96744d126be4c489c7719f7e2d8d207f8f75681c1",
@@ -25,8 +25,8 @@ ORIGINALS = {
 }
 REGISTRY = "e493d6fa9af94df6626e950ee8e4483ede10d94fc81405b394090dd0e047ef10"
 PUBLIC = "d0a37cfd1e47e9ec706d92c8b29dd9b29a4cfc9ca5c9891b0f427ba2510a93aa"
-REMOTE_PUBLIC = "d0a37cfd1e47e9ec706d92c8b29dd9b29a4cfc9ca5c9891b0f427ba2510a93aa"
-REMOTE_TRANSPORT = "cfda7d033e93fe78a8150c6a11a6f3b1d66bc5e417f49ee869a0630f855c8420"
+REMOTE_PUBLIC = "909284bf0e351ed037ea3acc22cd06ff57d2a17c3bfb83cd02df48b4e066948f"
+REMOTE_TRANSPORT = "e5baacfc3f9ad884610bf0c32c71d9e533f8df05d69264b4aedb97041c18bde5"
 sha = lambda b: hashlib.sha256(b).hexdigest()
 
 def require(ok, why):

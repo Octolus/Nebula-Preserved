@@ -1,7 +1,7 @@
 {
-  "bytes_excluding_inventory": 29196582,
+  "bytes_excluding_inventory": 29413375,
   "excluded": "Original game installation, compiled client/runtime outputs, Unity Linux build, databases, logs, credentials, keys, generated build products and private evidence are excluded. Four pre-existing vendored Cecil dependency DLLs remain at their reviewed original hashes.",
-  "file_count_excluding_inventory": 1647,
+  "file_count_excluding_inventory": 1687,
   "files": {
     ".editorconfig": {
       "sha256": "93287d2202fa7d6d6ce0d539f7189bbf775bd3df5de67be71830c2f55b7d7b82",
@@ -31,6 +31,14 @@
       "sha256": "e1f85e67c76ddb91ed298fcf8f2e8c8316275f363df4b91281e08f3f775d5196",
       "size": 1021
     },
+    ".github/workflows/backend-e2e.yml": {
+      "sha256": "26d7019ec28b22245d5a33d76b90902938224c138a9d9cef3a89505e194ecbf2",
+      "size": 1885
+    },
+    ".github/workflows/client-tls.yml": {
+      "sha256": "b83454d902b1ced8f82ec0090bdd7ae346f2af777a12b5607cca56c0d49fb775",
+      "size": 7241
+    },
     ".github/workflows/containers.yml": {
       "sha256": "6dd32bf5ae160bfe7c19db38c37f9e18abb590051ca7b55f258e882384b9d104",
       "size": 8663
@@ -40,8 +48,8 @@
       "size": 4693
     },
     ".github/workflows/quality.yml": {
-      "sha256": "c0109cd392ca85cf58c8781dd22e813f66af34441c871c23dcad4e6f9fbf6f90",
-      "size": 3275
+      "sha256": "227c59ee21f64ca32fcb68df5eaf560a325e1a00cad83513139e07e01618a070",
+      "size": 4482
     },
     ".github/workflows/rust-server.yml": {
       "sha256": "4d2f52a222ee96544ba3ade995d2f9ee557ffdc17f373c5eeb644941991addc7",
@@ -60,8 +68,8 @@
       "size": 1086
     },
     "README.md": {
-      "sha256": "3d5b4135be315886358cd0b9be2ed7aafd5593b36eafec4beac4a5a29f3eb853",
-      "size": 6670
+      "sha256": "9537ab77dbb5f7c7eebe3343b68d1dbd64ec75282fae8566b7689e658c7da23f",
+      "size": 8292
     },
     "SECURITY.md": {
       "sha256": "07f4658e09885c3b44e4ad861bfb450614528017b2d8441397034539659c19c3",
@@ -908,11 +916,11 @@
       "size": 2330
     },
     "client-patches/network-only/README.md": {
-      "sha256": "1e5f86a96d95974a830c8a527c34ccc9f0498bbe5781e8ceb09ded843787b7af",
-      "size": 4486
+      "sha256": "7387ab2ba50deafca374b1f8953bf18893d5495a6ac5a6b45aa1652c3a8208c7",
+      "size": 4617
     },
     "client-patches/network-only/build_network_client.py": {
-      "sha256": "542ac86af07627700c3c2afb4b82995c4473dd9acc959a9d89e3df7a0a680d00",
+      "sha256": "4527eec7b38592143e5ab8092361052b8b4e15d30d1d8675f2f61b927a7255f8",
       "size": 11224
     },
     "client-patches/network-only/native-automation/join_queue_gate.cpp": {
@@ -972,16 +980,16 @@
       "size": 502
     },
     "client-patches/network-only/public-access/NebulaRemoteBootstrap.cpp": {
-      "sha256": "be8da4892a39d8476b61b4fa6ca797bd9f3659fd581e50e429f41c10180761ae",
-      "size": 13089
+      "sha256": "552d57c1b3b89ae1bd23c1000e73715cbacf2aa53821a040e2d24aac4a67fc6d",
+      "size": 13229
     },
     "client-patches/network-only/public-access/NebulaRemoteBootstrap.h": {
       "sha256": "91620d7e88beaed8d86d423f18c6ca8d5ba42ead87dbf826dec58a2472c1ad1b",
       "size": 606
     },
     "client-patches/network-only/public-access/README.md": {
-      "sha256": "835539034d19cb74b83ec4fc3729a9bf3d9bfacb878df5d63d803fc992c615de",
-      "size": 2065
+      "sha256": "9b6b9d568713a87922675c963e62ed8961387a26050a0679a70e46cb95bb5b0c",
+      "size": 3068
     },
     "client-patches/network-only/public-access/RemoteTransportPin.h.in": {
       "sha256": "926122940b6aa1c62b828274ea41d24cd02bbd847df291f1272ce6d05aedd1a4",
@@ -995,9 +1003,17 @@
       "sha256": "1cf9bb24c1a908a005c45010183b4bafbc2e6a5aed8c4367113760207e8971f6",
       "size": 2596
     },
+    "client-patches/network-only/public-access/run_profile_checks.py": {
+      "sha256": "7afdf5a7d8b9c0416c18ba44688889a4279a4272b3eb063ef89cdec789a28e8a",
+      "size": 1673
+    },
     "client-patches/network-only/public-access/test_public_consumer.cpp": {
       "sha256": "0d9363753fa9e28f8d90efc32e86dd99b5cc792ef72690d926954f1ace759b92",
       "size": 7477
+    },
+    "client-patches/network-only/public-access/test_remote_profile.cpp": {
+      "sha256": "b34c540335296d6a52fcbfc15f2acee22fb4e8424bfe4f5c7b5e2f09a968721c",
+      "size": 4306
     },
     "client-patches/network-only/recipes/interaction_registry_patch.py": {
       "sha256": "6a65a9eab4340d759a5fc7509622b2fd741bae473fc8a954cadd7d7cb24ffdee",
@@ -1028,7 +1044,7 @@
       "size": 3890
     },
     "client-patches/network-only/source-lock.json": {
-      "sha256": "3ef766cca2acd749d3ec071f5000e699992e1b9d9f0299bb23e312ca991d6c2e",
+      "sha256": "b657ab12a863baacb0ac4380532250a0ee5cd1e379f85ef7ada78312ccc43898",
       "size": 2422
     },
     "client-patches/network-only/test_network_shim.cpp": {
@@ -1192,20 +1208,32 @@
       "size": 823
     },
     "deployment/ansible/README.md": {
-      "sha256": "d6af0e853e4a7cbbeaf29777bc6727d49929f17c6b92d847e40ccf4c34e52f18",
-      "size": 10519
+      "sha256": "9c9d2331410fb97e1dcf47647cf91c63ff98df3d83deabaf99e7df0b9c1a41c0",
+      "size": 11986
     },
     "deployment/ansible/ansible.cfg": {
       "sha256": "6075d0bc3c54dd47181d8bfe36960bfad40d5dc0dc1c9b9202bde8735463f2f8",
       "size": 147
     },
+    "deployment/ansible/files/acme-http.compose.yaml": {
+      "sha256": "5ebf4df996ea6a65a423a890ae8a3f6bb0b5a50a8e7469d657ed58ff8fabf3ac",
+      "size": 636
+    },
     "deployment/ansible/files/bootstrap-secrets.py": {
-      "sha256": "c4a068f5c69ad3bfc8e12ce99e19345f0dc3c818abdba38df2f6661420f5018c",
-      "size": 5036
+      "sha256": "cd35360b81a7415e21df481be8a2a051a704e6ddac305f789b7ab49b958ea002",
+      "size": 5611
     },
     "deployment/ansible/files/initialize-state.py": {
       "sha256": "2198694d3eebcb6d439c2f6872ee62fedd5d71cefabdf9fc9f6f3dc224568a39",
       "size": 1021
+    },
+    "deployment/ansible/files/manage-public-tls.py": {
+      "sha256": "33159a1a01967842733c8d3dfb092f62a934a3d70c3ada871aac6bb2c3c935f6",
+      "size": 9408
+    },
+    "deployment/ansible/files/nebula-preserved-acme-http.service": {
+      "sha256": "c14e01c818ef41d89484117c75a056ca37e80b4d68bf79e4f1ff8d65757981b9",
+      "size": 483
     },
     "deployment/ansible/files/nebula-preserved-backup.service": {
       "sha256": "a4cd58e3690535705937508a240279a912dfdd3f358a52efcde49a1f1234dd2b",
@@ -1215,9 +1243,17 @@
       "sha256": "87288a18f0bbd9f55d02eed0d9356f91c040a119c99f20cf66ea07317ce6cda6",
       "size": 142
     },
+    "deployment/ansible/files/nebula-preserved-public-tls.timer": {
+      "sha256": "ecbe9cc6b6ee1a889eba6ce4a78f00cc151de2bc1e02e991b4cbe1b34e9abd89",
+      "size": 226
+    },
     "deployment/ansible/files/nebula-preserved.service": {
       "sha256": "9f108d3553c047d74b3c217f5ad4876d6190f209bd0806dce3223a326293d657",
       "size": 599
+    },
+    "deployment/ansible/files/nginx-acme.conf": {
+      "sha256": "e3d1126c22d52a1be54267e9ede36a9d52fcb243fc108ecb3da46487e90362ba",
+      "size": 573
     },
     "deployment/ansible/files/nginx-panel.conf": {
       "sha256": "d7b6e127d4bbbe26b24743862aaeb465ffbb746ece3f68e10c8dee3e0ab56b01",
@@ -1228,24 +1264,48 @@
       "size": 314
     },
     "deployment/ansible/site.yaml": {
-      "sha256": "7558979d727274264873e9f0ad5fe135eb77e2622989e096daf4eebb5f9bd35e",
-      "size": 8651
+      "sha256": "dc094e81c10543ffe1c274f5034f9cf42f7ece4cf7495a4c7106aab6d1873d3c",
+      "size": 12483
     },
     "deployment/ansible/templates/compose.host.yaml.j2": {
       "sha256": "aa774230c8e9df2660ddd2fa9ec8fcd19b2e92158f5d4e217e36ba4fcfe1af39",
       "size": 943
     },
+    "deployment/ansible/templates/nebula-preserved-public-tls.service.j2": {
+      "sha256": "53c3e159ae4eb9937469a56eaa450ae354f91c358e4e737a6c8d015e1a3fc08d",
+      "size": 514
+    },
     "deployment/ansible/templates/runtime.env.j2": {
       "sha256": "6343d0e1d7efbe574ece82ec697fdc8fb1b6783eff4b56c6c7a3861762847ee8",
       "size": 442
     },
+    "deployment/ansible/tests/test_bootstrap_release.py": {
+      "sha256": "fd2a3df86a00bedf4512eb4cbdcadb22e38b92af019ef7545bd14bb7ae6e87fc",
+      "size": 11461
+    },
     "deployment/ansible/tests/test_deployment.py": {
-      "sha256": "02d380c82aa880285a636e776f9c9b1ab6a7dd7d4953781c33ebe3a6f085d0cf",
-      "size": 7471
+      "sha256": "62058f2bbde4fdf553f203ac472f064f3c24a6b9233713527f36c0d84946214b",
+      "size": 8369
+    },
+    "deployment/ansible/tests/test_public_tls.py": {
+      "sha256": "e7ee2b9d801ed32ecab62adf9bc7e41ac3b60cedcafc33598e2ff0871b76d98f",
+      "size": 8490
     },
     "deployment/ansible/vars.example.yaml": {
-      "sha256": "89955ebc59113f518f4617043c3f0f62760ee33a554e2cfee856b3bbe3ef866e",
-      "size": 486
+      "sha256": "f879e4ce3c86046757ca7d928c3492f7cd79858db110273f9cc2aba178999122",
+      "size": 680
+    },
+    "deployment/bootstrap/README.md": {
+      "sha256": "f154578ce65fe066fe93d8ddfee2e12c3cb931a5203b79b06e17de5a23c6dbad",
+      "size": 6039
+    },
+    "deployment/bootstrap/deploy.py": {
+      "sha256": "93b93c9fd96fa2bcff1168b6e51b9cdc200ecb6542c8936c3354b3ff70f2fac1",
+      "size": 20780
+    },
+    "deployment/bootstrap/validation.json": {
+      "sha256": "f3ac82d81f39234dfb56526bf22d1b8c224de5eb9a07c164024c5e4b9ce7babf",
+      "size": 2773
     },
     "deployment/docker/.env.example": {
       "sha256": "42a587eaeb51309a698eb26e3d734a3dc79c907415a93bb38bab1d33302f895c",
@@ -1384,8 +1444,8 @@
       "size": 1439
     },
     "docs/LAUNCHER.md": {
-      "sha256": "de602f5c4c31a02fd771d5504db51842bb10408d7575bf3bf067842cbb32d405",
-      "size": 6895
+      "sha256": "85bfa90cee8a08a491147f7ac2b1f4047e3315e4226c13a88506d11d6e4eb316",
+      "size": 9192
     },
     "docs/LICENSING.md": {
       "sha256": "06001ca90eb0ae4c1067e635e669dd5179b4a85a5160d0b4752d8a7f96ed8048",
@@ -1412,8 +1472,8 @@
       "size": 1946
     },
     "docs/PROGRESS.md": {
-      "sha256": "28ffcb253c488cd378706f0d6cc75ddcf69d7bfc8d444c5184698fe344421af2",
-      "size": 9123
+      "sha256": "38d1a45f8b52fe7a4684b79e16b7c484fdeda052d4254c1f7aee3289fbbdb5be",
+      "size": 11633
     },
     "docs/PUBLISHING.md": {
       "sha256": "439cdcbb5ad15eaad33e94ef664ad22ab305cf1c691d085ca4526f9de4bd9710",
@@ -1432,8 +1492,8 @@
       "size": 4218
     },
     "docs/TESTING.md": {
-      "sha256": "d2f5ec89f4c51692d2ea2095a15074eb45df14f2bbe41197b911b62c824877e8",
-      "size": 12288
+      "sha256": "5880800b0749e6c5e99eb31dde215a47284a259802d738837ccccede7eafda44",
+      "size": 16206
     },
     "docs/images/admin-panel.png": {
       "sha256": "bce9f0b96a157712952e47def10e38571623b8eb20d59339bbd29f314b818471",
@@ -2020,12 +2080,12 @@
       "size": 1008
     },
     "experimental/remote-transport/README.md": {
-      "sha256": "e3b91160a1895c39d2a11a27b3224733b4f52576a790b1746628d69c756d921a",
-      "size": 1936
+      "sha256": "dbb764e270b95c8f4cad3bba9ac8e173a95d2e6bacef382556a7b060c9e8f415",
+      "size": 3853
     },
     "experimental/remote-transport/STATUS.json": {
-      "sha256": "7f29d5a5a97b1ad41a028d45fdb800acc9e715000fc6f43b1d1b82ed5a4f09db",
-      "size": 953
+      "sha256": "08a6d4adf671176e7f7a5caa7b042c561aa736752b40f43cefc8024a1595dd46",
+      "size": 2080
     },
     "experimental/remote-transport/THIRD_PARTY_NOTICES.md": {
       "sha256": "49260c8d1498f7a78dbe31a44141c01b1590498b48852de65ed4170ff256d78a",
@@ -2039,9 +2099,49 @@
       "sha256": "aceb331cc4d4e1fd57bf02ee268908dacea72dbb148c3c70c2622ce7fcdb0264",
       "size": 923
     },
+    "experimental/remote-transport/client/src/lib.rs": {
+      "sha256": "9784e73d2f71603273d38ec94473ff8afb6ec942afd579648ea00a55e274b939",
+      "size": 139
+    },
     "experimental/remote-transport/client/src/main.rs": {
-      "sha256": "24cf0da500869896a386c096d0dbcca992176b8cc85190ebb3835da791af79bc",
-      "size": 17704
+      "sha256": "9b76206f5062790ef775fefa787fc55f63ea393fcc5eaefa3b08f041c6bccc71",
+      "size": 20057
+    },
+    "experimental/remote-transport/client/src/profile.rs": {
+      "sha256": "bebbb803c42289866d72bb5026613b1335aafce0eaa392a3d997309e1909d54e",
+      "size": 6833
+    },
+    "experimental/remote-transport/client/src/system_roots.rs": {
+      "sha256": "6db43cb4ce88653dff648a107034ce9c5f4eeb20516218288b4ebdae9180fcd0",
+      "size": 4794
+    },
+    "experimental/remote-transport/client/src/tls.rs": {
+      "sha256": "95170102720af6aa17acd6b55958b4e156de74d2f31ebdb339cb0fd7ebad087e",
+      "size": 4951
+    },
+    "experimental/remote-transport/client/tests/fixtures/README.md": {
+      "sha256": "4f46f2f09537b7c33feefed8dc1c7ca41be6148e8b1c8e0ad652a83b9e8b0533",
+      "size": 730
+    },
+    "experimental/remote-transport/client/tests/fixtures/ca.der": {
+      "sha256": "db23340b2e5ac5c1c286ae4aac3d5b16e73e4042518c5fa0cb1360c1d8989a5c",
+      "size": 777
+    },
+    "experimental/remote-transport/client/tests/fixtures/dns-only.der": {
+      "sha256": "f9b107e924974804a973d52e5a7e0e4fd44601d162219a318bceba6c5c940a8b",
+      "size": 823
+    },
+    "experimental/remote-transport/client/tests/fixtures/other-ca.der": {
+      "sha256": "c6583695cd77d2af628c7c786780c8ab12789a250e222a1162611c305a3b1cc9",
+      "size": 797
+    },
+    "experimental/remote-transport/client/tests/fixtures/server.der": {
+      "sha256": "32cdf1a6a0b06b93c3c051eba9ddd72f05b1004aa4ed146df230592ce2f76944",
+      "size": 829
+    },
+    "experimental/remote-transport/client/tls-validation.json": {
+      "sha256": "7a3db1988300542a13009bd8e8d6f3e58ffa79486707c83c54c1896af32a7018",
+      "size": 3692
     },
     "experimental/remote-transport/config/nebula-remote-gateway.env.example": {
       "sha256": "840cf9081d6f4800550478daa99fd59e0f7f3bc38ed67d99adb85cea97939cec",
@@ -2050,6 +2150,10 @@
     "experimental/remote-transport/config/nebula-remote-gateway.service": {
       "sha256": "d0e4e85ffdb85ed1d14c1fc3785b22fcbad6e712e4a3de8cba55b3030ce40c59",
       "size": 1075
+    },
+    "experimental/remote-transport/config/remote-game-system.conf.example": {
+      "sha256": "45ac6435f85491bf4551abf9125785eafc3326f6a8e508aadf11b669b5449f80",
+      "size": 166
     },
     "experimental/remote-transport/config/remote-game.conf.example": {
       "sha256": "73320afb8ac8088ca5366df5d479db69f03e94c5e7d7a0f05c142bc99951653b",
@@ -2124,8 +2228,8 @@
       "size": 6817
     },
     "experimental/rust-server/VALIDATION.md": {
-      "sha256": "54d280deec0c3595b2cf4c0870405fda717bf523ddaf581bfbbefde89487b719",
-      "size": 4972
+      "sha256": "b88dc57c3e456b37e365e4f51442c658214a136a083d5ce3a1a1a899fb9b92b7",
+      "size": 5789
     },
     "experimental/rust-server/compose.yaml": {
       "sha256": "bb52b57a0ff46faff5a19084e6666feca96caaf0de32c29f2175e5d0ab698dc6",
@@ -3444,8 +3548,8 @@
       "size": 8449
     },
     "experimental/rust-server/src/world/PARITY.md": {
-      "sha256": "f8fe4eccb4411c74b35e117b87cfd4322ec2478f369df7895d5e64c769711c1d",
-      "size": 6566
+      "sha256": "34e22de7d75c46f13da18cbcd7e396ea764bd370dc4c27325c707876067bbbbe",
+      "size": 8846
     },
     "experimental/rust-server/src/world/accounts.rs": {
       "sha256": "c7483be8c87ddfd5c85864edf620099fba7d8f776f3a94d42f0ac710350d2a12",
@@ -3460,8 +3564,8 @@
       "size": 95010
     },
     "experimental/rust-server/src/world/social.rs": {
-      "sha256": "49cab3292b07850117a8243f6ab47cfee404adf3ee83093dd402dc86fa5b7595",
-      "size": 14959
+      "sha256": "0c76106f7b09cd61082ec3a65f890f3b32891bc054c3f3b03964daf1c54cecf1",
+      "size": 25756
     },
     "experimental/rust-server/tests/access_contracts.rs": {
       "sha256": "532c8192cfbe5ce1548ff1661d67635e1268b1cc3da6b5a760fba6b9837dcd2c",
@@ -3556,8 +3660,12 @@
       "size": 2101
     },
     "experimental/rust-server/tests/world_engine.rs": {
-      "sha256": "bc5bc719925086a84bf532b20aeec6ed441e2cc7816b15620ac50bb4718b077f",
-      "size": 27836
+      "sha256": "57494993ae868d7ac8a61df88522d769b6a31e8d5ab0da7a8edc5335573527d8",
+      "size": 28655
+    },
+    "experimental/rust-server/world-regression-validation.json": {
+      "sha256": "17569e78be16ec4343144f601c2d39642350248bd6f24ec122d5d301c4a6c7a7",
+      "size": 838
     },
     "mirror-server/Build.ps1": {
       "sha256": "5815a681a72cf618bc3f3f31f365fb7033fc9966f918391832e6592a89130e6e",
@@ -5832,8 +5940,8 @@
       "size": 59
     },
     "mirror-server/UnityProject/Assets/Preservation/NebulaSocialState.cs": {
-      "sha256": "4625560166d5b4b7b8b893279935733fd0fd25c4b50f493d491c1d01891de0ba",
-      "size": 17969
+      "sha256": "6619f551111fb4975b18c87bec51ff2a69fc4dd2add98a1c9f5bb27a47b07f2b",
+      "size": 18543
     },
     "mirror-server/UnityProject/Assets/Preservation/NebulaSocialState.cs.meta": {
       "sha256": "b63aef28f726028a47e420dce5bffba66ef90c7669167ee299756dcac6f24559",
@@ -5971,6 +6079,26 @@
       "sha256": "0b22a7d9cb41d148d60786cfa9c1317b8380af4bcbeda179b19d0ed62f5d47bd",
       "size": 66450
     },
+    "mirror-server/tests/social-contracts/NuGet.Config": {
+      "sha256": "2142cfb2dfa2c7feefbe40fabcc68b0dfecadafa99a1db9b70239d977cf2a7ef",
+      "size": 113
+    },
+    "mirror-server/tests/social-contracts/Program.cs": {
+      "sha256": "e62efbc508996bae16f40e15814d234184398e8ca4f6b56d2c74869da104d3a1",
+      "size": 6677
+    },
+    "mirror-server/tests/social-contracts/README.md": {
+      "sha256": "fecbd6bc61403be0275cd04eb4ebe83d01ac047834caca2adf556399732daf87",
+      "size": 1289
+    },
+    "mirror-server/tests/social-contracts/SocialContracts.csproj": {
+      "sha256": "2630970519cc12035dc1f7cf870bbfb8979f121ab8273ea281c715bb91e71253",
+      "size": 653
+    },
+    "mirror-server/tests/social-contracts/UnityJsonFixture.cs": {
+      "sha256": "4ee73825946020dbd7509214c58c95679b294ff7b81cbd0bfad356f8b40398ef",
+      "size": 620
+    },
     "mirror-server/tests/test_build_linux.py": {
       "sha256": "35c8d7e9305c906b09cb5f03b79a955c4183ac8f4b841433c4affc4aa46c2da1",
       "size": 15178
@@ -5988,16 +6116,16 @@
       "size": 951
     },
     "patcher/README.md": {
-      "sha256": "7bac3674134fad5b4e24c005d7b4f1cda274d80ccb1a9add40fe15454c4610a6",
-      "size": 7869
+      "sha256": "19834dcde0ee1f023facc6b0022fd0f79a487411cd7e1e6113feff014fd4c1b2",
+      "size": 8967
     },
     "patcher/build.rs": {
       "sha256": "6e4a40ae59d46d5e8d73caf74c017b15bf1157f07af41b3fd1bac6540fcb1ac7",
       "size": 6457
     },
     "patcher/launcher-ui-validation.json": {
-      "sha256": "48c9f39b7abce8b9ce8f5b6003061b45554277f5894f67a48d31e4e604c473d2",
-      "size": 1575
+      "sha256": "d4a5efc597059fe8186a56e00872e2c7432db196e2d61c4b3988e1e17dfc80aa",
+      "size": 2183
     },
     "patcher/launcher.manifest": {
       "sha256": "2651221be54f676a3d85cfaee628c69876ff736554b8f1051ecbf97f0b71364b",
@@ -6024,8 +6152,8 @@
       "size": 3147
     },
     "patcher/src/discovery.rs": {
-      "sha256": "1b854314483d717cd822dd6862168fa385974d5a4908dd23084249e34b8b249a",
-      "size": 13954
+      "sha256": "999cd157c9d21bf971d3b3c4fb358e3445e7468181dea96a376814c81a5a0073",
+      "size": 22284
     },
     "patcher/src/embedded.rs": {
       "sha256": "a09919e3cdb4829cbcd9f9f8b2261336dd1099000f5f63d42897ba8127b224ad",
@@ -6036,28 +6164,32 @@
       "size": 10532
     },
     "patcher/src/gui.rs": {
-      "sha256": "1d39042ce127ceff1c8323d3607a7929679885fd8a78a909b5b7bfc7e834833a",
-      "size": 34106
+      "sha256": "6d507da7fb44f24c38c8e553bdf1f18e9306c9219fb8a74e7e4f093583e1a489",
+      "size": 37314
     },
     "patcher/src/launcher.rs": {
-      "sha256": "842bfcdcd630cbd09ff35a9412fcd45a30f49e0b8e657278704baf727ec849c9",
-      "size": 6513
+      "sha256": "7eb86045fda8250dbc8db06fbd6ea274a785c797d8f5a51cb82b2fa49b21b055",
+      "size": 9861
     },
     "patcher/src/launcher_ui.rs": {
-      "sha256": "acc718a6b401206812f317491992854b8a21ef32d5a4fd727c03f3756fb6c410",
-      "size": 8171
+      "sha256": "306e0db8701d469078af1e11f41e77cfdc1b5440a55d36dbe7659f69c9861528",
+      "size": 8260
     },
     "patcher/src/main.rs": {
-      "sha256": "b78691daf2d115075c1b06702f64d6a5d6ab1ada8e3087091948b0a2e778eade",
-      "size": 5948
+      "sha256": "34aa52bcca8f3c8a8f1a6bb71171141ba9e671f3a8701f4b52cfecd9a84fede0",
+      "size": 8995
     },
     "patcher/src/manifest.rs": {
       "sha256": "98521e87266edcea7ba8fdd9fe97dee4a236880c37e3ab14dcc42ee5476950c9",
       "size": 14320
     },
     "patcher/src/remote.rs": {
-      "sha256": "89b034810515f5a25c2533438820cb0fc2b8797971eb1e4317a18e17cc4d67d4",
-      "size": 9365
+      "sha256": "34696eec9ef6ce47a61621192e621863948a8ade18f8e9c944f1ec1182d9c162",
+      "size": 20285
+    },
+    "patcher/src/system_roots.rs": {
+      "sha256": "6db43cb4ce88653dff648a107034ce9c5f4eeb20516218288b4ebdae9180fcd0",
+      "size": 4794
     },
     "patcher/src/transaction.rs": {
       "sha256": "8be5af4f33340f9462748d7afce47138193f6732ea15787b1d3fc667e7678957",
@@ -6066,6 +6198,26 @@
     "patcher/src/unityfs.rs": {
       "sha256": "c37e5edb43599cfa1736188e6011fd9be8d97febae4f4d6291a89484f6dd7561",
       "size": 8611
+    },
+    "patcher/tests/fixtures/README.md": {
+      "sha256": "4f46f2f09537b7c33feefed8dc1c7ca41be6148e8b1c8e0ad652a83b9e8b0533",
+      "size": 730
+    },
+    "patcher/tests/fixtures/ca.der": {
+      "sha256": "db23340b2e5ac5c1c286ae4aac3d5b16e73e4042518c5fa0cb1360c1d8989a5c",
+      "size": 777
+    },
+    "patcher/tests/fixtures/dns-only.der": {
+      "sha256": "f9b107e924974804a973d52e5a7e0e4fd44601d162219a318bceba6c5c940a8b",
+      "size": 823
+    },
+    "patcher/tests/fixtures/other-ca.der": {
+      "sha256": "c6583695cd77d2af628c7c786780c8ab12789a250e222a1162611c305a3b1cc9",
+      "size": 797
+    },
+    "patcher/tests/fixtures/server.der": {
+      "sha256": "32cdf1a6a0b06b93c3c051eba9ddd72f05b1004aa4ed146df230592ce2f76944",
+      "size": 829
     },
     "patcher/tools/accept_backup_update.py": {
       "sha256": "df915032db5c8932b2a4cae725490d7697209381d92da3c836c90a222e94e4f2",
@@ -6171,6 +6323,10 @@
       "sha256": "72e5dad87f780148efe976992b6858f04197cb3824b9c6ba61277e640224d41d",
       "size": 12396
     },
+    "scripts/NONMINI-E2E.md": {
+      "sha256": "a7939b24845a3ca8375341e6af0579e02c92247487b5a17939bf0dd5563e1470",
+      "size": 2310
+    },
     "scripts/audit_public_tree.py": {
       "sha256": "6cb31ad101cd304bc4ef9f33338d55da8888a6bdd61cf62bb051ca0cda3024f7",
       "size": 3947
@@ -6182,6 +6338,10 @@
     "scripts/ci_linux_runtime.py": {
       "sha256": "8d2e5f8b17d64ca15dacce6d1000aaf2eec439786f7aec97dae2ae4063adf662",
       "size": 7714
+    },
+    "scripts/nonmini_backend_e2e.py": {
+      "sha256": "c9a8e3959e43892ed26654bfa0d26c82853a8ae16db98e52233f0d28fd687a33",
+      "size": 23398
     },
     "scripts/package_windows_patcher.py": {
       "sha256": "7ce02b8049200d7c622777f5fe34d8300aebb63cfd191c665bf1737132378d58",
