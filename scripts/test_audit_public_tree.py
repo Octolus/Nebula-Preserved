@@ -54,6 +54,16 @@ class ScannerTests(unittest.TestCase):
         value = 'C:' + chr(92) + 'Users' + chr(92) + 'fixture-person' + chr(92) + 'private.txt'
         self.assertTrue(self.flagged('README.md', value, 'private workspace path'))
 
+    def test_game_asset_phrase_only_exempts_machine_names_in_its_file(self):
+        word = 'Oc' + 'to'  # split so this file does not match its own rule
+        path, phrase = 'protocol/item-display-metadata.json', 'Tshirt ' + word
+        label = 'current computer name'
+        with patch.dict(audit.PRIVATE_PATTERNS, {label: audit.re.compile(r'(?<!\w)' + word + r'(?!\w)', audit.re.I)}):
+            self.assertFalse(self.flagged(path, phrase, label))
+            self.assertTrue(self.flagged(path, phrase + ' and ' + word + ' alone', label))
+            self.assertTrue(self.flagged('README.md', phrase, label))
+            self.assertTrue(self.flagged(path, phrase + '\n' + OTHER))
+
     def test_main_scans_all_files_and_keeps_nonzero_exit_for_other_id(self):
         with tempfile.TemporaryDirectory(prefix='nebula-public-audit-') as temporary:
             root = Path(temporary).resolve()

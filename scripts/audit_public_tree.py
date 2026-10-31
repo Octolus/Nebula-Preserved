@@ -30,22 +30,34 @@ SYNTHETIC_ACCOUNTS = {
     "experimental/rust-server/tests/character_python_vectors.json": {"7656119" + "8000000001"},
     "experimental/rust-server/tests/character_python_vectors.py": {"7656119" + "8000000001"},
     "experimental/rust-server/tests/lifecycle_contracts.rs": {"7656119" + "8000000001", "7656119" + "8000000002"},
+    # Backend and host-policy tests use the same valid-shaped synthetic style.
+    "backend/tests/test_diagnostic_logging.py": {"7656119" + "8000000001", "7656119" + "8000000002", "7656119" + "8000000003"},
+    "backend/tests/test_request_line_limits.py": {"7656119" + "8000000000"},
+    "deployment/ansible/tests/test_host_policy.py": {"7656119" + "0000000991"},
 }
+# Shipped game asset names that can coincide with a local username or computer
+# name. Exact file/phrase exceptions; only the machine-identity rules skip them.
+GAME_ASSET_PHRASES = {
+    "protocol/item-display-metadata.json": {"Tshirt Oc" + "to"},
+}
+MACHINE_LABELS = ("current Windows username", "current computer name")
 
-for label, value in (("current Windows username", os.environ.get("USERNAME")),
-                     ("current computer name", socket.gethostname())):
+for label, value in zip(MACHINE_LABELS, (os.environ.get("USERNAME"), socket.gethostname())):
     if value and len(value) >= 4:
         PRIVATE_PATTERNS[label] = re.compile(r"(?<!\w)" + re.escape(value) + r"(?!\w)", re.I)
 
 
 def private_content_issues(name, content):
     issues = []
+    scrubbed = content
+    for phrase in GAME_ASSET_PHRASES.get(name, ()):
+        scrubbed = scrubbed.replace(phrase, "")
     for label, pattern in PRIVATE_PATTERNS.items():
         if label == "real Steam account ID":
             allowed = SYNTHETIC_ACCOUNTS.get(name, set())
             found = any(match.group(0) not in allowed for match in pattern.finditer(content))
         else:
-            found = pattern.search(content) is not None
+            found = pattern.search(scrubbed if label in MACHINE_LABELS else content) is not None
         if found:
             issues.append({"path": name, "issue": label})
     return issues

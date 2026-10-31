@@ -311,9 +311,32 @@ def verify(release):
     return manifest
 
 
-def install(release, address, tls_mode, public_enrollment=False, trust_steam_id=False):
+# Operator policy knobs accepted by `install` and forwarded to Ansible vars.
+POLICY_OPTIONS = {'max_processes': (1, 32), 'public_world_idle_seconds': (0, 86400),
+                  'personal_world_idle_seconds': (0, 86400), 'starter_crystals': (0, 10 ** 9),
+                  'starter_np': (0, 10 ** 9), 'enrollment_max_accounts': (0, 10 ** 7),
+                  'enrollment_per_ip_hourly': (1, 10 ** 6), 'enrollment_global_hourly': (1, 10 ** 7)}
+
+
+def policy_values(options):
+    values = {'nebula_max_processes': 4}
+    for name, value in (options or {}).items():
+        if name == 'protected_accounts':
+            require(all(re.fullmatch(r'[0-9]{17}', str(row)) for row in value), 'Protected accounts must be SteamID64')
+            values['nebula_protected_accounts'] = [str(row) for row in value]
+        elif name in ('protect_staff_accounts', 'ssh_hardening', 'fail2ban', 'ufw'):
+            values['nebula_' + name] = bool(value)
+        elif value is not None:
+            require(name in POLICY_OPTIONS and type(value) is int
+                    and POLICY_OPTIONS[name][0] <= value <= POLICY_OPTIONS[name][1], 'Invalid ' + name)
+            values['nebula_' + name] = value
+    return values
+
+
+def install(release, address, tls_mode, public_enrollment=False, trust_steam_id=False, options=None):
     require(not trust_steam_id or public_enrollment,
             'Trusting claimed Steam IDs requires --public-enrollment')
+    policy = policy_values(options)
     address = str(ipaddress.IPv4Address(address))
     require(tls_mode in ('public_acme', 'private_ca'), 'Unknown TLS mode')
     if tls_mode == 'public_acme':
@@ -352,7 +375,7 @@ def install(release, address, tls_mode, public_enrollment=False, trust_steam_id=
                   'nebula_server_image': manifest['images']['server'],
                   'nebula_panel_image': manifest['images']['panel'],
                   'nebula_expected_image_ids': manifest['image_ids'],
-                  'nebula_max_processes': 2, 'nebula_tls_mode': tls_mode,
+                  **policy, 'nebula_tls_mode': tls_mode,
                   'nebula_public_enrollment': bool(public_enrollment),
                   'nebula_trust_steam_id': bool(trust_steam_id),
                   'nebula_verify_reboot': False}
@@ -397,6 +420,17 @@ def main():
                                 help='Opt in to automatic preservation registration; does not verify Steam ownership')
     install_parser.add_argument('--trust-steam-id', action='store_true',
                                 help='Allow anyone claiming a Steam ID to access the matching player account')
+    for name, (low, high) in POLICY_OPTIONS.items():
+        install_parser.add_argument('--' + name.replace('_', '-'), type=int, metavar=f'{low}..{high}')
+    install_parser.add_argument('--protected-account', action='append', default=[], metavar='STEAMID64',
+                                help='Account that always needs its primary credential (repeatable)')
+    install_parser.add_argument('--no-protect-staff-accounts', action='store_true',
+                                help='Allow trusted-ID device enrollment into staff/operator accounts')
+    install_parser.add_argument('--no-ssh-hardening', action='store_true',
+                                help='Keep SSH password login (hardening needs an authorized root key)')
+    install_parser.add_argument('--no-fail2ban', action='store_true', help='Do not install the sshd fail2ban jail')
+    install_parser.add_argument('--ufw', action='store_true',
+                                help='Enable ufw for host ports 22/80/443/8443/8444 (Docker ports bypass ufw)')
     args = parser.parse_args()
     try:
         if args.command == 'prepare':
@@ -405,8 +439,13 @@ def main():
         elif args.command == 'verify':
             result = {'release_verified': bool(verify(args.release))}
         else:
+            options = {name: getattr(args, name) for name in POLICY_OPTIONS}
+            options.update(protected_accounts=args.protected_account,
+                           protect_staff_accounts=not args.no_protect_staff_accounts,
+                           ssh_hardening=not args.no_ssh_hardening, fail2ban=not args.no_fail2ban,
+                           ufw=args.ufw)
             result = install(args.release, args.public_ip, args.tls_mode, args.public_enrollment,
-                             args.trust_steam_id)
+                             args.trust_steam_id, options)
         print(json.dumps(result))
     except (ValueError, OSError, tarfile.TarError, subprocess.CalledProcessError) as exc:
         parser.exit(1, f'Deployment stopped: {exc}\n')

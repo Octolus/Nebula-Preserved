@@ -11,7 +11,23 @@ use rusqlite::{params, Connection, OptionalExtension, TransactionBehavior};
 use serde_json::{json, Value};
 use std::{collections::HashMap, fs, io::Write, net::Ipv4Addr, path::Path};
 pub const ROUTES: &[&str] = &["N2LoadSpace", "N2SpaceLoading", "spaceExistServlet"];
-const PUBLIC: &[&str] = &["Nexus", "LeafPark", "Beach", "Cinema"];
+const PUBLIC: &[&str] = &[
+    "Nexus",
+    "LeafPark",
+    "Beach",
+    "Cinema",
+    "Bowling",
+    "Dome",
+    "StoneLakeCastle",
+    "Cube",
+    "GhostTown",
+    "TheNebulianOpenHouse",
+    "ZeroDistrict",
+    "NebuHouseOpenHouse",
+    "WestValleyApartmentOpenHouse",
+    "MedievalVillage",
+    "SKL",
+];
 const PERSONAL: &[&str] = &[
     "Home",
     "Greenhouse",
@@ -180,6 +196,37 @@ fn scope_matches(state: &State, v: &Value) -> bool {
         _ => false,
     }
 }
+/// Shipped minigame managers per scene (board, darts, pool, bowling); mirrors
+/// NebulaCoreReadiness.SceneTables and backend allocation.MINIGAME_SCENE_TABLES.
+fn minigame_scene_tables(scene: &str) -> [i64; 4] {
+    match scene {
+        "StoneLakeCastle" => [8, 0, 0, 0],
+        "Bowling" => [0, 3, 9, 12],
+        _ => [0, 0, 0, 0],
+    }
+}
+
+fn minigame_tables_match(v: &Value) -> bool {
+    let expected = minigame_scene_tables(v["psidglobal"].as_str().unwrap_or(""));
+    [
+        "board_tables",
+        "darts_tables",
+        "pool_tables",
+        "bowling_lanes",
+    ]
+    .iter()
+    .zip(expected)
+    .all(|(key, count)| {
+        // Runtimes older than the pool/bowling relay omit those two keys.
+        let value = &v[*key];
+        if value.is_null() && (*key == "pool_tables" || *key == "bowling_lanes") {
+            count == 0
+        } else {
+            value.is_i64() && value.as_i64() == Some(count)
+        }
+    })
+}
+
 fn read_status(state: &State, path: &Path, expected: Option<&str>) -> Option<Value> {
     let v = small(path, 65536)?;
     if v["format_version"] != 1 || v["listening"] != true {
@@ -195,9 +242,7 @@ fn read_status(state: &State, path: &Path, expected: Option<&str>) -> Option<Val
         && v["game_ready"] == false
         && v["protocol_complete"] == false
         && v["networking_parity"] == "unproven"
-        && ["board_tables", "darts_tables"]
-            .iter()
-            .all(|k| v[*k].as_i64() == Some(0));
+        && minigame_tables_match(&v);
     if !complete && !core {
         return None;
     }
@@ -1045,4 +1090,33 @@ pub fn export_desired(state: &State) -> Result<Value> {
     drop(conn);
     publish(&state.state_dir.join("desired-instances.json"), &v)?;
     Ok(v)
+}
+
+#[cfg(test)]
+mod minigame_table_tests {
+    use super::minigame_tables_match;
+    use serde_json::json;
+
+    #[test]
+    fn status_counts_must_equal_the_shipped_scene_managers() {
+        let ok = [
+            json!({"psidglobal":"StoneLakeCastle","board_tables":8,"darts_tables":0,"pool_tables":0,"bowling_lanes":0}),
+            json!({"psidglobal":"Bowling","board_tables":0,"darts_tables":3,"pool_tables":9,"bowling_lanes":12}),
+            json!({"psidglobal":"Nexus","board_tables":0,"darts_tables":0}),
+        ];
+        for v in ok {
+            assert!(minigame_tables_match(&v), "{v}");
+        }
+        let bad = [
+            json!({"psidglobal":"StoneLakeCastle","board_tables":0,"darts_tables":0}),
+            json!({"psidglobal":"Bowling","board_tables":0,"darts_tables":3}),
+            json!({"psidglobal":"Bowling","board_tables":0,"darts_tables":3,"pool_tables":9,"bowling_lanes":true}),
+            json!({"psidglobal":"LeafPark","board_tables":8,"darts_tables":0}),
+            json!({"psidglobal":"Nexus","darts_tables":0}),
+            json!({"psidglobal":"Nexus","board_tables":"0","darts_tables":0}),
+        ];
+        for v in bad {
+            assert!(!minigame_tables_match(&v), "{v}");
+        }
+    }
 }

@@ -241,6 +241,8 @@ class Config:
     backoff_initial: float = 1.0
     backoff_max: float = 30.0
     run: bool = False
+    # None keeps the historical single TTL for public worlds too.
+    public_idle_ttl: float | None = None
 
     @property
     def desired_path(self) -> Path:
@@ -588,6 +590,13 @@ class Supervisor:
     def _argv(self, desired: DesiredInstance, lease: Lease, attempt_token: str) -> list[str]:
         log = (self.config.state_dir / "supervisor-logs" / desired.instance_id /
                f"{attempt_token}.unity.log")
+        # Shipped minigame managers (board, darts, pool, bowling); the scene
+        # runtime refuses any other count (NebulaCoreReadiness.SceneTables,
+        # backend allocation.MINIGAME_SCENE_TABLES). Kept local to this method.
+        tables = {
+            "StoneLakeCastle": (8, 0, 0, 0),
+            "Bowling": (0, 3, 9, 12),
+        }.get(desired.psidglobal, (0, 0, 0, 0))
         return [
             str(self.config.binary), "-batchmode", "-nographics", "-logFile", str(log),
             "--nebula-instance", "--nebula-state-dir", str(self.config.state_dir),
@@ -596,7 +605,8 @@ class Supervisor:
             "--nebula-bind", self.config.bind,
             "--nebula-advertise-ip", self.config.advertise_ip,
             "--nebula-port", str(lease.port),
-            "--nebula-board-tables", "0", "--nebula-darts-tables", "0",
+            "--nebula-board-tables", str(tables[0]), "--nebula-darts-tables", str(tables[1]),
+            "--nebula-pool-tables", str(tables[2]), "--nebula-bowling-lanes", str(tables[3]),
             "--nebula-core-test-profile", desired.readiness_profile,
         ]
 
@@ -661,13 +671,15 @@ class Supervisor:
             self.children.pop(instance_id, None)
             requested = self.stop_requested.pop(instance_id, None) is not None
             stopped_for_idle = requested and lease.reason == "idle TTL"
+            evicted = requested and lease.reason == "capacity eviction"
             lease.pid = None
             if requested:
                 lease.restart_count = 0
                 lease.next_restart_at = now
             else:
                 self._set_backoff(lease, now)
-            lease.state = "stopped_idle" if stopped_for_idle else ("stopped" if requested else "backoff")
+            lease.state = ("stopped_idle" if stopped_for_idle else "evicted" if evicted
+                           else "stopped" if requested else "backoff")
             lease.reason = f"owned child exited with code {code}"
 
     def step(self) -> list[dict[str, Any]]:
@@ -677,6 +689,7 @@ class Supervisor:
         desired = {row.instance_id: row for row in desired_rows}
         actions: list[dict[str, Any]] = []
         planned_dry_run_launches = 0
+        queued: list[str] = []
 
         for instance_id in sorted(set(self.leases) - set(desired)):
             if instance_id in self.children:
@@ -704,10 +717,17 @@ class Supervisor:
                             lease.state = "collision"
                             lease.reason = "stopped lease remains occupied by an unowned process"
                 continue
+            idle = (row.active_demands == 0 and row.pending_reservations == 0 and
+                    row.active_allocations == 0)
+            live = self.children.get(row.instance_id)
+            if idle and not (live and live.poll() is None):
+                # Backend idle grace keeps a live world warm; it never justifies a launch.
+                continue
             budget_used = len(self.children) + (planned_dry_run_launches if not self.config.run else 0)
             if lease is None and budget_used >= self.config.max_processes:
                 actions.append({"action": "queue", "instance_id": row.instance_id,
                                 "reason": "owned process budget is full"})
+                queued.append(row.instance_id)
                 continue
             if lease is None:
                 try:
@@ -739,11 +759,10 @@ class Supervisor:
                     if self.config.run:
                         self._request_stop(row.instance_id, "actual descriptor health timed out")
                     continue
-                idle = (row.active_demands == 0 and row.pending_reservations == 0 and
-                        row.active_allocations == 0)
-                if idle and self.config.idle_ttl > 0:
+                if idle:
                     lease.idle_since = lease.idle_since or now
-                    if now - lease.idle_since >= self.config.idle_ttl:
+                    ttl = self._idle_ttl(row)
+                    if ttl > 0 and now - lease.idle_since >= ttl:
                         actions.append({"action": "stop", "instance_id": row.instance_id, "reason": "idle TTL"})
                         if self.config.run:
                             self._request_stop(row.instance_id, "idle TTL")
@@ -751,14 +770,11 @@ class Supervisor:
                     lease.idle_since = None
                 continue
 
-            idle = (row.active_demands == 0 and row.pending_reservations == 0 and
-                    row.active_allocations == 0)
-            if idle and self.config.idle_ttl > 0 and lease.state == "stopped_idle":
-                continue
             budget_used = len(self.children) + (planned_dry_run_launches if not self.config.run else 0)
             if budget_used >= self.config.max_processes:
                 actions.append({"action": "queue", "instance_id": row.instance_id,
                                 "reason": "owned process budget is full"})
+                queued.append(row.instance_id)
                 continue
             if now < lease.next_restart_at:
                 continue
@@ -807,9 +823,43 @@ class Supervisor:
                 lease.state = "starting"
                 lease.reason = ""
 
+        self._evict_for(queued, desired, now, actions)
         if self.config.run:
             self.write_runtime()
         return actions
+
+    def _idle_ttl(self, row: DesiredInstance) -> float:
+        if row.kind == "public" and self.config.public_idle_ttl is not None:
+            return self.config.public_idle_ttl
+        return self.config.idle_ttl
+
+    def _evict_for(self, queued: list[str], desired: dict[str, DesiredInstance], now: float,
+                   actions: list[dict[str, Any]]) -> None:
+        """Stop warm EMPTY worlds only when a real demand is queued on the budget.
+
+        A world is a candidate only when the backend reports zero demands,
+        reservations and allocations (its idle grace). Personal worlds go first,
+        then public ones, least recently active first. Occupied worlds are never
+        candidates, and slots already draining are credited before evicting more.
+        """
+        draining = sum(1 for instance_id in self.stop_requested if instance_id in self.children)
+        needed = len(queued) - draining
+        if needed <= 0:
+            return
+        candidates = []
+        for instance_id, child in self.children.items():
+            row = desired.get(instance_id)
+            if (row is None or instance_id in self.stop_requested or child.poll() is not None or
+                    row.desired_state != "running" or
+                    any((row.active_demands, row.pending_reservations, row.active_allocations))):
+                continue
+            idle_since = self.leases[instance_id].idle_since
+            candidates.append((row.kind != "personal", now if idle_since is None else idle_since, instance_id))
+        for _public, _since, instance_id in sorted(candidates)[:needed]:
+            actions.append({"action": "evict", "instance_id": instance_id,
+                            "reason": "capacity eviction", "for": queued})
+            if self.config.run:
+                self._request_stop(instance_id, "capacity eviction")
 
     def write_runtime(self) -> None:
         rows = []
@@ -892,7 +942,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--descriptor-max-age", type=float, default=15.0)
     parser.add_argument("--startup-timeout", type=float, default=45.0)
     parser.add_argument("--poll-interval", type=float, default=1.0)
-    parser.add_argument("--idle-ttl", type=float, default=0.0)
+    parser.add_argument("--idle-ttl", type=float, default=0.0,
+                        help="seconds an empty personal (and, by default, public) world stays warm; 0 disables")
+    parser.add_argument("--public-idle-ttl", type=float, default=None,
+                        help="separate idle TTL for public/shared worlds such as Nexus")
     parser.add_argument("--stop-grace", type=float, default=10.0)
     parser.add_argument("--backoff-initial", type=float, default=1.0)
     parser.add_argument("--backoff-max", type=float, default=30.0)
@@ -911,6 +964,8 @@ def config_from_args(args: argparse.Namespace) -> Config:
     if min(args.desired_max_age, args.descriptor_max_age, args.startup_timeout, args.poll_interval,
            args.stop_grace, args.backoff_initial) <= 0 or args.backoff_max < args.backoff_initial:
         raise ContractError("timing bounds are invalid")
+    if args.idle_ttl < 0 or (args.public_idle_ttl is not None and args.public_idle_ttl < 0):
+        raise ContractError("idle TTLs must be nonnegative")
     if args.run and os.name != "posix":
         raise ContractError("--run is supported only on a Linux/POSIX host")
     if args.run and args.once:
@@ -923,6 +978,7 @@ def config_from_args(args: argparse.Namespace) -> Config:
         args.max_processes, args.max_records, frozenset(args.allowed_scene), frozenset(args.allowed_profile),
         args.desired_max_age, args.descriptor_max_age, args.startup_timeout, args.poll_interval,
         args.idle_ttl, args.stop_grace, args.backoff_initial, args.backoff_max, args.run,
+        args.public_idle_ttl,
     )
 
 
@@ -941,7 +997,9 @@ def main(argv: list[str] | None = None) -> int:
         try:
             while not stop.is_set():
                 actions = supervisor.step()
-                print(json.dumps({"dry_run": not config.run, "actions": actions}, sort_keys=True), flush=True)
+                # Idle polls are silent; --once always reports for inspection.
+                if actions or args.once:
+                    print(json.dumps({"dry_run": not config.run, "actions": actions}, sort_keys=True), flush=True)
                 if args.once:
                     return 0
                 stop.wait(config.poll_interval)

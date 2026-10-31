@@ -734,8 +734,10 @@ class Contracts(unittest.TestCase):
             chair["behaviour"] = prior
 
     def test_nonmini_module_dispatch_is_integrated(self):
-        self.assertEqual(len(self.service.ROUTES), 92)
-        self.assertNotIn("Get_GatherChristmasGetSpacesCompleted", self.service.ROUTES)
+        # 92 non-minigame routes plus the separately owned minigame modules.
+        self.assertEqual(len(self.service.ROUTES), 92 + len(self.service.minigames.ROUTES | {"checkRewardGameServlet"})
+                         + len(self.service.fullgames.ROUTES))
+        self.assertIn("Get_GatherChristmasGetSpacesCompleted", self.service.fullgames.ROUTES)
         self.assertEqual(self.call("GetFeaturesServlet", self.guid, "offline-account-a"),
                          "true#" + self.guid + "#offline-account-a#0")
         self.assertEqual(self.call("checkRewardAvailableServlet", self.guid, "offline-account-a", "Cube"),

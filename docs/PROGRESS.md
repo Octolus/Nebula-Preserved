@@ -11,6 +11,14 @@ The existing deployment remains the default while that acceptance is pending.
 
 ## Current checkpoint — 2026-10-30
 
+The player inventory and item-grant picker now use the catalog's recovered photos,
+readable categories, character variants and current offers. The ownership API
+joins exact item/kind/variant identities and preserves unknown legacy records.
+Original commercial names, including companion names, remain unrecovered;
+photo-backed descriptive labels explicitly distinguish this from missing assets.
+The prior inventory view incorrectly exposed raw ownership IDs as display names.
+
+
 The V4 Windows tester restores verified originals after its owned game exits,
 even when the launcher window closes. Next-start preparation recovers an
 interrupted patch/restore and unwinds earlier versions before applying the

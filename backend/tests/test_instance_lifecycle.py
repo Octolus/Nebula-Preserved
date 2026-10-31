@@ -1,6 +1,7 @@
 """Managed lifecycle is opt-in, durable and never starts a process in backend tests."""
 import json
 import contextlib
+import os
 import io
 from pathlib import Path
 import socket
@@ -13,6 +14,7 @@ from unittest.mock import patch
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
+from allocation import MINIGAME_SCENE_TABLES
 from housing import HousingStore
 from interaction_registry import InteractionRegistryPublisher
 from service import Service
@@ -25,6 +27,10 @@ class ManagedInstanceTests(unittest.TestCase):
     def setUp(self):
         self.socket_guard = patch.object(socket, "socket", side_effect=AssertionError("sockets forbidden"))
         self.socket_guard.start()
+        # Lifecycle mechanics use one apartment; starter sets are covered by test_apartments.
+        self.env_guard = patch.dict(os.environ, {"NEBULA_STARTER_APARTMENTS": "Home"})
+        self.env_guard.start()
+        self.addCleanup(self.env_guard.stop)
         scratch = (Path(tempfile.gettempdir()) / "nebula-preserved-tests") / "work/offline-managed-instances"
         scratch.mkdir(parents=True, exist_ok=True)
         self.temp = tempfile.TemporaryDirectory(dir=scratch)
@@ -58,6 +64,7 @@ class ManagedInstanceTests(unittest.TestCase):
             players=players, maxusers=32, scene_registry_verified=True,
             housing_bound=personal, housing_owner=owner,
             interaction_bridge_required=True, interaction_registry_trusted=True)
+        value.update(MINIGAME_SCENE_TABLES.get(scene, {}))
         path = self.root / "instances" / instance_id / "instance-status.json"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(value), encoding="utf-8")
@@ -112,7 +119,7 @@ class ManagedInstanceTests(unittest.TestCase):
             "SELECT COUNT(*) FROM housing_spaces WHERE owner_ps4_id='owner-one'").fetchone()[0], 1)
         self.assertNotEqual(first, second)
 
-    def test_preexisting_account_binding_is_adopted_without_automatic_new_grant(self):
+    def test_preexisting_account_binding_is_adopted_as_its_native_home(self):
         other = self.root / "grandfathered"
         store = Store(other / "preservation.sqlite3")
         store.account("old", "Old Account")
@@ -123,7 +130,10 @@ class ManagedInstanceTests(unittest.TestCase):
         service = Service(store, Catalog(BACKEND.parent / "protocol"),
                           core_test_profile="nonmini-semantic-v1", managed_instances=True)
         try:
-            self.assertIsNone(service.lifecycle.provision_account("old"))
+            # Startup backfill adopts the legacy Home binding instead of adding a second one.
+            self.assertEqual(service.lifecycle.provision_account("old")["instance_id"], "apt-home")
+            self.assertEqual(store.db.execute(
+                "SELECT COUNT(*) FROM housing_spaces WHERE owner_ps4_id='old'").fetchone()[0], 1)
             store.bind_session("old", "b" * 32)
             self.assertEqual(service.lifecycle.request_load(
                 ("b" * 32, "old", "Home", "false", "", ""), store.session("b" * 32)),
@@ -382,7 +392,7 @@ class ManagedInstanceTests(unittest.TestCase):
         self.assertEqual(self.poll(visitor_guid, "visitor"), visitor_guid + "#false")
         self.assertIsNone(self.store.db.execute("SELECT 1 FROM allocations WHERE guid=?", (visitor_guid,)).fetchone())
 
-    def test_presence_keeps_running_then_expired_empty_world_stops(self):
+    def test_presence_keeps_running_then_expired_empty_world_stops_after_idle_grace(self):
         guid = self.account("owner")
         self.load(guid, "owner")
         instance_id = self.store.db.execute(
@@ -396,6 +406,12 @@ class ManagedInstanceTests(unittest.TestCase):
         with self.store.db:
             self.store.db.execute("UPDATE instance_demands SET expires_at=? WHERE requester_guid=?",
                                   (time.time() - 1, guid))
+        warm = json.loads(self.service.lifecycle.export_desired(self.root).read_text())["instances"][0]
+        self.assertEqual((warm["desired_state"], warm["active_demands"], warm["active_allocations"]),
+                         ("running", 0, 0))  # Personal idle grace (default 60 s).
+        with self.store.db:
+            self.store.db.execute("UPDATE managed_instances SET last_active_at=? WHERE instance_id=?",
+                                  (time.time() - 61, instance_id))
         stopped = json.loads(self.service.lifecycle.export_desired(self.root).read_text())["instances"][0]
         self.assertEqual((stopped["desired_state"], stopped["active_demands"], stopped["active_allocations"]),
                          ("stopped", 0, 0))

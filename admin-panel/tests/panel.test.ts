@@ -67,3 +67,35 @@ test('missing timestamps and malformed dates are not displayed as recent logins'
   assert.equal(formatCell('currency', 'np'), 'Nebula Points');
   assert.equal(formatCell('source', 'admin'), 'Operator grant');
 });
+test('staff action routes are allowed exactly and reject injection', () => {
+  for (const path of [
+    'users/p1/move',
+    'users/p1/clear-profile',
+    'moderation/server-status',
+    'moderation/disconnect-all',
+    'moderation/instances/inst-1/evacuate',
+    'users/p1/character/housing/grant',
+    'users/p1/character/housing/remove',
+  ])
+    assert.equal(allowedManagementPath('POST', path), true, path);
+  for (const path of [
+    'users/p1/live',
+    'moderation/scenes',
+    'moderation/instances',
+    'moderation/server-status',
+    'feed',
+    'monitor',
+    'purchases',
+    'users/p1/character/housing-options',
+  ])
+    assert.equal(allowedManagementPath('GET', path), true, path);
+  for (const path of [
+    'moderation/instances/../evacuate',
+    'moderation/instances/a/b/evacuate',
+    'users/p1/move/x',
+    'users/%2f/move',
+    'moderation/disconnect-all?x=1',
+  ])
+    assert.equal(allowedManagementPath('POST', path), false, path);
+  assert.equal(allowedManagementPath('GET', 'users/p1/move'), false);
+});

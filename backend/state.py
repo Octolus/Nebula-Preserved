@@ -9,6 +9,7 @@ import time
 import uuid
 
 from wire import PLATFORMS, ProtocolError, json_field
+from diagnostic_logging import missing_data
 from test_identity import reserved_id, reserved_name, validate_identity, validate_lookup_username
 from public_access import require_actor, _gift_recipient_lookup, AccessDenied
 
@@ -61,9 +62,11 @@ class Catalog:
                    if i == item_id and (gender is None or g == gender)
                    and (category is None or c == category)]
         if not choices:
+            missing_data("catalog_item_unknown", item_id=item_id, gender=gender, category=category)
             raise ProtocolError("Item has no unambiguous shipped wardrobe asset", 404)
         keys = {(x["gender"], x["category"]) for x in choices}
         if len(keys) != 1:
+            missing_data("catalog_item_ambiguous", item_id=item_id, gender=gender, category=category)
             raise ProtocolError("Item appears in multiple categories; supply gender and category")
         return choices[0]
 
@@ -593,6 +596,7 @@ class Store:
                 name = latest[0] if latest else None
         row = self.db.execute("SELECT * FROM presets WHERE ps4_id=? AND name=? AND gender=?", (ps4_id, name, gender)).fetchone()
         if not row:
+            missing_data("preset_unavailable", gender=gender, named=name is not None)
             raise ProtocolError("A fully reconstructed avatar preset is not available", 501)
         return {**dict(row), "preset": json.loads(row["preset_json"]),
                 "assets": json.loads(row["assets_json"]),

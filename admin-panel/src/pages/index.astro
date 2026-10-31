@@ -4,12 +4,18 @@ import ControlPanel from '../components/control-panel';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Nebula · Preservation control</title>
     <meta name="robots" content="noindex,nofollow" />
+    <script is:inline>
+      try {
+        if (localStorage.getItem('nebula-theme') === 'light')
+          document.documentElement.classList.remove('dark');
+      } catch {}
+    </script>
     <meta name="csrf-token" content={Astro.locals.csrf} />
   </head>
   <body>

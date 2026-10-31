@@ -22,6 +22,7 @@ sys.path.insert(0, str(BACKEND))
 from state import Store
 from housing import HousingStore, PERSONAL_SPACE_SCENES
 from interaction_registry import InteractionRegistryPublisher
+from allocation import NONMINI_PUBLIC_SCENES
 
 NOW = 1_800_000_000.0
 OWNER = "registry-owner"
@@ -105,8 +106,8 @@ def run():
     all_bindings = [binding(f"scene-{index:02}", logical, scene)
                     for index, (logical, scene) in enumerate(sorted(PERSONAL_SPACE_SCENES.items()))]
     public = [dict(format_version=1, instance_id="public-" + scene.lower(), psidglobal=scene)
-              for scene in ("Nexus", "LeafPark", "Beach", "Cinema")]
-    cases.append(capture("all_35_authored_static_scenes", all_bindings, public=public))
+              for scene in sorted(NONMINI_PUBLIC_SCENES)]
+    cases.append(capture("all_46_authored_static_scenes", all_bindings, public=public))
     hashes = {name: hashlib.sha256((BACKEND / name).read_bytes()).hexdigest()
               for name in ("interaction_registry.py", "housing.py", "state.py", "wire.py")}
     output = {"format_version": 1, "purpose": "Actual Python publisher oracle; authored metadata/SQLite only",

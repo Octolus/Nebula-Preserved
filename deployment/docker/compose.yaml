@@ -1,6 +1,10 @@
 name: nebula-preserved
+x-logging: &default-logging
+  driver: json-file
+  options: {max-size: "10m", max-file: "3", compress: "true"}
 services:
   server:
+    logging: *default-logging
     image: nebula-preserved-server:local
     platform: linux/amd64
     build:
@@ -25,6 +29,16 @@ services:
       NEBULA_MANAGED_SHA256: ${NEBULA_MANAGED_SHA256:?Set the reviewed Assembly-CSharp hash}
       NEBULA_MAX_PROCESSES: ${NEBULA_MAX_PROCESSES:-16}
       NEBULA_IDLE_TTL: ${NEBULA_IDLE_TTL:-60}
+      NEBULA_PERSONAL_WORLD_IDLE_SECONDS: ${NEBULA_PERSONAL_WORLD_IDLE_SECONDS:-}
+      NEBULA_PUBLIC_WORLD_IDLE_SECONDS: ${NEBULA_PUBLIC_WORLD_IDLE_SECONDS:-900}
+      NEBULA_STARTER_CRYSTALS: ${NEBULA_STARTER_CRYSTALS:-0}
+      NEBULA_STARTER_NP: ${NEBULA_STARTER_NP:-0}
+      NEBULA_STARTER_APARTMENTS: ${NEBULA_STARTER_APARTMENTS:-}
+      NEBULA_ENROLLMENT_MAX_ACCOUNTS: ${NEBULA_ENROLLMENT_MAX_ACCOUNTS:-1000}
+      NEBULA_ENROLLMENT_PER_IP_HOURLY: ${NEBULA_ENROLLMENT_PER_IP_HOURLY:-}
+      NEBULA_ENROLLMENT_GLOBAL_HOURLY: ${NEBULA_ENROLLMENT_GLOBAL_HOURLY:-}
+      NEBULA_PROTECT_STAFF_ACCOUNTS: ${NEBULA_PROTECT_STAFF_ACCOUNTS:-1}
+      NEBULA_PROTECTED_ACCOUNTS: ${NEBULA_PROTECTED_ACCOUNTS:-}
       NEBULA_CATALOG_POLICY: ${NEBULA_CATALOG_POLICY:-preservation-catalog-v1}
       NEBULA_PUBLIC_ENROLLMENT: ${NEBULA_PUBLIC_ENROLLMENT:-0}
       NEBULA_TRUST_STEAM_ID: ${NEBULA_TRUST_STEAM_ID:-0}
@@ -50,6 +64,7 @@ services:
       start_period: 45s
       retries: 3
   private-http:
+    logging: *default-logging
     image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
     profiles: [private]
     network_mode: service:server
@@ -70,6 +85,7 @@ services:
     depends_on:
       server: {condition: service_healthy}
   panel:
+    logging: *default-logging
     image: nebula-preserved-panel:local
     platform: linux/amd64
     build:
@@ -106,6 +122,7 @@ services:
     depends_on:
       server: {condition: service_healthy}
   public-https:
+    logging: *default-logging
     image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
     profiles: [public]
     network_mode: service:server
@@ -127,6 +144,7 @@ services:
     depends_on:
       server: {condition: service_healthy}
   public-game:
+    logging: *default-logging
     image: nebula-preserved-server:local
     platform: linux/amd64
     profiles: [public]
@@ -139,6 +157,9 @@ services:
     tmpfs: ["/tmp:rw,nosuid,nodev,size=16m,mode=1777"]
     volumes:
       - state:/var/lib/nebula:ro
+      # Only state/logs is writable: rotated gateway.jsonl survives container recreation.
+      # The server creates logs/ (uid 1000) before it reports healthy. Engine >=26, Compose >=2.30.
+      - {type: volume, source: state, target: /var/lib/nebula/logs, volume: {subpath: logs}}
     secrets: [tls_certificate, tls_private_key]
     entrypoint: [python, /opt/nebula/backend/remote_gateway.py]
     command: [--listen, --bind, 0.0.0.0, --port, "8443", --first-scene-port, "28000", --last-scene-port, "28031", --state-dir, /var/lib/nebula, --certificate, /run/secrets/tls_certificate, --private-key, /run/secrets/tls_private_key]

@@ -8,6 +8,7 @@ from pathlib import Path
 import time
 
 from wire import ProtocolError
+from diagnostic_logging import missing_data
 
 
 KINDS=('companions','locomotions')
@@ -58,7 +59,9 @@ class ResourceCatalog:
         checked_kind(kind)
         checked_text(item_id,'resource identifier')
         key=(kind,item_id)
-        if key not in self.items:raise ProtocolError('Unknown or conflicting shipped resource',404)
+        if key not in self.items:
+            missing_data('resource_item_unknown',kind=kind,item_id=item_id)
+            raise ProtocolError('Unknown or conflicting shipped resource',404)
         return self.items[key]
 
     def list(self,kind=None):

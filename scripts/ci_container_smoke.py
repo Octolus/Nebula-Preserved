@@ -70,6 +70,7 @@ def expected_world_argv(row):
             "--nebula-instance","--nebula-state-dir","/var/lib/nebula","--nebula-instance-id",row["instance_id"],
             "--nebula-space","Nexus","--nebula-bind","0.0.0.0","--nebula-advertise-ip","127.0.0.1",
             "--nebula-port",str(row["port"]),"--nebula-board-tables","0","--nebula-darts-tables","0",
+            "--nebula-pool-tables","0","--nebula-bowling-lanes","0",
             "--nebula-core-test-profile","nonmini-semantic-v1"]
 state=Path("/var/lib/nebula")
 db=sqlite3.connect("file:/var/lib/nebula/preservation.sqlite3?mode=ro",uri=True)

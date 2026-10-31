@@ -15,7 +15,23 @@ use std::{
     sync::{Arc, Mutex, OnceLock},
     time::SystemTime,
 };
-const PUBLIC: &[&str] = &["Nexus", "LeafPark", "Beach", "Cinema"];
+const PUBLIC: &[&str] = &[
+    "Nexus",
+    "LeafPark",
+    "Beach",
+    "Cinema",
+    "Bowling",
+    "Dome",
+    "StoneLakeCastle",
+    "Cube",
+    "GhostTown",
+    "TheNebulianOpenHouse",
+    "ZeroDistrict",
+    "NebuHouseOpenHouse",
+    "WestValleyApartmentOpenHouse",
+    "MedievalVillage",
+    "SKL",
+];
 const PERSONAL: &[&str] = &[
     "Home",
     "Greenhouse",

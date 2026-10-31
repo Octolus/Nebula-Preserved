@@ -22,6 +22,8 @@ import time
 
 STEAM_ID64 = re.compile(r"7656119[0-9]{10}\Z")
 TOKEN = re.compile(r"[A-Za-z0-9_-]{43}\Z")
+VERIFIED_CACHE_SIZE = 4096
+VERIFIED_CACHE_SECONDS = 900.0
 SCHEME = "Nebula-Account-v1"
 _ACTOR = ContextVar("nebula_authenticated_account", default=None)
 _GIFT_GRANT = ContextVar("nebula_validated_gift_recipient_grant", default=None)
@@ -100,6 +102,32 @@ class AccessAuthority:
             raise RuntimeError("Run migrate_public_access.py before enabling public access") from exc
         if ready is None:
             raise RuntimeError("Public-access schema migration is not recorded")
+        # Every game request carries the credential. One scrypt derivation is
+        # ~100 ms and 32 MiB on the event loop, which capped a 1-CPU host at
+        # ~10 game requests/s. Remember successful derivations under a
+        # process-secret HMAC, bound to the exact stored salt+verifier, so a
+        # revoked or rotated row is re-derived (and rejected) at once.
+        self._verified_key = secrets.token_bytes(32)
+        self._verified: dict[bytes, tuple[bytes, float]] = {}
+
+    def _verify(self, kind: str, account: str, token: str, salt: bytes, verifier: bytes) -> bool:
+        key = hmac.new(self._verified_key, "\0".join((kind, account, token)).encode("ascii"),
+                       hashlib.sha256).digest()
+        bound = hashlib.sha256(salt + verifier).digest()
+        now = time.monotonic()
+        cached = self._verified.get(key)
+        if cached is not None and cached[1] > now and hmac.compare_digest(cached[0], bound):
+            return True
+        if not hmac.compare_digest(_derive(token, salt), verifier):
+            self._verified.pop(key, None)
+            return False
+        if len(self._verified) >= VERIFIED_CACHE_SIZE:
+            for stale in [k for k, (_b, expires) in self._verified.items() if expires <= now]:
+                del self._verified[stale]
+            while len(self._verified) >= VERIFIED_CACHE_SIZE:
+                del self._verified[next(iter(self._verified))]
+        self._verified[key] = (bound, now + VERIFIED_CACHE_SECONDS)
+        return True
 
     @staticmethod
     def _derive_operator(secret: bytes, salt: bytes) -> bytes:
@@ -266,7 +294,7 @@ class AccessAuthority:
                 WHERE ps4_id=? AND key_hash=? AND revoked_at IS NULL""",
                 (account, hashlib.sha256(token.encode("ascii")).hexdigest())).fetchone()
             if alias is not None:
-                if not hmac.compare_digest(_derive(token, bytes(alias["salt"])), bytes(alias["verifier"])):
+                if not self._verify("device", account, token, bytes(alias["salt"]), bytes(alias["verifier"])):
                     raise AccessDenied("Invalid account credential")
                 sanction = self.db.execute("SELECT ban_enabled,ban_expires_at FROM moderation_accounts WHERE ps4_id=?", (account,)).fetchone()
                 if sanction is not None and sanction["ban_enabled"] == 1 and (
@@ -279,7 +307,7 @@ class AccessAuthority:
             # Do comparable password work for unknown/revoked accounts.
             _derive(token, b"\0" * 16)
             raise AccessDenied("Invalid account credential")
-        if not hmac.compare_digest(_derive(token, bytes(row["salt"])), bytes(row["verifier"])):
+        if not self._verify("account", account, token, bytes(row["salt"]), bytes(row["verifier"])):
             raise AccessDenied("Invalid account credential")
         return account
 

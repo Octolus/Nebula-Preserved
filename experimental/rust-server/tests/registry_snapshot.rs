@@ -182,7 +182,7 @@ fn public_status_discovery_requires_exact_supported_scene_and_id() {
     for (id, scene) in [
         ("public-one", "Nexus"),
         ("wrong-case", "nexus"),
-        ("unsupported", "Cube"),
+        ("unsupported", "SteamPunk"),
     ] {
         write(
             &s.state_dir
@@ -254,15 +254,33 @@ fn ownership_scene_aliases_are_exact_and_mixed_counts_are_independent() {
 }
 
 #[test]
-fn actual_authored_metadata_admits_all_35_reviewed_scenes_with_exact_mixed_counts() {
+fn actual_authored_metadata_admits_all_46_reviewed_scenes_with_exact_mixed_counts() {
     let (_dir, s) = fixture(true);
     let static_doc = s.catalog("static-interaction-manifest.json").unwrap();
     let scenes = static_doc["scenes"].as_array().unwrap();
-    assert_eq!(scenes.len(), 35);
+    assert_eq!(scenes.len(), 46);
     for (i, scene) in scenes.iter().enumerate() {
         let name = scene["scene"].as_str().unwrap();
         let id = format!("reviewed-{i}");
-        if ["Nexus", "LeafPark", "Beach", "Cinema"].contains(&name) {
+        if [
+            "Nexus",
+            "LeafPark",
+            "Beach",
+            "Cinema",
+            "Bowling",
+            "Dome",
+            "StoneLakeCastle",
+            "Cube",
+            "GhostTown",
+            "TheNebulianOpenHouse",
+            "ZeroDistrict",
+            "NebuHouseOpenHouse",
+            "WestValleyApartmentOpenHouse",
+            "MedievalVillage",
+            "SKL",
+        ]
+        .contains(&name)
+        {
             write(
                 &s.state_dir
                     .join("instances")
@@ -285,7 +303,7 @@ fn actual_authored_metadata_admits_all_35_reviewed_scenes_with_exact_mixed_count
     }
     registry_snapshot::publish(&s).unwrap();
     let doc = read(&s, "instance-interactions.json");
-    assert_eq!(doc["instances"].as_array().unwrap().len(), 35);
+    assert_eq!(doc["instances"].as_array().unwrap().len(), 46);
     for (i, scene) in scenes.iter().enumerate() {
         let id = format!("reviewed-{i}");
         let name = scene["scene"].as_str().unwrap();

@@ -26,7 +26,7 @@ Inventory: 11 observed contracts, 10 implemented preservation routes, and 1 defe
 | `Get_GatherMedievalVillage` | `guid # ps4_id # datetime_ticks` | `success # guid # ps4_id # available_bool # cooldown_seconds_double # amount_int32` | sender `0x690700`, callback `0x690c60` |
 | `Send_GatherMedievalVillageConsume` | `guid # ps4_id # datetime_ticks` | `success # guid # ps4_id # result_code_int32 # cooldown_seconds_double # popup_string` | sender `0x691120`, callback `0x690b10` |
 
-The five scene flags at indices 7–11 apply to type 4 (Christmas2018); other event types end after index 6. `Get_GatherChristmasGetSpacesCompleted` is the deferred Memorion score oracle and returns an explicit 501 rather than fabricated results.
+The five scene flags at indices 7–11 apply to type 4 (Christmas2018); other event types end after index 6. `Get_GatherChristmasGetSpacesCompleted` is served by `backend/fullgame.py` (2026-10-31): it echoes the level last recorded by `MemorionServlet` and the count of completed type-4 scenes, which indexes the shipped `aRewardsID` thresholds; see minigame-contracts.md.
 
 ## Local preservation policy
 
@@ -37,7 +37,7 @@ Original scheduling and reward definitions remain unknown and are never synthesi
 ## Evidence boundaries
 
 - Original event schedules and reward definitions were not present in the reviewed client artifacts.
-- The retired server's Memorion score-validation rules were not present in the reviewed client artifacts; Get_GatherChristmasGetSpacesCompleted therefore fails explicitly as deferred gameplay.
+- The retired server's Memorion score-validation rules were not present in the reviewed client artifacts; the local route (backend/fullgame.py) accepts only the level the server itself recorded and never invents a score.
 - No claim is made that locally configured event content reproduces retired production data.
 
 Mini-gameplay is deferred: archery, Memorion, and other full mini-game mechanics are outside this contract.

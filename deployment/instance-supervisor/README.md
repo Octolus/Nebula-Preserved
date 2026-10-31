@@ -66,6 +66,14 @@ endpoint remains occupied, launch is refused rather than killing or replacing
 the unknown process. Crashes use bounded exponential restart backoff. Backend
 stop/removal and optional idle TTL use TERM followed by a bounded KILL only for
 children owned by the current supervisor.
+`--idle-ttl` applies to empty personal worlds and, unless `--public-idle-ttl`
+is given, to shared worlds too. A row the backend still reports `running` with
+zero demands, reservations and allocations is in its idle grace: it is kept
+warm but never launched for that reason alone. When a row with real demand
+is queued on a full `--max-processes` budget, the supervisor stops (`evict`)
+one such empty world per queued demand, least recently active apartment first,
+then shared worlds; slots already draining are credited first and occupied
+worlds are never candidates. An evicted world restarts only on new demand.
 SIGTERM and SIGINT enter this same graceful owned-child shutdown path; the
 systemd `TimeoutStopSec` is longer than the configured child grace interval.
 
@@ -90,6 +98,7 @@ python3 tools/instance_supervisor.py --once \
   --bind 127.0.0.1 --advertise-ip 127.0.0.1 \
   --port-range 28000-28031 --max-processes 16 \
   --allowed-scene Nexus --allowed-scene LeafPark --allowed-scene Beach --allowed-scene Cinema \
+  --allowed-scene Bowling --allowed-scene Dome --allowed-scene StoneLakeCastle --allowed-scene Cube --allowed-scene GhostTown --allowed-scene TheNebulianOpenHouse --allowed-scene ZeroDistrict --allowed-scene NebuHouseOpenHouse --allowed-scene WestValleyApartmentOpenHouse --allowed-scene MedievalVillage --allowed-scene SKL \
   --allowed-scene Home --allowed-scene Greenhouse --allowed-scene Waterfall --allowed-scene StarCrawlers --allowed-scene BlueWaveHideout --allowed-scene DressingRoom --allowed-scene CutteridgeEstate --allowed-scene TheMoonlightRoom --allowed-scene LeChalet --allowed-scene LakeApartment --allowed-scene SereneGarden --allowed-scene WoodlandClearing --allowed-scene TheNebulian --allowed-scene SorcerersEyrie1 --allowed-scene ZeroDistrictDen --allowed-scene CampSilverLake --allowed-scene FlyingDevice --allowed-scene Deadquarters --allowed-scene HollyridgeEstate --allowed-scene WinterSnowGlobe --allowed-scene TokyoApartment --allowed-scene NebuHouse --allowed-scene WestValleyApartment --allowed-scene WhisperingHillsMansion --allowed-scene CliffApartment --allowed-scene TheCrypt --allowed-scene ForgottenStation --allowed-scene GreekSummerHouse --allowed-scene MountainHideout --allowed-scene GingerbreadHouse --allowed-scene WindMillFarmHouse \
   --allowed-profile nonmini-semantic-v1
 ```

@@ -20,9 +20,15 @@ ROUTES = {
     "CheckOwnGenericReward", "GenericReward", "RewardClothServlet",
     "RewardConsumeServlet", "SKLPromoServlet", "SKLPromoTriggerServlet",
     "checkRewardAvailableServlet", "CinemaInteractionNPServlet",
-    "CheckIfSpaceStillExistServlet",
+    "CheckIfSpaceStillExistServlet", "checkRewardGameServlet",
 }
-CONFIGURABLE = ROUTES - {"CheckIfSpaceStillExistServlet", "CheckOwnGenericReward", "SKLPromoTriggerServlet"}
+# Optional operator-defined grants behind recovered minigame success replies.
+# The minigame module claims them; their own UI shows the reward, so no
+# Reward4 notification is queued.  Trigger keys are closed shipped domains.
+MINIGAME_CLAIM_ROUTES = {"checkRewardGameServlet", "SetCooldownServlet",
+                         "XSpacesGamesType0Servlet", "Send_ArcheryCupidConsume"}
+CONFIGURABLE = (ROUTES - {"CheckIfSpaceStillExistServlet", "CheckOwnGenericReward",
+                          "SKLPromoTriggerServlet"}) | MINIGAME_CLAIM_ROUTES
 CLAIM_ROUTES = {"GenericReward", "RewardClothServlet", "RewardConsumeServlet", "SKLPromoServlet"}
 GRANT_KINDS = {"wardrobe", "companions", "locomotions", "housing", "coffee", "oktoberfest", "cinema"}
 REWARD_TYPES = {
@@ -30,6 +36,27 @@ REWARD_TYPES = {
     "PatricksDay2018", "Cube", "CampSilverLake0", "CampSilverLake1",
     "CampSilverLake2", "CampSilverLake3", "GhostWolf",
 }
+# checkRewardGameCoroutine @0x416a20 reads field 2 only for these typeGame
+# names (Utils.RewardType plus FullGameManager ChronoRace); others finish.
+REWARD_GAME_TYPES = REWARD_TYPES | {"ChronoRace"}
+MINIGAME_TRIGGERS = {
+    "SetCooldownServlet": {"0", "1", "2"},        # three shipped FootRace routes
+    "XSpacesGamesType0Servlet": {"0"},            # all six SKL reward steps reached
+    "Send_ArcheryCupidConsume": {"4"},            # all four Cupid hearts earned
+}
+
+
+def reward_game_key(type_game, stage):
+    """Trigger key for checkRewardGameServlet: '<typeGame>:<stage>'."""
+    return type_game + ":" + str(stage)
+
+
+def _valid_minigame_trigger(route, trigger_key):
+    if route == "checkRewardGameServlet":
+        type_game, separator, stage = trigger_key.partition(":")
+        return (separator == ":" and type_game in REWARD_GAME_TYPES
+                and re.fullmatch(r"(0|[1-9][0-9]{0,3})", stage) is not None)
+    return trigger_key in MINIGAME_TRIGGERS.get(route, ())
 
 
 def token(value, label, limit=256):
@@ -98,6 +125,8 @@ class RewardService:
         elif route == "SKLPromoServlet":
             integer(trigger_key, "numeric reward trigger")
             self._skl_promo(trigger_key)
+        elif route in MINIGAME_CLAIM_ROUTES and not _valid_minigame_trigger(route, trigger_key):
+            raise ProtocolError("Trigger is outside the shipped minigame reward domain")
         if route == "CinemaInteractionNPServlet":
             integer(trigger_key, "cinema interaction", 0, 1)
             grant_kind, item_id = "cinema", trigger_key
@@ -108,7 +137,7 @@ class RewardService:
                 raise ProtocolError("Availability checks cannot grant an item")
             if trigger_key not in REWARD_TYPES:
                 raise ProtocolError("Unknown shipped reward type")
-        elif route in CLAIM_ROUTES:
+        elif route in CLAIM_ROUTES or route in MINIGAME_CLAIM_ROUTES:
             if grant_kind not in GRANT_KINDS - {"cinema"} or not item_id:
                 raise ProtocolError("Claim route requires an explicit supported entitlement target")
             if route == "RewardClothServlet" and grant_kind != "wardrobe":
@@ -189,6 +218,8 @@ class RewardService:
             raise ProtocolError("Stored promo sprite is outside the shipped trigger", 500)
         if route == "checkRewardAvailableServlet" and str(trigger_key) not in REWARD_TYPES:
             raise ProtocolError("Stored reward type is outside the shipped enum", 500)
+        if route in MINIGAME_CLAIM_ROUTES and not _valid_minigame_trigger(route, str(trigger_key)):
+            raise ProtocolError("Stored minigame reward is outside the shipped domain", 500)
         return value
 
     def _claimed(self, ps4_id, route, trigger_key):
@@ -250,9 +281,44 @@ class RewardService:
                 self.notifications.enqueue_reward(profile["ps4_id"], "reward:" + route + ":" + str(trigger_key))
         return True, outcome, definition
 
+    def prepare_optional_claim(self, route, trigger_key):
+        """Outside Store.atomic(): True when an enabled minigame grant exists."""
+        if route not in MINIGAME_CLAIM_ROUTES:
+            raise ProtocolError("Not a minigame reward route", 500)
+        definition = self.definition(route, trigger_key)
+        if definition is None or not definition["enabled"]:
+            return False
+        self._prepare_grant(definition)
+        return True
+
+    def optional_claim(self, profile, route, trigger_key):
+        """Claim a configured minigame grant once; True only for a fresh grant.
+
+        May run inside the caller's Store.atomic() so the minigame state and the
+        entitlement/claim marker commit together. Unconfigured keys grant nothing.
+        """
+        definition = self.definition(route, trigger_key)
+        if definition is None or not definition["enabled"]:
+            return False
+        fresh, _outcome, _definition = self._claim(profile, route, trigger_key)
+        return fresh
+
     def dispatch(self, command, request):
         if command not in ROUTES:
             raise ProtocolError("Reward route is not reconstructed", 501)
+        if command == "checkRewardGameServlet":
+            # checkRewardGameCoroutine @0x416a20: GUID#PS4ID#typeGame#stage ->
+            # true#GUID#alreadyOwned. false shows the game's reward popup, true
+            # (or an unknown name) shows nothing. Missing/disabled definitions
+            # return true: suppress without a claim marker or fake grant.
+            guid, ps4_id, type_game, stage = request.require(4)
+            profile = self._platform_session(self.store.session(guid, ps4_id), request)
+            token(type_game, "reward game type", 64)
+            key = reward_game_key(type_game, integer(stage, "reward game stage", 0, 9999))
+            if not _valid_minigame_trigger(command, key):
+                return "true#" + guid + "#true"
+            fresh = self.prepare_optional_claim(command, key) and self.optional_claim(profile, command, key)
+            return "true#" + guid + "#" + str(not fresh).lower()
         if command == "CheckIfSpaceStillExistServlet":
             guid, ps4_id, instance_id = request.require(3)
             profile = self._platform_session(self.store.session(guid, ps4_id), request)
@@ -279,6 +345,13 @@ class RewardService:
             owned = self._claimed(ps4_id, "GenericReward", trigger_key) is not None
             return "false#" + guid + "#" + ps4_id + "#" + str(owned).lower()
         if command == "SKLPromoTriggerServlet":
+            definition = self.definition("SKLPromoServlet", trigger_key)
+            if definition is None or not definition["enabled"]:
+                # Get_SKLPromoCheckToSetAvailable @0x3e96a0: field 3 true hides
+                # the trigger, false calls SKLPromoTrigger.Show. Same silent
+                # suppression as CheckOwnGenericReward; no claim is written.
+                self._skl_promo(trigger_key)
+                return "true#" + guid + "#" + ps4_id + "#true"
             self._required("SKLPromoServlet", trigger_key)
             consumed = self._claimed(ps4_id, "SKLPromoServlet", trigger_key) is not None
             return "true#" + guid + "#" + ps4_id + "#" + str(consumed).lower()

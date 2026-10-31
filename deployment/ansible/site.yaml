@@ -17,7 +17,14 @@
           - nebula_build_report_sha256 is match('^[0-9a-f]{64}$')
           - nebula_server_sha256 is match('^[0-9a-f]{64}$')
           - nebula_managed_sha256 is match('^[0-9a-f]{64}$')
-          - (nebula_max_processes | default(2) | int) in range(1, 33)
+          - (nebula_max_processes | default(4) | int) in range(1, 33)
+          - (nebula_public_world_idle_seconds | default(900) | int) in range(0, 86401)
+          - (nebula_personal_world_idle_seconds | default(60) | int) in range(0, 86401)
+          - (nebula_starter_crystals | default(0) | int) >= 0
+          - (nebula_starter_np | default(0) | int) >= 0
+          - (nebula_starter_apartments | default(['Home']) | map('string') | select('match', '^[A-Za-z]{1,64}$') | list | length) == (nebula_starter_apartments | default(['Home']) | length)
+          - (nebula_enrollment_max_accounts | default(1000) | int) >= 0
+          - (nebula_protected_accounts | default([]) | map('string') | select('match', '^[0-9]{17}$') | list | length) == (nebula_protected_accounts | default([]) | length)
           - nebula_server_image is match('^[a-zA-Z0-9./:_@-]+$')
           - nebula_panel_image is match('^[a-zA-Z0-9./:_@-]+$')
           - (nebula_tls_mode | default('public_acme')) in ['public_acme', 'private_ca']
@@ -27,6 +34,90 @@
         state: present
         update_cache: true
         cache_valid_time: 3600
+    - name: Harden SSH login (key-only, root by key only)
+      when: nebula_ssh_hardening | default(true) | bool
+      block:
+        - name: Inspect authorized key files that must keep working
+          ansible.builtin.stat: {path: '{{ item }}'}
+          loop: "{{ nebula_ssh_authorized_keys_files | default(['/root/.ssh/authorized_keys']) }}"
+          register: ssh_key_files
+        - name: Read existing authorized key files
+          ansible.builtin.slurp: {src: '{{ item.stat.path }}'}
+          loop: '{{ ssh_key_files.results | selectattr("stat.exists") | list }}'
+          loop_control: {label: '{{ item.stat.path }}'}
+          register: ssh_key_contents
+        - name: Count usable public keys
+          ansible.builtin.set_fact:
+            nebula_ssh_usable_keys: >-
+              {{ ssh_key_contents.results | map(attribute='content') | map('b64decode')
+                 | map('split', '\n') | flatten
+                 | select('match', '^[^#]*(ssh-(ed25519|rsa|dss)|ecdsa-sha2-|sk-(ssh|ecdsa))')
+                 | list | length }}
+        - name: Never disable passwords without an authorized key (lockout guard)
+          ansible.builtin.assert:
+            that: nebula_ssh_usable_keys | int > 0
+            fail_msg: >-
+              No usable key in {{ nebula_ssh_authorized_keys_files | default(['/root/.ssh/authorized_keys']) }}.
+              Install a key first or set nebula_ssh_hardening=false.
+        - name: Install SSH hardening drop-in (00- so it wins over cloud-image 50-* settings)
+          ansible.builtin.copy:
+            dest: /etc/ssh/sshd_config.d/00-nebula-hardening.conf
+            mode: '0644'
+            content: |
+              # Managed by Nebula Ansible (nebula_ssh_hardening). sshd uses the first value seen.
+              PasswordAuthentication no
+              KbdInteractiveAuthentication no
+              PermitRootLogin prohibit-password
+          register: ssh_dropin
+          notify: Reload sshd
+        - name: Validate the complete sshd configuration before any reload
+          ansible.builtin.command: /usr/sbin/sshd -t
+          changed_when: false
+      rescue:
+        - name: Remove an sshd drop-in that failed validation
+          ansible.builtin.file: {path: /etc/ssh/sshd_config.d/00-nebula-hardening.conf, state: absent}
+          when: ssh_dropin is defined and ssh_dropin.changed
+        - name: Stop after a refused SSH hardening change
+          ansible.builtin.fail:
+            msg: SSH hardening was refused (see the previous error); sshd was not reloaded with it.
+    - name: Protect SSH with fail2ban
+      when: nebula_fail2ban | default(true) | bool
+      block:
+        - name: Install fail2ban with journal support
+          ansible.builtin.apt:
+            name: [fail2ban, python3-systemd]
+            state: present
+        - name: Configure the sshd jail
+          ansible.builtin.copy:
+            dest: /etc/fail2ban/jail.d/nebula-sshd.local
+            mode: '0644'
+            content: |
+              # Managed by Nebula Ansible (nebula_fail2ban). Host sshd only; Docker ports are not jailed.
+              [sshd]
+              enabled = true
+              backend = systemd
+              maxretry = {{ nebula_fail2ban_maxretry | default(5) }}
+              findtime = 10m
+              bantime = {{ nebula_fail2ban_bantime | default('1h') }}
+          notify: Restart fail2ban
+        - name: Enable fail2ban
+          ansible.builtin.systemd_service: {name: fail2ban, enabled: true, state: started}
+    - name: Enable host firewall (opt-in; Docker-published ports bypass ufw)
+      when: nebula_ufw | default(false) | bool
+      block:
+        - name: Install ufw
+          ansible.builtin.apt: {name: ufw, state: present}
+        - name: Allow SSH and the public service ports before enabling
+          ansible.builtin.command:
+            argv: [ufw, allow, '{{ item }}/tcp']
+          loop: "{{ nebula_ufw_allowed_tcp | default([22, 80, 443, 8443, 8444]) }}"
+          register: ufw_rule
+          changed_when: "'Skipping' not in ufw_rule.stdout"
+        - name: Default-deny other inbound host traffic and enable ufw
+          ansible.builtin.command:
+            argv: [ufw, --force, enable]
+          register: ufw_enable
+          changed_when: "'already' not in ufw_enable.stdout"
     - name: Create Docker keyring directory
       ansible.builtin.file: {path: /etc/apt/keyrings, state: directory, mode: '0755'}
     - name: Install official Docker signing key
@@ -266,11 +357,25 @@
           - /initialize-state.py
       when: existing_stack.stdout != 'active'
       changed_when: false
-    - name: Install consistent SQLite backup utility
+    - name: Install consistent SQLite and instance-state backup utility
       ansible.builtin.copy:
         src: ../../tools/backup_state.py
         dest: '{{ nebula_root }}/backup_state.py'
         mode: '0644'
+    - name: Install optional off-host backup hook
+      ansible.builtin.copy:
+        dest: '{{ nebula_root }}/backup-offsite.sh'
+        mode: '0700'
+        content: |
+          #!/bin/sh
+          # Managed by Ansible from nebula_backup_offsite_command. Runs after each
+          # verified backup with NEBULA_BACKUP_{DIR,DATABASE,STATE_ARCHIVE,RECEIPT}.
+          set -eu
+          {{ nebula_backup_offsite_command }}
+      when: nebula_backup_offsite_command | default('') | length > 0
+    - name: Remove disabled off-host backup hook
+      ansible.builtin.file: {path: '{{ nebula_root }}/backup-offsite.sh', state: absent}
+      when: nebula_backup_offsite_command | default('') | length == 0
     - name: Install boot service and backup timer
       ansible.builtin.copy:
         src: files/{{ item }}
@@ -278,6 +383,15 @@
         mode: '0644'
       loop: [nebula-preserved.service, nebula-preserved-backup.service, nebula-preserved-backup.timer]
       register: units
+    - name: Inspect existing state database
+      ansible.builtin.stat:
+        path: /var/lib/docker/volumes/nebula-preserved_state/_data/preservation.sqlite3
+      register: existing_state_db
+    - name: Take a verified pre-deploy backup (retained separately from daily sets)
+      ansible.builtin.command:
+        argv: [python3, '{{ nebula_root }}/backup_state.py', --state-dir, /var/lib/docker/volumes/nebula-preserved_state/_data, --destination, /var/backups/nebula-preserved, --keep-days, '14', --keep-deploy, '5', --kind, deploy, --offsite-hook, '{{ nebula_root }}/backup-offsite.sh']
+      when: existing_state_db.stat.exists
+      changed_when: true
     - name: Start or refresh complete stack
       ansible.builtin.systemd_service:
         name: nebula-preserved
@@ -316,3 +430,8 @@
       register: panel_health
       changed_when: false
       failed_when: panel_health.stdout != '200'
+  handlers:
+    - name: Reload sshd
+      ansible.builtin.systemd_service: {name: ssh, state: reloaded}
+    - name: Restart fail2ban
+      ansible.builtin.systemd_service: {name: fail2ban, state: restarted}

@@ -4,208 +4,242 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import { Input } from './ui/input';
-import { Label } from './ui/label';
 import { FormSelect } from './form-select';
-import { RecordList } from './record-list';
-import { ChangeForm, Details, PaginatedRecords, empty, type List } from './management-widgets';
+import { ItemRecords, PurchaseRecords } from './item-records';
+import { catalogKinds } from '../lib/catalog';
+import { PaginatedRecords, Pager, Stat, empty, asList, type List } from './management-widgets';
 import { ModerationPanel } from './moderation-panel';
-import { display, playerHref, playerTabs, type PlayerTab, type Row } from '../lib/panel';
+import { AdminActions } from './admin-actions';
+import { CharacterPanel, RevokeItem } from './player-character';
+import { SessionsPanel } from './player-sessions';
+import {
+  formatCell,
+  playerHref,
+  playerTabs,
+  relative,
+  sceneLabel,
+  isPublicScene,
+  type PlayerTab,
+  type Row,
+} from '../lib/panel';
 
-function CatalogGrant({
+const grantKinds = catalogKinds.filter((kind) => kind.value !== 'shop_artwork');
+type Api = (path: string, body?: Row) => Promise<any>;
+type Mutate = (path: string, body: Row) => Promise<boolean>;
+const truthy = (value: unknown) => value === true || value === 1;
+
+function GiveItems({
   accountId,
   api,
   mutate,
   saving,
 }: {
   accountId: string;
-  api: (path: string) => Promise<List>;
-  mutate: (path: string, body: Row) => Promise<boolean>;
+  api: Api;
+  mutate: Mutate;
   saving: boolean;
 }) {
-  const [kind, setKind] = useState('offer'),
+  const [kind, setKind] = useState('all'),
     [query, setQuery] = useState(''),
     [search, setSearch] = useState(''),
     [cursor, setCursor] = useState(''),
     [history, setHistory] = useState<string[]>([]),
     [records, setRecords] = useState<List>(empty),
-    [chosen, setChosen] = useState<Row | null>(null),
     [busy, setBusy] = useState(true),
-    [error, setError] = useState('');
+    [error, setError] = useState(''),
+    [given, setGiven] = useState<Set<string>>(new Set());
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearch(query.trim());
+      setCursor('');
+      setHistory([]);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [query]);
   useEffect(() => {
     let current = true;
     setBusy(true);
     setError('');
     api(
       'catalog?' +
-        new URLSearchParams({ kind, q: search, limit: '5', ...(cursor ? { cursor } : {}) }),
+        new URLSearchParams({ kind, q: search, limit: '8', ...(cursor ? { cursor } : {}) }),
     )
-      .then((data) => {
-        if (current) setRecords(data);
-      })
-      .catch((failure) => {
-        if (current) setError(failure.message);
-      })
-      .finally(() => {
-        if (current) setBusy(false);
-      });
+      .then((data) => current && setRecords(asList(data)))
+      .catch((failure) => current && setError(failure.message))
+      .finally(() => current && setBusy(false));
     return () => {
       current = false;
     };
   }, [api, kind, search, cursor]);
-  const defaults: Record<string, string> = chosen
-    ? {
-        kind,
-        item: String(chosen.offer_id || chosen.item_id),
-        gender: String(chosen.gender || ''),
-        category: String(chosen.category || ''),
-      }
-    : { kind };
+  const key = (row: Row) =>
+    [row.kind, row.offer_id, row.item_id, row.gender, row.category].join(':');
+  async function give(row: Row) {
+    const offer = row.kind === 'offer' || (!row.item_id && row.offer_id);
+    const body: Row = offer
+      ? { kind: 'offer', offer_id: row.offer_id }
+      : {
+          kind: row.kind,
+          item_id: row.item_id,
+          ...(row.kind === 'wardrobe' ? { gender: row.gender, category: row.category } : {}),
+        };
+    if (await mutate('users/' + encodeURIComponent(accountId) + '/items', body))
+      setGiven((value) => new Set(value).add(key(row)));
+  }
   return (
-    <div className="space-y-3">
-      <Card>
-        <CardHeader>
-          <CardTitle>Find an item to grant</CardTitle>
-          <CardDescription>
-            Search the server catalog, choose an item, then confirm the grant below. Grants do not
-            charge the player.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <form
-            className="grid gap-2 sm:grid-cols-[10rem_1fr_auto]"
-            onSubmit={(event) => {
-              event.preventDefault();
-              setSearch(query);
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Give items</CardTitle>
+        <CardDescription>
+          Search the catalog and click Give. Free for the player; recorded in the audit log.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div className="grid gap-2 sm:grid-cols-[12rem_1fr]">
+          <FormSelect
+            id="give-kind"
+            value={kind}
+            options={grantKinds.map((k) => ({ value: k.value, label: k.label }))}
+            onValueChange={(next) => {
+              setKind(next);
               setCursor('');
               setHistory([]);
             }}
-          >
-            <div>
-              <Label className="sr-only" htmlFor="grant-kind">
-                Catalog type
-              </Label>
-              <FormSelect
-                id="grant-kind"
-                value={kind}
-                options={['offer', 'wardrobe', 'companions', 'locomotions', 'housing']}
-                onValueChange={(next) => {
-                  setKind(next);
-                  setCursor('');
-                  setHistory([]);
-                  setChosen(null);
-                }}
-              />
-            </div>
-            <div>
-              <Label className="sr-only" htmlFor="grant-search">
-                Find catalog items
-              </Label>
-              <Input
-                id="grant-search"
-                value={query}
-                maxLength={128}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search name or exact item ID"
-                className="min-h-11"
-              />
-            </div>
-            <Button variant="outline" className="min-h-11" disabled={busy}>
-              Search catalog
-            </Button>
-          </form>
-          {error ? (
-            <p role="alert" className="text-sm text-destructive">
-              {error}
-            </p>
-          ) : busy ? (
-            <p role="status" className="text-sm">
-              Loading catalog…
-            </p>
-          ) : (
-            <RecordList
-              items={records.items}
-              columns={
-                kind === 'offer'
-                  ? ['name', 'offer_id', 'kind', 'crystals', 'np']
-                  : ['name', 'item_id', 'gender', 'category_label']
-              }
-              action={(row) => (
+          />
+          <Input
+            value={query}
+            maxLength={128}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search item name or category…"
+            className="min-h-9"
+            aria-label="Search items to give"
+          />
+        </div>
+        {error ? (
+          <p role="alert" className="text-sm text-destructive">
+            {error}
+          </p>
+        ) : busy && !records.items.length ? (
+          <p className="text-sm text-muted-foreground">Loading…</p>
+        ) : (
+          <ItemRecords
+            items={records.items}
+            action={(row) =>
+              given.has(key(row)) ? (
+                <Badge variant="secondary">Given</Badge>
+              ) : (
                 <Button
-                  variant="outline"
-                  className="min-h-11"
-                  disabled={saving}
-                  onClick={() => setChosen(row)}
+                  size="sm"
+                  disabled={saving || row.grantable === false}
+                  onClick={() => give(row)}
                 >
-                  Choose item
+                  Give
                 </Button>
-              )}
-            />
-          )}
-          <div className="flex justify-between gap-2">
-            <Button
-              variant="outline"
-              className="min-h-11"
-              disabled={busy || !history.length}
-              onClick={() => {
-                setCursor(history.at(-1)!);
-                setHistory((h) => h.slice(0, -1));
-              }}
-            >
-              Previous items
-            </Button>
-            <Button
-              variant="outline"
-              className="min-h-11"
-              disabled={busy || !records.next_cursor}
-              onClick={() => {
-                setHistory((h) => [...h, cursor]);
-                setCursor(records.next_cursor!);
-              }}
-            >
-              Next items
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-      <ChangeForm
-        key={JSON.stringify(defaults)}
-        title="Grant item"
-        description={
-          chosen
-            ? 'Selected: ' +
-              display(chosen.name || chosen.item_id || chosen.offer_id) +
-              '. Verify the exact ID and variant before saving.'
-            : 'Choose a catalog entry above or enter an exact known catalog ID. Optional variant fields must match the catalog.'
-        }
-        busy={saving}
-        defaults={defaults}
-        fields={[
-          {
-            name: 'kind',
-            label: 'Item type',
-            options: ['offer', 'wardrobe', 'companions', 'locomotions', 'housing'],
-          },
-          { name: 'item', label: 'Item or offer ID' },
-          { name: 'gender', label: 'Gender', optional: true },
-          { name: 'category', label: 'Category', optional: true },
-        ]}
-        submit={(data) =>
-          mutate('users/' + encodeURIComponent(accountId) + '/items', {
-            kind: data.kind,
-            ...(data.kind === 'offer' ? { offer_id: data.item } : { item_id: data.item }),
-            ...(data.gender ? { gender: data.gender } : {}),
-            ...(data.category ? { category: data.category } : {}),
-            reason: data.reason,
-          })
-        }
-      />
-    </div>
+              )
+            }
+          />
+        )}
+        <Pager
+          history={history}
+          next={records.next_cursor}
+          busy={busy}
+          back={() => {
+            setCursor(history.at(-1)!);
+            setHistory((h) => h.slice(0, -1));
+          }}
+          forward={() => {
+            setHistory((h) => [...h, cursor]);
+            setCursor(records.next_cursor!);
+          }}
+        />
+      </CardContent>
+    </Card>
   );
 }
+
+function Credits({ base, mutate, saving }: { base: string; mutate: Mutate; saving: boolean }) {
+  const [currency, setCurrency] = useState('crystals'),
+    [amount, setAmount] = useState(''),
+    [note, setNote] = useState(''),
+    [error, setError] = useState('');
+  async function change(sign: 1 | -1, value = Number(amount)) {
+    setError('');
+    if (!Number.isSafeInteger(value) || value <= 0)
+      return setError('Enter a whole number above zero.');
+    const body: Row = {
+      currency,
+      delta: sign * value,
+      ...(note.trim() ? { reason: note.trim() } : {}),
+    };
+    if (await mutate(base + '/wallet-adjustments', body)) {
+      setAmount('');
+      setNote('');
+    }
+  }
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Change credits</CardTitle>
+        <CardDescription>Balances can't go below zero.</CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-3">
+        <div className="grid gap-2 sm:grid-cols-[10rem_8rem_1fr]">
+          <FormSelect
+            id="credit-currency"
+            value={currency}
+            options={[
+              { value: 'crystals', label: 'Crystals' },
+              { value: 'np', label: 'Nebula Points' },
+            ]}
+            onValueChange={setCurrency}
+          />
+          <Input
+            type="number"
+            min={1}
+            step={1}
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
+            placeholder="Amount"
+            className="min-h-9"
+            aria-label="Amount"
+          />
+          <Input
+            value={note}
+            maxLength={512}
+            onChange={(event) => setNote(event.target.value)}
+            placeholder="Note (optional)"
+            className="min-h-9"
+            aria-label="Note"
+          />
+        </div>
+        {error && <p className="text-sm text-destructive">{error}</p>}
+        <div className="flex flex-wrap gap-2">
+          <Button size="sm" disabled={saving} onClick={() => change(1)}>
+            Add
+          </Button>
+          <Button size="sm" variant="outline" disabled={saving} onClick={() => change(-1)}>
+            Remove
+          </Button>
+          <span className="mx-1 self-center text-xs text-muted-foreground">Quick add:</span>
+          {[100, 1000, 10000].map((value) => (
+            <Button
+              key={value}
+              size="sm"
+              variant="secondary"
+              disabled={saving}
+              onClick={() => change(1, value)}
+            >
+              +{value.toLocaleString()}
+            </Button>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function PlayerAccount({
   id,
   detail,
-  wallet,
   tab,
   actor,
   api,
@@ -216,53 +250,94 @@ export function PlayerAccount({
 }: {
   id: string;
   detail: Row;
-  wallet: Row;
   tab: PlayerTab;
   actor: { role: string };
-  api: (path: string, body?: Row) => Promise<any>;
-  mutate: (path: string, body: Row) => Promise<boolean>;
+  api: Api;
+  mutate: Mutate;
   saving: boolean;
   revision: number;
   refresh: () => void;
 }) {
   const base = 'users/' + encodeURIComponent(id),
-    canEdit = ['owner', 'admin'].includes(actor.role);
+    canEdit = ['owner', 'admin'].includes(actor.role),
+    wallet = (detail.wallet || {}) as Row,
+    [copied, setCopied] = useState(false);
   const names: Record<PlayerTab, string> = {
-    summary: 'Summary',
+    summary: 'Overview',
+    character: 'Character',
     inventory: 'Inventory',
     purchases: 'Purchases',
     credits: 'Credits',
+    sessions: 'Sessions',
     moderation: 'Moderation',
-    activity: 'Activity',
+    activity: 'History',
   };
+  const gender =
+    detail.gender === 'MALE' ? 'Male' : detail.gender === 'FEMALE' ? 'Female' : detail.gender;
   return (
     <div className="min-w-0 space-y-3">
-      <Button asChild variant="outline" className="min-h-11">
-        <a href="#users">Back to players</a>
-      </Button>
       <Card>
-        <CardContent className="space-y-3">
+        <CardContent className="grid gap-3">
+          <a href="#users" className="w-fit text-xs text-muted-foreground hover:underline">
+            ← Players
+          </a>
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="min-w-0 break-words text-lg font-semibold [overflow-wrap:anywhere]">
-              {display(detail.username)}
-            </h3>
-            <Badge variant={detail.online === 1 ? 'default' : 'secondary'}>
-              {detail.online === 1 ? 'Online' : 'Offline'}
-            </Badge>
+            <h2 className="min-w-0 break-words text-lg font-semibold [overflow-wrap:anywhere]">
+              {String(detail.username || 'Unnamed player')}
+            </h2>
+            {truthy(detail.online) ? (
+              <Badge>Online</Badge>
+            ) : (
+              <Badge variant="outline">Offline</Badge>
+            )}
+            {truthy(detail.online) && (
+              <Badge variant="secondary">
+                {detail.current_scene
+                  ? 'In ' +
+                    (isPublicScene(detail.current_scene) || !detail.current_scene_owner
+                      ? sceneLabel(detail.current_scene)
+                      : String(detail.current_scene_owner) +
+                        "'s " +
+                        sceneLabel(detail.current_scene))
+                  : 'In menus / loading'}
+              </Badge>
+            )}
+            {truthy(detail.banned) && <Badge variant="destructive">Banned</Badge>}
+            {truthy(detail.muted) && <Badge variant="secondary">Muted</Badge>}
+            {typeof detail.staff_label === 'string' && detail.staff_label && (
+              <Badge variant="outline">{detail.staff_label}</Badge>
+            )}
           </div>
-          <p className="break-all text-xs text-muted-foreground">Account ID: {id}</p>
-          <div className="grid grid-cols-2 gap-3 border-t pt-3">
-            {[
-              ['Crystals', wallet.crystals],
-              ['Nebula Points', wallet.np],
-            ].map(([label, value]) => (
-              <div key={String(label)}>
-                <p className="text-xs text-muted-foreground">{String(label)}</p>
-                <p className="mt-1 text-xl font-semibold tabular-nums">
-                  {typeof value === 'number' ? value.toLocaleString() : '—'}
-                </p>
-              </div>
-            ))}
+          <button
+            type="button"
+            className="w-fit font-mono text-xs text-muted-foreground hover:text-foreground"
+            title="Copy Steam ID"
+            onClick={() => {
+              void navigator.clipboard?.writeText(id).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1500);
+              });
+            }}
+          >
+            Steam ID {id} {copied ? '· copied' : '· copy'}
+          </button>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <Stat
+              label="Crystals"
+              value={typeof wallet.crystals === 'number' ? wallet.crystals.toLocaleString() : '—'}
+            />
+            <Stat
+              label="Nebula Points"
+              value={typeof wallet.np === 'number' ? wallet.np.toLocaleString() : '—'}
+            />
+            <Stat
+              label="Last login"
+              value={<span className="text-sm">{relative(detail.last_login_at)}</span>}
+            />
+            <Stat
+              label="Joined"
+              value={<span className="text-sm">{relative(detail.created_at)}</span>}
+            />
           </div>
         </CardContent>
       </Card>
@@ -274,133 +349,145 @@ export function PlayerAccount({
         className="min-w-0 gap-3"
       >
         <TabsList
-          className="grid h-auto w-full grid-cols-3 gap-1 p-1 sm:grid-cols-6"
+          className="h-auto w-full flex-wrap justify-start gap-1 p-1"
           aria-label="Player sections"
         >
           {playerTabs.map((value) => (
-            <TabsTrigger
-              key={value}
-              value={value}
-              className="min-h-11 min-w-0 px-2 text-xs sm:text-sm"
-            >
+            <TabsTrigger key={value} value={value} className="flex-none px-3 text-xs sm:text-sm">
               {names[value]}
             </TabsTrigger>
           ))}
         </TabsList>
-        <TabsContent value="summary" className="space-y-3">
-          <Card>
-            <CardHeader>
-              <CardTitle>Account details</CardTitle>
-              <CardDescription>
-                Last login is the latest recorded session issue time; online status is the server's
-                current presence flag.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Details
-                data={{
-                  platform: detail.platform,
-                  gender: detail.gender,
-                  created_at: detail.created_at,
-                  last_login_at: detail.last_login_at,
-                  last_avatar_save_at: detail.last_avatar_save_at,
-                }}
-              />
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Manage this player</CardTitle>
-              <CardDescription>
-                View ownership and purchases, update balances or enforce a moderation policy.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {(['inventory', 'purchases', 'credits', 'moderation'] as PlayerTab[]).map((value) => (
-                <Button asChild key={value} variant="outline" className="min-h-11">
-                  <a href={playerHref(id, value)}>{names[value]}</a>
-                </Button>
-              ))}
-            </CardContent>
-          </Card>
+        <TabsContent value="summary" className="grid gap-3 xl:grid-cols-2">
+          <CharacterPanel
+            accountId={id}
+            api={api}
+            mutate={mutate}
+            saving={saving}
+            revision={revision}
+            canEdit={canEdit}
+            compact
+          />
+          <div className="grid content-start gap-3">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Account</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <dl className="grid grid-cols-2 gap-2">
+                  {[
+                    ['Platform', detail.platform],
+                    ['Character', gender],
+                    ['Joined', formatCell('created_at', detail.created_at)],
+                    ['Last login', formatCell('last_login_at', detail.last_login_at)],
+                    [
+                      'Last outfit save',
+                      formatCell('last_avatar_save_at', detail.last_avatar_save_at),
+                    ],
+                    [
+                      'Ban',
+                      truthy(detail.banned)
+                        ? detail.ban_expires_at
+                          ? 'Until ' + formatCell('ban_expires_at', detail.ban_expires_at)
+                          : 'Permanent'
+                        : 'No',
+                    ],
+                  ].map(([label, value]) => (
+                    <div key={String(label)}>
+                      <dt className="text-xs text-muted-foreground">{String(label)}</dt>
+                      <dd className="font-medium">{String(value ?? '—')}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </CardContent>
+            </Card>
+            <PaginatedRecords
+              title="Recent purchases"
+              path={base + '/purchases'}
+              revision={revision}
+              load={api}
+              params={{ limit: '5' }}
+              renderItems={(items) => <PurchaseRecords items={items} compact />}
+              headerAction={
+                <a
+                  href={playerHref(id, 'purchases')}
+                  className="text-xs font-normal text-muted-foreground hover:underline"
+                >
+                  All →
+                </a>
+              }
+            />
+          </div>
         </TabsContent>
-        <TabsContent value="inventory" className="space-y-3">
+        <TabsContent value="character">
+          <CharacterPanel
+            accountId={id}
+            api={api}
+            mutate={mutate}
+            saving={saving}
+            revision={revision}
+            canEdit={canEdit}
+          />
+        </TabsContent>
+        <TabsContent value="inventory" className="grid gap-3 xl:grid-cols-2">
           <PaginatedRecords
             title="Owned items"
             path={base + '/owned'}
             revision={revision}
             load={api}
-            columns={['display_name', 'kind', 'item_id', 'gender', 'category', 'granted_at']}
-            description="Durable server ownership. A player may need to reopen the relevant menu or rejoin to refresh cached items."
+            renderItems={(items) => (
+              <ItemRecords
+                items={items}
+                granted
+                emptyText="This player owns no items yet."
+                action={
+                  canEdit
+                    ? (row) => (
+                        <RevokeItem row={row} accountId={id} mutate={mutate} saving={saving} />
+                      )
+                    : undefined
+                }
+              />
+            )}
           />
-          {canEdit && <CatalogGrant accountId={id} api={api} mutate={mutate} saving={saving} />}
+          {canEdit && <GiveItems accountId={id} api={api} mutate={mutate} saving={saving} />}
         </TabsContent>
         <TabsContent value="purchases">
           <PaginatedRecords
-            title="Purchase history"
+            title="Purchases"
             path={base + '/purchases'}
             revision={revision}
             load={api}
-            columns={[
-              'name',
-              'offer_id',
-              'source',
-              'created_at',
-              'current_offer_crystals',
-              'current_offer_np',
-            ]}
-            description="Includes store purchases and offer grants. Prices shown are current catalog prices; original paid prices were not retained."
+            description="Store purchases and staff-given store offers. Prices are today's store prices."
+            renderItems={(items) => <PurchaseRecords items={items} />}
           />
         </TabsContent>
-        <TabsContent value="credits" className="space-y-3">
-          {canEdit ? (
-            <ChangeForm
-              title="Adjust credits"
-              description="Positive amounts add funds; negative amounts deduct them. The server saves the balance immediately and records before/after amounts. Players may need to reopen a store to see it."
-              busy={saving}
-              fields={[
-                { name: 'currency', label: 'Currency', options: ['crystals', 'np'] },
-                {
-                  name: 'delta',
-                  label: 'Amount to add or deduct',
-                  type: 'number',
-                  hint: 'A nonzero whole number. The resulting balance cannot go below zero.',
-                },
-              ]}
-              submit={(data) => {
-                const delta = Number(data.delta);
-                if (!Number.isSafeInteger(delta) || !delta)
-                  return Promise.reject(new Error('Enter a nonzero whole number.'));
-                return mutate(base + '/wallet-adjustments', {
-                  currency: data.currency,
-                  delta,
-                  reason: data.reason,
-                });
-              }}
-            />
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              Only admins and owners can change balances. Credit history remains available below.
-            </p>
-          )}
+        <TabsContent value="credits" className="grid gap-3">
+          {canEdit && <Credits base={base} mutate={mutate} saving={saving} />}
           <PaginatedRecords
-            title="Credit adjustments"
+            title="Credit history"
             path={base + '/transactions'}
             revision={revision}
             load={api}
-            columns={[
-              'currency',
-              'delta',
-              'before_balance',
-              'after_balance',
-              'actor_id',
-              'reason',
-              'created_at',
-            ]}
-            description="Only this player's operator credit adjustments; store purchases are in Purchases."
+            columns={['delta', 'after_balance', 'actor_id', 'reason', 'created_at']}
+            emptyText="No staff credit changes for this player."
           />
         </TabsContent>
-        <TabsContent value="moderation">
+        <TabsContent value="sessions">
+          <SessionsPanel accountId={id} api={api} revision={revision} />
+        </TabsContent>
+        <TabsContent value="moderation" className="grid gap-3">
+          <LiveState accountId={id} api={api} revision={revision} />
+          <AdminActions
+            actor={actor}
+            api={api}
+            mutate={mutate}
+            saving={saving}
+            target={id}
+            kinds={['player']}
+            online={detail.online === 1 || detail.online === true}
+            exclude={['ban', 'unban', 'mute', 'unmute', 'kick', 'staff_label']}
+          />
           <ModerationPanel
             accountId={id}
             actor={actor}
@@ -411,15 +498,66 @@ export function PlayerAccount({
         </TabsContent>
         <TabsContent value="activity">
           <PaginatedRecords
-            title="Player activity"
+            title="Staff actions on this player"
             path={base + '/audit'}
             revision={revision}
             load={api}
             columns={['operation', 'actor_id', 'reason', 'created_at']}
-            description="Audited operator changes for this account. Expand before/after to inspect the committed change. This is not a gameplay or chat log."
+            emptyText="No staff actions yet."
           />
         </TabsContent>
       </Tabs>
     </div>
+  );
+}
+
+/** Where the player is right now, according to the running scene. */
+function LiveState({
+  accountId,
+  api,
+  revision,
+}: {
+  accountId: string;
+  api: Api;
+  revision: number;
+}) {
+  const [live, setLive] = useState<Row | null>(null);
+  useEffect(() => {
+    let current = true;
+    api('users/' + encodeURIComponent(accountId) + '/live')
+      .then((value) => current && setLive(value))
+      .catch(() => current && setLive(null));
+    return () => {
+      current = false;
+    };
+  }, [api, accountId, revision]);
+  if (!live) return null;
+  const position = live.position as Row | null;
+  const redirect = live.pending_redirect as Row | null;
+  return (
+    <Card>
+      <CardContent className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+        <span>
+          <span className="text-muted-foreground">Now: </span>
+          <strong>
+            {live.in_world ? String(live.scene_label || sceneLabel(live.scene)) : 'Not in a world'}
+          </strong>
+        </span>
+        {position && typeof position.x === 'number' && (
+          <span className="font-mono text-xs text-muted-foreground">
+            {['x', 'y', 'z'].map((k) => k + ' ' + Number(position[k]).toFixed(1)).join('  ')}
+            {live.position_source === 'last_saved' ? ' (last saved)' : ''}
+          </span>
+        )}
+        {redirect && (
+          <Badge variant="secondary">
+            Moving to {sceneLabel(redirect.scene ?? redirect.redirect_scene)}
+          </Badge>
+        )}
+        {typeof live.server_status === 'string' && live.server_status !== 'normal' && (
+          <Badge variant="destructive">Server: {String(live.server_status)}</Badge>
+        )}
+      </CardContent>
+    </Card>
   );
 }

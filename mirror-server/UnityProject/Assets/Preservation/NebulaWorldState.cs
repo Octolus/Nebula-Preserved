@@ -130,6 +130,12 @@ namespace NebulaPreservation
         private readonly Dictionary<int, bool> genericStates = new Dictionary<int, bool>();
         private readonly List<string> genericHistory = new List<string>();
         private readonly HashSet<string> sceneSnapshots = new HashSet<string>(StringComparer.Ordinal);
+        // Last nonzero animation-layer weight per actor (C2S93). The only native
+        // senders are Cupid2018WalkingInLove.StartInLove/StopInlove 0x556f20 /
+        // 0x5572d0 and Halloween2018ZombiesTrigger.StartZombie/StopZombie
+        // 0x5952a0 / 0x595650: `93#SessionGUID#InLove|Zombie#1|0`.
+        private readonly Dictionary<string, SortedDictionary<string, string>> animationLayers =
+            new Dictionary<string, SortedDictionary<string, string>>(StringComparer.Ordinal);
 
         public bool ReadyForOriginalServerParity => false;
         public string SpaceId => inventory.SpaceId;
@@ -159,8 +165,9 @@ namespace NebulaPreservation
             if (args == null || args.Length == 0 || args[0] != callerGuid)
                 throw new Rejected("world_session_not_owned");
             Identity caller = IdentityFor(callerGuid);
-            if (opcode == 45 || opcode == 47 || opcode == 93)
+            if (opcode == 45 || opcode == 47)
                 throw new Rejected("world_clientbound_only_opcode");
+            if (opcode == 93) return AnimationLayer(caller, args);
             if (opcode == 31) return Boat(caller, args);
             if (opcode == 94) return Generic(caller, args);
             return Consumable(caller, opcode, args);
@@ -191,6 +198,26 @@ namespace NebulaPreservation
             ForgetActorSnapshots(caller.Guid);
             // The C2S caller already instantiated its own boat before sending.
             return new[] { Delivery.Others(caller.Guid, Join(31, caller.Guid, "True", token.ToString(Invariant))) };
+        }
+
+        private IReadOnlyList<Delivery> AnimationLayer(Identity caller, string[] args)
+        {
+            Count(args, 3);
+            string layer = args[1], weight = args[2];
+            if (layer != "InLove" && layer != "Zombie") throw new Rejected("animation_layer_not_supported");
+            if (weight != "0" && weight != "1") throw new Rejected("animation_layer_weight_invalid");
+            if (!animationLayers.TryGetValue(caller.Guid, out SortedDictionary<string, string> layers))
+            {
+                layers = new SortedDictionary<string, string>(StringComparer.Ordinal);
+                animationLayers[caller.Guid] = layers;
+            }
+            if (weight == "0") layers.Remove(layer);
+            else layers[layer] = weight;
+            if (layers.Count == 0) animationLayers.Remove(caller.Guid);
+            // S2C93 0x5ec380 reads [guid, layer, Int32 weight] and resolves the
+            // player through Memory.GetNebulaPlayer, so only viewers that have
+            // built the actor receive it (host gate on Others + source).
+            return new[] { Delivery.Others(caller.Guid, Join(93, caller.Guid, layer, weight)) };
         }
 
         private IReadOnlyList<Delivery> Generic(Identity caller, string[] args)
@@ -242,14 +269,23 @@ namespace NebulaPreservation
         {
             IdentityFor(requesterGuid);
             IdentityFor(actorGuid);
-            if (requesterGuid == actorGuid || !boats.TryGetValue(actorGuid, out int token)) return new Delivery[0];
-            if (!boatSnapshots.TryGetValue(requesterGuid, out HashSet<string> seen))
+            if (requesterGuid == actorGuid) return new Delivery[0];
+            var result = new List<Delivery>();
+            if (boats.TryGetValue(actorGuid, out int token))
             {
-                seen = new HashSet<string>(StringComparer.Ordinal);
-                boatSnapshots[requesterGuid] = seen;
+                if (!boatSnapshots.TryGetValue(requesterGuid, out HashSet<string> seen))
+                {
+                    seen = new HashSet<string>(StringComparer.Ordinal);
+                    boatSnapshots[requesterGuid] = seen;
+                }
+                if (seen.Add(actorGuid))
+                    result.Add(Delivery.To(requesterGuid, Join(31, actorGuid, "True", token.ToString(Invariant))));
             }
-            if (!seen.Add(actorGuid)) return new Delivery[0];
-            return new[] { Delivery.To(requesterGuid, Join(31, actorGuid, "True", token.ToString(Invariant))) };
+            // Layer weights are idempotent; replay on every fresh avatar build.
+            if (animationLayers.TryGetValue(actorGuid, out SortedDictionary<string, string> layers))
+                foreach (KeyValuePair<string, string> layer in layers)
+                    result.Add(Delivery.To(requesterGuid, Join(93, actorGuid, layer.Key, layer.Value)));
+            return result;
         }
 
         // Ordinary94 has no distinct initial-query request. Replay only recorded
@@ -267,6 +303,7 @@ namespace NebulaPreservation
         {
             boats.Remove(guid);
             boatSnapshots.Remove(guid);
+            animationLayers.Remove(guid);
             sceneSnapshots.Remove(guid);
             ForgetActorSnapshots(guid);
             return new Delivery[0];
@@ -298,5 +335,111 @@ namespace NebulaPreservation
         private static void Token(string token, int max)
         { if (token == null || token.Length > max || token.IndexOf('#') >= 0 || token.IndexOf('\0') >= 0) throw new Rejected("world_invalid_token"); }
         private static string Join(int opcode, params string[] fields) => opcode.ToString(Invariant) + "#" + String.Join("#", fields);
+    }
+
+    // Pure accounting of the client's automatic empty C2S15 frames. Native
+    // NebulaPlayerAnim.UpdateLocomotion 0x5f5270 always calls RemoveLocomotion
+    // 0x5f3c60, which sends `15#<local SessionGUID>#` whenever the player
+    // whose animator it is (local or remote) already has a locomotion object.
+    // UpdateLocomotion runs (a) right after the client's own 15 in
+    // LocomotionPrefab.OnClick 0x4b9be0 (including the isEmpty "none" entry),
+    // JetpackFlying 0x41f200/0x420090/0x41fa00, and (b) on every received S2C15
+    // (UpdateLocomotionProcessor 0x5ec4d0), for the local or a remote avatar.
+    // Those empties are indistinguishable on the wire from a deliberate
+    // removal (wheel "none", or RemoveLocomotion from SetCurrentAnim 0x5f4500,
+    // Cupid/Zombie, FoodTruck, OktoberFest, SkatingArea, ...), so they are
+    // matched by ordering: one expected empty per UpdateLocomotion that will
+    // find an existing object, consumed oldest first within a short window.
+    public sealed class NebulaLocomotionEchoes
+    {
+        // Own side effect: sent in the same client frame as the request.
+        public const double OwnWindow = 0.5;
+        // Receipt side effect: one round trip after our S2C15.
+        public const double ReceiptWindow = 3.0;
+
+        private sealed class Client
+        {
+            public string own; // null: unknown (OnAvatarLoaded restored Persistency)
+            public readonly Dictionary<string, string> remotes = new Dictionary<string, string>(StringComparer.Ordinal);
+            public readonly List<double> expected = new List<double>();
+        }
+
+        private readonly Dictionary<string, Client> clients = new Dictionary<string, Client>(StringComparer.Ordinal);
+
+        private Client State(string client)
+        {
+            if (!clients.TryGetValue(client, out Client state))
+            {
+                state = new Client();
+                clients[client] = state;
+            }
+            return state;
+        }
+
+        private static bool MayHaveObject(string model) => model == null || model.Length != 0;
+
+        private static void Expect(Client state, double until)
+        {
+            if (state.expected.Count < 64) state.expected.Add(until);
+        }
+
+        public int Pending(string client, double now)
+        {
+            if (!clients.TryGetValue(client, out Client state)) return 0;
+            state.expected.RemoveAll(x => x < now);
+            return state.expected.Count;
+        }
+
+        // A C2S15 from this client. Returns true when it is an automatic empty
+        // side effect that must not change anyone's locomotion.
+        public bool ClientRequest(string client, string item, double now)
+        {
+            Client state = State(client);
+            state.expected.RemoveAll(x => x < now);
+            if (item.Length == 0 && state.expected.Count > 0)
+            {
+                state.expected.RemoveAt(0);
+                return true;
+            }
+            // The sender already rendered the request locally. The senders that
+            // then call UpdateLocomotion produce one more empty if an object was
+            // present; a bare RemoveLocomotion empty leaves this unused.
+            if (MayHaveObject(state.own)) Expect(state, now + OwnWindow);
+            state.own = item;
+            return false;
+        }
+
+        // We sent S2C15 about actor to client (actor == client: its own avatar).
+        public void Sent(string client, string actor, string item, double now)
+        {
+            Client state = State(client);
+            state.expected.RemoveAll(x => x < now);
+            if (client == actor)
+            {
+                if (MayHaveObject(state.own)) Expect(state, now + ReceiptWindow);
+                state.own = item;
+                return;
+            }
+            if (!state.remotes.TryGetValue(actor, out string previous) || MayHaveObject(previous))
+                Expect(state, now + ReceiptWindow);
+            state.remotes[actor] = item;
+        }
+
+        // A freshly built remote avatar has no locomotion object yet.
+        public void ActorBuilt(string client, string actor)
+        {
+            if (client != actor) State(client).remotes[actor] = "";
+        }
+
+        public void ActorRemoved(string client, string actor)
+        {
+            if (clients.TryGetValue(client, out Client state)) state.remotes.Remove(actor);
+        }
+
+        public void Forget(string guid)
+        {
+            clients.Remove(guid);
+            foreach (Client state in clients.Values) state.remotes.Remove(guid);
+        }
     }
 }

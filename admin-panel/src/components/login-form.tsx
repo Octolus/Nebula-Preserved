@@ -52,7 +52,7 @@ export function LoginForm() {
               required
               maxLength={128}
               disabled={!ready || busy}
-              className="min-h-11"
+              className="min-h-9"
             />
           </div>
           <div className="grid gap-1.5">
@@ -65,7 +65,7 @@ export function LoginForm() {
               required
               maxLength={1024}
               disabled={!ready || busy}
-              className="min-h-11"
+              className="min-h-9"
             />
           </div>
           {error && (
@@ -73,7 +73,7 @@ export function LoginForm() {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Button type="submit" disabled={!ready || busy} className="min-h-11">
+          <Button type="submit" disabled={!ready || busy} className="min-h-9">
             {busy ? 'Signing in…' : 'Sign in'}
           </Button>
         </form>

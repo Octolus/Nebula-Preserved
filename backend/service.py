@@ -15,14 +15,19 @@ from allocation import InstanceDirectory
 from resources import ResourceCatalog, ResourceEntitlements
 from housing import HousingStore
 from instance_lifecycle import ManagedInstanceLifecycle
+from apartments import ApartmentPolicy
 from consumables import Consumables
 from gathering import Gathering
+from fullgame import FullGames
+from minigames import Minigames
 from rewards import RewardService, ROUTES as REWARD_ROUTES
 from shop import Shop
+from starter_policy import StarterPolicy
 from notifications import NotificationOutbox
 from public_access import require_actor, current_actor
 from state import Catalog, DEFAULT_PREFS, Store, canonical_platform
 from wire import PLATFORMS, ProtocolError, Request, json_field, session_guid
+from diagnostic_logging import missing_data
 
 
 # Authored preservation default for the versioned native hydration trailer.
@@ -84,7 +89,15 @@ class Service:
         "NPShopBundleItemsServlet", "NPShopBuyItemServlet", "NPShopGiftItemServlet",
         "NPShopIsItemPurchasedServlet", "NPShopSyncCrystalsServlet",
         "checkerToServerDownMaintenanceServlet",
+        # Recovered HTTP minigame contracts (backend/minigames.py, rewards.py).
+        "checkRewardGameServlet", *Minigames.ROUTES,
+        # Full-game lobby, space leaderboards and Memorion (backend/fullgame.py).
+        *FullGames.ROUTES,
     }
+    # Retired Steam order reconciliation is sent on every login and its reply is
+    # ignored by the client: acknowledge write-free instead of logging a 501.
+    # Other retired purchase routes remain unreconstructed (501).
+    RETIRED_ACKNOWLEDGED = {"STMCompleteSucceededOrders": "OK#"}
 
     def __init__(self, store: Store, catalog: Catalog, *, core_test_profile=None,
                  managed_instances=False):
@@ -96,13 +109,21 @@ class Service:
         self.housing = HousingStore(store, catalog.protocol_dir)
         self.lifecycle = (ManagedInstanceLifecycle(store, self.housing, self.instances, core_test_profile)
                           if managed_instances else None)
+        # Staff apartment grants/removals; managed mode also provisions Home
+        # and the starter set (manual mode provisions nothing automatically).
+        self.apartments = (self.lifecycle.apartments if self.lifecycle
+                           else ApartmentPolicy(store, self.housing))
         self.consumables = Consumables(store)
         self.notifications = NotificationOutbox(store)
         self.rewards = RewardService(store, catalog, self.instances)
         self.rewards.notifications = self.notifications
         self.gathering = Gathering(store, catalog, self.resources, self.housing)
         self.shop = Shop(store, catalog, self.resources, self.housing)
+        self.shop.apartments = self.apartments  # apartment offers create bindings
         self.shop.notifications = self.notifications
+        self.minigames = Minigames(store, self.rewards)  # After Shop: AddXP credits shop_wallets.
+        self.fullgames = FullGames(store)  # After Gathering: reads Christmas 2018 progress.
+        self.starter = StarterPolicy(store)  # After Shop: its trigger credits shop_wallets once.
         store.instance_resources = self.resources
         self.moderation = store.moderation
 
@@ -145,6 +166,8 @@ class Service:
         return result
 
     def dispatch(self, command, plaintext):
+        if command in self.RETIRED_ACKNOWLEDGED:
+            return self.RETIRED_ACKNOWLEDGED[command]
         if command not in self.ROUTES:
             raise ProtocolError("Route behavior has not been reconstructed", 501)
         request = Request.parse(plaintext, maxsplit=4 if command == "N2SavePreset" else -1)
@@ -157,9 +180,15 @@ class Service:
             response = self.gathering.dispatch(command, request)
         elif command in Shop.ROUTES:
             response = self.shop.dispatch(command, request)
+        elif command in Minigames.ROUTES:
+            response = self.minigames.dispatch(command, request)
+        elif command in FullGames.ROUTES:
+            response = self.fullgames.dispatch(command, request)
         else:
             response = getattr(self, "route_" + command)(request)
-        if "#" not in response and not (command == "GetInfoServlet" and request.fields[0] == "0"):
+        # GetLeaderboardServlet rows have no header (consumer @0x3eb040): one row has no '#'.
+        if ("#" not in response and not (command == "GetInfoServlet" and request.fields[0] == "0")
+                and not (command == "GetLeaderboardServlet" and "!" in response)):
             raise RuntimeError("Response violates recovered shared sender framing")
         return response
 
@@ -207,7 +236,8 @@ class Service:
 
     def route_CheckServerStatusServlet(self, request):
         username, nonce = request.require(2)
-        return "true#" + username + "#" + nonce + "#1"
+        # 0 maintenance scene, 1 continue, 2 updating scene (staff policy; game_admin).
+        return "true#" + username + "#" + nonce + "#" + str(self.moderation.server_status_code(current_actor()))
 
     def route_checkerToServerDownMaintenanceServlet(self, request):
         fields, _profile = self.identify(request, 2)
@@ -274,8 +304,11 @@ class Service:
 
     def route_GetIinitInfosNeededServlet(self, request):
         f, _ = self.identify(request, 2)
-        # Local policy: validate GUID/presets; defer optional memorion feature.
-        return f[0] + "#true#true#false"
+        # Local policy: validate GUID/presets. Field3 is PS4Info.isMemorionActive
+        # (HTTPGetIinitInfosNeeded @0x608b20); MemorionTrigger.Start @0x595c90
+        # shows the LeafPark arcade only when true. MemorionServlet is served by
+        # backend/fullgame.py, so the arcade is enabled.
+        return f[0] + "#true#true#true"
 
     def route_GetPlayerPrefsServlet(self, request):
         f, profile = self.identify(request, 2)
@@ -692,6 +725,7 @@ class Service:
         with self.store.db:
             changed = self.store.db.execute("UPDATE entitlements SET asset_status=? WHERE ps4_id=? AND item_id=?", (int(f[3]), profile["ps4_id"], f[2])).rowcount
             if not changed:
+                missing_data("wardrobe_entitlement_unknown", item_id=f[2])
                 raise ProtocolError("Unknown local wardrobe entitlement", 404)
         return "true#" + f[0]
 
@@ -713,6 +747,8 @@ class Service:
         if binding is not None and binding[0] == fields[1] and self.ban_fields(fields[1])[0] == "true":
             return fields[0] + "#true#false"
         f, profile = self.identify(request, 6)
+        from game_admin import redirected_load
+        f = redirected_load(self.store, f, profile)  # one-shot staff relocation of this session
         if self.lifecycle:
             return self.lifecycle.request_load(f, profile)
         if self.store.current_guid(profile["ps4_id"]) != f[0]:

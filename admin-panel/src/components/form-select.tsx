@@ -30,7 +30,7 @@ export function FormSelect({
       disabled={disabled}
       required={required}
     >
-      <SelectTrigger id={id} className={'min-h-11 w-full min-w-0 ' + className}>
+      <SelectTrigger id={id} className={'min-h-9 w-full min-w-0 ' + className}>
         <SelectValue placeholder="Choose an option" />
       </SelectTrigger>
       <SelectContent>
@@ -43,7 +43,7 @@ export function FormSelect({
                 }
               : option;
           return (
-            <SelectItem key={item.value} value={item.value} className="min-h-11 capitalize">
+            <SelectItem key={item.value} value={item.value} className="min-h-9 capitalize">
               {item.label}
             </SelectItem>
           );

@@ -22,8 +22,12 @@ preservation server policy, rather than a claim about the former service.
 
 The backend checks the current enabled role on every request. Only owners manage
 operators or set player staff labels. Admins can also adjust wallets, grant items,
-rename players, publish login news and set maintenance countdowns. Moderators can
-read records, ban/unban, kick, mute/unmute and review reports. A moderator or admin
+rename players, publish login news, set maintenance countdowns, switch the native
+maintenance/updating screen on and relocate or reconnect everyone. Moderators can
+read records, ban/unban, kick, mute/unmute, review reports, move a connected player
+to another world (or back to Nexus) and clear an offensive status/mood. The full
+evidence-backed list, including powers the client cannot receive, is in
+[MODERATION-CAPABILITIES.md](MODERATION-CAPABILITIES.md). A moderator or admin
 cannot sanction an explicitly linked enabled operator of equal or higher rank;
 owners can. Keep at least one enabled owner.
 

@@ -36,8 +36,8 @@ class FullCatalog(unittest.TestCase):
 
     def test_complete_coverage_excludes_controls_and_retains_unicode_and_generic_metadata(self):
         result = seed_full_catalog(self.service)
-        self.assertEqual(result["after"]["grantable"], 7688)
-        self.assertEqual(result["after"]["offered"], 7688)
+        self.assertEqual(result["after"]["grantable"], 7742)
+        self.assertEqual(result["after"]["offered"], 7742)
         self.assertEqual(result["after"]["unoffered"], 0)
         self.assertEqual(result["after"]["excluded_removal_controls"], 20)
         rows = CatalogInventory(self.service).items
@@ -65,7 +65,7 @@ class FullCatalog(unittest.TestCase):
         old = [tuple(r) for r in self.store.db.execute("SELECT * FROM shop_offers ORDER BY offer_id")]
         result = seed_full_catalog(self.service)
         self.assertEqual(result["preserved_existing_offers"], 15)
-        self.assertEqual(result["created_offers"], 7674)
+        self.assertEqual(result["created_offers"], 7728)
         for row in old:
             self.assertEqual(tuple(self.store.db.execute("SELECT * FROM shop_offers WHERE offer_id=?", (row[0],)).fetchone()), row)
         before = self.store.db.serialize()
@@ -105,7 +105,7 @@ class FullCatalog(unittest.TestCase):
         try:
             with patch.object(CatalogInventory, "snapshot", snapshot):
                 result = seed_full_catalog(self.service)
-            self.assertEqual(result["after"]["offered"], 7688)
+            self.assertEqual(result["after"]["offered"], 7742)
             self.assertEqual(attempts, [True])
         finally:
             rival.close()
@@ -138,14 +138,18 @@ class FullCatalog(unittest.TestCase):
             for index in range(4, len(fields), 2):
                 gender = int(fields[index])
                 response = self.call("GetShopTypeDataShopServlet", "catalog-guid", "catalog-client", sid, gender)
-                if gender in (0, 1):
+                if gender == 4:
+                    # Spaces tab: EntryGender.OnClick asks for type PERSON directly.
+                    for row in decode(self.call("GetItemAssetsDataServlet", "catalog-guid", "catalog-client", sid, 4, "PERSON"), ITEM_DATA):
+                        self.assertNotIn(row["id"], reached); reached.add(row["id"])
+                elif gender in (0, 1):
                     for category in decode(response, TYPE_DATA):
                         for row in decode(self.call("GetItemAssetsDataServlet", "catalog-guid", "catalog-client", sid, gender, category["typeID"]), ITEM_DATA):
                             self.assertNotIn(row["id"], reached); reached.add(row["id"])
                 else:
                     for row in decode(response, ITEM_DATA):
                         self.assertNotIn(row["id"], reached); reached.add(row["id"])
-        self.assertEqual(len(reached), 7688)
+        self.assertEqual(len(reached), 7742)
 
     def test_generated_offer_purchases_both_currencies_alias_unicode_and_fresh_process_state(self):
         seed_full_catalog(self.service)
@@ -187,10 +191,10 @@ class FullCatalog(unittest.TestCase):
         seed_full_catalog(self.service)
         manager = Management(self.store, self.service, b"fake-catalog-test-token-not-a-real-secret", [{"id": "owner", "role": "owner", "enabled": True}])
         response = manager.catalog({"kind": "all", "limit": "2"})
-        self.assertEqual(response["total"], 7688)
+        self.assertEqual(response["total"], 7742)
         self.assertEqual(len(response["items"]), 2)
-        self.assertEqual(response["counts"]["wardrobe"], 6210)
-        self.assertEqual(response["coverage"]["offered"], 7688)
+        self.assertEqual(response["counts"]["wardrobe"], 6234)
+        self.assertEqual(response["coverage"]["offered"], 7742)
         next_page = manager.catalog({"kind": "all", "limit": "2", "cursor": response["next_cursor"]})
         self.assertNotEqual(response["items"][0]["item_id"], next_page["items"][0]["item_id"])
         row = next(r for r in CatalogInventory(self.service).items if "Ñ" in r["item_id"])
@@ -235,7 +239,7 @@ class FullCatalog(unittest.TestCase):
         manager = Management(self.store, self.service, b"fake-catalog-test-token-not-a-real-secret", [{"id": "owner", "role": "owner", "enabled": True}])
         response = manager.catalog({"kind": "shop_artwork", "limit": "1"})
         self.assertEqual(response["total"], 1205)
-        self.assertEqual(response["counts"]["all"], 7688)
+        self.assertEqual(response["counts"]["all"], 7742)
         self.assertFalse(response["items"][0]["grantable"])
         self.assertFalse(response["items"][0]["historical_store_membership_known"])
         self.assertEqual(response["items"][0]["offers"], [])

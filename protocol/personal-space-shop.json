@@ -1,0 +1,304 @@
+{
+  "format_version": 1,
+  "scope": "Shop identities of personal spaces (apartments) in the shipped client, mapped to their navigator names.",
+  "sources": {
+    "resources": "resources.assets ResourceManager keys personalspaces/<id>/<id>thumbnail and personalspaces/<id>/screenshotN (31 IDs); exact ID case from the Texture2D names",
+    "identification": "Each ID's shipped thumbnail and screenshots were matched to the asset names in the shipped s/<scene> bundle, to readable text in the images, or to the shipped shops/bluewavehideout banner. This is an inference from shipped assets: the client carries no ID-to-name table (the retired server supplied it through GetPurchases personalspaces/personalspacesName)."
+  },
+  "native_contract": {
+    "shop_gender_id": 4,
+    "gender_tab": "Spaces",
+    "type_id": "PERSON",
+    "list_request": "EntryGender.OnClick 0x4a86e0 (switch case 4) -> ShopNETGcloud.Send_GetItemAssetsData 0x411490: GetItemAssetsDataServlet guid#ps4#shopID#4#PERSON",
+    "list_receiver": "ShopNETGcloud.Get_GetItemAssetsData 0x40c420: count then ItemData (id,name,imagePath,crystals,np,isBundle,gender,tablename); price <= 0 shows Free (EntryItem.Set 0x4aa380)",
+    "thumbnail": "EntryBase.setThumbnail 0x4a7f90: an imagePath containing PersonalSpaces/ is loaded with Resources.Load<Sprite> after \\ -> / and dropping the 4-character extension",
+    "screenshots": "EntryItem.OnClick 0x4a9790 -> WardrobeWindow.ShowScrollPersonalSpacesScreenShots 0x4b8030: Resources.Load<Sprite>(PersonalSpaces\\<ItemData.id>\\screenshot<i>) until one is missing",
+    "try_on": "EntryItem.OnClick runs the 3D try-on (SetShopBase.Init 0x468390) only when ItemData.gender equals the avatar gender; apartments send a non-avatar gender so the screenshot carousel is shown instead",
+    "owned_check": "ShopManager.OnItemSelected 0x4ad160 -> NPShopIsItemPurchased; True -> WardrobeWindow.setBtnsAsPurchased 0x4b90a0",
+    "buy": "NPShopBuyItemServlet; Get_NPShopBuyItem 0x40f230 on OK plays the purchase effect, marks the buttons purchased, refreshes ShopInfoPlayer and re-runs HTTPGetPurchases (Process 0x6350d0)",
+    "gift": "WardrobeWindow.OnClickGift 0x4b7700 has no category gate; NPShopGiftItemServlet applies to apartments like any item",
+    "navigator": "NavigatorSelector.SetPersonalSpaces 0x47d5b0 enables an apartment whose name equals a GetPurchases personalspacesName entry (Persistency.TypePurchase personalspaces = 9); Home is always enabled"
+  },
+  "spaces": [
+    {
+      "logical_space_key": "BlueWaveHideout",
+      "item_id": "skigTY65783ErgF5675GfdAloku87N43",
+      "thumbnail_path": "PersonalSpaces/skigTY65783ErgF5675GfdAloku87N43/skigTY65783ErgF5675GfdAloku87N43Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/skigty65783ergf5675gfdaloku87n43/skigty65783ergf5675gfdaloku87n43thumbnail",
+      "screenshot_count": 8,
+      "identification_basis": "shop_banner",
+      "identification_note": "Screenshot matches the shipped shops/bluewavehideout banner"
+    },
+    {
+      "logical_space_key": "CampSilverLake",
+      "item_id": "irmb56yTRHwei9860oBFGwE34256ypln",
+      "thumbnail_path": "PersonalSpaces/irmb56yTRHwei9860oBFGwE34256ypln/irmb56yTRHwei9860oBFGwE34256yplnThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/irmb56ytrhwei9860obfgwe34256ypln/irmb56ytrhwei9860obfgwe34256yplnthumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "CSL_* barn and wood assets; camp cabins in the screenshots"
+    },
+    {
+      "logical_space_key": "CliffApartment",
+      "item_id": "AAfgtr767JmnK90plOL56hYUjmn78IKj",
+      "thumbnail_path": "PersonalSpaces/AAfgtr767JmnK90plOL56hYUjmn78IKj/AAfgtr767JmnK90plOL56hYUjmn78IKjThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/aafgtr767jmnk90plol56hyujmn78ikj/aafgtr767jmnk90plol56hyujmn78ikjthumbnail",
+      "screenshot_count": 7,
+      "identification_basis": "scene_assets",
+      "identification_note": "Cliff, sand, boat, lighthouse, coconut-palm and pool assets"
+    },
+    {
+      "logical_space_key": "CutteridgeEstate",
+      "item_id": "AfoT549876kbngATGR345Hyji54NbfG3",
+      "thumbnail_path": "PersonalSpaces/AfoT549876kbngATGR345Hyji54NbfG3/AfoT549876kbngATGR345Hyji54NbfG3Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/afot549876kbngatgr345hyji54nbfg3/afot549876kbngatgr345hyji54nbfg3thumbnail",
+      "screenshot_count": 12,
+      "identification_basis": "scene_assets",
+      "identification_note": "Shared mansion kit with night skybox, cobwebs and iron fence; night mansion in the screenshots"
+    },
+    {
+      "logical_space_key": "Deadquarters",
+      "item_id": "PftbmnGhtrY34568fde345GTnblpo094",
+      "thumbnail_path": "PersonalSpaces/PftbmnGhtrY34568fde345GTnblpo094/PftbmnGhtrY34568fde345GTnblpo094Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/pftbmnghtry34568fde345gtnblpo094/pftbmnghtry34568fde345gtnblpo094thumbnail",
+      "screenshot_count": 7,
+      "identification_basis": "scene_assets",
+      "identification_note": "Broken concrete, locker and blood-stain assets; dark derelict interior"
+    },
+    {
+      "logical_space_key": "DressingRoom",
+      "item_id": "gitr546YUh07uIa3245FrtbT567yjhwq",
+      "thumbnail_path": "PersonalSpaces/gitr546YUh07uIa3245FrtbT567yjhwq/gitr546YUh07uIa3245FrtbT567yjhwqThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/gitr546yuh07uia3245frtbt567yjhwq/gitr546yuh07uia3245frtbt567yjhwqthumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "Chandelier/curtain kit shared with TheMoonlightRoom, in daylight"
+    },
+    {
+      "logical_space_key": "FlyingDevice",
+      "item_id": "Foat5867mnJKUI345tgFrtpasd43987n",
+      "thumbnail_path": "PersonalSpaces/Foat5867mnJKUI345tgFrtpasd43987n/Foat5867mnJKUI345tgFrtpasd43987nThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/foat5867mnjkui345tgfrtpasd43987n/foat5867mnjkui345tgfrtpasd43987nthumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "Cloud, propeller (Helice) and fin (Aleta) assets; airship in the screenshots"
+    },
+    {
+      "logical_space_key": "ForgottenStation",
+      "item_id": "lafRF5678HNgtry56734GBgftYJLasdE",
+      "thumbnail_path": "PersonalSpaces/lafRF5678HNgtry56734GBgftYJLasdE/lafRF5678HNgtry56734GBgftYJLasdEThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/lafrf5678hngtry56734gbgftyjlasde/lafrf5678hngtry56734gbgftyjlasdethumbnail",
+      "screenshot_count": 5,
+      "identification_basis": "scene_assets",
+      "identification_note": "Train locomotive and Dia de Muertos assets; Mexican station building in the screenshots"
+    },
+    {
+      "logical_space_key": "GingerbreadHouse",
+      "item_id": "ritgb678reMljIuo0asDcvf45t6ghYtr",
+      "thumbnail_path": "PersonalSpaces/ritgb678reMljIuo0asDcvf45t6ghYtr/ritgb678reMljIuo0asDcvf45t6ghYtrThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/ritgb678remljiuo0asdcvf45t6ghytr/ritgb678remljiuo0asdcvf45t6ghytrthumbnail",
+      "screenshot_count": 5,
+      "identification_basis": "scene_assets",
+      "identification_note": "XMAS22 gingerbread, candy and chocolate assets"
+    },
+    {
+      "logical_space_key": "GreekSummerHouse",
+      "item_id": "jfutGbtrY7689032Gbf45Tg6Yhng78ji",
+      "thumbnail_path": "PersonalSpaces/jfutGbtrY7689032Gbf45Tg6Yhng78ji/jfutGbtrY7689032Gbf45Tg6Yhng78jiThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/jfutgbtry7689032gbf45tg6yhng78ji/jfutgbtry7689032gbf45tg6yhng78jithumbnail",
+      "screenshot_count": 5,
+      "identification_basis": "scene_assets",
+      "identification_note": "Acropolis asset; white Greek house in the screenshots"
+    },
+    {
+      "logical_space_key": "Greenhouse",
+      "item_id": "A94tGot812Avgt650tmfkATR3476pLrf",
+      "thumbnail_path": "PersonalSpaces/A94tGot812Avgt650tmfkATR3476pLrf/A94tGot812Avgt650tmfkATR3476pLrfThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/a94tgot812avgt650tmfkatr3476plrf/a94tgot812avgt650tmfkatr3476plrfthumbnail",
+      "screenshot_count": 9,
+      "identification_basis": "scene_assets",
+      "identification_note": "Glass, wisteria, azalea and lotus assets; glass conservatory in the screenshots"
+    },
+    {
+      "logical_space_key": "HollyridgeEstate",
+      "item_id": "956nMHGreTYt4567uoaQw2345tGbNjuy",
+      "thumbnail_path": "PersonalSpaces/956nMHGreTYt4567uoaQw2345tGbNjuy/956nMHGreTYt4567uoaQw2345tGbNjuyThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/956nmhgretyt4567uoaqw2345tgbnjuy/956nmhgretyt4567uoaqw2345tgbnjuythumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "Shared mansion kit with winter blue spruce and blue-sunset skybox; snow-covered house in the screenshots"
+    },
+    {
+      "logical_space_key": "LakeApartment",
+      "item_id": "YIO890456mnkhyTwe435AZ129586jBfe",
+      "thumbnail_path": "PersonalSpaces/YIO890456mnkhyTwe435AZ129586jBfe/YIO890456mnkhyTwe435AZ129586jBfeThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/yio890456mnkhytwe435az129586jbfe/yio890456mnkhytwe435az129586jbfethumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "Cascade, snow and eerie-skybox assets; glass house over water"
+    },
+    {
+      "logical_space_key": "LeChalet",
+      "item_id": "Ar8Gb5967ijkmGnmHGT56ytWd34FAw21",
+      "thumbnail_path": "PersonalSpaces/Ar8Gb5967ijkmGnmHGT56ytWd34FAw21/Ar8Gb5967ijkmGnmHGT56ytWd34FAw21Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/ar8gb5967ijkmgnmhgt56ytwd34faw21/ar8gb5967ijkmgnmhgt56ytwd34faw21thumbnail",
+      "screenshot_count": 5,
+      "identification_basis": "scene_assets",
+      "identification_note": "Snow rock, winter blue spruce and brick fireplace assets; snow chalet in the screenshots"
+    },
+    {
+      "logical_space_key": "MountainHideout",
+      "item_id": "Aautg685790pPfgtr546Hngyt832Ftre",
+      "thumbnail_path": "PersonalSpaces/Aautg685790pPfgtr546Hngyt832Ftre/Aautg685790pPfgtr546Hngyt832FtreThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/aautg685790ppfgtr546hngyt832ftre/aautg685790ppfgtr546hngyt832ftrethumbnail",
+      "screenshot_count": 3,
+      "identification_basis": "scene_assets",
+      "identification_note": "Mountain plane, environment rock, medieval-block and plank assets; tower house among rocks"
+    },
+    {
+      "logical_space_key": "NebuHouse",
+      "item_id": "a8f459yiumngHTY234fRGBV601werFda",
+      "thumbnail_path": "PersonalSpaces/a8f459yiumngHTY234fRGBV601werFda/a8f459yiumngHTY234fRGBV601werFdaThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/a8f459yiumnghty234frgbv601werfda/a8f459yiumnghty234frgbv601werfdathumbnail",
+      "screenshot_count": 5,
+      "identification_basis": "screenshot_text",
+      "identification_note": "NEBU HOUSE sign on the building"
+    },
+    {
+      "logical_space_key": "SereneGarden",
+      "item_id": "4gbtONMyuU980QWEdc435tgBvtGyh765",
+      "thumbnail_path": "PersonalSpaces/4gbtONMyuU980QWEdc435tgBvtGyh765/4gbtONMyuU980QWEdc435tgBvtGyh765Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/4gbtonmyuu980qwedc435tgbvtgyh765/4gbtonmyuu980qwedc435tgbvtgyh765thumbnail",
+      "screenshot_count": 7,
+      "identification_basis": "scene_assets",
+      "identification_note": "Koi fish and maple-leaf assets; pagoda, maples and pond in the screenshots"
+    },
+    {
+      "logical_space_key": "SorcerersEyrie",
+      "item_id": "p098rbngRt65ASW234rtgbvGTRY657uy",
+      "thumbnail_path": "PersonalSpaces/p098rbngRt65ASW234rtgbvGTRY657uy/p098rbngRt65ASW234rtgbvGTRY657uyThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/p098rbngrt65asw234rtgbvgtry657uy/p098rbngrt65asw234rtgbvgtry657uythumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "Eyrie_* magic door and book assets; magic circle in the screenshots"
+    },
+    {
+      "logical_space_key": "StarCrawlers",
+      "item_id": "Ifr5948TrBGF2465oalRfA3Eefio821a",
+      "thumbnail_path": "PersonalSpaces/Ifr5948TrBGF2465oalRfA3Eefio821a/Ifr5948TrBGF2465oalRfA3Eefio821aThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/ifr5948trbgf2465oalrfa3eefio821a/ifr5948trbgf2465oalrfa3eefio821athumbnail",
+      "screenshot_count": 9,
+      "identification_basis": "scene_assets",
+      "identification_note": "HighClass_* DigiSky ceiling and console assets; sky-panel ceiling in the screenshots"
+    },
+    {
+      "logical_space_key": "TheCrypt",
+      "item_id": "GBGtry678iomNJhk345RfvGt675YHnjy",
+      "thumbnail_path": "PersonalSpaces/GBGtry678iomNJhk345RfvGt675YHnjy/GBGtry678iomNJhk345RfvGt675YHnjyThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/gbgtry678iomnjhk345rfvgt675yhnjy/gbgtry678iomnjhk345rfvgt675yhnjythumbnail",
+      "screenshot_count": 4,
+      "identification_basis": "scene_assets",
+      "identification_note": "Crypt_* tombstone, brazier and cobblestone assets"
+    },
+    {
+      "logical_space_key": "TheMoonlightRoom",
+      "item_id": "tbnt4957o8kMjhTS345GTRYbhg567uyj",
+      "thumbnail_path": "PersonalSpaces/tbnt4957o8kMjhTS345GTRYbhg567uyj/tbnt4957o8kMjhTS345GTRYbhg567uyjThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/tbnt4957o8kmjhts345gtrybhg567uyj/tbnt4957o8kmjhts345gtrybhg567uyjthumbnail",
+      "screenshot_count": 5,
+      "identification_basis": "scene_assets",
+      "identification_note": "Grave, haunted-tree and checker-floor assets; night ballroom in the screenshots"
+    },
+    {
+      "logical_space_key": "TheNebulian",
+      "item_id": "APBNMYU78945gbGfdgtyrpqwe4356hng",
+      "thumbnail_path": "PersonalSpaces/APBNMYU78945gbGfdgtyrpqwe4356hng/APBNMYU78945gbGfdgtyrpqwe4356hngThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/apbnmyu78945gbgfdgtyrpqwe4356hng/apbnmyu78945gbgfdgtyrpqwe4356hngthumbnail",
+      "screenshot_count": 13,
+      "identification_basis": "screenshot_text",
+      "identification_note": "NEBULIAN lettering on the yacht"
+    },
+    {
+      "logical_space_key": "TokyoApartment",
+      "item_id": "Toa955ggubVGF49234FREt54867immj3",
+      "thumbnail_path": "PersonalSpaces/Toa955ggubVGF49234FREt54867immj3/Toa955ggubVGF49234FREt54867immj3Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/toa955ggubvgf49234fret54867immj3/toa955ggubvgf49234fret54867immj3thumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "thumbnail_text",
+      "identification_note": "Tokyo Penthouse Apartment text on the thumbnail"
+    },
+    {
+      "logical_space_key": "Waterfall",
+      "item_id": "Fir594867iTrPOTbm7ajf843kFAera32",
+      "thumbnail_path": "PersonalSpaces/Fir594867iTrPOTbm7ajf843kFAera32/Fir594867iTrPOTbm7ajf843kFAera32Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/fir594867itrpotbm7ajf843kfaera32/fir594867itrpotbm7ajf843kfaera32thumbnail",
+      "screenshot_count": 10,
+      "identification_basis": "scene_assets",
+      "identification_note": "Waterfall, pool, glass-fence and car-platform assets"
+    },
+    {
+      "logical_space_key": "WestValleyApartment",
+      "item_id": "Fboa5675nmbsdfr340pUmjhyTr657ujM",
+      "thumbnail_path": "PersonalSpaces/Fboa5675nmbsdfr340pUmjhyTr657ujM/Fboa5675nmbsdfr340pUmjhyTr657ujMThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/fboa5675nmbsdfr340pumjhytr657ujm/fboa5675nmbsdfr340pumjhytr657ujmthumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "thumbnail_text",
+      "identification_note": "West Valley Apartment text on the thumbnail"
+    },
+    {
+      "logical_space_key": "WhisperingHillsMansion",
+      "item_id": "Aa067NMhmJrt5678Awervf546HNHyu78",
+      "thumbnail_path": "PersonalSpaces/Aa067NMhmJrt5678Awervf546HNHyu78/Aa067NMhmJrt5678Awervf546HNHyu78Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/aa067nmhmjrt5678awervf546hnhyu78/aa067nmhmjrt5678awervf546hnhyu78thumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "Grape (vineyard), pool and concrete WH_* assets; hillside vineyard house in the screenshots"
+    },
+    {
+      "logical_space_key": "WindMillFarmHouse",
+      "item_id": "fjtr5tGHby6789oLpOqW345tgBHgvfr3",
+      "thumbnail_path": "PersonalSpaces/fjtr5tGHby6789oLpOqW345tgBHgvfr3/fjtr5tGHby6789oLpOqW345tgBHgvfr3Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/fjtr5tghby6789olpoqw345tgbhgvfr3/fjtr5tghby6789olpoqw345tgbhgvfr3thumbnail",
+      "screenshot_count": 7,
+      "identification_basis": "thumbnail_text",
+      "identification_note": "Windmill Farmhouse text on the thumbnail"
+    },
+    {
+      "logical_space_key": "WinterSnowGlobe",
+      "item_id": "Tbnh569780PafV546Bhnhgytu7683Nmh",
+      "thumbnail_path": "PersonalSpaces/Tbnh569780PafV546Bhnhgytu7683Nmh/Tbnh569780PafV546Bhnhgytu7683NmhThumbnail.png",
+      "thumbnail_resource_key": "personalspaces/tbnh569780pafv546bhnhgytu7683nmh/tbnh569780pafv546bhnhgytu7683nmhthumbnail",
+      "screenshot_count": 5,
+      "identification_basis": "thumbnail_subject",
+      "identification_note": "Snow globe thumbnail"
+    },
+    {
+      "logical_space_key": "WoodlandClearing",
+      "item_id": "Arobnmy67834knmhHytpI90345gbtr43",
+      "thumbnail_path": "PersonalSpaces/Arobnmy67834knmhHytpI90345gbtr43/Arobnmy67834knmhHytpI90345gbtr43Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/arobnmy67834knmhhytpi90345gbtr43/arobnmy67834knmhhytpi90345gbtr43thumbnail",
+      "screenshot_count": 2,
+      "identification_basis": "scene_assets",
+      "identification_note": "Only grass and woodland-tree assets; empty forest clearing in the screenshots"
+    },
+    {
+      "logical_space_key": "ZeroDistrictDen",
+      "item_id": "Zdmbnght5676FGTr5JUYnmhqw3298564",
+      "thumbnail_path": "PersonalSpaces/Zdmbnght5676FGTr5JUYnmhqw3298564/Zdmbnght5676FGTr5JUYnmhqw3298564Thumbnail.png",
+      "thumbnail_resource_key": "personalspaces/zdmbnght5676fgtr5juynmhqw3298564/zdmbnght5676fgtr5juynmhqw3298564thumbnail",
+      "screenshot_count": 6,
+      "identification_basis": "scene_assets",
+      "identification_note": "ZDD_* neon and checkered-tile assets"
+    }
+  ],
+  "not_offered": [
+    {
+      "logical_space_key": "Home",
+      "reason": "Native default apartment; the client always lists it and no shipped shop ID exists for it"
+    },
+    {
+      "item_id": "oaFGrt5678MjknH5674GRTFvde435GlA",
+      "reason": "Thumbnail and screenshots show a haunted farmhouse with a graveyard that matches no shipped personal-space scene bundle; it cannot be loaded, so it is not offered"
+    }
+  ]
+}

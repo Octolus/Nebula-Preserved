@@ -48,8 +48,11 @@ class GatheringContracts(unittest.TestCase):
         return Request(tuple(fields), "StandaloneWindows")
 
     def test_unconfigured_and_inactive_events_fail_closed(self):
-        with self.assertRaises(ProtocolError):
-            self.source.dispatch("Get_GatherStatus", self.req("guid-a", "account-a", "1"))
+        changes = self.store.db.total_changes
+        # Native "no event running" answer (field 3 false), with no write.
+        self.assertEqual(self.source.dispatch("Get_GatherStatus", self.req("guid-a", "account-a", "1")),
+                         "true#guid-a#account-a#false#1#0")
+        self.assertEqual(self.store.db.total_changes, changes)
         self.source.configure(1, "Christmas", active=False, max_items=5, cooldown_seconds=60)
         self.assertEqual(self.source.dispatch("Get_npGather", self.req("guid-a", "account-a", "Christmas", "5")),
                          "true#guid-a#account-a#0#60")
@@ -117,10 +120,8 @@ class GatheringContracts(unittest.TestCase):
         with self.assertRaises(ProtocolError):
             self.source.dispatch("Get_npGatherChristmas",
                 self.req("guid-a", "account-a", "space-a", "2"))
-        with self.assertRaises(ProtocolError) as caught:
-            self.source.route_Get_GatherChristmasGetSpacesCompleted(
-                self.req("guid-a", "account-a", "3", "638972000000000000"))
-        self.assertEqual(caught.exception.status, 501)
+        # The Christmas 2018 Memorion score route lives in backend/fullgame.py.
+        self.assertFalse(hasattr(self.source, "route_Get_GatherChristmasGetSpacesCompleted"))
 
     def test_christmas_2018_scene_flags_are_unique_ordered_and_fail_closed(self):
         self.source.configure(4, "Christmas2018", active=True, max_items=5)

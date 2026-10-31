@@ -80,6 +80,26 @@ class EnrollmentPolicy(unittest.TestCase):
         self.store.account(OTHER)
         self.expect_status(409, self.payload(OTHER))
 
+    def test_repeat_authentication_skips_scrypt_but_honours_revocation_and_rotation(self):
+        import public_access
+        self.store.account(ACCOUNT)
+        original = self.authority.issue(ACCOUNT)
+        real = public_access._derive
+        with patch.object(public_access, '_derive', side_effect=real) as derive:
+            for _ in range(5):
+                self.assertEqual(self.authority.authenticate(original), ACCOUNT)
+            self.assertEqual(derive.call_count, 1)
+            wrong = original[:-1] + ('A' if original[-1] != 'A' else 'B')
+            with self.assertRaises(AccessDenied):
+                self.authority.authenticate(wrong)
+            self.authority.revoke(ACCOUNT)
+            with self.assertRaises(AccessDenied):
+                self.authority.authenticate(original)
+            rotated = self.authority.issue(ACCOUNT)
+            with self.assertRaises(AccessDenied):
+                self.authority.authenticate(original)
+            self.assertEqual(self.authority.authenticate(rotated), ACCOUNT)
+
     def test_registered_account_wrong_key_revocation_and_ban_cannot_reissue(self):
         registered = self.registration.register(self.payload(), PEER)
         self.expect_status(409, self.payload(key=secrets.token_urlsafe(32)))

@@ -19,6 +19,7 @@ from avatar_entry_codec import decode_entry_fields
 from wire import ProtocolError, json_field
 from housing_atomic import AtomicHousingSaves
 from public_access import require_actor
+from space_shop import SHOP_ID_BY_SPACE
 
 
 HOUSING_FIELDS = [
@@ -101,6 +102,8 @@ class HousingStore:
                 or self.space_names != set(PERSONAL_SPACE_SCENES)
                 or any(type(n) is not int or n < 0 for pair in self.space_slots.values() for n in pair)):
             raise ProtocolError("Personal-space placement metadata is incomplete", 501)
+        if not set(SHOP_ID_BY_SPACE) <= self.space_names:
+            raise ProtocolError("Personal-space shop evidence names an unknown space", 501)
         store.db.executescript("""
             CREATE TABLE IF NOT EXISTS housing_spaces (
                 instance_id TEXT PRIMARY KEY, logical_space_key TEXT NOT NULL,
@@ -206,6 +209,12 @@ class HousingStore:
                 """SELECT a.instance_id,s.ps4_id FROM allocations a
                 JOIN sessions s USING(guid) WHERE a.guid=?""", (desired_guid,)).fetchone()
             binding = self.binding(allocation["instance_id"]) if allocation else None
+            if allocation and not binding and requested_key not in self.space_names:
+                # Native InviteToJoin also targets a friend in a shared world
+                # (psidglobal and GUID from N2GetPsidglobalAndGuidByUsernamePlatform).
+                # No apartment authority applies; the caller pins the friend's
+                # exact public instance and validates its presence.
+                return None
             if not binding or allocation["ps4_id"] != binding["owner_ps4_id"]:
                 raise ProtocolError("Invite target is not the personal-space owner", 403)
             if (self.store.current_guid(binding["owner_ps4_id"]) != desired_guid
@@ -242,8 +251,12 @@ class HousingStore:
 
     def purchase_fields(self, ps4_id):
         items = self.inventory(ps4_id)
+        spaces = self.personal_spaces(ps4_id)
+        # Persistency.AssetData pairs asset and name; the navigator and
+        # ContainsPurchasedPersonalspace match the name, the shop the asset ID.
+        # Home has no shop ID, so its navigator name doubles as the asset.
         return {"housings": [x["item_id"] for x in items], "housingsName": [x["display_name"] for x in items],
-                "personalspaces": self.personal_spaces(ps4_id), "personalspacesName": self.personal_spaces(ps4_id)}
+                "personalspaces": [SHOP_ID_BY_SPACE.get(key, key) for key in spaces], "personalspacesName": spaces}
 
     def allocated_binding(self, guid, psidglobal=None, write=False):
         profile = self.store.session(guid)

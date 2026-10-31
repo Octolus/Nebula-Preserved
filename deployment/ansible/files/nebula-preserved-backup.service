@@ -5,7 +5,7 @@ After=nebula-preserved.service
 [Service]
 Type=oneshot
 UMask=0077
-ExecStart=/usr/bin/python3 /opt/nebula-preserved/backup_state.py --state-dir /var/lib/docker/volumes/nebula-preserved_state/_data --destination /var/backups/nebula-preserved --keep 14
+ExecStart=/usr/bin/python3 /opt/nebula-preserved/backup_state.py --state-dir /var/lib/docker/volumes/nebula-preserved_state/_data --destination /var/backups/nebula-preserved --keep-days 14 --keep-deploy 5 --offsite-hook /opt/nebula-preserved/backup-offsite.sh
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectHome=true

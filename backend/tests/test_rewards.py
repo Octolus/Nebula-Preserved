@@ -153,6 +153,16 @@ class Rewards(unittest.TestCase):
         self.assertEqual(self.service.consumables.balance("account-a", "coffee")["units"], 2)
         self.assertEqual(len(self.service.claims("account-a")), 1)
 
+    def test_unconfigured_skl_promo_trigger_is_hidden_without_writes(self):
+        changes = self.store.db.total_changes
+        self.assertEqual(self.call("SKLPromoTriggerServlet", "1").split("#"),
+                         ["true", self.guid, "account-a", "true"])
+        self.assertEqual(self.store.db.total_changes, changes)
+        with self.assertRaises(ProtocolError):
+            self.call("SKLPromoTriggerServlet", "99")  # not a shipped trigger
+        with self.assertRaises(ProtocolError):
+            self.call("SKLPromoServlet", "1")  # claiming still fails closed
+
     def test_skl_check_consume_sprite_and_locomotion(self):
         self.service.configure("SKLPromoServlet", "1", grant_kind="locomotions",
             item_id=self.locomotion, sprite_id=5)

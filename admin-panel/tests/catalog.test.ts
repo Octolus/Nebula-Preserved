@@ -18,6 +18,9 @@ import {
 test('catalog separates all assets from store offers and encodes exact filter values', () => {
   assert.equal(catalogKinds[0].value, 'all');
   assert.ok(catalogKinds.some((kind) => kind.value === 'offer' && kind.label === 'Store offers'));
+  assert.ok(
+    catalogKinds.some((kind) => kind.value === 'personal_spaces' && kind.label === 'Apartments'),
+  );
   const query = catalogQuery({
     kind: 'housing',
     search: 'lamp & chair',
@@ -166,5 +169,28 @@ test('SSR proxy forwards catalog filters only on the catalog route and keeps its
   assert.equal(
     managementQuery('catalog', new URLSearchParams({ q: 'x'.repeat(300) })).get('q')?.length,
     256,
+  );
+});
+
+test('ownership IDs cannot hide a recovered label and companion fallbacks stay honest', () => {
+  assert.equal(
+    catalogItemName({ item_id: 'opaque-item', display_name: 'opaque-item', name: 'Recovered hat' }),
+    'Recovered hat',
+  );
+  assert.equal(
+    catalogItemName({
+      item_id: 'opaque-item',
+      original_name: 'Original hat',
+      display_name: 'Local hat',
+    }),
+    'Original hat',
+  );
+  assert.equal(
+    catalogItemName({
+      kind: 'companions',
+      item_id: 'abcdefgh12345678',
+      display_name: 'Preserved Companions abcdefgh12345678',
+    }),
+    'Companion \u00b7 abcdefgh',
   );
 });

@@ -57,6 +57,12 @@ OCCUPABLE_NATIVE = {
     "Toilet": ("458c40", "458ce0"),
     "SeatSelection": ("457ce0", "457ea0"),
 }
+# Shipped public destinations: PreInitLOAD.NavigatorPublicSpaces plus the Nexus
+# Cinema/SKL CustomSpaceTriggers. SteamPunk ships only its logic prefab (no
+# s/steampunk scene bundle), so the client cannot load it.
+PUBLIC_SCENES = ("Nexus", "LeafPark", "Beach", "Cinema", "Bowling", "Dome", "StoneLakeCastle", "Cube",
+                 "GhostTown", "TheNebulianOpenHouse", "ZeroDistrict", "NebuHouseOpenHouse",
+                 "WestValleyApartmentOpenHouse", "MedievalVillage", "SKL")
 POLICY_NATIVE = ("451060", "451100", "5df620", "5decf0", "5deab0", "46fa80", "5e5b20", "44f580", "612380")
 
 
@@ -302,9 +308,9 @@ def validate_manifest(document: dict[str, Any]) -> None:
             or document.get("path_convention") != "anchor_relative_excludes_root_v1"):
         raise ValueError("invalid_manifest_header")
     scenes = document.get("scenes", [])
-    if len(scenes) != 35 or len({row["scene"] for row in scenes}) != 35:
+    if len(scenes) != 46 or len({row["scene"] for row in scenes}) != 46:
         raise ValueError("incomplete_canonical_scene_scope")
-    if sum(row["nonmini_core_v1"] for row in scenes) != 32:
+    if sum(row["nonmini_core_v1"] for row in scenes) != 43:
         raise ValueError("incomplete_core_scene_scope")
     for row in scenes:
         if row["status"] not in {"verified_empty", "complete_verified", "unresolved"}:
@@ -338,7 +344,7 @@ def build(base: Path) -> dict[str, Any]:
         raise ValueError("source_dump_hash_mismatch")
     bases = class_bases(DUMP.read_text(encoding="utf-8"))
     available = {path.stem for path in NATIVE.glob("*.c")}
-    logical_names = audit["personal_space_navigator_names"] + ["Nexus", "LeafPark", "Beach", "Cinema"]
+    logical_names = audit["personal_space_navigator_names"] + list(PUBLIC_SCENES)
     scenes = []
     for name in sorted(logical_names):
         sources = []
@@ -368,7 +374,7 @@ def build(base: Path) -> dict[str, Any]:
     native_rvas.update(rva for values in OCCUPABLE_NATIVE.values() for rva in values)
     document = {"format_version": 1, "target_execution": False,
         "path_convention": "anchor_relative_excludes_root_v1",
-        "scope": "35 canonical runtime scenes: four admitted public scenes,28 core personal scenes and three deferred-minigame mixed personal scenes. Read-only shipped artifacts; no game,UI,server,listener,attach,connection or live state.",
+        "scope": "46 canonical runtime scenes: fifteen admitted public scenes,28 core personal scenes and three deferred-minigame mixed personal scenes. Read-only shipped artifacts; no game,UI,server,listener,attach,connection or live state.",
         "source_evidence": {"dump_sha256": sha256(DUMP), "manifest_inventory_sha256": sha256(MANIFESTS),
             "world_inventory_sha256": sha256(WORLD), "tool_sha256": sha256(Path(__file__)),
             "generic_native_review_sha256": sha256(PROTOCOL / "tcp-world-interactions.json"),

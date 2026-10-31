@@ -265,7 +265,7 @@ class Tests(unittest.TestCase):
         expected = namespace["expected_world_argv"](row)
         self.assertEqual(actual, expected)
         self.assertNotIn(row["lease_token"], actual)  # Exact old probe is false.
-        for index in (4, 9, 11, 17, 23):
+        for index in (4, 9, 11, 17, 19, 23, 27):
             changed = actual.copy(); changed[index] = "wrong"
             self.assertNotEqual(changed, expected)
         self.assertNotEqual(actual + ["unexpected-argument"], expected)

@@ -174,7 +174,7 @@ export function NewsPanel({
                   canWrite
                     ? (row) => (
                         <Button
-                          className="min-h-11"
+                          className="min-h-9"
                           variant="outline"
                           disabled={
                             saving ||
@@ -196,7 +196,7 @@ export function NewsPanel({
             )}
             <div className="flex justify-between">
               <Button
-                className="min-h-11"
+                className="min-h-9"
                 variant="outline"
                 disabled={saving || !history.length}
                 onClick={() => {
@@ -207,7 +207,7 @@ export function NewsPanel({
                 Previous news
               </Button>
               <Button
-                className="min-h-11"
+                className="min-h-9"
                 variant="outline"
                 disabled={saving || !records.next_cursor}
                 onClick={() => {
@@ -245,7 +245,7 @@ export function NewsPanel({
               <Label htmlFor="news-expiry">News expiry in UTC (optional)</Label>
               <Input
                 id="news-expiry"
-                className="min-h-11"
+                className="min-h-9"
                 type="datetime-local"
                 step="60"
                 disabled={saving}
@@ -260,7 +260,7 @@ export function NewsPanel({
               <Label htmlFor="news-reason">News publication reason</Label>
               <Input
                 id="news-reason"
-                className="min-h-11"
+                className="min-h-9"
                 required
                 minLength={3}
                 maxLength={512}
@@ -272,7 +272,7 @@ export function NewsPanel({
                 }}
               />
             </div>
-            <label className="flex min-h-11 items-center gap-3 text-sm">
+            <label className="flex min-h-9 items-center gap-3 text-sm">
               <Checkbox
                 required
                 disabled={saving}
@@ -281,7 +281,7 @@ export function NewsPanel({
               />
               I checked this news for the server.
             </label>
-            <Button className="min-h-11" disabled={busy || saving || !confirmed}>
+            <Button className="min-h-9" disabled={busy || saving || !confirmed}>
               {saving ? 'Committing…' : 'Publish news'}
             </Button>
           </form>
@@ -295,7 +295,7 @@ export function NewsPanel({
               <Label htmlFor="news-archive-reason">News archive reason</Label>
               <Input
                 id="news-archive-reason"
-                className="min-h-11"
+                className="min-h-9"
                 required
                 minLength={3}
                 maxLength={512}
@@ -307,7 +307,7 @@ export function NewsPanel({
                 }}
               />
             </div>
-            <label className="flex min-h-11 items-center gap-3 text-sm">
+            <label className="flex min-h-9 items-center gap-3 text-sm">
               <Checkbox
                 required
                 disabled={saving}
@@ -317,13 +317,13 @@ export function NewsPanel({
               I checked this news archive decision.
             </label>
             <div className="flex gap-3">
-              <Button className="min-h-11" disabled={busy || saving || !archiveConfirmed}>
+              <Button className="min-h-9" disabled={busy || saving || !archiveConfirmed}>
                 {saving ? 'Committing…' : 'Confirm archive'}
               </Button>
               <Button
                 type="button"
                 variant="outline"
-                className="min-h-11"
+                className="min-h-9"
                 disabled={saving}
                 onClick={() => setArchive(null)}
               >

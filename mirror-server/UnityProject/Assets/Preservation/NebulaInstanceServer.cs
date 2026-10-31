@@ -35,7 +35,10 @@ namespace NebulaPreservation
             public string locomotion = "";
             public string companion = "";
             public long companionRevision, locomotionRevision;
-            public NebulaResourceSelections.Request resourcePending;
+            // One durable commit in flight per kind; the latest accepted
+            // request is coalesced behind it (latest wins, never rejected).
+            public NebulaResourceSelections.Request companionPending, locomotionPending;
+            public string companionWanted, locomotionWanted;
             public string animationReply;
             public string typingTarget;
             public bool typingPublic;
@@ -43,6 +46,14 @@ namespace NebulaPreservation
             public string interactionPendingReason;
             public int interactionPendingReasonCount;
             public double positionUpdatedAt;
+            // Scene-provided jetpack (FlyingDevice/SteamPunk): transient
+            // locomotion overlay, never a durable selection.
+            public bool jetpackActive;
+            // Latest ownership-free movement received after the Mirror spawn
+            // but before the first GUID-bearing request binds the account.
+            public Vector3? preBindPosition, preBindScale;
+            public Quaternion? preBindRotation;
+            public float? preBindSpeed;
             public readonly HashSet<uint> visibleEntities = new HashSet<uint>();
             public readonly HashSet<uint> loadedRemotes = new HashSet<uint>();
             public readonly HashSet<uint> wardrobeShown = new HashSet<uint>();
@@ -137,6 +148,8 @@ namespace NebulaPreservation
             public string[] implemented_opcodes;
             public int board_tables;
             public int darts_tables;
+            public int pool_tables;
+            public int bowling_lanes;
         }
 
         private sealed class Rejected : Exception
@@ -145,6 +158,10 @@ namespace NebulaPreservation
         }
 
         private static readonly CultureInfo Invariant = CultureInfo.InvariantCulture;
+        // JetpackFlying.JETPACKIDASSET; sent by AttachJetPack 0x41f200 and
+        // StartFreeFlying 0x420090. Present only in FlyingDevice and SteamPunk.
+        private const string JetpackLocomotionId = "GqOXf5oeSNwLL2W718G45L4s222EyKk5";
+        private readonly NebulaLocomotionEchoes locomotionEchoes = new NebulaLocomotionEchoes();
         private readonly Dictionary<int, Peer> peers = new Dictionary<int, Peer>();
         private readonly Dictionary<int, string> occupables = new Dictionary<int, string>();
         private readonly Dictionary<string, Peer> wardrobeEntities = new Dictionary<string, Peer>(StringComparer.Ordinal);
@@ -182,6 +199,9 @@ namespace NebulaPreservation
         private TelepathyTransport instanceTransport;
         private uint nextNetId = 1;
         private bool started;
+        private bool closingAnnounced, quitApproved, quitPending;
+        private float quitAfter;
+        private int quitAfterFrame;
         private bool publishedStatus;
         private float nextHeartbeat;
         private bool SemanticBridgeRequired => coreTestProfile == "nonmini-semantic-v1";
@@ -225,12 +245,16 @@ namespace NebulaPreservation
                 coreTestProfile = Argument(args, "--nebula-core-test-profile", false);
                 int boardTables = TableCount(args, "--nebula-board-tables");
                 int dartsTables = TableCount(args, "--nebula-darts-tables");
+                // Minigame table counts must equal the shipped scene managers
+                // (NebulaCoreReadiness.SceneTables) under a readiness profile.
+                int poolTables = TableCount(args, "--nebula-pool-tables");
+                int bowlingLanes = TableCount(args, "--nebula-bowling-lanes");
                 if (coreTestProfile != null && ((coreTestProfile != "nexus-core-v1" && coreTestProfile != "nonmini-core-v1" &&
                         coreTestProfile != "nonmini-semantic-v1") ||
                     (coreTestProfile == "nexus-core-v1" && spaceId != "Nexus") ||
                     (coreTestProfile == "nonmini-core-v1" && !NebulaCoreReadiness.IsNonMiniScene(spaceId)) ||
                     (coreTestProfile == "nonmini-semantic-v1" && !NebulaCoreReadiness.IsSemanticNonMiniScene(spaceId)) ||
-                    boardTables != 0 || dartsTables != 0))
+                    !NebulaCoreReadiness.SceneTablesMatch(spaceId, boardTables, dartsTables, poolTables, bowlingLanes)))
                     throw new Rejected("invalid_core_test_profile_or_scene");
                 accounts = new NebulaInstanceAccounts(stateDirectory);
                 resourceSelections = new NebulaResourceSelections(stateDirectory, instanceId, statusOwner);
@@ -239,9 +263,9 @@ namespace NebulaPreservation
                 social = new NebulaSocialState(stateDirectory);
                 socialMailbox = new NebulaSocialMailbox(stateDirectory, instanceId,
                     entry => JsonUtility.ToJson(entry), text => JsonUtility.FromJson<NebulaSocialMailbox.Envelope>(text));
-                // Nexus has no Board/Darts tables. Other scenes must supply
-                // their source-backed counts explicitly; zero disables them.
-                minigames = new NebulaMinigameState(boardTables, dartsTables, ResolveMinigameIdentity);
+                // StoneLakeCastle (board 8) and Bowling (darts 3, pool 9,
+                // bowling 12) ship minigame tables; zero disables a game.
+                minigames = new NebulaMinigameState(boardTables, dartsTables, poolTables, bowlingLanes, ResolveMinigameIdentity);
                 world = new NebulaWorldState(NebulaWorldState.SceneInventory.ForSpace(spaceId), ResolveWorldIdentity,
                     (actor, kind, receipt) => ClaimConsumable(actor.Guid, actor.PlatformId, kind, receipt));
                 interactionRegistry = new NebulaInteractionRegistry(instanceId, spaceId, Now);
@@ -261,6 +285,7 @@ namespace NebulaPreservation
                 NetworkServer.OnDisconnectedEvent += Disconnected;
                 NetworkServer.Listen(32);
                 started = true;
+                Application.wantsToQuit += WantsToQuit;
                 // Listen installs Mirror default handlers first. The custom
                 // player stream deliberately has no server-side game prefab.
                 NetworkServer.RegisterHandler<AddPlayerMessage>(AddPlayer);
@@ -285,6 +310,15 @@ namespace NebulaPreservation
         private void Update()
         {
             if (!started) return;
+            if (quitPending && Time.unscaledTime >= quitAfter && Time.frameCount >= quitAfterFrame)
+            {
+                // S2C96 has had at least two LateUpdate flushes; finish the
+                // deliberate quit that WantsToQuit postponed.
+                quitPending = false;
+                quitApproved = true;
+                Application.Quit();
+                return;
+            }
             if (Time.unscaledTime >= nextAuthorizationPump)
             {
                 nextAuthorizationPump = Time.unscaledTime + 0.25f;
@@ -515,11 +549,12 @@ namespace NebulaPreservation
                 RetireEntityFor(entity, recipient);
         }
 
-        private static bool RetireEntityFor(Peer entity, Peer recipient)
+        private bool RetireEntityFor(Peer entity, Peer recipient)
         {
             recipient.loadedRemotes.Remove(entity.netId);
             recipient.wardrobeShown.Remove(entity.netId);
             if (!recipient.visibleEntities.Remove(entity.netId)) return false;
+            if (recipient.account != null) locomotionEchoes.ActorRemoved(recipient.account.guid, entity.account.guid);
             recipient.retiredAccounts[entity.account.ps4_id] = Time.frameCount + 2;
             Send(recipient, Join(14, entity.account.guid));
             recipient.connection.Send(new ObjectDestroyMessage {netId = entity.netId});
@@ -718,9 +753,12 @@ namespace NebulaPreservation
             Record("local_spawn", connection, 0, "awaiting_application_identity");
         }
 
-        private static void Spawn(Peer entity, Peer recipient, bool local)
+        private void Spawn(Peer entity, Peer recipient, bool local)
         {
             if (!recipient.visibleEntities.Add(entity.netId)) return;
+            // The client builds a fresh remote avatar with no locomotion object.
+            if (!local && recipient.account != null && entity.account != null)
+                locomotionEchoes.ActorBuilt(recipient.account.guid, entity.account.guid);
             byte[] state = NebulaSpawnState.Initial(entity.position, entity.rotation, entity.speed);
             recipient.connection.Send(new SpawnMessage {
                 netId = entity.netId, isLocalPlayer = local, isOwner = local,
@@ -834,11 +872,11 @@ namespace NebulaPreservation
                 case 13: Chat(peer, f, platform); return;
                 case 15:
                     Count(f, 2); Own(peer, f[0], platform);
-                    BeginResourceSelection(peer, "locomotions", f[1]); return;
+                    Locomotion(peer, f[1]); return;
                 case 16: Query(peer, f, platform, 15); return;
                 case 17:
                     Count(f, 2); Own(peer, f[0], platform);
-                    BeginResourceSelection(peer, "companions", f[1]); return;
+                    Selection(peer, "companions", f[1]); return;
                 case 18: Preference(peer, f, platform); return;
                 case 19: Notification(peer, f); return;
                 case 20: Query(peer, f, platform, 2); return;
@@ -849,6 +887,10 @@ namespace NebulaPreservation
                     EnterWardrobe(peer, f, platform); return;
                 case 30:
                     Count(f, 1); Bound(peer); bool day = BooleanValue(f[0]);
+                    // Sole sender DayNightTrigger.Interact 0x44f580; of the 48
+                    // shipped logic prefabs only Waterfall contains one.
+                    if (!String.Equals(spaceId, "Waterfall", StringComparison.OrdinalIgnoreCase))
+                        throw new Rejected("day_night_trigger_not_in_scene");
                     isDay = day;
                     Broadcast("30##" + (day ? "True" : "False"), null); return;
                 case 92: AnimationParameter(peer, f, platform); return;
@@ -874,7 +916,9 @@ namespace NebulaPreservation
                 foreach (Peer other in others)
                     SeedRemote(peer, other);
                 Send(peer, Join(17, peer.account.guid, peer.companion));
-                Send(peer, Join(15, peer.account.guid, peer.locomotion));
+                // OnAvatarLoaded 0x5dfdc0 already applied the client's local
+                // Persistency copy; this aligns it with the durable selection.
+                SendOwnLocomotion(peer, peer.locomotion);
                 if (!interactionRegistry.IsOptedIn(peer.account.guid))
                     DeliverWorld(world.SnapshotScene(peer.account.guid), null);
                 if (isDay.HasValue) Send(peer, "30##" + (isDay.Value ? "True" : "False"));
@@ -942,113 +986,219 @@ namespace NebulaPreservation
                 peer.companionRevision = account.companion_revision;
                 peer.locomotionRevision = account.locomotion_revision;
                 RestorePose(peer);
+                ApplyPreBinding(peer);
                 SeedRemotes(peer);
             }
         }
 
-        private void BeginResourceSelection(Peer peer, string kind, string item)
+        // C2S15/C2S17 policy (client evidence):
+        // - Every sender renders its own request locally right after sending
+        //   (LocomotionPrefab.OnClick 0x4b9be0 and PetPrefab.OnClick 0x4c0b00
+        //   call UpdateLocomotion/UpdateCompanion; jetpack 0x41f200/0x420090/
+        //   0x41fa00 likewise), so a client-initiated change is relayed to the
+        //   other players only, never echoed to the sender.
+        // - The latest accepted request wins. Ownership is checked at once,
+        //   others see it at once, and the durable backend commit follows,
+        //   coalesced to the newest wanted value (one commit in flight per kind).
+        // - Automatic empty 15 side effects are dropped by NebulaLocomotionEchoes.
+        private void Selection(Peer peer, string kind, string item)
         {
-            try
+            Bound(peer);
+            bool companions = kind == "companions";
+            if (item.Length != 0 && !(companions ? peer.account.companion_ids : peer.account.locomotion_ids)
+                    ?.Contains(item, StringComparer.Ordinal) == true)
             {
-                Bound(peer);
-                if (peer.resourcePending != null) throw new Rejected("resource_selection_pending");
-                RequireResource(item, kind == "companions" ? peer.account.companion_ids : peer.account.locomotion_ids);
-                long revision = kind == "companions" ? peer.companionRevision : peer.locomotionRevision;
-                peer.resourcePending = resourceSelections.Begin(peer.account.guid, kind, item, revision, Now());
+                CorrectSelection(peer, kind);
+                throw new Rejected("resource_selection_not_owned");
             }
-            catch (Exception)
-            {
-                RestoreResourceSelection(peer, kind);
-                throw;
-            }
+            SetVisible(peer, kind, item);
+            if (companions) peer.companionWanted = item; else peer.locomotionWanted = item;
+            if ((companions ? peer.companionPending : peer.locomotionPending) == null) StartCommit(peer, kind);
         }
 
-        private void RestoreResourceSelection(Peer peer, string kind)
+        private void Locomotion(Peer peer, string item)
         {
-            // Original 15/17 receivers only apply local visuals; they do not
-            // invoke the wheel OnClick sender. Never manufacture a new request.
+            Bound(peer);
+            if (locomotionEchoes.ClientRequest(peer.account.guid, item, Now())) return;
+            if (item == JetpackLocomotionId && JetpackScene)
+            {
+                // Scene-provided, never owned: a transient overlay with no durable
+                // selection. The landing 15 (0x41fa00) ends it below.
+                if (peer.inWardrobe) throw new Rejected("jetpack_while_in_wardrobe");
+                peer.jetpackActive = true;
+                SetVisible(peer, "locomotions", item);
+                return;
+            }
+            peer.jetpackActive = false;
+            Selection(peer, "locomotions", item);
+        }
+
+        private void SetVisible(Peer peer, string kind, string item)
+        {
+            if (kind == "companions")
+            {
+                if (peer.companion == item) return;
+                peer.companion = item;
+                Broadcast(Join(17, peer.account.guid, item), peer);
+                return;
+            }
+            if (peer.locomotion == item) return;
+            peer.locomotion = item;
+            foreach (Peer recipient in peers.Values.Where(x => x.spawned && x != peer && x.account != null &&
+                x.visibleEntities.Contains(peer.netId)).ToArray())
+                SendLocomotion(recipient, peer);
+        }
+
+        private void SendLocomotion(Peer recipient, Peer actor)
+        {
+            Send(recipient, Join(15, actor.account.guid, actor.locomotion));
+            locomotionEchoes.Sent(recipient.account.guid, actor.account.guid, actor.locomotion, Now());
+        }
+
+        private void SendOwnLocomotion(Peer peer, string item)
+        {
+            Send(peer, Join(15, peer.account.guid, item));
+            locomotionEchoes.Sent(peer.account.guid, peer.account.guid, item, Now());
+        }
+
+        // Server-originated correction: the sender rendered something the
+        // server did not accept (not owned) or could not persist.
+        private void CorrectSelection(Peer peer, string kind)
+        {
             try
             {
                 Bound(peer);
-                string item = kind == "companions" ? peer.account.selected_companion : peer.account.selected_locomotion;
-                RequireResource(item, kind == "companions" ? peer.account.companion_ids : peer.account.locomotion_ids);
-                Send(peer, Join(kind == "companions" ? 17 : 15, peer.account.guid, item));
+                if (kind == "companions")
+                {
+                    Send(peer, Join(17, peer.account.guid, peer.companion));
+                    return;
+                }
+                if (peer.locomotion == JetpackLocomotionId)
+                {
+                    peer.jetpackActive = false;
+                    SetVisible(peer, kind, peer.account.selected_locomotion);
+                }
+                SendOwnLocomotion(peer, peer.locomotion);
             }
             catch (Exception) { } // disconnected/stale identity receives nothing
         }
 
+        private void StartCommit(Peer peer, string kind)
+        {
+            bool companions = kind == "companions";
+            string wanted = companions ? peer.companionWanted : peer.locomotionWanted;
+            if (wanted == null) return;
+            long revision = companions ? peer.companionRevision : peer.locomotionRevision;
+            string durable = companions ? peer.account.selected_companion : peer.account.selected_locomotion;
+            long exported = companions ? peer.account.companion_revision : peer.account.locomotion_revision;
+            if (wanted == durable && exported == revision)
+            {
+                if (companions) peer.companionWanted = null; else peer.locomotionWanted = null;
+                return;
+            }
+            try
+            {
+                var request = resourceSelections.Begin(peer.account.guid, kind, wanted, revision, Now());
+                if (companions) peer.companionPending = request; else peer.locomotionPending = request;
+            }
+            catch (Exception)
+            {
+                Record("rejected", peer.connection, companions ? 17 : 15, "resource_selection_not_started");
+                RevertSelection(peer, kind);
+            }
+        }
+
+        // Durable state is authoritative after a failed commit or an external
+        // (HTTP/operator/revocation) change: everyone, sender included, follows it.
+        private void RevertSelection(Peer peer, string kind)
+        {
+            bool companions = kind == "companions";
+            if (companions) { peer.companionWanted = null; peer.companionRevision = peer.account.companion_revision; }
+            else { peer.locomotionWanted = null; peer.locomotionRevision = peer.account.locomotion_revision; }
+            if (!companions && peer.jetpackActive) return; // the landing 15 settles it
+            string durable = companions ? peer.account.selected_companion : peer.account.selected_locomotion;
+            if ((companions ? peer.companion : peer.locomotion) == durable) return;
+            SetVisible(peer, kind, durable);
+            CorrectSelection(peer, kind);
+        }
+
         private void PumpResourceSelections()
         {
-            foreach (Peer peer in peers.Values.ToArray())
+            foreach (Peer peer in peers.Values.Where(x => x.account != null).ToArray())
             {
-                var request = peer.resourcePending;
-                if (request == null)
-                {
-                    if (peer.account == null) continue;
-                    try
-                    {
-                        Bound(peer);
-                        if (peer.account.companion_revision > peer.companionRevision)
-                        {
-                            peer.companion = peer.account.selected_companion;
-                            peer.companionRevision = peer.account.companion_revision;
-                            Broadcast(Join(17, peer.account.guid, peer.companion), peer);
-                            Send(peer, Join(17, peer.account.guid, peer.companion));
-                        }
-                        if (peer.account.locomotion_revision > peer.locomotionRevision)
-                        {
-                            peer.locomotion = peer.account.selected_locomotion;
-                            peer.locomotionRevision = peer.account.locomotion_revision;
-                            Broadcast(Join(15, peer.account.guid, peer.locomotion), peer);
-                            Send(peer, Join(15, peer.account.guid, peer.locomotion));
-                        }
-                    }
-                    catch (Exception) { }
-                    continue;
-                }
+                try { Bound(peer); }
+                catch (Exception) { continue; }
+                PumpSelection(peer, "companions");
+                PumpSelection(peer, "locomotions");
+            }
+        }
+
+        private void PumpSelection(Peer peer, string kind)
+        {
+            bool companions = kind == "companions";
+            var request = companions ? peer.companionPending : peer.locomotionPending;
+            long exportedRevision = companions ? peer.account.companion_revision : peer.account.locomotion_revision;
+            string exportedItem = companions ? peer.account.selected_companion : peer.account.selected_locomotion;
+            if (request == null)
+            {
                 try
                 {
-                    Bound(peer); // re-acquire current GUID, account and exact allocation
-                    if (peer.account.guid != request.guid || request.instance_id != instanceId || request.instance_owner != statusOwner)
-                        throw new Rejected("resource_selection_session_changed");
-                    if (Now() >= request.expires_at) throw new Rejected("resource_selection_deadline");
-                    var ack = resourceSelections.Poll(request);
-                    if (ack == null)
-                    {
-                        if (Now() >= request.expires_at) throw new Rejected("resource_selection_deadline");
-                        continue;
-                    }
-                    if (ack.status != "committed") throw new Rejected("resource_selection_not_committed");
-                    long exportedRevision = request.kind == "companions" ? peer.account.companion_revision : peer.account.locomotion_revision;
-                    string exportedItem = request.kind == "companions" ? peer.account.selected_companion : peer.account.selected_locomotion;
-                    if (exportedRevision < ack.revision) continue; // durable ack may precede atomic account export
-                    if (exportedRevision != ack.revision || exportedItem != request.item_id)
-                        throw new Rejected("resource_selection_ack_superseded");
-                    RequireResource(request.item_id, request.kind == "companions" ? peer.account.companion_ids : peer.account.locomotion_ids);
-                    if (request.kind == "companions")
-                    {
-                        peer.companion = request.item_id;
-                        peer.companionRevision = ack.revision;
-                    }
-                    else
-                    {
-                        peer.locomotion = request.item_id;
-                        peer.locomotionRevision = ack.revision;
-                    }
-                    Broadcast(Join(request.kind == "companions" ? 17 : 15, request.guid, request.item_id), peer);
-                    Send(peer, Join(request.kind == "companions" ? 17 : 15, request.guid, request.item_id));
-                    resourceSelections.Finish(request);
-                    peer.resourcePending = null;
+                    if ((companions ? peer.companionWanted : peer.locomotionWanted) != null) StartCommit(peer, kind);
+                    else if (exportedRevision > (companions ? peer.companionRevision : peer.locomotionRevision))
+                        RevertSelection(peer, kind);
                 }
-                catch (Exception)
-                {
-                    Record("rejected", peer.connection, -1, "resource_selection_failed_or_stale");
-                    if (peer.account != null && peer.account.guid == request.guid)
-                        RestoreResourceSelection(peer, request.kind);
-                    try { resourceSelections.Finish(request); } catch (Exception) { }
-                    peer.resourcePending = null;
-                }
+                catch (Exception) { }
+                return;
             }
+            try
+            {
+                if (peer.account.guid != request.guid || request.instance_id != instanceId || request.instance_owner != statusOwner)
+                    throw new Rejected("resource_selection_session_changed");
+                var ack = resourceSelections.Poll(request);
+                if (ack == null)
+                {
+                    if (Now() >= request.expires_at) throw new Rejected("resource_selection_deadline");
+                    return;
+                }
+                if (ack.status != "committed") throw new Rejected("resource_selection_not_committed");
+                if (exportedRevision < ack.revision) return; // durable ack may precede atomic account export
+                if (exportedRevision != ack.revision || exportedItem != request.item_id)
+                    throw new Rejected("resource_selection_ack_superseded");
+                resourceSelections.Finish(request);
+                if (companions) { peer.companionPending = null; peer.companionRevision = ack.revision; }
+                else { peer.locomotionPending = null; peer.locomotionRevision = ack.revision; }
+                // Nothing to broadcast: others saw it when it was accepted.
+                if ((companions ? peer.companionWanted : peer.locomotionWanted) == request.item_id)
+                {
+                    if (companions) peer.companionWanted = null; else peer.locomotionWanted = null;
+                }
+                else StartCommit(peer, kind);
+            }
+            catch (Exception)
+            {
+                Record("rejected", peer.connection, companions ? 17 : 15, "resource_selection_failed_or_stale");
+                try { resourceSelections.Finish(request); } catch (Exception) { }
+                if (companions) peer.companionPending = null; else peer.locomotionPending = null;
+                try { RevertSelection(peer, kind); } catch (Exception) { }
+            }
+        }
+
+        private bool JetpackScene => String.Equals(spaceId, "FlyingDevice", StringComparison.OrdinalIgnoreCase) ||
+            String.Equals(spaceId, "SteamPunk", StringComparison.OrdinalIgnoreCase);
+
+        private void ApplyPreBinding(Peer peer)
+        {
+            // Ownership-free speed and transform sent between the Mirror spawn
+            // and the first GUID-bearing request (gap 5). Latest values only.
+            bool moved = peer.preBindPosition.HasValue;
+            bool posed = moved || peer.preBindRotation.HasValue || peer.preBindScale.HasValue;
+            if (peer.preBindPosition.HasValue) peer.position = peer.preBindPosition.Value;
+            if (peer.preBindRotation.HasValue) peer.rotation = peer.preBindRotation.Value;
+            if (peer.preBindScale.HasValue) peer.scale = peer.preBindScale.Value;
+            if (peer.preBindSpeed.HasValue) peer.speed = peer.preBindSpeed.Value;
+            if (moved || (posed && peer.positionUpdatedAt > 0)) ObservePose(peer);
+            peer.preBindPosition = null; peer.preBindRotation = null;
+            peer.preBindScale = null; peer.preBindSpeed = null;
         }
 
         private void Bound(Peer peer)
@@ -1063,13 +1213,22 @@ namespace NebulaPreservation
 
         private void Transform(Peer peer, string[] f)
         {
-            Count(f, 2); Bound(peer);
+            Count(f, 2);
             if (Unsigned(f[0]) != peer.netId) throw new Rejected("netid_not_owned");
             TransformData data = JsonUtility.FromJson<TransformData>(f[1]);
             if (data == null || !Finite(data.position) || !Finite(data.rotation) ||
                 data.rotation.x * data.rotation.x + data.rotation.y * data.rotation.y +
                 data.rotation.z * data.rotation.z + data.rotation.w * data.rotation.w < 0.000001f)
                 throw new Rejected("invalid_transform");
+            if (peer.account == null)
+            {
+                // The client's distance gate (0x615000) does not resend an
+                // unacknowledged sample; keep the latest until binding.
+                peer.preBindPosition = data.position;
+                peer.preBindRotation = data.rotation;
+                return;
+            }
+            Bound(peer);
             if (peer.inWardrobe) throw new Rejected("movement_while_in_wardrobe");
             peer.position = data.position;
             peer.rotation = data.rotation;
@@ -1084,7 +1243,7 @@ namespace NebulaPreservation
             if (target == null) throw new Rejected("target_not_present");
             if (target == peer || !peer.visibleEntities.Contains(target.netId)) throw new Rejected("query_target_not_spawned_for_peer");
             if (responseOpcode == 2) Send(peer, TransformReply(target));
-            else if (responseOpcode == 15) Send(peer, Join(15, target.account.guid, target.locomotion));
+            else if (responseOpcode == 15) SendLocomotion(peer, target);
             else if (responseOpcode == 17) Send(peer, Join(17, target.account.guid, target.companion));
             else if (target.animationReply != null) Send(peer, target.animationReply);
             if (responseOpcode == 5)
@@ -1295,7 +1454,10 @@ namespace NebulaPreservation
             }
             catch (Exception error)
             {
-                Record("interaction_registry_refresh_rejected", null, 97, error.GetType().Name);
+                // Every Rejected type carries only its bounded reason code as
+                // the message; record it so startup races are diagnosable.
+                Record("interaction_registry_refresh_rejected", null, 97,
+                    error.GetType().Name == "Rejected" ? error.Message : error.GetType().Name);
             }
         }
 
@@ -1690,8 +1852,11 @@ namespace NebulaPreservation
                         !(legacyGeneric && interactionRegistry.IsOptedIn(recipient.account.guid))) Send(recipient, delivery.Payload);
                 }
                 else
+                    // Legacy 94 receiver 0x5d91b0 only looks up scene
+                    // APITPInteractables; it never resolves the actor, so it
+                    // is not gated on the viewer having built the avatar.
                     foreach (Peer recipient in peers.Values.Where(x => x.announced && x.account.guid != delivery.ExceptGuid &&
-                        (source == null || source == x || x.loadedRemotes.Contains(source.netId)) &&
+                        (legacyGeneric || source == null || source == x || x.loadedRemotes.Contains(source.netId)) &&
                         !(legacyGeneric && interactionRegistry.IsOptedIn(x.account.guid)))) Send(recipient, delivery.Payload);
             }
         }
@@ -1718,8 +1883,29 @@ namespace NebulaPreservation
                 if (!peers.TryGetValue(connection.connectionId, out Peer peer) || peer.connection != connection ||
                     !peer.spawned || !connection.isReady || !connection.isAuthenticated)
                     throw new Rejected("mirror_command_before_ready_player");
-                Bound(peer);
                 if (message.netId != peer.netId) throw new Rejected("mirror_command_netid_not_owned");
+                if (peer.account == null)
+                {
+                    // Before the first GUID-bearing request: remember only the
+                    // latest speed/transform and apply them when Own binds.
+                    if (NebulaMirrorCommands.IsSpeed(message))
+                    {
+                        if (!NebulaMirrorCommands.TryReadSpeed(message, out float early)) throw new Rejected("invalid_speed_command");
+                        peer.preBindSpeed = early;
+                        return;
+                    }
+                    if (NebulaMirrorCommands.IsTransform(message))
+                    {
+                        if (!NebulaMirrorCommands.TryReadTransform(message, out NebulaMirrorCommands.TransformCommand early))
+                            throw new Rejected("invalid_mirror_transform_command");
+                        if (early.position.HasValue) peer.preBindPosition = early.position.Value;
+                        if (early.rotation.HasValue) peer.preBindRotation = early.rotation.Value;
+                        if (early.scale.HasValue) peer.preBindScale = early.scale.Value;
+                        return;
+                    }
+                    throw new Rejected("identity_not_bound");
+                }
+                Bound(peer);
                 if (peer.inWardrobe) throw new Rejected("mirror_command_while_in_wardrobe");
                 if (NebulaMirrorCommands.IsSpeed(message))
                 {
@@ -1765,6 +1951,7 @@ namespace NebulaPreservation
             if (peer.account != null)
             {
                 interactionRebindDeadlines.Remove(peer.account.guid);
+                locomotionEchoes.Forget(peer.account.guid);
                 string relationPrefix = peer.account.guid + "|", relationSuffix = "|" + peer.account.guid;
                 foreach (string key in relationSnapshots.Keys.Where(x => x.StartsWith(relationPrefix, StringComparison.Ordinal) ||
                     x.EndsWith(relationSuffix, StringComparison.Ordinal)).ToArray()) relationSnapshots.Remove(key);
@@ -1891,7 +2078,8 @@ namespace NebulaPreservation
             bool semanticTrusted = interactionRegistry != null && interactionRegistry.HasTrustedProfile;
             bool sceneVerified = world.HasVerifiedInventory || (SemanticBridgeRequired && semanticTrusted);
             bool coreEligible = NebulaCoreReadiness.Eligible(coreTestProfile, spaceId, listening,
-                minigames.BoardTableCount, minigames.DartsTableCount, sceneVerified, housing != null, semanticTrusted);
+                minigames.BoardTableCount, minigames.DartsTableCount, minigames.PoolTableCount, minigames.BowlingLaneCount,
+                sceneVerified, housing != null, semanticTrusted);
             var value = new Status {
                 state = coreEligible ? "listening_core_test_candidate" : listening ? "listening_incomplete" : "stopped_incomplete", port = port,
                 bind = bindAddress.ToString(), ip = advertisedAddress,
@@ -1903,10 +2091,14 @@ namespace NebulaPreservation
                 interaction_registry_trusted = semanticTrusted, housing_bound = housing != null,
                 housing_owner = housing == null ? "" : housing.owner_ps4_id,
                 board_tables = minigames.BoardTableCount, darts_tables = minigames.DartsTableCount,
+                pool_tables = minigames.PoolTableCount, bowling_lanes = minigames.BowlingLaneCount,
                 implemented_opcodes = new[] {"1", "2", "3", "4", "6", "8", "9", "10", "11", "12", "13:space_private_local_policy",
                     "15", "16", "17", "18", "19:chat_friend_invite", "20", "21", "22", "23", "24", "25", "26:chat_friend",
-                    "29:wardrobe_lease", "30", "31:verified_scene_boats", "32:ttt_lobby", "33:ttt_lobby", "34:ttt", "35:ttt", "36", "37",
-                    "44:receipt_coffee", "46:receipt_oktoberfest", "80:lobby", "81:lobby", "82:lobby", "86:lobby", "92", "94:verified_scene_interactables",
+                    "29:wardrobe_lease", "30", "31:verified_scene_boats", "32:board", "33:board", "34:board", "35:board_ttt_chess_draughts", "36:board", "37:board",
+                    "51:pool", "52:pool", "53:pool", "54:pool", "55:pool", "56:pool", "57:pool",
+                    "64:bowling", "65:bowling", "66:bowling", "68:bowling", "69:bowling", "70:bowling", "71:bowling",
+                    "44:receipt_coffee", "46:receipt_oktoberfest", "80:darts", "81:darts", "82:darts", "84:darts", "85:darts", "86:darts", "92", "93:animation_layer", "94:verified_scene_interactables",
+                    "96:instance_closing",
                     "97:semantic_interaction_registry_v1"}
             };
             string path = Path.Combine(instanceDirectory, "instance-status.json");
@@ -2110,11 +2302,60 @@ namespace NebulaPreservation
             catch (UnauthorizedAccessException) { Record("descriptor_error", null, -1, "descriptor_access_failed"); }
         }
 
+        // Deliberate quit (supervisor SIGTERM/idle stop, housing retire,
+        // operator stop): tell every spawned client first. GetInstanceClosing
+        // receiver 0x5dbd80 compares token1 with ManagerInstance.id_instance
+        // (+0x248, N2SpaceLoading field 2 = this instanceId), then shows
+        // spaceOwnerDisconnected, locks input and runs RedirectToNexus.
+        private bool WantsToQuit()
+        {
+            if (!started || quitApproved) return true;
+            if (!closingAnnounced && !AnnounceClosing()) return true;
+            if (!quitPending)
+            {
+                // Mirror batches sends until LateUpdate; let at least two
+                // frames flush before the transport is shut down.
+                quitPending = true;
+                quitAfter = Time.unscaledTime + 0.5f;
+                quitAfterFrame = Time.frameCount + 2;
+            }
+            return false;
+        }
+
+        private bool AnnounceClosing()
+        {
+            closingAnnounced = true;
+            int sent = 0;
+            foreach (Peer peer in peers.Values.Where(x => x.spawned && x.connection != null).ToArray())
+            {
+                try { Send(peer, Join(96, "", instanceId)); ++sent; }
+                catch (Exception) { }
+            }
+            Record("instance_closing", null, 96, "peers=" + sent.ToString(Invariant));
+            return sent > 0;
+        }
+
+        private static void FlushBestEffort()
+        {
+            // Fallback when the quit bypassed wantsToQuit: run Mirror's own
+            // end-of-frame batch flush, then give Telepathy's send threads a
+            // moment before the sockets close.
+            try
+            {
+                typeof(NetworkServer).GetMethod("NetworkLateUpdate",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)?.Invoke(null, null);
+                System.Threading.Thread.Sleep(250);
+            }
+            catch (Exception) { }
+        }
+
         private void Stop()
         {
             if (started)
             {
+                if (!closingAnnounced && AnnounceClosing()) FlushBestEffort();
                 started = false;
+                Application.wantsToQuit -= WantsToQuit;
                 NetworkServer.Shutdown();
                 TryPublishStatus(false);
             }

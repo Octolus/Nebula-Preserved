@@ -94,7 +94,9 @@
         "bundle": "04/xjhn3028fjf8t4n8iv4e1ntguy3qin0y",
         "asset_path": "Assets/ART/ResourcesART/00_CLOTHS/xjhn3028fJf8t4ñ8iV4e1ÑTGuy3qiñ0Y/FBX/xjhn3028fJf8t4ñ8iV4e1ÑTGuy3qiñ0Y.prefab"
       }
-    ]
+    ],
+    "category_conflict_resolved_rows": 24,
+    "category_conflict_resolution_tool": "tools/build_item_catalog_metadata.py"
   },
   "items": [
     {
@@ -11764,11 +11766,21 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM/bxy2008F14ylFLvEXT3UV3maiREKbH7j/bxy2008F14ylFLvEXT3UV3maiREKbH7jThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/bxy2008f14ylflvext3uv3mairekbh7j",
       "bundle_size": 438673,
       "manifest_sha256": "57b43555438c44e4aeeec3387d3970d4412f8e6f86ac37453bf362dbc425f26b",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/bxy2008F14ylFLvEXT3UV3maiREKbH7j.prefab and bxy2008F14ylFLvEXT3UV3maiREKbH7jThumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -11801,11 +11813,21 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM/bxy2008F14ylFLvEXT3UV3maiREKbH7j/bxy2008F14ylFLvEXT3UV3maiREKbH7jThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/bxy2008f14ylflvext3uv3mairekbh7j",
       "bundle_size": 438673,
       "manifest_sha256": "57b43555438c44e4aeeec3387d3970d4412f8e6f86ac37453bf362dbc425f26b",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/bxy2008F14ylFLvEXT3UV3maiREKbH7j.prefab and bxy2008F14ylFLvEXT3UV3maiREKbH7jThumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -13562,11 +13584,22 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FACEITEM/C6q3hB7YjQesf1WMHd21aFrSc8t7M1wp/C6q3hB7YjQesf1WMHd21aFrSc8t7M1wpThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/c6q3hb7yjqesf1wmhd21afrsc8t7m1wp",
       "bundle_size": 410389,
       "manifest_sha256": "8b913620c9a799471d2536fa89be99dc118e796ac38b70697f029dc4154bb1e0",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/C6q3hB7YjQesf1WMHd21aFrSc8t7M1wp.prefab and C6q3hB7YjQesf1WMHd21aFrSc8t7M1wpThumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -22549,13 +22582,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4/dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/dctfitcc1h74eqvq85nrcj4vij1gy6s4",
       "bundle_size": 488124,
       "manifest_sha256": "7a0d88cf3ef87a7bc040a4f73bda489abee957484386cc1605466397bb6a6659",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4.prefab and dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4Thumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -22588,13 +22631,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4/dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/dctfitcc1h74eqvq85nrcj4vij1gy6s4",
       "bundle_size": 488124,
       "manifest_sha256": "7a0d88cf3ef87a7bc040a4f73bda489abee957484386cc1605466397bb6a6659",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4.prefab and dcTfiTcC1h74EqVQ85Nrcj4VIJ1gY6s4Thumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -23674,11 +23727,21 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2/dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/dibsnf7ycvfyf0n5pdigxpf2yla73gj2",
       "bundle_size": 358225,
       "manifest_sha256": "b6d020f18d37ae4010e3f88570e77372f4afa8fb79eff74d81d3b2f5243bbcfa",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2.prefab and dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2Thumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -23711,11 +23774,21 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2/dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/dibsnf7ycvfyf0n5pdigxpf2yla73gj2",
       "bundle_size": 358225,
       "manifest_sha256": "b6d020f18d37ae4010e3f88570e77372f4afa8fb79eff74d81d3b2f5243bbcfa",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2.prefab and dibsNf7ycvFYf0n5pDigXPf2Yla73GJ2Thumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -25799,11 +25872,21 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM/DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfU/DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfUThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/dveuuvrybcy1rq5pk46ql7jds4p8fufu",
       "bundle_size": 342127,
       "manifest_sha256": "e7dff5d24cd6c40ec7f390e0d566e255e26611495e08cfcca9a811d2b903de68",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfU.prefab and DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfUThumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -25836,11 +25919,21 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM/DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfU/DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfUThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/dveuuvrybcy1rq5pk46ql7jds4p8fufu",
       "bundle_size": 342127,
       "manifest_sha256": "e7dff5d24cd6c40ec7f390e0d566e255e26611495e08cfcca9a811d2b903de68",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfU.prefab and DveUuvrYbcy1Rq5Pk46ql7jDs4p8FUfUThumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -40435,13 +40528,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6/FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/fwwokytavsjac5p7b3q3xjmj8xyol6w6",
       "bundle_size": 415534,
       "manifest_sha256": "ad1b3598097333263124a0e4f5241fb5e6f05e7971edd22160ce5d75da7392ad",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6.prefab and FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6Thumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -40474,13 +40577,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6/FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/fwwokytavsjac5p7b3q3xjmj8xyol6w6",
       "bundle_size": 415534,
       "manifest_sha256": "ad1b3598097333263124a0e4f5241fb5e6f05e7971edd22160ce5d75da7392ad",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6.prefab and FwWokyTAVSJAc5p7B3Q3XJmJ8XYol6w6Thumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -43498,13 +43611,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM/gB467b4i8Bbc7M1j6r3kcQa0r6VhOFou/gB467b4i8Bbc7M1j6r3kcQa0r6VhOFouThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/gb467b4i8bbc7m1j6r3kcqa0r6vhofou",
       "bundle_size": 238486,
       "manifest_sha256": "351f98a11763f92c78177a1c4a5100ec8f74e04e76df1b723ab0e171eb906e7e",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/gB467b4i8Bbc7M1j6r3kcQa0r6VhOFou.prefab and gB467b4i8Bbc7M1j6r3kcQa0r6VhOFouThumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -43537,13 +43660,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM/gB467b4i8Bbc7M1j6r3kcQa0r6VhOFou/gB467b4i8Bbc7M1j6r3kcQa0r6VhOFouThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/gb467b4i8bbc7m1j6r3kcqa0r6vhofou",
       "bundle_size": 238486,
       "manifest_sha256": "351f98a11763f92c78177a1c4a5100ec8f74e04e76df1b723ab0e171eb906e7e",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/gB467b4i8Bbc7M1j6r3kcQa0r6VhOFou.prefab and gB467b4i8Bbc7M1j6r3kcQa0r6VhOFouThumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -48417,13 +48550,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHL/H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHLThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/h0wufuhh1o8jq3mjngvmnv2hm0v6vghl",
       "bundle_size": 538373,
       "manifest_sha256": "b3808a283ccb90d1d5fed2f80f4dba62eb34e00f9bf92ba98f95ae1525f34c38",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHL.prefab and H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHLThumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -48456,13 +48599,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHL/H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHLThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/h0wufuhh1o8jq3mjngvmnv2hm0v6vghl",
       "bundle_size": 538373,
       "manifest_sha256": "b3808a283ccb90d1d5fed2f80f4dba62eb34e00f9bf92ba98f95ae1525f34c38",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHL.prefab and H0WUFuhH1o8Jq3MJNgVMnV2Hm0v6vgHLThumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -53968,11 +54121,22 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FACEITEM/HPpUFu2Cv7Vw61Y2T5lTImQrQU0vButR/HPpUFu2Cv7Vw61Y2T5lTImQrQU0vButRThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/hppufu2cv7vw61y2t5ltimqrqu0vbutr",
       "bundle_size": 358101,
       "manifest_sha256": "7475ab70e64d8ead8ab1f7470f49157a73abd34d51212d0c64a310a02257a400",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/HPpUFu2Cv7Vw61Y2T5lTImQrQU0vButR.prefab and HPpUFu2Cv7Vw61Y2T5lTImQrQU0vButRThumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -58247,13 +58411,24 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL/IBMd4k00P8CPTE62MgElYX33J2twe8f3/IBMd4k00P8CPTE62MgElYX33J2twe8f3Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/ibmd4k00p8cpte62mgelyx33j2twe8f3",
       "bundle_size": 444608,
       "manifest_sha256": "a65f7ea0293999638142d02d86b90a394bba310ed366fd0ca42ed56fdd73c4d3",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/IBMd4k00P8CPTE62MgElYX33J2twe8f3.prefab and IBMd4k00P8CPTE62MgElYX33J2twe8f3Thumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -106189,13 +106364,24 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FACEITEM/oTiS017W22T7863475PL4OOJN44G8s1x/oTiS017W22T7863475PL4OOJN44G8s1xThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/otis017w22t7863475pl4oojn44g8s1x",
       "bundle_size": 530506,
       "manifest_sha256": "2b367091a0c72d3506fb3c2d9f0c29b40c897de34ab6d0ab9dfa8e20f48ac56a",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/oTiS017W22T7863475PL4OOJN44G8s1x.prefab and oTiS017W22T7863475PL4OOJN44G8s1xThumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -118562,11 +118748,22 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL/qI10cLCvuHyEi8HvVO76hyDwS27aSXE1/qI10cLCvuHyEi8HvVO76hyDwS27aSXE1Thumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/qi10clcvuhyei8hvvo76hydws27asxe1",
       "bundle_size": 243316,
       "manifest_sha256": "cebbd750fb050abfe64f4a72177d84074d1063aedad1c5dc28d724a9daac7db4",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/qI10cLCvuHyEi8HvVO76hyDwS27aSXE1.prefab and qI10cLCvuHyEi8HvVO76hyDwS27aSXE1Thumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -120107,13 +120304,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSY/QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSYThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/qou43kva5b8rj4hquejmtbsyo3d6ghsy",
       "bundle_size": 234684,
       "manifest_sha256": "5e78883a021027422f75ef03fe3f3059d1915393642880ee914fe55bd3187f88",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSY.prefab and QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSYThumbnail.png under Wardrobe_EAB/MALE/CLOTH_HEAD_FACEITEM",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -120146,13 +120353,23 @@
           "Assets/ResourcesART/Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL/QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSY/QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSYThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/qou43kva5b8rj4hquejmtbsyo3d6ghsy",
       "bundle_size": 234684,
       "manifest_sha256": "5e78883a021027422f75ef03fe3f3059d1915393642880ee914fe55bd3187f88",
       "dependencies": [
         "source-asset-metadata/AssetBundles/StandaloneWindows/skinmaterials"
-      ]
+      ],
+      "category_conflict_resolution": {
+        "resolution": "multiple_loadable_categories",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL",
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "thumbnail_only_categories": [],
+        "evidence": "shipped bundle manifest lists FBX/QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSY.prefab and QOU43KVa5b8Rj4HQuEjMtBSyO3d6GHSYThumbnail.png under Wardrobe_EAB/MALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -127585,11 +127802,22 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_HEAD_FACEITEM/RpRWMBxyV0Y6mr2lI66gBV4L7FGPu22M/RpRWMBxyV0Y6mr2lI66gBV4L7FGPu22MThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/rprwmbxyv0y6mr2li66gbv4l7fgpu22m",
       "bundle_size": 222279,
       "manifest_sha256": "d6870e5e305a2f6a31d4848f8022bed45cb7ce3317c71aaa3544efd7a58f9a0b",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/RpRWMBxyV0Y6mr2lI66gBV4L7FGPu22M.prefab and RpRWMBxyV0Y6mr2lI66gBV4L7FGPu22MThumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "FEMALE",
@@ -149649,11 +149877,22 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL/Usmi6YvR43pdU8MRv5RfoR8OBr10lTop/Usmi6YvR43pdU8MRv5RfoR8OBr10lTopThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/usmi6yvr43pdu8mrv5rfor8obr10ltop",
       "bundle_size": 317002,
       "manifest_sha256": "519bbaecec47c6e0a310a20d95807acb694c71bb4ff6f409a5c2656dad13c101",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/Usmi6YvR43pdU8MRv5RfoR8OBr10lTop.prefab and Usmi6YvR43pdU8MRv5RfoR8OBr10lTopThumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",
@@ -177480,11 +177719,22 @@
           "Assets/ResourcesART/Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL/Yq0cuye2bwvE7St17A6w7xip0P471e6S/Yq0cuye2bwvE7St17A6w7xip0P471e6SThumbnail.png"
         ]
       ],
-      "category_conflict": true,
+      "category_conflict": false,
       "bundle": "04/yq0cuye2bwve7st17a6w7xip0p471e6s",
       "bundle_size": 332726,
       "manifest_sha256": "c8ca9c108b5641ef45fa0b35ced2a4dc707ec9186f0e1fb8a0a6bf378b782328",
-      "dependencies": []
+      "dependencies": [],
+      "category_conflict_resolution": {
+        "resolution": "single_loadable_category",
+        "loadable_categories": [
+          "CLOTH_BODY_TORSO_APPAREL"
+        ],
+        "thumbnail_only_categories": [
+          "CLOTH_HEAD_FACEITEM"
+        ],
+        "evidence": "shipped bundle manifest lists FBX/Yq0cuye2bwvE7St17A6w7xip0P471e6S.prefab and Yq0cuye2bwvE7St17A6w7xip0P471e6SThumbnail.png under Wardrobe_EAB/FEMALE/CLOTH_BODY_TORSO_APPAREL",
+        "manifest_category_conflict": true
+      }
     },
     {
       "gender": "MALE",

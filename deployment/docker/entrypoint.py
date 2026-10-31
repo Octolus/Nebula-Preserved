@@ -14,7 +14,9 @@ import time
 from types import SimpleNamespace
 from urllib.request import urlopen
 
-SCENES = ('Nexus LeafPark Beach Cinema Home Greenhouse Waterfall StarCrawlers '
+SCENES = ('Nexus LeafPark Beach Cinema Bowling Dome StoneLakeCastle Cube GhostTown '
+          'TheNebulianOpenHouse ZeroDistrict NebuHouseOpenHouse WestValleyApartmentOpenHouse '
+          'MedievalVillage SKL Home Greenhouse Waterfall StarCrawlers '
           'BlueWaveHideout DressingRoom CutteridgeEstate TheMoonlightRoom LeChalet '
           'LakeApartment SereneGarden WoodlandClearing TheNebulian SorcerersEyrie1 '
           'ZeroDistrictDen CampSilverLake FlyingDevice Deadquarters HollyridgeEstate '
@@ -41,9 +43,12 @@ def plan(env, root=Path('/opt/nebula'), runtime=Path('/opt/nebula-runtime'), sta
     if any(not re.fullmatch('[0-9a-f]{64}', pin) for pin in pins):
         raise ValueError('All three reviewed build pins must be lowercase SHA-256')
     maximum = int(env.get('NEBULA_MAX_PROCESSES', '16'))
-    idle = float(env.get('NEBULA_IDLE_TTL', '60'))
-    if not 1 <= maximum <= 32 or not 0 <= idle <= 86400:
-        raise ValueError('Process limit must be 1..32 and idle TTL 0..86400')
+    # Personal worlds keep the historical NEBULA_IDLE_TTL; shared worlds (Nexus)
+    # stay warm longer. The backend reads the same variables for its idle grace.
+    idle = float(env.get('NEBULA_PERSONAL_WORLD_IDLE_SECONDS') or env.get('NEBULA_IDLE_TTL') or '60')
+    public_idle = float(env.get('NEBULA_PUBLIC_WORLD_IDLE_SECONDS') or '900')
+    if not 1 <= maximum <= 32 or not 0 <= idle <= 86400 or not 0 <= public_idle <= 86400:
+        raise ValueError('Process limit must be 1..32 and idle TTLs 0..86400')
     backend = [sys.executable, str(root/'backend/server.py'), '--listen', '--bind', '127.0.0.1',
                '--advertise-ip', advertise, '--port', '8080', '--managed-instances',
                '--core-test-profile', 'nonmini-semantic-v1', '--state-dir', str(state)]
@@ -65,6 +70,7 @@ def plan(env, root=Path('/opt/nebula'), runtime=Path('/opt/nebula-runtime'), sta
                   '--build-report-sha256', pins[0], '--binary-sha256', pins[1], '--managed-assembly-sha256', pins[2],
                   '--bind', '127.0.0.1' if mode == 'public' else '0.0.0.0', '--advertise-ip', advertise,
                   '--port-range', '28000-28031', '--max-processes', str(maximum), '--idle-ttl', str(idle),
+                  '--public-idle-ttl', str(public_idle),
                   '--stop-grace', '15', '--allowed-profile', 'nonmini-semantic-v1']
     for scene in SCENES: supervisor.extend(('--allowed-scene', scene))
     config = SimpleNamespace(binary=runtime/'build/NebulaServer.x86_64', build_report=runtime/'build-linux-validation.json',

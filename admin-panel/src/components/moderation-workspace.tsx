@@ -11,6 +11,10 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
+import { Badge } from './ui/badge';
+import { PaginatedRecords } from './management-widgets';
+import { playerHref } from '../lib/panel';
+import { AdminActions, UnsupportedActions } from './admin-actions';
 
 type Data = Record<string, unknown>;
 type Api = <T = Data>(path: string, body?: Data) => Promise<T>;
@@ -125,7 +129,7 @@ function Maintenance({
                   setMinutes(event.target.value);
                   setConfirmed(false);
                 }}
-                className="min-h-11"
+                className="min-h-9"
               />
             </div>
             <div className="space-y-2">
@@ -141,10 +145,10 @@ function Maintenance({
                   setReason(event.target.value);
                   setConfirmed(false);
                 }}
-                className="min-h-11"
+                className="min-h-9"
               />
             </div>
-            <label className="flex min-h-11 items-center gap-3 text-sm">
+            <label className="flex min-h-9 items-center gap-3 text-sm">
               <Checkbox
                 required
                 checked={confirmed}
@@ -153,7 +157,7 @@ function Maintenance({
               />
               I checked the maintenance notice for this server.
             </label>
-            <Button className="min-h-11" disabled={busy || saving || !confirmed}>
+            <Button className="min-h-9" disabled={busy || saving || !confirmed}>
               {saving ? 'Committing…' : 'Set maintenance notice'}
             </Button>
           </form>
@@ -203,15 +207,32 @@ function ReportReview({
   return (
     <form onSubmit={submit} className="space-y-4 rounded-md border p-4">
       <h3 className="font-semibold">Review report</h3>
-      <p className="break-all text-xs text-muted-foreground">{display(report.report_id)}</p>
       <dl className="grid gap-3 text-sm sm:grid-cols-2">
         <div>
-          <dt className="text-muted-foreground">Reported username</dt>
-          <dd className="break-words">{display(report.target)}</dd>
+          <dt className="text-muted-foreground">Reported player</dt>
+          <dd className="break-words">
+            {typeof report.target_account_id === 'string' ? (
+              <a
+                className="underline-offset-4 hover:underline"
+                href={playerHref(report.target_account_id, 'moderation')}
+              >
+                {display(report.target)}
+              </a>
+            ) : (
+              display(report.target) + ' (no matching account)'
+            )}
+          </dd>
         </div>
         <div>
-          <dt className="text-muted-foreground">Reporter account ID</dt>
-          <dd className="break-all">{display(report.reporter_account_id)}</dd>
+          <dt className="text-muted-foreground">Reported by</dt>
+          <dd className="break-all">
+            <a
+              className="underline-offset-4 hover:underline"
+              href={playerHref(String(report.reporter_account_id))}
+            >
+              {display(report.reporter_name || report.reporter_account_id)}
+            </a>
+          </dd>
         </div>
         <div className="sm:col-span-2">
           <dt className="text-muted-foreground">Report text</dt>
@@ -219,8 +240,7 @@ function ReportReview({
         </div>
       </dl>
       <p className="text-xs text-muted-foreground">
-        The reported username is not an account ID. Reviewing a report changes its workflow status;
-        it does not enforce a player policy.
+        Reviewing a report only changes its status. To act on the player, open their Moderation tab.
       </p>
       {error && (
         <p role="alert" className="text-sm text-destructive">
@@ -272,10 +292,10 @@ function ReportReview({
             setReason(event.target.value);
             setConfirmed(false);
           }}
-          className="min-h-11"
+          className="min-h-9"
         />
       </div>
-      <label className="flex min-h-11 items-center gap-3 text-sm">
+      <label className="flex min-h-9 items-center gap-3 text-sm">
         <Checkbox
           required
           checked={confirmed}
@@ -285,13 +305,13 @@ function ReportReview({
         I checked this report and review decision.
       </label>
       <div className="flex flex-wrap gap-3">
-        <Button className="min-h-11" disabled={saving || !confirmed}>
+        <Button className="min-h-9" disabled={saving || !confirmed}>
           {saving ? 'Committing…' : 'Save report review'}
         </Button>
         <Button
           type="button"
           variant="outline"
-          className="min-h-11"
+          className="min-h-9"
           disabled={saving}
           onClick={close}
         >
@@ -344,25 +364,18 @@ function ModerationActivity({
   const columns =
     kind === 'reports'
       ? [
-          ['report_id', 'Report ID'],
-          ['target', 'Reported username'],
-          ['reporter_account_id', 'Reporter account ID'],
-          ['option', 'Category'],
-          ['text', 'Report text'],
+          ['target', 'Reported player'],
+          ['reporter_account_id', 'Reported by'],
+          ['text', 'Message'],
           ['status', 'Status'],
-          ['created_at', 'Created'],
+          ['created_at', 'When'],
         ]
       : [
-          ['event_id', 'Event ID'],
-          ['request_id', 'Request ID'],
-          ['operation', 'Operation'],
-          ['target_id', 'Target'],
-          ['actor_id', 'Operator'],
-          ['actor_role', 'Operator role'],
+          ['operation', 'Action'],
+          ['target_id', 'Player'],
+          ['actor_id', 'By'],
           ['reason', 'Reason'],
-          ['before', 'Before'],
-          ['after', 'After'],
-          ['created_at', 'Created'],
+          ['created_at', 'When'],
         ];
   return (
     <Card>
@@ -380,7 +393,7 @@ function ModerationActivity({
             <Button
               key={value}
               variant={kind === value ? 'default' : 'outline'}
-              className="min-h-11"
+              className="min-h-9"
               aria-pressed={kind === value}
               onClick={() => {
                 setKind(value);
@@ -419,7 +432,7 @@ function ModerationActivity({
                     ? (row) => (
                         <Button
                           variant="outline"
-                          className="min-h-11"
+                          className="min-h-9"
                           onClick={() => setSelected(row)}
                           disabled={!/^[a-f0-9]{64}$/.test(String(row.report_id))}
                         >
@@ -435,7 +448,7 @@ function ModerationActivity({
         <div className="flex justify-between">
           <Button
             variant="outline"
-            className="min-h-11"
+            className="min-h-9"
             disabled={busy || !history.length}
             onClick={() => {
               setCursor(history[history.length - 1]);
@@ -446,7 +459,7 @@ function ModerationActivity({
           </Button>
           <Button
             variant="outline"
-            className="min-h-11"
+            className="min-h-9"
             disabled={busy || !records.next_cursor}
             onClick={() => {
               setHistory((value) => [...value, cursor]);
@@ -474,32 +487,78 @@ export function ModerationWorkspace({
   actor,
   api,
   revision,
+  mutate,
+  saving = false,
 }: {
   actor: { role: string };
   api: Api;
   revision: number;
+  mutate?: (path: string, body: Data) => Promise<boolean>;
+  saving?: boolean;
 }) {
   const [version, setVersion] = useState(0);
   const refreshAll = useCallback(() => setVersion((value) => value + 1), []);
   const currentRevision = revision + version;
   return (
-    <Tabs defaultValue="players" className="gap-3">
+    <Tabs defaultValue="active" className="gap-3">
       <TabsList
-        className="grid h-auto w-full grid-cols-2 gap-1 p-1 sm:grid-cols-4"
+        className="h-auto w-full flex-wrap justify-start gap-1 p-1"
         aria-label="Moderation sections"
       >
         {[
-          ['players', 'Player actions'],
+          ['active', 'Active restrictions'],
+          ['players', 'Take action'],
           ['reports', 'Reports & history'],
           ['maintenance', 'Maintenance'],
           ['news', 'Login news'],
         ].map(([id, label]) => (
-          <TabsTrigger key={id} value={id} className="min-h-11 text-xs sm:text-sm">
+          <TabsTrigger key={id} value={id} className="flex-none px-3 text-xs sm:text-sm">
             {label}
           </TabsTrigger>
         ))}
       </TabsList>
-      <TabsContent value="players">
+      <TabsContent value="active">
+        <PaginatedRecords
+          title="Banned and muted players"
+          path="moderation/active"
+          revision={currentRevision}
+          load={api as (path: string) => Promise<any>}
+          description="Everyone currently restricted, why, and until when. Open a player to lift or change it."
+          columns={['account_id', 'status', 'reason', 'until', 'last_actor_id', 'last_action_at']}
+          render={{
+            status: (row) => (
+              <span className="flex gap-1">
+                {row.banned ? <Badge variant="destructive">Banned</Badge> : null}
+                {row.muted ? <Badge variant="secondary">Muted</Badge> : null}
+              </span>
+            ),
+            reason: (row) => String((row.banned ? row.ban_reason : row.mute_reason) || '—'),
+            until: (row) => {
+              const at = row.banned ? row.ban_expires_at : row.mute_expires_at;
+              return typeof at === 'number' ? new Date(at * 1000).toLocaleString() : 'Permanent';
+            },
+          }}
+          onRowClick={(row) =>
+            (window.location.hash = playerHref(String(row.account_id), 'moderation'))
+          }
+          emptyText="No one is banned or muted."
+        />
+      </TabsContent>
+      <TabsContent value="players" className="grid gap-3">
+        {mutate && (
+          <AdminActions
+            actor={actor}
+            api={api as (path: string, body?: Data) => Promise<any>}
+            mutate={mutate}
+            saving={saving}
+            target={null}
+            kinds={['server']}
+            title="Server actions"
+            description="Affect everyone: server availability screens and reconnecting or relocating all players."
+            exclude={['maintenance_countdown', 'publish_news']}
+          />
+        )}
+        <UnsupportedActions api={api as (path: string, body?: Data) => Promise<any>} />
         <ModerationPanel
           actor={actor}
           api={api}

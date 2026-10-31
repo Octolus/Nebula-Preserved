@@ -3,11 +3,15 @@ import argparse
 import asyncio
 import hashlib
 import json
+import secrets
 from pathlib import Path
+import re
 import sys
 import time
 
 from aiohttp import web
+from diagnostic_logging import (RotatingJSONLog, account_ref, begin_request, configure_file_sink, current_request,
+                                emit, end_request, failure_reason, report_exception, route_label, safe_stack)
 
 from allocation import ipv4_address, network_port, validation_profile
 from interaction_registry import InteractionRegistryPublisher
@@ -17,10 +21,23 @@ from service import Service
 from resource_selection import SelectionAuthority
 from state import Catalog, Store
 from management import start_management, stop_management
+from player_activity import attach_activity, observe_request, start_activity, stop_activity
 from test_identity import private_concrete_ipv4
 from wire import ProtocolError, decrypt, encrypt
 
 ROOT = Path(__file__).resolve().parents[1]
+
+# Every native request is a GET whose AES payload rides in the query string.
+# A fully equipped N2SavePreset (~9.6 KB) and a HousingSavePresetServletParts
+# part beyond ~75 placed items (budget 200, ~21 KB) exceed aiohttp's default
+# 8190-byte request line and were rejected with 400 before dispatch. Match the
+# fronting nginx large_client_header_buffers (64k) instead.
+MAX_REQUEST_LINE = 64 * 1024
+
+
+def application():
+    return web.Application(client_max_size=1024 * 1024,
+                           handler_args={"max_line_size": MAX_REQUEST_LINE})
 
 
 class Backend:
@@ -81,14 +98,17 @@ class Backend:
         self.service.instances.advertised_ip = self.advertised_ip
         self.service.instances.core_test_profile = self.core_test_profile
         self.interactions = InteractionRegistryPublisher(self.store, ROOT / "protocol")
-        self.log = (state_dir / "requests.jsonl").open("a", encoding="utf-8")
+        self.log = RotatingJSONLog(state_dir / "requests.jsonl")
+        configure_file_sink(state_dir / "logs" / "backend-failures.jsonl")
         self.maintenance_task = None
         self.management_runner = None
         self.service.publish_runtime_state = self.publish_state
+        self.activity = attach_activity(self)  # operator monitoring; never raises
 
     def record(self, **event):
-        self.log.write(json.dumps({"time": time.time(), **event}, ensure_ascii=True) + "\n")
-        self.log.flush()
+        log = getattr(self, "log", sys.stdout)
+        log.write(json.dumps({"time": time.time(), **event}, ensure_ascii=True) + "\n")
+        log.flush()
 
     def publish_state(self):
         """Refresh local inter-process state even while no HTTP request arrives."""
@@ -110,11 +130,14 @@ class Backend:
                 # Keep a transient file/import failure from permanently
                 # stopping later refreshes; do not log identity contents.
                 self.record(error="state_refresh_failed", error_type=type(exc).__name__)
+                emit("background_failed", ("state_refresh", type(exc).__name__), level="error",
+                     task="state_refresh", error_type=type(exc).__name__)
 
     async def start_maintenance(self, _app):
         self.management_runner = await start_management(self)
         self.publish_state()
         self.maintenance_task = asyncio.create_task(self.maintain_state())
+        start_activity(self)
 
     async def handle(self, request):
         command = request.path.lstrip("/")
@@ -128,40 +151,103 @@ class Backend:
                                       "public_access": self.public_access,
                                       "game_ready": False,
                                       "networking_parity": "unproven"})
+        started = time.monotonic()
+        details = {"request_id": secrets.token_hex(8), "command": route_label(command)}
+        token = begin_request(details["request_id"], details["command"])
+        try:
+            response = await self.handle_game(request, command, started, details)
+            observe_request(self, request, command, response)  # never raises or alters response
+            return response
+        finally:
+            end_request(token)
+
+    def fail(self, details, started, status, reason, message=None, *, field_count=None, error=None):
+        """request_failed / unknown_route on stdout; generic client responses are unchanged."""
+        route, request_id = details["command"], details["request_id"]
+        if error is not None:
+            report_exception(request_id, route, error)
+        emit("unknown_route" if reason == "unknown_route" else "request_failed",
+             None if error is not None else (details.get("actor_ref"), route, status, reason),
+             level="error" if status >= 500 and reason != "unknown_route" else "warning",
+             request_id=request_id, route=route, status=status, reason=reason,
+             message=None if message is None else message[:200],
+             elapsed_ms=max(0, int((time.monotonic() - started) * 1000)),
+             field_count=field_count, actor_ref=details.get("actor_ref"))
+
+    async def handle_game(self, request, command, started, details):
+        def record(**event):
+            self.record(**details, elapsed_ms=max(0, int((time.monotonic() - started) * 1000)), **event)
+        if command == "launcher-probe" and request.method == "GET" and not request.query:
+            # The launcher's TLS check (patcher launcher::probe) requires exactly
+            # this 400 body. It is expected traffic, not a failure.
+            details["command"] = "launcher_probe"
+            record(status=400, error_type="launcher_probe")
+            return web.Response(status=400, text="Expected encrypted GET request")
         if request.method != "GET" or "data" not in request.query:
+            record(status=400, error="invalid_request_shape", error_type="request_shape")
+            # Path only (never the query), reduced to a bounded safe alphabet.
+            shown = re.sub(r"[^A-Za-z0-9_./-]", "?", request.path[:96])
+            self.fail(details, started, 400, "invalid_request_shape", f"{request.method} {shown}")
             return web.Response(status=400, text="Expected encrypted GET request")
         try:
             plaintext = decrypt(request.query["data"])
         except (ValueError, UnicodeError):
-            self.record(command=command, error="invalid_encrypted_request")
+            record(status=400, error="invalid_encrypted_request", error_type="encryption")
+            self.fail(details, started, 400, "invalid_encrypted_request")
             return web.Response(status=400, text="Invalid encrypted request")
+        except Exception as exc:
+            record(status=500, error="internal_error", error_type="internal_error", stack=safe_stack(exc))
+            self.fail(details, started, 500, "internal_error", error=exc)
+            return web.Response(status=500, text=encrypt("ERROR"), content_type="text/plain")
         digest = hashlib.sha256(plaintext.encode("utf-8")).hexdigest()
+        details["request_sha256"] = digest
+        # '#'-separated fields before the platform trailer; values are never logged.
+        field_count = plaintext.count("#")
         try:
             if self.access is None:
                 response = await dispatch_housing_atomic(self.service, command, plaintext)
                 self.publish_state()
             else:
                 account = self.access.authenticate(request.headers.get("Authorization"))
+                details["actor_ref"] = current_request()["actor_ref"] = account_ref(account)
                 with actor_scope(account):
                     response = await dispatch_housing_atomic(self.service, command, plaintext)
                     self.publish_state()
+            response_bytes = len(response.encode("utf-8"))
+            encrypted_response = encrypt(response)
         except AccessDenied as exc:
-            self.record(command=command, request_sha256=digest, status=403,
-                        error_type=type(exc).__name__)
+            record(status=403, error="access_denied", error_type="AccessDenied")
+            self.fail(details, started, 403, "access_denied", field_count=field_count)
             return web.Response(status=403, text=encrypt("ERROR"), content_type="text/plain")
         except ProtocolError as exc:
-            self.record(command=command, request_sha256=digest, status=exc.status, error=str(exc))
+            record(status=exc.status, error=str(exc), error_type="ProtocolError")
+            unknown = exc.status == 501 and command not in self.service.ROUTES
+            self.fail(details, started, exc.status, "unknown_route" if unknown else failure_reason(exc.status),
+                      str(exc), field_count=field_count)
             return web.Response(status=exc.status, text=encrypt("ERROR"), content_type="text/plain")
-        self.record(command=command, request_sha256=digest, status=200,
-                    response_bytes=len(response.encode("utf-8")))
-        return web.Response(text=encrypt(response), content_type="text/plain")
+        except Exception as exc:
+            record(status=500, error="internal_error", error_type="internal_error", stack=safe_stack(exc))
+            self.fail(details, started, 500, "internal_error", field_count=field_count, error=exc)
+            return web.Response(status=500, text=encrypt("ERROR"), content_type="text/plain")
+        record(status=200, response_bytes=response_bytes)
+        return web.Response(text=encrypted_response, content_type="text/plain")
 
     async def handle_enrollment(self, request):
         from enrollment import EnrollmentError, MAX_BODY, decode_body
         headers = {"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"}
+        started = time.monotonic()
+        request_id = secrets.token_hex(8)
+        def record(**event):
+            self.record(command="preservation/enroll", request_id=request_id,
+                        elapsed_ms=max(0, int((time.monotonic() - started) * 1000)), **event)
+        details = {"command": "preservation/enroll", "request_id": request_id}
         if self.enrollment is None:
+            record(status=404, error="registration_disabled", error_type="enrollment")
+            self.fail(details, started, 404, "registration_disabled")
             return web.json_response({"error": "registration_disabled"}, status=404, headers=headers)
         if request.method != "POST":
+            record(status=405, error="method_not_allowed", error_type="request_shape")
+            self.fail(details, started, 405, "method_not_allowed")
             return web.json_response({"error": "method_not_allowed"}, status=405, headers=headers)
         peer = request.headers.get("X-Nebula-Enrollment-IP")
         try:
@@ -175,14 +261,25 @@ class Backend:
             except (ValueError, UnicodeError):
                 body = None
             result = self.enrollment.register(body, peer)
+            record(status=201 if result["created"] else 200)
             return web.json_response(result, status=201 if result["created"] else 200, headers=headers)
         except EnrollmentError as exc:
             if exc.status == 429:
                 headers["Retry-After"] = "3600"
+            # Enrollment codes are static protocol values; never log input.
+            code = exc.code if exc.code in {"invalid_request", "registration_rate_limited",
+                "account_banned", "account_unavailable", "registration_capacity_reached"} else "enrollment_rejected"
+            record(status=exc.status, error=code, error_type="EnrollmentError")
+            self.fail(details, started, exc.status, code)
             return web.json_response({"error": exc.code}, status=exc.status, headers=headers)
+        except Exception as exc:
+            record(status=500, error="internal_error", error_type="internal_error", stack=safe_stack(exc))
+            self.fail(details, started, 500, "internal_error", error=exc)
+            return web.json_response({"error": "internal_error"}, status=500, headers=headers)
 
     async def close(self, _app):
         await stop_management(self)
+        await stop_activity(self)
         if self.maintenance_task is not None:
             self.maintenance_task.cancel()
             try:
@@ -191,6 +288,7 @@ class Backend:
                 pass
             self.maintenance_task = None
         self.log.close()
+        configure_file_sink(None)
         self.store.close()
 
 
@@ -248,7 +346,7 @@ def main():
                       local_test_identities=a.local_test_identities,
                       public_access=a.public_access, catalog_policy=a.catalog_policy,
                       public_enrollment=a.public_enrollment, trust_steam_id=a.trust_steam_id)
-    app = web.Application(client_max_size=1024 * 1024)
+    app = application()
     app.router.add_route("*", "/{path:.*}", backend.handle)
     app.on_startup.append(backend.start_maintenance)
     app.on_cleanup.append(backend.close)

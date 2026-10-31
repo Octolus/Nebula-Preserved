@@ -16,13 +16,24 @@ import uuid
 from datetime import datetime, timezone
 
 from public_access import current_actor, require_actor
-from wire import ProtocolError
+from wire import ProtocolError, json_field
 
 MAX_UTC = 253402300799
 REQUEST_ID = re.compile(r"[0-9a-f]{32}\Z")
 GUID = re.compile(r"[0-9a-f]{32}\Z")
 REPORT_ID = re.compile(r"[0-9a-f]{64}\Z")
 OPERATOR_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,63}\Z")
+SCENE_KEY = re.compile(r"[A-Za-z][A-Za-z0-9]{0,63}\Z")
+# Native CheckServerStatusServlet field 3: 0 ServerUnderMaintenance scene,
+# 1 continue, 2 UpdatingPatch scene. NETGcloudLogin.LoadSpace re-checks it
+# before every space load, including the automatic post-disconnect reload.
+SERVER_STATUS = {0: "maintenance", 1: "normal", 2: "updating"}
+SERVER_STATUS_CODES = {name: code for code, name in SERVER_STATUS.items()}
+# A released session reconnects ~2 s after the scene drops it
+# (ManagerInstance.OnClientDisconnectedDelay). Bound the one-shot redirect so
+# a stale entry can never hijack a later voluntary journey.
+REDIRECT_SECONDS = 120
+PROFILE_TEXT_DEFAULTS = {"status": "", "mood": "0"}
 
 
 def canonical(value):
@@ -96,6 +107,14 @@ class Moderation:
                 news_id TEXT PRIMARY KEY, text TEXT NOT NULL, date_label TEXT NOT NULL,
                 created_at INTEGER NOT NULL, expires_at INTEGER,
                 active INTEGER NOT NULL CHECK(active IN (0,1)));
+            CREATE TABLE IF NOT EXISTS moderation_server_status (
+                singleton INTEGER PRIMARY KEY CHECK(singleton=1),
+                status INTEGER NOT NULL CHECK(status IN (0,1,2)),
+                reason TEXT NOT NULL, actor_id TEXT NOT NULL, updated_at INTEGER NOT NULL);
+            CREATE TABLE IF NOT EXISTS moderation_load_redirects (
+                guid TEXT PRIMARY KEY, ps4_id TEXT NOT NULL REFERENCES profiles,
+                psidglobal TEXT NOT NULL, request_id TEXT NOT NULL,
+                created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL, consumed_at INTEGER);
             CREATE TRIGGER IF NOT EXISTS moderation_events_no_update BEFORE UPDATE ON moderation_events
                 BEGIN SELECT RAISE(ABORT,'Moderation history is append-only'); END;
             CREATE TRIGGER IF NOT EXISTS moderation_events_no_delete BEFORE DELETE ON moderation_events
@@ -398,4 +417,138 @@ class Moderation:
                         (identity, status, note, actor["id"], now))
         after = {"status": status, "note": note, "actor_id": actor["id"], "updated_at": now}
         self._event(request_id, actor, "report.review", identity, reason, before, after, now)
+        return before, after, before != after
+
+    # ---- Native-delivered staff actions (see docs/MODERATION-CAPABILITIES.md) ----
+    # These only change backend authority. Delivery uses existing client
+    # receivers: CheckServerStatusServlet, the scene authority snapshot
+    # (allocation removal makes the scene drop the peer), the client's own
+    # OnClientDisconnectedDelay -> LoadSpace reload, and the N2LoadSpace /
+    # N2SpaceLoading reply that names the scene the client then loads.
+
+    def server_status(self):
+        row = self.db.execute("SELECT status,reason,actor_id,updated_at FROM moderation_server_status "
+                              "WHERE singleton=1").fetchone()
+        code = row["status"] if row else 1
+        return {"code": code, "status": SERVER_STATUS[code], "reason": row["reason"] if row else "",
+                "actor_id": row["actor_id"] if row else None, "updated_at": row["updated_at"] if row else None}
+
+    def _operator_account(self, account_id):
+        if not self.db.execute("SELECT 1 FROM sqlite_schema WHERE type='table' "
+                               "AND name='management_operator_accounts'").fetchone():
+            return False
+        return self.db.execute("""SELECT 1 FROM management_operator_accounts l
+            JOIN management_operators o USING(operator_id) WHERE l.account_id=? AND o.enabled=1""",
+                               (account_id,)).fetchone() is not None
+
+    def server_status_code(self, account_id=None):
+        """Native status integer. Only an authenticated ingress account that an
+        owner explicitly linked to an enabled operator bypasses a lockout; the
+        persona name in the request is a client claim and is never consulted."""
+        code = self.server_status()["code"]
+        if code != 1 and isinstance(account_id, str) and self._operator_account(account_id):
+            return 1
+        return code
+
+    def set_server_status(self, status, *, reason, actor, request_id):
+        now = self._mutation(actor, request_id, reason)
+        require(actor["role"] in ("owner", "admin"), "Server status requires an admin or owner", 403)
+        require(isinstance(status, str) and status in SERVER_STATUS_CODES,
+                "Server status must be normal, maintenance or updating")
+        before = self.server_status()
+        self.db.execute("INSERT INTO moderation_server_status VALUES(1,?,?,?,?) ON CONFLICT(singleton) DO UPDATE "
+                        "SET status=excluded.status,reason=excluded.reason,actor_id=excluded.actor_id,"
+                        "updated_at=excluded.updated_at", (SERVER_STATUS_CODES[status], reason, actor["id"], int(now)))
+        after = self.server_status()
+        self._event(request_id, actor, "server.status", "global", reason, before, after, now)
+        return before, after, before["code"] != after["code"]
+
+    def world_sessions(self, account_id=None, instance_id=None, limit=1000):
+        """Newest non-revoked session per account that currently holds a world allocation."""
+        clauses, parameters = [], []
+        if account_id is not None:
+            clauses.append("s.ps4_id=?")
+            parameters.append(account_id)
+        if instance_id is not None:
+            clauses.append("a.instance_id=?")
+            parameters.append(instance_id)
+        sql = """SELECT s.ps4_id AS account_id,s.guid,a.instance_id,a.psidglobal,a.allocated_at
+            FROM sessions s JOIN allocations a USING(guid)
+            WHERE NOT EXISTS(SELECT 1 FROM sessions n WHERE n.ps4_id=s.ps4_id AND
+                (n.created_at>s.created_at OR (n.created_at=s.created_at AND n.guid>s.guid)))
+              AND NOT EXISTS(SELECT 1 FROM moderation_revoked_sessions r WHERE r.guid=s.guid)"""
+        sql += "".join(" AND " + clause for clause in clauses)
+        rows = [dict(row) for row in self.db.execute(sql + " ORDER BY s.ps4_id LIMIT ?", (*parameters, limit + 1))]
+        require(len(rows) <= limit, "Too many connected sessions for one action", 409)
+        return rows
+
+    def release_sessions(self, sessions, scene, *, operation, target, reason, actor, request_id):
+        """Drop world allocations without revoking sessions.
+
+        The scene and gateway disconnect a peer whose allocation no longer names
+        their instance. The unmodified client then waits two seconds and calls
+        LoadSpace(current psidglobal); a pending redirect makes N2LoadSpace
+        reserve the redirect scene instead. Session GUIDs stay valid: not a kick.
+        """
+        now = int(self._mutation(actor, request_id, reason))
+        require(scene is None or (isinstance(scene, str) and SCENE_KEY.fullmatch(scene)), "Invalid scene")
+        require(isinstance(sessions, list), "Invalid session selection")
+        expires = now + REDIRECT_SECONDS if scene is not None else None
+        released = []
+        for row in sessions:
+            session_token(row["guid"])
+            self.db.execute("DELETE FROM allocations WHERE guid=?", (row["guid"],))
+            if scene is None:
+                self.db.execute("DELETE FROM moderation_load_redirects WHERE guid=?", (row["guid"],))
+            else:
+                self.db.execute("""INSERT INTO moderation_load_redirects VALUES(?,?,?,?,?,?,NULL)
+                    ON CONFLICT(guid) DO UPDATE SET ps4_id=excluded.ps4_id,psidglobal=excluded.psidglobal,
+                    request_id=excluded.request_id,created_at=excluded.created_at,
+                    expires_at=excluded.expires_at,consumed_at=NULL""",
+                                (row["guid"], row["account_id"], scene, request_id, now, expires))
+            released.append({"account_id": row["account_id"], "from_scene": row["psidglobal"],
+                             "from_instance_id": row["instance_id"]})
+        before = {"sessions": released}
+        after = {"released": len(released), "redirect_scene": scene, "redirect_expires_at": expires,
+                 "delivery": "allocation_released_client_reloads"}
+        self._event(request_id, actor, operation, target, reason, before, after, now)
+        return before, after, bool(released)
+
+    def consume_load_redirect(self, guid, account_id):
+        """One-shot target for the next N2LoadSpace of exactly this session."""
+        row = self.db.execute("SELECT psidglobal,expires_at FROM moderation_load_redirects "
+                              "WHERE guid=? AND ps4_id=? AND consumed_at IS NULL", (guid, account_id)).fetchone()
+        if row is None:
+            return None
+        now = int(self._now())
+        if row["expires_at"] <= now:
+            return None
+        with self.db:
+            claimed = self.db.execute("UPDATE moderation_load_redirects SET consumed_at=? "
+                                      "WHERE guid=? AND consumed_at IS NULL", (now, guid)).rowcount
+        return row["psidglobal"] if claimed == 1 else None
+
+    def pending_redirect(self, guid):
+        row = self.db.execute("SELECT psidglobal,expires_at FROM moderation_load_redirects "
+                              "WHERE guid=? AND consumed_at IS NULL AND expires_at>?",
+                              (guid, int(self._now()))).fetchone()
+        return {"scene": row["psidglobal"], "expires_at": row["expires_at"]} if row else None
+
+    def _preference(self, account_id, key):
+        row = self.db.execute("SELECT value FROM preferences WHERE ps4_id=? AND key=?", (account_id, key)).fetchone()
+        return json.loads(row[0]) if row else PROFILE_TEXT_DEFAULTS[key]
+
+    def clear_profile_text(self, account_id, keys, *, reason, actor, request_id):
+        """Reset the status/mood the native PlayerLabelInfoServlet JSON displays."""
+        now = self._mutation(actor, request_id, reason)
+        self._account(account_id)
+        require(isinstance(keys, list) and keys and len(set(keys)) == len(keys)
+                and all(isinstance(key, str) and key in PROFILE_TEXT_DEFAULTS for key in keys),
+                "Choose status and/or mood to clear")
+        before = {key: self._preference(account_id, key) for key in sorted(keys)}
+        for key in keys:
+            self.db.execute("INSERT INTO preferences VALUES(?,?,?) ON CONFLICT(ps4_id,key) DO UPDATE SET value=excluded.value",
+                            (account_id, key, json_field(PROFILE_TEXT_DEFAULTS[key])))
+        after = {key: PROFILE_TEXT_DEFAULTS[key] for key in sorted(keys)}
+        self._event(request_id, actor, "profile.clear", account_id, reason, before, after, now)
         return before, after, before != after

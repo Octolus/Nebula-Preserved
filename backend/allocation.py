@@ -21,7 +21,34 @@ _PERSONAL_NAMES = frozenset(json.loads((_PROTOCOL / "http-nonminigame-gap-audit.
     encoding="utf-8"))["personal_space_navigator_names"])
 NONMINI_PERSONAL_SCENES = _PERSONAL_NAMES - {"CampSilverLake", "CutteridgeEstate", "SorcerersEyrie"}
 NONMINI_SEMANTIC_PERSONAL_SCENES = (_PERSONAL_NAMES - {"SorcerersEyrie"}) | {"SorcerersEyrie1"}
-NONMINI_PUBLIC_SCENES = frozenset({"Nexus", "LeafPark", "Beach", "Cinema"})
+# Shipped public destinations: PreInitLOAD.NavigatorPublicSpaces plus the Nexus
+# Cinema/SKL triggers. SteamPunk ships no s/steampunk scene bundle. Requires the
+# rebuilt scene runtime whose NebulaCoreReadiness.publicScenes lists the same set.
+NONMINI_PUBLIC_SCENES = frozenset({
+    "Nexus", "LeafPark", "Beach", "Cinema", "Bowling", "Dome", "StoneLakeCastle", "Cube",
+    "GhostTown", "TheNebulianOpenHouse", "ZeroDistrict", "NebuHouseOpenHouse",
+    "WestValleyApartmentOpenHouse", "MedievalVillage", "SKL"})
+# Shipped minigame managers (gameTables lengths) per scene; must equal
+# NebulaCoreReadiness.SceneTables. Other scenes expose none. Darts in Bowling
+# sits under an inactive object in the shipped prefab and is unreachable.
+MINIGAME_SCENE_TABLES = {
+    "StoneLakeCastle": {"board_tables": 8, "darts_tables": 0, "pool_tables": 0, "bowling_lanes": 0},
+    "Bowling": {"board_tables": 0, "darts_tables": 3, "pool_tables": 9, "bowling_lanes": 12},
+}
+_NO_MINIGAME_TABLES = {"board_tables": 0, "darts_tables": 0, "pool_tables": 0, "bowling_lanes": 0}
+
+
+def minigame_tables_match(value):
+    """Status table counts equal the scene's shipped managers exactly."""
+    expected = MINIGAME_SCENE_TABLES.get(value.get("psidglobal"), _NO_MINIGAME_TABLES)
+    for key, count in expected.items():
+        # Runtimes older than the pool/bowling relay omit those keys.
+        actual = value.get(key, 0) if key in ("pool_tables", "bowling_lanes") else value.get(key)
+        if type(actual) is not int or actual != count:
+            return False
+    return True
+
+
 _MIXED_SEMANTIC_COUNTS = {
     "CampSilverLake": (9, 8, 1),
     "CutteridgeEstate": (5, 4, 1),
@@ -181,7 +208,7 @@ class InstanceDirectory:
                               value.get("core_test_eligible") is True and value.get("listener_bound") is True and
                               value.get("game_ready") is False and value.get("protocol_complete") is False and
                               value.get("networking_parity") == "unproven" and
-                              all(type(value.get(k)) is int and value[k] == 0 for k in ("board_tables", "darts_tables")))
+                              minigame_tables_match(value))
             if not (complete or core_candidate):
                 return None
             if isinstance(value["heartbeat"], bool):

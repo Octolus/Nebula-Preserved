@@ -1,10 +1,13 @@
 services:
   server:
     image: {{ nebula_server_image }}
-    mem_limit: 1280m
+    # ~225 MiB per Unity world plus backend/supervisor headroom: 768 MiB + 256 MiB per
+    # world slot (2 slots = the former 1280m, 4 slots = 1792m). Override explicitly
+    # with nebula_server_mem_limit_mb when the host has less free memory.
+    mem_limit: {{ nebula_server_mem_limit_mb | default(768 + 256 * (nebula_max_processes | default(4) | int)) | int }}m
     logging: &logs
       driver: json-file
-      options: {max-size: "10m", max-file: "3"}
+      options: {max-size: "10m", max-file: "3", compress: "true"}
   public-game:
     image: {{ nebula_server_image }}
     mem_limit: 96m

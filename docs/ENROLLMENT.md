@@ -31,6 +31,14 @@ trusted claim can create a fresh device credential. Active account bans still
 block claims and device authentication. Claimed-ID access never grants dashboard
 operator permissions.
 
+**Protected accounts** keep strict semantics under the trust policy. With
+`NEBULA_PROTECT_STAFF_ACCOUNTS=1` (the default), accounts linked to a dashboard
+operator (`management_operator_accounts`) or carrying a moderation staff label,
+plus every SteamID64 in the comma-separated `NEBULA_PROTECTED_ACCOUNTS`, refuse
+claimed-device enrollment with `409 account_unavailable`. Only the exact primary
+credential (a lost-response retry) is accepted; existing device credentials are
+not revoked. A listed ID that does not exist yet can still be created once.
+
 Device aliases are bound to their exact account and secret. The backend records
 the active trust policy in SQLite so independent HTTP and native TLS gateway
 readers agree. The gateway binds and revalidates the exact device credential,
@@ -78,13 +86,17 @@ and retains authentication elsewhere. It limits registration to two requests
 per second with a ten-request burst. Persistent strict limits allow eight
 attempts per source address per hour and 100 globally. Trusted mode allows
 120 per source address per hour and 1,200 globally. Both policies allow up to
-1,000 newly registered accounts; trusted profiles allow 64 distinct device
+1,000 newly registered accounts (operators override these with
+`NEBULA_ENROLLMENT_PER_IP_HOURLY`, `NEBULA_ENROLLMENT_GLOBAL_HOURLY` and
+`NEBULA_ENROLLMENT_MAX_ACCOUNTS`; empty values keep the defaults); trusted profiles allow 64 distinct device
 aliases each. At capacity, existing device retries still work. Invalid and
 conflicting requests count toward rate limits.
 
 Rate records contain keyed address digests instead of raw client addresses.
 Responses disable caching; request and response secrets are not logged.
-Registration does not grant credits, special inventory or Steam rights.
+Registration itself grants no special inventory or Steam rights; an optional
+operator starter wallet (`NEBULA_STARTER_CRYSTALS`/`NEBULA_STARTER_NP`, default 0)
+is credited once when any new profile is created.
 Normal actor binding and moderation continue to apply.
 
 ## Focused checks
@@ -92,6 +104,7 @@ Normal actor binding and moderation continue to apply.
 ```sh
 python -B -m unittest discover -s backend/tests -p test_enrollment.py -v
 python -B -m unittest discover -s backend/tests -p test_trusted_enrollment.py -v
+python -B -m unittest discover -s backend/tests -p test_enrollment_protection.py -v
 ```
 
 Checks cover actual loopback HTTP, strict registration, trusted existing-account

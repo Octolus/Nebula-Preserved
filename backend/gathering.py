@@ -294,7 +294,13 @@ class Gathering:
 
     def route_Get_GatherStatus(self, request):
         fields, profile = self._identity(request, 3)
-        type_id = self._type(fields[2]); event, progress = self._event(type_id, profile)
+        type_id = self._type(fields[2])
+        if not self.store.db.execute("SELECT 1 FROM gathering_events WHERE type_id=?", (type_id,)).fetchone():
+            # Get_GatherStatus @0x3f0470 returns before touching any UI when
+            # field 3 is false: the native "no event running" answer, where a
+            # 404 only reached the client's error path. Nothing is written.
+            return self._reply(fields[0], fields[1], "false", type_id, 0)
+        event, progress = self._event(type_id, profile)
         return self._reply(fields[0], fields[1], str(self._active(event)).lower(), type_id, progress["current_items"])
 
     def route_Send_GatherInitInSpace(self, request):
@@ -387,14 +393,6 @@ class Gathering:
         # cooldown from index6.
         return self._reply(fields[0], fields[1], 1, 0, 2,
                            self._cooldown(event, progress), progress["current_items"])
-
-    def route_Get_GatherChristmasGetSpacesCompleted(self, request):
-        fields, _profile = self._identity(request, 4)
-        self._integer(fields[2], "Memorion level", 0, 1_000_000)
-        self._integer(fields[3], "client DateTime ticks", 0, 9_999_999_999_999_999_999)
-        # Callback 0x3ef0c0 consumes a server-validated Memorion score and
-        # level index. That game and its scoring oracle are explicitly deferred.
-        raise ProtocolError("Christmas 2018 Memorion gameplay is deferred", 501)
 
     def route_Get_GatherMedievalVillage(self, request):
         fields, profile = self._identity(request, 3)

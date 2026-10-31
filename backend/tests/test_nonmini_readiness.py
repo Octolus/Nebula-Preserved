@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
-from allocation import (InstanceDirectory, NONMINI_PERSONAL_SCENES, NONMINI_PUBLIC_SCENES,
+from allocation import (InstanceDirectory, MINIGAME_SCENE_TABLES, NONMINI_PERSONAL_SCENES, NONMINI_PUBLIC_SCENES,
                         NONMINI_SEMANTIC_PERSONAL_SCENES, validation_profile)
 from service import Service
 from state import Store, Catalog
@@ -40,6 +40,7 @@ class NonminiReadiness(unittest.TestCase):
             board_tables=0, darts_tables=0, heartbeat=time.time(), ip='127.0.0.1', bind='127.0.0.1',
             port=28002, instance_id='apartment-test', psidglobal=scene, players=0, maxusers=32,
             scene_registry_verified=True, housing_bound=personal, housing_owner='owner' if personal else '')
+        value.update(MINIGAME_SCENE_TABLES.get(scene, {}))
         value.update(overrides)
         path=self.root/'instances/apartment-test/instance-status.json'
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -94,9 +95,46 @@ class NonminiReadiness(unittest.TestCase):
         self.binding()
         self.assertIsNotNone(self.directory.ready())
 
+    def test_minigame_table_counts_must_match_the_shipped_scene(self):
+        self.assertEqual(MINIGAME_SCENE_TABLES['StoneLakeCastle']['board_tables'], 8)
+        self.assertEqual(MINIGAME_SCENE_TABLES['Bowling'],
+                         {'board_tables': 0, 'darts_tables': 3, 'pool_tables': 9, 'bowling_lanes': 12})
+        for scene in ('StoneLakeCastle', 'Bowling'):
+            self.descriptor(scene)
+            self.assertIsNotNone(self.directory.ready(scene))
+        for scene, overrides in (('StoneLakeCastle', {'board_tables': 0}), ('StoneLakeCastle', {'board_tables': 7}),
+                                 ('StoneLakeCastle', {'pool_tables': 9}), ('Bowling', {'bowling_lanes': 11}),
+                                 ('Bowling', {'pool_tables': True}), ('Bowling', {'darts_tables': 0}),
+                                 ('LeafPark', {'board_tables': 8}), ('LeafPark', {'bowling_lanes': 12}),
+                                 ('Nexus', {'pool_tables': '0'})):
+            with self.subTest(scene=scene, overrides=overrides):
+                self.descriptor(scene, **overrides)
+                self.assertIsNone(self.directory.ready(scene))
+        # A runtime without the pool/bowling relay cannot serve Bowling.
+        self.descriptor('Bowling')
+        path = self.root/'instances/apartment-test/instance-status.json'
+        value = json.loads(path.read_text(encoding='utf-8'))
+        del value['pool_tables'], value['bowling_lanes']
+        path.write_text(json.dumps(value), encoding='utf-8')
+        self.assertIsNone(self.directory.ready('Bowling'))
+
+    def test_minigame_table_counts_match_the_scene_runtime_and_supervisor(self):
+        source=(BACKEND.parent/'mirror-server/UnityProject/Assets/Preservation/NebulaCoreReadiness.cs').read_text()
+        csharp={scene:tuple(map(int,counts.split(','))) for scene,counts in
+                re.findall(r'if \(space == "(\w+)"\) return new\[\] \{ ([0-9, ]+) \};',source)}
+        supervisor=(BACKEND.parent/'tools/instance_supervisor.py').read_text(encoding='utf-8')
+        match=re.search(r'tables = \{(.*?)\}\.get\(',supervisor,re.S)
+        self.assertIsNotNone(match)
+        python_side={scene:tuple(map(int,counts.split(','))) for scene,counts in
+                     re.findall(r'"(\w+)": \(([0-9, ]+)\)',match.group(1))}
+        keys=('board_tables','darts_tables','pool_tables','bowling_lanes')
+        expected={scene:tuple(row[k] for k in keys) for scene,row in MINIGAME_SCENE_TABLES.items()}
+        self.assertEqual(csharp, expected)
+        self.assertEqual(python_side, expected)
+
     def test_mixed_unknown_spelling_and_game_table_metadata_are_closed(self):
         self.binding()
-        for scene in ('home','Cube','CampSilverLake','CutteridgeEstate','SorcerersEyrie','Bowling','Unknown'):
+        for scene in ('home','cube','SteamPunk','TokyoApartmentOpenHouse','CampSilverLake','CutteridgeEstate','SorcerersEyrie','Unknown'):
             self.descriptor(scene)
             self.assertIsNone(self.directory.ready())
 

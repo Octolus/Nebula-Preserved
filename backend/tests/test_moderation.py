@@ -406,6 +406,46 @@ class ModerationTests(unittest.TestCase):
                     with self.store.atomic(): self.store.db.execute(statement)
                 self.assertEqual(tables(self.store.db), before)
 
+    def test_server_status_defaults_open_and_requires_admin_and_atomic_group(self):
+        self.assertEqual(self.moderation.server_status()["status"], "normal")
+        self.assertEqual(self.moderation.server_status_code(ACCOUNT), 1)
+        self.assert_protocol(409, self.moderation.set_server_status, "maintenance", reason="x",
+                             actor={"id": "admin", "role": "admin"}, request_id=uuid.uuid4().hex)
+        self.assert_protocol(403, self.command, "set_server_status", "maintenance")
+        admin = {"id": "admin", "role": "admin"}
+        before, after, changed = self.command("set_server_status", "updating", actor=admin)
+        self.assertEqual((before["code"], after["code"], changed), (1, 2, True))
+        # No management operator tables in this unit store: nobody bypasses.
+        self.assertEqual(self.moderation.server_status_code(ACCOUNT), 2)
+        self.assert_protocol(400, self.command, "set_server_status", 0, actor=admin)
+
+    def test_release_sessions_keeps_guid_and_redirect_is_one_shot_and_bound(self):
+        self.store.db.execute("INSERT INTO allocations VALUES(?,?,?,?,?,?)", (G2, "pub-a", "Nexus", "127.0.0.1", 28000, 1.0))
+        self.store.db.commit()
+        with self.store.atomic():
+            sessions = self.moderation.world_sessions(account_id=ACCOUNT)
+        self.assertEqual([row["guid"] for row in sessions], [G2])
+        before, after, changed = self.command("release_sessions", sessions, "Beach", operation="move", target=ACCOUNT)
+        self.assertTrue(changed)
+        self.assertEqual(after["redirect_scene"], "Beach")
+        self.assertIsNone(self.store.db.execute("SELECT 1 FROM allocations WHERE guid=?", (G2,)).fetchone())
+        self.moderation.ensure_allowed(ACCOUNT, G2)  # not revoked: this is not a kick
+        self.assertEqual(self.moderation.pending_redirect(G2)["scene"], "Beach")
+        self.assertIsNone(self.moderation.consume_load_redirect(G2, OTHER))  # bound to the account
+        self.assertEqual(self.moderation.consume_load_redirect(G2, ACCOUNT), "Beach")
+        self.assertIsNone(self.moderation.consume_load_redirect(G2, ACCOUNT))
+        self.assert_protocol(400, self.command, "release_sessions", [], "../Home", operation="move", target=ACCOUNT)
+        event = self.store.db.execute("SELECT operation,target_id FROM moderation_events WHERE operation='move'").fetchone()
+        self.assertEqual(tuple(event), ("move", ACCOUNT))
+
+    def test_clear_profile_text_validates_keys_and_records_history(self):
+        self.store.save_preference(ACCOUNT, "status", "bad")
+        before, after, changed = self.command("clear_profile_text", ACCOUNT, ["status"])
+        self.assertEqual((before, after, changed), ({"status": "bad"}, {"status": ""}, True))
+        self.assertEqual(self.store.preferences(ACCOUNT)["status"], "")
+        self.assert_protocol(400, self.command, "clear_profile_text", ACCOUNT, ["userName"])
+        self.assert_protocol(404, self.command, "clear_profile_text", "missing-account", ["mood"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

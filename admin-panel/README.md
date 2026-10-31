@@ -21,6 +21,19 @@ The operator file seeds backend roles on its first management startup. Subsequen
 
 To create another operator: first assign its ID and role from **Panel access**, then stop the panel and add its password using the same command with `--owner their-operator-id --add-login`. Credential additions use an exclusive lock and atomic file replacement. Recreate the panel (`docker compose up -d --force-recreate panel`) afterward: file-backed Compose secrets must be remounted after replacement. The role in the credential file is only an initial seed and does not override an existing backend role. Keep at least one enabled owner. To rotate a password, stop the panel, replace only that operator's `password_scrypt` with a newly generated scrypt record, rotate the panel session key to invalidate existing sessions, then recreate the panel. Preserve backend state and the service token. If a crashed credential CLI leaves `admin-bootstrap.lock`, verify no credential CLI is running before removing that stale lock; never run multiple uncoordinated writers.
 
+## What the panel shows
+
+- **Overview:** headline numbers (players, online, purchases, bans, mutes, open reports), who is online, the latest purchases and staff actions. Every tile links to its page.
+- **Live monitor:** players online right now and which world they are in, running worlds and anything waiting to load, server errors from the last hour, a live activity stream and the full login history with IP location.
+- **Players:** search by name or Steam ID, filter online or restricted players, and open a player for:
+  - **Character:** what they are wearing now, saved outfits (wear, rename, delete), game settings, friends and blocks, apartments and furniture, last location (reset when stuck) and consumables.
+  - **Inventory:** owned items with photos and one-click **Give** / **Remove**.
+  - **Purchases, Credits, Sessions** (start, duration, IP, location, how it ended; other players on the same IP; failed logins), **Moderation** and **History**.
+- **Real-time updates:** the panel polls the server every few seconds, shows a toast for new logins, purchases, reports and staff actions, and refreshes what is on screen.
+- Names replace IDs throughout: players, items, stores and staff actions are shown by name and link to their page; IDs stay as small secondary text.
+- Reasons are only required for moderation and panel-access changes. Giving items, changing credits, store edits and save-data edits are one click and still audited. Destructive edits ask for a second click.
+- Dark monochrome theme by default; the sidebar toggles light mode.
+
 ## Features and limits
 
 The panel uses compact shadcn cards, tabs, selects, checkboxes and forms. At phone
@@ -91,3 +104,9 @@ Browser workflows cover login, audited mutations, moderation, idempotent replay,
 The browser receives only a signed HttpOnly session and a session-bound CSRF token. The SSR service reads the internal API token from its secret file, restricts proxied routes, validates origins and bodies, and checks the current backend operator role. Sessions expire after eight hours; rotating the signing key invalidates them. Login attempts are bounded in process memory; use reverse-proxy rate limits for public HTTPS administration. No analytics, remote fonts or external avatar images are loaded.
 
 Component sources originate from [shadcn/ui dashboard-01](https://ui.shadcn.com/blocks/dashboard), distributed under MIT. The sample company, accounts, chart data and unrelated demo navigation have been removed.
+
+Player inventory and grant results share catalog photos, readable categories,
+character labels and current store prices. Exact asset IDs remain in the item
+inspector. Missing historical names are explicitly identified; names are not
+inferred from opaque IDs. Unknown legacy entitlements remain visible without
+being matched to a different variant or given an unrelated photo.

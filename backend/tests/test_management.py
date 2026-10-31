@@ -101,7 +101,8 @@ class ManagementTests(unittest.TestCase):
         M.Management(self.store, self.service, TOKEN, OPERATORS)
         actor = self.manager.actor(headers())
         self.assertEqual(self.manager.read("me", {}, actor)["permissions"],
-                         ["moderation.ban", "moderation.kick", "moderation.mute", "moderation.reports", "read"])
+                         ["moderation.ban", "moderation.kick", "moderation.move", "moderation.mute",
+                          "moderation.profile", "moderation.reports", "read"])
         self.manager.command("operators/admin", {"role": "moderator", "enabled": False, "reason": "test"}, headers("owner", "test-key-0002"))
         self.assert_error(403, self.manager.actor, headers())
 
@@ -201,6 +202,41 @@ class ManagementTests(unittest.TestCase):
                 self.assertEqual(before[table], after[table])
         self.assertEqual(self.manager.owned(ACCOUNT, {})["total"], 4)
 
+    def test_owned_items_join_exact_catalog_variants_without_changing_ownership(self):
+        grants = [dict(kind="wardrobe", item_id=self.asset["item_id"], gender=self.asset["gender"], category=self.asset["category"]),
+                  dict(kind="companions", item_id=self.service.resources.catalog.list("companions")[0]["item_id"]),
+                  dict(kind="locomotions", item_id=self.service.resources.catalog.list("locomotions")[0]["item_id"]),
+                  dict(kind="housing", item_id=next(iter(self.service.housing.catalog)))]
+        for index, grant in enumerate(grants):
+            self.command("items", grant, key=f"metadata-grant-{index}")
+        before = rows(self.store.db)
+        page = self.manager.owned(ACCOUNT, {"limit": "2"})
+        second = self.manager.owned(ACCOUNT, {"limit": "2", "cursor": page["next_cursor"]})
+        items = page["items"] + second["items"]
+        self.assertEqual(len(items), 4)
+        self.assertEqual({r["kind"] for r in items}, {g["kind"] for g in grants})
+        for item in items:
+            self.assertTrue(item["catalog_known"])
+            self.assertTrue(item["preview_url"].startswith("/api/catalog-preview/"))
+            self.assertIsNone(item["original_name"])
+            self.assertTrue(item["category_label"])
+            self.assertIn("offers", item)
+        wardrobe = next(r for r in items if r["kind"] == "wardrobe")
+        self.assertEqual((wardrobe["gender"], wardrobe["category"]), (self.asset["gender"], self.asset["category"]))
+        self.assertEqual(before, rows(self.store.db))
+
+    def test_owned_unknown_item_keeps_identity_and_saved_label_without_false_preview(self):
+        asset = self.service.resources.catalog.list("companions")[0]
+        self.command("items", {"kind": "companions", "item_id": asset["item_id"]})
+        with self.store.db:
+            self.store.db.execute("UPDATE resource_entitlements SET item_id=?,display_name=? WHERE ps4_id=?",
+                                  ("legacy-unknown-item", "Player's old companion", ACCOUNT))
+        item = self.manager.owned(ACCOUNT, {})["items"][0]
+        self.assertFalse(item["catalog_known"])
+        self.assertEqual(item["display_name"], "Player's old companion")
+        self.assertEqual(item["item_id"], "legacy-unknown-item")
+        self.assertNotIn("preview_url", item)
+
     def test_unknown_item_and_game_role_mutations_rejected(self):
         before = rows(self.store.db)
         for kind in ("housing", "companions", "wardrobe", "admin", "vip"):
@@ -254,7 +290,8 @@ class ManagementTests(unittest.TestCase):
         two = self.manager.read("users", {"limit": "1", "cursor": one["next_cursor"]}, actor)
         self.assertEqual(one["total"], 2);self.assertNotEqual(one["items"], two["items"])
         self.assertEqual(self.manager.read("users", {"q": "%' OR 1=1--"}, actor)["total"], 0)
-        for tail in ("health", "me", "roles", "capabilities", "stats", "operators", "audit", "transactions", "users/" + ACCOUNT, "users/" + ACCOUNT + "/wallet", "users/" + ACCOUNT + "/owned", "users/" + ACCOUNT + "/purchases"):
+        for tail in ("health", "me", "roles", "capabilities", "stats", "operators", "audit", "transactions", "users/" + ACCOUNT, "users/" + ACCOUNT + "/wallet", "users/" + ACCOUNT + "/owned", "users/" + ACCOUNT + "/purchases",
+                     "users/" + ACCOUNT + "/live", "moderation/scenes", "moderation/instances", "moderation/server-status"):
             self.manager.read(tail, {}, actor)
         for kind in ("wardrobe", "companions", "locomotions", "housing", "offer"):
             self.assertIsInstance(self.manager.read("catalog", {"kind": kind}, actor)["items"], list)
@@ -262,7 +299,8 @@ class ManagementTests(unittest.TestCase):
 
     def test_validation_missing_accounts_reason_unknown_fields_and_keys(self):
         self.assert_error(404, self.command, "wallet-adjustments", {"currency": "np", "delta": 1}, account="missing")
-        self.assert_error(400, self.command, "wallet-adjustments", {"currency": "np", "delta": 1, "reason": ""})
+        self.assert_error(400, self.command, "wallet-adjustments", {"currency": "np", "delta": 1, "reason": " "})
+        self.assert_error(400, self.command, "ban", {"reason": ""})
         self.assert_error(400, self.command, "wallet-adjustments", {"currency": "np", "delta": 1, "level": 99})
         self.assert_error(400, self.command, "wallet-adjustments", {"currency": "np", "delta": 1}, key="short")
         self.assert_error(400, self.manager.command, "operators/new", {"role": {}, "enabled": True, "reason": "test"}, headers("owner"))
@@ -283,7 +321,75 @@ class ManagementTests(unittest.TestCase):
         self.assertEqual(asyncio.run(call(Request("me", method="DELETE")))[0], 405)
 
 
+def _game_admin_http_contract(self):
+    """New staff routes travel through the same envelope, permission and error mapping."""
+    async def call(request):
+        response = await self.manager.handle(request)
+        return response.status, json.loads(response.body)
+    status, body = asyncio.run(call(Request("capabilities")))
+    self.assertEqual(status, 200)
+    actions = {row["id"]: row for row in body["data"]["admin_actions"]}
+    self.assertTrue(actions["move"]["allowed"] and actions["server_status"]["allowed"])
+    self.assertFalse(actions["staff_label"]["allowed"])  # admin is not owner
+    status, body = asyncio.run(call(Request("moderation/server-status", method="POST",
+                                            body={"status": "nope", "reason": "x"})))
+    self.assertEqual((status, body["error"]["code"]), (400, "invalid_request"))
+    status, body = asyncio.run(call(Request("moderation/server-status", method="POST",
+                                            body={"status": "maintenance", "reason": "x"},
+                                            auth=headers("moderator", "test-key-0009"))))
+    self.assertEqual((status, body["error"]["code"]), (403, "forbidden"))
+    status, body = asyncio.run(call(Request("users/" + ACCOUNT + "/move", method="POST",
+                                            body={"scene": "Nexus", "reason": "x"}, auth=headers("admin", "test-key-0010"))))
+    self.assertEqual((status, body["error"]["code"]), (409, "conflict"))  # not in a world
+    status, body = asyncio.run(call(Request("users/" + ACCOUNT + "/live")))
+    self.assertEqual(status, 200)
+    self.assertFalse(body["data"]["in_world"])
+
+
+ManagementTests.test_game_admin_http_contract = _game_admin_http_contract
 
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+
+def _economy_changes_do_not_require_reason(self):
+    result = self.manager.command("users/" + ACCOUNT + "/wallet-adjustments", {"currency": "np", "delta": 3},
+                                  headers("admin", "test-key-noreason"))
+    self.assertTrue(result["changed"])
+    row = self.store.db.execute("SELECT reason FROM management_audit WHERE audit_id=?", (result["audit_id"],)).fetchone()
+    self.assertEqual("No reason given", row[0])
+    self.assert_error(400, self.manager.command, "users/" + ACCOUNT + "/ban", {}, headers("admin", "test-key-noreason2"))
+
+
+ManagementTests.test_economy_changes_do_not_require_reason = _economy_changes_do_not_require_reason
+
+
+def _feed_reports_new_activity_with_names(self):
+    actor = {"id": "admin", "role": "admin"}
+    before = self.manager.read("feed", {"since": "0"}, actor)
+    self.manager.command("users/" + ACCOUNT + "/wallet-adjustments", {"currency": "np", "delta": 2},
+                         headers("admin", "test-key-feed-0001"))
+    after = self.manager.read("feed", {"since": str(before["server_time"] - 1)}, actor)
+    staff = [row for row in after["items"] if row["type"] == "staff"]
+    self.assertTrue(staff and staff[-1]["operation"] == "wallet.adjust")
+    self.assertEqual("player", staff[-1]["target_type"])
+    self.assert_error(400, self.manager.read, "feed", {"since": "x"}, actor)
+
+
+ManagementTests.test_feed_reports_new_activity_with_names = _feed_reports_new_activity_with_names
+
+
+def _player_detail_reports_current_scene(self):
+    actor = {"id": "admin", "role": "admin"}
+    self.assertIsNone(self.manager.read("users/" + ACCOUNT, {}, actor)["current_scene"])
+    self.store.db.execute("INSERT INTO sessions VALUES('scene-guid',?,?)", (ACCOUNT, 1.0))
+    self.store.db.execute("INSERT INTO allocations VALUES('scene-guid','inst-1','Nexus','127.0.0.1',7777,1.0)")
+    self.store.db.execute("INSERT INTO profile_state(ps4_id,online) VALUES(?,1) ON CONFLICT(ps4_id) DO UPDATE SET online=1", (ACCOUNT,))
+    self.store.db.commit()
+    detail = self.manager.read("users/" + ACCOUNT, {}, actor)
+    self.assertEqual(("Nexus", "inst-1"), (detail["current_scene"], detail["current_instance_id"]))
+
+
+ManagementTests.test_player_detail_reports_current_scene = _player_detail_reports_current_scene

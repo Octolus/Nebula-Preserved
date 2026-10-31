@@ -8,8 +8,12 @@ import sqlite3
 import time
 
 from avatar_entry_codec import encode_entry_fields
+from catalog_inventory import client_item_order, client_type_id, client_type_ids
 from wire import ProtocolError
+from diagnostic_logging import missing_data
 from public_access import gift_recipient_grant
+from space_shop import (SHOP_SPACES, SPACE_GENDER_ID, SPACE_ITEM_GENDER, SPACE_TABLENAME,
+                        SPACE_TYPE_ID)
 
 
 SHOP_DATA = [
@@ -38,7 +42,20 @@ ITEM_DATA = [
     {"name": "tablename", "type": "string"},
 ]
 
-KINDS = ("wardrobe", "companions", "locomotions", "housing", "bundle")
+KINDS = ("wardrobe", "companions", "locomotions", "housing", "personal_spaces", "bundle")
+# Shared by table creation and the one-time CHECK migration of older databases.
+OFFERS_DDL = """CREATE TABLE {name} (
+    offer_id TEXT PRIMARY KEY, kind TEXT NOT NULL
+    CHECK(kind IN ('wardrobe','companions','locomotions','housing','personal_spaces','bundle')),
+    item_id TEXT, gender TEXT, category TEXT,
+    shop_id TEXT NOT NULL REFERENCES shop_catalogs(shop_id),
+    type_id TEXT NOT NULL, gender_id INTEGER NOT NULL,
+    name TEXT NOT NULL, image_path TEXT NOT NULL,
+    crystals INTEGER NOT NULL CHECK(crystals>=0),
+    np INTEGER NOT NULL CHECK(np>=0),
+    featured INTEGER NOT NULL CHECK(featured IN (0,1)),
+    active INTEGER NOT NULL CHECK(active IN (0,1)),
+    created_at REAL NOT NULL)"""
 TYPE_SHOPS = range(4)
 TYPE_LIST_GENDERS = (0, 1)
 DIRECT_ITEM_GENDERS = (2, 3, 5, 6)
@@ -101,6 +118,9 @@ class Shop:
         self.resources = resources
         self.housing = housing
         self.notifications = notifications
+        # ApartmentPolicy; Service attaches it. Apartment offers grant bindings.
+        self.apartments = None
+        self._migrate_offer_kinds()
         with store.db:
             store.db.executescript("""
                 CREATE TABLE IF NOT EXISTS shop_wallets (
@@ -113,18 +133,7 @@ class Shop:
                     CHECK(type_shop BETWEEN 0 AND 3), name TEXT NOT NULL,
                     description TEXT NOT NULL, url TEXT NOT NULL,
                     active INTEGER NOT NULL CHECK(active IN (0,1)));
-                CREATE TABLE IF NOT EXISTS shop_offers (
-                    offer_id TEXT PRIMARY KEY, kind TEXT NOT NULL
-                    CHECK(kind IN ('wardrobe','companions','locomotions','housing','bundle')),
-                    item_id TEXT, gender TEXT, category TEXT,
-                    shop_id TEXT NOT NULL REFERENCES shop_catalogs(shop_id),
-                    type_id TEXT NOT NULL, gender_id INTEGER NOT NULL,
-                    name TEXT NOT NULL, image_path TEXT NOT NULL,
-                    crystals INTEGER NOT NULL CHECK(crystals>=0),
-                    np INTEGER NOT NULL CHECK(np>=0),
-                    featured INTEGER NOT NULL CHECK(featured IN (0,1)),
-                    active INTEGER NOT NULL CHECK(active IN (0,1)),
-                    created_at REAL NOT NULL);
+                {offers};
                 CREATE TABLE IF NOT EXISTS shop_bundle_items (
                     bundle_offer_id TEXT NOT NULL REFERENCES shop_offers(offer_id),
                     child_offer_id TEXT NOT NULL REFERENCES shop_offers(offer_id),
@@ -136,7 +145,35 @@ class Shop:
                     source TEXT NOT NULL CHECK(source IN ('buy','gift','admin')),
                     granted_by TEXT, created_at REAL NOT NULL,
                     PRIMARY KEY(ps4_id,offer_id));
-            """)
+            """.replace("{offers}", OFFERS_DDL.format(name="IF NOT EXISTS shop_offers")))
+
+    def _migrate_offer_kinds(self):
+        """Rebuild an older shop_offers table whose CHECK lacks personal_spaces.
+
+        SQLite cannot alter a CHECK; this is its documented table-rebuild
+        procedure. Rows, IDs and every referencing row are kept unchanged.
+        """
+        db = self.store.db
+        row = db.execute("SELECT sql FROM sqlite_schema WHERE type='table' AND name='shop_offers'").fetchone()
+        if row is None or "'personal_spaces'" in row[0]:
+            return
+        db.commit()
+        db.execute("PRAGMA foreign_keys=OFF")
+        try:
+            db.executescript("BEGIN IMMEDIATE;" + OFFERS_DDL.format(name="shop_offers_migrating") + ";"
+                             "INSERT INTO shop_offers_migrating SELECT * FROM shop_offers;"
+                             "DROP TABLE shop_offers;"
+                             "ALTER TABLE shop_offers_migrating RENAME TO shop_offers;")
+            if db.execute("PRAGMA foreign_key_check").fetchone() is not None:
+                db.rollback()
+                raise ProtocolError("Shop offer migration would break a reference", 500)
+            db.commit()
+        except BaseException:
+            if db.in_transaction:
+                db.rollback()
+            raise
+        finally:
+            db.execute("PRAGMA foreign_keys=ON")
 
     def configure_shop(self, shop_id, type_shop, name, description="", url="", active=True):
         shop_id = _text(shop_id, "shop ID")
@@ -188,6 +225,9 @@ class Shop:
                     raise ProtocolError("Wardrobe gender ID does not match the shipped asset")
             else:
                 gender = category = None
+            if kind == "personal_spaces" and (gender_id, type_id) != (SPACE_GENDER_ID, SPACE_TYPE_ID):
+                # Only the native Spaces tab (gender 4, type PERSON) lists apartments.
+                raise ProtocolError("Apartment offers use the Spaces tab (gender 4, type PERSON)")
             derived_image = self._thumbnail(kind, item_id, asset)
             if image_path and image_path != derived_image:
                 raise ProtocolError("Offer thumbnail does not match the shipped manifest asset")
@@ -268,8 +308,47 @@ class Shop:
         sql = "SELECT * FROM shop_offers WHERE offer_id=?" + (" AND active=1" if active else "")
         row = self.store.db.execute(sql, (offer_id,)).fetchone()
         if not row:
+            inactive = active and self.store.db.execute(
+                "SELECT 1 FROM shop_offers WHERE offer_id=?", (offer_id,)).fetchone()
+            missing_data("shop_offer_inactive" if inactive else "shop_offer_unknown", offer_id=offer_id)
             raise ProtocolError("Unknown local offer", 404)
         return dict(row)
+
+    # ItemData.id is a single client value. EntryItem.Set (0x4aa380) stores it
+    # as itemSelected, and the 3D try-on loader SetShopBase.Init(itemSelected,
+    # tablename) and WardrobeWindow.buyItem/OnClickBuyNP/OnClickGift
+    # (0x4b8500/0x4b75e0/0x4b7700) all send that same value back. Lists
+    # therefore expose the shipped asset ID, and the return paths accept either
+    # that asset ID or a legacy/bundle offer ID. No stored row changes.
+    _IDENTITY_SQL = ("kind || '|' || CASE kind WHEN 'wardrobe' THEN "
+                     "coalesce(gender,'') || '|' || coalesce(category,'') ELSE '' END")
+
+    def _ambiguous_item_ids(self):
+        """Asset IDs that cannot name exactly one underlying local item."""
+        rows = self.store.db.execute(
+            f"""SELECT item_id FROM shop_offers WHERE active=1 AND kind<>'bundle' AND item_id IS NOT NULL
+                GROUP BY item_id HAVING COUNT(DISTINCT {self._IDENTITY_SQL})>1
+                UNION SELECT o.item_id FROM shop_offers o JOIN shop_offers p
+                ON p.offer_id=o.item_id AND p.offer_id<>o.offer_id""")
+        return {row[0] for row in rows}
+
+    def _client_offer(self, key, price=None):
+        """Resolve an ItemData.id sent back by the client to one active offer."""
+        if self.store.db.execute("SELECT 1 FROM shop_offers WHERE offer_id=?", (key,)).fetchone():
+            return self._offer(key)
+        rows = [dict(row) for row in self.store.db.execute(
+            f"""SELECT *, {self._IDENTITY_SQL} AS identity FROM shop_offers
+                WHERE item_id=? AND kind<>'bundle' AND active=1 ORDER BY offer_id""", (key,))]
+        if not rows:
+            return self._offer(key)  # unknown/inactive reporting is unchanged
+        if len({row["identity"] for row in rows}) != 1:
+            raise ProtocolError("Asset ID names several different local items", 409)
+        if price is not None:
+            # Same item in several stores: the displayed price selects the offer.
+            rows = [row for row in rows if price(row)] or rows
+        offer = rows[0]
+        del offer["identity"]
+        return offer
 
     def _resolve_asset(self, kind, item_id, gender=None, category=None):
         if kind == "wardrobe":
@@ -280,8 +359,14 @@ class Shop:
             return self.resources.catalog.resolve(kind, item_id)
         if kind == "housing":
             if item_id not in self.housing.catalog:
+                missing_data("housing_item_unknown", item_id=item_id)
                 raise ProtocolError("Unknown shipped housing asset", 404)
             return self.housing.catalog[item_id]
+        if kind == "personal_spaces":
+            if item_id not in SHOP_SPACES:
+                missing_data("personal_space_unknown", item_id=item_id)
+                raise ProtocolError("Unknown shipped apartment shop ID", 404)
+            return SHOP_SPACES[item_id]
         raise ProtocolError("Bundle has no direct shipped asset")
 
     @staticmethod
@@ -291,15 +376,18 @@ class Shop:
             return path
         if (not path.endswith(".png") or "/" not in path
                 or not any(marker in path for marker in
-                           ("MALE/", "FEMALE/", "COMPANIONS/", "Housing/", "LOCOMOTIONS/"))):
+                           ("MALE/", "FEMALE/", "COMPANIONS/", "Housing/", "LOCOMOTIONS/", "PersonalSpaces/"))):
             raise ProtocolError("Offer thumbnail is not compatible with the shipped loader")
         return path
 
     def _thumbnail(self, kind, item_id, asset):
         if kind == "wardrobe":
             suffix = "/" + item_id + "Thumbnail.png"
+            # A manifest may list the same ID under several folders; only the
+            # row's own gender/category folder is its thumbnail.
             paths = [e[2] for e in asset.get("category_evidence", [])
-                     if len(e) == 3 and e[2].endswith(suffix)]
+                     if len(e) == 3 and e[2].endswith(suffix)
+                     and (e[0], e[1]) == (asset.get("gender"), asset.get("category"))]
             prefixes = ("Assets/ResourcesART/Wardrobe_EAB/", "Assets/ART/ResourcesART/Wardrobe_EAB/")
             paths = [p[len(prefix):] for p in paths for prefix in prefixes if p.startswith(prefix)]
             if not paths and item_id in GENERIC_THUMBNAIL_ITEMS:
@@ -321,21 +409,34 @@ class Shop:
             # the catalog row has already proved the canonical table and ID.
             return self._checked_thumbnail(
                 "Housing/" + asset["table"] + "/" + item_id + "/" + item_id + "Thumbnail.png")
+        if kind == "personal_spaces":
+            # EntryBase.setThumbnail loads PersonalSpaces/<id>/<id>Thumbnail
+            # from shipped Resources; the same ID names its screenshots.
+            return self._checked_thumbnail(asset["thumbnail_path"])
         raise ProtocolError("Bundle thumbnail must be explicitly configured")
 
-    def _item(self, row, profile_gender=None):
+    def _item(self, row, profile_gender=None, ambiguous=None):
         if row["kind"] == "wardrobe":
             table = row["category"]
         elif row["kind"] in ("companions", "locomotions"):
             table = self.resources.catalog.resolve(row["kind"], row["item_id"])["table"]
         elif row["kind"] == "housing":
             table = self.housing.catalog[row["item_id"]]["table"]
+        elif row["kind"] == "personal_spaces":
+            table = SPACE_TABLENAME
         else:
             table = "BUNDLES"
         gender = row["gender"] if row["kind"] == "wardrobe" else profile_gender
         if gender not in ("MALE", "FEMALE"):
             gender = "MALE"
-        return {"id": row["offer_id"], "name": row["name"],
+        if row["kind"] == "personal_spaces":
+            gender = SPACE_ITEM_GENDER
+        if ambiguous is None:
+            ambiguous = self._ambiguous_item_ids()
+        client_id = row["offer_id"]
+        if row["kind"] != "bundle" and row["item_id"] and row["item_id"] not in ambiguous:
+            client_id = row["item_id"]
+        return {"id": client_id, "name": row["name"],
                 "imagePath": row["image_path"], "crystals": row["crystals"],
                 "np": row["np"], "isBundle": row["kind"] == "bundle",
                 "gender": "BundleMix" if row["kind"] == "bundle" else gender,
@@ -343,7 +444,8 @@ class Shop:
 
     def _features(self, request):
         fields, profile = self._profile(request, 2)
-        rows = [self._item(dict(row), profile["gender"]) for row in self.store.db.execute(
+        ambiguous = self._ambiguous_item_ids()
+        rows = [self._item(dict(row), profile["gender"], ambiguous) for row in self.store.db.execute(
             "SELECT * FROM shop_offers WHERE active=1 AND featured=1 ORDER BY offer_id")]
         return self._list(fields[0], fields[1], rows, ITEM_DATA)
 
@@ -374,17 +476,21 @@ class Shop:
         fields, profile = self._profile(request, 4)
         gender_id = _uint(fields[3], "shop gender ID")
         if gender_id in TYPE_LIST_GENDERS:
-            rows = [{"shopID": fields[2], "typeID": row[0], "gender": str(gender_id)}
-                    for row in self.store.db.execute(
-                        """SELECT DISTINCT type_id FROM shop_offers o JOIN shop_catalogs s USING(shop_id)
-                           WHERE o.active=1 AND s.active=1 AND o.shop_id=? AND o.gender_id=?
-                           ORDER BY type_id""", (fields[2], gender_id))]
+            # Only IDs with a native ItemTypeWindow icon, in client enum order;
+            # an unknown ID would abort the client's whole category list.
+            stored = [row[0] for row in self.store.db.execute(
+                """SELECT DISTINCT type_id FROM shop_offers o JOIN shop_catalogs s USING(shop_id)
+                   WHERE o.active=1 AND s.active=1 AND o.shop_id=? AND o.gender_id=?
+                   ORDER BY type_id""", (fields[2], gender_id))]
+            rows = [{"shopID": fields[2], "typeID": type_id, "gender": str(gender_id)}
+                    for type_id in client_type_ids(stored)]
             return self._list(fields[0], fields[1], rows, TYPE_DATA)
         if gender_id in DIRECT_ITEM_GENDERS:
-            rows = [self._item(dict(row), profile["gender"]) for row in self.store.db.execute(
+            ambiguous = self._ambiguous_item_ids()
+            rows = client_item_order(self._item(dict(row), profile["gender"], ambiguous) for row in self.store.db.execute(
                 """SELECT o.* FROM shop_offers o JOIN shop_catalogs s USING(shop_id)
                    WHERE o.active=1 AND s.active=1 AND o.shop_id=? AND o.gender_id=?
-                   ORDER BY o.offer_id""", (fields[2], gender_id))]
+                   ORDER BY o.offer_id""", (fields[2], gender_id)))
             return self._list(fields[0], fields[1], rows, ITEM_DATA)
         if gender_id == 4:
             return self._list(fields[0], fields[1], [], ITEM_DATA)
@@ -393,21 +499,27 @@ class Shop:
     def _items(self, request):
         fields, profile = self._profile(request, 5)
         gender_id = _uint(fields[3], "shop gender ID")
-        rows = [self._item(dict(row), profile["gender"]) for row in self.store.db.execute(
+        # The client sends back the type ID it displayed (merged L/R slots,
+        # RINGSL/R already stripped to RINGS); match every stored member.
+        wanted = client_type_id(fields[4])
+        ambiguous = self._ambiguous_item_ids()
+        rows = client_item_order(self._item(dict(row), profile["gender"], ambiguous) for row in self.store.db.execute(
             """SELECT o.* FROM shop_offers o JOIN shop_catalogs s USING(shop_id)
                WHERE o.active=1 AND s.active=1 AND o.shop_id=? AND o.gender_id=?
-               AND o.type_id=? ORDER BY o.offer_id""", (fields[2], gender_id, fields[4]))]
+               ORDER BY o.offer_id""", (fields[2], gender_id))
+            if row["type_id"] == fields[4] or (wanted is not None and client_type_id(row["type_id"]) == wanted))
         return self._list(fields[0], fields[1], rows, ITEM_DATA)
 
     def _bundle(self, request):
         fields, profile = self._profile(request, 3)
-        parent = self._offer(fields[2])
+        parent = self._client_offer(fields[2])
         if parent["kind"] != "bundle":
             raise ProtocolError("Offer is not a bundle")
-        rows = [self._item(dict(row), profile["gender"]) for row in self.store.db.execute(
+        ambiguous = self._ambiguous_item_ids()
+        rows = [self._item(dict(row), profile["gender"], ambiguous) for row in self.store.db.execute(
             """SELECT o.* FROM shop_bundle_items b JOIN shop_offers o
                ON o.offer_id=b.child_offer_id WHERE b.bundle_offer_id=? AND o.active=1
-               ORDER BY b.ordinal,o.offer_id""", (fields[2],))]
+               ORDER BY b.ordinal,o.offer_id""", (parent["offer_id"],))]
         return self._list(fields[0], fields[1], rows, ITEM_DATA)
 
     def _info(self, request):
@@ -416,7 +528,16 @@ class Shop:
         return "#".join(("true", fields[0], fields[1], profile["username"],
                          str(wallet["np"]), str(wallet["crystals"])))
 
+    def _space_key(self, offer):
+        if self.apartments is None:
+            raise ProtocolError("Apartment ownership is not configured", 501)
+        return self._resolve_asset("personal_spaces", offer["item_id"])["logical_space_key"]
+
     def _underlying_owned(self, ps4_id, offer):
+        if offer["kind"] == "personal_spaces":
+            # The binding is the entitlement: a staff-removed apartment can be
+            # bought again even though its old purchase receipt remains.
+            return self.apartments_owned(ps4_id, offer)
         if self.store.db.execute("SELECT 1 FROM shop_owned WHERE ps4_id=? AND offer_id=?",
                                  (ps4_id, offer["offer_id"])).fetchone():
             return True
@@ -429,6 +550,9 @@ class Shop:
             return any(row["item_id"] == offer["item_id"] for row in self.housing.inventory(ps4_id))
         children = self._children(offer["offer_id"])
         return bool(children) and all(self._underlying_owned(ps4_id, child) for child in children)
+
+    def apartments_owned(self, ps4_id, offer):
+        return self.apartments.owned(ps4_id, self._space_key(offer)) is not None
 
     def _children(self, offer_id):
         return [dict(row) for row in self.store.db.execute(
@@ -450,6 +574,9 @@ class Shop:
             self.resources.grant(ps4_id, offer["kind"], offer["item_id"], offer["name"])
         elif offer["kind"] == "housing":
             self.housing.grant_item(ps4_id, offer["item_id"], offer["name"])
+        elif offer["kind"] == "personal_spaces":
+            # Same path as a starter or staff grant: binding plus managed instance.
+            self.apartments.bind(ps4_id, self._space_key(offer))
 
     def _record_grant(self, ps4_id, offer, source, granted_by=None):
         with self.store.atomic():
@@ -470,7 +597,8 @@ class Shop:
                 raise ProtocolError("Purchase requires the current account session", 403)
             # Recheck ownership and the wallet after BEGIN IMMEDIATE.  This is
             # the serialization point for idempotency and balance authority.
-            offer = self._offer(fields[2])
+            offer = self._client_offer(fields[2], lambda row: (row["crystals"], row["np"])
+                                       == (supplied_crystals, supplied_np))
             if (supplied_crystals, supplied_np) != (offer["crystals"], offer["np"]):
                 raise ProtocolError("Displayed price no longer matches the configured offer", 409)
             if option == 0:
@@ -480,10 +608,12 @@ class Shop:
             else:
                 raise ProtocolError("Unsupported local purchase option")
             if self._underlying_owned(fields[1], offer):
+                missing_data("purchase_already_owned", offer_id=offer["offer_id"])
                 return "#".join(("true", fields[0], fields[1], "ISPURCHASED"))
             self._ensure_wallet(fields[1])
             wallet = self.wallet(fields[1])
             if wallet[column] < cost:
+                missing_data("purchase_insufficient_funds", offer_id=offer["offer_id"], currency=column)
                 return "#".join(("true", fields[0], fields[1], failure))
             updated = self.store.db.execute(
                 f"UPDATE shop_wallets SET {column}={column}-? WHERE ps4_id=? AND {column}>=?",
@@ -506,15 +636,17 @@ class Shop:
                 raise ProtocolError("Gift requires the current account session", 403)
             # Friendship, ownership and balance are re-read under the same
             # write transaction as debit, grants and the idempotency claim.
-            offer = self._offer(fields[2])
+            offer = self._client_offer(fields[2], lambda row: row["crystals"] == supplied_crystals)
             if supplied_crystals != offer["crystals"]:
                 raise ProtocolError("Displayed gift price no longer matches the configured offer", 409)
             target = self._gift_target(sender["ps4_id"], target_name)
             if self._underlying_owned(target["ps4_id"], offer):
+                missing_data("gift_already_owned", offer_id=offer["offer_id"])
                 return "#".join((*prefix, "ISPURCHASED", target_name, offer["offer_id"]))
             self._ensure_wallet(fields[1])
             wallet = self.wallet(fields[1])
             if wallet["crystals"] < offer["crystals"]:
+                missing_data("gift_insufficient_funds", offer_id=offer["offer_id"], currency="crystals")
                 return "#".join((*prefix, "NOCRYSTALS", target_name, offer["offer_id"]))
             updated = self.store.db.execute(
                 "UPDATE shop_wallets SET crystals=crystals-? WHERE ps4_id=? AND crystals>=?",
@@ -556,7 +688,7 @@ class Shop:
 
     def _is_purchased(self, request):
         fields, _ = self._profile(request, 3)
-        owned = self._underlying_owned(fields[1], self._offer(fields[2]))
+        owned = self._underlying_owned(fields[1], self._client_offer(fields[2]))
         return "#".join(("true", fields[0], fields[1], "True" if owned else "False"))
 
     def _sync(self, request):

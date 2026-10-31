@@ -6,6 +6,7 @@ export const catalogKinds = [
   { value: 'companions', label: 'Companions' },
   { value: 'locomotions', label: 'Locomotions' },
   { value: 'housing', label: 'Furniture' },
+  { value: 'personal_spaces', label: 'Apartments' },
   { value: 'offer', label: 'Store offers' },
   { value: 'shop_artwork', label: 'Recovered shop artwork' },
 ] as const;
@@ -36,15 +37,24 @@ export function catalogKindLabel(value: unknown) {
 }
 
 export function catalogItemName(row: Row) {
-  const supplied = String(row.display_name || row.name || '').trim();
   const id = String(row.item_id || row.offer_id || '');
-  if (
-    supplied &&
-    supplied !== id &&
-    !/^(preserved|preservation|local preservation)\b/i.test(supplied) &&
-    !/^[a-z0-9_-]{24,}$/i.test(supplied)
-  )
-    return supplied;
+  for (const value of [
+    row.original_name,
+    row.label,
+    row.derived_name,
+    row.display_name,
+    row.readable_name,
+    row.name,
+  ]) {
+    const supplied = String(value || '').trim();
+    if (
+      supplied &&
+      supplied !== id &&
+      !/^(preserved|preservation|local preservation)\b/i.test(supplied) &&
+      !/^[a-z0-9_-]{24,}$/i.test(supplied)
+    )
+      return supplied;
+  }
   const type = catalogCategoryLabel(row);
   const gender = catalogGenderLabel(row.gender);
   return [gender === 'All characters' ? '' : gender, type, id ? '· ' + id.slice(0, 8) : '']
@@ -118,6 +128,7 @@ export function catalogCategoryLabel(row: Row) {
       {
         wardrobe: 'Customization item',
         housing: 'Furniture',
+        personal_spaces: 'Apartment',
         companions: 'Companion',
         locomotions: 'Locomotion',
         shop_artwork: 'Shop artwork',

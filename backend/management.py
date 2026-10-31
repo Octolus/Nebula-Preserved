@@ -24,10 +24,18 @@ from wire import ProtocolError
 PREFIX = "/management/v1"
 OPERATOR_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,63}\Z")
 KEY = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{7,127}\Z")
+# Moderators act on individual players. Admins add server-wide availability,
+# mass relocation and economy/data powers. Owners add access control and the
+# staff badge (display identity). See docs/MODERATION-CAPABILITIES.md.
+_MODERATOR = ("read", "moderation.ban", "moderation.kick", "moderation.mute", "moderation.reports",
+              "moderation.move", "moderation.profile")
+_ADMIN = _MODERATOR + ("wallet.adjust", "items.grant", "catalog.manage", "players.data", "users.rename",
+                       "moderation.maintenance", "moderation.news", "moderation.server_status",
+                       "moderation.disconnect")
 PERMISSIONS = {
-    "moderator": frozenset(("read", "moderation.ban", "moderation.kick", "moderation.mute", "moderation.reports")),
-    "admin": frozenset(("read", "wallet.adjust", "items.grant", "users.rename", "moderation.ban", "moderation.kick", "moderation.mute", "moderation.reports", "moderation.maintenance", "moderation.news")),
-    "owner": frozenset(("read", "wallet.adjust", "items.grant", "users.rename", "operators.manage", "moderation.ban", "moderation.kick", "moderation.mute", "moderation.reports", "moderation.maintenance", "moderation.news", "players.staff")),
+    "moderator": frozenset(_MODERATOR),
+    "admin": frozenset(_ADMIN),
+    "owner": frozenset(_ADMIN + ("operators.manage", "players.staff")),
 }
 MAX_BALANCE = 2_147_483_647
 MAX_BODY = 16 * 1024
@@ -110,6 +118,14 @@ class Management:
         self.db = store.db
         self._migrate()
         self._bootstrap(operators)
+        from store_management import StoreManagement
+        from player_data import PlayerData
+        from player_activity import PlayerActivity
+        from game_admin import GameAdmin
+        self.stores = StoreManagement(self)
+        self.player_data = PlayerData(self)
+        self.activity = PlayerActivity(self)
+        self.game_admin = GameAdmin(self)
 
     def _migrate(self):
         require(not self.db.in_transaction and not self.db.atomic_depth, "Management schema requires an idle Store")
@@ -215,7 +231,117 @@ class Management:
             UNION ALL SELECT kind,item_id,NULL,NULL,display_name,granted_at FROM resource_entitlements WHERE ps4_id=?
             UNION ALL SELECT 'housing',item_id,NULL,NULL,display_name,granted_at FROM housing_entitlements WHERE ps4_id=?
             ORDER BY kind,item_id,gender,category"""
-        return self.page_sql(sql, (account_id,) * 3, query)
+        result = self.page_sql(sql, (account_id,) * 3, query)
+        result["items"] = self._with_assets(result["items"])
+        return result
+
+    def _with_assets(self, rows):
+        """Join recovered catalog photos/labels onto ownership-shaped rows."""
+        from catalog_inventory import CatalogInventory, identity
+        if not hasattr(self, "_catalog_inventory"):
+            self._catalog_inventory = CatalogInventory(self.service)
+        assets, _offers, _stores, _counts, _summary = self._catalog_inventory.snapshot()
+        lookup = {identity(row): row for row in assets}
+        joined = []
+        for row in rows:
+            if row.get("kind") not in ("wardrobe", "companions", "locomotions", "housing") or not row.get("item_id"):
+                joined.append({**row, "catalog_known": False})
+                continue
+            asset = lookup.get(identity(row), {})
+            merged = {**asset, **row, "category": row.get("category") or asset.get("category"),
+                      "gender": row.get("gender") or asset.get("gender"), "catalog_known": bool(asset)}
+            # Ownership rows often store the raw ID as their name; prefer the catalog's readable one.
+            if row.get("display_name") in (None, "", row.get("item_id")) and asset.get("display_name"):
+                merged["display_name"] = asset["display_name"]
+            joined.append(merged)
+        return joined
+
+    def feed(self, since):
+        """Recent server activity for the panel's live view, oldest first, bounded."""
+        now = time.time()
+        since = max(since, now - 3600)
+        rows = []
+        q = lambda sql: [dict(r) for r in self.db.execute(sql, (since,))]
+        for row in q("""SELECT 'login' AS type,s.created_at AS at,s.ps4_id AS account_id,p.username AS account_name
+                FROM sessions s LEFT JOIN profiles p USING(ps4_id) WHERE s.created_at>? ORDER BY s.created_at DESC LIMIT 50"""):
+            rows.append(row)
+        for row in q("""SELECT 'purchase' AS type,s.created_at AS at,s.ps4_id AS account_id,p.username AS account_name,
+                s.source,o.name AS item_name,o.kind FROM shop_owned s LEFT JOIN profiles p USING(ps4_id)
+                LEFT JOIN shop_offers o USING(offer_id) WHERE s.created_at>? ORDER BY s.created_at DESC LIMIT 50"""):
+            rows.append(row)
+        for row in q("""SELECT 'staff' AS type,created_at AS at,operation,target_id,actor_id,reason
+                FROM management_audit WHERE created_at>? ORDER BY audit_id DESC LIMIT 50"""):
+            rows.append(row)
+        for row in q("""SELECT 'report' AS type,r.created_at AS at,r.target,s.ps4_id AS account_id,p.username AS account_name
+                FROM local_reports r LEFT JOIN sessions s ON s.guid=r.guid LEFT JOIN profiles p ON p.ps4_id=s.ps4_id
+                WHERE r.created_at>? ORDER BY r.created_at DESC LIMIT 50"""):
+            rows.append(row)
+        self._name_targets([r for r in rows if r["type"] == "staff"])
+        rows.sort(key=lambda r: r["at"] or 0)
+        return {"items": rows[-100:], "server_time": now,
+                "online": self.db.execute("SELECT COUNT(*) FROM profile_state WHERE online=1").fetchone()[0]}
+
+    def _presence(self, account_id, profile):
+        """Scene the player's current session is allocated to, if they are online."""
+        if not profile.get("online"):
+            return {"current_scene": None, "current_instance_id": None, "current_scene_owner": None}
+        row = self.db.execute("""SELECT l.psidglobal,l.instance_id FROM sessions s JOIN allocations l USING(guid)
+            WHERE s.ps4_id=? ORDER BY l.allocated_at DESC LIMIT 1""", (account_id,)).fetchone()
+        if row is None:
+            return {"current_scene": None, "current_instance_id": None, "current_scene_owner": None}
+        owner = self.db.execute("SELECT owner_ps4_id FROM housing_spaces WHERE instance_id=?", (row[1],)).fetchone()             if self.db.execute("SELECT 1 FROM sqlite_schema WHERE name='housing_spaces'").fetchone() else None
+        return {"current_scene": row[0], "current_instance_id": row[1],
+                "current_scene_owner": self._usernames([owner[0]]).get(owner[0]) if owner else None}
+
+    def _usernames(self, ids):
+        ids = sorted({value for value in ids if isinstance(value, str) and value})
+        if not ids:
+            return {}
+        marks = ",".join("?" * len(ids))
+        return dict(self.db.execute("SELECT ps4_id,username FROM profiles WHERE ps4_id IN (" + marks + ")", ids))
+
+    def _name_accounts(self, rows, key="account_id", name="account_name"):
+        names = self._usernames(row.get(key) for row in rows)
+        for row in rows:
+            row[name] = names.get(row.get(key))
+        return rows
+
+    def _name_targets(self, rows):
+        """Readable target names for audit/moderation rows; IDs stay for linking."""
+        targets = [row.get("target_id") for row in rows]
+        ids = sorted({t for t in targets if isinstance(t, str) and t})
+        players = self._usernames(ids)
+
+        def lookup(table, key):
+            if not ids:
+                return {}
+            return dict(self.db.execute("SELECT " + key + ",name FROM " + table + " WHERE " + key
+                                        + " IN (" + ",".join("?" * len(ids)) + ")", ids))
+        stores, offers = lookup("shop_catalogs", "shop_id"), lookup("shop_offers", "offer_id")
+        for row in rows:
+            target, operation = row.get("target_id"), str(row.get("operation") or "")
+            if operation.startswith("operators."):
+                kind, label = "operator", target
+            elif operation.startswith("report."):
+                kind, label = "report", None
+            elif operation.startswith("moderation.news") or operation.startswith("news."):
+                kind, label = "news", None
+            elif operation.startswith("moderation.maintenance") or operation.startswith("maintenance."):
+                kind, label = "server", "Maintenance notice"
+            elif operation in ("moderation.server_status", "server.status"):
+                kind, label = "server", "Server availability"
+            elif operation in ("moderation.disconnect", "disconnect.all", "instance.evacuate"):
+                kind, label = ("server", "All connected players") if target in ("server", "global") else ("instance", target)
+            elif target in players:
+                kind, label = "player", players[target]
+            elif target in stores:
+                kind, label = "store", stores[target]
+            elif target in offers:
+                kind, label = "listing", offers[target]
+            else:
+                kind, label = None, None
+            row["target_type"], row["target_name"] = kind, label
+        return rows
 
     def read(self, tail, query, actor):
         if tail == "health":
@@ -225,33 +351,68 @@ class Management:
         if tail == "roles":
             return {"items": [{"id": role, "permissions": sorted(permissions)}
                               for role, permissions in PERMISSIONS.items()]}
+        parts = tail.split("/")
+        if self.game_admin.handles_read(parts):
+            return self.game_admin.read(parts, query, actor)
         if tail == "capabilities":
-            return {"dashboard_roles": list(PERMISSIONS), "game_roles_supported": [],
+            return {**self.game_admin.capabilities(actor, PERMISSIONS),
+                    "dashboard_roles": list(PERMISSIONS), "game_roles_supported": [],
                     "game_privilege_mutation_supported": False, "game_developer_flag_grant_supported": False,
-                    "grant_kinds": ["wardrobe", "companions", "locomotions", "housing", "offer"],
+                    "grant_kinds": ["wardrobe", "companions", "locomotions", "housing", "personal_spaces", "offer"],
                     "currency_kinds": ["crystals", "np"], "historical_purchase_price_retained": False,
                     "public_access_credential_management_supported": False,
+                    "catalog_management_supported": True,
+                    "store_types": [{"value": 0, "kind": "wardrobe", "label": "Clothing & customization"},
+                                    {"value": 1, "kind": "companions", "label": "Companions"},
+                                    {"value": 2, "kind": "housing", "label": "Furniture"},
+                                    {"value": 3, "kind": "locomotions", "label": "Locomotions"}],
                     "moderation_supported": True,
-                    "moderation_actions": ["ban", "unban", "kick", "mute", "unmute"],
+                    "moderation_actions": ["ban", "unban", "kick", "mute", "unmute", "move",
+                                           "clear-profile"],
+                    "server_status_supported": True, "player_relocation_supported": True,
                     "announcement_supported": False,
                     "news_supported": True, "staff_labels_supported": True,
                     "operator_account_links_supported": True,
                     "moderation_delivery": "Committed policy is not a client display acknowledgement"}
         if tail == "moderation/status":
             return {"maintenance_minutes": self.service.moderation.maintenance_minutes(),
+                    "server_status": self.service.moderation.server_status()["status"],
                     "game_roles_supported": [], "announcement_supported": False}
         if tail == "moderation/events":
             result = self.page_sql("SELECT * FROM moderation_events ORDER BY event_id DESC", (), query)
             for row in result["items"]:
                 row["before"] = json.loads(row.pop("before_json"))
                 row["after"] = json.loads(row.pop("after_json"))
+            self._name_targets(result["items"])
             return result
         if tail == "moderation/reports":
             limit, offset = self.pagination(query)
             total = self.db.execute("SELECT COUNT(*) FROM local_reports").fetchone()[0]
-            return {"items": self.service.moderation.reports(limit=limit, offset=offset),
-                    "total": total, "limit": limit,
+            items = self._name_accounts(self.service.moderation.reports(limit=limit, offset=offset),
+                                        "reporter_account_id", "reporter_name")
+            # A report names a player by username; resolve it only when unambiguous.
+            for item in items:
+                matches = self.db.execute("SELECT ps4_id FROM profiles WHERE lower(username)=lower(?) LIMIT 2",
+                                          (item.get("target") or "",)).fetchall()
+                item["target_account_id"] = matches[0][0] if len(matches) == 1 else None
+            return {"items": items, "total": total, "limit": limit,
                     "next_cursor": str(offset + limit) if offset + limit < total else None}
+        if tail == "moderation/active":
+            now = self.service.moderation._now()
+            result = self.page_sql("""SELECT m.ps4_id AS account_id,p.username AS account_name,
+                m.ban_enabled=1 AND (m.ban_expires_at IS NULL OR m.ban_expires_at>?) AS banned,m.ban_expires_at,m.ban_reason,
+                m.mute_enabled=1 AND (m.mute_expires_at IS NULL OR m.mute_expires_at>?) AS muted,m.mute_expires_at,m.mute_reason,
+                (SELECT actor_id FROM moderation_events e WHERE e.target_id=m.ps4_id ORDER BY event_id DESC LIMIT 1) AS last_actor_id,
+                (SELECT created_at FROM moderation_events e WHERE e.target_id=m.ps4_id ORDER BY event_id DESC LIMIT 1) AS last_action_at
+                FROM moderation_accounts m LEFT JOIN profiles p USING(ps4_id)
+                WHERE (m.ban_enabled=1 AND (m.ban_expires_at IS NULL OR m.ban_expires_at>?))
+                   OR (m.mute_enabled=1 AND (m.mute_expires_at IS NULL OR m.mute_expires_at>?))
+                ORDER BY last_action_at DESC,account_id""", (now, now, now, now), query)
+            return result
+        if tail == "feed":
+            since = query.get("since", "0")
+            require(isinstance(since, str) and re.fullmatch(r"[0-9]{1,12}(?:\.[0-9]{1,20})?", since), "Invalid feed cursor")
+            return self.feed(float(since))
         if tail == "moderation/news":
             return self.page_sql("SELECT * FROM moderation_news ORDER BY created_at DESC,news_id DESC", (), query)
         if tail == "stats":
@@ -263,52 +424,95 @@ class Management:
                     "admin_offer_grants": scalar("SELECT COUNT(*) FROM shop_owned WHERE source='admin'"),
                     "crystals": scalar("SELECT COALESCE(SUM(crystals),0) FROM shop_wallets"),
                     "np": scalar("SELECT COALESCE(SUM(np),0) FROM shop_wallets"),
-                    "audit_entries": scalar("SELECT COUNT(*) FROM management_audit")}
+                    "audit_entries": scalar("SELECT COUNT(*) FROM management_audit"),
+                    "banned": self.db.execute("SELECT COUNT(*) FROM moderation_accounts WHERE ban_enabled=1 AND (ban_expires_at IS NULL OR ban_expires_at>?)", (self.service.moderation._now(),)).fetchone()[0],
+                    "muted": self.db.execute("SELECT COUNT(*) FROM moderation_accounts WHERE mute_enabled=1 AND (mute_expires_at IS NULL OR mute_expires_at>?)", (self.service.moderation._now(),)).fetchone()[0],
+                    "open_reports": scalar("SELECT COUNT(*) FROM moderation_report_index i LEFT JOIN moderation_report_reviews v USING(report_id) WHERE COALESCE(v.status,'open')='open'")}
         if tail == "users":
             search = query.get("q", "")
             require(isinstance(search, str) and len(search) <= 128, "Invalid account search")
             # instr gives literal substring matching; %, _ and SQL syntax are data.
-            return self.page_sql("""SELECT p.ps4_id AS account_id,p.username,p.platform,p.gender,p.created_at,
-                COALESCE(s.online,0) AS online,COALESCE(w.crystals,0) AS crystals,COALESCE(w.np,0) AS np
+            status = query.get("status", "")
+            require(status in ("", "online", "banned", "muted", "restricted"), "Invalid player status filter")
+            now = self.service.moderation._now()
+            sql = """SELECT * FROM (SELECT p.ps4_id AS account_id,p.username,p.platform,p.gender,p.created_at,
+                COALESCE(s.online,0) AS online,COALESCE(w.crystals,0) AS crystals,COALESCE(w.np,0) AS np,
+                (SELECT MAX(created_at) FROM sessions WHERE ps4_id=p.ps4_id) AS last_login_at,
+                COALESCE(m.ban_enabled=1 AND (m.ban_expires_at IS NULL OR m.ban_expires_at>?),0) AS banned,
+                COALESCE(m.mute_enabled=1 AND (m.mute_expires_at IS NULL OR m.mute_expires_at>?),0) AS muted
                 FROM profiles p LEFT JOIN profile_state s USING(ps4_id) LEFT JOIN shop_wallets w USING(ps4_id)
-                WHERE instr(lower(p.ps4_id),lower(?))>0 OR instr(lower(p.username),lower(?))>0 ORDER BY p.ps4_id""", (search, search), query)
+                LEFT JOIN moderation_accounts m USING(ps4_id)
+                WHERE instr(lower(p.ps4_id),lower(?))>0 OR instr(lower(p.username),lower(?))>0)"""
+            sql += {"": "", "online": " WHERE online=1", "banned": " WHERE banned=1", "muted": " WHERE muted=1",
+                    "restricted": " WHERE banned=1 OR muted=1"}[status]
+            return self.page_sql(sql + " ORDER BY online DESC,COALESCE(last_login_at,created_at) DESC,account_id",
+                                 (now, now, search, search), query)
         if tail == "operators":
             require(actor["role"] == "owner", "Only an owner may list dashboard operators", 403, "forbidden")
-            return self.page_sql("SELECT o.operator_id AS id,o.role,o.enabled,o.created_at,o.updated_at,l.account_id FROM management_operators o LEFT JOIN management_operator_accounts l USING(operator_id) ORDER BY o.operator_id", (), query)
+            result = self.page_sql("SELECT o.operator_id AS id,o.role,o.enabled,o.created_at,o.updated_at,l.account_id FROM management_operators o LEFT JOIN management_operator_accounts l USING(operator_id) ORDER BY o.operator_id", (), query)
+            self._name_accounts(result["items"])
+            return result
         if tail == "audit":
             result = self.page_sql("SELECT * FROM management_audit ORDER BY audit_id DESC", (), query)
             for row in result["items"]:
                 row["before"] = json.loads(row.pop("before_json"));row["after"] = json.loads(row.pop("after_json"))
+            self._name_targets(result["items"])
             return result
         if tail == "transactions":
-            return self.page_sql("SELECT * FROM management_wallet_ledger ORDER BY ledger_id DESC", (), query)
+            result = self.page_sql("SELECT * FROM management_wallet_ledger ORDER BY ledger_id DESC", (), query)
+            self._name_accounts(result["items"])
+            return result
+        if tail == "purchases":
+            result = self.page_sql("""SELECT s.ps4_id AS account_id,p.username AS account_name,s.offer_id,s.source,
+                s.granted_by,s.created_at,o.kind,o.item_id,o.gender,o.category,o.name,o.shop_id,c.name AS store_name,
+                o.crystals AS current_offer_crystals,o.np AS current_offer_np FROM shop_owned s
+                LEFT JOIN profiles p USING(ps4_id) LEFT JOIN shop_offers o USING(offer_id)
+                LEFT JOIN shop_catalogs c ON c.shop_id=o.shop_id ORDER BY s.created_at DESC,s.offer_id""", (), query)
+            result["items"] = self._with_assets(result["items"])
+            return result
         if tail == "catalog":
             return self.catalog(query)
         parts = tail.split("/")
+        if tail == "stores" or (len(parts) == 2 and parts[0] in ("stores", "store-offers")):
+            return self.stores.read(tail, query)
+        if parts[0] == "monitor" or (len(parts) >= 3 and parts[0] == "users" and parts[2] in ("sessions", "logins", "ips")):
+            if parts[0] == "users":
+                self.profile(parts[1])
+            return self.activity.read(parts, query)
+        if len(parts) >= 3 and parts[0] == "users" and parts[2] == "character":
+            self.profile(parts[1])
+            return self.player_data.read(parts[1], parts[3:], query)
         if len(parts) in (2, 3) and parts[0] == "users":
             account_id = parts[1];profile = self.profile(account_id)
             if len(parts) == 2:
-                return {**profile, "wallet": self.service.shop.wallet(account_id)}
+                moderation = self.service.moderation.status(account_id)
+                return {**profile, "wallet": self.service.shop.wallet(account_id),
+                        "banned": moderation["banned"], "muted": moderation["muted"],
+                        "ban_expires_at": moderation["ban_expires_at"], "mute_expires_at": moderation["mute_expires_at"],
+                        "staff_label": moderation["staff_label"], **self._presence(account_id, profile)}
             if parts[2] == "wallet":
                 return self.service.shop.wallet(account_id)
             if parts[2] == "moderation":
-                return self.service.moderation.status(account_id)
+                return {**self.service.moderation.status(account_id), "username": profile["username"]}
             if parts[2] == "owned":
                 return self.owned(account_id, query)
             if parts[2] == "transactions":
                 return self.page_sql("SELECT * FROM management_wallet_ledger WHERE account_id=? ORDER BY ledger_id DESC", (account_id,), query)
             if parts[2] == "audit":
                 result = self.page_sql("""SELECT * FROM management_audit WHERE target_id=? AND operation IN
-                    ('wallet.adjust','items.grant','users.rename','moderation.ban','moderation.kick','moderation.mute','players.staff')
+                    ('wallet.adjust','items.grant','users.rename','moderation.ban','moderation.kick','moderation.mute','moderation.unban','moderation.unmute','players.staff','players.data','moderation.move','moderation.profile')
                     ORDER BY audit_id DESC""", (account_id,), query)
                 for row in result["items"]:
                     row["before"] = json.loads(row.pop("before_json"))
                     row["after"] = json.loads(row.pop("after_json"))
                 return result
             if parts[2] == "purchases":
-                result = self.page_sql("""SELECT s.offer_id,s.source,s.granted_by,s.created_at,o.kind,o.item_id,o.name,
+                result = self.page_sql("""SELECT s.offer_id,s.source,s.granted_by,s.created_at,o.kind,o.item_id,o.gender,
+                    o.category,o.name,o.shop_id,c.name AS store_name,
                     o.crystals AS current_offer_crystals,o.np AS current_offer_np FROM shop_owned s
-                    LEFT JOIN shop_offers o USING(offer_id) WHERE s.ps4_id=? ORDER BY s.created_at DESC,s.offer_id""", (account_id,), query)
+                    LEFT JOIN shop_offers o USING(offer_id) LEFT JOIN shop_catalogs c ON c.shop_id=o.shop_id
+                    WHERE s.ps4_id=? ORDER BY s.created_at DESC,s.offer_id""", (account_id,), query)
+                result["items"] = self._with_assets(result["items"])
                 for item in result["items"]:
                     item["historical_price_known"] = False
                 return result
@@ -380,11 +584,16 @@ class Management:
 
     def _command(self, tail, body, headers):
         parts = tail.split("/")
-        if len(parts) == 3 and parts[0] == "users":
+        game_route = self.game_admin.route(parts)
+        if game_route is not None:
+            permission, target = game_route
+        elif len(parts) == 3 and parts[0] == "users":
             permission = {"wallet-adjustments": "wallet.adjust", "items": "items.grant", "rename": "users.rename",
                           "ban": "moderation.ban", "unban": "moderation.ban", "kick": "moderation.kick",
                           "mute": "moderation.mute", "unmute": "moderation.mute", "staff-label": "players.staff"}.get(parts[2])
             target = parts[1]
+        elif len(parts) >= 4 and parts[0] == "users" and parts[2] == "character":
+            permission, target = "players.data", parts[1]
         elif tail == "moderation/maintenance":
             permission, target = "moderation.maintenance", "server"
         elif len(parts) == 3 and parts[:2] == ["moderation", "reports"]:
@@ -395,13 +604,20 @@ class Management:
             permission, target = "operators.manage", parts[1]
         elif len(parts) == 3 and parts[0] == "operators" and parts[2] == "player-link":
             permission, target = "operators.manage", parts[1]
+        elif len(parts) == 2 and parts[0] in ("stores", "store-offers"):
+            permission, target = "catalog.manage", parts[1]
         else:
             permission = None
         require(permission is not None, "Management route not found", 404, "not_found")
         actor = self.actor(headers, permission)
         key = headers.get("Idempotency-Key", "")
         require(isinstance(key, str) and KEY.fullmatch(key), "A bounded Idempotency-Key of at least eight characters is required")
-        reason = text(body.get("reason"), "audit reason", maximum=512)
+        # Moderation and access changes need a stated reason; routine economy,
+        # catalog and save-data edits are still audited but may omit it.
+        if permission.startswith("moderation.") or permission in ("players.staff", "operators.manage")                 or body.get("reason") not in (None, ""):
+            reason = text(body.get("reason"), "audit reason", maximum=512)
+        else:
+            reason = "No reason given"
         fingerprint = hashlib.sha256(canonical({"method": "POST", "route": tail, "body": body}).encode()).hexdigest()
         with self.store.atomic():
             actor = self.actor(headers, permission)  # Recheck authorization under the write lock.
@@ -411,12 +627,19 @@ class Management:
                 result = json.loads(old["response_json"]);result["replayed"] = True
                 return result
             request_id = uuid.uuid4().hex
-            if permission == "wallet.adjust":
+            if game_route is not None:
+                before, after, changed = self.game_admin.command(parts, body, actor, request_id, reason)
+            elif permission == "wallet.adjust":
                 before, after, changed = self._wallet(target, body, actor, request_id, reason)
             elif permission == "items.grant":
                 before, after, changed = self._grant(target, body, actor)
             elif permission == "users.rename":
                 before, after, changed = self._rename(target, body)
+            elif permission == "catalog.manage":
+                before, after, changed = self.stores.change(parts[0], target, body)
+            elif permission == "players.data":
+                self.profile(target)
+                before, after, changed = self.player_data.change(target, parts[3:], body, actor, request_id)
             elif permission == "players.staff":
                 fields(body, ("label", "reason"));self.profile(target)
                 before, after, changed = self.service.moderation.set_staff_label(
@@ -442,10 +665,14 @@ class Management:
                 before, after, changed = self._operator_player_link(target, body)
             else:
                 before, after, changed = self._operator(target, body)
-            audit_id = self._audit(request_id, actor["id"], actor["role"], permission, target, reason, before, after)
+            # Record the action taken, not just the permission (unban/unmute share ban/mute permissions).
+            operation = ("moderation." + parts[2]) if parts[0] == "users" and parts[2] in ("unban", "unmute") else permission
+            audit_id = self._audit(request_id, actor["id"], actor["role"], operation, target, reason, before, after)
             result = {"request_id": request_id, "audit_id": audit_id, "operation": permission,
                       "account_id": target if parts[0] == "users" else None,
                       "operator_id": target if parts[0] == "operators" else None,
+                      "store_id": target if parts[0] == "stores" else None,
+                      "offer_id": target if parts[0] == "store-offers" else None,
                       "before": before, "after": after, "changed": changed, "replayed": False}
             self.db.execute("INSERT INTO management_requests VALUES(?,?,?,?,?)", (actor["id"], key, fingerprint, canonical(result), time.time()))
             return result
@@ -457,16 +684,20 @@ class Management:
             return moderation.set_maintenance(body.get("minutes"), reason=reason,
                                               actor=actor, request_id=request_id)
         self.profile(target)
-        linked_operator = self.db.execute("SELECT o.role FROM management_operators o JOIN management_operator_accounts l USING(operator_id) WHERE l.account_id=? AND o.enabled=1", (target,)).fetchone()
-        if linked_operator is not None and actor["role"] != "owner":
-            rank = {"moderator": 1, "admin": 2, "owner": 3}
-            require(rank[actor["role"]] > rank[linked_operator["role"]],
-                    "An operator may not sanction an equal or higher enabled operator", 403, "forbidden")
+        self.protect_target(target, actor)
         fields(body, ("expires_at", "reason") if action in ("ban", "mute") else ("reason",))
         arguments = {"reason": reason, "actor": actor, "request_id": request_id}
         if action in ("ban", "mute"):
             arguments["expires_at"] = body.get("expires_at")
         return getattr(moderation, action)(target, **arguments)
+
+    def protect_target(self, target, actor):
+        """Explicitly linked enabled operators are only actionable by a higher rank (or an owner)."""
+        linked_operator = self.db.execute("SELECT o.role FROM management_operators o JOIN management_operator_accounts l USING(operator_id) WHERE l.account_id=? AND o.enabled=1", (target,)).fetchone()
+        if linked_operator is not None and actor["role"] != "owner":
+            rank = {"moderator": 1, "admin": 2, "owner": 3}
+            require(rank[actor["role"]] > rank[linked_operator["role"]],
+                    "An operator may not sanction an equal or higher enabled operator", 403, "forbidden")
 
     def _operator_player_link(self, target, body):
         fields(body, ("account_id", "reason"))
@@ -535,6 +766,16 @@ class Management:
             owned = self.db.execute("SELECT 1 FROM housing_entitlements WHERE ps4_id=? AND item_id=?", (target, item_id)).fetchone() is not None
             if not owned:
                 self.service.housing.grant_item(target, item_id)
+        elif kind == "personal_spaces":
+            # Apartment by its shop ID: the same binding a purchase creates.
+            require(not ({"gender", "category"} & body.keys()), "Apartment grant has no gender/category")
+            from space_shop import SHOP_SPACES
+            require(item_id in SHOP_SPACES, "Shipped apartment not found", 404, "not_found")
+            space = SHOP_SPACES[item_id]["logical_space_key"]
+            key = {"kind": kind, "item_id": item_id, "space_key": space}
+            owned = self.service.apartments.owned(target, space) is not None
+            if not owned:
+                self.service.apartments.bind(target, space)
         else:
             raise ManagementError(400, "invalid_request", "Unsupported grant kind")
         return {**key, "owned": owned}, {**key, "owned": True}, not owned

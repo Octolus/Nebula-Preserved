@@ -121,7 +121,7 @@ class ShopContracts(unittest.TestCase):
                                   "gender": "0"}])
         offers = decode_list(self.call("GetItemAssetsDataServlet", "guid-a", "shop-a",
                                        "avatar-shop", 0, item["category"]), ITEM_DATA)
-        self.assertEqual(offers[0]["id"], "wardrobe-offer")
+        self.assertEqual(offers[0]["id"], item["item_id"])  # ItemData.id = shipped asset ID
         self.assertEqual((offers[0]["crystals"], offers[0]["np"]), (31, 9))
         self.assertEqual(offers[0]["tablename"], item["category"])
         self.assertEqual(offers[0]["gender"], item["gender"])
@@ -129,7 +129,7 @@ class ShopContracts(unittest.TestCase):
                          f"{item['gender']}/{item['category']}/{item['item_id']}/"
                          f"{item['item_id']}Thumbnail.png")
         self.assertEqual(decode_list(self.call("GetFeaturesServlet", "guid-a", "shop-a"),
-                                     ITEM_DATA)[0]["id"], "wardrobe-offer")
+                                     ITEM_DATA)[0]["id"], item["item_id"])
 
     def test_wallet_buy_is_server_priced_idempotent_and_persistent(self):
         item = self.configure_wardrobe(crystals=20, np=7)
@@ -252,7 +252,7 @@ class ShopContracts(unittest.TestCase):
         self.shop.add_bundle_item("bundle", "chair", 1)
         rows = decode_list(self.call("NPShopBundleItemsServlet", "guid-a", "shop-a",
                                      "bundle"), ITEM_DATA)
-        self.assertEqual([row["id"] for row in rows], ["pet", "chair"])
+        self.assertEqual([row["id"] for row in rows], [companion, housing])
         self.shop.set_wallet("shop-a", 10)
         with patch.object(self.housing, "grant_item",
                           side_effect=RuntimeError("injected later bundle child failure")):
@@ -289,7 +289,7 @@ class ShopContracts(unittest.TestCase):
         response = self.call("GetShopTypeDataShopServlet", "guid-a", "shop-a",
                              "companions", 2)
         rows = decode_list(response, ITEM_DATA)
-        self.assertEqual(rows[0]["id"], "pet")
+        self.assertEqual(rows[0]["id"], companion["item_id"])
         self.assertEqual(rows[0]["imagePath"],
                          f"COMPANIONS/{companion['item_id']}/"
                          f"{companion['item_id']}Thumbnail.png")

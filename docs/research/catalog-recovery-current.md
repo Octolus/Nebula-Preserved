@@ -22,7 +22,7 @@ Group those four items under the corresponding selectable canonical UI categorie
 
 `ShopNETGcloud.Get_GetItemAssetsData` (RVA `0x40c420`) reads the declared Int32 count from token 3, allocates that many `ItemData` entries, then consumes tokens 4 through count+3. It computes local UI pages as `ceil(count / 10)`. There is no small item-count cap or server pagination parameter in this receiver. `Get_GetShopTypeDataMale` (RVA `0x40d630`) similarly handles complete returned arrays. This is bounded static evidence, not a claim of unlimited allocation or transport capacity.
 
-The preservation remote transport limits an HTTP response to 8 MiB (`RESPONSE_LIMIT` in `experimental/remote-transport/client/src/main.rs`). Keep lists category-scoped and measure the actual encoded/encrypted wire response against that limit. Gender 4 has no recovered deserialization branch in this receiver, so do not turn furniture IDs into invented personal-space offers.
+The preservation remote transport limits an HTTP response to 8 MiB (`RESPONSE_LIMIT` in `experimental/remote-transport/client/src/main.rs`). Keep lists category-scoped and measure the actual encoded/encrypted wire response against that limit. Gender 4 (Spaces) is not a `GetShopTypeData` tab: `EntryGender.OnClick` (`0x4a86e0`) asks `GetItemAssetsData` for type `PERSON` directly and this same receiver parses the reply. Apartment offers use the recovered `PersonalSpaces/<id>` shop IDs, never furniture IDs (see [ITEM-METADATA-EVIDENCE.md](../ITEM-METADATA-EVIDENCE.md#apartments-personal-spaces)).
 
 ## Shop artwork is not store membership
 

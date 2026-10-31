@@ -123,18 +123,24 @@ class HTTPAdapterErrors(unittest.TestCase):
         self.assertEqual((event["command"], event["status"], event["response_bytes"]),
                          ("Success", 200, len("true#session#OK")))
 
-    def test_steam_completed_order_reconciliation_stays_unreconstructed_501_and_write_free(self):
+    def test_steam_completed_order_reconciliation_is_acknowledged_200_and_write_free(self):
         service = self.real_service()
+        # Acknowledged retired route, not a reconstructed purchase handler.
         self.assertNotIn("STMCompleteSucceededOrders", service.ROUTES)
         changes = self.store.db.total_changes
         backend = backend_for(service)
         response = drive(backend.handle(request(
             "STMCompleteSucceededOrders", "session#steam-id#StandaloneWindows")))
-        self.assertEqual(response.status, 501)
-        self.assertEqual(decrypt(response.text), "ERROR")
+        self.assertEqual(response.status, 200)
+        self.assertEqual(decrypt(response.text), "OK#")
         self.assertEqual(self.store.db.total_changes, changes)
         event = json.loads(backend.log.getvalue())
-        self.assertEqual(event["error"], "Route behavior has not been reconstructed")
+        self.assertEqual((event["command"], event["status"]), ("STMCompleteSucceededOrders", 200))
+        self.assertNotIn("error", event)
+        # Other retired purchase routes keep the unreconstructed 501.
+        backend.log = io.StringIO()
+        other = drive(backend.handle(request("STMCompleteOrder", "session#steam-id#StandaloneWindows")))
+        self.assertEqual((other.status, decrypt(other.text)), (501, "ERROR"))
 
     def test_shop_native_200_insufficient_and_duplicate_statuses_are_unchanged(self):
         self.account()

@@ -10,5 +10,33 @@ nebula_panel_image: nebula-preserved-panel:host-reviewed
 nebula_build_report_sha256: REPLACE_WITH_SHA256
 nebula_server_sha256: REPLACE_WITH_SHA256
 nebula_managed_sha256: REPLACE_WITH_SHA256
-nebula_max_processes: 2
+# Concurrent Unity worlds (~225 MiB each). The server container memory limit
+# scales as 768 + 256 MiB per slot unless nebula_server_mem_limit_mb is set.
+nebula_max_processes: 4
+# Empty shared worlds (Nexus) stay warm; empty apartments stop sooner. Idle
+# worlds are evicted first whenever a player needs a slot.
+nebula_public_world_idle_seconds: 900
+nebula_personal_world_idle_seconds: 60
+# Applied exactly once when an account is created (never retroactively).
+nebula_starter_crystals: 0
+nebula_starter_np: 0
+# Apartments every account owns (existing accounts are backfilled once at
+# startup; nothing is ever removed). Home, the client's native default, is
+# always included. Use [Home] for the original free apartment only.
+nebula_starter_apartments: [Home, CliffApartment, LakeApartment]
+# Enrollment (only with nebula_public_enrollment). Empty rate limits use the
+# policy defaults: 8/IP and 100 global per hour, or 120/1200 with trusted IDs.
+nebula_enrollment_max_accounts: 1000
+# nebula_enrollment_per_ip_hourly: 120
+# nebula_enrollment_global_hourly: 1200
+# With nebula_trust_steam_id, staff-labelled / operator-linked and listed
+# accounts still require their primary credential on a new device.
+nebula_protect_staff_accounts: true
+nebula_protected_accounts: []
+# Host hardening (prepared; review before applying). See README.
+nebula_ssh_hardening: true
+nebula_fail2ban: true
+nebula_ufw: false
+# Optional off-host copy after each verified backup (disabled when empty).
+nebula_backup_offsite_command: ''
 nebula_verify_reboot: false

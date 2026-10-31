@@ -51,7 +51,7 @@ type CatalogPage = {
 const empty: CatalogPage = { items: [], total: 0, next_cursor: null };
 const any = '__any__';
 
-function CatalogPreview({ row, large = false }: { row: Row; large?: boolean }) {
+export function CatalogPreview({ row, large = false }: { row: Row; large?: boolean }) {
   const url = catalogPreviewUrl(row);
   const [failed, setFailed] = useState(false);
   useEffect(() => setFailed(false), [url]);
@@ -71,7 +71,7 @@ function CatalogPreview({ row, large = false }: { row: Row; large?: boolean }) {
             decoding="async"
             width={320}
             height={320}
-            className="size-full object-contain p-3"
+            className={'size-full object-contain ' + (large ? 'p-3' : 'p-0.5')}
             onError={() => setFailed(true)}
           />
           {row.own_thumbnail_known === false && (
@@ -81,9 +81,17 @@ function CatalogPreview({ row, large = false }: { row: Row; large?: boolean }) {
           )}
         </>
       ) : (
-        <div className="flex flex-col items-center gap-2 p-4 text-center text-muted-foreground">
-          <IconPackage className="size-9" aria-hidden="true" />
-          <span className="text-xs">
+        <div
+          className="flex flex-col items-center gap-2 p-1 text-center text-muted-foreground"
+          title={failed ? 'Preview could not load' : 'Preview not recovered'}
+        >
+          <IconPackage className={large ? 'size-9' : 'size-1/2'} aria-hidden="true" />
+          {large && (
+            <span className="text-xs">
+              {failed ? 'Preview could not load' : 'Preview not recovered'}
+            </span>
+          )}
+          <span className="sr-only">
             {failed ? 'Preview could not load' : 'Preview not recovered'}
           </span>
         </div>
@@ -92,7 +100,13 @@ function CatalogPreview({ row, large = false }: { row: Row; large?: boolean }) {
   );
 }
 
-function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string) => void }) {
+export function CatalogItem({
+  row,
+  selectStore,
+}: {
+  row: Row;
+  selectStore?: (id: string) => void;
+}) {
   const offers = catalogOffers(row);
   const provenance =
     row.provenance && typeof row.provenance === 'object' ? (row.provenance as Row) : {};
@@ -123,6 +137,26 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
       ['kind', catalogKindLabel(row.kind)],
       ['gender', catalogGenderLabel(row.gender)],
       ['category', catalogCategoryLabel(row)],
+      ['subcategory', row.subcategory],
+      ['store_category_label', row.store_category_label],
+      [
+        'shop_path',
+        row.shop_path && typeof row.shop_path === 'object'
+          ? [
+              (row.shop_path as Row).gender_tab,
+              row.store_category_label || catalogCategoryLabel(row),
+            ]
+              .filter(Boolean)
+              .join(' › ')
+          : undefined,
+      ],
+      ['shop_reachable', row.shop_reachable],
+      ['gender_variant', row.gender_variant],
+      ['slot_side', row.slot_side],
+      ['housing_group', row.housing_group],
+      ['variant_family_size', row.variant_family_size],
+      ['season_hint', row.season_hint],
+      ['also_in_categories', row.also_in_categories],
       ['category_id', row.category],
       ['bundle', row.bundle],
       ['asset_path', row.asset_path],
@@ -146,7 +180,7 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
       <SheetTrigger asChild>
         <Button
           variant="outline"
-          className="min-h-11"
+          className="min-h-9"
           aria-label={'Inspect ' + catalogItemName(row)}
         >
           Inspect item
@@ -215,11 +249,11 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
                         {offer.store_active === false ? 'Store inactive' : 'Offer inactive'}
                       </Badge>
                     ) : null}
-                    {typeof offer.shop_id === 'string' && (
+                    {selectStore && typeof offer.shop_id === 'string' && (
                       <SheetClose asChild>
                         <Button
                           variant="link"
-                          className="h-auto min-h-11 max-w-full justify-start whitespace-normal px-0 text-left"
+                          className="h-auto min-h-9 max-w-full justify-start whitespace-normal px-0 text-left"
                           onClick={() => selectStore(String(offer.shop_id))}
                         >
                           Browse this store
@@ -239,7 +273,7 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
           </Card>
           <Accordion type="single" collapsible>
             <AccordionItem value="provenance">
-              <AccordionTrigger className="min-h-11">Metadata sources & limits</AccordionTrigger>
+              <AccordionTrigger className="min-h-9">Metadata sources & limits</AccordionTrigger>
               <AccordionContent className="space-y-3">
                 <Details
                   data={Object.fromEntries(
@@ -258,14 +292,14 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
             </AccordionItem>
             {Object.keys(sourceMetadata).length > 0 && (
               <AccordionItem value="source">
-                <AccordionTrigger className="min-h-11">Recovered source metadata</AccordionTrigger>
+                <AccordionTrigger className="min-h-9">Recovered source metadata</AccordionTrigger>
                 <AccordionContent>
                   <Details data={sourceMetadata} />
                 </AccordionContent>
               </AccordionItem>
             )}
             <AccordionItem value="record">
-              <AccordionTrigger className="min-h-11">
+              <AccordionTrigger className="min-h-9">
                 All available catalog metadata
               </AccordionTrigger>
               <AccordionContent>
@@ -275,7 +309,7 @@ function CatalogItem({ row, selectStore }: { row: Row; selectStore: (id: string)
           </Accordion>
           {row.grantable !== false && (
             <SheetClose asChild>
-              <Button asChild variant="outline" className="min-h-11">
+              <Button asChild variant="outline" className="min-h-9">
                 <a href="#users">Find a player to grant items</a>
               </Button>
             </SheetClose>
@@ -352,7 +386,7 @@ export function CatalogWorkspace({
         <CardTitle className="flex flex-wrap items-center gap-2">
           Game items{' '}
           <Badge variant="secondary" aria-live="polite">
-            {busy ? 'Loading…' : page.total.toLocaleString() + ' matches'}
+            {busy ? 'Loading…' : Number(page.total ?? 0).toLocaleString() + ' matches'}
           </Badge>
         </CardTitle>
         <CardDescription>
@@ -370,7 +404,7 @@ export function CatalogWorkspace({
               <Button
                 key={entry.value}
                 variant={kind === entry.value ? 'default' : 'outline'}
-                className="min-h-11 max-w-full whitespace-normal"
+                className="min-h-9 max-w-full whitespace-normal"
                 aria-pressed={kind === entry.value}
                 onClick={() => {
                   setKind(entry.value);
@@ -382,7 +416,9 @@ export function CatalogWorkspace({
               >
                 {entry.label}
                 {page.counts?.[entry.value] !== undefined && (
-                  <Badge variant="secondary">{page.counts[entry.value].toLocaleString()}</Badge>
+                  <Badge variant="secondary">
+                    {Number(page.counts?.[entry.value] ?? 0).toLocaleString()}
+                  </Badge>
                 )}
               </Button>
             ))}
@@ -399,7 +435,7 @@ export function CatalogWorkspace({
             <Label htmlFor="catalog-search">Search items</Label>
             <Input
               id="catalog-search"
-              className="min-h-11"
+              className="min-h-9"
               maxLength={128}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -461,13 +497,13 @@ export function CatalogWorkspace({
             />
           </div>
           <div className="flex flex-wrap items-end gap-2 sm:col-span-2">
-            <Button variant="outline" className="min-h-11" disabled={busy}>
+            <Button variant="outline" className="min-h-9" disabled={busy}>
               Search
             </Button>
             <Button
               type="button"
               variant="ghost"
-              className="min-h-11"
+              className="min-h-9"
               onClick={() => {
                 setQuery('');
                 setSearch('');
@@ -494,7 +530,7 @@ export function CatalogWorkspace({
           <div className="flex gap-1" aria-label="Catalog view">
             <Button
               variant={view === 'cards' ? 'secondary' : 'ghost'}
-              className="min-h-11"
+              className="min-h-9"
               aria-pressed={view === 'cards'}
               onClick={() => setView('cards')}
             >
@@ -503,7 +539,7 @@ export function CatalogWorkspace({
             </Button>
             <Button
               variant={view === 'list' ? 'secondary' : 'ghost'}
-              className="min-h-11"
+              className="min-h-9"
               aria-pressed={view === 'list'}
               onClick={() => setView('list')}
             >
@@ -593,7 +629,7 @@ export function CatalogWorkspace({
         <div className="flex items-center justify-between gap-2">
           <Button
             variant="outline"
-            className="min-h-11"
+            className="min-h-9"
             disabled={busy || !history.length}
             onClick={() => {
               setCursor(history.at(-1)!);
@@ -607,7 +643,7 @@ export function CatalogWorkspace({
           </p>
           <Button
             variant="outline"
-            className="min-h-11"
+            className="min-h-9"
             disabled={busy || !page.next_cursor}
             onClick={() => {
               setHistory((values) => [...values, cursor]);

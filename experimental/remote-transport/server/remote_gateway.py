@@ -11,6 +11,7 @@ from contextlib import closing
 import hashlib
 import json
 import math
+import secrets
 from pathlib import Path
 import signal
 import sqlite3
@@ -22,6 +23,7 @@ import time
 from public_access import AccessAuthority, AccessDenied
 from allocation import InstanceDirectory
 from wire import decrypt
+from diagnostic_logging import configure_file_sink, write_line
 
 MAX_FRAME = 16 * 1024
 MAX_CONNECTIONS = 64
@@ -48,14 +50,67 @@ class Denied(Exception):
     pass
 
 
-def first_identity_frame(batch: bytes, guid: str, bound=False):
-    """Admit only controls until exact source opcode1 binds the TLS actor.
+_DENIAL_REASONS = frozenset((
+    "frame", "message", "application_identity", "identity_timeout", "tls", "rate",
+    "preamble", "port", "credential", "allocation", "moderation_unavailable",
+    "banned", "revoked_session", "changed", "instance", "lifetime",
+))
+
+
+def diagnostic_event(event_name, task, context, **fields):
+    shared = context.get("_connection", {})
+    event = {"event": event_name, "task": task, "stage": context["stage"], **fields}
+    for key in ("connection_id", "actor_ref", "session_ref", "frames_received",
+                "client_bytes_received", "frames_forwarded", "client_bytes_forwarded",
+                "server_bytes_received", "server_bytes_forwarded", "last_mirror_id", "last_opcode"):
+        if key in shared:
+            event[key] = shared[key]
+    if "started" in shared:
+        event["elapsed_ms"] = max(0, int((time.monotonic() - shared["started"]) * 1000))
+    event["timestamp"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    for key in ("frame_length", "first_mirror_id", "denial_detail"):
+        if key in context:
+            event[key] = context[key]
+    write_line(json.dumps(event, separators=(",", ":")))
+
+
+def close_diagnostic(task, context, error=None):
+    """Log bounded protocol metadata only; never stringify an exception."""
+    if error is None:
+        reason = "stream_eof"
+    elif isinstance(error, Denied):
+        reason = (error.args[0] if error.args and isinstance(error.args[0], str)
+                  and error.args[0] in _DENIAL_REASONS else "denied")
+    elif isinstance(error, AccessDenied):
+        reason = "access_denied"
+    elif isinstance(error, asyncio.IncompleteReadError):
+        reason = "stream_eof"
+    elif isinstance(error, asyncio.TimeoutError):
+        reason = "timeout"
+    elif isinstance(error, asyncio.CancelledError):
+        reason = "cancelled"
+    elif isinstance(error, sqlite3.Error):
+        reason = "database_error"
+    elif isinstance(error, OSError):
+        reason = "transport_error"
+    elif isinstance(error, (ValueError, UnicodeError, struct.error)):
+        reason = "invalid_data"
+    else:
+        reason = "internal_error"
+    diagnostic_event("gateway_close", task, context, reason=reason)
+
+
+def first_identity_frame(batch: bytes, guid: str, bound=False, diagnostics=None):
+    """Bind the TLS actor to its first GUID-bearing application request.
 
     Reuses the pinned historical layout, not modern Mirror varuint batching:
     timestamp f64; ushort message ID; NebulaMessage ushort string size+1.
-    Early owned Command/EntityState packets are discarded: the instance cannot
-    accept ownership before the application's identity claim either. A different
-    application opcode before the claim fails closed, pending native acceptance.
+    Native OnConnected initializes scene interactables before announcing opcode1;
+    RandomIdle also sends opcode4 before that announcement. Those requests carry
+    the same authenticated session GUID and the instance validates their schemas
+    and allocation through Own. Do not impose an opcode1-first ordering that the
+    shipped client does not provide. Ownership-free updates are discarded until
+    a GUID-bearing request binds this transport to the authenticated actor.
     """
     if not 8 <= len(batch) <= MAX_FRAME or not math.isfinite(struct.unpack_from("<d", batch)[0]):
         raise Denied("frame")
@@ -66,6 +121,8 @@ def first_identity_frame(batch: bytes, guid: str, bound=False):
         if offset + 2 > len(batch):
             raise Denied("frame")
         kind, = struct.unpack_from("<H", batch, offset)
+        if diagnostics is not None:
+            diagnostics.get("_connection", {})["last_mirror_id"] = kind
         offset += 2
         if kind in (READY, NOT_READY, ADD_PLAYER):
             pass
@@ -92,8 +149,12 @@ def first_identity_frame(batch: bytes, guid: str, bound=False):
             offset += length - 1
             fields = decrypt(ciphertext).split("#")
             if len(fields) < 3 or fields[-1] != "StandaloneWindows" or not fields[0].isdigit():
+                if diagnostics is not None:
+                    diagnostics["denial_detail"] = "invalid_identity_schema"
                 raise Denied("application_identity")
             opcode = int(fields[0])
+            if diagnostics is not None and 0 <= opcode <= 65535:
+                diagnostics.get("_connection", {})["last_opcode"] = opcode
             # Keep checking every GUID-bearing packet, even after opcode1. A
             # correct GUID claim may still be rejected by the instance (e.g.
             # stale snapshot or incorrect netId); it must never unlock a later
@@ -101,13 +162,18 @@ def first_identity_frame(batch: bytes, guid: str, bound=False):
             # every other Own consumer uses token1. 2/19/30 call Bound instead.
             if opcode == 1:
                 if len(fields) != 6 or fields[2] != guid:
+                    if diagnostics is not None:
+                        diagnostics["denial_detail"] = ("invalid_identity_schema" if len(fields) != 6
+                                                        else "guid_mismatch")
                     raise Denied("application_identity")
             elif opcode not in (2, 19, 30) and fields[1] != guid:
+                if diagnostics is not None:
+                    diagnostics["denial_detail"] = "guid_mismatch"
                 raise Denied("application_identity")
-            if not bound:
-                if (len(fields) != 6 or fields[0] != "1" or fields[2] != guid
-                        or fields[5] != "StandaloneWindows"):
-                    raise Denied("application_identity")
+            if not bound and opcode not in (2, 19, 30):
+                # The GUID check above is the transport identity proof. The
+                # instance separately validates the packet and owns announcement
+                # state; a scene query or animation is not a player announcement.
                 bound = True
         else:
             raise Denied("message")
@@ -192,12 +258,32 @@ class Authority:
         return value
 
 
-async def read_frame(reader, timeout=45):
-    header = await asyncio.wait_for(reader.readexactly(4), timeout)
+async def read_frame(reader, timeout=45, diagnostics=None):
+    shared = diagnostics.get("_connection", {}) if diagnostics is not None else {}
+    async def receive(size):
+        try:
+            data = await asyncio.wait_for(reader.readexactly(size), timeout)
+        except asyncio.IncompleteReadError as error:
+            shared["client_bytes_received"] = shared.get("client_bytes_received", 0) + len(error.partial)
+            raise
+        shared["client_bytes_received"] = shared.get("client_bytes_received", 0) + len(data)
+        return data
+    if diagnostics is not None:
+        diagnostics.pop("frame_length", None)
+        diagnostics.pop("first_mirror_id", None)
+        diagnostics.pop("denial_detail", None)
+    header = await receive(4)
     length, = struct.unpack(">I", header)
+    if diagnostics is not None:
+        diagnostics.pop("first_mirror_id", None)
+        diagnostics["frame_length"] = length
     if not 8 <= length <= MAX_FRAME:
         raise Denied("frame")
-    return await asyncio.wait_for(reader.readexactly(length), timeout)
+    batch = await receive(length)
+    shared["frames_received"] = shared.get("frames_received", 0) + 1
+    if diagnostics is not None and length >= 10:
+        diagnostics["first_mirror_id"] = struct.unpack_from("<H", batch, 8)[0]
+    return batch
 
 
 async def write_frame(writer, frame):
@@ -213,17 +299,36 @@ class Gateway:
         self.active = set()
         self.attempts = {}
 
-    async def relay(self, source, destination):
+    async def relay(self, source, destination, diagnostics=None):
         while True:
+            if diagnostics is not None:
+                diagnostics["stage"] = "upstream_read"
             chunk = await asyncio.wait_for(source.read(65536), 120)
             if not chunk:
                 return
+            if diagnostics is not None:
+                diagnostics["stage"] = "client_write"
+                shared = diagnostics.get("_connection", {})
+                shared["server_bytes_received"] += len(chunk)
             destination.write(chunk)
             await asyncio.wait_for(destination.drain(), 10)
+            if diagnostics is not None:
+                shared["server_bytes_forwarded"] += len(chunk)
 
     async def serve(self, reader, writer):
+        shared = {"connection_id": secrets.token_hex(8), "started": time.monotonic(),
+                  "frames_received": 0, "client_bytes_received": 0,
+                  "frames_forwarded": 0, "client_bytes_forwarded": 0,
+                  "server_bytes_received": 0, "server_bytes_forwarded": 0}
+        context = {"stage": "tls", "_connection": shared}
         if self.slots.locked():
+            context["stage"] = "capacity"
+            close_diagnostic("admission", context, Denied("rate"))
             writer.close()
+            try:
+                await asyncio.wait_for(writer.wait_closed(), 2)
+            except Exception:
+                pass
             return
         await self.slots.acquire()
         task = asyncio.current_task()
@@ -234,6 +339,7 @@ class Gateway:
             tls = writer.get_extra_info("ssl_object")
             if tls is None or tls.selected_alpn_protocol() != "nebula-game/1":
                 raise Denied("tls")
+            context["stage"] = "rate"
             peer = writer.get_extra_info("peername")
             source = peer[0] if isinstance(peer, tuple) else ""
             now = time.monotonic()
@@ -242,18 +348,34 @@ class Gateway:
             if count >= 8 or len(self.attempts) >= 4096:
                 raise Denied("rate")
             self.attempts[source] = (began, count + 1)
+            context["stage"] = "preamble"
             header = await asyncio.wait_for(reader.readexactly(8), 5)
             magic, port, length = struct.unpack(">4sHH", header)
             if magic != b"NRT1" or length != 85:
                 raise Denied("preamble")
             raw = await asyncio.wait_for(reader.readexactly(length), 5)
             authorization = raw.decode("ascii")
+            context["stage"] = "authorization"
             async with self.password_work:
                 actor = await asyncio.wait_for(asyncio.to_thread(self.authority.resolve, port, authorization), 5)
             del raw, authorization
+            shared["actor_ref"] = hashlib.sha256(actor["account"].encode("utf-8")).hexdigest()[:16]
+            shared["session_ref"] = hashlib.sha256(actor["guid"].encode("utf-8")).hexdigest()[:16]
+            context["stage"] = "upstream_connect"
             local, upstream = await asyncio.wait_for(asyncio.open_connection("127.0.0.1", port), 5)
+            context["stage"] = "acknowledgement"
             writer.write(b"OK01")
             await asyncio.wait_for(writer.drain(), 5)
+
+            client_context = {"stage": "identity_read", "_connection": shared}
+            server_context = {"stage": "upstream_read", "_connection": shared}
+            validation_context = {"stage": "revalidation", "_connection": shared}
+
+            async def forward(output):
+                client_context["stage"] = "upstream_write"
+                await write_frame(upstream, output)
+                shared["frames_forwarded"] += 1
+                shared["client_bytes_forwarded"] += len(output) + 4
 
             async def client_to_server():
                 bound = False
@@ -263,18 +385,24 @@ class Gateway:
                     remaining = expires - time.monotonic()
                     if remaining <= 0 or frames >= 256:
                         raise Denied("identity_timeout")
-                    batch = await read_frame(reader, min(remaining, 30))
-                    outputs, bound = first_identity_frame(batch, actor["guid"])
+                    client_context["stage"] = "identity_read"
+                    batch = await read_frame(reader, min(remaining, 30), client_context)
+                    client_context["stage"] = "identity_filter"
+                    outputs, bound = first_identity_frame(batch, actor["guid"], diagnostics=client_context)
+                    if bound:
+                        diagnostic_event("identity_bound", "client_to_server", client_context)
                     for output in outputs:
-                        await write_frame(upstream, output)
+                        await forward(output)
                     frames += 1
                 while True:
-                    batch = await read_frame(reader, 120)
-                    outputs, still_bound = first_identity_frame(batch, actor["guid"], True)
+                    client_context["stage"] = "bound_read"
+                    batch = await read_frame(reader, 120, client_context)
+                    client_context["stage"] = "bound_filter"
+                    outputs, still_bound = first_identity_frame(batch, actor["guid"], True, client_context)
                     if not still_bound:
                         raise Denied("application_identity")
                     for output in outputs:
-                        await write_frame(upstream, output)
+                        await forward(output)
 
             async def revalidate():
                 until = time.monotonic() + MAX_LIFETIME
@@ -284,12 +412,21 @@ class Gateway:
                 raise Denied("lifetime")
 
             jobs = [asyncio.create_task(client_to_server()),
-                    asyncio.create_task(self.relay(local, writer)),
+                    asyncio.create_task(self.relay(local, writer, server_context)),
                     asyncio.create_task(revalidate())]
-            await asyncio.wait(jobs, return_when=asyncio.FIRST_COMPLETED)
-        except (AccessDenied, Denied, OSError, ValueError, UnicodeError, sqlite3.Error,
-                asyncio.TimeoutError, asyncio.IncompleteReadError):
-            pass
+            task_info = zip(jobs, ("client_to_server", "server_to_client", "revalidation"),
+                            (client_context, server_context, validation_context))
+            context["stage"] = "relay"
+            done, _ = await asyncio.wait(jobs, return_when=asyncio.FIRST_COMPLETED)
+            for job, name, details in task_info:
+                if job in done:
+                    error = asyncio.CancelledError() if job.cancelled() else job.exception()
+                    close_diagnostic(name, details, error)
+        except asyncio.CancelledError:
+            close_diagnostic("connection", context, asyncio.CancelledError())
+            raise
+        except Exception as error:
+            close_diagnostic("admission", context, error)
         finally:
             for job in jobs:
                 job.cancel()
@@ -299,12 +436,12 @@ class Gateway:
                 upstream.close()
                 try:
                     await asyncio.wait_for(upstream.wait_closed(), 2)
-                except (OSError, asyncio.TimeoutError):
+                except Exception:
                     pass
             writer.close()
             try:
                 await asyncio.wait_for(writer.wait_closed(), 2)
-            except (OSError, asyncio.TimeoutError):
+            except Exception:
                 pass
             self.active.discard(task)
             self.slots.release()
@@ -315,6 +452,7 @@ async def run(args):
     tls.minimum_version = ssl.TLSVersion.TLSv1_2
     tls.load_cert_chain(args.certificate, args.private_key)
     tls.set_alpn_protocols(["nebula-game/1"])
+    configure_file_sink(args.state_dir / "logs" / "gateway.jsonl")
     service = Gateway(Authority(args.state_dir, args.first_scene_port, args.last_scene_port))
     server = await asyncio.start_server(service.serve, args.bind, args.port, ssl=tls,
                                         ssl_handshake_timeout=5, backlog=64, limit=65536)

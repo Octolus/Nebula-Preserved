@@ -1,151 +1,172 @@
 # Nebula Preserved
 
-### Reconstructing the services behind Nebula Realms.
+### Community servers for Nebula Realms.
 
-A community preservation project for the Windows Steam client: accounts,
-characters, items, social features and persistent worlds, hosted on Linux.
-The separate operator dashboard uses Astro, React and shadcn/ui.
+Nebula Realms is a social virtual world on Steam: you make a character, dress
+it up, decorate apartments, meet friends in shared worlds and play minigames.
+The game cannot do any of that without its online services. Nebula Preserved
+rebuilds those services as open-source software, so the game can be played
+again on servers run by the community.
 
-**[Quickstart →](deployment/bootstrap/README.md)** ·
-[Administration](admin-panel/README.md) ·
-[Ubuntu automation](deployment/ansible/README.md) ·
-[Windows launcher](docs/LAUNCHER.md) ·
-[Moderation](docs/MODERATION-OPERATIONS.md) ·
-[Item catalog](docs/CATALOG.md) ·
-[Client patching](client-patches/network-only/README.md) ·
-[Project status](docs/PROGRESS.md) ·
-[Rust server candidate](experimental/rust-server/README.md) ·
-[Contributing](CONTRIBUTING.md)
+You play with your own Steam copy of the game. A small launcher points it at a
+community server; the game itself, its look and its controls stay exactly as
+they were.
 
-> **Development snapshot.** This is not a completed multiplayer release.
-> Native public-client login, final shared-server acceptance, apartment flows
-> and equipped-resource reconciliation still need verification. The
-> [status matrix](docs/PROGRESS.md) records the evidence and remaining work.
+**[Play](#play) · [Host a server](#host-a-server) · [How it works](#how-it-works) ·
+[Project status](docs/PROGRESS.md) · [Contributing](CONTRIBUTING.md)**
+
+> **Early test phase.** People are playing on a community server, but not every
+> feature has been confirmed against the original game. Expect bugs, and keep
+> backups if you run a server. The [status page](docs/PROGRESS.md) tracks what
+> has been checked and what hasn't.
+
+## What works
+
+| Area | Status |
+|---|---|
+| Login and characters | Automatic sign-up with your Steam account, character creation, wardrobe and saved outfits |
+| Worlds | Nexus and 14 other public worlds, started on demand, with other players visible and chat |
+| Friends and social | Friend lists, online status, private and public chat, invitations |
+| Shop and items | Full item catalog, wallets, purchases and inventory |
+| Apartments | Every new player gets three starter apartments (Home, Cliff and Lake) with saved furniture layouts |
+| Minigames | Partly working; still being tested |
+| Server admin | A web dashboard for players, items, credits, moderation, reports and an audit log |
+
+Only the networking is changed. Bugs and visual quirks from the original game,
+such as square tree leaves in older worlds, are left as they were on purpose.
+
+## Play
+
+You need:
+
+- **Windows** with **Steam** installed, running and signed in.
+- **Nebula Realms** installed from Steam (app 919290). The launcher works with
+  the final Steam build, 11018722.
+- **The launcher** (`nebula-preservation-patcher.exe`) for the server you want
+  to join. Ask the person who runs that server; community test builds come with
+  the server address built in.
+
+Then:
+
+1. Close the game if it is running.
+2. Double-click `nebula-preservation-patcher.exe`. It finds your game
+   automatically; if it can't, click **Browse…** and pick `Nebula Realms.exe`.
+3. Click **Start the game**.
+
+The first start creates your account on that server from your Steam login.
+Nothing else needs to be typed in: no password, server address or certificate.
+
+**What the launcher changes:** before the game starts it swaps in a few
+networking files and keeps checked backups of the originals. When you quit the
+game, the originals are put back automatically. `Nebula Realms.exe` itself is
+never modified. If your PC crashes mid-game, just open the launcher again and
+it repairs the install first.
+
+If something goes wrong, the launcher explains the next step. With the game
+closed you can also undo everything manually:
+
+```powershell
+nebula-preservation-patcher.exe restore
+```
+
+More detail, including joining a server that gives you an account file
+instead: [Windows launcher guide](docs/LAUNCHER.md).
+
+## Host a server
+
+A server runs on one Linux machine with Docker. A small VPS is enough for a few
+friends.
+
+You need:
+
+- A dedicated **Ubuntu 26.04 or newer (x86_64)** server with a public IPv4
+  address. 2 GB of RAM handles about three worlds at once.
+- Inbound TCP ports **80** (certificate checks), **443** (dashboard) and
+  **8443/8444** (players) open, including in your provider's firewall.
+- A **prepared release**: the server images plus the Linux world server built
+  with Unity. The world server is built from the game's own data, so it can't
+  be shipped in this repository; the [setup guide](docs/SETUP.md) explains how
+  to build one from your own copy.
+
+Copy the release to the server, then run this one command as root:
+
+```sh
+python3 /path/to/release/deployment/bootstrap/deploy.py install \
+  --release /path/to/release --public-ip YOUR_SERVER_IPV4 --public-enrollment
+```
+
+`--public-enrollment` lets new players sign up by themselves from the launcher.
+Add `--trust-steam-id` if players should also be able to use the same account
+from a second PC. Note that this trusts the Steam ID the launcher reports, so
+anyone who knows a player's Steam ID could use their account.
+
+The installer sets up Docker, the game server and the dashboard. It also gets a
+free HTTPS certificate for your IP address and renews it automatically, and it
+sets up daily backups. Running it again later upgrades the server and keeps all
+player data.
+
+Afterwards:
+
+- Open `https://YOUR_SERVER_IPV4/login` for the admin dashboard. The owner
+  login is generated on the server in
+  `/opt/nebula-preserved/operator/panel-login.txt`; read it over SSH. There are
+  no default passwords.
+- Build a launcher with your server address built in and give it to your
+  players (see [building the launcher](docs/LAUNCHER.md#fixed-server-community-tester-build)).
+
+Further reading: [installer details](deployment/bootstrap/README.md) ·
+[player sign-up rules](docs/ENROLLMENT.md) · [dashboard](admin-panel/README.md) ·
+[moderation](docs/MODERATION-OPERATIONS.md) · [Docker without the installer](deployment/docker/README.md) ·
+[Ansible](deployment/ansible/README.md) · [releases and upgrades](docs/RELEASES.md)
 
 <details>
-<summary>Operator dashboard preview</summary>
+<summary>Dashboard preview</summary>
 
 ![Nebula operator dashboard overview using synthetic accounts](docs/images/admin-panel.png)
 
-*Dashboard shown with disposable test data.*
+*Shown with made-up test accounts.*
 
 </details>
 
-## What is being preserved
+## How it works
 
-| Service | Reconstruction |
-|---|---|
-| Accounts and characters | Replacement accounts, avatar presets, customization and saved preferences |
-| Items and stores | Inventory, local wallets, catalog offers, purchases and audited operator grants |
-| Social and worlds | Friends, chat, invitations, scene allocation and apartment ownership/layouts |
-| Administration | Player lookup, credits, grants, purchase history, moderation, reports, roles and audit records |
+| Part | What it does | Built with | Source |
+|---|---|---|---|
+| Backend | Accounts, characters, items, shop, friends, chat and saved state | Python · aiohttp · SQLite | [backend](backend/) |
+| World servers | The shared 3D worlds players walk around in | C# · Unity · Mirror | [mirror-server](mirror-server/) |
+| Dashboard | Web admin panel for server owners and moderators | Astro · React · shadcn/ui | [admin-panel](admin-panel/) |
+| Hosting | Installer, Docker images, HTTPS, backups | Docker Compose · Ansible | [deployment](deployment/) |
+| Launcher | Finds the game, patches networking, restores originals | Rust | [patcher](patcher/) |
+| Client patches | The networking changes applied to the game | Patch recipes | [client-patches](client-patches/) |
+| Protocol notes | Recovered messages, item catalog and research | JSON · Markdown | [protocol](protocol/), [docs](docs/) |
 
-Historical native tests demonstrated two clients in Nexus, public/private chat,
-friendship, character/settings persistence and one store purchase. Linux Docker
-and the panel have passed isolated synthetic runtime, persistence and TLS
-boundary checks. Those results do not establish complete original-client
-connectivity through the final distribution. The target is the original
-networking and persistent state; minigame integration remains deferred in the
-current snapshot. See the status matrix for incomplete flows.
+The original server code was never released. Everything here was rebuilt by
+studying how the shipped game talks to its servers. Original accounts, store
+prices and purchase history could not be recovered, so every server starts
+fresh and sets its own prices. Real-money Steam purchases are disabled.
 
-The default client patch changes networking compatibility and server routing.
-It retains the shipped interface, input and rendering. Original cosmetic/gameplay
-bugs remain outside this project's networking scope. Optional input experiments
-are documented separately in [controls](docs/CONTROLS.md).
+An independent [Rust server](experimental/rust-server/README.md) that does the
+same job without Unity or Python is being developed alongside; it is
+experimental.
 
-## Start a server
+## Contributing
 
-Use a dedicated **Ubuntu 26.04+ x86_64** host and a prepared, reviewed runtime
-release. Copy that release to the server through your verified SSH connection,
-then run the [one-command installer](deployment/bootstrap/README.md) as root:
+Start with the [setup guide](docs/SETUP.md), [testing](docs/TESTING.md) and the
+[contribution guidelines](CONTRIBUTING.md). Please read [security](SECURITY.md)
+and [privacy](docs/PRIVACY.md) before sharing logs: server and game logs can
+contain player identifiers.
 
-```sh
-python3 /path/to/reviewed-release/deployment/bootstrap/deploy.py install \
-  --release /path/to/reviewed-release --public-ip YOUR_SERVER_IPV4
-```
+Before publishing anything, run the checks in [publishing](docs/PUBLISHING.md),
+including `python scripts/audit_public_tree.py`.
 
-The installer installs Docker/Compose and Ansible as needed, checks and loads
-the release, creates private operator credentials, and configures persistent
-boot services and daily verified backups. It obtains a publicly trusted Let's
-Encrypt certificate for the server's IPv4 address through HTTP-01 and enables
-hourly renewal. The default launcher uses system trust; no manual CA import or
-certificate-hash editing is required on this public path.
+## Legal
 
-The public address must belong to the server. Allow inbound TCP 80 for certificate
-validation, 443 for the dashboard, and 8443/8444 for players, including in the
-provider firewall. The source checkout alone cannot supply a runtime release:
-operators need matching, lawfully prepared Unity runtime and image artifacts.
+This is an unofficial fan preservation project. It is not affiliated with or
+endorsed by the game's developers or publisher. It contains no game files: you
+need your own copy from Steam, and the launcher only changes networking files
+in your own install.
 
-The current installer completed with 41 successful tasks, 11 changed and no
-failures. Fourteen external checks passed using default system certificate
-trust, including API/dashboard access with retained credentials, certificate
-SAN/chain checks on all three TLS ports, ALPN and 35 closed internal ports.
-The renewal service also completed with no runtime-file changes or TLS sidecar
-refresh, leaving active connections undisturbed. A repeat installation passed
-with 40 successful tasks, one changed and no failures. An actual reboot restored
-all boot services, retained authority/TLS
-files and preserved all 48 durable table fingerprints. Final native client/UI
-acceptance remains pending. These deployment checks do not establish gameplay.
-
-For manual Compose operation or an explicit private profile, see the
-[Docker instructions](deployment/docker/README.md#pull-published-images-from-ghcr)
-and [Ansible operations](deployment/ansible/README.md).
-
-Building images yourself instead requires the complete matching Linux Unity
-server build and validation report. The [setup guide](docs/SETUP.md) covers
-preparing those inputs from source.
-
-Runtime hosting does not require host Unity, Python, Node or Rust installations
-when using the complete images. This source checkout contains no generated
-Unity runtime, game assets, player database or credentials.
-
-| Deployment | Boundary |
-|---|---|
-| Docker private profile | Loopback only; explicitly configure a trusted LAN/VPN for other players |
-| Installer public profile | Per-account credentials, explicit auth migration and automatic publicly trusted TLS |
-| Operator panel | Manual Docker binds loopback by default; installer exposes the dashboard through TLS; internal management API remains unpublished |
-
-There are no default passwords. The installer creates private secrets; manual
-Compose setup requires bootstrapping them with the documented UID 1000
-permissions. Keep the named state volume and separate secrets across upgrades;
-see [backup and lifecycle guidance](deployment/docker/README.md#lifecycle-and-health).
-
-The installer needs a prepared release and reachable public ports. Manual
-Compose operation additionally needs matching image/runtime metadata,
-configuration and secrets. Keep the named state volume across either path.
-
-## How it fits together
-
-| Component | Stack | Source |
-|---|---|---|
-| Account, inventory, shop, social and persistence services | Python · aiohttp · SQLite | [backend](backend/) |
-| Reconstructed scene servers | C# · Unity · Mirror v66.0.9 / Telepathy | [mirror-server](mirror-server/) |
-| Operator dashboard | Astro SSR · React · shadcn/ui | [admin-panel](admin-panel/) |
-| Hosting and ingress | Linux · Docker Compose | [deployment/docker](deployment/docker/) |
-| Steam discovery, patching and restore | Rust | [patcher](patcher/) |
-| Networking compatibility | Native/managed patch recipes | [client-patches](client-patches/) |
-| Recovered contracts | Manifests and protocol research | [protocol](protocol/) |
-
-The matching client is Steam app **919290**, build **11018722**. Players supply
-their own installation. The networking-only patcher uses exact version/hash
-checks, backups and receipt-backed restore; no complete game is distributed.
-
-Mirror provides historical framing and serializers. Game-specific services are
-reconstructed from shipped behavior. Publisher server code, historical accounts,
-retired service data and original store policy were not recovered. Replacement
-credits and offers use explicit local policy; real Steam commerce is disconnected.
-
-## Work on the project
-
-Start with [setup](docs/SETUP.md), [testing](docs/TESTING.md) and
-[contribution guidelines](CONTRIBUTING.md). Review [security](SECURITY.md) and
-[privacy](docs/PRIVACY.md) before sharing logs or operating a server.
-[Releases](docs/RELEASES.md) and [publication checks](docs/PUBLISHING.md) describe
-the separate source, image and client-bundle gates.
-
-Original project contributions are licensed under [MIT](LICENSE). Vendored
-components retain their [upstream terms](THIRD_PARTY_NOTICES.md); this license
-does not cover the original game or grant rights to its assets. See
-[licensing scope](docs/LICENSING.md) for the source and release boundaries.
-Publication workflows are provided; assembling this checkout has not executed
-them remotely or published a repository, image or patch bundle.
+Project code is released under the [MIT licence](LICENSE). Bundled third-party
+components keep their own licences ([notices](THIRD_PARTY_NOTICES.md)). The
+licence doesn't cover the game or give any rights to its assets; see
+[licensing scope](docs/LICENSING.md).

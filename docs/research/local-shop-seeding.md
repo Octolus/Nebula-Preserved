@@ -18,7 +18,7 @@ client exactly:
 | 1 | `Female_Icon` | clothing `TypeData`, then `ItemData` |
 | 2 | `Bundle` | direct `ItemData` |
 | 3 | `Companion` | direct `ItemData` |
-| 4 | `Spaces` | personal-space path; not seeded here |
+| 4 | `Spaces` | direct `ItemData` for type `PERSON`; apartments are seeded by the catalog policy, not here |
 | 5 | `Furniture_Icon` | direct `ItemData` |
 | 6 | `Locomotion` | direct `ItemData` |
 

@@ -8,6 +8,8 @@ import re
 import struct
 import time
 
+from allocation import NONMINI_PUBLIC_SCENES
+
 
 def _f32(value):
     value = struct.unpack("<f", struct.pack("<f", float(value)))[0]
@@ -35,7 +37,8 @@ class InteractionRegistryPublisher:
     # them as full runtime paths would be unsafe until the canonical root
     # namespace is source-bound on both client and server.
     UNRESOLVED_DYNAMIC_ROOT_SCENES = {"CampSilverLake", "CutteridgeEstate", "SorcerersEyrie1"}
-    PUBLIC_SCENES = {"Nexus", "LeafPark", "Beach", "Cinema"}
+    # Single source with backend allocation/lifecycle admission.
+    PUBLIC_SCENES = NONMINI_PUBLIC_SCENES
     def __init__(self, store, protocol_dir):
         self.store = store
         self.protocol_dir = Path(protocol_dir)

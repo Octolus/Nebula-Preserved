@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Badge } from './ui/badge';
+import { PlayerPicker } from './management-widgets';
 import {
   actionLabels,
   moderationBody,
@@ -32,8 +33,8 @@ export function ModerationPanel({
   revision: number;
   onCommitted?: () => void;
 }) {
-  const [query, setQuery] = useState('');
   const [target, setTarget] = useState(accountId || '');
+  const [targetName, setTargetName] = useState('');
   const [capabilities, setCapabilities] = useState<RecordData>({});
   const [status, setStatus] = useState<RecordData | null>(null);
   const [action, setAction] = useState<ModerationAction>('ban');
@@ -149,32 +150,20 @@ export function ModerationPanel({
       </CardHeader>
       <CardContent className="space-y-6">
         {!accountId && (
-          <form
-            className="flex flex-wrap items-end gap-3"
-            onSubmit={(event) => {
-              event.preventDefault();
-              setTarget(query.trim());
-              setConfirmed(false);
-              setReason('');
-              setExpiry('');
-              setNotice('');
-            }}
-          >
-            <div className="min-w-48 flex-1 space-y-2">
-              <Label htmlFor={prefix + '-target'}>Player account ID</Label>
-              <Input
-                id={prefix + '-target'}
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                required
-                maxLength={128}
-                className="min-h-11"
-              />
-            </div>
-            <Button variant="outline" className="min-h-11" disabled={busy || saving}>
-              Look up player
-            </Button>
-          </form>
+          <div className="grid gap-2">
+            <PlayerPicker
+              api={api as (path: string) => Promise<any>}
+              placeholder="Find the player to moderate…"
+              onPick={(row) => {
+                setTarget(String(row.account_id));
+                setTargetName(String(row.username || ''));
+                setConfirmed(false);
+                setReason('');
+                setExpiry('');
+                setNotice('');
+              }}
+            />
+          </div>
         )}
         {busy && (
           <p role="status" className="text-sm text-muted-foreground">
@@ -202,7 +191,10 @@ export function ModerationPanel({
         {status?.account_id === target && !busy && (
           <>
             <div className="space-y-3">
-              <p className="break-all text-sm font-medium">{target}</p>
+              <p className="text-sm font-medium">
+                {String(status.username || targetName || target)}{' '}
+                <span className="font-mono text-xs text-muted-foreground">{target}</span>
+              </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant={status.banned === true ? 'destructive' : 'secondary'}>
                   {status.banned === true ? 'Banned' : 'Not banned'}
@@ -269,7 +261,7 @@ export function ModerationPanel({
                           setExpiry(event.target.value);
                           setConfirmed(false);
                         }}
-                        className="min-h-11"
+                        className="min-h-9"
                       />
                       <p className="text-xs text-muted-foreground">
                         Leave empty to keep the policy until it is removed.
@@ -290,10 +282,10 @@ export function ModerationPanel({
                       setReason(event.target.value);
                       setConfirmed(false);
                     }}
-                    className="min-h-11"
+                    className="min-h-9"
                   />
                 </div>
-                <label className="flex min-h-11 items-center gap-3 text-sm">
+                <label className="flex min-h-9 items-center gap-3 text-sm">
                   <Checkbox
                     checked={confirmed}
                     disabled={saving}
@@ -306,7 +298,7 @@ export function ModerationPanel({
                   </span>
                 </label>
                 <Button
-                  className="min-h-11"
+                  className="min-h-9"
                   variant={action === 'ban' || action === 'kick' ? 'destructive' : 'default'}
                   disabled={saving || !confirmed}
                 >
@@ -334,7 +326,7 @@ export function ModerationPanel({
                       setLabel(event.target.value);
                       setLabelConfirmed(false);
                     }}
-                    className="min-h-11"
+                    className="min-h-9"
                   />
                 </div>
                 <div className="space-y-2">
@@ -350,10 +342,10 @@ export function ModerationPanel({
                       setLabelReason(event.target.value);
                       setLabelConfirmed(false);
                     }}
-                    className="min-h-11"
+                    className="min-h-9"
                   />
                 </div>
-                <label className="flex min-h-11 items-center gap-3 text-sm">
+                <label className="flex min-h-9 items-center gap-3 text-sm">
                   <Checkbox
                     required
                     checked={labelConfirmed}
@@ -363,7 +355,7 @@ export function ModerationPanel({
                   I checked the display label for account{' '}
                   <span className="break-all">{target}</span>.
                 </label>
-                <Button className="min-h-11" disabled={saving || !labelConfirmed}>
+                <Button className="min-h-9" disabled={saving || !labelConfirmed}>
                   {saving ? 'Committing…' : 'Set display label'}
                 </Button>
               </form>

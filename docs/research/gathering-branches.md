@@ -71,7 +71,7 @@ Evidence: `0x3ef0c0`, `work/decompiled/dump.cs`.
 - The five Christmas2018 PSIDs use unique durable rows; repeated scenes are idempotent and any other PSID fails closed.
 - Gather consume increments progress, bounded by the explicitly configured local threshold.
 - Reward grant, progress reset/increment and claim marker remain in Store.atomic().
-- The Memorion score endpoint returns an explicit deferred-gameplay error instead of fabricating a score oracle.
+- The Memorion score endpoint moved to `backend/fullgame.py` (2026-10-31). The threshold array is `GatherChristmas2018.aRewardsID` = [5,7,9,11,15,25] in `s/leafparklogicprefab`; the local index is the number of completed type-4 scenes.
 
 ## Remaining evidence boundaries
 

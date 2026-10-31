@@ -4,12 +4,18 @@ import { LoginForm } from '../components/login-form';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Sign in · Nebula</title>
     <meta name="robots" content="noindex,nofollow" />
+    <script is:inline>
+      try {
+        if (localStorage.getItem('nebula-theme') === 'light')
+          document.documentElement.classList.remove('dark');
+      } catch {}
+    </script>
   </head>
   <body class="grid min-h-screen place-items-center bg-muted/30 p-5">
     <main class="w-full max-w-sm">

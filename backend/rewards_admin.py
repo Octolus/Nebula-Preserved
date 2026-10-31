@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from allocation import InstanceDirectory
-from rewards import CONFIGURABLE, GRANT_KINDS, REWARD_TYPES, RewardService
+from rewards import CONFIGURABLE, GRANT_KINDS, MINIGAME_TRIGGERS, REWARD_GAME_TYPES, REWARD_TYPES, RewardService
 from state import Catalog, Store
 from wire import ProtocolError
 
@@ -52,6 +52,9 @@ def main():
                 "checkRewardAvailableServlet": {"reward_types": sorted(REWARD_TYPES)},
                 "SKLPromoServlet": {key: sorted(value) for key, value in sorted(service.skl_promos.items())},
                 "CinemaInteractionNPServlet": {"0": "Ticket", "1": "PopCorn"},
+                "checkRewardGameServlet": {"trigger": "<typeGame>:<stage>",
+                                           "type_games": sorted(REWARD_GAME_TYPES)},
+                **{route: {"triggers": sorted(triggers)} for route, triggers in MINIGAME_TRIGGERS.items()},
             }
         print(json.dumps(result, ensure_ascii=True, indent=2))
     except (ProtocolError, OSError, ValueError) as exc:
