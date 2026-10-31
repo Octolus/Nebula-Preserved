@@ -7,7 +7,7 @@ COPY experimental/rust-server/tests/ ./tests/
 RUN cargo build --locked --release
 
 # The candidate links against Bookworm's libc, libm and libgcc runtime.
-FROM debian:bookworm-slim@sha256:7ff6ba31527b9e336162fa061746c366c4b2032f4d2cff2078bea43f78efe3f8 AS runtime
+FROM debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 AS runtime
 LABEL org.opencontainers.image.title="Nebula Preserved experimental Rust server" \
       org.opencontainers.image.description="Isolated candidate; native-client networking parity unproven"
 RUN install -d -o 10001 -g 10001 /var/lib/nebula-rust /opt/nebula/protocol /usr/share/licenses/nebula-preserved
