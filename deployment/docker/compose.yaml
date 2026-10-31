@@ -65,7 +65,7 @@ services:
       retries: 3
   private-http:
     logging: *default-logging
-    image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+    image: nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
     profiles: [private]
     network_mode: service:server
     user: "1000:1000"
@@ -123,7 +123,7 @@ services:
       server: {condition: service_healthy}
   public-https:
     logging: *default-logging
-    image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+    image: nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
     profiles: [public]
     network_mode: service:server
     user: "1000:1000"
