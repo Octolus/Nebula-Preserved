@@ -1,29 +1,22 @@
 # Windows patcher builds and releases
 
-The **Windows patcher** workflow compiles the Rust launcher and CLI for
-`x86_64-pc-windows-msvc` on GitHub's Windows Server 2025 runner. It runs the
-shared `quality.yml` checks first, checks rustfmt, runs `cargo test --locked`,
-and builds with `cargo build --locked --release`. Rust is pinned to 1.97.1;
-Cargo.lock fixes dependency versions. Build paths are remapped in the binary.
-Generic CI builds contain no deployment-specific server, CA or frozen bundle
-pin. For a portable launch-enabled release with verified embedded material, see
+Build the Rust launcher and CLI for `x86_64-pc-windows-msvc` on Windows. Rust
+is pinned to 1.97.1 and Cargo.lock fixes dependency versions:
+
+```powershell
+cargo fmt --manifest-path patcher/Cargo.toml --all -- --check
+cargo test --manifest-path patcher/Cargo.toml --locked
+cargo build --manifest-path patcher/Cargo.toml --locked --release
+python scripts/package_windows_patcher.py --binary patcher/target/release/nebula-preservation-patcher.exe --output-dir release-artifacts
+```
+
+There is no CI workflow for the patcher; build and test it locally. Generic
+builds contain no deployment-specific server, CA or frozen bundle pin. For a
+portable launch-enabled release with verified embedded material, see
 [Windows launcher](LAUNCHER.md#build-a-portable-release).
 
-Pull requests, pushes to `main`, `v*` tags and manual runs build a downloadable
-`windows-x64-patcher` workflow artifact after checks pass. A caller can also use
-the reusable workflow. Pull requests receive read-only repository access and no
-release token. There is no `pull_request_target` workflow. External actions are
-pinned to verified full commit SHAs and use Node 24.
-
-A successful `v*` tag push publishes the ZIP and its checksum as GitHub Release
-assets, after the same quality and build jobs finish. The release job alone has
-`contents: write`; it uses the run's own artifact and the built-in `GITHUB_TOKEN`.
-It verifies the checksum and existing tag. Existing assets are not overwritten.
-Manual runs build artifacts; they do not publish releases. A reusable caller may
-explicitly pass `publish: true`, which still requires a `v*` tag and cannot
-publish from a pull request. Workflows do not publish a patch bundle or upload
-game files. No GitHub release, repository setting or token has been created by
-adding these workflow files.
+To publish, upload the ZIP and its checksum to a GitHub Release by hand. Never
+attach a patch bundle or game files.
 
 ## What the download contains
 

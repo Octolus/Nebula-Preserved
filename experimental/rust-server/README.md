@@ -108,10 +108,9 @@ documents. No image is pushed by these instructions or the CI job.
 
 ## Evidence and licensing
 
-The [candidate workflow](../../.github/workflows/rust-server.yml) tests the locked
-crate, [reference comparisons](parity/README.md) and
-[TLS gateway interoperability](interop/README.md) on Windows and Linux using
-Rust 1.90.0 and Python 3.12, then checks the restricted container profile.
+The locked crate, [reference comparisons](parity/README.md) and
+[TLS gateway interoperability](interop/README.md) are tested locally on Windows
+and Linux using Rust 1.90.0 and Python 3.12; there is no CI workflow for them.
 [Recorded validation](VALIDATION.md) includes exact tested binary hashes and
 measured idle footprint. These synthetic checks do not establish native game
 acceptance, production readiness or historical server-policy parity.

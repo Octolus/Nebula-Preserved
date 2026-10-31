@@ -1,7 +1,7 @@
 {
-  "bytes_excluding_inventory": 45563067,
+  "bytes_excluding_inventory": 45551570,
   "excluded": "Original game installation, compiled client/runtime outputs, Unity Linux build, databases, logs, credentials, keys, generated build products and private evidence are excluded. Four pre-existing vendored Cecil dependency DLLs remain at their reviewed original hashes.",
-  "file_count_excluding_inventory": 1780,
+  "file_count_excluding_inventory": 1774,
   "files": {
     ".editorconfig": {
       "sha256": "93287d2202fa7d6d6ce0d539f7189bbf775bd3df5de67be71830c2f55b7d7b82",
@@ -27,33 +27,9 @@
       "sha256": "d0d00695f0e3b0391a39d52b037b7ee4b0a331112e9ab80e8638f9c03da96542",
       "size": 648
     },
-    ".github/dependabot.yml": {
-      "sha256": "e1f85e67c76ddb91ed298fcf8f2e8c8316275f363df4b91281e08f3f775d5196",
-      "size": 1021
-    },
     ".github/workflows/backend-e2e.yml": {
       "sha256": "26d7019ec28b22245d5a33d76b90902938224c138a9d9cef3a89505e194ecbf2",
       "size": 1885
-    },
-    ".github/workflows/client-tls.yml": {
-      "sha256": "b83454d902b1ced8f82ec0090bdd7ae346f2af777a12b5607cca56c0d49fb775",
-      "size": 7241
-    },
-    ".github/workflows/containers.yml": {
-      "sha256": "6dd32bf5ae160bfe7c19db38c37f9e18abb590051ca7b55f258e882384b9d104",
-      "size": 8663
-    },
-    ".github/workflows/patcher.yml": {
-      "sha256": "820f9a3b78cc8e1587f30691dec9dec8a4f95a7cd2e52290be34d14c2b1fa467",
-      "size": 4693
-    },
-    ".github/workflows/quality.yml": {
-      "sha256": "227c59ee21f64ca32fcb68df5eaf560a325e1a00cad83513139e07e01618a070",
-      "size": 4482
-    },
-    ".github/workflows/rust-server.yml": {
-      "sha256": "4d2f52a222ee96544ba3ade995d2f9ee557ffdc17f373c5eeb644941991addc7",
-      "size": 5686
     },
     ".gitignore": {
       "sha256": "e475e5984c0e223e05f9db44861d11804c9e86fbe96693a5bd1f6b1fec04c71c",
@@ -1712,8 +1688,8 @@
       "size": 4460
     },
     "docs/PATCHER-RELEASE.md": {
-      "sha256": "544926f8d4b2f36ef94f3e2e6605d2aafc1d546994b5e10de05e19ab73755988",
-      "size": 5469
+      "sha256": "765f8c5c29c0583e6a90f6b32b0f8299deab6d7f047ffecbe25687d3e13f3676",
+      "size": 4706
     },
     "docs/PRIVACY.md": {
       "sha256": "45a8071bf0cce35a19602367bc7701d5259ecf5021fd0541fb2ff73ed12e6da6",
@@ -1732,8 +1708,8 @@
       "size": 2783
     },
     "docs/RELEASES.md": {
-      "sha256": "3136166a5d311df46187f5dc45f67a358e9c9dfb65f1ae71e32d74d272a83a95",
-      "size": 6510
+      "sha256": "3cf9a6fd10d04d1ec1550e7bdfc23ad2f09599f5fdf037ea08d542cb9f9b68b7",
+      "size": 4458
     },
     "docs/SETUP.md": {
       "sha256": "16d56e2c3e5784ac121f5316ef0e3286b1421963833eb4255c89da8dc64bdd01",
@@ -1748,8 +1724,8 @@
       "size": 18492
     },
     "docs/images/admin-panel.png": {
-      "sha256": "bce9f0b96a157712952e47def10e38571623b8eb20d59339bbd29f314b818471",
-      "size": 76532
+      "sha256": "c0951311ab8f4ee9b61d944e151a6709233cf8a3647ecb89d2720f8f5fff57af",
+      "size": 102354
     },
     "docs/research/README.md": {
       "sha256": "935b572c4305c875463c54477f74ce73653e56b12ae64cebcb9085e31ddcddc6",
@@ -2480,8 +2456,8 @@
       "size": 834
     },
     "experimental/rust-server/README.md": {
-      "sha256": "51bf7e5e7d8af743a4e41ac16841ee259b453d5c7165c464d2de7b0a843a56dc",
-      "size": 6817
+      "sha256": "706afc778296a21a85ffd05ad5786822365d9666d237cf387f8c89d12b784f47",
+      "size": 6752
     },
     "experimental/rust-server/VALIDATION.md": {
       "sha256": "b88dc57c3e456b37e365e4f51442c658214a136a083d5ce3a1a1a899fb9b92b7",
@@ -6712,8 +6688,8 @@
       "size": 7435
     },
     "scripts/test_package_windows_patcher.py": {
-      "sha256": "830062f3b091b17d7b071885bf8f984659e618e98769f338235f1bcc35eec6b5",
-      "size": 9330
+      "sha256": "4a222c3f76fcf60077243d1983ca644d67908ac47df2f8de097d5d25e80b7d87",
+      "size": 6677
     },
     "scripts/test_run_unit_tests.py": {
       "sha256": "9e4dee40441ff3e331b0860d7a73f34742bfd520c6b87063fa47e905a9aaa1fc",

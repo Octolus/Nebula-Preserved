@@ -11,7 +11,6 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 import zipfile
-import yaml
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 SOURCE = REPOSITORY/'scripts/package_windows_patcher.py'
@@ -117,46 +116,6 @@ class Packaging(unittest.TestCase):
         with patch.object(Path, 'open', failed):
             with self.assertRaises(PermissionError): self.package()
         self.assertFalse(self.output.exists())
-
-
-class Workflow(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.text = (REPOSITORY/'.github/workflows/patcher.yml').read_text()
-        cls.value = yaml.load(cls.text, Loader=yaml.BaseLoader)
-
-    def test_events_quality_dependency_and_tag_only_write_job(self):
-        workflow = self.value
-        self.assertEqual(set(workflow['on']), {'push', 'pull_request', 'workflow_call', 'workflow_dispatch'})
-        self.assertEqual(workflow['permissions'], {'contents': 'read'})
-        self.assertEqual(workflow['jobs']['quality']['uses'], './.github/workflows/quality.yml')
-        self.assertEqual(workflow['jobs']['build']['needs'], 'quality')
-        release = workflow['jobs']['release']
-        self.assertEqual(release['permissions'], {'contents': 'write'})
-        self.assertEqual(set(release['needs']), {'quality', 'build'})
-        self.assertIn("github.event_name != 'pull_request'", release['if'])
-        self.assertIn("startsWith(github.ref, 'refs/tags/v')", release['if'])
-        self.assertNotIn('pull_request_target', workflow['on'])
-
-    def test_action_sha_pins_exact_locked_commands_and_no_bundle_step(self):
-        expected = {'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1',
-                    'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9',
-                    'actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333'}
-        uses = {step['uses'] for job in self.value['jobs'].values() for step in job.get('steps', []) if 'uses' in step}
-        self.assertEqual(uses, expected)
-        build = self.value['jobs']['build']
-        self.assertEqual(build['runs-on'], 'windows-2025')
-        self.assertEqual(self.value['env']['RUST_TARGET'], 'x86_64-pc-windows-msvc')
-        self.assertIn('test --manifest-path patcher/Cargo.toml --locked --target', self.text)
-        self.assertIn('build --manifest-path patcher/Cargo.toml --locked --release --target', self.text)
-        self.assertIn('fmt --manifest-path patcher/Cargo.toml --all -- --check', self.text)
-        self.assertNotIn('build_bundle', self.text); self.assertNotIn('--clobber', self.text)
-        checkout = next(step for step in build['steps'] if step.get('uses', '').startswith('actions/checkout@'))
-        self.assertEqual(checkout['with']['persist-credentials'], 'false')
-        self.assertNotIn('runner.', str(build.get('env', {})))
-        self.assertIn('CARGO_TARGET_DIR=$env:RUNNER_TEMP/patcher-target', build['steps'][0]['run'])
-        self.assertIn('CARGO_ENCODED_RUSTFLAGS=', build['steps'][0]['run'])
-        self.assertIn('$env:GITHUB_ENV', build['steps'][0]['run'])
 
 
 if __name__ == '__main__':
