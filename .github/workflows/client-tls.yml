@@ -131,7 +131,7 @@ jobs:
         run: |
           cargo "+$env:RUST_TOOLCHAIN-x86_64-pc-windows-gnu" build --release --locked --offline --manifest-path experimental/remote-transport/client/Cargo.toml --target x86_64-pc-windows-gnu
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12'
       - name: Test the actual native bootstrap profile gate

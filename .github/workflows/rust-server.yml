@@ -74,7 +74,7 @@ jobs:
           cargo "+$RUST_TOOLCHAIN" test --locked --offline --all-targets --manifest-path experimental/rust-server/Cargo.toml --target "${{ matrix.target }}"
       - name: Build the executable used by the headless probes
         run: cargo "+$RUST_TOOLCHAIN" build --locked --offline --manifest-path experimental/rust-server/Cargo.toml --target "${{ matrix.target }}"
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12'
       - name: Install headless reference-test dependencies
